@@ -1,0 +1,102 @@
+<project name="Thumbnailator" default="dist" basedir=".">
+	<description>
+		Thumbnailator Build
+	</description>
+	<!-- set global properties for this build -->
+	<property name="src" location="src" />
+	<property name="build" location="build-tmp" />
+	<property name="dist"  location="distribution" />
+	<property name="resources" location="resources" />
+	<property name="javadoc_dir" value="javadoc" />
+
+	<!-- Set version number -->
+	<property name="version" value="0.2.0" />
+	
+	<target name="init">
+	</target>
+
+	<target
+		name="compile"
+		depends="init"
+		description="compile the source">
+		
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}"/>
+		
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac
+			srcdir="${src}"
+			destdir="${build}"
+			source="1.5"
+			target="1.5" />
+		
+	</target>
+
+	<target
+		name="dist"
+		depends="compile"
+		description="generate the distribution">
+		<tstamp/>
+		
+		<property name="resources-common-dir" location="${resources}/common" />
+	  	
+		<!-- Create the distribution directory -->
+		<mkdir dir="${dist}/${version}" />
+		
+		<!-- Generate the javadocs -->
+		<javadoc 
+			destdir="${dist}/${version}/${javadoc_dir}"
+			sourcepath="${src}"
+			author="true"
+			version="true"
+			Public="true"
+			source="1.5"
+			doctitle="Thumbnailator API Documenatation (Version ${version})"
+			Locale="en_US" >
+			
+			<link href="http://download-llnw.oracle.com/javase/1.5.0/docs/api/" />
+		</javadoc>
+	
+		<!-- Put everything in ${build} into the Thumbnailator-${version}.jar file -->
+	    <jar jarfile="${dist}/${version}/Thumbnailator-${version}.jar">
+	    	<fileset dir="${build}" />
+			<fileset dir="${resources}" />
+	    	<manifest>
+	          <attribute name="Built-By" value="coobird"/>
+	          <section name="Thumbnailator">
+	            <attribute name="Specification-Title" value="Thumbnailator"/>
+	            <attribute name="Specification-Version" value="${version}"/>
+	            <attribute name="Specification-Vendor" value="coobird.net"/>
+	            <attribute name="Implementation-Title" value="Thumbnailator"/>
+	            <attribute name="Implementation-Version" value="${version}"/> 
+	            <attribute name="Implementation-Vendor" value="coobird.net"/>
+	          </section>
+	        </manifest>
+	    </jar>
+		
+	    <jar jarfile="${dist}/${version}/Thumbnailator-${version}-src.jar">
+	    	<fileset dir="${build}" />
+	    	<fileset dir="${src}" excludes="**/package.info" />
+			<fileset dir="${resources}" />
+	    	<manifest>
+	          <attribute name="Built-By" value="coobird"/>
+	          <section name="Thumbnailator">
+	            <attribute name="Specification-Title" value="Thumbnailator"/>
+	            <attribute name="Specification-Version" value="${version}"/>
+	            <attribute name="Specification-Vendor" value="coobird.net"/>
+	            <attribute name="Implementation-Title" value="Thumbnailator"/>
+	            <attribute name="Implementation-Version" value="${version}"/> 
+	            <attribute name="Implementation-Vendor" value="coobird.net"/>
+	          </section>
+	        </manifest>
+	    </jar>
+	</target>
+
+	<target
+		name="clean"
+		description="clean up">
+		
+		<!-- Delete the ${build} directory tree -->
+		<delete dir="${build}"/>
+	</target>
+</project>
