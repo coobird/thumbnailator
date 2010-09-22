@@ -77,6 +77,25 @@ public class ProgressiveBilinearResizer extends AbstractResizer
 		Graphics2D g = tempImage.createGraphics();
 		g.setRenderingHints(RENDERING_HINTS);
 		
+		/*
+		 * Determine the size of the first resize step should be.
+		 * 1) Beginning from the target size
+		 * 2) Increase each dimension by 2
+		 * 3) Until reaching the original size
+		 */
+		int startWidth = targetWidth;
+		int startHeight = targetHeight;
+		
+		while (startWidth < currentWidth && startHeight < currentHeight)
+		{
+			startWidth *= 2;
+			startHeight *= 2;
+		}
+		
+		currentWidth = startWidth / 2;
+		currentHeight = startHeight / 2;
+
+		// Perform first resize step.
 		g.drawImage(srcImage, 0, 0, currentWidth, currentHeight, null);
 		
 		// Perform an in-place progressive bilinear resize.
