@@ -68,6 +68,7 @@ public class FileThumbnailTask extends ThumbnailTask
 		}
 		
 		ImageReader reader = readers.next();
+		reader.setInput(iis);
 		inputFormatName = reader.getFormatName();
 		
 		return reader.read(0);
@@ -102,18 +103,21 @@ public class FileThumbnailTask extends ThumbnailTask
 		ImageWriter writer = writers.next();
 		
 		ImageWriteParam writeParam = writer.getDefaultWriteParam();
-		writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-		
-		/*
-		 * Sets the compression quality, if specified.
-		 * 
-		 * Note:
-		 * The value to denote that the codec's default compression quality
-		 * should be used is Float.NaN. 
-		 */
-		if (!Float.isNaN(param.getOutputQuality()))
+		if (writeParam.canWriteCompressed())
 		{
-			writeParam.setCompressionQuality(param.getOutputQuality());
+			writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+			
+			/*
+			 * Sets the compression quality, if specified.
+			 * 
+			 * Note:
+			 * The value to denote that the codec's default compression quality
+			 * should be used is Float.NaN. 
+			 */
+			if (!Float.isNaN(param.getOutputQuality()))
+			{
+				writeParam.setCompressionQuality(param.getOutputQuality());
+			}
 		}
 		
 		ImageOutputStream ios = 
