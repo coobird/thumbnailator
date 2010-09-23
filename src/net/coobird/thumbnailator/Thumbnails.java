@@ -443,6 +443,13 @@ public final class Thumbnails
 			int height
 	) throws IOException
 	{
+		validateDimensions(width, height);
+		
+		if (f == null)
+		{
+			throw new NullPointerException("Input file is null.");
+		}
+		
 		return createThumbnail(ImageIO.read(f), width, height);
 	}
 	
