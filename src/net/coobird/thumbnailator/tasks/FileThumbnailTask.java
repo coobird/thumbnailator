@@ -123,6 +123,11 @@ public class FileThumbnailTask extends ThumbnailTask
 		ImageOutputStream ios = 
 			ImageIO.createImageOutputStream(destinationFile);
 		
+		if (ios == null)
+		{
+			throw new IOException("Could not open output file.");
+		}
+		
 		writer.setOutput(ios);
 		writer.write(null, new IIOImage(img, null, null), writeParam);
 		
