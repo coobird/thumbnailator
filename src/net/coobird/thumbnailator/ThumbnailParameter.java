@@ -217,4 +217,72 @@ public class ThumbnailParameter
 	{
 		return outputQuality;
 	}
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + imageType;
+		result = prime * result + (keepAspectRatio ? 1231 : 1237);
+		result = prime * result
+				+ ((outputFormat == null) ? 0 : outputFormat.hashCode());
+		result = prime * result + Float.floatToIntBits(outputQuality);
+		result = prime * result
+				+ ((thumbnailSize == null) ? 0 : thumbnailSize.hashCode());
+		result = prime * result
+				+ ((watermarks == null) ? 0 : watermarks.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ThumbnailParameter other = (ThumbnailParameter) obj;
+		if (imageType != other.imageType)
+			return false;
+		if (keepAspectRatio != other.keepAspectRatio)
+			return false;
+		if (outputFormat == null)
+		{
+			if (other.outputFormat != null)
+				return false;
+		}
+		else if (!outputFormat.equals(other.outputFormat))
+			return false;
+		if (Float.floatToIntBits(outputQuality) != Float
+				.floatToIntBits(other.outputQuality))
+			return false;
+		if (thumbnailSize == null)
+		{
+			if (other.thumbnailSize != null)
+				return false;
+		}
+		else if (!thumbnailSize.equals(other.thumbnailSize))
+			return false;
+		if (watermarks == null)
+		{
+			if (other.watermarks != null)
+				return false;
+		}
+		else if (!watermarks.equals(other.watermarks))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "ThumbnailParameter [thumbnailSize=" + thumbnailSize
+				+ ", watermarks=" + watermarks + ", keepAspectRatio="
+				+ keepAspectRatio + ", outputFormat=" + outputFormat
+				+ ", outputQuality=" + outputQuality + ", imageType="
+				+ imageType + "]";
+	}
 }
