@@ -14,6 +14,7 @@ import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
+import net.coobird.thumbnailator.BufferedImages;
 import net.coobird.thumbnailator.ThumbnailParameter;
 
 /**
@@ -62,6 +63,11 @@ public class StreamThumbnailTask extends ThumbnailTask
 	{
 		ImageInputStream iis = ImageIO.createImageInputStream(is);
 		
+		if (iis == null)
+		{
+			throw new IOException("Could not open InputStream.");
+		}
+		
 		Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
 		if (!readers.hasNext())
 		{
@@ -73,7 +79,11 @@ public class StreamThumbnailTask extends ThumbnailTask
 		reader.setInput(iis);
 		inputFormatName = reader.getFormatName();
 		
-		return reader.read(0);
+		BufferedImage img = reader.read(0);
+		
+		iis.close();
+		
+		return img;
 	}
 
 	@Override
@@ -119,8 +129,33 @@ public class StreamThumbnailTask extends ThumbnailTask
 		
 		ImageOutputStream ios = ImageIO.createImageOutputStream(os);
 		
+		if (ios == null)
+		{
+			throw new IOException("Could not open OutputStream.");
+		}
+		
+		/*
+		 * Note:
+		 * The following code is a workaround for the JPEG writer which ships
+		 * with the JDK.
+		 * 
+		 * At issue is, that the JPEG writer appears to write the alpha
+		 * channel when it should not. To circumvent this, images which are
+		 * to be saved as a JPEG will be copied to another BufferedImage without
+		 * an alpha channel before it is saved.
+		 */
+		if (
+				formatName.equalsIgnoreCase("jpg")
+				|| formatName.equalsIgnoreCase("jpeg")
+		)
+		{
+			img = BufferedImages.copy(img, BufferedImage.TYPE_INT_RGB);
+		}
+		
 		writer.setOutput(ios);
 		writer.write(null, new IIOImage(img, null, null), writeParam);
+		
+		ios.close();
 		
 		return true;
 	}
