@@ -318,6 +318,17 @@ public final class Thumbnails
 			int height
 	) throws IOException
 	{
+		validateDimensions(width, height);
+		
+		if (is == null)
+		{
+			throw new NullPointerException("InputStream is null.");
+		} 
+		else if (os == null)
+		{
+			throw new NullPointerException("OutputStream is null.");
+		}
+		
 		ThumbnailParameter param = 
 			new ThumbnailParameter(
 					new Dimension(width, height),
@@ -334,6 +345,12 @@ public final class Thumbnails
 	/**
 	 * Creates a thumbnail from an source image and writes the thumbnail to
 	 * a destination file.
+	 * <p>
+	 * The image format to use for the thumbnail will be determined from the
+	 * file extension. However, if the image format cannot be determined, then,
+	 * the same image format as the original image will be used when writing
+	 * the thumbnail. 
+	 * 
 	 * 
 	 * @param inFile		The {@link File} from which image data is read.
 	 * @param outFile		The {@link File} to which thumbnail is written.
@@ -350,13 +367,57 @@ public final class Thumbnails
 	) throws IOException
 	{
 		validateDimensions(width, height);
+		
+		if (inFile == null)
+		{
+			throw new NullPointerException("Input file is null.");
+		}
+		else if (outFile == null)
+		{
+			throw new NullPointerException("Output file is null.");
+		}
+		
+		if (!inFile.exists())
+		{
+			throw new IOException("Input file does not exist.");
+		}
 
+		/*
+		 * Determine the output file format.
+		 * 
+		 * Check to be sure the format is supported, and if not, then use
+		 * the original file format.
+		 */
+		String fileName = outFile.getName();
+		String fileExtension = null; 
+		if (
+				fileName.contains(".") 
+				&& fileName.lastIndexOf('.') != fileName.length() - 1
+		)
+		{
+			int lastIndex = fileName.lastIndexOf('.');
+			fileExtension = fileName.substring(lastIndex + 1); 
+		}
+			
+		String format = ThumbnailParameter.ORIGINAL_FORMAT;
+		if (fileExtension != null)
+		{
+			for (String supportedFormatName : ImageIO.getWriterFormatNames())
+			{
+				if (supportedFormatName.equals(fileExtension))
+				{
+					format = supportedFormatName;
+					break;
+				}
+			}
+		}
+		
 		ThumbnailParameter param = 
 			new ThumbnailParameter(
 					new Dimension(width, height),
 					Collections.<Watermark>emptyList(),
 					true,
-					ThumbnailParameter.ORIGINAL_FORMAT,
+					format,
 					ThumbnailParameter.DEFAULT_QUALITY,
 					BufferedImage.TYPE_INT_ARGB
 			);
