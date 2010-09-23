@@ -10,7 +10,7 @@
 	<property name="javadoc_dir" value="javadoc" />
 
 	<!-- Set version number -->
-	<property name="version" value="0.2.0" />
+	<property name="version" value="0.2.1" />
 	
 	<target name="init">
 	</target>
@@ -52,7 +52,8 @@
 			Public="true"
 			source="1.5"
 			doctitle="Thumbnailator API Documenatation (Version ${version})"
-			Locale="en_US" >
+			windowtitle="Thumbnailator API Documenatation (Version ${version})"
+			locale="en_US" >
 			
 			<link href="http://download-llnw.oracle.com/javase/1.5.0/docs/api/" />
 		</javadoc>
@@ -81,10 +82,10 @@
 	    	<manifest>
 	          <attribute name="Built-By" value="coobird"/>
 	          <section name="Thumbnailator">
-	            <attribute name="Specification-Title" value="Thumbnailator"/>
+	            <attribute name="Specification-Title" value="Thumbnailator with sources"/>
 	            <attribute name="Specification-Version" value="${version}"/>
 	            <attribute name="Specification-Vendor" value="coobird.net"/>
-	            <attribute name="Implementation-Title" value="Thumbnailator"/>
+	            <attribute name="Implementation-Title" value="Thumbnailator with sources"/>
 	            <attribute name="Implementation-Version" value="${version}"/> 
 	            <attribute name="Implementation-Vendor" value="coobird.net"/>
 	          </section>
