@@ -241,7 +241,7 @@ public final class Thumbnails
 	 * @throws IOException	Thrown when a problem occurs when reading from 
 	 * 						{@code File} representing an image file. 						
 	 */
-	public static Collection<? extends File> createThumbnailCollection(
+	public static Collection<File> createThumbnailCollection(
 			Collection<? extends File> files,
 			Rename rename,
 			int width,
@@ -250,6 +250,15 @@ public final class Thumbnails
 	throws IOException
 	{
 		validateDimensions(width, height);
+		
+		if (files == null)
+		{
+			throw new NullPointerException("Collection of Files is null.");
+		}
+		if (rename == null)
+		{
+			throw new NullPointerException("Rename is null.");
+		}
 		
 		ArrayList<File> resultFiles = new ArrayList<File>();
 		
