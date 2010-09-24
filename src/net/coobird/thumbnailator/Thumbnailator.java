@@ -4,9 +4,8 @@ import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.filters.Watermark;
-import net.coobird.thumbnailator.resizers.Resizer;
+import net.coobird.thumbnailator.makers.FixedSizeThumbnailMaker;
 import net.coobird.thumbnailator.resizers.ResizerFactory;
 import net.coobird.thumbnailator.tasks.ThumbnailTask;
 
@@ -34,25 +33,32 @@ public class Thumbnailator
 	{
 		ThumbnailParameter param = task.getParam();
 		
+		// Obtain the original image.
 		BufferedImage sourceImage = task.read();
-		BufferedImage destinationImage = new BufferedImageBuilder(
-				param.getSize(),
-				param.getType()
-		).build(); 
-		
-		// Create thumbnail
-		Dimension sourceSize = new Dimension(sourceImage.getWidth(), sourceImage.getHeight());
+
+		// Get the dimensions of the original and thumbnail images. 
+		Dimension sourceSize = 
+			new Dimension(sourceImage.getWidth(), sourceImage.getHeight());
 		Dimension destinationSize = param.getSize();
+		int destinationWidth = param.getSize().width;
+		int destinationHeight = param.getSize().height;
 		
-		Resizer r = ResizerFactory.getResizer(sourceSize, destinationSize);
-		r.resize(sourceImage, destinationImage);
+		// Create the thumbnail.
+		BufferedImage destinationImage =
+			new FixedSizeThumbnailMaker()
+				.size(destinationWidth, destinationHeight)
+				.keepAspectRatio(param.isKeepAspectRatio())
+				.imageType(param.getType())
+				.resizer(ResizerFactory.getResizer(sourceSize, destinationSize))
+				.make(sourceImage);
 		
-		// Add watermarks
+		// Add watermarks.
 		for (Watermark w : param.getWatermarks())
 		{
 			destinationImage = w.apply(destinationImage);
 		}
 		
+		// Write the thumbnail image to the destination.
 		task.write(destinationImage);
 	}
 }
