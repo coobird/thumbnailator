@@ -30,7 +30,7 @@ public enum Positions implements Position
 				int insetTop, int insetBottom)
 		{
 			int x = insetLeft;
-			int y = height + insetTop;
+			int y = insetTop;
 			return new Point(x, y);
 		}
 	},
@@ -46,7 +46,7 @@ public enum Positions implements Position
 				int insetTop, int insetBottom)
 		{
 			int x = (enclosingWidth / 2) - (width / 2);
-			int y = height + insetTop;
+			int y = insetTop;
 			return new Point(x, y);
 		}
 	},
@@ -63,7 +63,7 @@ public enum Positions implements Position
 				int insetTop, int insetBottom)
 		{
 			int x = enclosingWidth - width - insetRight;
-			int y = height + insetTop;
+			int y = insetTop;
 			return new Point(x, y);
 		}
 	},
@@ -80,7 +80,7 @@ public enum Positions implements Position
 				int insetTop, int insetBottom)
 		{
 			int x = insetLeft;
-			int y = (enclosingHeight / 2) - (height / 2) + height;
+			int y = (enclosingHeight / 2) - (height / 2);
 			return new Point(x, y);
 		}
 	},
@@ -96,7 +96,7 @@ public enum Positions implements Position
 				int insetTop, int insetBottom)
 		{
 			int x = (enclosingWidth / 2) - (width / 2);
-			int y = (enclosingHeight / 2) - (height / 2) + height;
+			int y = (enclosingHeight / 2) - (height / 2);
 			return new Point(x, y);
 		}
 	},
@@ -113,7 +113,7 @@ public enum Positions implements Position
 				int insetTop, int insetBottom)
 		{
 			int x = enclosingWidth - width - insetRight;
-			int y = (enclosingHeight / 2) - (height / 2) + height;
+			int y = (enclosingHeight / 2) - (height / 2);
 			return new Point(x, y);
 		}
 	},
@@ -130,7 +130,7 @@ public enum Positions implements Position
 				int insetTop, int insetBottom)
 		{
 			int x = insetLeft;
-			int y = enclosingHeight - insetBottom;
+			int y = enclosingHeight - height - insetBottom;
 			return new Point(x, y);
 		}
 	},
@@ -147,7 +147,7 @@ public enum Positions implements Position
 				int insetTop, int insetBottom)
 		{
 			int x = (enclosingWidth / 2) - (width / 2);
-			int y = enclosingHeight - insetBottom;
+			int y = enclosingHeight - height - insetBottom;
 			return new Point(x, y);
 		}
 	},
@@ -164,7 +164,7 @@ public enum Positions implements Position
 				int insetTop, int insetBottom)
 		{
 			int x = enclosingWidth - width - insetRight;
-			int y = enclosingHeight - insetBottom;
+			int y = enclosingHeight - height - insetBottom;
 			return new Point(x, y);
 		}
 	},
