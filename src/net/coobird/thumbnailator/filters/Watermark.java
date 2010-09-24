@@ -64,16 +64,23 @@ public class Watermark implements ImageFilter
 		int watermarkWidth = watermarkImg.getWidth();
 		int watermarkHeight = watermarkImg.getHeight();
 
-		Point p = 
-			position.calculate(watermarkWidth, watermarkHeight, width, height,
-				0, 0, 0, 0);
+		Point p = position.calculate(
+				width, height, watermarkWidth, watermarkHeight,
+				0, 0, 0, 0
+		);
 
 		Graphics2D g = imgWithWatermark.createGraphics();
+		
+		// Draw the actual image.
+		g.drawImage(img, 0, 0, null);
+		
+		// Draw the watermark on top.
 		g.setComposite(
 				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity)
 		);
 		
 		g.drawImage(watermarkImg, p.x, p.y, null);
+		
 		g.dispose();
 
 		return imgWithWatermark;
