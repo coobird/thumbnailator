@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -25,19 +25,20 @@ import java.util.Map;
 public class ProgressiveBilinearResizer extends AbstractResizer
 {
 	/**
-	 * Rendering hints to use when resizing an image.
+	 * 
 	 */
-	private static final Map<RenderingHints.Key, Object> RENDERING_HINTS;
+	public ProgressiveBilinearResizer()
+	{
+		this(Collections.<RenderingHints.Key, Object>emptyMap());
+	}
 	
 	/**
-	 * Initializes the rendering hint map to use bilinear interpolation.
+	 * 
+	 * @param hints
 	 */
-	static {
-		RENDERING_HINTS = new HashMap<RenderingHints.Key, Object>();
-		RENDERING_HINTS.put(
-				RenderingHints.KEY_INTERPOLATION,
-				RenderingHints.VALUE_INTERPOLATION_BILINEAR
-		);
+	public ProgressiveBilinearResizer(Map<RenderingHints.Key, Object> hints)
+	{
+		super(RenderingHints.VALUE_INTERPOLATION_BILINEAR, hints);
 	}
 	
 	/**
@@ -59,7 +60,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer
 	public void resize(BufferedImage srcImage, BufferedImage destImage)
 			throws NullPointerException
 	{
-		super.resize(srcImage, destImage);
+		super.performChecks(srcImage, destImage);
 		
 		int currentWidth = srcImage.getWidth();
 		int currentHeight = srcImage.getHeight();
