@@ -1,8 +1,9 @@
 package net.coobird.thumbnailator.resizers;
 
-import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * Image resizer class using bilinear interpolation for the resizing operation.
@@ -12,6 +13,23 @@ import java.awt.image.BufferedImage;
  */
 public class BilinearResizer extends AbstractResizer
 {
+	/**
+	 * 
+	 */
+	public BilinearResizer()
+	{
+		this(Collections.<RenderingHints.Key, Object>emptyMap());
+	}
+	
+	/**
+	 * 
+	 * @param hints
+	 */
+	public BilinearResizer(Map<RenderingHints.Key, Object> hints)
+	{
+		super(RenderingHints.VALUE_INTERPOLATION_BILINEAR, hints);
+	}
+	
 	/**
 	 * <p>
 	 * Resizes an image using bilinear interpolation.
@@ -29,21 +47,8 @@ public class BilinearResizer extends AbstractResizer
 	 */
 	@Override
 	public void resize(BufferedImage srcImage, BufferedImage destImage) 
-	throws NullPointerException
+			throws NullPointerException
 	{
 		super.resize(srcImage, destImage);
-		
-		int width = destImage.getWidth();
-		int height = destImage.getHeight();
-		
-		Graphics2D g = destImage.createGraphics();
-		
-		g.setRenderingHint(
-				RenderingHints.KEY_INTERPOLATION,
-				RenderingHints.VALUE_INTERPOLATION_BILINEAR
-		);
-		
-		g.drawImage(srcImage, 0, 0, width, height, null);
-		g.dispose();
 	}
 }
