@@ -8,7 +8,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import net.coobird.thumbnailator.BufferedImages;
-import net.coobird.thumbnailator.Positions;
+import net.coobird.thumbnailator.Position;
 
 /**
  * An {@link ImageFilter} which will overlay a text caption to an image.
@@ -45,7 +45,7 @@ public class Caption implements ImageFilter
 	/**
 	 * The position at which the text should be drawn.
 	 */
-	private final Positions position;
+	private final Position position;
 	
 	/** 
 	 * The insets for the text to draw.
@@ -67,7 +67,7 @@ public class Caption implements ImageFilter
 	 * @param insets	The inset size around the caption.
 	 */
 	public Caption(String caption, Font font, Color c, float alpha,
-			Positions position, int insets)
+			Position position, int insets)
 	{
 		this.caption = caption;
 		this.font = font;
@@ -88,7 +88,7 @@ public class Caption implements ImageFilter
 	 * @param position	The position of the caption.
 	 * @param insets	The inset size around the caption.
 	 */
-	public Caption(String caption, Font font, Color c, Positions position,
+	public Caption(String caption, Font font, Color c, Position position,
 			int insets)
 	{
 		this.caption = caption;
@@ -114,16 +114,17 @@ public class Caption implements ImageFilter
 		int imageHeight = img.getHeight();
 		
 		int captionWidth = g.getFontMetrics().stringWidth(caption);
-		int captionHeight = 
-			(int)g.getFontMetrics().getLineMetrics(caption, g).getHeight();
+		int captionHeight = g.getFontMetrics().getHeight() / 2;
 		
 		Point p = position.calculate(
-				imageWidth,	imageHeight, captionWidth, captionHeight,
+				imageWidth,	imageHeight, captionWidth, 0,
 				insets, insets, insets, insets
 		);
 
-		// TODO x is off by an offset -- it is not exactly vertically centered.
-		g.drawString(caption, p.x, p.y);
+		double yRatio = p.y / (double)img.getHeight();
+		int yOffset = (int)((1.0 - yRatio) * captionHeight);
+		
+		g.drawString(caption, p.x, p.y + yOffset);
 		
 		g.dispose();
 		
