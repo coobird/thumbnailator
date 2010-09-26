@@ -47,6 +47,20 @@ public class Watermark implements ImageFilter
 	public Watermark(Position position, BufferedImage watermarkImg,
 			float opacity)
 	{
+		if (position == null)
+		{
+			throw new NullPointerException("Position is null.");
+		}
+		if (watermarkImg == null)
+		{
+			throw new NullPointerException("Watermark image is null.");
+		}
+		if (opacity > 1.0f || opacity < 0.0f)
+		{
+			throw new IllegalArgumentException("Opacity is out of range of " +
+					"between 0.0f and 1.0f.");
+		}
+		
 		this.position = position;
 		this.watermarkImg = watermarkImg;
 		this.opacity = opacity;
