@@ -129,10 +129,10 @@ public final class BufferedImageBuilder
 	 */
 	public BufferedImageBuilder width(int width)
 	{
-		if (width < 0)
+		if (width <= 0)
 		{
 			throw new IllegalArgumentException(
-					"Width must be greater or equal to 0."
+					"Width must be greater than 0."
 			);
 		}
 		
@@ -149,10 +149,10 @@ public final class BufferedImageBuilder
 	 */
 	public BufferedImageBuilder height(int height)
 	{
-		if (height < 0)
+		if (height <= 0)
 		{
 			throw new IllegalArgumentException(
-					"Height must be greater or equal to 0."
+					"Height must be greater than 0."
 			);
 		}
 
