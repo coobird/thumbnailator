@@ -1,6 +1,7 @@
 package net.coobird.thumbnailator.filters;
 
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
@@ -126,7 +127,20 @@ public class Rotation
 				
 				Graphics2D g = newImage.createGraphics();
 				
-				// TODO consider RenderingHints to use.
+				/*
+				 * TODO consider RenderingHints to use.
+				 * The following are hints which have been chosen to give
+				 * decent image quality. In the future, there may be a need
+				 * to have a way to change these settings.
+				 */
+				g.setRenderingHint(
+						RenderingHints.KEY_INTERPOLATION,
+						RenderingHints.VALUE_INTERPOLATION_BILINEAR
+				);
+				g.setRenderingHint(
+						RenderingHints.KEY_ANTIALIASING,
+						RenderingHints.VALUE_ANTIALIAS_ON
+				);
 				
 				double w = newWidth / 2.0;
 				double h = newHeight / 2.0;
