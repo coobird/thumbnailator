@@ -14,7 +14,7 @@ import java.util.Map;
 public class BicubicResizer extends AbstractResizer
 {
 	/**
-	 * 
+	 * Instantiates a {@link BicubicResizer} with default rendering hints.
 	 */
 	public BicubicResizer()
 	{
@@ -22,8 +22,9 @@ public class BicubicResizer extends AbstractResizer
 	}
 	
 	/**
+	 * Instantiates a {@link BicubicResizer} with the specified rendering hints.
 	 * 
-	 * @param hints
+	 * @param hints		Additional rendering hints to apply.
 	 */
 	public BicubicResizer(Map<RenderingHints.Key, Object> hints)
 	{
