@@ -8,6 +8,10 @@ import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 
 /**
  * A class containing rotation filters.
+ * <p>
+ * Aside from the three {@link Rotator}s provided as class constants, a
+ * {@link Rotator} which performs a rotation by an arbituary angle can be
+ * obtained through the {@link Rotation#newRotator(double)} method.
  *  
  * @author coobird
  *
@@ -15,13 +19,25 @@ import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 public class Rotation
 {
 	/**
+	 * This class is not intended to be instantiated. 
+	 */
+	private Rotation() {}
+	
+	/**
 	 * An {@link ImageFilter} which applies a rotation to an image.
+	 * <p>
+	 * An instance of a {@link Rotator} can be obtained through the
+	 * {@link Rotation#newRotator(double)} method.
 	 * 
 	 * @author coobird
 	 *
 	 */
 	public abstract static class Rotator implements ImageFilter
 	{
+		/**
+		 * This class is not intended to be instantiated. 
+		 */
+		private Rotator() {}
 	}
 	
 	/**
