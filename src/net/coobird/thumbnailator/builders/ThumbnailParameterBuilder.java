@@ -119,7 +119,7 @@ public final class ThumbnailParameterBuilder
 	/**
 	 * Sets the output format type of the thumbnail.
 	 * 
-	 * @param format		The output format type of the thumbnail.
+	 * @param formatType	The output format type of the thumbnail.
 	 * @return				A reference to this object.
 	 */
 	public ThumbnailParameterBuilder formatType(String formatType)
@@ -151,7 +151,7 @@ public final class ThumbnailParameterBuilder
 	 * Sets the {@link Resizer} to use when performing the resizing operation
 	 * to create the thumbnail.
 	 * 
-	 * @param filters		The {@link Resizer} to use when creating the
+	 * @param resizer		The {@link Resizer} to use when creating the
 	 * 						thumbnail.
 	 * @return				A reference to this object.
 	 */

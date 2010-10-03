@@ -606,7 +606,7 @@ public final class Thumbnails
 	/**
 	 * Indicate to make thumbnails from the specified {@link BufferedImage}s.
 	 * 
-	 * @param files		{@link BufferedImage}s for which thumbnails
+	 * @param images	{@link BufferedImage}s for which thumbnails
 	 * 					are to be produced for.
 	 * @return			Reference to a builder object which is used to
 	 * 					specify the parameters for creating the thumbnail.
