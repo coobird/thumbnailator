@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.coobird.thumbnailator.resizers.configuration;
+package net.coobird.thumbnailator.resizers.configurations;
 
 public enum ScalingMode 
 {

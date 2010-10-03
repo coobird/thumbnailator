@@ -34,11 +34,11 @@ import net.coobird.thumbnailator.resizers.ProgressiveBilinearResizer;
 import net.coobird.thumbnailator.resizers.Resizer;
 import net.coobird.thumbnailator.resizers.ResizerFactory;
 import net.coobird.thumbnailator.resizers.Resizers;
-import net.coobird.thumbnailator.resizers.configuration.AlphaInterpolation;
-import net.coobird.thumbnailator.resizers.configuration.Antialiasing;
-import net.coobird.thumbnailator.resizers.configuration.Dithering;
-import net.coobird.thumbnailator.resizers.configuration.Rendering;
-import net.coobird.thumbnailator.resizers.configuration.ScalingMode;
+import net.coobird.thumbnailator.resizers.configurations.AlphaInterpolation;
+import net.coobird.thumbnailator.resizers.configurations.Antialiasing;
+import net.coobird.thumbnailator.resizers.configurations.Dithering;
+import net.coobird.thumbnailator.resizers.configurations.Rendering;
+import net.coobird.thumbnailator.resizers.configurations.ScalingMode;
 import net.coobird.thumbnailator.tasks.FileThumbnailTask;
 import net.coobird.thumbnailator.tasks.StreamThumbnailTask;
 

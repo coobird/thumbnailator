@@ -1,17 +1,17 @@
 /**
  * 
  */
-package net.coobird.thumbnailator.resizers.configuration;
+package net.coobird.thumbnailator.resizers.configurations;
 
 import java.awt.RenderingHints;
 import java.awt.RenderingHints.Key;
 
 
-public enum AlphaInterpolation implements ResizerConfiguration
+public enum Rendering implements ResizerConfiguration
 {
-	SPEED(RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED),
-	QUALITY(RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY),
-	DEFAULT(RenderingHints.VALUE_ALPHA_INTERPOLATION_DEFAULT),
+	SPEED(RenderingHints.VALUE_RENDER_SPEED),
+	QUALITY(RenderingHints.VALUE_RENDER_QUALITY),
+	DEFAULT(RenderingHints.VALUE_RENDER_DEFAULT),
 	;
 	
 	/**
@@ -22,7 +22,7 @@ public enum AlphaInterpolation implements ResizerConfiguration
 	/**
 	 * @param value
 	 */
-	private AlphaInterpolation(Object value)
+	private Rendering(Object value)
 	{
 		this.value = value;
 	}
