@@ -221,7 +221,8 @@ public class ThumbnailParameter
 	 * Creates an object holding the parameters needed in order to make a
 	 * thumbnail.
 	 * 
-	 * @param thumbnailSize		The size of the thumbnail to generate.
+	 * @param scalingFactor		The scaling factor to use when creating a
+	 * 							thumbnail from the original image.
 	 * @param keepAspectRatio	Indicates whether or not the thumbnail should
 	 * 							maintain the aspect ratio of the original image.
 	 * @param outputFormat		A string indicating the compression format

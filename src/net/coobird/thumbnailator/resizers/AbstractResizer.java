@@ -20,12 +20,22 @@ public abstract class AbstractResizer implements Resizer
 	 * Rendering hints to use when resizing an image.
 	 */
 	protected final Map<RenderingHints.Key, Object> RENDERING_HINTS;
+	
+	/**
+	 * Field used to hold the rendering hints in an unmodifiable form.
+	 */
 	protected final Map<RenderingHints.Key, Object> UNMODIFIABLE_RENDERING_HINTS;
 	
 	protected static final RenderingHints.Key KEY_INTERPOLATION = 
 		RenderingHints.KEY_INTERPOLATION;
 
-
+	/**
+	 * Initializes the {@link AbstractResizer}.
+	 * 
+	 * @param interpolationValue		The rendering hint value to use for the
+	 * 									interpolation hint.
+	 * @param hints						Other rendering hints to add.
+	 */
 	protected AbstractResizer(
 			Object interpolationValue,
 			Map<RenderingHints.Key, Object> hints
@@ -80,9 +90,11 @@ public abstract class AbstractResizer implements Resizer
 	}
 	
 	/**
+	 * Performs checks on the source and destination image to see if they are
+	 * images which can be processed.
 	 * 
-	 * @param srcImage
-	 * @param destImage
+	 * @param srcImage		The source image.
+	 * @param destImage		The destination image.
 	 */
 	protected void performChecks(BufferedImage srcImage, BufferedImage destImage)
 	{
@@ -95,7 +107,13 @@ public abstract class AbstractResizer implements Resizer
 	}
 	
 	/**
-	 * @return
+	 * Returns the rendering hints that the resizer uses.
+	 * <p>
+	 * The keys and values used for the rendering hints are those defined in
+	 * the {@link RenderingHints} class.
+	 * 
+	 * @see RenderingHints 
+	 * @return		Rendering hints used when resizing the image. 
 	 */
 	public Map<RenderingHints.Key, Object> getRenderingHints()
 	{
