@@ -76,9 +76,9 @@ public class ThumbnailParameter
 	/**
 	 * The output format type for the thumbnail.
 	 * <p>
-	 * A value of {@link ThumbnailParameter#ORIGINAL_FORMAT_TYPE} indicates
-	 * that the image format of the original image should be used as the
-	 * output format.
+	 * A value of {@link ThumbnailParameter#DEFAULT_FORMAT_TYPE} indicates
+	 * that the default type of the specified compression format should be used
+	 * as the output format type.
 	 */
 	private final String outputFormatType;
 	
@@ -374,6 +374,10 @@ public class ThumbnailParameter
 
 	/**
 	 * Returns the output format for the thumbnail.
+	 * <p>
+	 * If the output format is to use the same compression format as the
+	 * original image, this method will return
+	 * {@link ThumbnailParameter#ORIGINAL_FORMAT}.
 	 * 
 	 * @return 		The output format for the thumbnail.
 	 */
@@ -384,7 +388,11 @@ public class ThumbnailParameter
 	
 	/**
 	 * Returns the output format type for the thumbnail.
-	 * 
+	 * <p>
+	 * If the default compression type of the compression format is to be used,
+	 * then this method will return 
+	 * {@link ThumbnailParameter#DEFAULT_FORMAT_TYPE}.
+	 *  
 	 * @return 		The output format type for the thumbnail.
 	 */
 	public String getOutputFormatType()
