@@ -639,7 +639,7 @@ public final class Thumbnails
 		
 		public Builder(BufferedImage... images)
 		{
-			statusMap.put(Properties.OUTPUT_FORMAT, Status.NOT_READY);
+			statusMap.put(Properties.OUTPUT_FORMAT, Status.OPTIONAL);
 			this.images = Arrays.asList(images);
 		}
 
@@ -1399,6 +1399,14 @@ watermark(Positions.CENTER, image, opacity);
 			
 			return asBufferedImages().get(0);
 		}
+		
+		/*
+		 * TODO A method which will accept a function used to generate names.
+		 * Perhaps an Iterator which creates names.
+		 * 
+		 * This way, the source can be a list of BufferedImages, and the
+		 * thumbnails can be output to files.
+		 */
 		
 		/**
 		 * Creates the thumbnails and stores them to the files, using the 
