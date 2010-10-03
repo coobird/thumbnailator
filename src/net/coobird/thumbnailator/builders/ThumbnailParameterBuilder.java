@@ -1,13 +1,11 @@
 package net.coobird.thumbnailator.builders;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import net.coobird.thumbnailator.ThumbnailParameter;
-import net.coobird.thumbnailator.filters.Watermark;
+import net.coobird.thumbnailator.filters.ImageFilter;
+import net.coobird.thumbnailator.resizers.Resizer;
 
 /**
  * A builder for generating {@link ThumbnailParameter}.
@@ -20,17 +18,18 @@ public final class ThumbnailParameterBuilder
 	private int width;
 	private int height;
 	private int imageType;
-	private List<Watermark> watermarks;
 	private boolean keepAspectRatio;
 	private float thumbnailQuality;
 	private String thumbnailFormat;
+	private String thumbnailFormatType;
+	private List<ImageFilter> filters;
+	private Resizer resizer;
 	
 	/**
 	 * Creates an instance of a {@link ThumbnailParameterBuilder}.
 	 */
 	public ThumbnailParameterBuilder()
 	{
-		watermarks = Collections.emptyList();
 	}
 	
 	/**
@@ -42,34 +41,6 @@ public final class ThumbnailParameterBuilder
 	public ThumbnailParameterBuilder imageType(int type)
 	{
 		imageType = type;
-		return this;
-	}
-	
-	/**
-	 * Sets the watermark to apply to the thumbnail.
-	 * 
-	 * @param watermark		A watermark to apply to the thumbnail.
-	 * @return				A reference to this object.
-	 */
-	public ThumbnailParameterBuilder watermark(Watermark watermark)
-	{
-		watermarks = Arrays.asList(watermark);
-		return this;
-	}
-	
-	/**
-	 * Sets the watermarks to apply to the thumbnail.
-	 * <p>
-	 * The order of the watermarks applied will be in the order the watermarks
-	 * are in the {@link List}. Therefore, the watermark which appears at the
-	 * beginning of the list will be the watermark which is applied first.
-	 * 
-	 * @param watermarks	A list of watermarks to apply to the thumbnail.
-	 * @return				A reference to this object.
-	 */
-	public ThumbnailParameterBuilder watermarks(List<Watermark> watermarks)
-	{
-		this.watermarks = new ArrayList<Watermark>(watermarks);
 		return this;
 	}
 	
@@ -144,6 +115,56 @@ public final class ThumbnailParameterBuilder
 		this.thumbnailFormat = format;
 		return this;
 	}
+	
+	/**
+	 * Sets the output format type of the thumbnail.
+	 * 
+	 * @param format		The output format type of the thumbnail.
+	 * @return				A reference to this object.
+	 */
+	public ThumbnailParameterBuilder formatType(String formatType)
+	{
+		this.thumbnailFormatType = formatType;
+		return this;
+	}
+	
+	/**
+	 * Sets the {@link ImageFilter}s to apply to the thumbnail.
+	 * <p>
+	 * These filters will be applied after the original image is resized.
+	 * 
+	 * @param filters		The output format type of the thumbnail.
+	 * @return				A reference to this object.
+	 */
+	public ThumbnailParameterBuilder filters(List<ImageFilter> filters)
+	{
+		if (filters == null)
+		{
+			throw new NullPointerException("Filters is null.");
+		}
+		
+		this.filters = filters;
+		return this;
+	}
+	
+	/**
+	 * Sets the {@link Resizer} to use when performing the resizing operation
+	 * to create the thumbnail.
+	 * 
+	 * @param filters		The {@link Resizer} to use when creating the
+	 * 						thumbnail.
+	 * @return				A reference to this object.
+	 */
+	public ThumbnailParameterBuilder resizer(Resizer resizer)
+	{
+		if (resizer == null)
+		{
+			throw new NullPointerException("Resizer is null.");
+		}
+		
+		this.resizer = resizer;
+		return this;
+	}
 
 	/**
 	 * Returns a {@link ThumbnailParameter} from the parameters which are
@@ -159,11 +180,13 @@ public final class ThumbnailParameterBuilder
 	{
 		ThumbnailParameter param = new ThumbnailParameter(
 				new Dimension(width, height),
-				watermarks,
 				keepAspectRatio,
 				thumbnailFormat,
+				thumbnailFormatType,
 				thumbnailQuality,
-				imageType
+				imageType,
+				filters,
+				resizer
 		);
 			
 		return param;

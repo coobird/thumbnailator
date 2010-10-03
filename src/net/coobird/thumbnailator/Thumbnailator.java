@@ -1,12 +1,11 @@
 package net.coobird.thumbnailator;
 
-import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import net.coobird.thumbnailator.filters.Watermark;
+import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.makers.FixedSizeThumbnailMaker;
-import net.coobird.thumbnailator.resizers.ResizerFactory;
+import net.coobird.thumbnailator.makers.ScaledThumbnailMaker;
 import net.coobird.thumbnailator.tasks.ThumbnailTask;
 
 /**
@@ -35,27 +34,44 @@ public class Thumbnailator
 		
 		// Obtain the original image.
 		BufferedImage sourceImage = task.read();
-
-		// Get the dimensions of the original and thumbnail images. 
-		Dimension sourceSize = 
-			new Dimension(sourceImage.getWidth(), sourceImage.getHeight());
-		Dimension destinationSize = param.getSize();
-		int destinationWidth = param.getSize().width;
-		int destinationHeight = param.getSize().height;
 		
-		// Create the thumbnail.
-		BufferedImage destinationImage =
-			new FixedSizeThumbnailMaker()
-				.size(destinationWidth, destinationHeight)
-				.keepAspectRatio(param.isKeepAspectRatio())
-				.imageType(param.getType())
-				.resizer(ResizerFactory.getResizer(sourceSize, destinationSize))
-				.make(sourceImage);
+		BufferedImage destinationImage;
 		
-		// Add watermarks.
-		for (Watermark w : param.getWatermarks())
+		if (param.getSize() != null)
 		{
-			destinationImage = w.apply(destinationImage);
+			// Get the dimensions of the original and thumbnail images. 
+			int destinationWidth = param.getSize().width;
+			int destinationHeight = param.getSize().height;
+			
+			// Create the thumbnail.
+			destinationImage =
+				new FixedSizeThumbnailMaker()
+					.size(destinationWidth, destinationHeight)
+					.keepAspectRatio(param.isKeepAspectRatio())
+					.imageType(param.getType())
+					.resizer(param.getResizer())
+					.make(sourceImage);
+		}
+		else if (!Double.isNaN(param.getScalingFactor()))
+		{
+			// Create the thumbnail.
+			destinationImage =
+				new ScaledThumbnailMaker()
+					.scale(param.getScalingFactor())
+					.imageType(param.getType())
+					.resizer(param.getResizer())
+					.make(sourceImage);
+		}
+		else
+		{
+			throw new IllegalStateException("Parameters to make thumbnail" +
+					" does not have scaling factor nor thumbnail size specified.");
+		}
+		
+		// Perform the image filters
+		for (ImageFilter filter : param.getImageFilters())
+		{
+			destinationImage = filter.apply(destinationImage);
 		}
 		
 		// Write the thumbnail image to the destination.

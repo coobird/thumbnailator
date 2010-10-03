@@ -125,6 +125,18 @@ public class StreamThumbnailTask extends ThumbnailTask
 			{
 				writeParam.setCompressionQuality(param.getOutputQuality());
 			}
+			
+			/*
+			 * Sets the compression format type, if specified.
+			 * 
+			 * Note:
+			 * The value to denote that the codec's default compression type
+			 * should be used is null. 
+			 */
+			if (param.getOutputFormatType() != ThumbnailParameter.DEFAULT_FORMAT_TYPE)
+			{
+				writeParam.setCompressionType(param.getOutputFormatType());
+			}
 		}
 		
 		ImageOutputStream ios = ImageIO.createImageOutputStream(os);

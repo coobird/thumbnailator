@@ -5,7 +5,8 @@ import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.List;
 
-import net.coobird.thumbnailator.filters.Watermark;
+import net.coobird.thumbnailator.filters.ImageFilter;
+import net.coobird.thumbnailator.resizers.Resizer;
 
 /**
  * This class is used to specify the parameters to use when creating a thumbnail.
@@ -22,21 +23,39 @@ public class ThumbnailParameter
 	public static final String ORIGINAL_FORMAT = null;
 	
 	/**
+	 * A constant used to denote that the output format type of the thumbnail
+	 * should be the default type of the codec being used.
+	 */
+	public static final String DEFAULT_FORMAT_TYPE = null;
+	
+	/**
 	 * A constant used to denote that the default compression quality settings
 	 * should be used when creating the thumbnail.
 	 */
 	public static final float DEFAULT_QUALITY = Float.NaN;
 	
 	/**
+	 * A constant used to denote that the default image type should be used
+	 * when creating the thumbnail.
+	 */
+	public static final int DEFAULT_IMAGE_TYPE = BufferedImage.TYPE_INT_ARGB;
+	
+	/**
 	 * The thumbnail size.
+	 * <p>
+	 * If this field is set, then the {@link #scalingFactor} field will be set
+	 * as {@link Double#NaN} to indicate that it is not set.
 	 */
 	private final Dimension thumbnailSize;
 	
 	/**
-	 * A list of watermarks to place on the thumbnail. The watermark with the
-	 * highest index will be placed on top.
+	 * The scaling factor to use when creating a thumbnail from the original
+	 * image.
+	 * <p>
+	 * If this field is set, then the {@link #thumbnailSize} field will be set
+	 * as {@code null} to indicate that it is not set.
 	 */
-	private final List<Watermark> watermarks;
+	private final double scalingFactor;
 	
 	/**
 	 * Indicated whether or not the thumbnail should retain the aspect ratio
@@ -48,8 +67,20 @@ public class ThumbnailParameter
 	
 	/**
 	 * The output format for the thumbnail.
+	 * <p>
+	 * A value of {@link ThumbnailParameter#ORIGINAL_FORMAT} indicates that the
+	 * image format of the original image should be used as the output format.
 	 */
 	private final String outputFormat;
+	
+	/**
+	 * The output format type for the thumbnail.
+	 * <p>
+	 * A value of {@link ThumbnailParameter#ORIGINAL_FORMAT_TYPE} indicates
+	 * that the image format of the original image should be used as the
+	 * output format.
+	 */
+	private final String outputFormatType;
 	
 	/**
 	 * The output quality settings which will be used by the image compressor.
@@ -58,7 +89,7 @@ public class ThumbnailParameter
 	 * where {@code 0.0f} is for the lowest quality setting and {@code 1.0f} for
 	 * the highest quality setting.
 	 * <p>
-	 * A value of {@code Float#NaN} indicates that the default quality settings
+	 * A value of {@link Float#NaN} indicates that the default quality settings
 	 * of the output codec should be used.
 	 */
 	private final float outputQuality;
@@ -68,23 +99,42 @@ public class ThumbnailParameter
 	 */
 	private final int imageType;
 	
+	
+	/**
+	 * {@link ImageFilter}s to apply to the thumbnail.
+	 * <p>
+	 * The filters will be applied after the original image has been resized.
+	 */
+	private final List<ImageFilter> filters;
+	
+	
+	/**
+	 * The {@link Resizer} to use when performing the resizing operation to
+	 * create a thumbnail.
+	 */
+	private final Resizer resizer;
+	
+	
 	/**
 	 * Creates an object holding the parameters needed in order to make a
 	 * thumbnail.
 	 * 
 	 * @param thumbnailSize		The size of the thumbnail to generate.
-	 * @param watermarks		The {@link Watermark}s to place on the thumbnail.
-	 * 							An empty {@link List} or {@code null} can be
-	 * 							used to signify that no watermarks should be
-	 * 							applied to the thumbnail.
 	 * @param keepAspectRatio	Indicates whether or not the thumbnail should
 	 * 							maintain the aspect ratio of the original image.
-	 * @param outputFormat		A string indicating the type of compression
+	 * @param outputFormat		A string indicating the compression format
 	 * 							that should be applied on the thumbnail.
 	 * 							A value of 
 	 * 							{@link ThumbnailParameter#ORIGINAL_FORMAT} 
 	 * 							should be provided if the same image format as
 	 * 							the original should	be used for the thumbnail.
+	 * @param outputFormatType	A string indicating the compression type that
+	 * 							should be used when writing the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DEFAULT_FORMAT_TYPE} 
+	 * 							should be provided if the thumbnail should be
+	 * 							written using the default compression type of
+	 * 							the codec specified in {@code outputFormat}.
 	 * @param outputQuality		A value from {@code 0.0f} to {@code 1.0f} which
 	 * 							indicates the quality setting to use for the
 	 * 							compression of the thumbnail. {@code 0.0f}
@@ -96,21 +146,36 @@ public class ThumbnailParameter
 	 * 							compression quality settings should be used.
 	 * @param imageType 		The {@link BufferedImage} image type of the 
 	 * 							thumbnail.
+	 * 							A value of
+	 * 							{@link ThumbnailParameter#DEFAULT_IMAGE_TYPE}
+	 *							should be specified when the default image
+	 *							type should be used when creating the thumbnail.
+	 * @param filters			The {@link ImageFilter}s to apply to the
+	 * 							thumbnail.
+	 * 							A value of {@code null} will be recognized as
+	 * 							no filters are to be applied.
+	 * 							The filters are applied after the original
+	 * 							image has been resized.
+	 * @param resizer			The {@link Resizer} to use when performing the
+	 * 							resizing operation to create a thumbnail.
+	 * 
 	 * @throws IllegalArgumentException 	If size is {@code null} or if the 
 	 * 										dimensions are negative. 
 	 */
 	public ThumbnailParameter(
 			Dimension thumbnailSize,
-			List<Watermark> watermarks,
 			boolean keepAspectRatio,
 			String outputFormat,
+			String outputFormatType,
 			float outputQuality,
-			int imageType
+			int imageType,
+			List<ImageFilter> filters,
+			Resizer resizer
 	)
 	{
 		if (thumbnailSize == null)
 		{
-			throw new IllegalArgumentException("Thumbnail size must not be null.");
+			throw new IllegalArgumentException("Thumbnail size cannot be null.");
 		} 
 		else if (thumbnailSize.width < 0 || thumbnailSize.height < 0)
 		{
@@ -118,13 +183,110 @@ public class ThumbnailParameter
 		}
 
 		this.thumbnailSize = thumbnailSize;
-		
-		this.watermarks = watermarks != null ? 
-				watermarks : Collections.<Watermark>emptyList();
+		this.scalingFactor = Double.NaN;
 		
 		this.keepAspectRatio = keepAspectRatio;
 		
 		this.outputFormat = outputFormat;
+		this.outputFormatType = outputFormatType;
+		
+		/*
+		 * Note:
+		 * The value of DEFAULT_QUALITY is Float.NaN which cannot be compared
+		 * by using the regular == operator. Therefore, to check that NaN is
+		 * being used, one must use the Float.NaN method.
+		 */
+		if ( (outputQuality < 0.0f || outputQuality > 1.0f) &&
+				!Float.isNaN(outputQuality) )
+		{
+			throw new IllegalArgumentException("The output quality must be " +
+					"between 0.0f and 1.0f, or Float.NaN to use the default " +
+			"compression quality of codec being used.");
+		}
+		
+		this.outputQuality = outputQuality;
+		this.imageType = imageType;
+		
+		this.filters = filters == null ? 
+				Collections.<ImageFilter>emptyList() : filters;
+				
+		if (resizer == null)
+		{
+			throw new IllegalArgumentException("Resizer cannot be null");
+		}
+		this.resizer = resizer;
+	}
+
+	/**
+	 * Creates an object holding the parameters needed in order to make a
+	 * thumbnail.
+	 * 
+	 * @param thumbnailSize		The size of the thumbnail to generate.
+	 * @param keepAspectRatio	Indicates whether or not the thumbnail should
+	 * 							maintain the aspect ratio of the original image.
+	 * @param outputFormat		A string indicating the compression format
+	 * 							that should be applied on the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#ORIGINAL_FORMAT} 
+	 * 							should be provided if the same image format as
+	 * 							the original should	be used for the thumbnail.
+	 * @param outputFormatType	A string indicating the compression type that
+	 * 							should be used when writing the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DEFAULT_FORMAT_TYPE} 
+	 * 							should be provided if the thumbnail should be
+	 * 							written using the default compression type of
+	 * 							the codec specified in {@code outputFormat}.
+	 * @param outputQuality		A value from {@code 0.0f} to {@code 1.0f} which
+	 * 							indicates the quality setting to use for the
+	 * 							compression of the thumbnail. {@code 0.0f}
+	 * 							indicates the lowest quality, {@code 1.0f}
+	 * 							indicates the highest quality setting for the 
+	 * 							compression.
+	 * 							{@link ThumbnailParameter#DEFAULT_QUALITY}
+	 * 							should be specified when the codec's default
+	 * 							compression quality settings should be used.
+	 * @param imageType 		The {@link BufferedImage} image type of the 
+	 * 							thumbnail.
+	 * 							A value of
+	 * 							{@link ThumbnailParameter#DEFAULT_IMAGE_TYPE}
+	 *							should be specified when the default image
+	 *							type should be used when creating the thumbnail.
+	 * @param filters			The {@link ImageFilter}s to apply to the
+	 * 							thumbnail.
+	 * 							A value of {@code null} will be recognized as
+	 * 							no filters are to be applied.
+	 * 							The filters are applied after the original
+	 * 							image has been resized.
+	 * @param resizer			The {@link Resizer} to use when performing the
+	 * 							resizing operation to create a thumbnail.
+	 * 
+	 * @throws IllegalArgumentException 	If scaling factor is less than or
+	 * 										equal to 0. 
+	 */
+	public ThumbnailParameter(
+			double scalingFactor,
+			boolean keepAspectRatio,
+			String outputFormat,
+			String outputFormatType,
+			float outputQuality,
+			int imageType,
+			List<ImageFilter> filters,
+			Resizer resizer
+	)
+	{
+		if (scalingFactor <= 0.0)
+		{
+			throw new IllegalArgumentException("Scaling factor is less than or equal to 0.");
+		} 
+
+		this.scalingFactor = scalingFactor;
+		this.thumbnailSize = null;
+		
+		this.keepAspectRatio = keepAspectRatio;
+		
+		this.outputFormat = outputFormat;
+		this.outputFormatType = outputFormatType;
 		
 		/*
 		 * Note:
@@ -139,35 +301,54 @@ public class ThumbnailParameter
 					"between 0.0f and 1.0f, or Float.NaN to use the default " +
 					"compression quality of codec being used.");
 		}
+		
 		this.outputQuality = outputQuality;
 		this.imageType = imageType;
+		
+		this.filters = filters == null ? 
+				Collections.<ImageFilter>emptyList() : filters;
+		
+		if (resizer == null)
+		{
+			throw new IllegalArgumentException("Resizer cannot be null");
+		}
+		this.resizer = resizer;
 	}
+	
 	
 	/**
 	 * Returns the size of the thumbnail.
+	 * <p>
+	 * Returns {@code null} if the scaling factor is set rather than the 
+	 * explicit thumbnail size.
 	 * 
 	 * @return		The size of the thumbnail.
 	 */
 	public Dimension getSize()
 	{
-		return (Dimension)thumbnailSize.clone();
-	}
-
-	/**
-	 * Returns the watermarks associated with the thumbnail.
-	 * 
-	 * This method returns a {@link List} which is an unmodifiable copy of the
-	 * internal {@code List} containing the watermarks. 
-	 * 
-	 * @return		The watermarks associated with the thumbnail.
-	 */
-	public List<Watermark> getWatermarks()
-	{
-		return watermarks != null ? 
-				Collections.unmodifiableList(watermarks) : 
-				Collections.<Watermark>emptyList();
+		if (thumbnailSize != null)
+		{
+			return (Dimension)thumbnailSize.clone();
+		}
+		else
+		{
+			return null;
+		}
 	}
 	
+	/**
+	 * Returns the scaling factor for the thumbnail.
+	 * <p>
+	 * Returns {@link Double#NaN} if the thumbnail size is set rather than the 
+	 * scaling factor.
+	 * 
+	 * @return		The scaling factor for the thumbnail.
+	 */
+	public double getScalingFactor()
+	{
+		return scalingFactor;
+	}
+
 	/**
 	 * Returns the type of image. The value returned is the constant used for
 	 * image types of {@link BufferedImage}.
@@ -200,6 +381,16 @@ public class ThumbnailParameter
 	{
 		return outputFormat;
 	}
+	
+	/**
+	 * Returns the output format type for the thumbnail.
+	 * 
+	 * @return 		The output format type for the thumbnail.
+	 */
+	public String getOutputFormatType()
+	{
+		return outputFormatType;
+	}
 
 	/**
 	 * Returns the compression quality settings for the thumbnail.
@@ -218,71 +409,27 @@ public class ThumbnailParameter
 		return outputQuality;
 	}
 
-	@Override
-	public int hashCode()
+	/**
+	 * Returns the list of {@link ImageFilter}s which are applied to the
+	 * thumbnail.
+	 * <p>
+	 * These filters are applied after the original image has been resized.
+	 * 
+	 * @return		The {@link ImageFilter}s which are applied to the thumbnail.
+	 */
+	public List<ImageFilter> getImageFilters()
 	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + imageType;
-		result = prime * result + (keepAspectRatio ? 1231 : 1237);
-		result = prime * result
-				+ ((outputFormat == null) ? 0 : outputFormat.hashCode());
-		result = prime * result + Float.floatToIntBits(outputQuality);
-		result = prime * result
-				+ ((thumbnailSize == null) ? 0 : thumbnailSize.hashCode());
-		result = prime * result
-				+ ((watermarks == null) ? 0 : watermarks.hashCode());
-		return result;
+		return Collections.unmodifiableList(filters);
 	}
-
-	@Override
-	public boolean equals(Object obj)
+	
+	/**
+	 * Returns the {@link Resizer} to use when performing the resizing
+	 * operation to create the thumbnail.
+	 * 
+	 * @return		The {@link Resizer} to use when creating a thumbnail.
+	 */
+	public Resizer getResizer()
 	{
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ThumbnailParameter other = (ThumbnailParameter) obj;
-		if (imageType != other.imageType)
-			return false;
-		if (keepAspectRatio != other.keepAspectRatio)
-			return false;
-		if (outputFormat == null)
-		{
-			if (other.outputFormat != null)
-				return false;
-		}
-		else if (!outputFormat.equals(other.outputFormat))
-			return false;
-		if (Float.floatToIntBits(outputQuality) != Float
-				.floatToIntBits(other.outputQuality))
-			return false;
-		if (thumbnailSize == null)
-		{
-			if (other.thumbnailSize != null)
-				return false;
-		}
-		else if (!thumbnailSize.equals(other.thumbnailSize))
-			return false;
-		if (watermarks == null)
-		{
-			if (other.watermarks != null)
-				return false;
-		}
-		else if (!watermarks.equals(other.watermarks))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "ThumbnailParameter [thumbnailSize=" + thumbnailSize
-				+ ", watermarks=" + watermarks + ", keepAspectRatio="
-				+ keepAspectRatio + ", outputFormat=" + outputFormat
-				+ ", outputQuality=" + outputQuality + ", imageType="
-				+ imageType + "]";
+		return resizer;
 	}
 }

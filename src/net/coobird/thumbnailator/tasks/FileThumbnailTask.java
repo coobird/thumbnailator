@@ -33,7 +33,7 @@ public class FileThumbnailTask extends ThumbnailTask
 	/**
 	 * The {@link File} to which image data is written to.
 	 */
-	private final File destinationFile;
+	private File destinationFile;
 	
 	/**
 	 * Creates a {@link ThumbnailTask} in which image data is read from the 
@@ -100,6 +100,7 @@ public class FileThumbnailTask extends ThumbnailTask
 		else
 		{
 			formatName = param.getOutputFormat();
+			destinationFile = new File(destinationFile.getAbsolutePath() + "." + formatName);
 		}
 			
 		Iterator<ImageWriter> writers = 
@@ -127,6 +128,18 @@ public class FileThumbnailTask extends ThumbnailTask
 			if (!Float.isNaN(param.getOutputQuality()))
 			{
 				writeParam.setCompressionQuality(param.getOutputQuality());
+			}
+			
+			/*
+			 * Sets the compression format type, if specified.
+			 * 
+			 * Note:
+			 * The value to denote that the codec's default compression type
+			 * should be used is null. 
+			 */
+			if (param.getOutputFormatType() != ThumbnailParameter.DEFAULT_FORMAT_TYPE)
+			{
+				writeParam.setCompressionType(param.getOutputFormatType());
 			}
 		}
 		
