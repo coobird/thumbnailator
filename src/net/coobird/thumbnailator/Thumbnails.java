@@ -616,6 +616,12 @@ public final class Thumbnails
 		return new Builder(images);
 	}
 	
+	/**
+	 * A builder interface for Thumbnailator.
+	 * 
+	 * @author coobird
+	 *
+	 */
 	public static class Builder
 	{
 		private List<File> files = null;
@@ -705,7 +711,6 @@ public final class Thumbnails
 			}
 		}
 
-		
 		/**
 		 * Map to keep track of whether a property has been properly set or not.
 		 */
@@ -751,7 +756,10 @@ public final class Thumbnails
 			statusMap.put(property, newStatus);
 		}
 
-		
+		/*
+		 * Defines the fields for the builder interface, and assigns the
+		 * default values.
+		 */
 		private int width = -1;
 		private int height = -1;
 		private double scale = Double.NaN;
@@ -768,14 +776,12 @@ public final class Thumbnails
 		private Dithering dithering = Dithering.DEFAULT;
 		private Antialiasing antialiasing = Antialiasing.DEFAULT;
 		private Rendering rendering = Rendering.DEFAULT;
-
 		
 		/**
 		 * The {@link ImageFilter}s that should be applied when creating the
 		 * thumbnail.
 		 */
 		private Pipeline filterPipeline = new Pipeline();
-
 		
 		/**
 		 * Sets the size of the thumbnail.
@@ -827,6 +833,8 @@ public final class Thumbnails
 		
 		/**
 		 * Sets the image type of the thumbnail.
+		 * <p>
+		 * Calling this method to set this parameter is optional.
 		 * 
 		 * @param type			The image type of the thumbnail.
 		 * @return				Reference to this object.
@@ -962,7 +970,16 @@ public final class Thumbnails
 		}
 		
 		/**
-		 * @param quality
+		 * Sets the compression output quality of the thumbnail.
+		 * <p> 
+		 * The value is a {@code float} between {@code 0.0f} and {@code 1.0f}
+		 * where {@code 0.0f} indicates the minimum quality and {@code 1.0f}
+		 * indicates the maximum quality settings should be used for by the
+		 * compression codec. 
+		 * <p>
+		 * Calling this method to set this parameter is optional.
+		 * 
+		 * @param quality		The quality of the 
 		 * @return				Reference to this object.
 		 */
 		public Builder outputQuality(float quality)
@@ -973,7 +990,11 @@ public final class Thumbnails
 		}
 		
 		/**
-		 * @param format
+		 * Sets the compression format to use when writing the thumbnail.
+		 * <p>
+		 * Calling this method to set this parameter is optional.
+		 * 
+		 * @param format		The compression format.
 		 * @return				Reference to this object.
 		 */
 		public Builder outputFormat(String format)
@@ -984,7 +1005,15 @@ public final class Thumbnails
 		}
 		
 		/**
-		 * @param formatType
+		 * Sets the compression format type of the thumbnail to write.
+		 * <p>
+		 * If the default type for the compression codec should be used, a 
+		 * value of {@link ThumbnailParameter#DEFAULT_FORMAT_TYPE} should be
+		 * used. 
+		 * <p>
+		 * Calling this method to set this parameter is optional.
+		 *  
+		 * @param formatType	The compression format type 
 		 * @return				Reference to this object.
 		 */
 		public Builder outputFormatType(String formatType)
@@ -1002,6 +1031,8 @@ public final class Thumbnails
 		 * <p>
 		 * If multiple watermarks are to be applied, the watermarks will be
 		 * applied in the order that this method is called.
+		 * <p>
+		 * Calling this method to set this parameter is optional.
 		 * 
 		 * @param w				The watermark to apply to the thumbnail.
 		 * @return				Reference to this object.
@@ -1034,6 +1065,8 @@ watermark(Positions.CENTER, image, 0.5f);
 		 * <p>
 		 * If multiple watermarks are to be applied, the watermarks will be
 		 * applied in the order that this method is called.
+		 * <p>
+		 * Calling this method to set this parameter is optional.
 		 * 
 		 * @param image			The image of the watermark.
 		 * @return				Reference to this object.
@@ -1059,6 +1092,8 @@ watermark(Positions.CENTER, image, opacity);
 		 * <p>
 		 * If multiple watermarks are to be applied, the watermarks will be
 		 * applied in the order that this method is called.
+		 * <p>
+		 * Calling this method to set this parameter is optional.
 		 * 
 		 * @param image			The image of the watermark.
 		 * @param opacity		The opacity of the watermark.
@@ -1083,6 +1118,8 @@ watermark(Positions.CENTER, image, opacity);
 		 * <p>
 		 * If multiple watermarks are to be applied, the watermarks will be
 		 * applied in the order that this method is called.
+		 * <p>
+		 * Calling this method to set this parameter is optional.
 		 * 
 		 * @param position		The position of the watermark.
 		 * @param image			The image of the watermark.
@@ -1112,6 +1149,8 @@ watermark(Positions.CENTER, image, opacity);
 		 * <p>
 		 * If multiple rotations are to be applied, the rotations will be
 		 * applied in the order that this method is called.
+		 * <p>
+		 * Calling this method to set this parameter is optional.
 		 *  
 		 * @param angle			Angle in degress.
 		 * @return				Reference to this object.
@@ -1135,6 +1174,8 @@ watermark(Positions.CENTER, image, opacity);
 		 * <p>
 		 * If multiple filters are to be applied, the filters will be
 		 * applied in the order that this method is called.
+		 * <p>
+		 * Calling this method to set this parameter is optional.
 		 * 
 		 * @param filter		An image filter to apply to the thumbnail.
 		 * @return				Reference to this object.
@@ -1158,6 +1199,8 @@ watermark(Positions.CENTER, image, opacity);
 		 * <p>
 		 * If multiple filters are to be applied, the filters will be
 		 * applied in the order that this method is called.
+		 * <p>
+		 * Calling this method to set this parameter is optional.
 		 * 
 		 * @param filters		A list of filters to apply to the thumbnail.
 		 * @return				Reference to this object.
