@@ -921,12 +921,14 @@ public final class Thumbnails
 		 * Sets whether or not to keep the aspect ratio of the original image
 		 * for the thumbnail.
 		 * <p>
-		 * This method must be called when a thumbnail is to be produced by
-		 * resizing to a fixed size. Therefore, if the {@link #size(int, int)} 
-		 * method has been called, this method must be called.
-		 * <p>
 		 * Calling this method without first calling the {@link #size(int, int)}
 		 * method will result in an {@link IllegalStateException} to be thrown.
+		 * <p>
+		 * If this method is not called when, by default the aspect ratio of
+		 * the original image is preserved for the thumbnail.
+		 * <p>
+		 * Calling this method after calling the {@link #scale(double)} method
+		 * will result in a {@link IllegalStateException}. 
 		 * 
 		 * @param keep			{@code true} if the thumbnail is to maintain
 		 * 						the aspect ratio of the original image,
@@ -935,10 +937,18 @@ public final class Thumbnails
 		 * 
 		 * @throws IllegalStateException	If the {@link #size(int, int)} has
 		 * 									not yet been called to specify the
-		 * 									size of the thumbnail.
+		 * 									size of the thumbnail, or if
+		 * 									the {@link #scale(double)} method
+		 * 									has been called.
 		 */
 		public Builder keepAspectRatio(boolean keep)
 		{
+			if (statusMap.get(Properties.SCALE) == Status.ALREADY_SET)
+			{
+				throw new IllegalStateException("Cannot specify whether to " +
+						"keep the aspect ratio if the scaling factor has " +
+						"already been specified.");
+			}
 			if (statusMap.get(Properties.SIZE) != Status.ALREADY_SET)
 			{
 				throw new IllegalStateException("Cannot specify whether to " +
