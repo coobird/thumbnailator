@@ -25,7 +25,8 @@ import java.util.Map;
 public class ProgressiveBilinearResizer extends AbstractResizer
 {
 	/**
-	 * 
+	 * Instantiates a {@link ProgressiveBilinearResizer} with default
+	 * rendering hints.
 	 */
 	public ProgressiveBilinearResizer()
 	{
@@ -33,8 +34,10 @@ public class ProgressiveBilinearResizer extends AbstractResizer
 	}
 	
 	/**
+	 * Instantiates a {@link ProgressiveBilinearResizer} with the specified
+	 * rendering hints.
 	 * 
-	 * @param hints
+	 * @param hints		Additional rendering hints to apply.
 	 */
 	public ProgressiveBilinearResizer(Map<RenderingHints.Key, Object> hints)
 	{
