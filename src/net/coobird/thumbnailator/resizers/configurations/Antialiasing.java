@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.coobird.thumbnailator.resizers.configuration;
+package net.coobird.thumbnailator.resizers.configurations;
 
 import java.awt.RenderingHints;
 import java.awt.RenderingHints.Key;
