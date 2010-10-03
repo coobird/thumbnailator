@@ -133,17 +133,24 @@ public class ThumbnailsBuilderTest
 	 * <li>An {@link IllegalStateException} is thrown</li>
 	 * </ol>
 	 */	
-	@Test(expected=IllegalStateException.class)
+	@Test
 	public void scaleWithAspectRatioTrue()
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		BufferedImage thumbnail = Thumbnails.of(img)
-			.scale(0.5f)
-			.keepAspectRatio(true)
-			.asBufferedImage();
-
-		fail();
+		try
+		{
+			BufferedImage thumbnail = Thumbnails.of(img)
+				.scale(0.5f)
+				.keepAspectRatio(true)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			assertTrue(e.getMessage().contains("scaling factor has already been specified"));
+		}
 	}
 	
 	/**
@@ -157,16 +164,81 @@ public class ThumbnailsBuilderTest
 	 * <li>An {@link IllegalStateException} is thrown</li>
 	 * </ol>
 	 */	
-	@Test(expected=IllegalStateException.class)
+	@Test
 	public void scaleWithAspectRatioFalse()
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		BufferedImage thumbnail = Thumbnails.of(img)
-			.scale(0.5f)
-			.keepAspectRatio(false)
-			.asBufferedImage();
+		try
+		{
+			BufferedImage thumbnail = Thumbnails.of(img)
+				.scale(0.5f)
+				.keepAspectRatio(false)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			assertTrue(e.getMessage().contains("scaling factor has already been specified"));
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The keepAspectRatio method is called before the size method.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An {@link IllegalStateException} is thrown</li>
+	 * </ol>
+	 */	
+	@Test
+	public void keepAspectRatioBeforeSize()
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		fail();
+		try
+		{
+			Thumbnails.of(img)
+				.keepAspectRatio(false);
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			assertTrue(e.getMessage().contains("unless the size parameter has already been specified."));
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The keepAspectRatio method is called after the scale method.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An {@link IllegalStateException} is thrown</li>
+	 * </ol>
+	 */	
+	@Test
+	public void keepAspectRatioAfterScale()
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		try
+		{
+			BufferedImage thumbnail = Thumbnails.of(img)
+				.scale(0.5f)
+				.keepAspectRatio(false)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			assertTrue(e.getMessage().contains("scaling factor has already been specified"));
+		}
 	}
 }
