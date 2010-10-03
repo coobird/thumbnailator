@@ -618,7 +618,14 @@ public final class Thumbnails
 	
 	/**
 	 * A builder interface for Thumbnailator.
-	 * 
+	 * <p>
+	 * An instance of this class is obtained by calling one of:
+	 * <ul>
+	 * <li>{@link Thumbnails#of(BufferedImage...)}</li>
+	 * <li>{@link Thumbnails#of(File...)}</li>
+	 * <li>{@link Thumbnails#of(String...)}</li>
+	 * </ul>
+ 	 * 
 	 * @author coobird
 	 *
 	 */
@@ -627,7 +634,7 @@ public final class Thumbnails
 		private List<File> files = null;
 		private List<BufferedImage> images = null;
 		
-		public Builder(String... filenames)
+		private Builder(String... filenames)
 		{
 			statusMap.put(Properties.OUTPUT_FORMAT, Status.OPTIONAL);
 			files = new ArrayList<File>();
@@ -637,13 +644,13 @@ public final class Thumbnails
 			}
 		}
 		
-		public Builder(File... files)
+		private Builder(File... files)
 		{
 			statusMap.put(Properties.OUTPUT_FORMAT, Status.OPTIONAL);
 			this.files = Arrays.asList(files);
 		}
 		
-		public Builder(BufferedImage... images)
+		private Builder(BufferedImage... images)
 		{
 			statusMap.put(Properties.OUTPUT_FORMAT, Status.OPTIONAL);
 			this.images = Arrays.asList(images);
