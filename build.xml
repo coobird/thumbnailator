@@ -10,7 +10,7 @@
 	<property name="javadoc_dir" value="javadoc" />
 
 	<!-- Set version number -->
-	<property name="version" value="0.2.1" />
+	<property name="version" value="0.2.2" />
 	
 	<target name="init">
 	</target>
@@ -40,12 +40,9 @@
 		
 		<property name="resources-common-dir" location="${resources}/common" />
 	  	
-		<!-- Create the distribution directory -->
-		<mkdir dir="${dist}/${version}" />
-		
-		<!-- Generate the javadocs -->
+		<!-- Generate the javadocs, place into /javadoc directory -->
 		<javadoc 
-			destdir="${dist}/${version}/${javadoc_dir}"
+			destdir="${javadoc_dir}"
 			sourcepath="${src}"
 			author="true"
 			version="true"
@@ -57,6 +54,9 @@
 			
 			<link href="http://download-llnw.oracle.com/javase/1.5.0/docs/api/" />
 		</javadoc>
+		
+		<!-- Create the distribution directory -->
+		<mkdir dir="${dist}/${version}" />
 	
 		<!-- Put everything in ${build} into the Thumbnailator-${version}.jar file -->
 	    <jar jarfile="${dist}/${version}/Thumbnailator-${version}.jar">
@@ -91,6 +91,10 @@
 	          </section>
 	        </manifest>
 	    </jar>
+		
+		<zip destfile="${dist}/${version}/Thumbnailator-${version}-javadoc.zip">
+			<fileset dir="${javadoc_dir}" />
+		</zip>
 	</target>
 
 	<target
