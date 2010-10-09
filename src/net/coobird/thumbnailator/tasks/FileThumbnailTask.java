@@ -93,7 +93,6 @@ public class FileThumbnailTask extends ThumbnailTask
 		 */
 		
 		String formatName;
-		System.out.println(inputFormatName);
 		if (param.getOutputFormat() == ThumbnailParameter.ORIGINAL_FORMAT || inputFormatName.equalsIgnoreCase(param.getOutputFormat()))
 		{
 			formatName = inputFormatName;
