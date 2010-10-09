@@ -1,7 +1,6 @@
 package net.coobird.thumbnailator;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
@@ -20,7 +19,6 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.filters.Pipeline;
 import net.coobird.thumbnailator.filters.Rotation;
@@ -32,25 +30,33 @@ import net.coobird.thumbnailator.resizers.BicubicResizer;
 import net.coobird.thumbnailator.resizers.BilinearResizer;
 import net.coobird.thumbnailator.resizers.ProgressiveBilinearResizer;
 import net.coobird.thumbnailator.resizers.Resizer;
-import net.coobird.thumbnailator.resizers.ResizerFactory;
-import net.coobird.thumbnailator.resizers.Resizers;
 import net.coobird.thumbnailator.resizers.configurations.AlphaInterpolation;
 import net.coobird.thumbnailator.resizers.configurations.Antialiasing;
 import net.coobird.thumbnailator.resizers.configurations.Dithering;
 import net.coobird.thumbnailator.resizers.configurations.Rendering;
 import net.coobird.thumbnailator.resizers.configurations.ScalingMode;
 import net.coobird.thumbnailator.tasks.FileThumbnailTask;
-import net.coobird.thumbnailator.tasks.StreamThumbnailTask;
 
 /**
- * This class provides static utility methods which perform generation of
- * thumbnails using Thumbnailator.
+ * This class provides a fluent interface to create thumbnails.
+ * <DL>
+ * <DT><B>Usage:</B></DT>
+ * <DD>
+ * The following example code demonstrates how to use the fluent interface
+ * to create a thumbnail from multiple files from a directory, resizing them to
+ * a maximum of 200 pixels by 200 pixels while preserving the aspect ratio of
+ * the original, then saving the resulting thumbnails as JPEG images with file
+ * names having {@code thumbnail.} appended to the beginning of the file name. 
  * <p>
- * When images are resized, the aspect ratio of the images are preserved.
- * <p>
- * Note: This class does not provide good support for large images.
- * For very large images, it is possible for an {@link OutOfMemoryError} to
- * occur during processing. 
+ * <pre>
+Thumbnails.of(directory.listFiles())
+    .size(200, 200)
+    .keepAspectRatio(true)
+    .outputFormat("jpeg")
+    .asFiles(Thumbnailator.PREFIX_DOT_THUMBNAIL_RENAME);
+ * </pre>
+ * </DD>
+ * </DL>
  * 
  * @author coobird
  *
@@ -65,9 +71,14 @@ public final class Thumbnails
 	/**
 	 * This class is used to rename file names.
 	 * 
+	 * @deprecated 		This class has been moved to the 
+	 * 					{@link Thumbnailator} class, and is subject to removal
+	 * 					in future versions of Thumbnailator.
+	 * 
 	 * @author coobird
 	 *
 	 */
+	@Deprecated
 	public abstract static class Rename
 	{
 		/**
@@ -134,7 +145,12 @@ public final class Thumbnails
 	 * <li>Before: {@code picture.jpg}</li>
 	 * <li>After: {@code thumbnail-picture.jpg}</li>
 	 * </ul>
+	 * 
+	 * @deprecated 		This constant has been moved to the 
+	 * 					{@link Thumbnailator} class, and is subject to removal
+	 * 					in future versions of Thumbnailator.
 	 */
+	@Deprecated
 	public static final Rename PREFIX_HYPTHEN_THUMBNAIL_RENAME = new Rename() {
 		@Override
 		public String apply(String fileName)
@@ -152,7 +168,12 @@ public final class Thumbnails
 	 * <li>Before: {@code picture.jpg}</li>
 	 * <li>After: {@code picture-thumbnail.jpg}</li>
 	 * </ul>
+	 * 
+	 * @deprecated 		This constant has been moved to the 
+	 * 					{@link Thumbnailator} class, and is subject to removal
+	 * 					in future versions of Thumbnailator.
 	 */
+	@Deprecated
 	public static final Rename SUFFIX_HYPTHEN_THUMBNAIL_RENAME = new Rename() {
 		@Override
 		public String apply(String fileName)
@@ -170,7 +191,12 @@ public final class Thumbnails
 	 * <li>Before: {@code picture.jpg}</li>
 	 * <li>After: {@code picture.thumbnail.jpg}</li>
 	 * </ul>
+	 * 
+	 * @deprecated 		This constant has been moved to the 
+	 * 					{@link Thumbnailator} class, and is subject to removal
+	 * 					in future versions of Thumbnailator.
 	 */
+	@Deprecated
 	public static final Rename SUFFIX_DOT_THUMBNAIL_RENAME = new Rename() {
 		@Override
 		public String apply(String fileName)
@@ -187,7 +213,12 @@ public final class Thumbnails
 	 * <li>Before: {@code picture.jpg}</li>
 	 * <li>After: {@code thumbnail.picture.jpg}</li>
 	 * </ul>
+	 * 
+	 * @deprecated 		This constant has been moved to the 
+	 * 					{@link Thumbnailator} class, and is subject to removal
+	 * 					in future versions of Thumbnailator.
 	 */
+	@Deprecated
 	public static final Rename PREFIX_DOT_THUMBNAIL_RENAME = new Rename() {
 		@Override
 		public String apply(String fileName)
@@ -204,7 +235,12 @@ public final class Thumbnails
 	 * <li>Before: {@code picture.jpg}</li>
 	 * <li>After: {@code picture.jpg}</li>
 	 * </ul>
+	 * 
+	 * @deprecated 		This constant has been moved to the 
+	 * 					{@link Thumbnailator} class, and is subject to removal
+	 * 					in future versions of Thumbnailator.
 	 */
+	@Deprecated
 	public static final Rename NULL_RENAME = new Rename() {
 		@Override
 		public String apply(String name)
@@ -261,7 +297,12 @@ public final class Thumbnails
 	 * @param height		The height of the thumbnail.
 	 * @throws IOException	Thrown when a problem occurs when reading from 
 	 * 						{@code File} representing an image file. 						
+	 * 
+	 * @deprecated 		This method has been moved to the 
+	 * 					{@link Thumbnailator} class, and is subject to removal
+	 * 					in future versions of Thumbnailator.
 	 */
+	@Deprecated
 	public static Collection<File> createThumbnailCollection(
 			Collection<? extends File> files,
 			Rename rename,
@@ -308,7 +349,12 @@ public final class Thumbnails
 	 * @param height		The height of the thumbnail.
 	 * @throws IOException	Thrown when a problem occurs when reading from 
 	 * 						{@code File} representing an image file.
+	 * 
+	 * @deprecated 		This method has been moved to the 
+	 * 					{@link Thumbnailator} class, and is subject to removal
+	 * 					in future versions of Thumbnailator.
 	 */
+	@Deprecated
 	public static void createThumbnails(
 			Collection<? extends File> files,
 			Rename rename,
@@ -349,7 +395,12 @@ public final class Thumbnails
 	 * @param height		The height of the thumbnail.
 	 * @throws IOException	Thrown when a problem occurs when reading from 
 	 * 						{@code File} representing an image file.
+	 * 
+	 * @deprecated 		This method has been moved to the 
+	 * 					{@link Thumbnailator} class, and is subject to removal
+	 * 					in future versions of Thumbnailator.
 	 */
+	@Deprecated
 	public static void createThumbnail(
 			InputStream is,
 			OutputStream os,
@@ -357,30 +408,7 @@ public final class Thumbnails
 			int height
 	) throws IOException
 	{
-		validateDimensions(width, height);
-		
-		if (is == null)
-		{
-			throw new NullPointerException("InputStream is null.");
-		} 
-		else if (os == null)
-		{
-			throw new NullPointerException("OutputStream is null.");
-		}
-		
-		ThumbnailParameter param = 
-			new ThumbnailParameter(
-					new Dimension(width, height),
-					true,
-					ThumbnailParameter.ORIGINAL_FORMAT,
-					ThumbnailParameter.DEFAULT_FORMAT_TYPE,
-					ThumbnailParameter.DEFAULT_QUALITY,
-					BufferedImage.TYPE_INT_ARGB,
-					null,
-					Resizers.PROGRESSIVE
-			);
-		
-		Thumbnailator.createThumbnail(new StreamThumbnailTask(param, is, os));
+		Thumbnailator.createThumbnail(is, os, width, height);
 	}
 	
 	/**
@@ -399,7 +427,12 @@ public final class Thumbnails
 	 * @param height		The height of the thumbnail.
 	 * @throws IOException	Thrown when a problem occurs when reading from 
 	 * 						{@code File} representing an image file.
+	 * 
+	 * @deprecated 		This method has been moved to the 
+	 * 					{@link Thumbnailator} class, and is subject to removal
+	 * 					in future versions of Thumbnailator.
 	 */
+	@Deprecated
 	public static void createThumbnail(
 			File inFile,
 			File outFile,
@@ -407,66 +440,7 @@ public final class Thumbnails
 			int height
 	) throws IOException
 	{
-		validateDimensions(width, height);
-		
-		if (inFile == null)
-		{
-			throw new NullPointerException("Input file is null.");
-		}
-		else if (outFile == null)
-		{
-			throw new NullPointerException("Output file is null.");
-		}
-		
-		if (!inFile.exists())
-		{
-			throw new IOException("Input file does not exist.");
-		}
-
-		/*
-		 * Determine the output file format.
-		 * 
-		 * Check to be sure the format is supported, and if not, then use
-		 * the original file format.
-		 */
-		String fileName = outFile.getName();
-		String fileExtension = null; 
-		if (
-				fileName.contains(".") 
-				&& fileName.lastIndexOf('.') != fileName.length() - 1
-		)
-		{
-			int lastIndex = fileName.lastIndexOf('.');
-			fileExtension = fileName.substring(lastIndex + 1); 
-		}
-			
-		String format = ThumbnailParameter.ORIGINAL_FORMAT;
-		if (fileExtension != null)
-		{
-			for (String supportedFormatName : ImageIO.getWriterFormatNames())
-			{
-				if (supportedFormatName.equals(fileExtension))
-				{
-					format = supportedFormatName;
-					break;
-				}
-			}
-		}
-		
-		ThumbnailParameter param = 
-			new ThumbnailParameter(
-					new Dimension(width, height),
-					true,
-					format,
-					ThumbnailParameter.DEFAULT_FORMAT_TYPE,
-					ThumbnailParameter.DEFAULT_QUALITY,
-					BufferedImage.TYPE_INT_ARGB,
-					null,
-					Resizers.PROGRESSIVE
-			);
-		
-		Thumbnailator.createThumbnail(
-				new FileThumbnailTask(param, inFile, outFile));
+		Thumbnailator.createThumbnail(inFile, outFile, width, height);
 	}
 	
 	/**
@@ -479,21 +453,19 @@ public final class Thumbnails
 	 * @return				The thumbnail image as a {@link BufferedImage}.
 	 * @throws IOException	Thrown when a problem occurs when reading from 
 	 * 						{@code File} representing an image file.
+	 * 
+	 * @deprecated 		This method has been moved to the 
+	 * 					{@link Thumbnailator} class, and is subject to removal
+	 * 					in future versions of Thumbnailator.
 	 */
+	@Deprecated
 	public static BufferedImage createThumbnail(
 			File f,
 			int width,
 			int height
 	) throws IOException
 	{
-		validateDimensions(width, height);
-		
-		if (f == null)
-		{
-			throw new NullPointerException("Input file is null.");
-		}
-		
-		return createThumbnail(ImageIO.read(f), width, height);
+		return Thumbnailator.createThumbnail(f, width, height);
 	}
 	
 	/**
@@ -518,24 +490,19 @@ public final class Thumbnails
 	 * @param width				The width of the thumbnail.
 	 * @param height			The height of the thumbnail.
 	 * @return					Resulting thumbnail.
+	 * 
+	 * @deprecated 		This method has been moved to the 
+	 * 					{@link Thumbnailator} class, and is subject to removal
+	 * 					in future versions of Thumbnailator.
 	 */
+	@Deprecated
 	public static BufferedImage createThumbnail(
 			BufferedImage img, 
 			int width, 
 			int height
 	)
 	{
-		validateDimensions(width, height);
-		
-		Dimension imgSize = new Dimension(img.getWidth(), img.getHeight());
-		Dimension thumbnailSize = new Dimension(width, height);
-		
-		BufferedImage thumbnailImage = 
-			new FixedSizeThumbnailMaker(width, height, true)
-					.resizer(ResizerFactory.getResizer(imgSize, thumbnailSize))
-					.make(img); 
-		
-		return thumbnailImage;
+		return Thumbnailator.createThumbnail(img, width, height);
 	}
 	
 	/**
@@ -553,27 +520,19 @@ public final class Thumbnails
 	 * @param width			The width of the thumbnail.
 	 * @param height		The height of the thumbnail.
 	 * @return				The thumbnail image as an {@link Image}.
+	 * 
+	 * @deprecated 		This method has been moved to the 
+	 * 					{@link Thumbnailator} class, and is subject to removal
+	 * 					in future versions of Thumbnailator.
 	 */
+	@Deprecated
 	public static Image createThumbnail(
 			Image img, 
 			int width, 
 			int height
 	)
 	{
-		validateDimensions(width, height);
-		
-		// Copy the image from Image into a new BufferedImage.
-		BufferedImage srcImg =
-			new BufferedImageBuilder(
-					img.getWidth(null),
-					img.getHeight(null)
-			).build();
-		
-		Graphics g = srcImg.createGraphics();
-		g.drawImage(img, width, height, null);
-		g.dispose();
-		
-		return createThumbnail(srcImg, width, height);
+		return Thumbnailator.createThumbnail(img, width, height);
 	}
 	
 	
