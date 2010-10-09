@@ -93,14 +93,38 @@ public class FileThumbnailTask extends ThumbnailTask
 		 */
 		
 		String formatName;
-		if (param.getOutputFormat() == ThumbnailParameter.ORIGINAL_FORMAT)
+		System.out.println(inputFormatName);
+		if (param.getOutputFormat() == ThumbnailParameter.ORIGINAL_FORMAT || inputFormatName.equalsIgnoreCase(param.getOutputFormat()))
 		{
 			formatName = inputFormatName;
 		}
 		else
 		{
 			formatName = param.getOutputFormat();
-			destinationFile = new File(destinationFile.getAbsolutePath() + "." + formatName);
+			
+			/*
+			 * Add or replace the file extension of the output file.
+			 * 
+			 * If the file extension matches the output format's extension,
+			 * then leave as is.
+			 * 
+			 * Else, append the extension for the output format to the filename. 
+			 */
+			String fileExtension = null; 
+			String fileName = destinationFile.getName();
+			if (
+					fileName.contains(".") 
+					&& fileName.lastIndexOf('.') != fileName.length() - 1
+			)
+			{
+				int lastIndex = fileName.lastIndexOf('.');
+				fileExtension = fileName.substring(lastIndex + 1); 
+			}
+			
+			if (fileExtension == null || !fileExtension.equalsIgnoreCase(formatName)) 
+			{
+				destinationFile = new File(destinationFile.getAbsolutePath() + "." + formatName);
+			}
 		}
 			
 		Iterator<ImageWriter> writers = 
