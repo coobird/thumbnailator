@@ -72,7 +72,7 @@ public final class Thumbnails
 	 * This class is used to rename file names.
 	 * 
 	 * @deprecated 		This class has been moved to the 
-	 * 					{@link Thumbnailator} class, and is subject to removal
+	 * 					{@link Rename} class, and is subject to removal
 	 * 					in future versions of Thumbnailator.
 	 * 
 	 * @author coobird
@@ -1429,7 +1429,7 @@ watermark(Positions.CENTER, image, opacity);
 		
 		/**
 		 * Creates the thumbnails and stores them to the files, using the 
-		 * {@link Rename} function to determine the filenames. The files
+		 * {@code Rename} function to determine the filenames. The files
 		 * are returned as {@link List}.
 		 * <p>
 		 * To call this method, the thumbnails must have been creates from
@@ -1444,7 +1444,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * @throws IOException		If a problem occurs while writing the
 		 * 							thumbnails to files. 
 		 */
-		public List<File> asFiles(Rename rename) throws IOException
+		public List<File> asFiles(net.coobird.thumbnailator.Rename rename) throws IOException
 		{
 			checkReadiness();
 			
@@ -1478,7 +1478,7 @@ watermark(Positions.CENTER, image, opacity);
 
 		/**
 		 * Creates the thumbnails and stores them to the files, using the 
-		 * {@link Rename} function to determine the filenames.
+		 * {@code Rename} function to determine the filenames.
 		 * <p>
 		 * To call this method, the thumbnails must have been creates from
 		 * files by calling the {@link Thumbnails#of(File...)} method.
@@ -1490,7 +1490,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * @throws IOException		If a problem occurs while writing the
 		 * 							thumbnails to files. 
 		 */
-		public void toFiles(Rename rename) throws IOException
+		public void toFiles(net.coobird.thumbnailator.Rename rename) throws IOException
 		{
 			asFiles(rename);
 		}
