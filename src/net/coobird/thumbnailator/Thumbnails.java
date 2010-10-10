@@ -147,8 +147,8 @@ public final class Thumbnails
 	 * </ul>
 	 * 
 	 * @deprecated 		This constant has been moved to the 
-	 * 					{@link Thumbnailator} class, and is subject to removal
-	 * 					in future versions of Thumbnailator.
+	 * 					{@link net.coobird.thumbnailator.Rename} class, and is
+	 * 					subject to removal in future versions of Thumbnailator.
 	 */
 	@Deprecated
 	public static final Rename PREFIX_HYPTHEN_THUMBNAIL_RENAME = new Rename() {
@@ -170,8 +170,8 @@ public final class Thumbnails
 	 * </ul>
 	 * 
 	 * @deprecated 		This constant has been moved to the 
-	 * 					{@link Thumbnailator} class, and is subject to removal
-	 * 					in future versions of Thumbnailator.
+	 * 					{@link net.coobird.thumbnailator.Rename} class, and is
+	 * 					subject to removal in future versions of Thumbnailator.
 	 */
 	@Deprecated
 	public static final Rename SUFFIX_HYPTHEN_THUMBNAIL_RENAME = new Rename() {
@@ -193,8 +193,8 @@ public final class Thumbnails
 	 * </ul>
 	 * 
 	 * @deprecated 		This constant has been moved to the 
-	 * 					{@link Thumbnailator} class, and is subject to removal
-	 * 					in future versions of Thumbnailator.
+	 * 					{@link net.coobird.thumbnailator.Rename} class, and is
+	 * 					subject to removal in future versions of Thumbnailator.
 	 */
 	@Deprecated
 	public static final Rename SUFFIX_DOT_THUMBNAIL_RENAME = new Rename() {
@@ -215,8 +215,8 @@ public final class Thumbnails
 	 * </ul>
 	 * 
 	 * @deprecated 		This constant has been moved to the 
-	 * 					{@link Thumbnailator} class, and is subject to removal
-	 * 					in future versions of Thumbnailator.
+	 * 					{@link net.coobird.thumbnailator.Rename} class, and is
+	 * 					subject to removal in future versions of Thumbnailator.
 	 */
 	@Deprecated
 	public static final Rename PREFIX_DOT_THUMBNAIL_RENAME = new Rename() {
@@ -237,8 +237,8 @@ public final class Thumbnails
 	 * </ul>
 	 * 
 	 * @deprecated 		This constant has been moved to the 
-	 * 					{@link Thumbnailator} class, and is subject to removal
-	 * 					in future versions of Thumbnailator.
+	 * 					{@link net.coobird.thumbnailator.Rename} class, and is
+	 * 					subject to removal in future versions of Thumbnailator.
 	 */
 	@Deprecated
 	public static final Rename NULL_RENAME = new Rename() {
