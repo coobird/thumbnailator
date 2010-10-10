@@ -10,7 +10,7 @@
 	<property name="javadoc_dir" value="javadoc" />
 
 	<!-- Set version number -->
-	<property name="version" value="0.2.2" />
+	<property name="version" value="0.2.3" />
 	
 	<target name="init">
 	</target>
