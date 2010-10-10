@@ -54,7 +54,7 @@ Thumbnails.of(directory.listFiles())
     .size(200, 200)
     .keepAspectRatio(true)
     .outputFormat("jpeg")
-    .asFiles(Thumbnailator.PREFIX_DOT_THUMBNAIL_RENAME);
+    .asFiles(Rename.PREFIX_DOT_THUMBNAIL);
  * </pre>
  * </DD>
  * </DL>
