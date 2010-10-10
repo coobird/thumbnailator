@@ -1,8 +1,6 @@
 package net.coobird.thumbnailator.resizers;
 
 import java.awt.AlphaComposite;
-import java.awt.Composite;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
@@ -47,13 +45,10 @@ public class ProgressiveBilinearResizer extends AbstractResizer
 	}
 	
 	/**
-	 * <p>
 	 * Resizes an image using the progressive bilinear scaling technique.
-	 * </p>
 	 * <p>
 	 * If the source and/or destination image is {@code null}, then a 
 	 * {@link NullPointerException} will be thrown.
-	 * </p>
 	 * 
 	 * @param srcImage		The source image.
 	 * @param destImage		The destination image.
@@ -72,6 +67,15 @@ public class ProgressiveBilinearResizer extends AbstractResizer
 		
 		final int targetWidth = destImage.getWidth();
 		final int targetHeight = destImage.getHeight();
+		
+		// If multi-step downscaling is not required, perform one-step.
+		if ((targetWidth * 2 >= currentWidth) && (targetHeight * 2 >= currentHeight))
+		{
+			Graphics2D g = destImage.createGraphics();
+			g.drawImage(srcImage, 0, 0, targetWidth, targetHeight, null);
+			g.dispose();
+			return;
+		}
 		
 		// Temporary image used for in-place resizing of image.
 		BufferedImage tempImage = new BufferedImage(
@@ -131,7 +135,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer
 		g.dispose();
 		
 		// Draw the resized image onto the destination image.
-		Graphics destg = destImage.createGraphics();
+		Graphics2D destg = destImage.createGraphics();
 		destg.drawImage(tempImage, 0, 0, targetWidth, targetHeight, 0, 0, currentWidth, currentHeight, null);
 		destg.dispose();
 	}
