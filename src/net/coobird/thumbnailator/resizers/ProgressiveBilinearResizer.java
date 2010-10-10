@@ -1,5 +1,7 @@
 package net.coobird.thumbnailator.resizers;
 
+import java.awt.AlphaComposite;
+import java.awt.Composite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -80,6 +82,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer
 		
 		Graphics2D g = tempImage.createGraphics();
 		g.setRenderingHints(RENDERING_HINTS);
+		g.setComposite(AlphaComposite.Src);
 		
 		/*
 		 * Determine the size of the first resize step should be.
