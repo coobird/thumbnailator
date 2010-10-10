@@ -1226,6 +1226,29 @@ watermark(Positions.CENTER, image, opacity);
 		 * Returns a {@link Resizer} which is suitable for the current
 		 * builder state.
 		 * 
+		 * @return			The {@link Resizer} which is suitable for the
+		 * 					current builder state.
+		 */
+		private Resizer makeResizer()
+		{
+			/*
+			 * If the scalingMode has been set, then use scalingMode to obtain
+			 * a resizer, else, use the resizer field.
+			 */
+			if (statusMap.get(Properties.SCALING_MODE) == Status.ALREADY_SET)
+			{
+				return makeResizer(scalingMode);
+			}
+			else
+			{
+				return this.resizer;
+			}
+		}
+
+		/**
+		 * Returns a {@link Resizer} which is suitable for the current
+		 * builder state.
+		 * 
 		 * @param mode		The scaling mode to use to create thumbnails.
 		 * @return			The {@link Resizer} which is suitable for the
 		 * 					specified scaling mode and builder state.
@@ -1291,20 +1314,7 @@ watermark(Positions.CENTER, image, opacity);
 		 */
 		private ThumbnailParameter makeParam()
 		{
-			Resizer resizer;
-			
-			/*
-			 * If the scalingMode has been set, then use scalingMode to obtain
-			 * a resizer, else, use the resizer field.
-			 */
-			if (statusMap.get(Properties.SCALING_MODE) == Status.ALREADY_SET)
-			{
-				resizer = makeResizer(scalingMode);
-			}
-			else
-			{
-				resizer = this.resizer;
-			}
+			Resizer resizer = makeResizer();
 			
 			if (Double.isNaN(scale))
 			{
@@ -1437,7 +1447,7 @@ watermark(Positions.CENTER, image, opacity);
 		public List<BufferedImage> asBufferedImages()
 		{
 			checkReadiness();
-			Resizer r = makeResizer(scalingMode);
+			Resizer r = makeResizer();
 			
 			List<BufferedImage> thumbnails = new ArrayList<BufferedImage>();
 			
