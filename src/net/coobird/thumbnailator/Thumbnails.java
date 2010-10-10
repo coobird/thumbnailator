@@ -30,6 +30,7 @@ import net.coobird.thumbnailator.resizers.BicubicResizer;
 import net.coobird.thumbnailator.resizers.BilinearResizer;
 import net.coobird.thumbnailator.resizers.ProgressiveBilinearResizer;
 import net.coobird.thumbnailator.resizers.Resizer;
+import net.coobird.thumbnailator.resizers.Resizers;
 import net.coobird.thumbnailator.resizers.configurations.AlphaInterpolation;
 import net.coobird.thumbnailator.resizers.configurations.Antialiasing;
 import net.coobird.thumbnailator.resizers.configurations.Dithering;
@@ -662,6 +663,7 @@ public final class Thumbnails
 			OUTPUT_FORMAT("outputFormat"),
 			OUTPUT_FORMAT_TYPE("outputFormatType"),
 			OUTPUT_QUALITY("outputQuality"),
+			RESIZER("resizer"),
 			;
 			
 			private final String name;
@@ -698,6 +700,7 @@ public final class Thumbnails
 			statusMap.put(Properties.OUTPUT_FORMAT, Status.OPTIONAL);
 			statusMap.put(Properties.OUTPUT_FORMAT_TYPE, Status.OPTIONAL);
 			statusMap.put(Properties.OUTPUT_QUALITY, Status.OPTIONAL);
+			statusMap.put(Properties.RESIZER, Status.OPTIONAL);
 		}
 
 		/**
@@ -742,6 +745,8 @@ public final class Thumbnails
 		private Dithering dithering = Dithering.DEFAULT;
 		private Antialiasing antialiasing = Antialiasing.DEFAULT;
 		private Rendering rendering = Rendering.DEFAULT;
+		
+		private Resizer resizer = Resizers.PROGRESSIVE;
 		
 		/**
 		 * The {@link ImageFilter}s that should be applied when creating the
@@ -823,7 +828,24 @@ public final class Thumbnails
 		public Builder scalingMode(ScalingMode config)
 		{
 			updateStatus(Properties.SCALING_MODE, Status.ALREADY_SET);
+			updateStatus(Properties.RESIZER, Status.CANNOT_SET);
 			scalingMode = config;
+			return this;
+		}
+		
+		/**
+		 * Sets the resizing operation to use when creating the thumbnail.
+		 * <p>
+		 * Calling this method to set this parameter is optional.
+		 * 
+		 * @param resizer		The scaling operation to use.
+		 * @return				Reference to this object.
+		 */
+		public Builder resizer(Resizer resizer)
+		{
+			updateStatus(Properties.RESIZER, Status.ALREADY_SET);
+			updateStatus(Properties.SCALING_MODE, Status.CANNOT_SET);
+			this.resizer = resizer;
 			return this;
 		}
 		
@@ -1182,17 +1204,32 @@ watermark(Positions.CENTER, image, opacity);
 			return this;
 		}
 		
+		/**
+		 * Checks whether the builder is ready to create thumbnails.
+		 * 
+		 * @throws IllegalStateException	If the builder is not ready to
+		 * 									create thumbnails, due to some
+		 * 									parameters not being set.
+		 */
 		private void checkReadiness()
 		{
 			for (Map.Entry<Properties, Status> s : statusMap.entrySet())
 			{
 				if (s.getValue() == Status.NOT_READY) {
-					throw new IllegalArgumentException(s.getKey().getName() +
+					throw new IllegalStateException(s.getKey().getName() +
 							" is not set.");
 				}
 			}
 		}
 		
+		/**
+		 * Returns a {@link Resizer} which is suitable for the current
+		 * builder state.
+		 * 
+		 * @param mode		The scaling mode to use to create thumbnails.
+		 * @return			The {@link Resizer} which is suitable for the
+		 * 					specified scaling mode and builder state.
+		 */
 		private Resizer makeResizer(ScalingMode mode)
 		{
 			Map<RenderingHints.Key, Object> hints = 
@@ -1221,6 +1258,15 @@ watermark(Positions.CENTER, image, opacity);
 			}
 		}
 
+		/**
+		 * Returns a {@link ThumbnailMaker} which is appropriate for the
+		 * currrent builder state.
+		 * 
+		 * @param r			The {@link Resizer} to use with the 
+		 * 					{@link ThumbnailMaker}.
+		 * @return			The {@link ThumbnailMaker} which is suitable for
+		 * 					the current builder state.
+		 */
 		private ThumbnailMaker makeMaker(Resizer r)
 		{
 			if (!Double.isNaN(scale))
@@ -1237,14 +1283,32 @@ watermark(Positions.CENTER, image, opacity);
 			}
 		}
 		
+		/**
+		 * Returns a {@link ThumbnailParameter} from the current builder state.
+		 * 
+		 * @return			A {@link ThumbnailParameter} from the current
+		 * 					builder state.
+		 */
 		private ThumbnailParameter makeParam()
 		{
-			Resizer resizer = makeResizer(scalingMode);
+			Resizer resizer;
 			
-			ThumbnailParameter param;
+			/*
+			 * If the scalingMode has been set, then use scalingMode to obtain
+			 * a resizer, else, use the resizer field.
+			 */
+			if (statusMap.get(Properties.SCALING_MODE) == Status.ALREADY_SET)
+			{
+				resizer = makeResizer(scalingMode);
+			}
+			else
+			{
+				resizer = this.resizer;
+			}
+			
 			if (Double.isNaN(scale))
 			{
-				param = new ThumbnailParameter(
+				return new ThumbnailParameter(
 						new Dimension(width, height),
 						keepAspectRatio,
 						outputFormat,
@@ -1257,7 +1321,7 @@ watermark(Positions.CENTER, image, opacity);
 			}
 			else
 			{
-				param = new ThumbnailParameter(
+				return new ThumbnailParameter(
 						scale,
 						keepAspectRatio,
 						outputFormat,
@@ -1268,9 +1332,16 @@ watermark(Positions.CENTER, image, opacity);
 						resizer
 				);
 			}
-			return param;
 		}
 
+		/**
+		 * Returns an {@link Iterable} which iterates over given files or
+		 * images to return the original images from which the thumbnails
+		 * should be made. 
+		 * 
+		 * @return			An {@link Iterable} which provides the original
+		 * 					images for which thumbnails should be made for. 
+		 */
 		private Iterable<BufferedImage> getOriginalImages()
 		{
 			class BufferedImageIterator implements Iterator<BufferedImage>
@@ -1320,7 +1391,7 @@ watermark(Positions.CENTER, image, opacity);
 					}
 					catch (IOException e)
 					{
-						throw new IllegalArgumentException(e);
+						throw new IllegalArgumentException("Could not open image file.", e);
 					}
 				}
 				
