@@ -41,12 +41,9 @@ public class Rotation
 	}
 	
 	/**
-	 * <p>
 	 * Performs a rotation of a specified image.
-	 * </p>
 	 * <p>
 	 * This method will only rotate images at a multiple of 90 degrees.
-	 * </p>
 	 * 
 	 * @param img			Image to rotate.
 	 * @param angle			The angle to rotate the image by.
@@ -83,10 +80,11 @@ public class Rotation
 	}
 	
 	/**
-	 * <p>
 	 * Creates a new instance of {@code Rotator} which rotates an image at
 	 * the specified angle.
-	 * </p>
+	 * <p>
+	 * When the {@link Rotator} returned by this method is applied, the image
+	 * will be rotated clockwise by the specified angle.
 	 * 
 	 * @param angle			The angle at which the instance of {@code Rotator}
 	 * 						is to rotate a image it acts upon.
