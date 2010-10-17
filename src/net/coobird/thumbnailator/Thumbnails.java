@@ -1132,6 +1132,8 @@ watermark(Positions.CENTER, image, opacity);
 		/**
 		 * Sets the amount of rotation to apply to the thumbnail.
 		 * <p>
+		 * The thumbnail will be rotated clockwise by the angle specified.
+		 * <p>
 		 * This method can be called multiple times to apply multiple
 		 * rotations.
 		 * <p>
