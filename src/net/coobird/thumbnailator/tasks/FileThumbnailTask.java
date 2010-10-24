@@ -2,6 +2,7 @@ package net.coobird.thumbnailator.tasks;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 
@@ -54,6 +55,13 @@ public class FileThumbnailTask extends ThumbnailTask
 	@Override
 	public BufferedImage read() throws IOException
 	{
+		if (!sourceFile.exists())
+		{
+			throw new FileNotFoundException(
+					"Could not find file: " + sourceFile.getAbsolutePath()
+			);
+		}
+		
 		/* TODO refactor.
 		 * The following code has been adapted from the 
 		 * StreamThumbnailTask.read method.
@@ -62,7 +70,8 @@ public class FileThumbnailTask extends ThumbnailTask
 		
 		if (iis == null)
 		{
-			throw new IOException("Could not open input file.");
+			throw new IOException(
+					"Could not open file: " + sourceFile.getAbsolutePath());
 		}
 		
 		Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
