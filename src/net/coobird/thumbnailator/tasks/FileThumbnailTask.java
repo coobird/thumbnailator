@@ -20,6 +20,9 @@ import net.coobird.thumbnailator.ThumbnailParameter;
 /**
  * A thumbnail generation task which reads and writes data from and to a 
  * {@link File}.
+ * <p>
+ * Only the first image included in the image file will be read. Subsequent
+ * images included in the image file will be ignored.
  * 
  * @author coobird
  *
@@ -86,7 +89,7 @@ public class FileThumbnailTask extends ThumbnailTask
 		reader.setInput(iis);
 		inputFormatName = reader.getFormatName();
 
-		BufferedImage img = reader.read(0);
+		BufferedImage img = reader.read(FIRST_IMAGE_INDEX);
 		
 		iis.close();
 		
