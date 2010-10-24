@@ -135,8 +135,8 @@ public class Rotation
 						Math.max(newPositions[2][1], newPositions[3][1])
 				);
 				
-				int newWidth = (int)(maxX - minX);
-				int newHeight = (int)(maxY - minY);
+				int newWidth = (int)Math.round(maxX - minX);
+				int newHeight = (int)Math.round(maxY - minY);
 				newImage = new BufferedImageBuilder(newWidth, newHeight).build();
 				
 				Graphics2D g = newImage.createGraphics();
@@ -159,8 +159,8 @@ public class Rotation
 				double w = newWidth / 2.0;
 				double h = newHeight / 2.0;
 				g.rotate(Math.toRadians(angle), w, h);
-				int centerX = (int)((newWidth - width) / 2.0);
-				int centerY = (int)((newHeight - height) / 2.0);
+				int centerX = (int)Math.round((newWidth - width) / 2.0);
+				int centerY = (int)Math.round((newHeight - height) / 2.0);
 				
 				g.drawImage(img, centerX, centerY, null);
 				g.dispose();
