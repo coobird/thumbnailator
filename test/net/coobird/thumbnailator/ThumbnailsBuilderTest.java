@@ -3,9 +3,14 @@ package net.coobird.thumbnailator;
 import java.awt.image.BufferedImage;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
+import net.coobird.thumbnailator.resizers.Resizer;
+import net.coobird.thumbnailator.resizers.Resizers;
+import net.coobird.thumbnailator.resizers.configurations.ScalingMode;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import static org.mockito.Mockito.*;
 
 
 /**
@@ -35,11 +40,11 @@ public class ThumbnailsBuilderTest
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		BufferedImage thumbnail = Thumbnails.of(img)
-			.size(100, 100)
+			.size(50, 50)
 			.asBufferedImage();
 		
-		assertEquals(100, thumbnail.getWidth());
-		assertEquals(100, thumbnail.getHeight());
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
 	}
 	
 	/**
@@ -62,12 +67,12 @@ public class ThumbnailsBuilderTest
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		BufferedImage thumbnail = Thumbnails.of(img)
-			.size(120, 100)
+			.size(120, 50)
 			.keepAspectRatio(true)
 			.asBufferedImage();
 		
-		assertEquals(100, thumbnail.getWidth());
-		assertEquals(100, thumbnail.getHeight());
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
 	}
 	
 	/**
@@ -89,12 +94,12 @@ public class ThumbnailsBuilderTest
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		BufferedImage thumbnail = Thumbnails.of(img)
-			.size(120, 100)
+			.size(120, 50)
 			.keepAspectRatio(false)
 			.asBufferedImage();
 		
 		assertEquals(120, thumbnail.getWidth());
-		assertEquals(100, thumbnail.getHeight());
+		assertEquals(50, thumbnail.getHeight());
 	}
 
 	/**
@@ -115,11 +120,11 @@ public class ThumbnailsBuilderTest
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		BufferedImage thumbnail = Thumbnails.of(img)
-			.scale(0.5f)
+			.scale(0.25f)
 			.asBufferedImage();
 		
-		assertEquals(100, thumbnail.getWidth());
-		assertEquals(100, thumbnail.getHeight());
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
 	}
 	
 	/**
@@ -241,4 +246,142 @@ public class ThumbnailsBuilderTest
 			assertTrue(e.getMessage().contains("scaling factor has already been specified"));
 		}
 	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The resizer method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The specified Resizer is called for resizing.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void resizerOnly()
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		Resizer resizer = mock(Resizer.class);
+	
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(200, 200)
+			.resizer(resizer)
+			.asBufferedImage();
+		
+		verify(resizer).resize(img, thumbnail);
+		verifyNoMoreInteractions(resizer);
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The resizer method is called twice</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An {@link IllegalStateException} is thrown</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalStateException.class)
+	public void resizerTwice()
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(200, 200)
+			.resizer(Resizers.PROGRESSIVE)
+			.resizer(Resizers.PROGRESSIVE)
+			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The scalingMode method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The thumbnail is successfully created.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void scalingModeOnly()
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(200, 200)
+			.scalingMode(ScalingMode.PROGRESSIVE_BILINEAR)
+			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The scalingMode method is called twice</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An {@link IllegalStateException} is thrown</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalStateException.class)
+	public void scalingModeTwice()
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(200, 200)
+			.scalingMode(ScalingMode.PROGRESSIVE_BILINEAR)
+			.scalingMode(ScalingMode.PROGRESSIVE_BILINEAR)
+			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The resizer method is called, then</li>
+	 * <li>The scalingMode method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An {@link IllegalStateException} is thrown</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalStateException.class)
+	public void resizerThenScalingMode()
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(200, 200)
+			.resizer(Resizers.PROGRESSIVE)
+			.scalingMode(ScalingMode.PROGRESSIVE_BILINEAR)
+			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The scalingMode method is called, then</li>
+	 * <li>The resizer method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An {@link IllegalStateException} is thrown</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalStateException.class)
+	public void scalingModeThenResizer()
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(200, 200)
+			.scalingMode(ScalingMode.PROGRESSIVE_BILINEAR)
+			.resizer(Resizers.PROGRESSIVE)
+			.asBufferedImage();
+	}
+	
 }
