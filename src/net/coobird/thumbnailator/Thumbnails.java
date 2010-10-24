@@ -791,7 +791,11 @@ public final class Thumbnails
 		 * and the {@link #keepAspectRatio(boolean)} will result in an
 		 * {@link IllegalArgumentException}.
 		 * 
-		 * @param scale			A double greater than 0.0
+		 * @param scale			The scaling factor to use when creating a
+		 * 						thumbnail.
+		 * 						<p>
+		 * 						The value must be a {@code double} which is
+		 * 						greater than {@code 0.0}.
 		 * @return				Reference to this object.
 		 */
 		public Builder scale(double scale)
@@ -802,13 +806,16 @@ public final class Thumbnails
 			
 			if (scale <= 0)
 			{
-				throw new IllegalArgumentException("Scale is equal to or less than 0.");
+				throw new IllegalArgumentException(
+						"The scaling factor is equal to or less than 0."
+				);
 			}
 			
 			this.scale = scale;
 			
 			return this;
 		}
+
 		
 		/**
 		 * Sets the image type of the thumbnail.
