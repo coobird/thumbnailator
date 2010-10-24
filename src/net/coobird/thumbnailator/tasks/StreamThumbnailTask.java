@@ -24,7 +24,8 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * This class does not close the {@link InputStream} and {@link OutputStream}
  * upon the completion of processing.
  * <p>
- * Only the first image included in the data stream will be processed.
+ * Only the first image obtained from the data stream will be read. Subsequent
+ * images will be ignored.
  * 
  * @author coobird
  *
@@ -79,7 +80,7 @@ public class StreamThumbnailTask extends ThumbnailTask
 		reader.setInput(iis);
 		inputFormatName = reader.getFormatName();
 		
-		BufferedImage img = reader.read(0);
+		BufferedImage img = reader.read(FIRST_IMAGE_INDEX);
 		
 		iis.close();
 		

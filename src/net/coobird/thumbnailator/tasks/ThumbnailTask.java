@@ -8,6 +8,10 @@ import net.coobird.thumbnailator.ThumbnailParameter;
 /**
  * This class is used by {@link ThumbnailTask} implementations which is used
  * when creating thumbnails from external sources and destinations.
+ * <p>
+ * If the image handled by a {@link ThumbnailTask} contains multiple images,
+ * only the first image will be read by the {@link #read()} method. Any
+ * subsequent images will be ignored. 
  * 
  * @author coobird
  *
@@ -26,6 +30,11 @@ public abstract class ThumbnailTask
 	 * same as the input image format. 
 	 */
 	protected String inputFormatName;
+	
+	/**
+	 * Constant used to obtain the first image when reading an image file. 
+	 */
+	protected static final int FIRST_IMAGE_INDEX = 0;
 	
 	/**
 	 * Instantiates a {@link ThumbnailTask} with the parameters to use when
