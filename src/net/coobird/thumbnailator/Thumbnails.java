@@ -725,6 +725,14 @@ public final class Thumbnails
 			statusMap.put(property, newStatus);
 		}
 
+		/**
+		 * An constant used to indicate that the imageType has not been
+		 * specified. When this constant is encountered, one should use the
+		 * {@link ThumbnailParameter#DEFAULT_IMAGE_TYPE} as the value for
+		 * imageType.
+		 */
+		private static int IMAGE_TYPE_UNSPECIFIED = -1;
+		
 		/*
 		 * Defines the fields for the builder interface, and assigns the
 		 * default values.
@@ -733,7 +741,7 @@ public final class Thumbnails
 		private int height = -1;
 		private double scale = Double.NaN;
 		
-		private int imageType = ThumbnailParameter.DEFAULT_IMAGE_TYPE;
+		private int imageType = IMAGE_TYPE_UNSPECIFIED;
 		private boolean keepAspectRatio = true;
 		
 		private String outputFormat = ThumbnailParameter.ORIGINAL_FORMAT;
@@ -1289,22 +1297,29 @@ watermark(Positions.CENTER, image, opacity);
 		 * 
 		 * @param r			The {@link Resizer} to use with the 
 		 * 					{@link ThumbnailMaker}.
+		 * @param imageType	The image type for the thumbnail.
 		 * @return			The {@link ThumbnailMaker} which is suitable for
 		 * 					the current builder state.
 		 */
-		private ThumbnailMaker makeMaker(Resizer r)
+		private ThumbnailMaker makeThumbnailMaker(Resizer r, int imageType)
 		{
+			int imageTypeToUse = imageType;
+			if (imageType == IMAGE_TYPE_UNSPECIFIED)
+			{
+				imageTypeToUse = ThumbnailParameter.DEFAULT_IMAGE_TYPE;
+			}
+			
 			if (!Double.isNaN(scale))
 			{
 				return new ScaledThumbnailMaker(scale)
 						.resizer(r)
-						.imageType(imageType);
+						.imageType(imageTypeToUse);
 			}
 			else
 			{
 				return new FixedSizeThumbnailMaker(width, height, keepAspectRatio)
 						.resizer(r)
-						.imageType(imageType);
+						.imageType(imageTypeToUse);
 			}
 		}
 		
@@ -1318,6 +1333,12 @@ watermark(Positions.CENTER, image, opacity);
 		{
 			Resizer resizer = makeResizer();
 			
+			int imageTypeToUse = imageType;
+			if (imageType == IMAGE_TYPE_UNSPECIFIED)
+			{
+				imageTypeToUse = ThumbnailParameter.DEFAULT_IMAGE_TYPE;
+			}
+			
 			if (Double.isNaN(scale))
 			{
 				return new ThumbnailParameter(
@@ -1326,7 +1347,7 @@ watermark(Positions.CENTER, image, opacity);
 						outputFormat,
 						outputFormatType,
 						outputQuality,
-						imageType,
+						imageTypeToUse,
 						filterPipeline.getFilters(),
 						resizer
 				);
@@ -1339,7 +1360,7 @@ watermark(Positions.CENTER, image, opacity);
 						outputFormat,
 						outputFormatType,
 						outputQuality,
-						imageType,
+						imageTypeToUse,
 						filterPipeline.getFilters(),
 						resizer
 				);
@@ -1456,7 +1477,7 @@ watermark(Positions.CENTER, image, opacity);
 			// Create thumbnails
 			for (BufferedImage img : getOriginalImages())
 			{
-				ThumbnailMaker maker = makeMaker(r);
+				ThumbnailMaker maker = makeThumbnailMaker(r, img.getType());
 				
 				BufferedImage thumbnailImg = maker.make(img);
 				
