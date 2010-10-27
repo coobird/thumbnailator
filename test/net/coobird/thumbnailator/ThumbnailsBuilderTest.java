@@ -384,4 +384,76 @@ public class ThumbnailsBuilderTest
 			.asBufferedImage();
 	}
 	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The imageType method is not called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The image type of the resulting image is the same as the original
+	 * image</li>
+	 * </ol>
+	 */	
+	@Test
+	public void imageTypeNotCalled()
+	{
+		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_BYTE_INDEXED);
+		
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(200, 200)
+			.asBufferedImage();
+		
+		assertEquals(BufferedImage.TYPE_BYTE_INDEXED, thumbnail.getType());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The imageType method is called with the same type as the original
+	 * image</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The image type of the resulting image is the same as the original
+	 * image</li>
+	 * </ol>
+	 */	
+	@Test
+	public void imageTypeCalledSameType()
+	{
+		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_BYTE_GRAY);
+		
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(200, 200)
+			.imageType(BufferedImage.TYPE_BYTE_GRAY)
+			.asBufferedImage();
+		
+		assertEquals(BufferedImage.TYPE_BYTE_GRAY, thumbnail.getType());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The imageType method is called with the different type as the
+	 * original image</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The image type of the resulting image is the the specified by the
+	 * imageType method</li>
+	 * </ol>
+	 */	
+	@Test
+	public void imageTypeCalledDifferentType()
+	{
+		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_BYTE_GRAY);
+		
+		BufferedImage thumbnail = Thumbnails.of(img)
+		.size(200, 200)
+		.imageType(BufferedImage.TYPE_BYTE_GRAY)
+		.asBufferedImage();
+		
+		assertEquals(BufferedImage.TYPE_BYTE_GRAY, thumbnail.getType());
+	}
 }
