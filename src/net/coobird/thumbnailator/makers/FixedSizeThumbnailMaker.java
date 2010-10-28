@@ -105,9 +105,17 @@ public class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * @param width				The width of the thumbnail to produce.
 	 * @param height			The height of the thumbnails to produce.
 	 * @return					A reference to this object.
+	 * @throws IllegalStateException	If the size has already
+	 * 									been previously set.
 	 */
 	public FixedSizeThumbnailMaker size(int width, int height)
 	{
+		if (ready.isSet(PARAM_SIZE))
+		{
+			throw new IllegalStateException(
+					"The size has already been set."
+			);
+		}
 		this.width = width;
 		this.height = height;
 
@@ -126,9 +134,17 @@ public class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * 						thumbnail image will have the same aspect ratio
 	 * 						as the original image.
  	 * @return				A reference to this object.
+	 * @throws IllegalStateException	If whether to keep the aspect ratio has
+	 * 									already	been previously set.
 	 */
 	public FixedSizeThumbnailMaker keepAspectRatio(boolean keep)
 	{
+		if (ready.isSet(PARAM_KEEP_RATIO))
+		{
+			throw new IllegalStateException(
+					"Whether to keep the aspect ratio has already been set."
+			);
+		}
 		this.keepRatio = keep;
 
 		ready.set(PARAM_KEEP_RATIO);

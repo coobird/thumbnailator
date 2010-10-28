@@ -44,6 +44,7 @@ public class ScaledThumbnailMaker extends ThumbnailMaker
 	 */
 	public ScaledThumbnailMaker()
 	{
+		super();
 		ready.unset(PARAM_SCALE);
 	}
 	
@@ -56,6 +57,7 @@ public class ScaledThumbnailMaker extends ThumbnailMaker
 	 */
 	public ScaledThumbnailMaker(double factor)
 	{
+		this();
 		scale(factor);
 	}
 	
@@ -70,9 +72,18 @@ public class ScaledThumbnailMaker extends ThumbnailMaker
 	 * @param factor			The scaling factor to apply when resizing an
 	 * 							image to create a thumbnail.
 	 * @return					A reference to this object.
+	 * @throws IllegalStateException	If the scaling factor has already
+	 * 									been previously set.
 	 */
 	public ScaledThumbnailMaker scale(double factor)
 	{
+		if (ready.isSet(PARAM_SCALE))
+		{
+			throw new IllegalStateException(
+					"The scaling factor has already been set."
+			);
+		}
+		
 		this.factor = factor;
 		ready.set(PARAM_SCALE);
 		return this;

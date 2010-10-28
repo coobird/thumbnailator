@@ -91,6 +91,19 @@ public abstract class ThumbnailMaker
 		{
 			alreadySetMap.put(parameterName, true);
 		}
+		
+		/**
+		 * Returns whether the specified parameter has already been set.
+		 * 
+		 * @param parameterName		The parameter to check whether it has been
+		 * 							already set or not
+		 * @return					{@code true} if the parameter has been set,
+		 * 							{@code false} otherwise.
+		 */
+		protected boolean isSet(String parameterName)
+		{
+			return alreadySetMap.get(parameterName);
+		}
 	}
 	
 	/**
