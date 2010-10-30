@@ -614,7 +614,7 @@ public final class Thumbnails
 		 * @param listener		The listener.
 		 * @return				Reference to this object.
 		 */
-		public Builder addListener(ThumbnailatorEventListener listener)
+		public Builder notify(ThumbnailatorEventListener listener)
 		{
 			listeners.add(listener);
 			return this;
