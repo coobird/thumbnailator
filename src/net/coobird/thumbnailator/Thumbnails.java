@@ -1170,7 +1170,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * <p>
 		 * Calling this method to set this parameter is optional.
 		 *  
-		 * @param angle			Angle in degress.
+		 * @param angle			Angle in degrees.
 		 * @return				Reference to this object.
 		 */
 		public Builder rotate(double angle)
@@ -1390,7 +1390,7 @@ watermark(Positions.CENTER, image, opacity);
 		/**
 		 * Returns an {@link Iterable} which iterates over given files or
 		 * images to return the original images from which the thumbnails
-		 * should be made. 
+		 * should be made.
 		 * 
 		 * @return			An {@link Iterable} which provides the original
 		 * 					images for which thumbnails should be made for. 
@@ -1513,34 +1513,27 @@ watermark(Positions.CENTER, image, opacity);
 		/**
 		 * Creates a thumbnail and returns it as a {@link BufferedImage}.
 		 * <p>
-		 * To call this method, the thumbnail must have been created from a
-		 * single {@link BufferedImage} by calling the 
-		 * {@link Thumbnails#of(BufferedImage...)} method.
+		 * When multiple images are specified through one of the 
+		 * {@link Thumbnails#of} methods, only the first image will be
+		 * processed.
 		 * 
 		 * @return		A thumbnail as a {@link BufferedImage}.
-		 * 
-		 * @throws IllegalStateException	If the thumbnail are not being
-		 * 									created from a {@link BufferedImage}
-		 * 									or if the thumbnails are being
-		 * 									created from multiple images.
 		 */
 		public BufferedImage asBufferedImage()
 		{
 			checkReadiness();
+			Resizer r = makeResizer();
 			
-			if (images == null)
-			{
-				throw new IllegalStateException(
-						"Cannot create thumbnails to files if original images" +
-						" are not from images.");
-			}
-			else if (images.size() > 1)
-			{
-				throw new IllegalStateException(
-						"Cannot output multiple thumbnails to one image.");
-			}
+			BufferedImage img = getOriginalImages().iterator().next();
 			
-			return asBufferedImages().get(0);
+			// Create thumbnails
+			ThumbnailMaker maker = makeThumbnailMaker(r, img.getType());
+			BufferedImage thumbnailImg = maker.make(img);
+			
+			// Apply image filters
+			thumbnailImg = filterPipeline.apply(thumbnailImg);
+			
+			return thumbnailImg;
 		}
 		
 		/*
