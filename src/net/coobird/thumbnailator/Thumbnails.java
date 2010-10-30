@@ -536,6 +536,13 @@ public final class Thumbnails
 		return Thumbnailator.createThumbnail(img, width, height);
 	}
 	
+	private static void checkForNull(Object o, String message)
+	{
+		if (o == null)
+		{
+			throw new NullPointerException(message);
+		}
+	}
 	
 	/**
 	 * Indicate to make thumbnails for images with the specified filenames.  
@@ -544,9 +551,11 @@ public final class Thumbnails
 	 * 					are to be produced for.
 	 * @return			Reference to a builder object which is used to
 	 * 					specify the parameters for creating the thumbnail.
+	 * @throws NullPointerException		If the argument is {@code null}.
 	 */
 	public static Builder of(String... files)
 	{
+		checkForNull(files, "Cannot specify null for input files.");
 		return new Builder(files);
 	}
 	
@@ -557,9 +566,11 @@ public final class Thumbnails
 	 * 					are to be produced for.
 	 * @return			Reference to a builder object which is used to
 	 * 					specify the parameters for creating the thumbnail.
+	 * @throws NullPointerException		If the argument is {@code null}.
 	 */
 	public static Builder of(File... files)
 	{
+		checkForNull(files, "Cannot specify null for input files.");
 		return new Builder(files);
 	}
 	
@@ -570,9 +581,11 @@ public final class Thumbnails
 	 * 					are to be produced for.
 	 * @return			Reference to a builder object which is used to
 	 * 					specify the parameters for creating the thumbnail.
+	 * @throws NullPointerException		If the argument is {@code null}.
 	 */
 	public static Builder of(BufferedImage... images)
 	{
+		checkForNull(images, "Cannot specify null for images.");
 		return new Builder(images);
 	}
 	
