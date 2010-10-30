@@ -34,6 +34,84 @@ public class ThumbnailsBuilderTest
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
+	 * <li>The of(String...) method is called with null.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown.</li>
+	 * </ol>
+	 */
+	@Test(expected=NullPointerException.class)
+	public void ofStringsIsNull()
+	{
+		String[] files = null;
+		
+		try
+		{
+			Thumbnails.of(files);
+		}
+		catch (NullPointerException e)
+		{
+			assertEquals("Cannot specify null for input files.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The of(File...) method is called with null.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown.</li>
+	 * </ol>
+	 */
+	@Test(expected=NullPointerException.class)
+	public void ofFilesIsNull()
+	{
+		File[] files = null;
+		
+		try
+		{
+			Thumbnails.of(files);
+		}
+		catch (NullPointerException e)
+		{
+			assertEquals("Cannot specify null for input files.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The of(BufferedImage...) method is called with null.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown.</li>
+	 * </ol>
+	 */
+	@Test(expected=NullPointerException.class)
+	public void ofBufferedImagesIsNull()
+	{
+		BufferedImage[] images = null;
+		
+		try
+		{
+			Thumbnails.of(images);
+		}
+		catch (NullPointerException e)
+		{
+			assertEquals("Cannot specify null for images.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
 	 * <li>The size method is called.</li>
 	 * </ol>
 	 * and the expected outcome is,
