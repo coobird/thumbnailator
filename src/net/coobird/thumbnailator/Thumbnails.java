@@ -19,6 +19,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import net.coobird.thumbnailator.events.ThumbnailatorEventListener;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.filters.Pipeline;
 import net.coobird.thumbnailator.filters.Rotation;
@@ -604,8 +605,87 @@ public final class Thumbnails
 	 */
 	public static class Builder
 	{
+		private final List<ThumbnailatorEventListener> listeners;
+		
+		/**
+		 * Adds an {@link ThumbnailatorEventListener} which is notified of
+		 * events which occur during the thumbnail generation process.
+		 * 
+		 * @param listener		The listener.
+		 * @return				Reference to this object.
+		 */
+		public Builder notify(ThumbnailatorEventListener listener)
+		{
+			listeners.add(listener);
+			return this;
+		}
+		
+		/**
+		 * Notifies all {@link ThumbnailatorEventListener}s that a file is
+		 * going to be processed. 
+		 * 
+		 * @param sourceFile			The source image file.
+		 */
+		private void notifyBeginFile(File sourceFile)
+		{
+			for (ThumbnailatorEventListener listener : listeners)
+			{
+				listener.beginFile(sourceFile);
+			}
+		}
+		
+		/**
+		 * Notifies all {@link ThumbnailatorEventListener}s that a file has
+		 * been processed. 
+		 * 
+		 * @param sourceFile			The source image file.
+		 * @param destinationFile		The destination thumbnail file.
+		 */
+		private void notifyProcessedFile(File sourceFile, File destinationFile)
+		{
+			for (ThumbnailatorEventListener listener : listeners)
+			{
+				listener.processedFile(sourceFile, destinationFile);
+			}
+		}
+		
+		/**
+		 * Notifies all {@link ThumbnailatorEventListener}s that an image is
+		 * going to be processed. 
+		 * 
+		 * @param sourceFile			The source image.
+		 */
+		private void notifyBeginBufferedImage(BufferedImage sourceImage)
+		{
+			for (ThumbnailatorEventListener listener : listeners)
+			{
+				listener.beginBufferedImage(sourceImage);
+			}
+		}
+		
+		/**
+		 * Notifies all {@link ThumbnailatorEventListener}s that an image has
+		 * been processed. 
+		 * 
+		 * @param sourceFile			The source image.
+		 * @param destinationFile		The destination thumbnail.
+		 */
+		private void notifyProcessedBufferedImage(
+				BufferedImage sourceImage, BufferedImage destinationImage)
+		{
+			for (ThumbnailatorEventListener listener : listeners)
+			{
+				listener.processedBufferedImage(sourceImage, destinationImage);
+			}
+		}
+		
 		private List<File> files = null;
 		private List<BufferedImage> images = null;
+		
+		// Perform initializations which are not dependent on the constructors.
+		{
+			listeners = new ArrayList<ThumbnailatorEventListener>();
+		}
 		
 		private Builder(String... filenames)
 		{
@@ -1497,14 +1577,16 @@ watermark(Positions.CENTER, image, opacity);
 			// Create thumbnails
 			for (BufferedImage img : getOriginalImages())
 			{
-				ThumbnailMaker maker = makeThumbnailMaker(r, img.getType());
+				notifyBeginBufferedImage(img);
 				
+				ThumbnailMaker maker = makeThumbnailMaker(r, img.getType());
 				BufferedImage thumbnailImg = maker.make(img);
 				
 				// Apply image filters
 				thumbnailImg = filterPipeline.apply(thumbnailImg);
 				
 				thumbnails.add(thumbnailImg);
+				notifyProcessedBufferedImage(img, thumbnailImg);
 			}
 			
 			return thumbnails;
@@ -1567,7 +1649,10 @@ watermark(Positions.CENTER, image, opacity);
 			
 			if (files == null)
 			{
-				throw new IllegalStateException("Cannot create thumbnails to files if original images are not from files.");
+				throw new IllegalStateException(
+						"Cannot create thumbnails to files if original " +
+						"images are not from files."
+				);
 			}
 			
 			if (rename == null)
@@ -1582,12 +1667,17 @@ watermark(Positions.CENTER, image, opacity);
 			
 			for (File f : files)
 			{
+				notifyBeginFile(f);
+				
 				File destinationFile = 
 					new File(f.getParent(), rename.apply(f.getName()));
 				
 				destinationFiles.add(destinationFile);
 				
-				Thumbnailator.createThumbnail(new FileThumbnailTask(param, f, destinationFile));
+				Thumbnailator.createThumbnail(
+						new FileThumbnailTask(param, f, destinationFile)
+				);
+				notifyProcessedFile(f, destinationFile);
 			}
 			
 			return destinationFiles;
@@ -1631,16 +1721,26 @@ watermark(Positions.CENTER, image, opacity);
 			
 			if (files == null)
 			{
-				throw new IllegalStateException("Cannot create thumbnails to files if original images are not from files.");
+				throw new IllegalStateException(
+						"Cannot create thumbnails to files if original " +
+						"images are not from files."
+				);
 			}
 			else if (files.size() > 1)
 			{
-				throw new IllegalArgumentException("Cannot output multiple thumbnails to one file.");
+				throw new IllegalArgumentException(
+						"Cannot output multiple thumbnails to one file.");
 			}
 			
 			ThumbnailParameter param = makeParam();
 			
-			Thumbnailator.createThumbnail(new FileThumbnailTask(param, files.get(0), outFile));
+			File sourceFile = files.get(0);
+			notifyBeginFile(sourceFile);
+			
+			Thumbnailator.createThumbnail(
+					new FileThumbnailTask(param, sourceFile, outFile)
+			);
+			notifyProcessedFile(sourceFile, outFile);
 		}
 	}
 }
