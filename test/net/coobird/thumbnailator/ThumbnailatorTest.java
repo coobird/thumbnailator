@@ -822,11 +822,10 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		byte[] bytes = makeImageData("jpg", 200, 200);
-		InputStream is = new ByteArrayInputStream(bytes);
+		InputStream is = null;
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		Thumbnailator.createThumbnail(null, os, 50, 50);
+		Thumbnailator.createThumbnail(is, os, 50, 50);
 		
 		fail();
 	}
@@ -852,9 +851,9 @@ public class ThumbnailatorTest
 		 */
 		byte[] bytes = makeImageData("jpg", 200, 200);
 		InputStream is = new ByteArrayInputStream(bytes);
-		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		ByteArrayOutputStream os = null;
 		
-		Thumbnailator.createThumbnail(is, null, 50, 50);
+		Thumbnailator.createThumbnail(is, os, 50, 50);
 		
 		fail();
 	}
@@ -1149,10 +1148,10 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("foo.jpg");
+		File inputFile = null;
 		File outputFile = new File("bar.jpg");
 		
-		Thumbnailator.createThumbnail(null, outputFile, 50, 50);
+		Thumbnailator.createThumbnail(inputFile, outputFile, 50, 50);
 		
 		fail();
 	}
@@ -1177,9 +1176,9 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		File inputFile = new File("foo.jpg");
-		File outputFile = new File("bar.jpg");
+		File outputFile = null;
 		
-		Thumbnailator.createThumbnail(inputFile, null, 50, 50);
+		Thumbnailator.createThumbnail(inputFile, outputFile, 50, 50);
 		
 		fail();
 	}
