@@ -556,7 +556,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void ofBufferedImageAoBufferedImage()
+	public void of_BufferedImage_asBufferedImage()
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -579,14 +579,39 @@ public class ThumbnailsBuilderTest
 	 * <li>An IllegalStateException is thrown.</li>
 	 * </ol>
 	 */	
-	@Test(expected=IllegalStateException.class)
-	public void ofBufferedImagesAsBufferedImage()
+	@Test(expected=IllegalArgumentException.class)
+	public void of_BufferedImages_asBufferedImage()
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img, img)
 			.size(100, 100)
 			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.of(BufferedImage)</li>
+	 * <li>asBufferedImages()</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void of_BufferedImage_asBufferedImages()
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		List<BufferedImage> thumbnails = Thumbnails.of(img)
+			.size(100, 100)
+			.asBufferedImages();
+		
+		assertEquals(100, thumbnails.get(0).getWidth());
+		assertEquals(100, thumbnails.get(0).getHeight());
+		assertEquals(1, thumbnails.size());
 	}
 	
 	/**
@@ -601,7 +626,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void ofBufferedImagesAsBufferedImages()
+	public void of_BufferedImages_asBufferedImages()
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
