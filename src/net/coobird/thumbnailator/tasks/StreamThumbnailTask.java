@@ -161,6 +161,9 @@ public class StreamThumbnailTask extends ThumbnailTask
 		 * channel when it should not. To circumvent this, images which are
 		 * to be saved as a JPEG will be copied to another BufferedImage without
 		 * an alpha channel before it is saved.
+		 * 
+		 * Also, the BMP writer appears not to support ARGB, so an RGB image
+		 * will be produced before saving.
 		 */
 		if (
 				formatName.equalsIgnoreCase("jpg")
