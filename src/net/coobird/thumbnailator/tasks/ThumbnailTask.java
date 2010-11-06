@@ -65,12 +65,12 @@ public abstract class ThumbnailTask
 	 * Writes the thumbnail to the destination.
 	 * 
 	 * @param img			The image to write.
-	 * @return				Returns {@code false} if the thumbnail could not be
-	 * 						written to the destination.
+	 * @throws UnsupportedFormatException	When an image file which is to be
+	 * 										read or written is unsupported. 
 	 * @throws IOException	Thrown when an I/O problem occurs when writing the
 	 * 						image.
 	 */
-	public abstract boolean write(BufferedImage img) throws IOException;
+	public abstract void write(BufferedImage img) throws IOException;
 	
 	/**
 	 * Returns the {@link ThumbnailParameter} for this {@link ThumbnailTask},

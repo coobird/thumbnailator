@@ -1,29 +1,20 @@
-package net.coobird.thumbnailator;
+package net.coobird.thumbnailator.concurrent;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.concurrent.Callable;
 
 import javax.imageio.ImageIO;
 
-import net.coobird.thumbnailator.builders.BufferedImageBuilder;
-import net.coobird.thumbnailator.filters.ImageFilter;
-import net.coobird.thumbnailator.makers.FixedSizeThumbnailMaker;
-import net.coobird.thumbnailator.makers.ScaledThumbnailMaker;
-import net.coobird.thumbnailator.resizers.ResizerFactory;
-import net.coobird.thumbnailator.resizers.Resizers;
-import net.coobird.thumbnailator.tasks.FileThumbnailTask;
-import net.coobird.thumbnailator.tasks.StreamThumbnailTask;
+import net.coobird.thumbnailator.Rename;
+import net.coobird.thumbnailator.Thumbnailator;
+import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.tasks.ThumbnailTask;
-import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 
 /**
  * This class provides static utility methods which perform generation of
@@ -38,12 +29,12 @@ import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
  * @author coobird
  *
  */
-public class Thumbnailator
+public class ConcurrentThumbnailator
 {
 	/**
 	 * This class is not intended to be instantiated.
 	 */
-	private Thumbnailator() {}
+	private ConcurrentThumbnailator() {}
 	
 	/**
 	 * Creates a thumbnail from parameters specified in a {@link ThumbnailTask}.
@@ -52,54 +43,20 @@ public class Thumbnailator
 	 * @throws IOException		Thrown when a problem occurs when creating a
 	 * 							thumbnail.
 	 */
-	public static void createThumbnail(ThumbnailTask task) throws IOException
+	public static Callable<Void> createThumbnail(final ThumbnailTask task)
 	{
-		ThumbnailParameter param = task.getParam();
-		
-		// Obtain the original image.
-		BufferedImage sourceImage = task.read();
-		
-		BufferedImage destinationImage;
-		
-		if (param.getSize() != null)
+		if (task == null)
 		{
-			// Get the dimensions of the original and thumbnail images. 
-			int destinationWidth = param.getSize().width;
-			int destinationHeight = param.getSize().height;
-			
-			// Create the thumbnail.
-			destinationImage =
-				new FixedSizeThumbnailMaker()
-					.size(destinationWidth, destinationHeight)
-					.keepAspectRatio(param.isKeepAspectRatio())
-					.imageType(param.getType())
-					.resizer(param.getResizer())
-					.make(sourceImage);
-		}
-		else if (!Double.isNaN(param.getScalingFactor()))
-		{
-			// Create the thumbnail.
-			destinationImage =
-				new ScaledThumbnailMaker()
-					.scale(param.getScalingFactor())
-					.imageType(param.getType())
-					.resizer(param.getResizer())
-					.make(sourceImage);
-		}
-		else
-		{
-			throw new IllegalStateException("Parameters to make thumbnail" +
-					" does not have scaling factor nor thumbnail size specified.");
+			throw new NullPointerException("The task is null.");
 		}
 		
-		// Perform the image filters
-		for (ImageFilter filter : param.getImageFilters())
-		{
-			destinationImage = filter.apply(destinationImage);
-		}
-		
-		// Write the thumbnail image to the destination.
-		task.write(destinationImage);
+		return new Callable<Void>() {
+			public Void call() throws Exception
+			{
+				Thumbnailator.createThumbnail(task);
+				return null;
+			}
+		};
 	}
 
 	/**
@@ -125,23 +82,20 @@ public class Thumbnailator
 	 * @param height			The height of the thumbnail.
 	 * @return					Resulting thumbnail.
 	 */
-	public static BufferedImage createThumbnail(
-			BufferedImage img, 
-			int width, 
-			int height
+	public static Callable<BufferedImage> createThumbnail(
+			final BufferedImage img, 
+			final int width, 
+			final int height
 	)
 	{
 		validateDimensions(width, height);
 		
-		Dimension imgSize = new Dimension(img.getWidth(), img.getHeight());
-		Dimension thumbnailSize = new Dimension(width, height);
-		
-		BufferedImage thumbnailImage = 
-			new FixedSizeThumbnailMaker(width, height, true)
-					.resizer(ResizerFactory.getResizer(imgSize, thumbnailSize))
-					.make(img); 
-		
-		return thumbnailImage;
+		return new Callable<BufferedImage>() {
+			public BufferedImage call() throws Exception
+			{
+				return Thumbnailator.createThumbnail(img, width, height);
+			}
+		};
 	}
 
 	/**
@@ -161,80 +115,22 @@ public class Thumbnailator
 	 * @throws IOException	Thrown when a problem occurs when reading from 
 	 * 						{@code File} representing an image file.
 	 */
-	public static void createThumbnail(
-			File inFile,
-			File outFile,
-			int width,
-			int height
-	) throws IOException
+	public static Callable<Void> createThumbnail(
+			final File inFile,
+			final File outFile,
+			final int width,
+			final int height
+	)
 	{
 		validateDimensions(width, height);
-		
-		if (inFile == null)
-		{
-			throw new NullPointerException("Input file is null.");
-		}
-		else if (outFile == null)
-		{
-			throw new NullPointerException("Output file is null.");
-		}
-		
-		if (!inFile.exists())
-		{
-			throw new IOException("Input file does not exist.");
-		}
-	
-		/*
-		 * Determine the output file format.
-		 * 
-		 * Check to be sure the format is supported, and if not, then use
-		 * the original file format.
-		 */
-		String fileName = outFile.getName();
-		String fileExtension = null; 
-		if (
-				fileName.contains(".") 
-				&& fileName.lastIndexOf('.') != fileName.length() - 1
-		)
-		{
-			int lastIndex = fileName.lastIndexOf('.');
-			fileExtension = fileName.substring(lastIndex + 1); 
-		}
-			
-		String format = ThumbnailParameter.ORIGINAL_FORMAT;
-		if (fileExtension != null)
-		{
-			for (String supportedFormatName : ImageIO.getWriterFormatNames())
+
+		return new Callable<Void>() {
+			public Void call() throws Exception
 			{
-				if (supportedFormatName.equals(fileExtension))
-				{
-					format = supportedFormatName;
-					break;
-				}
+				Thumbnailator.createThumbnail(inFile, outFile, width, height);
+				return null;
 			}
-			if (format == null)
-			{
-				throw new UnsupportedFormatException(
-						fileExtension, 
-						"No suitable ImageWriter found for " + fileExtension + "."
-				);
-			}
-		}
-		
-		ThumbnailParameter param = 
-			new ThumbnailParameter(
-					new Dimension(width, height),
-					true,
-					format,
-					ThumbnailParameter.DEFAULT_FORMAT_TYPE,
-					ThumbnailParameter.DEFAULT_QUALITY,
-					ThumbnailParameter.DEFAULT_IMAGE_TYPE,
-					null,
-					Resizers.PROGRESSIVE
-			);
-		
-		Thumbnailator.createThumbnail(
-				new FileThumbnailTask(param, inFile, outFile));
+		};
 	}
 
 	/**
@@ -248,10 +144,10 @@ public class Thumbnailator
 	 * @throws IOException	Thrown when a problem occurs when reading from 
 	 * 						{@code File} representing an image file.
 	 */
-	public static BufferedImage createThumbnail(
-			File f,
-			int width,
-			int height
+	public static Callable<BufferedImage> createThumbnail(
+			final File f,
+			final int width,
+			final int height
 	) throws IOException
 	{
 		validateDimensions(width, height);
@@ -280,33 +176,26 @@ public class Thumbnailator
 	 * @param height		The height of the thumbnail.
 	 * @return				The thumbnail image as an {@link Image}.
 	 */
-	public static Image createThumbnail(
-			Image img, 
-			int width, 
-			int height
+	public static Callable<Image> createThumbnail(
+			final Image img, 
+			final int width, 
+			final int height
 	)
 	{
 		validateDimensions(width, height);
 		
-		// Copy the image from Image into a new BufferedImage.
-		BufferedImage srcImg =
-			new BufferedImageBuilder(
-					img.getWidth(null),
-					img.getHeight(null)
-			).build();
-		
-		Graphics g = srcImg.createGraphics();
-		g.drawImage(img, width, height, null);
-		g.dispose();
-		
-		return createThumbnail(srcImg, width, height);
+		return new Callable<Image>() {
+			public Image call() throws Exception
+			{
+				Thumbnailator.createThumbnail(img, width, height);
+				return null;
+			}
+		};
 	}
 
 	/**
 	 * Creates a thumbnail from image data streamed from an {@link InputStream}
-	 * and streams the data out to an {@link OutputStream}.
-	 * <p>
-	 * The thumbnail will be stored in the same format as the original image.
+	 * and streams the data out to an {@link OutputStream}. 
 	 * 
 	 * @param is			The {@link InputStream} from which to obtain
 	 * 						image data.
@@ -316,37 +205,11 @@ public class Thumbnailator
 	 * @throws IOException	Thrown when a problem occurs when reading from 
 	 * 						{@code File} representing an image file.
 	 */
-	public static void createThumbnail(
-			InputStream is,
-			OutputStream os,
-			int width,
-			int height
-	) throws IOException
-	{
-		Thumbnailator.createThumbnail(
-				is, os, ThumbnailParameter.ORIGINAL_FORMAT, width, height);
-	}
-	
-	/**
-	 * Creates a thumbnail from image data streamed from an {@link InputStream}
-	 * and streams the data out to an {@link OutputStream}, with the specified
-	 * format for the output data. 
-	 * 
-	 * @param is			The {@link InputStream} from which to obtain
-	 * 						image data.
-	 * @param os			The {@link OutputStream} to send thumbnail data to.
-	 * @param format		The image format to use to store the thumbnail data.
-	 * @param width			The width of the thumbnail.
-	 * @param height		The height of the thumbnail.
-	 * @throws IOException	Thrown when a problem occurs when reading from 
-	 * 						{@code File} representing an image file.
-	 */
-	public static void createThumbnail(
-			InputStream is,
-			OutputStream os,
-			String format,
-			int width,
-			int height
+	public static Callable<Void> createThumbnail(
+			final InputStream is,
+			final OutputStream os,
+			final int width,
+			final int height
 	) throws IOException
 	{
 		validateDimensions(width, height);
@@ -360,19 +223,13 @@ public class Thumbnailator
 			throw new NullPointerException("OutputStream is null.");
 		}
 		
-		ThumbnailParameter param = 
-			new ThumbnailParameter(
-					new Dimension(width, height),
-					true,
-					format,
-					ThumbnailParameter.DEFAULT_FORMAT_TYPE,
-					ThumbnailParameter.DEFAULT_QUALITY,
-					ThumbnailParameter.DEFAULT_IMAGE_TYPE,
-					null,
-					Resizers.PROGRESSIVE
-			);
-		
-		Thumbnailator.createThumbnail(new StreamThumbnailTask(param, is, os));
+		return new Callable<Void>() {
+			public Void call() throws Exception
+			{
+				Thumbnailator.createThumbnail(is, os, width, height);
+				return null;
+			}
+		};
 	}
 
 	/**
@@ -391,11 +248,11 @@ public class Thumbnailator
 	 * @throws IOException	Thrown when a problem occurs when reading from 
 	 * 						{@code File} representing an image file. 						
 	 */
-	public static Collection<File> createThumbnailsAsCollection(
-			Collection<? extends File> files,
-			Rename rename,
-			int width,
-			int height
+	public static Callable<Collection<File>> createThumbnailsAsCollection(
+			final Collection<? extends File> files,
+			final Rename rename,
+			final int width,
+			final int height
 	) 
 	throws IOException
 	{
@@ -410,19 +267,14 @@ public class Thumbnailator
 			throw new NullPointerException("Rename is null.");
 		}
 		
-		ArrayList<File> resultFiles = new ArrayList<File>();
-		
-		for (File inFile : files)
-		{
-			File outFile = 
-				new File(inFile.getParent(), rename.apply(inFile.getName()));
-			
-			createThumbnail(inFile, outFile, width, height);
-			
-			resultFiles.add(outFile);
-		}
-		
-		return Collections.unmodifiableList(resultFiles);
+		return new Callable<Collection<File>>() {
+			public Collection<File> call() throws Exception
+			{
+				return Thumbnailator.createThumbnailsAsCollection(
+						files, rename, width, height
+				);
+			}
+		};
 	}
 
 	/**
@@ -438,11 +290,11 @@ public class Thumbnailator
 	 * @throws IOException	Thrown when a problem occurs when reading from 
 	 * 						{@code File} representing an image file.
 	 */
-	public static void createThumbnails(
-			Collection<? extends File> files,
-			Rename rename,
-			int width,
-			int height
+	public static Callable<Void> createThumbnails(
+			final Collection<? extends File> files,
+			final Rename rename,
+			final int width,
+			final int height
 	) 
 	throws IOException
 	{
@@ -457,13 +309,13 @@ public class Thumbnailator
 			throw new NullPointerException("Rename is null.");
 		}
 		
-		for (File inFile : files)
-		{
-			File outFile = 
-				new File(inFile.getParent(), rename.apply(inFile.getName()));
-			
-			createThumbnail(inFile, outFile, width, height);
-		}
+		return new Callable<Void>() {
+			public Void call() throws Exception
+			{
+				Thumbnailator.createThumbnails(files, rename, width, height);
+				return null;
+			}
+		};
 	}
 
 	/**
