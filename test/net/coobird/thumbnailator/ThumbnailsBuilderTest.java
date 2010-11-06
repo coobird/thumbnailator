@@ -232,7 +232,7 @@ public class ThumbnailsBuilderTest
 		
 		try
 		{
-			BufferedImage thumbnail = Thumbnails.of(img)
+			Thumbnails.of(img)
 				.scale(0.5f)
 				.keepAspectRatio(true)
 				.asBufferedImage();
@@ -263,7 +263,7 @@ public class ThumbnailsBuilderTest
 		
 		try
 		{
-			BufferedImage thumbnail = Thumbnails.of(img)
+			Thumbnails.of(img)
 				.scale(0.5f)
 				.keepAspectRatio(false)
 				.asBufferedImage();
@@ -321,7 +321,7 @@ public class ThumbnailsBuilderTest
 		
 		try
 		{
-			BufferedImage thumbnail = Thumbnails.of(img)
+			Thumbnails.of(img)
 				.scale(0.5f)
 				.keepAspectRatio(false)
 				.asBufferedImage();
@@ -375,7 +375,7 @@ public class ThumbnailsBuilderTest
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		BufferedImage thumbnail = Thumbnails.of(img)
+		Thumbnails.of(img)
 			.size(200, 200)
 			.resizer(Resizers.PROGRESSIVE)
 			.resizer(Resizers.PROGRESSIVE)
@@ -397,7 +397,7 @@ public class ThumbnailsBuilderTest
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		BufferedImage thumbnail = Thumbnails.of(img)
+		Thumbnails.of(img)
 			.size(200, 200)
 			.scalingMode(ScalingMode.PROGRESSIVE_BILINEAR)
 			.asBufferedImage();
@@ -418,7 +418,7 @@ public class ThumbnailsBuilderTest
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		BufferedImage thumbnail = Thumbnails.of(img)
+		Thumbnails.of(img)
 			.size(200, 200)
 			.scalingMode(ScalingMode.PROGRESSIVE_BILINEAR)
 			.scalingMode(ScalingMode.PROGRESSIVE_BILINEAR)
@@ -441,7 +441,7 @@ public class ThumbnailsBuilderTest
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		BufferedImage thumbnail = Thumbnails.of(img)
+		Thumbnails.of(img)
 			.size(200, 200)
 			.resizer(Resizers.PROGRESSIVE)
 			.scalingMode(ScalingMode.PROGRESSIVE_BILINEAR)
@@ -464,7 +464,7 @@ public class ThumbnailsBuilderTest
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		BufferedImage thumbnail = Thumbnails.of(img)
+		Thumbnails.of(img)
 			.size(200, 200)
 			.scalingMode(ScalingMode.PROGRESSIVE_BILINEAR)
 			.resizer(Resizers.PROGRESSIVE)
@@ -584,7 +584,7 @@ public class ThumbnailsBuilderTest
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		BufferedImage thumbnail = Thumbnails.of(img, img)
+		Thumbnails.of(img, img)
 			.size(100, 100)
 			.asBufferedImage();
 	}
