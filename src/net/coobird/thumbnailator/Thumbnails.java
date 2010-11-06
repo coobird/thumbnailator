@@ -1518,10 +1518,18 @@ watermark(Positions.CENTER, image, opacity);
 		 * processed.
 		 * 
 		 * @return		A thumbnail as a {@link BufferedImage}.
+		 * @throws IllegalArgumentException		If multiple original images are
+		 * 										specified.
 		 */
 		public BufferedImage asBufferedImage()
 		{
 			checkReadiness();
+			
+			if (images.size() > 1)
+			{
+				throw new IllegalArgumentException("Cannot create one thumbnail from multiple original images.");
+			}
+			
 			Resizer r = makeResizer();
 			
 			BufferedImage img = getOriginalImages().iterator().next();
@@ -1560,6 +1568,8 @@ watermark(Positions.CENTER, image, opacity);
 		 * 
 		 * @throws IOException		If a problem occurs while writing the
 		 * 							thumbnails to files. 
+		 * @throws IllegalStateException		If the original images are not
+		 * 										from files.
 		 */
 		public List<File> asFiles(net.coobird.thumbnailator.Rename rename) throws IOException
 		{
@@ -1606,6 +1616,8 @@ watermark(Positions.CENTER, image, opacity);
 		 * 
 		 * @throws IOException		If a problem occurs while writing the
 		 * 							thumbnails to files. 
+		 * @throws IllegalStateException		If the original images are not
+		 * 										from files.
 		 */
 		public void toFiles(net.coobird.thumbnailator.Rename rename) throws IOException
 		{
@@ -1624,6 +1636,10 @@ watermark(Positions.CENTER, image, opacity);
 		 * 
 		 * @throws IOException		If a problem occurs while writing the
 		 * 							thumbnails to files. 
+		 * @throws IllegalStateException		If the original images are not
+		 * 										from files.
+		 * @throws IllegalArgumentException		If multiple original image files
+		 * 										are	specified.
 		 */
 		public void toFile(File outFile) throws IOException
 		{
