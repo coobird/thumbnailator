@@ -120,9 +120,23 @@ public class ConcurrentThumbnailator
 			final File outFile,
 			final int width,
 			final int height
-	)
+	) throws IOException
 	{
 		validateDimensions(width, height);
+		
+		if (inFile == null)
+		{
+			throw new NullPointerException("Input file is null.");
+		}
+		else if (outFile == null)
+		{
+			throw new NullPointerException("Output file is null.");
+		}
+		
+		if (!inFile.exists())
+		{
+			throw new IOException("Input file does not exist.");
+		}
 
 		return new Callable<Void>() {
 			public Void call() throws Exception
@@ -187,8 +201,7 @@ public class ConcurrentThumbnailator
 		return new Callable<Image>() {
 			public Image call() throws Exception
 			{
-				Thumbnailator.createThumbnail(img, width, height);
-				return null;
+				return Thumbnailator.createThumbnail(img, width, height);
 			}
 		};
 	}
@@ -245,8 +258,6 @@ public class ConcurrentThumbnailator
 	 * @param rename		The renaming function to use.
 	 * @param width			The width of the thumbnail.
 	 * @param height		The height of the thumbnail.
-	 * @throws IOException	Thrown when a problem occurs when reading from 
-	 * 						{@code File} representing an image file. 						
 	 */
 	public static Callable<Collection<File>> createThumbnailsAsCollection(
 			final Collection<? extends File> files,
@@ -254,7 +265,6 @@ public class ConcurrentThumbnailator
 			final int width,
 			final int height
 	) 
-	throws IOException
 	{
 		validateDimensions(width, height);
 		
@@ -287,8 +297,6 @@ public class ConcurrentThumbnailator
 	 * @param rename		The renaming function to use.
 	 * @param width			The width of the thumbnail.
 	 * @param height		The height of the thumbnail.
-	 * @throws IOException	Thrown when a problem occurs when reading from 
-	 * 						{@code File} representing an image file.
 	 */
 	public static Callable<Void> createThumbnails(
 			final Collection<? extends File> files,
@@ -296,7 +304,6 @@ public class ConcurrentThumbnailator
 			final int width,
 			final int height
 	) 
-	throws IOException
 	{
 		validateDimensions(width, height);
 		
