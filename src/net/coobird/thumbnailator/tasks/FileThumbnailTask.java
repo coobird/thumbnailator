@@ -200,6 +200,9 @@ public class FileThumbnailTask extends ThumbnailTask
 		 * channel when it should not. To circumvent this, images which are
 		 * to be saved as a JPEG will be copied to another BufferedImage without
 		 * an alpha channel before it is saved.
+		 * 
+		 * Also, the BMP writer appears not to support ARGB, so an RGB image
+		 * will be produced before saving.
 		 */
 		if (
 				formatName.equalsIgnoreCase("jpg")
@@ -210,7 +213,6 @@ public class FileThumbnailTask extends ThumbnailTask
 			img = BufferedImages.copy(img, BufferedImage.TYPE_INT_RGB);
 		}
 		
-		System.out.println(writer);
 		writer.setOutput(ios);
 		writer.write(null, new IIOImage(img, null, null), writeParam);
 		
