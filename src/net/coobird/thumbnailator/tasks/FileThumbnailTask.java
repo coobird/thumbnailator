@@ -5,17 +5,21 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
+import javax.imageio.event.IIOReadProgressListener;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
 import net.coobird.thumbnailator.BufferedImages;
 import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.events.ThumbnailatorEvent;
+import net.coobird.thumbnailator.events.ThumbnailatorEventListener;
 
 /**
  * A thumbnail generation task which reads and writes data from and to a 
@@ -54,6 +58,22 @@ public class FileThumbnailTask extends ThumbnailTask
 		this.sourceFile = sourceFile;
 		this.destinationFile = destinationFile;
 	}
+	
+	/**
+	 * Creates a {@link ThumbnailTask} in which image data is read from the 
+	 * specified {@link File} and is output to a specified {@link File}, using
+	 * the parameters provided in the specified {@link ThumbnailParameter}.
+	 * 
+	 * @param param				The parameters to use to create the thumbnail.
+	 * @param sourceFile		The {@link File} from which image data is read.
+	 * @param destinationFile	The {@link File} to which thumbnail is written.
+	 */
+	public FileThumbnailTask(ThumbnailParameter param, File sourceFile, File destinationFile, List<ThumbnailatorEventListener> listeners)
+	{
+		super(param, listeners);
+		this.sourceFile = sourceFile;
+		this.destinationFile = destinationFile;
+	}
 
 	@Override
 	public BufferedImage read() throws IOException
@@ -89,6 +109,40 @@ public class FileThumbnailTask extends ThumbnailTask
 		reader.setInput(iis);
 		inputFormatName = reader.getFormatName();
 
+		reader.addIIOReadProgressListener(new IIOReadProgressListener() {
+			
+			public void thumbnailStarted(ImageReader source, int imageIndex,
+					int thumbnailIndex) {}
+			
+			public void thumbnailProgress(ImageReader source, float percentageDone) {}
+			
+			public void thumbnailComplete(ImageReader source) {}
+			
+			public void sequenceStarted(ImageReader source, int minIndex) {}
+			
+			public void sequenceComplete(ImageReader source) {}
+			
+			public void readAborted(ImageReader source)
+			{
+				notifier.failedProcessingFile(sourceFile);
+			}
+			
+			public void imageStarted(ImageReader source, int imageIndex)
+			{
+				notifier.processingFile(new ThumbnailatorEvent(-1, -1, -1, -1, 0.0), sourceFile);
+			}
+			
+			public void imageProgress(ImageReader source, float percentageDone)
+			{
+				notifier.processingFile(new ThumbnailatorEvent(-1, -1, -1, -1, percentageDone), sourceFile);
+			}
+			
+			public void imageComplete(ImageReader source)
+			{
+				notifier.processingFile(new ThumbnailatorEvent(-1, -1, -1, -1, 1.0), sourceFile);
+			}
+		});
+		
 		BufferedImage img = reader.read(FIRST_IMAGE_INDEX);
 		
 		iis.close();

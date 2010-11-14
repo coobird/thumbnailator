@@ -34,6 +34,19 @@ public interface ThumbnailatorEventListener
 	 */
 	public void beginBufferedImage(BufferedImage sourceImage);
 	
+	/**
+	 * Notifies that the processing of a {@link ThumbnailTask} failed.
+	 * 
+	 * @param task			The {@link ThumbnailTask} that was being processed.
+	 */
+	public void failedProcessingTask(ThumbnailTask task);
+
+	/**
+	 * Notifies that the processing of a {@link File} failed.
+	 * 
+	 * @param sourceFile	The {@link BufferedImage} that was being processed.
+	 */
+	public void failedProcessingFile(File sourceFile);
 	
 	/**
 	 * Notifies the progress of the processing of a {@link ThumbnailTask}.
@@ -41,7 +54,7 @@ public interface ThumbnailatorEventListener
 	 * @param event			An object indicating the current progress.
 	 * @param task			The {@link ThumbnailTask} that is being processed.
 	 */
-	public void progressTask(ThumbnailatorEvent event, ThumbnailTask task);
+	public void processingTask(ThumbnailatorEvent event, ThumbnailTask task);
 	
 	/**
 	 * Notifies the progress of the processing of a {@link File}.
@@ -49,7 +62,7 @@ public interface ThumbnailatorEventListener
 	 * @param event			An object indicating the current progress.
 	 * @param sourceFile	The {@link BufferedImage} that is being processed.
 	 */
-	public void progressFile(ThumbnailatorEvent event, File sourceFile);
+	public void processingFile(ThumbnailatorEvent event, File sourceFile);
 	
 	/**
 	 * Notifies that a {@link ThumbnailTask} is has been processed.

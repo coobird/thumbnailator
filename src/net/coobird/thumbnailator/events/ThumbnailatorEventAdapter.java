@@ -23,9 +23,13 @@ public abstract class ThumbnailatorEventAdapter
 
 	public void processedTask(ThumbnailTask task) {}
 	
-	public void progressFile(ThumbnailatorEvent event, File sourceFile) {}
+	public void processingFile(ThumbnailatorEvent event, File sourceFile) {}
 
-	public void progressTask(ThumbnailatorEvent event, ThumbnailTask task) {}
+	public void processingTask(ThumbnailatorEvent event, ThumbnailTask task) {}
+	
+	public void failedProcessingFile(File sourceFile) {}
+	
+	public void failedProcessingTask(ThumbnailTask task) {}
 
 	public void beginBufferedImage(BufferedImage sourceImage) {}
 
