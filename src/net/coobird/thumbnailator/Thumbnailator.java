@@ -23,6 +23,7 @@ import net.coobird.thumbnailator.resizers.Resizers;
 import net.coobird.thumbnailator.tasks.FileThumbnailTask;
 import net.coobird.thumbnailator.tasks.StreamThumbnailTask;
 import net.coobird.thumbnailator.tasks.ThumbnailTask;
+import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 
 /**
  * This class provides static utility methods which perform generation of
@@ -211,6 +212,13 @@ public class Thumbnailator
 					break;
 				}
 			}
+			if (format == null)
+			{
+				throw new UnsupportedFormatException(
+						fileExtension, 
+						"No suitable ImageWriter found for " + fileExtension + "."
+				);
+			}
 		}
 		
 		ThumbnailParameter param = 
@@ -220,7 +228,7 @@ public class Thumbnailator
 					format,
 					ThumbnailParameter.DEFAULT_FORMAT_TYPE,
 					ThumbnailParameter.DEFAULT_QUALITY,
-					BufferedImage.TYPE_INT_ARGB,
+					ThumbnailParameter.DEFAULT_IMAGE_TYPE,
 					null,
 					Resizers.PROGRESSIVE
 			);
@@ -296,7 +304,9 @@ public class Thumbnailator
 
 	/**
 	 * Creates a thumbnail from image data streamed from an {@link InputStream}
-	 * and streams the data out to an {@link OutputStream}. 
+	 * and streams the data out to an {@link OutputStream}.
+	 * <p>
+	 * The thumbnail will be stored in the same format as the original image.
 	 * 
 	 * @param is			The {@link InputStream} from which to obtain
 	 * 						image data.
@@ -309,6 +319,32 @@ public class Thumbnailator
 	public static void createThumbnail(
 			InputStream is,
 			OutputStream os,
+			int width,
+			int height
+	) throws IOException
+	{
+		Thumbnailator.createThumbnail(
+				is, os, ThumbnailParameter.ORIGINAL_FORMAT, width, height);
+	}
+	
+	/**
+	 * Creates a thumbnail from image data streamed from an {@link InputStream}
+	 * and streams the data out to an {@link OutputStream}, with the specified
+	 * format for the output data. 
+	 * 
+	 * @param is			The {@link InputStream} from which to obtain
+	 * 						image data.
+	 * @param os			The {@link OutputStream} to send thumbnail data to.
+	 * @param format		The image format to use to store the thumbnail data.
+	 * @param width			The width of the thumbnail.
+	 * @param height		The height of the thumbnail.
+	 * @throws IOException	Thrown when a problem occurs when reading from 
+	 * 						{@code File} representing an image file.
+	 */
+	public static void createThumbnail(
+			InputStream is,
+			OutputStream os,
+			String format,
 			int width,
 			int height
 	) throws IOException
@@ -328,10 +364,10 @@ public class Thumbnailator
 			new ThumbnailParameter(
 					new Dimension(width, height),
 					true,
-					ThumbnailParameter.ORIGINAL_FORMAT,
+					format,
 					ThumbnailParameter.DEFAULT_FORMAT_TYPE,
 					ThumbnailParameter.DEFAULT_QUALITY,
-					BufferedImage.TYPE_INT_ARGB,
+					ThumbnailParameter.DEFAULT_IMAGE_TYPE,
 					null,
 					Resizers.PROGRESSIVE
 			);

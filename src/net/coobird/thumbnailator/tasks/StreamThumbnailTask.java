@@ -72,8 +72,10 @@ public class StreamThumbnailTask extends ThumbnailTask
 		Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
 		if (!readers.hasNext())
 		{
-			throw new IOException(
-					"No acceptable ImageReader found for source data.");
+			throw new UnsupportedFormatException(
+					UnsupportedFormatException.UNKNOWN,
+					"No suitable ImageReader found for source data."
+			);
 		}
 		
 		ImageReader reader = readers.next();
@@ -88,7 +90,7 @@ public class StreamThumbnailTask extends ThumbnailTask
 	}
 
 	@Override
-	public boolean write(BufferedImage img) throws IOException
+	public void write(BufferedImage img) throws IOException
 	{
 		String formatName;
 		if (param.getOutputFormat() == ThumbnailParameter.ORIGINAL_FORMAT)
@@ -105,7 +107,10 @@ public class StreamThumbnailTask extends ThumbnailTask
 		
 		if (!writers.hasNext())
 		{
-			return false;
+			throw new UnsupportedFormatException(
+					formatName,
+					"No suitable ImageWriter found for " + formatName + "."
+			);
 		}
 		
 		ImageWriter writer = writers.next();
@@ -156,10 +161,14 @@ public class StreamThumbnailTask extends ThumbnailTask
 		 * channel when it should not. To circumvent this, images which are
 		 * to be saved as a JPEG will be copied to another BufferedImage without
 		 * an alpha channel before it is saved.
+		 * 
+		 * Also, the BMP writer appears not to support ARGB, so an RGB image
+		 * will be produced before saving.
 		 */
 		if (
 				formatName.equalsIgnoreCase("jpg")
 				|| formatName.equalsIgnoreCase("jpeg")
+				|| formatName.equalsIgnoreCase("bmp")
 		)
 		{
 			img = BufferedImages.copy(img, BufferedImage.TYPE_INT_RGB);
@@ -169,7 +178,5 @@ public class StreamThumbnailTask extends ThumbnailTask
 		writer.write(null, new IIOImage(img, null, null), writeParam);
 		
 		ios.close();
-		
-		return true;
 	}
 }

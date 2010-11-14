@@ -547,6 +547,90 @@ public class ThumbnailsBuilderTest
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
+	 * <li>Thumbnails.of(BufferedImage...)</li>
+	 * <li>where the BufferedImage[] is null.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=NullPointerException.class)
+	public void of_BufferedImage_null()
+	{
+		BufferedImage[] img = null;
+		
+		try
+		{
+			Thumbnails.of(img);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			assertEquals("Cannot specify null for images.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.of(File...)</li>
+	 * <li>where the File[] is null.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=NullPointerException.class)
+	public void of_File_null()
+	{
+		File[] f = null;
+		
+		try
+		{
+			Thumbnails.of(f);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			assertEquals("Cannot specify null for input files.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.of(String...)</li>
+	 * <li>where the String[] is null.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=NullPointerException.class)
+	public void of_Strings_null()
+	{
+		String[] f = null;
+		
+		try
+		{
+			Thumbnails.of(f);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			assertEquals("Cannot specify null for input files.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
 	 * <li>Thumbnails.of(BufferedImage)</li>
 	 * <li>asBufferedImage()</li>
 	 * </ol>
@@ -556,7 +640,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void ofBufferedImageAoBufferedImage()
+	public void of_BufferedImage_asBufferedImage()
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -579,14 +663,39 @@ public class ThumbnailsBuilderTest
 	 * <li>An IllegalStateException is thrown.</li>
 	 * </ol>
 	 */	
-	@Test(expected=IllegalStateException.class)
-	public void ofBufferedImagesAsBufferedImage()
+	@Test(expected=IllegalArgumentException.class)
+	public void of_BufferedImages_asBufferedImage()
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img, img)
 			.size(100, 100)
 			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.of(BufferedImage)</li>
+	 * <li>asBufferedImages()</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void of_BufferedImage_asBufferedImages()
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		List<BufferedImage> thumbnails = Thumbnails.of(img)
+			.size(100, 100)
+			.asBufferedImages();
+		
+		assertEquals(100, thumbnails.get(0).getWidth());
+		assertEquals(100, thumbnails.get(0).getHeight());
+		assertEquals(1, thumbnails.size());
 	}
 	
 	/**
@@ -601,7 +710,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void ofBufferedImagesAsBufferedImages()
+	public void of_BufferedImages_asBufferedImages()
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -629,7 +738,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException 
 	 */	
 	@Test
-	public void ofFileToFile() throws IOException
+	public void of_File_toFile() throws IOException
 	{
 		File f = new File("test-resources/Thumbnailator/grid.png");
 		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
@@ -658,7 +767,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException 
 	 */	
 	@Test(expected=IllegalArgumentException.class)
-	public void ofFilesToFile() throws IOException
+	public void of_Files_toFile() throws IOException
 	{
 		File f = new File("test-resources/Thumbnailator/grid.png");
 		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
@@ -683,7 +792,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException 
 	 */	
 	@Test
-	public void ofFileToFiles() throws IOException
+	public void of_File_toFiles() throws IOException
 	{
 		File f1 = new File("test-resources/Thumbnailator/grid.png");
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
@@ -713,7 +822,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException 
 	 */	
 	@Test
-	public void ofFilesToFiles() throws IOException
+	public void of_Files_toFiles() throws IOException
 	{
 		File f1 = new File("test-resources/Thumbnailator/grid.png");
 		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
@@ -749,7 +858,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException 
 	 */	
 	@Test
-	public void ofFileAsFiles() throws IOException
+	public void of_File_asFiles() throws IOException
 	{
 		File f1 = new File("test-resources/Thumbnailator/grid.png");
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
@@ -781,7 +890,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException 
 	 */	
 	@Test
-	public void ofFilesAsFiles() throws IOException
+	public void of_Files_asFiles() throws IOException
 	{
 		File f1 = new File("test-resources/Thumbnailator/grid.png");
 		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
@@ -818,7 +927,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException 
 	 */	
 	@Test
-	public void ofStringToFile() throws IOException
+	public void of_String_toFile() throws IOException
 	{
 		String f = "test-resources/Thumbnailator/grid.png";
 		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
@@ -847,7 +956,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException 
 	 */	
 	@Test(expected=IllegalArgumentException.class)
-	public void ofStringsToFile() throws IOException
+	public void of_Strings_toFile() throws IOException
 	{
 		String f = "test-resources/Thumbnailator/grid.png";
 		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
@@ -872,7 +981,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException 
 	 */	
 	@Test
-	public void ofStringToFiles() throws IOException
+	public void of_String_toFiles() throws IOException
 	{
 		String f1 = "test-resources/Thumbnailator/grid.png";
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
@@ -902,7 +1011,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException 
 	 */	
 	@Test
-	public void ofStringsToFiles() throws IOException
+	public void of_Strings_toFiles() throws IOException
 	{
 		String f1 = "test-resources/Thumbnailator/grid.png";
 		String f2 = "test-resources/Thumbnailator/grid.jpg";
@@ -938,7 +1047,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException 
 	 */	
 	@Test
-	public void ofStringAsFiles() throws IOException
+	public void of_String_asFiles() throws IOException
 	{
 		String f1 = "test-resources/Thumbnailator/grid.png";
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
@@ -970,7 +1079,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException 
 	 */	
 	@Test
-	public void ofStringsAsFiles() throws IOException
+	public void of_Strings_asFiles() throws IOException
 	{
 		String f1 = "test-resources/Thumbnailator/grid.png";
 		String f2 = "test-resources/Thumbnailator/grid.jpg";
