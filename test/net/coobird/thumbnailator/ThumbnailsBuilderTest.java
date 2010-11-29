@@ -547,6 +547,225 @@ public class ThumbnailsBuilderTest
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
+	 * <li>outputFormat</li>
+	 * <li>toFile(File)</li>
+	 * <li>format name matches the file extension</li>
+	 * <li>format is same as the original format</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The output format of the image is one that is specified.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void outputFormat_SameAsOriginal_SameAsFileExtension() throws IOException
+	{
+		File f = new File("test-resources/Thumbnailator/grid.png");
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		outFile.deleteOnExit();
+		
+		Thumbnails.of(f)
+			.size(50, 50)
+			.outputFormat("png")
+			.toFile(outFile);
+		
+		BufferedImage fromFileImage = ImageIO.read(outFile);
+		
+		String formatName = ImageIO.getImageReaders(ImageIO.createImageInputStream(outFile)).next().getFormatName();
+		assertEquals("png", formatName);
+		
+		assertEquals(50, fromFileImage.getWidth());
+		assertEquals(50, fromFileImage.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputFormat</li>
+	 * <li>toFile(File)</li>
+	 * <li>format name matches the file extension</li>
+	 * <li>format is different from the original format</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The output format of the image is one that is specified.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void outputFormat_DiffersFromOriginal_SameAsFileExtension() throws IOException
+	{
+		File f = new File("test-resources/Thumbnailator/grid.png");
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		outFile.deleteOnExit();
+		
+		Thumbnails.of(f)
+			.size(50, 50)
+			.outputFormat("jpg")
+			.toFile(outFile);
+		
+		BufferedImage fromFileImage = ImageIO.read(outFile);
+		
+		String formatName = ImageIO.getImageReaders(ImageIO.createImageInputStream(outFile)).next().getFormatName();
+		assertEquals("JPEG", formatName);
+		
+		assertEquals(50, fromFileImage.getWidth());
+		assertEquals(50, fromFileImage.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputFormat</li>
+	 * <li>toFile(File)</li>
+	 * <li>format name matches the file extension</li>
+	 * <li>format is different from the original format</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The output format of the image is one that is specified.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void outputFormat_DiffersFromOriginal_SameAsFileExtension_Jpeg() throws IOException
+	{
+		File f = new File("test-resources/Thumbnailator/grid.png");
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		outFile.deleteOnExit();
+		
+		Thumbnails.of(f)
+			.size(50, 50)
+			.outputFormat("jpeg")
+			.toFile(outFile);
+		
+		BufferedImage fromFileImage = ImageIO.read(outFile);
+		
+		String formatName = ImageIO.getImageReaders(ImageIO.createImageInputStream(outFile)).next().getFormatName();
+		assertEquals("JPEG", formatName);
+		
+		assertEquals(50, fromFileImage.getWidth());
+		assertEquals(50, fromFileImage.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputFormat</li>
+	 * <li>toFile(File)</li>
+	 * <li>format name differs from the file extension</li>
+	 * <li>format is same as the original format</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The output format of the image is one that is specified.</li>
+	 * <li>The format extension is appended to the output filename.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void outputFormat_SameAsOriginal_DiffersFromFileExtension() throws IOException
+	{
+		File f = new File("test-resources/Thumbnailator/grid.png");
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		
+		File actualOutFile = new File("test-resources/Thumbnailator/grid.tmp.jpg.png");
+		actualOutFile.deleteOnExit();
+		
+		Thumbnails.of(f)
+			.size(50, 50)
+			.outputFormat("png")
+			.toFile(outFile);
+		
+		BufferedImage fromFileImage = ImageIO.read(actualOutFile);
+		
+		String formatName = ImageIO.getImageReaders(ImageIO.createImageInputStream(actualOutFile)).next().getFormatName();
+		assertEquals("png", formatName);
+		
+		assertEquals(50, fromFileImage.getWidth());
+		assertEquals(50, fromFileImage.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputFormat</li>
+	 * <li>toFile(File)</li>
+	 * <li>format name differs from the file extension</li>
+	 * <li>format differs from the original format</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The output format of the image is one that is specified.</li>
+	 * <li>The format extension is appended to the output filename.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void outputFormat_DiffersFromOriginal_DiffersFromFileExtension() throws IOException
+	{
+		File f = new File("test-resources/Thumbnailator/grid.png");
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+
+		File actualOutFile = new File("test-resources/Thumbnailator/grid.tmp.png.jpg");
+		actualOutFile.deleteOnExit();
+		
+		Thumbnails.of(f)
+			.size(50, 50)
+			.outputFormat("jpg")
+			.toFile(outFile);
+		
+		BufferedImage fromFileImage = ImageIO.read(actualOutFile);
+		
+		String formatName = ImageIO.getImageReaders(ImageIO.createImageInputStream(actualOutFile)).next().getFormatName();
+		assertEquals("JPEG", formatName);
+		
+		assertEquals(50, fromFileImage.getWidth());
+		assertEquals(50, fromFileImage.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputFormat</li>
+	 * <li>toFile(File)</li>
+	 * <li>format name differs from the file extension</li>
+	 * <li>format differs from the original format</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The output format of the image is one that is specified.</li>
+	 * <li>The format extension is appended to the output filename.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void outputFormat_DiffersFromOriginal_DiffersFromFileExtension_Jpeg() throws IOException
+	{
+		File f = new File("test-resources/Thumbnailator/grid.png");
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		
+		File actualOutFile = new File("test-resources/Thumbnailator/grid.tmp.png.jpeg");
+		actualOutFile.deleteOnExit();
+		
+		Thumbnails.of(f)
+			.size(50, 50)
+			.outputFormat("jpeg")
+			.toFile(outFile);
+		
+		BufferedImage fromFileImage = ImageIO.read(actualOutFile);
+		
+		String formatName = ImageIO.getImageReaders(ImageIO.createImageInputStream(actualOutFile)).next().getFormatName();
+		assertEquals("JPEG", formatName);
+		
+		assertEquals(50, fromFileImage.getWidth());
+		assertEquals(50, fromFileImage.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
 	 * <li>Thumbnails.of(BufferedImage...)</li>
 	 * <li>where the BufferedImage[] is null.</li>
 	 * </ol>
