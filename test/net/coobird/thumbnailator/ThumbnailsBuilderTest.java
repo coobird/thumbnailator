@@ -10,6 +10,8 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -850,6 +852,246 @@ public class ThumbnailsBuilderTest
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
+	 * <li>Thumbnails.of(BufferedImage...)</li>
+	 * <li>where the BufferedImage[] is length 0.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void of_BufferedImage_empty()
+	{
+		BufferedImage[] img = new BufferedImage[0];
+		
+		try
+		{
+			Thumbnails.of(img);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			assertEquals("Cannot specify an empty array for images.", e.getMessage());
+			throw e;
+		}
+	}
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.of(File...)</li>
+	 * <li>where the File[] is length 0.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void of_File_empty()
+	{
+		File[] f = new File[0];
+		
+		try
+		{
+			Thumbnails.of(f);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			assertEquals("Cannot specify an empty array for input files.", e.getMessage());
+			throw e;
+		}
+	}
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.of(String...)</li>
+	 * <li>where the String[] is length 0.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void of_Strings_empty()
+	{
+		String[] f = new String[0];
+		
+		try
+		{
+			Thumbnails.of(f);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			assertEquals("Cannot specify an empty array for input files.", e.getMessage());
+			throw e;
+		}
+	}
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromImages(Collection)</li>
+	 * <li>where the Collection is null.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=NullPointerException.class)
+	public void fromImages_Collection_null()
+	{
+		try
+		{
+			Thumbnails.fromImages(null);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			assertEquals("Cannot specify null for images.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromFiles(Collection)</li>
+	 * <li>where the Collection is null.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=NullPointerException.class)
+	public void fromFiles_Collection_null()
+	{
+		try
+		{
+			Thumbnails.fromFiles(null);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			assertEquals("Cannot specify null for input files.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromFilenames(Collection)</li>
+	 * <li>where the Collection is null.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=NullPointerException.class)
+	public void fromFilenames_Collection_null()
+	{
+		try
+		{
+			Thumbnails.fromFilenames(null);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			assertEquals("Cannot specify null for input files.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromImages(Collection)</li>
+	 * <li>where the Collection is empty.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void fromImages_Collection_empty()
+	{
+		try
+		{
+			Thumbnails.fromImages(Collections.<BufferedImage>emptyList());
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			assertEquals("Cannot specify an empty collection for images.", e.getMessage());
+			throw e;
+		}
+	}
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromFiles(Collection)</li>
+	 * <li>where the Collection is empty.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void fromFiles_Collection_empty()
+	{
+		try
+		{
+			Thumbnails.fromFiles(Collections.<File>emptyList());
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			assertEquals("Cannot specify an empty collection for input files.", e.getMessage());
+			throw e;
+		}
+	}
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromFilenames(Collection)</li>
+	 * <li>where the Collection is empty.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void fromFilenames_Collection_empty()
+	{
+		try
+		{
+			Thumbnails.fromFilenames(Collections.<String>emptyList());
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			assertEquals("Cannot specify an empty collection for input files.", e.getMessage());
+			throw e;
+		}
+	}
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
 	 * <li>Thumbnails.of(BufferedImage)</li>
 	 * <li>asBufferedImage()</li>
 	 * </ol>
@@ -944,6 +1186,103 @@ public class ThumbnailsBuilderTest
 		assertEquals(2, thumbnails.size());
 	}
 	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromImages([BufferedImage])</li>
+	 * <li>asBufferedImage()</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A BufferedImage is returned</li>
+	 * </ol>
+	 */	
+	@Test
+	public void fromImages_Single_asBufferedImage()
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		BufferedImage thumbnail = Thumbnails.fromImages(Arrays.asList(img))
+			.size(100, 100)
+			.asBufferedImage();
+		
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+	}
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromImages([BufferedImage, BufferedImage])</li>
+	 * <li>asBufferedImage()</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void fromImages_Multiple_asBufferedImage()
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		Thumbnails.fromImages(Arrays.asList(img, img))
+			.size(100, 100)
+			.asBufferedImage();
+	}
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromImages([BufferedImage])</li>
+	 * <li>asBufferedImages()</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void fromImages_Single_asBufferedImages()
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		List<BufferedImage> thumbnails = Thumbnails.fromImages(Arrays.asList(img))
+			.size(100, 100)
+			.asBufferedImages();
+		
+		assertEquals(100, thumbnails.get(0).getWidth());
+		assertEquals(100, thumbnails.get(0).getHeight());
+		assertEquals(1, thumbnails.size());
+	}
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromImages([BufferedImage, BufferedImage])</li>
+	 * <li>asBufferedImage()</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void fromImages_Multiple_asBufferedImages()
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		List<BufferedImage> thumbnails = Thumbnails.fromImages(Arrays.asList(img, img))
+			.size(100, 100)
+			.asBufferedImages();
+		
+		assertEquals(100, thumbnails.get(0).getWidth());
+		assertEquals(100, thumbnails.get(0).getHeight());
+		assertEquals(100, thumbnails.get(1).getWidth());
+		assertEquals(100, thumbnails.get(1).getHeight());
+		assertEquals(2, thumbnails.size());
+	}
+
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>

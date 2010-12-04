@@ -544,6 +544,22 @@ public final class Thumbnails
 		}
 	}
 	
+	private static void checkForEmpty(Object[] o, String message)
+	{
+		if (o.length == 0)
+		{
+			throw new IllegalArgumentException(message);
+		}
+	}
+	
+	private static void checkForEmpty(Collection<?> o, String message)
+	{
+		if (o.size() == 0)
+		{
+			throw new IllegalArgumentException(message);
+		}
+	}
+	
 	/**
 	 * Indicate to make thumbnails for images with the specified filenames.  
 	 * 
@@ -552,10 +568,12 @@ public final class Thumbnails
 	 * @return			Reference to a builder object which is used to
 	 * 					specify the parameters for creating the thumbnail.
 	 * @throws NullPointerException		If the argument is {@code null}.
+	 * @throws IllegalArgumentException	If the argument is an empty array.
 	 */
 	public static Builder of(String... files)
 	{
 		checkForNull(files, "Cannot specify null for input files.");
+		checkForEmpty(files, "Cannot specify an empty array for input files.");
 		return new Builder(files);
 	}
 	
@@ -567,10 +585,12 @@ public final class Thumbnails
 	 * @return			Reference to a builder object which is used to
 	 * 					specify the parameters for creating the thumbnail.
 	 * @throws NullPointerException		If the argument is {@code null}.
+	 * @throws IllegalArgumentException	If the argument is an empty array.
 	 */
 	public static Builder of(File... files)
 	{
 		checkForNull(files, "Cannot specify null for input files.");
+		checkForEmpty(files, "Cannot specify an empty array for input files.");
 		return new Builder(files);
 	}
 	
@@ -582,13 +602,66 @@ public final class Thumbnails
 	 * @return			Reference to a builder object which is used to
 	 * 					specify the parameters for creating the thumbnail.
 	 * @throws NullPointerException		If the argument is {@code null}.
+	 * @throws IllegalArgumentException	If the argument is an empty array.
 	 */
 	public static Builder of(BufferedImage... images)
 	{
 		checkForNull(images, "Cannot specify null for images.");
+		checkForEmpty(images, "Cannot specify an empty array for images.");
 		return new Builder(images);
 	}
+
+	/**
+	 * Indicate to make thumbnails for images with the specified filenames.  
+	 * 
+	 * @param files		File names of image files for which thumbnails
+	 * 					are to be produced for.
+	 * @return			Reference to a builder object which is used to
+	 * 					specify the parameters for creating the thumbnail.
+	 * @throws NullPointerException		If the argument is {@code null}.
+	 * @throws IllegalArgumentException	If the argument is an empty collection.
+	 */
+	public static Builder fromFilenames(Collection<String> files)
+	{
+		checkForNull(files, "Cannot specify null for input files.");
+		checkForEmpty(files, "Cannot specify an empty collection for input files.");
+		return of(files.toArray(new String[files.size()]));
+	}
 	
+	/**
+	 * Indicate to make thumbnails from the specified {@link File}s.  
+	 * 
+	 * @param files		{@link File} objects of image files for which thumbnails
+	 * 					are to be produced for.
+	 * @return			Reference to a builder object which is used to
+	 * 					specify the parameters for creating the thumbnail.
+	 * @throws NullPointerException		If the argument is {@code null}.
+	 * @throws IllegalArgumentException	If the argument is an empty collection.
+	 */
+	public static Builder fromFiles(Collection<File> files)
+	{
+		checkForNull(files, "Cannot specify null for input files.");
+		checkForEmpty(files, "Cannot specify an empty collection for input files.");
+		return of(files.toArray(new File[files.size()]));
+	}
+	
+	/**
+	 * Indicate to make thumbnails from the specified {@link BufferedImage}s.
+	 * 
+	 * @param images	{@link BufferedImage}s for which thumbnails
+	 * 					are to be produced for.
+	 * @return			Reference to a builder object which is used to
+	 * 					specify the parameters for creating the thumbnail.
+	 * @throws NullPointerException		If the argument is {@code null}.
+	 * @throws IllegalArgumentException	If the argument is an empty collection.
+	 */
+	public static Builder fromImages(Collection<BufferedImage> images)
+	{
+		checkForNull(images, "Cannot specify null for images.");
+		checkForEmpty(images, "Cannot specify an empty collection for images.");
+		return of(images.toArray(new BufferedImage[images.size()]));
+	}
+
 	/**
 	 * A builder interface for Thumbnailator.
 	 * <p>
@@ -597,6 +670,9 @@ public final class Thumbnails
 	 * <li>{@link Thumbnails#of(BufferedImage...)}</li>
 	 * <li>{@link Thumbnails#of(File...)}</li>
 	 * <li>{@link Thumbnails#of(String...)}</li>
+	 * <li>{@link Thumbnails#fromImages(Collection)}</li>
+	 * <li>{@link Thumbnails#fromFiles(Collection)}</li>
+	 * <li>{@link Thumbnails#fromFilenames(Collection)}</li>
 	 * </ul>
  	 * 
 	 * @author coobird
@@ -629,7 +705,6 @@ public final class Thumbnails
 			this.images = Arrays.asList(images);
 		}
 
-		
 		/**
 		 * Status of each property.
 		 * 
