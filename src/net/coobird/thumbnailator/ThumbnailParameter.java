@@ -262,7 +262,8 @@ public class ThumbnailParameter
 	 * @param resizer			The {@link Resizer} to use when performing the
 	 * 							resizing operation to create a thumbnail.
 	 * 
-	 * @throws IllegalArgumentException 	If scaling factor is less than or
+	 * @throws IllegalArgumentException 	If the scaling factor is not a
+	 * 										rational number or is less than or
 	 * 										equal to 0. 
 	 */
 	public ThumbnailParameter(
@@ -279,6 +280,10 @@ public class ThumbnailParameter
 		if (scalingFactor <= 0.0)
 		{
 			throw new IllegalArgumentException("Scaling factor is less than or equal to 0.");
+		} 
+		else if (Double.isNaN(scalingFactor) || Double.isInfinite(scalingFactor))
+		{
+			throw new IllegalArgumentException("Scaling factor must be a rational number.");
 		} 
 
 		this.scalingFactor = scalingFactor;

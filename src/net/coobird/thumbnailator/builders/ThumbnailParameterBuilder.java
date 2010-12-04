@@ -1,29 +1,64 @@
 package net.coobird.thumbnailator.builders;
 
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+import java.util.Collections;
 import java.util.List;
 
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.resizers.Resizer;
+import net.coobird.thumbnailator.resizers.Resizers;
 
 /**
  * A builder for generating {@link ThumbnailParameter}.
+ * <p>
+ * The default values assigned to the {@link ThumbnailParameter} created by
+ * the {@link ThumbnailParameterBuilder} are as follows:
+ * <p>
+ * <dl>
+ * <dt>width</dt>
+ * <dd>Unassigned. Must be set by the {@link #size(int, int)} method.</dd>
+ * <dt>height</dt>
+ * <dd>Unassigned. Must be set by the {@link #size(int, int)} method.</dd>
+ * <dt>scaling factor</dt>
+ * <dd>Unassigned. Must be set by the {@link #scale(double)} method.</dd>
+ * <dt>image type</dt>
+ * <dd>See {@link ThumbnailParameter#DEFAULT_IMAGE_TYPE}. Same as
+ * {@link BufferedImage#TYPE_INT_ARGB}.</dd>
+ * <dt>aspect ratio</dt>
+ * <dd>Maintain the aspect ratio of the original image.</dd>
+ * <dt>output quality</dt>
+ * <dd>See {@link ThumbnailParameter#DEFAULT_QUALITY}.</dd>
+ * <dt>output format</dt>
+ * <dd>See {@link ThumbnailParameter#ORIGINAL_FORMAT}. Maintains the same
+ * image format as the original image.</dd>
+ * <dt>output format type</dt>
+ * <dd>See {@link ThumbnailParameter#DEFAULT_FORMAT_TYPE}. Uses the default
+ * format type of the codec used to create the thumbnail image.</dd>
+ * <dt>image filters</dt>
+ * <dd>None.</dd>
+ * <dt>resizer</dt>
+ * <dd>{@link Resizers#PROGRESSIVE} is used.</dd>
+ * </dl>
  * 
  * @author coobird
  *
  */
 public final class ThumbnailParameterBuilder
 {
-	private int width;
-	private int height;
-	private int imageType;
-	private boolean keepAspectRatio;
-	private float thumbnailQuality;
-	private String thumbnailFormat;
-	private String thumbnailFormatType;
-	private List<ImageFilter> filters;
-	private Resizer resizer;
+	private static final int UNINITIALIZED = -1;
+	
+	private int width = UNINITIALIZED;
+	private int height = UNINITIALIZED;
+	private double scalingFactor = Double.NaN;
+	private int imageType = ThumbnailParameter.DEFAULT_IMAGE_TYPE;
+	private boolean keepAspectRatio = true;
+	private float thumbnailQuality = ThumbnailParameter.DEFAULT_QUALITY;
+	private String thumbnailFormat = ThumbnailParameter.ORIGINAL_FORMAT;
+	private String thumbnailFormatType = ThumbnailParameter.DEFAULT_FORMAT_TYPE;
+	private List<ImageFilter> filters = Collections.emptyList();
+	private Resizer resizer = Resizers.PROGRESSIVE;
 	
 	/**
 	 * Creates an instance of a {@link ThumbnailParameterBuilder}.
@@ -62,11 +97,45 @@ public final class ThumbnailParameterBuilder
 	 * @param width		The width of the thumbnail.
 	 * @param height	The height of the thumbnail.
 	 * @return			A reference to this object.
+	 * @throws IllegalArgumentException	If the widht or height is less than 0.
 	 */
 	public ThumbnailParameterBuilder size(int width, int height)
 	{
+		if (width < 0)
+		{
+			throw new IllegalArgumentException("Width must be greater than 0.");
+		}
+		if (height < 0)
+		{
+			throw new IllegalArgumentException("Height must be greater than 0.");
+		}
+		
 		this.width = width;
 		this.height = height;
+		return this;
+	}
+	
+	/**
+	 * Sets the scaling factor of the thumbnail.
+	 * 
+	 * @param scalingFactor		The scaling factor of the thumbnail.
+	 * @return					A reference to this object.
+	 * @throws IllegalArgumentException		If the scaling factor is not a 
+	 * 										rational number, or if it is less
+	 * 										than {@code 0.0}.
+	 */
+	public ThumbnailParameterBuilder scale(double scalingFactor)
+	{
+		if (scalingFactor <= 0.0)
+		{
+			throw new IllegalArgumentException("Scaling factor is less than or equal to 0.");
+		} 
+		else if (Double.isNaN(scalingFactor) || Double.isInfinite(scalingFactor))
+		{
+			throw new IllegalArgumentException("Scaling factor must be a rational number.");
+		} 
+		
+		this.scalingFactor = scalingFactor;
 		return this;
 	}
 	
@@ -175,20 +244,44 @@ public final class ThumbnailParameterBuilder
 	 * 
 	 * @return		A {@link ThumbnailParameter} with parameters set through
 	 * 				the use of this builder.
+	 * @throws IllegalStateException	If neither the size nor the scaling
+	 * 									factor has been set.
 	 */
 	public ThumbnailParameter build()
 	{
-		ThumbnailParameter param = new ThumbnailParameter(
-				new Dimension(width, height),
-				keepAspectRatio,
-				thumbnailFormat,
-				thumbnailFormatType,
-				thumbnailQuality,
-				imageType,
-				filters,
-				resizer
-		);
+		if (!Double.isNaN(scalingFactor))
+		{
+			// If scaling factor has been set.
+			return new ThumbnailParameter(
+					scalingFactor,
+					keepAspectRatio,
+					thumbnailFormat,
+					thumbnailFormatType,
+					thumbnailQuality,
+					imageType,
+					filters,
+					resizer
+			);
 			
-		return param;
+		}
+		else if (width != UNINITIALIZED && height != UNINITIALIZED)
+		{
+			return new ThumbnailParameter(
+					new Dimension(width, height),
+					keepAspectRatio,
+					thumbnailFormat,
+					thumbnailFormatType,
+					thumbnailQuality,
+					imageType,
+					filters,
+					resizer
+			);
+		}
+		else
+		{
+			throw new IllegalStateException(
+					"The size nor the scaling factor has been set."
+			);
+		}
 	}
 }
