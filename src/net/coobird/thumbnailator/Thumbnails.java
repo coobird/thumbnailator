@@ -19,8 +19,10 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import net.coobird.thumbnailator.events.ThumbnailatorEvent;
 import net.coobird.thumbnailator.events.ThumbnailatorEventListener;
 import net.coobird.thumbnailator.events.ThumbnailatorEventNotifier;
+import net.coobird.thumbnailator.events.ThumbnailatorEvent.Phase;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.filters.Pipeline;
 import net.coobird.thumbnailator.filters.Rotation;
@@ -1597,14 +1599,24 @@ watermark(Positions.CENTER, image, opacity);
 			for (BufferedImage img : getOriginalImages())
 			{
 				notifier.beginProcessing(img);
+				notifier.processing(new ThumbnailatorEvent(Phase.ACQUIRE, 0.0), img);
+				notifier.processing(new ThumbnailatorEvent(Phase.ACQUIRE, 1.0), img);
 				
+				// Create thumbnails
+				notifier.processing(new ThumbnailatorEvent(Phase.RESIZE, 0.0), img);
 				ThumbnailMaker maker = makeThumbnailMaker(r, img.getType());
 				BufferedImage thumbnailImg = maker.make(img);
+				notifier.processing(new ThumbnailatorEvent(Phase.RESIZE, 1.0), img);
 				
 				// Apply image filters
+				notifier.processing(new ThumbnailatorEvent(Phase.FILTER, 0.0), img);
 				thumbnailImg = filterPipeline.apply(thumbnailImg);
+				notifier.processing(new ThumbnailatorEvent(Phase.FILTER, 1.0), img);
 				
+				notifier.processing(new ThumbnailatorEvent(Phase.OUTPUT, 0.0), img);
 				thumbnails.add(thumbnailImg);
+				notifier.processing(new ThumbnailatorEvent(Phase.OUTPUT, 1.0), img);
+				
 				notifier.finishedProcessing(img, thumbnailImg);
 			}
 			
@@ -1634,14 +1646,25 @@ watermark(Positions.CENTER, image, opacity);
 			Resizer r = makeResizer();
 			
 			BufferedImage img = getOriginalImages().iterator().next();
+			notifier.beginProcessing(img);
+			notifier.processing(new ThumbnailatorEvent(Phase.ACQUIRE, 0.0), img);
+			notifier.processing(new ThumbnailatorEvent(Phase.ACQUIRE, 1.0), img);
+			
 			
 			// Create thumbnails
+			notifier.processing(new ThumbnailatorEvent(Phase.RESIZE, 0.0), img);
 			ThumbnailMaker maker = makeThumbnailMaker(r, img.getType());
 			BufferedImage thumbnailImg = maker.make(img);
+			notifier.processing(new ThumbnailatorEvent(Phase.RESIZE, 1.0), img);
 			
 			// Apply image filters
+			notifier.processing(new ThumbnailatorEvent(Phase.FILTER, 0.0), img);
 			thumbnailImg = filterPipeline.apply(thumbnailImg);
+			notifier.processing(new ThumbnailatorEvent(Phase.FILTER, 1.0), img);
 			
+			notifier.processing(new ThumbnailatorEvent(Phase.OUTPUT, 0.0), img);
+			notifier.processing(new ThumbnailatorEvent(Phase.OUTPUT, 1.0), img);
+			notifier.finishedProcessing(img, thumbnailImg);
 			return thumbnailImg;
 		}
 		
