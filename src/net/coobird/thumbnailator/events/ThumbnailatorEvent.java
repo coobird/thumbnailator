@@ -3,53 +3,71 @@ package net.coobird.thumbnailator.events;
 
 public class ThumbnailatorEvent 
 {
-	private final int currentTask;
-	private final int totalTasks;
-	private final int successfulTasks;
-	private final int failedTasks;
-	private final double currentPercentage;
+	public enum Phase
+	{
+		/**
+		 * The image is being acquired.
+		 */
+		ACQUIRE,
+		
+		/**
+		 * The image is being resized.
+		 */
+		RESIZE,
+		
+		/**
+		 * The image is being filtered.
+		 */
+		FILTER,
+		
+		/**
+		 * The image is being output.
+		 */
+		OUTPUT,
+		;
+	}
 	
 	/**
-	 * @param currentTask
-	 * @param totalTasks
-	 * @param successfulTasks
-	 * @param failedTasks
-	 * @param currentPercentage
+	 * The current phase of the image processing. 
 	 */
-	public ThumbnailatorEvent(int currentTask, int totalTasks,
-			int successfulTasks, int failedTasks, double currentPercentage)
+	private final Phase phase;
+	
+	/**
+	 * The progress in this phase of processing.
+	 * <p>
+	 * The {@code double} ranges from {@code 0.0} to {@code 1.0}, where
+	 * {@code 0.0} indicates no progress, and {@code 1.0} indicates completion.
+	 * If an anomaly has occurred, {@link Double#NaN} will be used.
+	 */
+	private final double progress;
+	
+	
+	/**
+	 * @param phase
+	 * @param progress
+	 */
+	public ThumbnailatorEvent(Phase phase, double progress)
 	{
 		super();
-		this.currentTask = currentTask;
-		this.totalTasks = totalTasks;
-		this.successfulTasks = successfulTasks;
-		this.failedTasks = failedTasks;
-		this.currentPercentage = currentPercentage;
+		this.phase = phase;
+		this.progress = progress;
+	}
+	
+
+	/**
+	 * @return the phase
+	 */
+	public Phase getPhase()
+	{
+		return phase;
 	}
 
-	public int getCurrentTask()
+	/**
+	 * @return the progress
+	 */
+	public double getProgress()
 	{
-		return currentTask;
-	}
-
-	public int getTotalTasks()
-	{
-		return totalTasks;
-	}
-
-	public int getSuccessfulTasks()
-	{
-		return successfulTasks;
-	}
-
-	public int getFailedTasks()
-	{
-		return failedTasks;
-	}
-
-	public double getCurrentPercentage()
-	{
-		return currentPercentage;
+		return progress;
 	}
 
 	@Override
@@ -57,16 +75,13 @@ public class ThumbnailatorEvent
 	{
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((phase == null) ? 0 : phase.hashCode());
 		long temp;
-		temp = Double.doubleToLongBits(currentPercentage);
+		temp = Double.doubleToLongBits(progress);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + currentTask;
-		result = prime * result + failedTasks;
-		result = prime * result + successfulTasks;
-		result = prime * result + totalTasks;
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -77,26 +92,23 @@ public class ThumbnailatorEvent
 		if (getClass() != obj.getClass())
 			return false;
 		ThumbnailatorEvent other = (ThumbnailatorEvent) obj;
-		if (Double.doubleToLongBits(currentPercentage) != Double
-				.doubleToLongBits(other.currentPercentage))
+		if (phase == null)
+		{
+			if (other.phase != null)
+				return false;
+		}
+		else if (!phase.equals(other.phase))
 			return false;
-		if (currentTask != other.currentTask)
-			return false;
-		if (failedTasks != other.failedTasks)
-			return false;
-		if (successfulTasks != other.successfulTasks)
-			return false;
-		if (totalTasks != other.totalTasks)
+		if (Double.doubleToLongBits(progress) != Double
+				.doubleToLongBits(other.progress))
 			return false;
 		return true;
 	}
-
+	
 	@Override
 	public String toString()
 	{
-		return "ThumbnailatorEvent [currentTask=" + currentTask
-				+ ", totalTasks=" + totalTasks + ", successfulTasks="
-				+ successfulTasks + ", failedTasks=" + failedTasks
-				+ ", currentPercentage=" + currentPercentage + "]";
+		return "ThumbnailatorEvent [phase=" + phase + ", progress=" + progress
+				+ "]";
 	}
 }

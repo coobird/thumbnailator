@@ -100,4 +100,19 @@ public abstract class ThumbnailTask
 	{
 		return param;
 	}
+	
+	/**
+	 * Returns an unmodifiable list of {@link ThumbnailatorEventListener}s
+	 * associated with this {@link ThumbnailTask}.
+	 * 
+	 * @return
+	 */
+	public List<ThumbnailatorEventListener> getListeners()
+	{
+		return notifier.getListeners();
+	}
+	
+	public abstract Object getSource();
+	public abstract Object getDestination();
+	
 }

@@ -1,9 +1,5 @@
 package net.coobird.thumbnailator.events;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-
-import net.coobird.thumbnailator.tasks.ThumbnailTask;
 
 /**
  * An interface for receiving events from Thumbnailator.
@@ -14,76 +10,32 @@ import net.coobird.thumbnailator.tasks.ThumbnailTask;
 public interface ThumbnailatorEventListener
 {
 	/**
-	 * Notifies that a {@link ThumbnailTask} is going to be processed.
+	 * Notifies that processing is beginning.
 	 * 
-	 * @param task			The {@link ThumbnailTask} which will be processed.
+	 * @param source		The source.
 	 */
-	public void beginTask(ThumbnailTask task);
+	public void beginProcessing(Object source);
 	
 	/**
-	 * Notifies that a {@link File} is going to be processed.
-	 * 
-	 * @param sourceFile	The {@link File} which will be processed.
-	 */
-	public void beginFile(File sourceFile);
-	
-	/**
-	 * Notifies that a {@link BufferedImage} is going to be processed.
-	 * 
-	 * @param sourceFile	The {@link BufferedImage} which will be processed.
-	 */
-	public void beginBufferedImage(BufferedImage sourceImage);
-	
-	/**
-	 * Notifies that the processing of a {@link ThumbnailTask} failed.
-	 * 
-	 * @param task			The {@link ThumbnailTask} that was being processed.
-	 */
-	public void failedProcessingTask(ThumbnailTask task);
-
-	/**
-	 * Notifies that the processing of a {@link File} failed.
-	 * 
-	 * @param sourceFile	The {@link BufferedImage} that was being processed.
-	 */
-	public void failedProcessingFile(File sourceFile);
-	
-	/**
-	 * Notifies the progress of the processing of a {@link ThumbnailTask}.
+	 * Notifies that processing has failed.
 	 * 
 	 * @param event			An object indicating the current progress.
-	 * @param task			The {@link ThumbnailTask} that is being processed.
+	 * @param source		The source.
 	 */
-	public void processingTask(ThumbnailatorEvent event, ThumbnailTask task);
+	public void failedProcessing(ThumbnailatorEvent event, Object source);
 	
 	/**
-	 * Notifies the progress of the processing of a {@link File}.
+	 * Notifies the progress of the processing the source.
 	 * 
-	 * @param event			An object indicating the current progress.
-	 * @param sourceFile	The {@link BufferedImage} that is being processed.
+	 * @param source		The source.
 	 */
-	public void processingFile(ThumbnailatorEvent event, File sourceFile);
+	public void processing(ThumbnailatorEvent event, Object source);
 	
 	/**
-	 * Notifies that a {@link ThumbnailTask} is has been processed.
+	 * Notifies that processing has completed.
 	 * 
-	 * @param task			The {@link ThumbnailTask} that has been processed.
+	 * @param source		The source.
+	 * @param destination	The destination.
 	 */
-	public void processedTask(ThumbnailTask task);
-	
-	/**
-	 * Notifies that a {@link File} is has been processed.
-	 * 
-	 * @param sourceFile			The source image file.
-	 * @param destinationFile		The file containing the thumbnail image.
-	 */
-	public void processedFile(File sourceFile, File destinationFile);
-	
-	/**
-	 * Notifies that a {@link BufferedImage} has been processed.
-	 * 
-	 * @param sourceImage			The source image.
-	 * @param destinationImage		The thumbnail image.
-	 */
-	public void processedBufferedImage(BufferedImage sourceImage, BufferedImage destinationImage);
+	public void finishedProcessing(Object source, Object destination);
 }

@@ -1,12 +1,8 @@
 package net.coobird.thumbnailator.events;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import net.coobird.thumbnailator.tasks.ThumbnailTask;
 
 public class ThumbnailatorEventNotifier implements ThumbnailatorEventListener
 {
@@ -32,85 +28,35 @@ public class ThumbnailatorEventNotifier implements ThumbnailatorEventListener
 		return Collections.unmodifiableList(listeners);
 	}
 	
-	public void beginBufferedImage(BufferedImage sourceImage)
+	public void beginProcessing(Object source)
 	{
 		for (ThumbnailatorEventListener listener : listeners)
 		{
-			listener.beginBufferedImage(sourceImage);
+			listener.beginProcessing(source);
 		}
 	}
 
-	public void beginFile(File sourceFile)
+	public void failedProcessing(ThumbnailatorEvent event, Object source)
 	{
 		for (ThumbnailatorEventListener listener : listeners)
 		{
-			listener.beginFile(sourceFile);
+			listener.failedProcessing(event, source);
 		}
 	}
 
-	public void beginTask(ThumbnailTask task)
+	public void processing(ThumbnailatorEvent event, Object source)
 	{
 		for (ThumbnailatorEventListener listener : listeners)
 		{
-			listener.beginTask(task);
+			listener.processing(event, source);
 		}
 	}
-
-	public void failedProcessingFile(File sourceFile)
+	
+	public void finishedProcessing(Object source, Object destination)
 	{
 		for (ThumbnailatorEventListener listener : listeners)
 		{
-			listener.failedProcessingFile(sourceFile);
-		}
-	}
-
-	public void failedProcessingTask(ThumbnailTask task)
-	{
-		for (ThumbnailatorEventListener listener : listeners)
-		{
-			listener.failedProcessingTask(task);
-		}
-	}
-
-	public void processedBufferedImage(BufferedImage sourceImage,
-			BufferedImage destinationImage)
-	{
-		for (ThumbnailatorEventListener listener : listeners)
-		{
-			listener.processedBufferedImage(sourceImage, destinationImage);
-		}
-	}
-
-	public void processedFile(File sourceFile, File destinationFile)
-	{
-		for (ThumbnailatorEventListener listener : listeners)
-		{
-			listener.processedFile(sourceFile, destinationFile);
-		}
-		
-	}
-
-	public void processedTask(ThumbnailTask task)
-	{
-		for (ThumbnailatorEventListener listener : listeners)
-		{
-			listener.processedTask(task);
-		}
-	}
-
-	public void processingFile(ThumbnailatorEvent event, File sourceFile)
-	{
-		for (ThumbnailatorEventListener listener : listeners)
-		{
-			listener.processingFile(event, sourceFile);
-		}
-	}
-
-	public void processingTask(ThumbnailatorEvent event, ThumbnailTask task)
-	{
-		for (ThumbnailatorEventListener listener : listeners)
-		{
-			listener.processingTask(event, task);
+			listener.finishedProcessing(source, destination);
 		}
 	}
 }

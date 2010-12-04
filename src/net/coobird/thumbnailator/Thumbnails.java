@@ -1519,7 +1519,7 @@ watermark(Positions.CENTER, image, opacity);
 			// Create thumbnails
 			for (BufferedImage img : getOriginalImages())
 			{
-				notifier.beginBufferedImage(img);
+				notifier.beginProcessing(img);
 				
 				ThumbnailMaker maker = makeThumbnailMaker(r, img.getType());
 				BufferedImage thumbnailImg = maker.make(img);
@@ -1528,7 +1528,7 @@ watermark(Positions.CENTER, image, opacity);
 				thumbnailImg = filterPipeline.apply(thumbnailImg);
 				
 				thumbnails.add(thumbnailImg);
-				notifier.processedBufferedImage(img, thumbnailImg);
+				notifier.finishedProcessing(img, thumbnailImg);
 			}
 			
 			return thumbnails;
@@ -1619,7 +1619,7 @@ watermark(Positions.CENTER, image, opacity);
 			
 			for (File f : files)
 			{
-				notifier.beginFile(f);
+				notifier.beginProcessing(f);
 				
 				File destinationFile = 
 					new File(f.getParent(), rename.apply(f.getName()));
@@ -1629,7 +1629,7 @@ watermark(Positions.CENTER, image, opacity);
 				Thumbnailator.createThumbnail(
 						new FileThumbnailTask(param, f, destinationFile, notifier.getListeners())
 				);
-				notifier.processedFile(f, destinationFile);
+				notifier.finishedProcessing(f, destinationFile);
 			}
 			
 			return destinationFiles;
@@ -1693,12 +1693,12 @@ watermark(Positions.CENTER, image, opacity);
 			ThumbnailParameter param = makeParam();
 			
 			File sourceFile = files.get(0);
-			notifier.beginFile(sourceFile);
+			notifier.beginProcessing(sourceFile);
 			
 			Thumbnailator.createThumbnail(
 					new FileThumbnailTask(param, sourceFile, outFile, notifier.getListeners())
 			);
-			notifier.processedFile(sourceFile, outFile);
+			notifier.finishedProcessing(sourceFile, outFile);
 		}
 	}
 }
