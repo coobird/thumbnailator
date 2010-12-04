@@ -8,6 +8,8 @@
 	<property name="dist"  location="distribution" />
 	<property name="resources" location="resources" />
 	<property name="javadoc_dir" value="javadoc" />
+	<property name="classes" location="bin" />
+	<property name="tests" location="test" />
 
 	<!-- Set version number -->
 	<property name="version" value="0.2.6" />
@@ -31,15 +33,28 @@
 			target="1.5" />
 		
 	</target>
+	
+	<target
+		name="test"
+		description="Runs unit tests">
+	
+		<junit haltonfailure="yes" printsummary="yes">
+			<classpath path="${classes}" />
+			<batchtest>
+				<fileset dir="${tests}">
+					<include name="**/*.java" />
+					<exclude name="**/test/*.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
 
 	<target
 		name="dist"
-		depends="compile"
+		depends="compile,test"
 		description="generate the distribution">
 		<tstamp/>
 		
-		<property name="resources-common-dir" location="${resources}/common" />
-	  	
 		<!-- Generate the javadocs, place into /javadoc directory -->
 		<javadoc 
 			destdir="${javadoc_dir}"

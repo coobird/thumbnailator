@@ -153,6 +153,30 @@ public class FileThumbnailTask extends ThumbnailTask
 		
 		return img;
 	}
+	
+	/**
+	 * Determines whether an specified format name and file extension are
+	 * for the same format.
+	 * 
+	 * @param formatName			Format name.
+	 * @param fileExtension			File extension.
+	 * @return						Returns {@code true} if the specified file
+	 * 								extension is valid for the specified format.
+	 */
+	private boolean isMatchingFormat(String formatName, String fileExtension)
+	{
+		String[] suffixes = ImageIO.getImageWritersByFormatName(formatName)
+							.next().getOriginatingProvider().getFileSuffixes();
+		
+		for (String suffix : suffixes)
+		{
+			if (fileExtension.equals(suffix))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 	@Override
 	public void write(BufferedImage img) throws IOException
@@ -170,32 +194,33 @@ public class FileThumbnailTask extends ThumbnailTask
 		else
 		{
 			formatName = param.getOutputFormat();
-			
-			/*
-			 * Add or replace the file extension of the output file.
-			 * 
-			 * If the file extension matches the output format's extension,
-			 * then leave as is.
-			 * 
-			 * Else, append the extension for the output format to the filename. 
-			 */
-			String fileExtension = null; 
-			String fileName = destinationFile.getName();
-			if (
-					fileName.contains(".") 
-					&& fileName.lastIndexOf('.') != fileName.length() - 1
-			)
-			{
-				int lastIndex = fileName.lastIndexOf('.');
-				fileExtension = fileName.substring(lastIndex + 1); 
-			}
-			
-			if (fileExtension == null || !fileExtension.equalsIgnoreCase(formatName)) 
-			{
-				destinationFile = new File(destinationFile.getAbsolutePath() + "." + formatName);
-			}
 		}
 			
+		/*
+		 * Add or replace the file extension of the output file.
+		 * 
+		 * If the file extension matches the output format's extension,
+		 * then leave as is.
+		 * 
+		 * Else, append the extension for the output format to the filename. 
+		 */
+		String fileExtension = null; 
+		String fileName = destinationFile.getName();
+		if (
+				fileName.indexOf('.') != -1 
+				&& fileName.lastIndexOf('.') != fileName.length() - 1
+		)
+		{
+			int lastIndex = fileName.lastIndexOf('.');
+			fileExtension = fileName.substring(lastIndex + 1); 
+		}
+		
+		if (fileExtension == null || !isMatchingFormat(formatName, fileExtension)) 
+		{
+			destinationFile = new File(destinationFile.getAbsolutePath() + "." + formatName);
+		}
+		
+		// Checks for available writers for the format.
 		Iterator<ImageWriter> writers = 
 			ImageIO.getImageWritersByFormatName(formatName);
 		
