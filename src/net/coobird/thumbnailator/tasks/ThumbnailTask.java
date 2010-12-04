@@ -2,8 +2,11 @@ package net.coobird.thumbnailator.tasks;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 
 import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.events.ThumbnailatorEventListener;
+import net.coobird.thumbnailator.events.ThumbnailatorEventNotifier;
 
 /**
  * This class is used by {@link ThumbnailTask} implementations which is used
@@ -22,6 +25,8 @@ public abstract class ThumbnailTask
 	 * The parameters to use when creating a thumbnail.
 	 */
 	protected final ThumbnailParameter param;
+	
+	protected final ThumbnailatorEventNotifier notifier;
 	
 	/**
 	 * String indicating the image format of the input image.
@@ -45,6 +50,19 @@ public abstract class ThumbnailTask
 	protected ThumbnailTask(ThumbnailParameter param)
 	{
 		this.param = param;
+		this.notifier = new ThumbnailatorEventNotifier();
+	}
+	
+	/**
+	 * Instantiates a {@link ThumbnailTask} with the parameters to use when
+	 * creating thumbnails.
+	 * 
+	 * @param param			The parameters to use when creating thumbnails.
+	 */
+	protected ThumbnailTask(ThumbnailParameter param, List<ThumbnailatorEventListener> listeners)
+	{
+		this.param = param;
+		this.notifier = new ThumbnailatorEventNotifier(listeners);
 	}
 	
 	/**
@@ -82,4 +100,19 @@ public abstract class ThumbnailTask
 	{
 		return param;
 	}
+	
+	/**
+	 * Returns an unmodifiable list of {@link ThumbnailatorEventListener}s
+	 * associated with this {@link ThumbnailTask}.
+	 * 
+	 * @return
+	 */
+	public List<ThumbnailatorEventListener> getListeners()
+	{
+		return notifier.getListeners();
+	}
+	
+	public abstract Object getSource();
+	public abstract Object getDestination();
+	
 }

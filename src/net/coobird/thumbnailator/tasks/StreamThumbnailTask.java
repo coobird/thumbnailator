@@ -179,4 +179,18 @@ public class StreamThumbnailTask extends ThumbnailTask
 		
 		ios.close();
 	}
+
+	@Override
+	public Object getSource()
+	{
+		// TODO Auto-generated method stub
+		return is;
+	}
+	
+	@Override
+	public Object getDestination()
+	{
+		// TODO Auto-generated method stub
+		return os;
+	}
 }

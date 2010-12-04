@@ -5,17 +5,23 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
+import javax.imageio.event.IIOReadProgressListener;
+import javax.imageio.event.IIOWriteProgressListener;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
 import net.coobird.thumbnailator.BufferedImages;
 import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.events.ThumbnailatorEvent;
+import net.coobird.thumbnailator.events.ThumbnailatorEventListener;
+import net.coobird.thumbnailator.events.ThumbnailatorEvent.Phase;
 
 /**
  * A thumbnail generation task which reads and writes data from and to a 
@@ -51,6 +57,22 @@ public class FileThumbnailTask extends ThumbnailTask
 	public FileThumbnailTask(ThumbnailParameter param, File sourceFile, File destinationFile)
 	{
 		super(param);
+		this.sourceFile = sourceFile;
+		this.destinationFile = destinationFile;
+	}
+	
+	/**
+	 * Creates a {@link ThumbnailTask} in which image data is read from the 
+	 * specified {@link File} and is output to a specified {@link File}, using
+	 * the parameters provided in the specified {@link ThumbnailParameter}.
+	 * 
+	 * @param param				The parameters to use to create the thumbnail.
+	 * @param sourceFile		The {@link File} from which image data is read.
+	 * @param destinationFile	The {@link File} to which thumbnail is written.
+	 */
+	public FileThumbnailTask(ThumbnailParameter param, File sourceFile, File destinationFile, List<ThumbnailatorEventListener> listeners)
+	{
+		super(param, listeners);
 		this.sourceFile = sourceFile;
 		this.destinationFile = destinationFile;
 	}
@@ -91,6 +113,40 @@ public class FileThumbnailTask extends ThumbnailTask
 		reader.setInput(iis);
 		inputFormatName = reader.getFormatName();
 
+		reader.addIIOReadProgressListener(new IIOReadProgressListener() {
+			
+			public void thumbnailStarted(ImageReader source, int imageIndex,
+					int thumbnailIndex) {}
+			
+			public void thumbnailProgress(ImageReader source, float percentageDone) {}
+			
+			public void thumbnailComplete(ImageReader source) {}
+			
+			public void sequenceStarted(ImageReader source, int minIndex) {}
+			
+			public void sequenceComplete(ImageReader source) {}
+			
+			public void readAborted(ImageReader source)
+			{
+				notifier.failedProcessing(new ThumbnailatorEvent(Phase.ACQUIRE, Double.NaN), sourceFile);
+			}
+			
+			public void imageStarted(ImageReader source, int imageIndex)
+			{
+				notifier.processing(new ThumbnailatorEvent(Phase.ACQUIRE, 0.0), sourceFile);
+			}
+			
+			public void imageProgress(ImageReader source, float percentageDone)
+			{
+				notifier.processing(new ThumbnailatorEvent(Phase.ACQUIRE, percentageDone / 100d), sourceFile);
+			}
+			
+			public void imageComplete(ImageReader source)
+			{
+				notifier.processing(new ThumbnailatorEvent(Phase.ACQUIRE, 1.0), sourceFile);
+			}
+		});
+		
 		BufferedImage img = reader.read(FIRST_IMAGE_INDEX);
 		
 		iis.close();
@@ -238,9 +294,60 @@ public class FileThumbnailTask extends ThumbnailTask
 			img = BufferedImages.copy(img, BufferedImage.TYPE_INT_RGB);
 		}
 		
+		
+		writer.addIIOWriteProgressListener(new IIOWriteProgressListener() {
+			
+			public void writeAborted(ImageWriter source)
+			{
+				notifier.failedProcessing(new ThumbnailatorEvent(Phase.OUTPUT, Double.NaN), sourceFile);
+			}
+			
+			public void thumbnailStarted(ImageWriter source, int imageIndex,
+					int thumbnailIndex)
+			{
+			}
+			
+			public void thumbnailProgress(ImageWriter source, float percentageDone)
+			{
+			}
+			
+			public void thumbnailComplete(ImageWriter source)
+			{
+			}
+			
+			public void imageStarted(ImageWriter source, int imageIndex)
+			{
+				notifier.processing(new ThumbnailatorEvent(Phase.OUTPUT, 0.0), sourceFile);
+			}
+			
+			public void imageProgress(ImageWriter source, float percentageDone)
+			{
+				notifier.processing(new ThumbnailatorEvent(Phase.OUTPUT, percentageDone / 100d), sourceFile);
+			}
+			
+			public void imageComplete(ImageWriter source)
+			{
+				notifier.processing(new ThumbnailatorEvent(Phase.OUTPUT, 1.0), sourceFile);
+			}
+		});
+		
 		writer.setOutput(ios);
 		writer.write(null, new IIOImage(img, null, null), writeParam);
 		
 		ios.close();
+	}
+
+	@Override
+	public Object getSource()
+	{
+		// TODO Auto-generated method stub
+		return sourceFile;
+	}
+	
+	@Override
+	public Object getDestination()
+	{
+		// TODO Auto-generated method stub
+		return destinationFile;
 	}
 }
