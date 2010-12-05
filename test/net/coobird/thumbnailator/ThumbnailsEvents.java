@@ -2,16 +2,24 @@ package net.coobird.thumbnailator;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 import net.coobird.thumbnailator.events.ThumbnailatorEvent;
 import net.coobird.thumbnailator.events.ThumbnailatorEventListener;
 import net.coobird.thumbnailator.events.ThumbnailatorEvent.Phase;
 import net.coobird.thumbnailator.filters.ImageFilter;
+import net.coobird.thumbnailator.tasks.FileThumbnailTask;
+import net.coobird.thumbnailator.tasks.StreamThumbnailTask;
+import net.coobird.thumbnailator.tasks.ThumbnailTask;
 
 import org.junit.Test;
 import org.mockito.ArgumentMatcher;
@@ -25,12 +33,81 @@ import static org.mockito.Mockito.*;
 public class ThumbnailsEvents
 {
 	@Test
+	public void successful_Thumbnailator_createThumbnail_FileThumbnailTask() throws IOException
+	{
+		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File outputFile = File.createTempFile("thumbnailator-testing-", ".jpg");
+		outputFile.deleteOnExit();
+		
+		ThumbnailatorEventListener mockListener = mock(ThumbnailatorEventListener.class);
+		
+		ThumbnailParameter param = new ThumbnailParameterBuilder()
+				.size(50, 50)
+				.build();
+		
+		Thumbnailator.createThumbnail(
+				new FileThumbnailTask(param, inputFile, outputFile, Arrays.asList(mockListener))
+		);
+		
+		verify(mockListener).beginProcessing(inputFile);
+		verify(mockListener).processing(eq(new ThumbnailatorEvent(Phase.ACQUIRE, 0.0)), same(inputFile));
+		verify(mockListener, atLeastOnce()).processing(argThat(new EventWithProgressFromZeroToOne(Phase.ACQUIRE)), same(inputFile));
+		verify(mockListener).processing(eq(new ThumbnailatorEvent(Phase.ACQUIRE, 1.0)), same(inputFile));
+		verify(mockListener).processing(eq(new ThumbnailatorEvent(Phase.RESIZE, 0.0)), same(inputFile));
+		verify(mockListener).processing(eq(new ThumbnailatorEvent(Phase.RESIZE, 1.0)), same(inputFile));
+		verify(mockListener).processing(eq(new ThumbnailatorEvent(Phase.FILTER, 0.0)), same(inputFile));
+		verify(mockListener).processing(eq(new ThumbnailatorEvent(Phase.FILTER, 1.0)), same(inputFile));
+		verify(mockListener).processing(eq(new ThumbnailatorEvent(Phase.OUTPUT, 0.0)), same(inputFile));
+		verify(mockListener, atLeastOnce()).processing(argThat(new EventWithProgressFromZeroToOne(Phase.OUTPUT)), same(inputFile));
+		verify(mockListener).processing(eq(new ThumbnailatorEvent(Phase.OUTPUT, 1.0)), same(inputFile));
+		verify(mockListener).finishedProcessing(inputFile, outputFile);
+		
+		verifyNoMoreInteractions(mockListener);
+	}
+	
+	@Test
+	public void successful_Thumbnailator_createThumbnail_StreamThumbnailTask() throws IOException
+	{
+		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File outputFile = File.createTempFile("thumbnailator-testing-", ".jpg");
+		outputFile.deleteOnExit();
+		
+		ThumbnailatorEventListener mockListener = mock(ThumbnailatorEventListener.class);
+		
+		ThumbnailParameter param = new ThumbnailParameterBuilder()
+				.size(50, 50)
+				.build();
+		
+		InputStream is = new FileInputStream(inputFile);
+		OutputStream os = new FileOutputStream(outputFile);
+		
+		Thumbnailator.createThumbnail(
+				new StreamThumbnailTask(param, is, os, Arrays.asList(mockListener))
+		);
+		
+		verify(mockListener).beginProcessing(is);
+		verify(mockListener).processing(eq(new ThumbnailatorEvent(Phase.ACQUIRE, 0.0)), same(is));
+		verify(mockListener, atLeastOnce()).processing(argThat(new EventWithProgressFromZeroToOne(Phase.ACQUIRE)), same(is));
+		verify(mockListener).processing(eq(new ThumbnailatorEvent(Phase.ACQUIRE, 1.0)), same(is));
+		verify(mockListener).processing(eq(new ThumbnailatorEvent(Phase.RESIZE, 0.0)), same(is));
+		verify(mockListener).processing(eq(new ThumbnailatorEvent(Phase.RESIZE, 1.0)), same(is));
+		verify(mockListener).processing(eq(new ThumbnailatorEvent(Phase.FILTER, 0.0)), same(is));
+		verify(mockListener).processing(eq(new ThumbnailatorEvent(Phase.FILTER, 1.0)), same(is));
+		verify(mockListener).processing(eq(new ThumbnailatorEvent(Phase.OUTPUT, 0.0)), same(is));
+		verify(mockListener, atLeastOnce()).processing(argThat(new EventWithProgressFromZeroToOne(Phase.OUTPUT)), same(is));
+		verify(mockListener).processing(eq(new ThumbnailatorEvent(Phase.OUTPUT, 1.0)), same(is));
+		verify(mockListener).finishedProcessing(is, os);
+		
+		verifyNoMoreInteractions(mockListener);
+	}
+	
+	@Test
 	public void successfulFileProcessing_Single() throws IOException
 	{
 		// This test checks for parts that internally uses ThumbnailTasks
 		
 		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
-		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
+		File outputFile = File.createTempFile("thumbnailator-testing-", ".jpg");
 		outputFile.deleteOnExit();
 		
 		ThumbnailatorEventListener mockListener = mock(ThumbnailatorEventListener.class);
@@ -111,7 +188,7 @@ public class ThumbnailsEvents
 		// This test checks for parts that internally uses ThumbnailTasks
 		
 		String inputFile = "test-resources/Thumbnailator/grid.jpg";
-		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
+		File outputFile = File.createTempFile("thumbnailator-testing-", ".jpg");
 		outputFile.deleteOnExit();
 		
 		ThumbnailatorEventListener mockListener = mock(ThumbnailatorEventListener.class);
@@ -264,7 +341,7 @@ public class ThumbnailsEvents
 		// This test checks for parts that internally uses ThumbnailTasks
 		
 		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
-		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
+		File outputFile = File.createTempFile("thumbnailator-testing-", ".jpg");
 		outputFile.deleteOnExit();
 		
 		ThumbnailatorEventListener mockListener = mock(ThumbnailatorEventListener.class);
@@ -297,7 +374,7 @@ public class ThumbnailsEvents
 		// This test checks for parts that internally uses ThumbnailTasks
 		
 		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
-		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
+		File outputFile = File.createTempFile("thumbnailator-testing-", ".jpg");
 		outputFile.deleteOnExit();
 		
 		ThumbnailatorEventListener mockListener = mock(ThumbnailatorEventListener.class);
@@ -333,7 +410,7 @@ public class ThumbnailsEvents
 		// This test checks for parts that internally uses ThumbnailTasks
 		
 		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
-		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
+		File outputFile = File.createTempFile("thumbnailator-testing-", ".jpg");
 		outputFile.deleteOnExit();
 		
 		ThumbnailatorEventListener mockListener = mock(ThumbnailatorEventListener.class);
@@ -367,7 +444,7 @@ public class ThumbnailsEvents
 		// This test checks for parts that internally uses ThumbnailTasks
 		
 		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
-		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
+		File outputFile = File.createTempFile("thumbnailator-testing-", ".jpg");
 		outputFile.deleteOnExit();
 		
 		ThumbnailatorEventListener mockListener = mock(ThumbnailatorEventListener.class);
