@@ -85,6 +85,8 @@ public abstract class ThumbnailTask
 	 * Reads a source image.
 	 * 
 	 * @return					The image which was obtained from the source.
+	 * @throws UnsupportedFormatException	When an image file which is to be
+	 * 										read or written is unsupported. 
 	 * @throws IOException		Thrown when an I/O problem occurs when reading
 	 * 							from the image source.
 	 */
