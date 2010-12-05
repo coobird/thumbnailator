@@ -37,7 +37,7 @@ BufferedImage thumbnail = new FixedSizeThumbnailMaker()
  * @author coobird
  *
  */
-public class FixedSizeThumbnailMaker extends ThumbnailMaker
+public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 {
 	private static final String PARAM_SIZE = "size";
 	private static final String PARAM_KEEP_RATIO = "keepRatio";
