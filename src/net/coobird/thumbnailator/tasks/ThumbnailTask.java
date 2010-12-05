@@ -8,6 +8,7 @@ import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.events.ThumbnailatorEvent;
 import net.coobird.thumbnailator.events.ThumbnailatorEventListener;
 import net.coobird.thumbnailator.events.ThumbnailatorEventNotifier;
+import net.coobird.thumbnailator.events.ThumbnailatorEvent.Phase;
 
 /**
  * This class is used by {@link ThumbnailTask} implementations which is used
@@ -144,4 +145,25 @@ public abstract class ThumbnailTask
 	 * @return		The destination.
 	 */
 	public abstract Object getDestination();
+
+	/**
+	 * Notifies the notifier and throws an exception.
+	 * 
+	 * @param <T>
+	 * @param e
+	 * @param phase
+	 * @param notifier
+	 * @param source
+	 * @throws T
+	 */
+	protected static <T extends Exception> void throwException(
+			T e,
+			Phase phase,
+			ThumbnailatorEventNotifier notifier,
+			Object source
+	) throws T
+	{
+		notifier.failedProcessing(new ThumbnailatorEvent(phase, e), source);
+		throw e;
+	}
 }

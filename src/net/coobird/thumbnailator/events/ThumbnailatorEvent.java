@@ -1,8 +1,14 @@
 package net.coobird.thumbnailator.events;
 
 
-public class ThumbnailatorEvent 
+public class ThumbnailatorEvent
 {
+	/**
+	 * The value returned by the {@link #getProgress()} method when this
+	 * event was caused by a failure during processing.
+	 */
+	public static final double ERROR = Double.NaN;
+	
 	public enum Phase
 	{
 		/**
@@ -41,6 +47,14 @@ public class ThumbnailatorEvent
 	 */
 	private final double progress;
 	
+	/**
+	 * The cause for the failure of processing.
+	 * <p>
+	 * If a failure has not occurred, or if the cause of a failure is not
+	 * available, then this field will be {@code null}.
+	 */
+	private final Throwable throwable;
+	
 	
 	/**
 	 * @param phase
@@ -51,6 +65,22 @@ public class ThumbnailatorEvent
 		super();
 		this.phase = phase;
 		this.progress = progress;
+		this.throwable = null;
+	}
+	
+	/**
+	 * Instantiates an event which indicates that an failure has occurred
+	 * during processing, and a cause for the failure is available. 
+	 * 
+	 * @param phase
+	 * @param t
+	 */
+	public ThumbnailatorEvent(Phase phase, Throwable t)
+	{
+		super();
+		this.phase = phase;
+		this.progress = ERROR;
+		this.throwable = t;
 	}
 	
 
@@ -69,6 +99,19 @@ public class ThumbnailatorEvent
 	{
 		return progress;
 	}
+	
+	/**
+	 * Returns the cause of the failure.
+	 * <p>
+	 * If no cause is available, or if a failure has not occurred, then 
+	 * {@code null} is returned.
+	 * 
+	 * @return the throwable
+	 */
+	public Throwable getCause()
+	{
+		return throwable;
+	}
 
 	@Override
 	public int hashCode()
@@ -79,9 +122,11 @@ public class ThumbnailatorEvent
 		long temp;
 		temp = Double.doubleToLongBits(progress);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result
+				+ ((throwable == null) ? 0 : throwable.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -102,13 +147,20 @@ public class ThumbnailatorEvent
 		if (Double.doubleToLongBits(progress) != Double
 				.doubleToLongBits(other.progress))
 			return false;
+		if (throwable == null)
+		{
+			if (other.throwable != null)
+				return false;
+		}
+		else if (!throwable.equals(other.throwable))
+			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString()
 	{
 		return "ThumbnailatorEvent [phase=" + phase + ", progress=" + progress
-				+ "]";
+				+ ", throwable=" + throwable + "]";
 	}
 }

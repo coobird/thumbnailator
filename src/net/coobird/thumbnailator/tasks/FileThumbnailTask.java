@@ -18,6 +18,7 @@ import javax.imageio.stream.ImageOutputStream;
 import net.coobird.thumbnailator.BufferedImages;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.events.ThumbnailatorEventListener;
+import net.coobird.thumbnailator.events.ThumbnailatorEvent.Phase;
 
 /**
  * A thumbnail generation task which reads and writes data from and to a 
@@ -81,14 +82,21 @@ public class FileThumbnailTask extends ThumbnailTask
 		this.sourceFile = sourceFile;
 		this.destinationFile = destinationFile;
 	}
-
+	
 	@Override
 	public BufferedImage read() throws IOException
 	{
+		String sourcePath = sourceFile.getPath();
+		
 		if (!sourceFile.exists())
 		{
-			throw new FileNotFoundException(
-					"Could not find file: " + sourceFile.getAbsolutePath()
+			throwException(
+					new FileNotFoundException(
+							"Could not find file: " + sourcePath
+					),
+					Phase.ACQUIRE,
+					notifier,
+					sourceFile
 			);
 		}
 		
@@ -100,17 +108,27 @@ public class FileThumbnailTask extends ThumbnailTask
 		
 		if (iis == null)
 		{
-			throw new IOException(
-					"Could not open file: " + sourceFile.getAbsolutePath());
+			throwException(
+					new IOException(
+							"Could not find file: " + sourcePath
+					),
+					Phase.ACQUIRE,
+					notifier,
+					sourceFile
+			);
 		}
 		
 		Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
 		if (!readers.hasNext())
 		{
-			String sourcePath = sourceFile.getPath();
-			throw new UnsupportedFormatException(
-					UnsupportedFormatException.UNKNOWN,
-					"No suitable ImageReader found for " + sourcePath + "."
+			throwException(
+					new UnsupportedFormatException(
+							UnsupportedFormatException.UNKNOWN,
+							"No suitable ImageReader found for " + sourcePath + "."
+					),
+					Phase.ACQUIRE,
+					notifier,
+					sourceFile
 			);
 		}
 		
@@ -199,9 +217,14 @@ public class FileThumbnailTask extends ThumbnailTask
 		
 		if (!writers.hasNext())
 		{
-			throw new UnsupportedFormatException(
-					formatName, 
-					"No suitable ImageWriter found for " + formatName + "."
+			throwException(
+					new UnsupportedFormatException(
+							formatName, 
+							"No suitable ImageWriter found for " + formatName + "."
+					),
+					Phase.OUTPUT,
+					notifier,
+					sourceFile
 			);
 		}
 		
@@ -242,7 +265,12 @@ public class FileThumbnailTask extends ThumbnailTask
 		
 		if (ios == null)
 		{
-			throw new IOException("Could not open output file.");
+			throwException(
+					new IOException("Could not open output file."),
+					Phase.OUTPUT,
+					notifier,
+					sourceFile
+			);
 		}
 		
 		/*
