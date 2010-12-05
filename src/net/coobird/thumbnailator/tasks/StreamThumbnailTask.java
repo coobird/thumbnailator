@@ -18,6 +18,7 @@ import javax.imageio.stream.ImageOutputStream;
 import net.coobird.thumbnailator.BufferedImages;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.events.ThumbnailatorEventListener;
+import net.coobird.thumbnailator.events.ThumbnailatorEvent.Phase;
 
 /**
  * A thumbnail generation task which streams data from an {@link InputStream}
@@ -94,15 +95,27 @@ public class StreamThumbnailTask extends ThumbnailTask
 		
 		if (iis == null)
 		{
-			throw new IOException("Could not open InputStream.");
+			throwException(
+					new IOException(
+							"Could not open InputStream."
+					),
+					Phase.ACQUIRE,
+					notifier,
+					is
+			);
 		}
 		
 		Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
 		if (!readers.hasNext())
 		{
-			throw new UnsupportedFormatException(
-					UnsupportedFormatException.UNKNOWN,
-					"No suitable ImageReader found for source data."
+			throwException(
+					new UnsupportedFormatException(
+							UnsupportedFormatException.UNKNOWN,
+							"No suitable ImageReader found for source data."
+					),
+					Phase.ACQUIRE,
+					notifier,
+					is
 			);
 		}
 		
@@ -112,11 +125,17 @@ public class StreamThumbnailTask extends ThumbnailTask
 		
 		reader.addIIOReadProgressListener(new ReadListener(notifier, is));
 		
-		BufferedImage img = reader.read(FIRST_IMAGE_INDEX);
-		
-		iis.close();
-		
-		return img;
+		try
+		{
+			BufferedImage img = reader.read(FIRST_IMAGE_INDEX);
+			iis.close();
+			
+			return img;
+		}
+		catch (IOException e)
+		{
+			throw throwException(e, Phase.ACQUIRE, notifier, is);
+		}
 	}
 
 	@Override
@@ -137,9 +156,14 @@ public class StreamThumbnailTask extends ThumbnailTask
 		
 		if (!writers.hasNext())
 		{
-			throw new UnsupportedFormatException(
-					formatName, 
-					"No suitable ImageWriter found for " + formatName + "."
+			throwException(
+					new UnsupportedFormatException(
+							formatName, 
+							"No suitable ImageWriter found for " + formatName + "."
+					),
+					Phase.OUTPUT,
+					notifier,
+					is
 			);
 		}
 		
@@ -179,7 +203,12 @@ public class StreamThumbnailTask extends ThumbnailTask
 		
 		if (ios == null)
 		{
-			throw new IOException("Could not open OutputStream.");
+			throwException(
+					new IOException("Could not open OutputStream."),
+					Phase.OUTPUT,
+					notifier,
+					is
+			);
 		}
 		
 		/*
@@ -207,11 +236,18 @@ public class StreamThumbnailTask extends ThumbnailTask
 		writer.addIIOWriteProgressListener(new WriteListener(notifier, is));
 		
 		writer.setOutput(ios);
-		writer.write(null, new IIOImage(img, null, null), writeParam);
 		
-		ios.close();
+		try
+		{
+			writer.write(null, new IIOImage(img, null, null), writeParam);
+			ios.close();
+		}
+		catch (IOException e)
+		{
+			throw throwException(e, Phase.OUTPUT, notifier, is);
+		}
 	}
-
+	
 	@Override
 	public Object getSource()
 	{

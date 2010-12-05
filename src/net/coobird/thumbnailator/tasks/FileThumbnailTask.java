@@ -138,11 +138,17 @@ public class FileThumbnailTask extends ThumbnailTask
 		
 		reader.addIIOReadProgressListener(new ReadListener(notifier, sourceFile));
 		
-		BufferedImage img = reader.read(FIRST_IMAGE_INDEX);
-		
-		iis.close();
-		
-		return img;
+		try
+		{
+			BufferedImage img = reader.read(FIRST_IMAGE_INDEX);
+			iis.close();
+			
+			return img;
+		}
+		catch (IOException e)
+		{
+			throw throwException(e, Phase.ACQUIRE, notifier, sourceFile);
+		}
 	}
 	
 	/**
@@ -298,9 +304,16 @@ public class FileThumbnailTask extends ThumbnailTask
 		writer.addIIOWriteProgressListener(new WriteListener(notifier, sourceFile));
 		
 		writer.setOutput(ios);
-		writer.write(null, new IIOImage(img, null, null), writeParam);
 		
-		ios.close();
+		try
+		{
+			writer.write(null, new IIOImage(img, null, null), writeParam);
+			ios.close();
+		}
+		catch (IOException e)
+		{
+			throw throwException(e, Phase.OUTPUT, notifier, sourceFile);
+		}
 	}
 	
 	@Override
