@@ -25,6 +25,10 @@ import net.coobird.thumbnailator.events.ThumbnailatorEventListener;
  * <p>
  * Only the first image included in the image file will be read. Subsequent
  * images included in the image file will be ignored.
+ * <p>
+ * Implementation note: The default implementation of the {@link FileThumbnailTask}
+ * will use the first {@link ImageReader} and {@link ImageWriter} object which
+ * can be obtained for the specified format. 
  * 
  * @author coobird
  *

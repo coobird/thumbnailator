@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -16,6 +17,7 @@ import javax.imageio.stream.ImageOutputStream;
 
 import net.coobird.thumbnailator.BufferedImages;
 import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.events.ThumbnailatorEventListener;
 
 /**
  * A thumbnail generation task which streams data from an {@link InputStream}
@@ -26,6 +28,10 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * <p>
  * Only the first image obtained from the data stream will be read. Subsequent
  * images will be ignored.
+ * <p>
+ * Implementation note: The default implementation of the {@link FileThumbnailTask}
+ * will use the first {@link ImageReader} and {@link ImageWriter} object which
+ * can be obtained for the specified format. 
  * 
  * @author coobird
  *
@@ -55,6 +61,28 @@ public class StreamThumbnailTask extends ThumbnailTask
 	public StreamThumbnailTask(ThumbnailParameter param, InputStream is, OutputStream os)
 	{
 		super(param);
+		this.is = is;
+		this.os = os;
+	}
+	
+	/**
+	 * Creates a {@link ThumbnailTask} in which streamed image data from the 
+	 * specified {@link InputStream} is output to a specified 
+	 * {@link OutputStream}, using the parameters provided in the specified
+	 * {@link ThumbnailParameter}.
+	 * <p>
+	 * The progress of the processing will be notified to the {@link List} of
+	 * {@link ThumbnailatorEventListener}s.
+	 * 
+	 * @param param		The parameters to use to create the thumbnail.
+	 * @param is		The {@link InputStream} from which to obtain image data.
+	 * @param os		The {@link OutputStream} to send thumbnail data to.
+	 * @param listeners		The {@link ThumbnailatorEventListener}s which
+	 * 						are to be notified on the progress of processing.
+	 */
+	public StreamThumbnailTask(ThumbnailParameter param, InputStream is, OutputStream os, List<ThumbnailatorEventListener> listeners)
+	{
+		super(param, listeners);
 		this.is = is;
 		this.os = os;
 	}
