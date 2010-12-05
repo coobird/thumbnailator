@@ -684,21 +684,6 @@ public final class Thumbnails
 	 */
 	public static class Builder
 	{
-		private final ThumbnailatorEventNotifier notifier;
-		
-		/**
-		 * Adds an {@link ThumbnailatorEventListener} which is notified of
-		 * events which occur during the thumbnail generation process.
-		 * 
-		 * @param listener		The listener.
-		 * @return				Reference to this object.
-		 */
-		public Builder notify(ThumbnailatorEventListener listener)
-		{
-			notifier.add(listener);
-			return this;
-		}
-		
 		private List<File> files = null;
 		private List<BufferedImage> images = null;
 		
@@ -1650,7 +1635,6 @@ watermark(Positions.CENTER, image, opacity);
 			notifier.processing(new ThumbnailatorEvent(Phase.ACQUIRE, 0.0), img);
 			notifier.processing(new ThumbnailatorEvent(Phase.ACQUIRE, 1.0), img);
 			
-			
 			// Create thumbnails
 			notifier.processing(new ThumbnailatorEvent(Phase.RESIZE, 0.0), img);
 			ThumbnailMaker maker = makeThumbnailMaker(r, img.getType());
@@ -1719,8 +1703,6 @@ watermark(Positions.CENTER, image, opacity);
 			
 			for (File f : files)
 			{
-				notifier.beginProcessing(f);
-				
 				File destinationFile = 
 					new File(f.getParent(), rename.apply(f.getName()));
 				
@@ -1729,7 +1711,6 @@ watermark(Positions.CENTER, image, opacity);
 				Thumbnailator.createThumbnail(
 						new FileThumbnailTask(param, f, destinationFile, notifier.getListeners())
 				);
-				notifier.finishedProcessing(f, destinationFile);
 			}
 			
 			return destinationFiles;
@@ -1793,12 +1774,30 @@ watermark(Positions.CENTER, image, opacity);
 			ThumbnailParameter param = makeParam();
 			
 			File sourceFile = files.get(0);
-			notifier.beginProcessing(sourceFile);
 			
 			Thumbnailator.createThumbnail(
 					new FileThumbnailTask(param, sourceFile, outFile, notifier.getListeners())
 			);
-			notifier.finishedProcessing(sourceFile, outFile);
+		}
+
+		/**
+		 * A {@link ThumbnailatorEventListener} which notifies multiple
+		 * {@link ThumbnailatorEventListener}s of events which occur while
+		 * processing a thumbnail.
+		 */
+		private final ThumbnailatorEventNotifier notifier;
+
+		/**
+		 * Adds an {@link ThumbnailatorEventListener} which is notified of
+		 * events which occur during the thumbnail generation process.
+		 * 
+		 * @param listener		The listener.
+		 * @return				Reference to this object.
+		 */
+		public Builder notify(ThumbnailatorEventListener listener)
+		{
+			notifier.add(listener);
+			return this;
 		}
 	}
 }
