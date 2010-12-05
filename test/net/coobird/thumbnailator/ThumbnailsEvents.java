@@ -19,12 +19,10 @@ import net.coobird.thumbnailator.events.ThumbnailatorEvent.Phase;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.tasks.FileThumbnailTask;
 import net.coobird.thumbnailator.tasks.StreamThumbnailTask;
-import net.coobird.thumbnailator.tasks.ThumbnailTask;
+import net.coobird.thumbnailator.test.matchers.EventWithProgressFromZeroToOne;
 
 import org.junit.Test;
-import org.mockito.ArgumentMatcher;
 
-import static org.junit.Assert.*;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.same;
@@ -479,35 +477,6 @@ public class ThumbnailsEvents
 		public BufferedImage apply(BufferedImage img)
 		{
 			return img;
-		}
-	}
-
-	private static class EventWithProgressFromZeroToOne 
-		extends ArgumentMatcher<ThumbnailatorEvent>
-	{
-		private final Phase expectedPhase;
-		
-		/**
-		 * @param expectedPhase
-		 */
-		public EventWithProgressFromZeroToOne(Phase expectedPhase)
-		{
-			super();
-			this.expectedPhase = expectedPhase;
-		}
-		
-		@Override
-		public boolean matches(Object argument)
-		{
-			if (!(argument instanceof ThumbnailatorEvent))
-			{
-				return false;
-			}
-			
-			double val = ((ThumbnailatorEvent)argument).getProgress();
-			Phase p = ((ThumbnailatorEvent)argument).getPhase();
-			
-			return (val < 1.0 || val >= 0.0) && (p == expectedPhase);
 		}
 	}
 }
