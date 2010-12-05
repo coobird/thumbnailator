@@ -156,7 +156,7 @@ public abstract class ThumbnailTask
 	 * @param source
 	 * @throws T
 	 */
-	protected static <T extends Exception> void throwException(
+	protected static <T extends Exception> T throwException(
 			T e,
 			Phase phase,
 			ThumbnailatorEventNotifier notifier,
