@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.events.ThumbnailatorEvent;
 import net.coobird.thumbnailator.events.ThumbnailatorEventListener;
 import net.coobird.thumbnailator.events.ThumbnailatorEventNotifier;
 
@@ -15,6 +16,11 @@ import net.coobird.thumbnailator.events.ThumbnailatorEventNotifier;
  * If the image handled by a {@link ThumbnailTask} contains multiple images,
  * only the first image will be read by the {@link #read()} method. Any
  * subsequent images will be ignored. 
+ * <p>
+ * Notes on events: {@link ThumbnailTask}s will notify registered
+ * {@link ThumbnailatorEventListener}s of
+ * read ({@link ThumbnailatorEvent.Phase#ACQUIRE}) and 
+ * write ({@link ThumbnailatorEvent.Phase#OUTPUT}) events.
  * 
  * @author coobird
  *
@@ -55,7 +61,9 @@ public abstract class ThumbnailTask
 	
 	/**
 	 * Instantiates a {@link ThumbnailTask} with the parameters to use when
-	 * creating thumbnails.
+	 * creating thumbnails, and also a {@link List} of 
+	 * {@link ThumbnailatorEventListener}s which should be notified of events
+	 * which occur during processing.
 	 * 
 	 * @param param			The parameters to use when creating thumbnails.
 	 */
@@ -105,14 +113,25 @@ public abstract class ThumbnailTask
 	 * Returns an unmodifiable list of {@link ThumbnailatorEventListener}s
 	 * associated with this {@link ThumbnailTask}.
 	 * 
-	 * @return
+	 * @return	A {@link List} of {@link ThumbnailatorEventListener}s associated
+	 * 			with this {@link ThumbnailTask}.
 	 */
 	public List<ThumbnailatorEventListener> getListeners()
 	{
 		return notifier.getListeners();
 	}
 	
+	/**
+	 * Returns the source from which the image to resize is obtained from.
+	 * 
+	 * @return		The source.
+	 */
 	public abstract Object getSource();
-	public abstract Object getDestination();
 	
+	/**
+	 * Returns the destination to which the thumbnail is output to.
+	 * 
+	 * @return		The destination.
+	 */
+	public abstract Object getDestination();
 }
