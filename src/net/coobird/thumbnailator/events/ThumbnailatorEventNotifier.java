@@ -15,7 +15,7 @@ public class ThumbnailatorEventNotifier implements ThumbnailatorEventListener
 	
 	public ThumbnailatorEventNotifier(List<ThumbnailatorEventListener> listeners)
 	{
-		this.listeners = listeners;
+		this.listeners = new ArrayList<ThumbnailatorEventListener>(listeners);
 	}
 	
 	public boolean add(ThumbnailatorEventListener listener)
