@@ -17,10 +17,18 @@ import net.coobird.thumbnailator.events.ThumbnailatorEventNotifier;
  * only the first image will be read by the {@link #read()} method. Any
  * subsequent images will be ignored. 
  * <p>
- * Notes on events: {@link ThumbnailTask}s will notify registered
- * {@link ThumbnailatorEventListener}s of
+ * <h3>Notes on events</h3>
+ * {@link ThumbnailTask}s will notify registered 
+ * {@link ThumbnailatorEventListener}s of 
  * read ({@link ThumbnailatorEvent.Phase#ACQUIRE}) and 
  * write ({@link ThumbnailatorEvent.Phase#OUTPUT}) events.
+ * <p>
+ * The {@code progress} value returned as part of the {@link ThumbnailatorEvent}
+ * will be in the range {@code 0.0} to {@code 1.0}, however, whether the range
+ * is inclusive or exclusive is dependent on the implementation. Furthermore,
+ * the implementation need not define whether the range is guaranteed to be
+ * inclusive or not under all circumstances. Under error conditions, the
+ * {@code progress} value will be {@link Double#NaN}.   
  * 
  * @author coobird
  *
