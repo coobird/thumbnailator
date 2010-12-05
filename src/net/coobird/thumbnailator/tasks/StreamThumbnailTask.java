@@ -110,6 +110,8 @@ public class StreamThumbnailTask extends ThumbnailTask
 		reader.setInput(iis);
 		inputFormatName = reader.getFormatName();
 		
+		reader.addIIOReadProgressListener(new ReadListener(notifier, is));
+		
 		BufferedImage img = reader.read(FIRST_IMAGE_INDEX);
 		
 		iis.close();
@@ -136,7 +138,7 @@ public class StreamThumbnailTask extends ThumbnailTask
 		if (!writers.hasNext())
 		{
 			throw new UnsupportedFormatException(
-					formatName,
+					formatName, 
 					"No suitable ImageWriter found for " + formatName + "."
 			);
 		}
@@ -201,6 +203,8 @@ public class StreamThumbnailTask extends ThumbnailTask
 		{
 			img = BufferedImages.copy(img, BufferedImage.TYPE_INT_RGB);
 		}
+		
+		writer.addIIOWriteProgressListener(new WriteListener(notifier, is));
 		
 		writer.setOutput(ios);
 		writer.write(null, new IIOImage(img, null, null), writeParam);
