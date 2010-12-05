@@ -38,7 +38,7 @@ import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
  * @author coobird
  *
  */
-public class Thumbnailator
+public final class Thumbnailator
 {
 	/**
 	 * This class is not intended to be instantiated.

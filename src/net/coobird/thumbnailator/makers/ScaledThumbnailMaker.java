@@ -21,7 +21,7 @@ BufferedImage thumbnail = new ScaledThumbnailMaker().scale(0.25).make(img);
  * @author coobird
  *
  */
-public class ScaledThumbnailMaker extends ThumbnailMaker
+public final class ScaledThumbnailMaker extends ThumbnailMaker
 {
 	
 	private static final String PARAM_SCALE = "scale";
