@@ -61,7 +61,8 @@ public class Thumbnailator
 		ThumbnailatorEventNotifier notifier = 
 			new ThumbnailatorEventNotifier(task.getListeners());
 		
-		
+		notifier.beginProcessing(task.getSource());
+
 		// Obtain the original image.
 		BufferedImage sourceImage = task.read();
 		
@@ -115,6 +116,8 @@ public class Thumbnailator
 		
 		// Write the thumbnail image to the destination.
 		task.write(destinationImage);
+		
+		notifier.finishedProcessing(task.getSource(), task.getDestination());
 	}
 
 	/**
