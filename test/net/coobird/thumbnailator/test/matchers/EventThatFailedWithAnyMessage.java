@@ -8,22 +8,20 @@ import net.coobird.thumbnailator.events.ThumbnailatorEvent.Phase;
 
 import org.mockito.ArgumentMatcher;
 
-public class EventThatFailed
+public class EventThatFailedWithAnyMessage
 	extends ArgumentMatcher<ThumbnailatorEvent>
 {
 	private final Phase expectedPhase;
 	private final Class<?> cls;
-	private final String message;
 	
 	/**
 	 * @param expectedPhase
 	 */
-	public EventThatFailed(Phase expectedPhase, Class<? extends Throwable> cls, String message)
+	public EventThatFailedWithAnyMessage(Phase expectedPhase, Class<? extends Throwable> cls)
 	{
 		super();
 		this.expectedPhase = expectedPhase;
 		this.cls = cls;
-		this.message = message;
 	}
 	
 	@Override
@@ -38,10 +36,6 @@ public class EventThatFailed
 		Throwable t = event.getCause();
 		
 		if (!cls.isAssignableFrom(t.getClass()))
-		{
-			return false;
-		}
-		else if (!t.getMessage().equals(message))
 		{
 			return false;
 		}
