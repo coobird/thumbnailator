@@ -853,8 +853,11 @@ public final class Thumbnails
 		/**
 		 * Sets the size of the thumbnail.
 		 * <p>
-		 * Once this method is called, caling the {@link #scale(double)} method
-		 * will result in an {@link IllegalArgumentException}.
+		 * Once this method is called, calling the {@link #scale(double)} method
+		 * will result in an {@link IllegalStateException}.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
 		 * 
 		 * @param width			The width of the thumbnail.
 		 * @param height		The height of the thumbnail.
@@ -877,7 +880,10 @@ public final class Thumbnails
 		 * <p>
 		 * Once this method is called, caling the {@link #size(int, int)} method
 		 * and the {@link #keepAspectRatio(boolean)} will result in an
-		 * {@link IllegalArgumentException}.
+		 * {@link IllegalStateException}.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
 		 * 
 		 * @param scale			The scaling factor to use when creating a
 		 * 						thumbnail.
@@ -903,12 +909,14 @@ public final class Thumbnails
 			
 			return this;
 		}
-
 		
 		/**
 		 * Sets the image type of the thumbnail.
 		 * <p>
 		 * Calling this method to set this parameter is optional.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
 		 * 
 		 * @param type			The image type of the thumbnail.
 		 * @return				Reference to this object.
@@ -924,6 +932,9 @@ public final class Thumbnails
 		 * Sets the resizing scaling mode to use when creating the thumbnail.
 		 * <p>
 		 * Calling this method to set this parameter is optional.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
 		 * 
 		 * @param config		The scaling mode to use.
 		 * @return				Reference to this object.
@@ -940,6 +951,9 @@ public final class Thumbnails
 		 * Sets the resizing operation to use when creating the thumbnail.
 		 * <p>
 		 * Calling this method to set this parameter is optional.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
 		 * 
 		 * @param resizer		The scaling operation to use.
 		 * @return				Reference to this object.
@@ -957,6 +971,9 @@ public final class Thumbnails
 		 * operation to generate the thumbnail.
 		 * <p>
 		 * Calling this method to set this parameter is optional.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
 		 * 
 		 * @param config		The alpha interpolation mode.
 		 * @return				Reference to this object.
@@ -973,6 +990,9 @@ public final class Thumbnails
 		 * operation to generate the thumbnail.
 		 * <p>
 		 * Calling this method to set this parameter is optional.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
 		 * 
 		 * @param config		The dithering mode.
 		 * @return				Reference to this object.
@@ -989,6 +1009,9 @@ public final class Thumbnails
 		 * operation to generate the thumbnail.
 		 * <p>
 		 * Calling this method to set this parameter is optional.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException}.
 		 * 
 		 * @param config		The antialiasing mode.
 		 * @return				Reference to this object.
@@ -1005,6 +1028,9 @@ public final class Thumbnails
 		 * operation to generate the thumbnail.
 		 * <p>
 		 * Calling this method to set this parameter is optional.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
 		 * 
 		 * @param config		The rendering mode.
 		 * @return				Reference to this object.
@@ -1069,6 +1095,9 @@ public final class Thumbnails
 		 * compression codec. 
 		 * <p>
 		 * Calling this method to set this parameter is optional.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
 		 * 
 		 * @param quality		The quality of the 
 		 * @return				Reference to this object.
@@ -1084,6 +1113,9 @@ public final class Thumbnails
 		 * Sets the compression format to use when writing the thumbnail.
 		 * <p>
 		 * Calling this method to set this parameter is optional.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
 		 * 
 		 * @param format		The compression format.
 		 * @return				Reference to this object.
@@ -1103,6 +1135,9 @@ public final class Thumbnails
 		 * used. 
 		 * <p>
 		 * Calling this method to set this parameter is optional.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
 		 *  
 		 * @param formatType	The compression format type 
 		 * @return				Reference to this object.
