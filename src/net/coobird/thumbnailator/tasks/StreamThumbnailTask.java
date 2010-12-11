@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -16,6 +17,8 @@ import javax.imageio.stream.ImageOutputStream;
 
 import net.coobird.thumbnailator.BufferedImages;
 import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.events.ThumbnailatorEventListener;
+import net.coobird.thumbnailator.events.ThumbnailatorEvent.Phase;
 
 /**
  * A thumbnail generation task which streams data from an {@link InputStream}
@@ -26,6 +29,10 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * <p>
  * Only the first image obtained from the data stream will be read. Subsequent
  * images will be ignored.
+ * <p>
+ * Implementation note: The default implementation of the {@link FileThumbnailTask}
+ * will use the first {@link ImageReader} and {@link ImageWriter} object which
+ * can be obtained for the specified format. 
  * 
  * @author coobird
  *
@@ -58,6 +65,28 @@ public class StreamThumbnailTask extends ThumbnailTask
 		this.is = is;
 		this.os = os;
 	}
+	
+	/**
+	 * Creates a {@link ThumbnailTask} in which streamed image data from the 
+	 * specified {@link InputStream} is output to a specified 
+	 * {@link OutputStream}, using the parameters provided in the specified
+	 * {@link ThumbnailParameter}.
+	 * <p>
+	 * The progress of the processing will be notified to the {@link List} of
+	 * {@link ThumbnailatorEventListener}s.
+	 * 
+	 * @param param		The parameters to use to create the thumbnail.
+	 * @param is		The {@link InputStream} from which to obtain image data.
+	 * @param os		The {@link OutputStream} to send thumbnail data to.
+	 * @param listeners		The {@link ThumbnailatorEventListener}s which
+	 * 						are to be notified on the progress of processing.
+	 */
+	public StreamThumbnailTask(ThumbnailParameter param, InputStream is, OutputStream os, List<ThumbnailatorEventListener> listeners)
+	{
+		super(param, listeners);
+		this.is = is;
+		this.os = os;
+	}
 
 	@Override
 	public BufferedImage read() throws IOException
@@ -66,15 +95,27 @@ public class StreamThumbnailTask extends ThumbnailTask
 		
 		if (iis == null)
 		{
-			throw new IOException("Could not open InputStream.");
+			throwException(
+					new IOException(
+							"Could not open InputStream."
+					),
+					Phase.ACQUIRE,
+					notifier,
+					is
+			);
 		}
 		
 		Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
 		if (!readers.hasNext())
 		{
-			throw new UnsupportedFormatException(
-					UnsupportedFormatException.UNKNOWN,
-					"No suitable ImageReader found for source data."
+			throwException(
+					new UnsupportedFormatException(
+							UnsupportedFormatException.UNKNOWN,
+							"No suitable ImageReader found for source data."
+					),
+					Phase.ACQUIRE,
+					notifier,
+					is
 			);
 		}
 		
@@ -82,11 +123,19 @@ public class StreamThumbnailTask extends ThumbnailTask
 		reader.setInput(iis);
 		inputFormatName = reader.getFormatName();
 		
-		BufferedImage img = reader.read(FIRST_IMAGE_INDEX);
+		reader.addIIOReadProgressListener(new ReadListener(notifier, is));
 		
-		iis.close();
-		
-		return img;
+		try
+		{
+			BufferedImage img = reader.read(FIRST_IMAGE_INDEX);
+			iis.close();
+			
+			return img;
+		}
+		catch (IOException e)
+		{
+			throw throwException(e, Phase.ACQUIRE, notifier, is);
+		}
 	}
 
 	@Override
@@ -107,9 +156,14 @@ public class StreamThumbnailTask extends ThumbnailTask
 		
 		if (!writers.hasNext())
 		{
-			throw new UnsupportedFormatException(
-					formatName,
-					"No suitable ImageWriter found for " + formatName + "."
+			throwException(
+					new UnsupportedFormatException(
+							formatName, 
+							"No suitable ImageWriter found for " + formatName + "."
+					),
+					Phase.OUTPUT,
+					notifier,
+					is
 			);
 		}
 		
@@ -149,7 +203,12 @@ public class StreamThumbnailTask extends ThumbnailTask
 		
 		if (ios == null)
 		{
-			throw new IOException("Could not open OutputStream.");
+			throwException(
+					new IOException("Could not open OutputStream."),
+					Phase.OUTPUT,
+					notifier,
+					is
+			);
 		}
 		
 		/*
@@ -174,9 +233,32 @@ public class StreamThumbnailTask extends ThumbnailTask
 			img = BufferedImages.copy(img, BufferedImage.TYPE_INT_RGB);
 		}
 		
-		writer.setOutput(ios);
-		writer.write(null, new IIOImage(img, null, null), writeParam);
+		writer.addIIOWriteProgressListener(new WriteListener(notifier, is));
 		
-		ios.close();
+		writer.setOutput(ios);
+		
+		try
+		{
+			writer.write(null, new IIOImage(img, null, null), writeParam);
+			ios.close();
+		}
+		catch (IOException e)
+		{
+			throw throwException(e, Phase.OUTPUT, notifier, is);
+		}
+	}
+	
+	@Override
+	public Object getSource()
+	{
+		// TODO Auto-generated method stub
+		return is;
+	}
+	
+	@Override
+	public Object getDestination()
+	{
+		// TODO Auto-generated method stub
+		return os;
 	}
 }

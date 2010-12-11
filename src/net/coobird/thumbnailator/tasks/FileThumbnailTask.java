@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -16,6 +17,8 @@ import javax.imageio.stream.ImageOutputStream;
 
 import net.coobird.thumbnailator.BufferedImages;
 import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.events.ThumbnailatorEventListener;
+import net.coobird.thumbnailator.events.ThumbnailatorEvent.Phase;
 
 /**
  * A thumbnail generation task which reads and writes data from and to a 
@@ -23,6 +26,10 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * <p>
  * Only the first image included in the image file will be read. Subsequent
  * images included in the image file will be ignored.
+ * <p>
+ * Implementation note: The default implementation of the {@link FileThumbnailTask}
+ * will use the first {@link ImageReader} and {@link ImageWriter} object which
+ * can be obtained for the specified format. 
  * 
  * @author coobird
  *
@@ -38,7 +45,7 @@ public class FileThumbnailTask extends ThumbnailTask
 	 * The {@link File} to which image data is written to.
 	 */
 	private File destinationFile;
-	
+
 	/**
 	 * Creates a {@link ThumbnailTask} in which image data is read from the 
 	 * specified {@link File} and is output to a specified {@link File}, using
@@ -54,14 +61,42 @@ public class FileThumbnailTask extends ThumbnailTask
 		this.sourceFile = sourceFile;
 		this.destinationFile = destinationFile;
 	}
-
+	
+	/**
+	 * Creates a {@link ThumbnailTask} in which image data is read from the 
+	 * specified {@link File} and is output to a specified {@link File}, using
+	 * the parameters provided in the specified {@link ThumbnailParameter}.
+	 * <p>
+	 * The progress of the processing will be notified to the {@link List} of
+	 * {@link ThumbnailatorEventListener}s.
+	 * 
+	 * @param param				The parameters to use to create the thumbnail.
+	 * @param sourceFile		The {@link File} from which image data is read.
+	 * @param destinationFile	The {@link File} to which thumbnail is written.
+	 * @param listeners			The {@link ThumbnailatorEventListener}s which
+	 * 							are to be notified on the progress of processing.
+	 */
+	public FileThumbnailTask(ThumbnailParameter param, File sourceFile, File destinationFile, List<ThumbnailatorEventListener> listeners)
+	{
+		super(param, listeners);
+		this.sourceFile = sourceFile;
+		this.destinationFile = destinationFile;
+	}
+	
 	@Override
 	public BufferedImage read() throws IOException
 	{
+		String sourcePath = sourceFile.getPath();
+		
 		if (!sourceFile.exists())
 		{
-			throw new FileNotFoundException(
-					"Could not find file: " + sourceFile.getAbsolutePath()
+			throwException(
+					new FileNotFoundException(
+							"Could not find file: " + sourcePath
+					),
+					Phase.ACQUIRE,
+					notifier,
+					sourceFile
 			);
 		}
 		
@@ -73,29 +108,47 @@ public class FileThumbnailTask extends ThumbnailTask
 		
 		if (iis == null)
 		{
-			throw new IOException(
-					"Could not open file: " + sourceFile.getAbsolutePath());
+			throwException(
+					new IOException(
+							"Could not find file: " + sourcePath
+					),
+					Phase.ACQUIRE,
+					notifier,
+					sourceFile
+			);
 		}
 		
 		Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
 		if (!readers.hasNext())
 		{
-			String sourcePath = sourceFile.getPath();
-			throw new UnsupportedFormatException(
-					UnsupportedFormatException.UNKNOWN,
-					"No suitable ImageReader found for " + sourcePath + "."
+			throwException(
+					new UnsupportedFormatException(
+							UnsupportedFormatException.UNKNOWN,
+							"No suitable ImageReader found for " + sourcePath + "."
+					),
+					Phase.ACQUIRE,
+					notifier,
+					sourceFile
 			);
 		}
 		
 		ImageReader reader = readers.next();
 		reader.setInput(iis);
 		inputFormatName = reader.getFormatName();
-
-		BufferedImage img = reader.read(FIRST_IMAGE_INDEX);
 		
-		iis.close();
+		reader.addIIOReadProgressListener(new ReadListener(notifier, sourceFile));
 		
-		return img;
+		try
+		{
+			BufferedImage img = reader.read(FIRST_IMAGE_INDEX);
+			iis.close();
+			
+			return img;
+		}
+		catch (IOException e)
+		{
+			throw throwException(e, Phase.ACQUIRE, notifier, sourceFile);
+		}
 	}
 	
 	/**
@@ -170,9 +223,14 @@ public class FileThumbnailTask extends ThumbnailTask
 		
 		if (!writers.hasNext())
 		{
-			throw new UnsupportedFormatException(
-					formatName, 
-					"No suitable ImageWriter found for " + formatName + "."
+			throwException(
+					new UnsupportedFormatException(
+							formatName, 
+							"No suitable ImageWriter found for " + formatName + "."
+					),
+					Phase.OUTPUT,
+					notifier,
+					sourceFile
 			);
 		}
 		
@@ -213,7 +271,12 @@ public class FileThumbnailTask extends ThumbnailTask
 		
 		if (ios == null)
 		{
-			throw new IOException("Could not open output file.");
+			throwException(
+					new IOException("Could not open output file."),
+					Phase.OUTPUT,
+					notifier,
+					sourceFile
+			);
 		}
 		
 		/*
@@ -238,9 +301,32 @@ public class FileThumbnailTask extends ThumbnailTask
 			img = BufferedImages.copy(img, BufferedImage.TYPE_INT_RGB);
 		}
 		
-		writer.setOutput(ios);
-		writer.write(null, new IIOImage(img, null, null), writeParam);
+		writer.addIIOWriteProgressListener(new WriteListener(notifier, sourceFile));
 		
-		ios.close();
+		writer.setOutput(ios);
+		
+		try
+		{
+			writer.write(null, new IIOImage(img, null, null), writeParam);
+			ios.close();
+		}
+		catch (IOException e)
+		{
+			throw throwException(e, Phase.OUTPUT, notifier, sourceFile);
+		}
+	}
+	
+	@Override
+	public Object getSource()
+	{
+		// TODO Auto-generated method stub
+		return sourceFile;
+	}
+	
+	@Override
+	public Object getDestination()
+	{
+		// TODO Auto-generated method stub
+		return destinationFile;
 	}
 }
