@@ -493,6 +493,295 @@ public class ThumbnailsBuilderTest
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
+	 * <li>outputQuality(float) is 0.0f</li>
+	 * <li>toFile(File)</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The outputQuality is allowed</li>
+	 * <li>The thumbnail is successfully produced</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void outputQuality_float_ValidArg_ZeroZero() throws IOException
+	{
+		File f = new File("test-resources/Thumbnailator/grid.jpg");
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		outFile.deleteOnExit();
+		
+		Thumbnails.of(f)
+			.size(50, 50)
+			.outputFormat("jpg")
+			.outputQuality(0.0f)
+			.toFile(outFile);
+		
+		BufferedImage thumbnail = ImageIO.read(outFile);
+		
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputQuality(float) is 0.5f</li>
+	 * <li>toFile(File)</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The outputQuality is allowed</li>
+	 * <li>The thumbnail is successfully produced</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void outputQuality_float_ValidArg_ZeroFive() throws IOException
+	{
+		File f = new File("test-resources/Thumbnailator/grid.jpg");
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		outFile.deleteOnExit();
+		
+		Thumbnails.of(f)
+			.size(50, 50)
+			.outputFormat("jpg")
+			.outputQuality(0.5f)
+			.toFile(outFile);
+		
+		BufferedImage thumbnail = ImageIO.read(outFile);
+		
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputQuality(float) is 1.0f</li>
+	 * <li>toFile(File)</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The outputQuality is allowed</li>
+	 * <li>The thumbnail is successfully produced</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void outputQuality_float_ValidArg_OneZero() throws IOException
+	{
+		File f = new File("test-resources/Thumbnailator/grid.jpg");
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		outFile.deleteOnExit();
+		
+		Thumbnails.of(f)
+			.size(50, 50)
+			.outputFormat("jpg")
+			.outputQuality(1.0f)
+			.toFile(outFile);
+		
+		BufferedImage thumbnail = ImageIO.read(outFile);
+		
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputQuality(float) is negative</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void outputQuality_float_InvalidArg_Negative() throws IOException
+	{
+		File f = new File("test-resources/Thumbnailator/grid.jpg");
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		outFile.deleteOnExit();
+		
+		Thumbnails.of(f)
+			.size(50, 50)
+			.outputFormat("jpg")
+			.outputQuality(-0.01f);
+	}
+
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputQuality(float) is greater than 1.0d</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void outputQuality_float_InvalidArg_OverOne() throws IOException
+	{
+		File f = new File("test-resources/Thumbnailator/grid.jpg");
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		outFile.deleteOnExit();
+		
+		Thumbnails.of(f)
+			.size(50, 50)
+			.outputFormat("jpg")
+			.outputQuality(1.01f);
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputQuality(double) is 0.0d</li>
+	 * <li>toFile(File)</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The outputQuality is allowed</li>
+	 * <li>The thumbnail is successfully produced</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void outputQuality_double_ValidArg_ZeroZero() throws IOException
+	{
+		File f = new File("test-resources/Thumbnailator/grid.jpg");
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		outFile.deleteOnExit();
+		
+		Thumbnails.of(f)
+			.size(50, 50)
+			.outputFormat("jpg")
+			.outputQuality(0.0d)
+			.toFile(outFile);
+		
+		BufferedImage thumbnail = ImageIO.read(outFile);
+		
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputQuality(double) is 0.5d</li>
+	 * <li>toFile(File)</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The outputQuality is allowed</li>
+	 * <li>The thumbnail is successfully produced</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void outputQuality_double_ValidArg_ZeroFive() throws IOException
+	{
+		File f = new File("test-resources/Thumbnailator/grid.jpg");
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		outFile.deleteOnExit();
+		
+		Thumbnails.of(f)
+			.size(50, 50)
+			.outputFormat("jpg")
+			.outputQuality(0.5d)
+			.toFile(outFile);
+		
+		BufferedImage thumbnail = ImageIO.read(outFile);
+		
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputQuality(double) is 1.0d</li>
+	 * <li>toFile(File)</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The outputQuality is allowed</li>
+	 * <li>The thumbnail is successfully produced</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void outputQuality_double_ValidArg_OneZero() throws IOException
+	{
+		File f = new File("test-resources/Thumbnailator/grid.jpg");
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		outFile.deleteOnExit();
+		
+		Thumbnails.of(f)
+			.size(50, 50)
+			.outputFormat("jpg")
+			.outputQuality(1.0d)
+			.toFile(outFile);
+		
+		BufferedImage thumbnail = ImageIO.read(outFile);
+		
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputQuality(double) is negative</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void outputQuality_double_InvalidArg_Negative() throws IOException
+	{
+		File f = new File("test-resources/Thumbnailator/grid.jpg");
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		outFile.deleteOnExit();
+		
+		Thumbnails.of(f)
+			.size(50, 50)
+			.outputFormat("jpg")
+			.outputQuality(-0.01d);
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputQuality(double) is greater than 1.0d</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void outputQuality_double_InvalidArg_OverOne() throws IOException
+	{
+		File f = new File("test-resources/Thumbnailator/grid.jpg");
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		outFile.deleteOnExit();
+		
+		Thumbnails.of(f)
+			.size(50, 50)
+			.outputFormat("jpg")
+			.outputQuality(1.01d);
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
 	 * <li>outputFormat</li>
 	 * <li>toFile(File)</li>
 	 * <li>format name matches the file extension</li>

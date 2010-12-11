@@ -1096,16 +1096,74 @@ public final class Thumbnails
 		 * <p>
 		 * Calling this method to set this parameter is optional.
 		 * <p>
-		 * Calling this method multiple times will result in an
-		 * {@link IllegalStateException} to be thrown.
+		 * Calling this method multiple times, or the 
+		 * {@link #outputQuality(double)} in conjunction with this method will
+		 * result in an {@link IllegalStateException} to be thrown.
 		 * 
 		 * @param quality		The quality of the 
 		 * @return				Reference to this object.
+		 * @throws IllegalArgumentException	If the argument is less than
+		 * 									{@code 0.0f} or is greater than
+		 * 									{@code 1.0f}.
 		 */
 		public Builder outputQuality(float quality)
 		{
+			if (quality < 0.0f || quality > 1.0f)
+			{
+				throw new IllegalArgumentException(
+						"The quality setting must be in the range 0.0f and " +
+						"1.0f, inclusive."
+				);
+			}
 			updateStatus(Properties.OUTPUT_QUALITY, Status.ALREADY_SET);
 			outputQuality = quality;
+			return this;
+		}
+		
+		/**
+		 * Sets the compression output quality of the thumbnail.
+		 * <p> 
+		 * The value is a {@code double} between {@code 0.0d} and {@code 1.0d}
+		 * where {@code 0.0d} indicates the minimum quality and {@code 1.0d}
+		 * indicates the maximum quality settings should be used for by the
+		 * compression codec. 
+		 * <p>
+		 * This method is a convenience method for {@link #outputQuality(float)}
+		 * where the {@code double} argument type is accepted instead of a
+		 * {@code float}.
+		 * <p>
+		 * Calling this method to set this parameter is optional.
+		 * <p>
+		 * Calling this method multiple times, or the 
+		 * {@link #outputQuality(float)} in conjunction with this method will
+		 * result in an {@link IllegalStateException} to be thrown.
+		 * 
+		 * @param quality		The quality of the 
+		 * @return				Reference to this object.
+		 * @throws IllegalArgumentException	If the argument is less than
+		 * 									{@code 0.0d} or is greater than
+		 * 									{@code 1.0d}.
+ 		 */
+		public Builder outputQuality(double quality)
+		{
+			if (quality < 0.0d || quality > 1.0d)
+			{
+				throw new IllegalArgumentException(
+						"The quality setting must be in the range 0.0d and " +
+						"1.0d, inclusive."
+				);
+			}
+			
+			updateStatus(Properties.OUTPUT_QUALITY, Status.ALREADY_SET);
+			outputQuality = (float)quality;
+			if (outputQuality < 0.0f)
+			{
+				outputQuality = 0.0f;
+			}
+			else if (outputQuality > 1.0f)
+			{
+				outputQuality = 1.0f;
+			}
 			return this;
 		}
 		
