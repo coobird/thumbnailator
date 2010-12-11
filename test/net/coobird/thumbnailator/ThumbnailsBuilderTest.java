@@ -1200,6 +1200,56 @@ public class ThumbnailsBuilderTest
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
+	 * <li>outputFormat with a supported format</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>No exception is thrown.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void outputFormat_SupportedFormat() throws IOException
+	{
+		// given
+		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
+		
+		// when
+		Thumbnails.of(f1)
+			.size(50, 50)
+			.outputFormat("png");
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputFormat with a supported format</li>
+	 * <li>toFile(File)</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void outputFormat_UnsupportedFormat() throws IOException
+	{
+		// given
+		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
+		
+		// when
+		Thumbnails.of(f1)
+			.size(50, 50)
+			.outputFormat("unsupported");
+		
+		// then
+		// expect an IllagelArgumentExceptio.
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
 	 * <li>Thumbnails.of(BufferedImage...)</li>
 	 * <li>where the BufferedImage[] is null.</li>
 	 * </ol>

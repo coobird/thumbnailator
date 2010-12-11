@@ -1177,9 +1177,18 @@ public final class Thumbnails
 		 * 
 		 * @param format		The compression format.
 		 * @return				Reference to this object.
+		 * @throws IllegalArgumentException	If an unsupported format is
+		 * 									specified.
 		 */
 		public Builder outputFormat(String format)
 		{
+			if (!ThumbnailatorUtils.isSupportedOutputFormat(format))
+			{
+				throw new IllegalArgumentException(
+						"Specified format is not supported: " + format
+				);
+			}
+			
 			updateStatus(Properties.OUTPUT_FORMAT, Status.ALREADY_SET);
 			outputFormat = format;
 			return this;
