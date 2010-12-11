@@ -38,12 +38,12 @@
 		name="test"
 		description="Runs unit tests">
 	
-		<junit haltonfailure="yes" printsummary="yes">
+		<junit haltonfailure="yes" printsummary="yes" reloading="no">
 			<classpath path="${classes}" />
 			<batchtest>
 				<fileset dir="${tests}">
 					<include name="**/*.java" />
-					<exclude name="**/test/*.java" />
+					<exclude name="**/test/**/*.java" />
 				</fileset>
 			</batchtest>
 		</junit>
