@@ -1205,6 +1205,11 @@ public final class Thumbnails
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
+		 * <p>
+		 * Furthermore, if this method is called, then calling the 
+		 * {@link #outputFormat} method is disabled, in order to prevent
+		 * cases where the output format type does not exist in the format
+		 * specified for the {@code outputFormat} method.
 		 *  
 		 * @param formatType	The compression format type 
 		 * @return				Reference to this object.
@@ -1245,8 +1250,12 @@ public final class Thumbnails
 			 * output format unchangeable, or else we'd risk having a type
 			 * that is not part of the output format.
 			 */
-			updateStatus(Properties.OUTPUT_FORMAT, Status.ALREADY_SET);
 			updateStatus(Properties.OUTPUT_FORMAT_TYPE, Status.ALREADY_SET);
+			
+			if (!statusMap.containsKey(Properties.OUTPUT_FORMAT))
+			{
+				updateStatus(Properties.OUTPUT_FORMAT, Status.CANNOT_SET);
+			}
 			outputFormatType = formatType;
 			return this;
 		}
