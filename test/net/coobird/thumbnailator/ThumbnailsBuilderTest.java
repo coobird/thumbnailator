@@ -1244,7 +1244,176 @@ public class ThumbnailsBuilderTest
 			.outputFormat("unsupported");
 		
 		// then
-		// expect an IllagelArgumentExceptio.
+		// expect an IllagelArgumentException.
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputFormat specified</li>
+	 * <li>outputFormatType is supported</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>No exception is thrown</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void outputFormat_Checks_FormatSpecified_TypeSupported() throws IOException
+	{
+		// given
+		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
+		
+		// when
+		Thumbnails.of(f1)
+			.size(50, 50)
+			.outputFormat("JPEG")
+			.outputFormatType("JPEG");
+		
+		// then
+		// no exception occurs
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputFormat specified</li>
+	 * <li>outputFormatType is specified, but the outputFormat does not
+	 * support compression.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void outputFormat_Checks_FormatSpecified_FormatDoesNotSupportCompression() throws IOException
+	{
+		// given
+		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
+		
+		// when
+		Thumbnails.of(f1)
+			.size(50, 50)
+			.outputFormat("PNG")
+			.outputFormatType("JPEG");
+		
+		// then
+		// expect an IllagelArgumentException.
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputFormat specified</li>
+	 * <li>outputFormatType is unsupported</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void outputFormat_Checks_FormatSpecified_TypeUnsupported() throws IOException
+	{
+		// given
+		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
+		
+		// when
+		Thumbnails.of(f1)
+		.size(50, 50)
+		.outputFormat("JPEG")
+		.outputFormatType("foo");
+		
+		// then
+		// expect an IllagelArgumentException.
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputFormat specified</li>
+	 * <li>outputFormatType is default for the output format</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>No exception is thrown</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void outputFormat_Checks_FormatSpecified_TypeDefault() throws IOException
+	{
+		// given
+		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
+		
+		// when
+		Thumbnails.of(f1)
+			.size(50, 50)
+			.outputFormat("JPEG")
+			.outputFormatType(ThumbnailParameter.DEFAULT_FORMAT_TYPE);
+		
+		// then
+		// no exception occurs
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputFormat is the format of the original image</li>
+	 * <li>outputFormatType is specified</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void outputFormat_Checks_FormatSpecifiedAsOriginal_TypeSpecified() throws IOException
+	{
+		// given
+		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
+		
+		// when
+		Thumbnails.of(f1)
+			.size(50, 50)
+			.outputFormat(ThumbnailParameter.ORIGINAL_FORMAT)
+			.outputFormatType("JPEG");
+		
+		// then
+		// expect an IllagelArgumentException.
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>outputFormat is the format of the original image</li>
+	 * <li>outputFormatType is specified</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>No exception is thrown.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void outputFormat_Checks_FormatSpecifiedAsOriginal_TypeIsDefaultForFormat() throws IOException
+	{
+		// given
+		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
+		
+		// when
+		Thumbnails.of(f1)
+			.size(50, 50)
+			.outputFormat(ThumbnailParameter.ORIGINAL_FORMAT)
+			.outputFormatType(ThumbnailParameter.DEFAULT_FORMAT_TYPE);
+		
+		// then
+		// no exception is thrown.
 	}
 	
 	/**
