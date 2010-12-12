@@ -1208,9 +1208,44 @@ public final class Thumbnails
 		 *  
 		 * @param formatType	The compression format type 
 		 * @return				Reference to this object.
+		 * @throws IllegalArgumentException	If an unsupported format type is
+		 * 									specified for the current output
+		 * 									format type. Or, if the output
+		 * 									format has not been specified before
+		 * 									this method was called.
 		 */
 		public Builder outputFormatType(String formatType)
 		{
+			/*
+			 * If the output format is the original format, and the format type
+			 * is being specified, it's going to be likely that the specified
+			 * type will not be present in all the formats, so we'll disallow
+			 * it. (e.g. setting type to "JPEG", and if the original formats
+			 * were JPEG and PNG, then we'd have a problem. 
+			 */
+			if (formatType != ThumbnailParameter.DEFAULT_FORMAT_TYPE 
+					&& outputFormat == ThumbnailParameter.ORIGINAL_FORMAT)
+			{
+				throw new IllegalArgumentException(
+						"Cannot set the format type if a specific output " +
+						"format has not been specified."
+				);
+			}
+			
+			if (!ThumbnailatorUtils.isSupportedOutputFormatType(outputFormat, formatType))
+			{
+				throw new IllegalArgumentException(
+						"Specified format type (" + formatType + ") is not " +
+						" supported for the format: " + outputFormat
+				);
+			}
+			
+			/*
+			 * If the output format type is set, then we'd better make the
+			 * output format unchangeable, or else we'd risk having a type
+			 * that is not part of the output format.
+			 */
+			updateStatus(Properties.OUTPUT_FORMAT, Status.ALREADY_SET);
 			updateStatus(Properties.OUTPUT_FORMAT_TYPE, Status.ALREADY_SET);
 			outputFormatType = formatType;
 			return this;
