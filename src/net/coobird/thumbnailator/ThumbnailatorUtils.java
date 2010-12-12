@@ -114,11 +114,16 @@ public final class ThumbnailatorUtils
 	 *  
 	 * @param format	The format to check whether it is supported or not.
 	 * @param type		The format type to check whether it is supported or not.
-	 * @return			{@code true} if the format type is supported, 
-	 * 					{@code false} otherwise.
+	 * @return			{@code true} if the format type is supported by the
+	 * 					specified supported format, {@code false} otherwise.
 	 */
 	public static boolean isSupportedOutputFormatType(String format, String type)
 	{
+		if (!isSupportedOutputFormat(format))
+		{
+			return false;
+		}
+		
 		if (format == ThumbnailParameter.ORIGINAL_FORMAT
 				&& type == ThumbnailParameter.DEFAULT_FORMAT_TYPE)
 		{
