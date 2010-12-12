@@ -8,6 +8,12 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriter;
 
+/**
+ * A utility class for Thumbnailator.
+ * 
+ * @author coobird
+ *
+ */
 public final class ThumbnailatorUtils
 {
 	/**
@@ -15,11 +21,33 @@ public final class ThumbnailatorUtils
 	 */
 	private ThumbnailatorUtils() {}
 	
+	/**
+	 * Returns a {@link List} of supported output formats.
+	 * 
+	 * @return		A {@link List} of supported output formats. If no formats
+	 * 				are supported, an empty list is returned.
+	 */
 	public static List<String> getSupportedOutputFormats()
 	{
-		return Arrays.asList(ImageIO.getWriterFormatNames());
+		String[] formats = ImageIO.getWriterFormatNames();
+		
+		if (formats == null)
+		{
+			return Collections.emptyList();
+		}
+		else
+		{
+			return Arrays.asList(formats);
+		}
 	}
 	
+	/**
+	 * Returns whether a specified format is supported for output.
+	 *  
+	 * @param format	The format to check whether it is supported or not.
+	 * @return			{@code true} if the format is supported, {@code false}
+	 * 					otherwise.
+	 */
 	public static boolean isSupportedOutputFormat(String format)
 	{
 		for (String supportedFormat : getSupportedOutputFormats())
@@ -33,6 +61,13 @@ public final class ThumbnailatorUtils
 		return false;
 	}
 	
+	/**
+	 * Returns a {@link List} of supported output formats types for a specified
+	 * output format.
+	 * 
+	 * @return		A {@link List} of supported output formats types. If no 
+	 * 				formats types are supported, an empty list is returned.
+	 */
 	public static List<String> getSupportedOutputFormatTypes(String format)
 	{
 		if (format == null)
@@ -59,8 +94,26 @@ public final class ThumbnailatorUtils
 		}
 	}
 	
+	/**
+	 * Returns whether a specified format type is supported for a specified
+	 * output format.
+	 *  
+	 * @param format	The format to check whether it is supported or not.
+	 * @param type		The format type to check whether it is supported or not.
+	 * @return			{@code true} if the format type is supported, 
+	 * 					{@code false} otherwise.
+	 */
 	public static boolean isSupportedOutputFormatType(String format, String type)
 	{
+		if (format == null)
+		{
+			throw new NullPointerException("Format name cannot be null.");
+		}
+		else if (type == null)
+		{
+			throw new NullPointerException("Format type name cannot be null.");
+		}
+		
 		for (String supportedType : getSupportedOutputFormatTypes(format))
 		{
 			if (supportedType.equals(type))
