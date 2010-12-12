@@ -50,6 +50,11 @@ public final class ThumbnailatorUtils
 	 */
 	public static boolean isSupportedOutputFormat(String format)
 	{
+		if (format == ThumbnailParameter.ORIGINAL_FORMAT)
+		{
+			return true;
+		}
+		
 		for (String supportedFormat : getSupportedOutputFormats())
 		{
 			if (supportedFormat.equals(format))
@@ -66,13 +71,15 @@ public final class ThumbnailatorUtils
 	 * output format.
 	 * 
 	 * @return		A {@link List} of supported output formats types. If no 
-	 * 				formats types are supported, an empty list is returned.
+	 * 				formats types are supported, or if compression is not
+	 * 				supported for the specified format, then an empty list 
+	 * 				is returned.
 	 */
 	public static List<String> getSupportedOutputFormatTypes(String format)
 	{
-		if (format == null)
+		if (format == ThumbnailParameter.ORIGINAL_FORMAT)
 		{
-			throw new NullPointerException("Format name cannot be null.");
+			return Collections.emptyList();
 		}
 		
 		Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(format); 
@@ -81,8 +88,15 @@ public final class ThumbnailatorUtils
 			return Collections.emptyList();
 		}
 		
-		String[] types = 
-			writers.next().getDefaultWriteParam().getCompressionTypes();
+		String[] types;
+		try
+		{
+			types = writers.next().getDefaultWriteParam().getCompressionTypes();
+		}
+		catch (UnsupportedOperationException e)
+		{
+			return Collections.emptyList();
+		}
 		
 		if (types == null)
 		{
@@ -105,13 +119,19 @@ public final class ThumbnailatorUtils
 	 */
 	public static boolean isSupportedOutputFormatType(String format, String type)
 	{
-		if (format == null)
+		if (format == ThumbnailParameter.ORIGINAL_FORMAT
+				&& type == ThumbnailParameter.DEFAULT_FORMAT_TYPE)
 		{
-			throw new NullPointerException("Format name cannot be null.");
+			return true;
 		}
-		else if (type == null)
+		else if (format == ThumbnailParameter.ORIGINAL_FORMAT
+				&& type != ThumbnailParameter.DEFAULT_FORMAT_TYPE)
 		{
-			throw new NullPointerException("Format type name cannot be null.");
+			return false;
+		}
+		else if (type == ThumbnailParameter.DEFAULT_FORMAT_TYPE)
+		{
+			return true;
 		}
 		
 		for (String supportedType : getSupportedOutputFormatTypes(format))
