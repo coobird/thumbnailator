@@ -1716,8 +1716,12 @@ watermark(Positions.CENTER, image, opacity);
 			List<BufferedImage> thumbnails = new ArrayList<BufferedImage>();
 			
 			// Create thumbnails
-			// TODO This code could cause very large images to cause
-			// OutOfMemoryErrors.
+			/*
+			 * TODO This code could cause very large images to cause
+			 * OutOfMemoryErrors -- getOriginalImages will open each image at a  
+			 * time, however, if each image is large, then it could deplete 
+			 * the heap.
+			 */
 			for (BufferedImage img : getOriginalImages())
 			{
 				ThumbnailMaker maker = makeThumbnailMaker(r, img.getType());
