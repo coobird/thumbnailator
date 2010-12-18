@@ -1,4 +1,4 @@
-package net.coobird.thumbnailator.tasks;
+package net.coobird.thumbnailator.tasks.io;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -13,6 +13,7 @@ import javax.imageio.stream.ImageOutputStream;
 
 import net.coobird.thumbnailator.BufferedImages;
 import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 
 public class OutputStreamImageSink extends AbstractImageSink
 {

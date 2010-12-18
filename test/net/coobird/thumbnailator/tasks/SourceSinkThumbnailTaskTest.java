@@ -15,6 +15,9 @@ import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.Thumbnailator;
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
+import net.coobird.thumbnailator.tasks.io.BufferedImageSink;
+import net.coobird.thumbnailator.tasks.io.InputStreamImageSource;
+import net.coobird.thumbnailator.tasks.io.OutputStreamImageSink;
 
 import static org.junit.Assert.*;
 
@@ -107,7 +110,15 @@ public class SourceSinkThumbnailTaskTest
 		String formatName = getFormatName(destIs);
 		assertEquals("JPEG", formatName);
 	}
+
 	
+	/**
+	 * Returns the format of an image which is read through the {@link InputStream}.
+	 * 
+	 * @param is			The {@link InputStream} to an image.
+	 * @return				File format of the image.
+	 * @throws IOException
+	 */
 	private static String getFormatName(InputStream is) throws IOException
 	{
 		return ImageIO.getImageReaders(
