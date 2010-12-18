@@ -3,7 +3,7 @@ package net.coobird.thumbnailator.tasks;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class BufferedImageSource implements ImageSource
+public class BufferedImageSource extends AbstractImageSource
 {
 	private final BufferedImage img;
 	
@@ -18,6 +18,7 @@ public class BufferedImageSource implements ImageSource
 
 	public BufferedImage read() throws IOException
 	{
+		inputFormatName = "BufferedImage";
 		return img;
 	}
 }

@@ -6,4 +6,5 @@ import java.io.IOException;
 public interface ImageSource
 {
 	public BufferedImage read() throws IOException;
+	public String getInputFormatName();
 }
