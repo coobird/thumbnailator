@@ -1,15 +1,19 @@
 package net.coobird.thumbnailator.tasks;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.Thumbnailator;
+import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 
 import static org.junit.Assert.*;
@@ -25,19 +29,23 @@ public class SourceSinkThumbnailTaskTest
 		ThumbnailParameter param = 
 			new ThumbnailParameterBuilder().size(50, 50).build();
 		
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		ByteArrayInputStream is = 
+			new ByteArrayInputStream(makeImageData("png", 200, 200));
 		
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		BufferedImageSink destination = new BufferedImageSink();
 		
 		// when
-		Thumbnailator.createThumbnail(new SourceSinkThumbnailTask(param, source, destination));
+		Thumbnailator.createThumbnail(
+				new SourceSinkThumbnailTask(param, source, destination)
+		);
 
 		// then
 		BufferedImage thumbnail = destination.getImage();
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
+	
 	
 	@Test
 	public void task_SizeOnly_InputStream_OutputStream() throws IOException
@@ -46,21 +54,27 @@ public class SourceSinkThumbnailTaskTest
 		ThumbnailParameter param = 
 			new ThumbnailParameterBuilder().size(50, 50).build();
 		
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
-		File destinationFile = new File("test-resources/Thumbnailator/out-grid.png");
-		destinationFile.deleteOnExit();
+		byte[] imageData = makeImageData("png", 200, 200);
+		ByteArrayInputStream is = new ByteArrayInputStream(imageData);
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
-		OutputStreamImageSink destination = new OutputStreamImageSink(new FileOutputStream(destinationFile));
+		InputStreamImageSource source = new InputStreamImageSource(is);
+		OutputStreamImageSink destination = new OutputStreamImageSink(os);
 
 		// when
-		Thumbnailator.createThumbnail(new SourceSinkThumbnailTask(param, source, destination));
+		Thumbnailator.createThumbnail(
+				new SourceSinkThumbnailTask(param, source, destination)
+		);
 		
 		// then
-		BufferedImage thumbnail = ImageIO.read(destinationFile);
+		ByteArrayInputStream destIs = new ByteArrayInputStream(os.toByteArray());
+		BufferedImage thumbnail = ImageIO.read(destIs);
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
-		String formatName = ImageIO.getImageReaders(ImageIO.createImageInputStream(destinationFile)).next().getFormatName();
+		
+		destIs = new ByteArrayInputStream(os.toByteArray());
+		String formatName = getFormatName(destIs);
+		
 		assertEquals("png", formatName);
 	}
 	
@@ -71,21 +85,53 @@ public class SourceSinkThumbnailTaskTest
 		ThumbnailParameter param = 
 			new ThumbnailParameterBuilder().size(50, 50).format("jpg").build();
 		
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
-		File destinationFile = new File("test-resources/Thumbnailator/out-grid.jpg");
-		destinationFile.deleteOnExit();
+		byte[] imageData = makeImageData("png", 200, 200);
+		ByteArrayInputStream is = new ByteArrayInputStream(imageData);
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
-		OutputStreamImageSink destination = new OutputStreamImageSink(new FileOutputStream(destinationFile));
+		InputStreamImageSource source = new InputStreamImageSource(is);
+		OutputStreamImageSink destination = new OutputStreamImageSink(os);
 		
 		// when
-		Thumbnailator.createThumbnail(new SourceSinkThumbnailTask(param, source, destination));
+		Thumbnailator.createThumbnail(
+				new SourceSinkThumbnailTask(param, source, destination)
+		);
 		
 		// then
-		BufferedImage thumbnail = ImageIO.read(destinationFile);
+		ByteArrayInputStream destIs = new ByteArrayInputStream(os.toByteArray());
+		BufferedImage thumbnail = ImageIO.read(destIs);
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
-		String formatName = ImageIO.getImageReaders(ImageIO.createImageInputStream(destinationFile)).next().getFormatName();
+		
+		destIs = new ByteArrayInputStream(os.toByteArray());
+		String formatName = getFormatName(destIs);
 		assertEquals("JPEG", formatName);
+	}
+	
+	private static String getFormatName(InputStream is) throws IOException
+	{
+		return ImageIO.getImageReaders(
+				ImageIO.createImageInputStream(is)
+		).next().getFormatName();
+	}
+
+
+	/**
+	 * Returns test image data as an array of {@code byte}s.
+	 * 
+	 * @param format			Image format.
+	 * @param width				Image width.
+	 * @param height			Image height.
+	 * @return					A {@code byte[]} of image data.
+	 * @throws IOException		When a problem occurs while making image data.
+	 */
+	private static byte[] makeImageData(String format, int width, int height)
+			throws IOException
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(img, format, baos);
+		
+		return baos.toByteArray();
 	}
 }
