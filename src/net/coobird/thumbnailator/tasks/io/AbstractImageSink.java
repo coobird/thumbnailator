@@ -1,4 +1,4 @@
-package net.coobird.thumbnailator.tasks;
+package net.coobird.thumbnailator.tasks.io;
 
 import net.coobird.thumbnailator.ThumbnailParameter;
 

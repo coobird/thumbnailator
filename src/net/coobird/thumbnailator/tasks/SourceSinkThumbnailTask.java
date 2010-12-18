@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.tasks.io.ImageSink;
+import net.coobird.thumbnailator.tasks.io.ImageSource;
 
 public class SourceSinkThumbnailTask extends ThumbnailTask
 {

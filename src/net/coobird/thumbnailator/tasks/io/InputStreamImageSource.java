@@ -1,4 +1,4 @@
-package net.coobird.thumbnailator.tasks;
+package net.coobird.thumbnailator.tasks.io;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -9,8 +9,11 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
+import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
+
 public class InputStreamImageSource extends AbstractImageSource
 {
+	private static final int FIRST_IMAGE_INDEX = 0;
 	private final InputStream is;
 	
 	/**
@@ -44,7 +47,7 @@ public class InputStreamImageSource extends AbstractImageSource
 		reader.setInput(iis);
 		inputFormatName = reader.getFormatName();
 		
-		BufferedImage img = reader.read(ThumbnailTask.FIRST_IMAGE_INDEX);
+		BufferedImage img = reader.read(FIRST_IMAGE_INDEX);
 		
 		iis.close();
 		
