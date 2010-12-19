@@ -44,6 +44,9 @@ public class URLImageSource extends AbstractImageSource
 			source = new InputStreamImageSource(url.openStream());
 		}
 		
-		return source.read();
+		BufferedImage img = source.read();
+		this.inputFormatName = source.getInputFormatName();
+		
+		return img;
 	}
 }
