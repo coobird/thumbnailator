@@ -2689,4 +2689,178 @@ public class ThumbnailsBuilderTest
 		assertEquals(50, fromFileImage2.getWidth());
 		assertEquals(50, fromFileImage2.getHeight());
 	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The resizer method is called with null</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown</li>
+	 * </ol>
+	 */	
+	@Test(expected=NullPointerException.class)
+	public void resizer_Null()
+	{
+		try
+		{
+			// given
+			// when
+			Thumbnails.of("non-existent-file")
+				.size(200, 200)
+				.resizer(null);
+		}
+		catch (NullPointerException e)
+		{
+			// then
+			assertEquals("Resizer is null.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The alphaInterpolation method is called with null</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown</li>
+	 * </ol>
+	 */	
+	@Test(expected=NullPointerException.class)
+	public void alphaInterpolation_Null()
+	{
+		try
+		{
+			// given
+			// when
+			Thumbnails.of("non-existent-file")
+				.size(200, 200)
+				.alphaInterpolation(null);
+		}
+		catch (NullPointerException e)
+		{
+			// then
+			assertEquals("Alpha interpolation is null.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The dithering method is called with null</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown</li>
+	 * </ol>
+	 */	
+	@Test(expected=NullPointerException.class)
+	public void dithering_Null()
+	{
+		try
+		{
+			// given
+			// when
+			Thumbnails.of("non-existent-file")
+				.size(200, 200)
+				.dithering(null);
+		}
+		catch (NullPointerException e)
+		{
+			// then
+			assertEquals("Dithering is null.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The antialiasing method is called with null</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown</li>
+	 * </ol>
+	 */	
+	@Test(expected=NullPointerException.class)
+	public void antialiasing_Null()
+	{
+		try
+		{
+			// given
+			// when
+			Thumbnails.of("non-existent-file")
+				.size(200, 200)
+				.antialiasing(null);
+		}
+		catch (NullPointerException e)
+		{
+			// then
+			assertEquals("Antialiasing is null.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The rendering method is called with null</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown</li>
+	 * </ol>
+	 */	
+	@Test(expected=NullPointerException.class)
+	public void rendering_Null()
+	{
+		try
+		{
+			// given
+			// when
+			Thumbnails.of("non-existent-file")
+				.size(200, 200)
+				.rendering(null);
+		}
+		catch (NullPointerException e)
+		{
+			// then
+			assertEquals("Rendering is null.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The scalingMode method is called with null</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown</li>
+	 * </ol>
+	 */	
+	@Test(expected=NullPointerException.class)
+	public void scalingMode_Null()
+	{
+		try
+		{
+			// given
+			// when
+			Thumbnails.of("non-existent-file")
+				.size(200, 200)
+				.scalingMode(null);
+		}
+		catch (NullPointerException e)
+		{
+			// then
+			assertEquals("Scaling mode is null.", e.getMessage());
+			throw e;
+		}
+	}
 }
