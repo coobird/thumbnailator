@@ -1,7 +1,7 @@
 package net.coobird.thumbnailator.tasks.io;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
+import static org.junit.matchers.JUnitMatchers.*;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -70,7 +70,7 @@ public class URLImageSourceTest
 		}
 		catch (IOException e)
 		{
-			assertEquals("Could not open connection to URL: file:notfound", e.getMessage());
+			assertThat(e.getMessage(), containsString("Could not open connection to URL:"));
 			throw e;
 		}
 		
