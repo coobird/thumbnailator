@@ -100,18 +100,17 @@ public class URLImageSourceTest
 		// given
 		URLImageSource source = new URLImageSource(new URL("file:notfound"));
 		
-		// when
 		try
 		{
+			// when
 			source.read();
 		}
 		catch (IOException e)
 		{
+			// then
 			assertThat(e.getMessage(), containsString("Could not open connection to URL:"));
 			throw e;
 		}
-		
-		// then
 		fail();
 	}
 }

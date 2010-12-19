@@ -64,18 +64,17 @@ public class FileImageSourceTest
 		// given
 		FileImageSource source = new FileImageSource(new File("notfound"));
 		
-		// when
 		try
 		{
+			// when
 			source.read();
 		}
 		catch (FileNotFoundException e)
 		{
+			// then
 			assertThat(e.getMessage(), containsString("Could not find file"));
 			throw e;
 		}
-		
-		// then
 		fail();
 	}
 	
@@ -130,18 +129,17 @@ public class FileImageSourceTest
 		// given
 		FileImageSource source = new FileImageSource("notfound");
 		
-		// when
 		try
 		{
+			// when
 			source.read();
 		}
 		catch (FileNotFoundException e)
 		{
+			// then
 			assertThat(e.getMessage(), containsString("Could not find file"));
 			throw e;
 		}
-		
-		// then
 		fail();
 	}
 }
