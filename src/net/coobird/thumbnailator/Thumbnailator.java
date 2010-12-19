@@ -15,6 +15,9 @@ import java.util.Collections;
 import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
+import net.coobird.thumbnailator.events.ThumbnailatorEvent;
+import net.coobird.thumbnailator.events.ThumbnailatorEventNotifier;
+import net.coobird.thumbnailator.events.ThumbnailatorEvent.Phase;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.makers.FixedSizeThumbnailMaker;
 import net.coobird.thumbnailator.makers.ScaledThumbnailMaker;
@@ -55,12 +58,17 @@ public final class Thumbnailator
 	public static void createThumbnail(ThumbnailTask task) throws IOException
 	{
 		ThumbnailParameter param = task.getParam();
+		ThumbnailatorEventNotifier notifier = 
+			new ThumbnailatorEventNotifier(task.getListeners());
 		
+		notifier.beginProcessing(task.getSource());
+
 		// Obtain the original image.
 		BufferedImage sourceImage = task.read();
 		
 		BufferedImage destinationImage;
-		
+
+		notifier.processing(new ThumbnailatorEvent(Phase.RESIZE, 0.0), task.getSource());
 		if (param.getSize() != null)
 		{
 			// Get the dimensions of the original and thumbnail images. 
@@ -88,18 +96,28 @@ public final class Thumbnailator
 		}
 		else
 		{
+			notifier.failedProcessing(new ThumbnailatorEvent(Phase.RESIZE, Double.NaN), task);
 			throw new IllegalStateException("Parameters to make thumbnail" +
 					" does not have scaling factor nor thumbnail size specified.");
 		}
+		notifier.processing(new ThumbnailatorEvent(Phase.RESIZE, 1.0), task.getSource());
 		
 		// Perform the image filters
+		notifier.processing(new ThumbnailatorEvent(Phase.FILTER, 0.0), task.getSource());
+		double total = 0.0;
+		double increment = 1.0 / (double)param.getImageFilters().size();
 		for (ImageFilter filter : param.getImageFilters())
 		{
 			destinationImage = filter.apply(destinationImage);
+			total += increment;
+			notifier.processing(new ThumbnailatorEvent(Phase.FILTER, total), task.getSource());
 		}
+		notifier.processing(new ThumbnailatorEvent(Phase.FILTER, 1.0), task.getSource());
 		
 		// Write the thumbnail image to the destination.
 		task.write(destinationImage);
+		
+		notifier.finishedProcessing(task.getSource(), task.getDestination());
 	}
 
 	/**
