@@ -16,6 +16,12 @@ public class URLImageSource extends AbstractImageSource
 	public URLImageSource(URL url)
 	{
 		super();
+		
+		if (url == null)
+		{
+			throw new NullPointerException("URL cannot be null.");
+		}
+		
 		this.url = url;
 		this.proxy = null;
 	}
@@ -27,6 +33,16 @@ public class URLImageSource extends AbstractImageSource
 	public URLImageSource(URL url, Proxy proxy)
 	{
 		super();
+		
+		if (url == null)
+		{
+			throw new NullPointerException("URL cannot be null.");
+		}
+		else if (proxy == null)
+		{
+			throw new NullPointerException("Proxy cannot be null.");
+		}
+		
 		this.url = url;
 		this.proxy = proxy;
 	}
