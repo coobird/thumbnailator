@@ -9,9 +9,46 @@ import java.net.URL;
 
 import org.junit.Test;
 
-
 public class URLImageSourceTest
 {
+	/*
+	 * TODO Need test cases which utilize a proxy.
+	 */
+	
+	@Test(expected=NullPointerException.class)
+	public void givenNullURL() throws IOException
+	{
+		try
+		{
+			// given
+			// when
+			new URLImageSource(null);
+		}
+		catch (NullPointerException e)
+		{
+			// then
+			assertEquals("URL cannot be null.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Test(expected=NullPointerException.class)
+	public void givenURL_givenNullProxy() throws IOException
+	{
+		try
+		{
+			// given
+			// when
+			new URLImageSource(new URL("file:test-resources/Thumbnailator/grid.png"), null);
+		}
+		catch (NullPointerException e)
+		{
+			// then
+			assertEquals("Proxy cannot be null.", e.getMessage());
+			throw e;
+		}
+	}
+	
 	@Test
 	public void fileExists_Png() throws IOException
 	{
