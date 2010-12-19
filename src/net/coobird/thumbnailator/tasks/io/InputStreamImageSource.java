@@ -22,6 +22,12 @@ public class InputStreamImageSource extends AbstractImageSource
 	public InputStreamImageSource(InputStream is)
 	{
 		super();
+		
+		if (is == null)
+		{
+			throw new NullPointerException("InputStream cannot be null.");
+		}
+		
 		this.is = is;
 	}
 
