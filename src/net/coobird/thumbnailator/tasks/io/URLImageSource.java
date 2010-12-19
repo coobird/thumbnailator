@@ -34,17 +34,32 @@ public class URLImageSource extends AbstractImageSource
 	public BufferedImage read() throws IOException
 	{
 		InputStreamImageSource source;
-		
-		if (proxy != null)
+		try
 		{
-			source = new InputStreamImageSource(url.openConnection(proxy).getInputStream());
+			if (proxy != null)
+			{
+				source = new InputStreamImageSource(url.openConnection(proxy).getInputStream());
+			}
+			else
+			{
+				source = new InputStreamImageSource(url.openStream());
+			}
 		}
-		else
+		catch (IOException e)
 		{
-			source = new InputStreamImageSource(url.openStream());
+			throw new IOException("Could not open connection to URL: " + url);
 		}
 		
-		BufferedImage img = source.read();
+		BufferedImage img;
+		try
+		{
+			img = source.read();
+		}
+		catch (Exception e)
+		{
+			throw new IOException("Could not obtain image from URL: " + url);
+		}
+		
 		this.inputFormatName = source.getInputFormatName();
 		
 		return img;
