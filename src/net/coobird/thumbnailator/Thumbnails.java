@@ -941,11 +941,7 @@ public final class Thumbnails
 		 */
 		public Builder scalingMode(ScalingMode config)
 		{
-			if (config == null)
-			{
-				throw new NullPointerException("Scaling mode is null.");
-			}
-			
+			checkForNull(config, "Scaling mode is null.");
 			updateStatus(Properties.SCALING_MODE, Status.ALREADY_SET);
 			updateStatus(Properties.RESIZER, Status.CANNOT_SET);
 			scalingMode = config;
@@ -965,11 +961,7 @@ public final class Thumbnails
 		 */
 		public Builder resizer(Resizer resizer)
 		{
-			if (resizer == null)
-			{
-				throw new NullPointerException("Resizer is null.");
-			}
-			
+			checkForNull(resizer, "Resizer is null.");
 			updateStatus(Properties.RESIZER, Status.ALREADY_SET);
 			updateStatus(Properties.SCALING_MODE, Status.CANNOT_SET);
 			this.resizer = resizer;
@@ -990,11 +982,7 @@ public final class Thumbnails
 		 */
 		public Builder alphaInterpolation(AlphaInterpolation config)
 		{
-			if (config == null)
-			{
-				throw new NullPointerException("Alpha interpolation is null.");
-			}
-			
+			checkForNull(config, "Alpha interpolation is null.");
 			updateStatus(Properties.ALPHA_INTERPOLATION, Status.ALREADY_SET);
 			alphaInterpolation = config;
 			return this;
@@ -1014,11 +1002,7 @@ public final class Thumbnails
 		 */
 		public Builder dithering(Dithering config)
 		{
-			if (config == null)
-			{
-				throw new NullPointerException("Dithering is null.");
-			}
-			
+			checkForNull(config, "Dithering is null.");
 			updateStatus(Properties.DITHERING, Status.ALREADY_SET);
 			dithering = config;
 			return this;
@@ -1038,11 +1022,7 @@ public final class Thumbnails
 		 */
 		public Builder antialiasing(Antialiasing config)
 		{
-			if (config == null)
-			{
-				throw new NullPointerException("Antialiasing is null.");
-			}
-			
+			checkForNull(config, "Antialiasing is null.");
 			updateStatus(Properties.ANTIALIASING, Status.ALREADY_SET);
 			antialiasing = config;
 			return this;
@@ -1062,11 +1042,7 @@ public final class Thumbnails
 		 */
 		public Builder rendering(Rendering config)
 		{
-			if (config == null)
-			{
-				throw new NullPointerException("Rendering is null.");
-			}
-			
+			checkForNull(config, "Rendering is null.");
 			updateStatus(Properties.RENDERING, Status.ALREADY_SET);
 			rendering = config;
 			return this;
