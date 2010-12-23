@@ -13,6 +13,9 @@ import net.coobird.thumbnailator.Thumbnailator;
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 import net.coobird.thumbnailator.tasks.io.BufferedImageSink;
+import net.coobird.thumbnailator.tasks.io.FileImageSource;
+import net.coobird.thumbnailator.tasks.io.ImageSink;
+import net.coobird.thumbnailator.tasks.io.ImageSource;
 import net.coobird.thumbnailator.tasks.io.InputStreamImageSource;
 import net.coobird.thumbnailator.tasks.io.OutputStreamImageSink;
 
@@ -91,6 +94,34 @@ public class SourceSinkThumbnailTaskTest
 		
 		InputStreamImageSource source = new InputStreamImageSource(is);
 		OutputStreamImageSink destination = new OutputStreamImageSink(os);
+		
+		// when
+		Thumbnailator.createThumbnail(
+				new SourceSinkThumbnailTask(param, source, destination)
+		);
+		
+		// then
+		ByteArrayInputStream destIs = new ByteArrayInputStream(os.toByteArray());
+		BufferedImage thumbnail = ImageIO.read(destIs);
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+		
+		destIs = new ByteArrayInputStream(os.toByteArray());
+		String formatName = getFormatName(destIs);
+		assertEquals("JPEG", formatName);
+	}
+	
+	@Test
+	public void task_ChangeOutputFormat_File_OutputStream() throws IOException
+	{
+		// given
+		ThumbnailParameter param = 
+			new ThumbnailParameterBuilder().size(50, 50).format("jpg").build();
+		
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		
+		ImageSource source = new FileImageSource("test-resources/Thumbnailator/grid.bmp");
+		ImageSink destination = new OutputStreamImageSink(os);
 		
 		// when
 		Thumbnailator.createThumbnail(
