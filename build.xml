@@ -111,6 +111,43 @@
 			<fileset dir="${javadoc_dir}" />
 		</zip>
 	</target>
+	
+	<target
+		name="release"
+		description="release files to Google Project Hosting">
+	
+		<taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask" name="gcupload" />
+
+	    <property file="build.credentials.properties" />
+		
+	    <gcupload 
+			username="${gc.username}" 
+			password="${gc.password}" 
+			projectname="thumbnailator" 
+			filename="${dist}/${version}/Thumbnailator-${version}-javadoc.zip" 
+			targetfilename="Thumbnailator-${version}-javadoc.zip"
+			summary="Javadocs for Thumbnailator"
+			labels="Featured" />
+		
+	    <gcupload 
+			username="${gc.username}" 
+			password="${gc.password}" 
+			projectname="thumbnailator" 
+			filename="${dist}/${version}/Thumbnailator-${version}-src.jar" 
+			targetfilename="Thumbnailator-${version}-src.jar"
+			summary="Thumbnailator JAR file with sources - Recommended for development"
+			labels="Featured" />
+		
+	    <gcupload 
+			username="${gc.username}" 
+			password="${gc.password}" 
+			projectname="thumbnailator" 
+			filename="${dist}/${version}/Thumbnailator-${version}.jar" 
+			targetfilename="Thumbnailator-${version}.jar"
+			summary="Thumbnailator JAR file"
+			labels="Featured" />
+	
+	</target>
 
 	<target
 		name="clean"
