@@ -41,9 +41,14 @@ public abstract class ThumbnailTask
 	 * creating thumbnails.
 	 * 
 	 * @param param			The parameters to use when creating thumbnails.
+	 * @throws NullPointerException		If the parameter is {@code null}.
 	 */
 	protected ThumbnailTask(ThumbnailParameter param)
 	{
+		if (param == null)
+		{
+			throw new NullPointerException("The parameter is null.");
+		}
 		this.param = param;
 	}
 	
