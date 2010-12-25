@@ -35,6 +35,12 @@ public class ThumbnailParameter
 	public static final float DEFAULT_QUALITY = Float.NaN;
 	
 	/**
+	 * A constant used to denote that the image type of the original image
+	 * should be used when creating the thumbnail.
+	 */
+	public static final int ORIGINAL_IMAGE_TYPE = -1;
+	
+	/**
 	 * A constant used to denote that the default image type should be used
 	 * when creating the thumbnail.
 	 */
@@ -445,5 +451,17 @@ public class ThumbnailParameter
 	public Resizer getResizer()
 	{
 		return resizer;
+	}
+	
+	/**
+	 * Returns whether or not the original image type should be used for the
+	 * thumbnail.
+	 * 
+	 * @return		{@code true} if the original image type should be used,
+	 * 				{@code false} otherwise.
+	 */
+	public boolean useOriginalImageType()
+	{
+		return imageType == ORIGINAL_IMAGE_TYPE;
 	}
 }
