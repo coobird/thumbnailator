@@ -76,4 +76,13 @@ public class FileImageSource extends AbstractImageSource
 		
 		return img;
 	}
+
+	/**
+	 * Returns the source file.
+	 * @return 		The {@code File} to the source file.
+	 */
+	public File getFile()
+	{
+		return sourceFile;
+	}
 }
