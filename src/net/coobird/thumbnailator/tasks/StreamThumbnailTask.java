@@ -38,6 +38,7 @@ public class StreamThumbnailTask extends ThumbnailTask
 	 * @param param		The parameters to use to create the thumbnail.
 	 * @param is		The {@link InputStream} from which to obtain image data.
 	 * @param os		The {@link OutputStream} to send thumbnail data to.
+	 * @throws NullPointerException		If the parameter is {@code null}.
 	 */
 	public StreamThumbnailTask(ThumbnailParameter param, InputStream is, OutputStream os)
 	{

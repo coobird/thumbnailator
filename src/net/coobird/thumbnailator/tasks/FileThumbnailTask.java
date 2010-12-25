@@ -33,6 +33,7 @@ public class FileThumbnailTask extends ThumbnailTask
 	 * @param param				The parameters to use to create the thumbnail.
 	 * @param sourceFile		The {@link File} from which image data is read.
 	 * @param destinationFile	The {@link File} to which thumbnail is written.
+	 * @throws NullPointerException		If the parameter is {@code null}.
 	 */
 	public FileThumbnailTask(ThumbnailParameter param, File sourceFile, File destinationFile)
 	{

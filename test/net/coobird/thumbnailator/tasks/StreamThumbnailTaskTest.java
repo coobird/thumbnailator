@@ -25,6 +25,28 @@ import org.junit.Test;
 
 public class StreamThumbnailTaskTest
 {
+	@Test(expected=NullPointerException.class)
+	public void nullParameter() throws IOException
+	{
+		// given
+		InputStream is = mock(InputStream.class);
+		OutputStream os = mock(OutputStream.class);
+		
+		try
+		{
+			// when
+			new StreamThumbnailTask(null, is, os);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			// then
+			assertEquals("The parameter is null.", e.getMessage());
+			verifyZeroInteractions(is);
+			verifyZeroInteractions(os);
+			throw e;
+		}
+	}
 
 	@Test
 	public void testRead_CorrectUsage() throws IOException
