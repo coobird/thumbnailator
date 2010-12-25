@@ -15,6 +15,12 @@ import net.coobird.thumbnailator.BufferedImages;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 
+/**
+ * 
+ * 
+ * @author coobird
+ *
+ */
 public class FileImageSink extends AbstractImageSink
 {
 	private File destinationFile;
@@ -33,8 +39,7 @@ public class FileImageSink extends AbstractImageSink
 	 */
 	public FileImageSink(String destinationFilePath)
 	{
-		super();
-		this.destinationFile = new File(destinationFilePath);
+		this(new File(destinationFilePath));
 	}
 	
 	/**
