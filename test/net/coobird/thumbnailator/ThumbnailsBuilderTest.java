@@ -46,7 +46,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void sizeOnly()
+	public void sizeOnly() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -73,7 +73,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void sizeWithAspectRatioTrue()
+	public void sizeWithAspectRatioTrue() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -100,7 +100,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void sizeWithAspectRatioFalse()
+	public void sizeWithAspectRatioFalse() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -126,7 +126,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void scaleOnly()
+	public void scaleOnly() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -150,7 +150,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void scaleWithAspectRatioTrue()
+	public void scaleWithAspectRatioTrue() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -181,7 +181,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void scaleWithAspectRatioFalse()
+	public void scaleWithAspectRatioFalse() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -211,7 +211,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void keepAspectRatioBeforeSize()
+	public void keepAspectRatioBeforeSize() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -239,7 +239,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void keepAspectRatioAfterScale()
+	public void keepAspectRatioAfterScale() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -269,7 +269,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void resizerOnly()
+	public void resizerOnly() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -295,7 +295,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=IllegalStateException.class)
-	public void resizerTwice()
+	public void resizerTwice() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -317,7 +317,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void scalingModeOnly()
+	public void scalingModeOnly() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -338,7 +338,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=IllegalStateException.class)
-	public void scalingModeTwice()
+	public void scalingModeTwice() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -361,7 +361,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=IllegalStateException.class)
-	public void resizerThenScalingMode()
+	public void resizerThenScalingMode() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -384,7 +384,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=IllegalStateException.class)
-	public void scalingModeThenResizer()
+	public void scalingModeThenResizer() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -407,7 +407,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void imageTypeNotCalled()
+	public void imageTypeNotCalled() throws IOException
 	{
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_BYTE_INDEXED);
 		
@@ -431,7 +431,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void imageTypeCalledSameType()
+	public void imageTypeCalledSameType() throws IOException
 	{
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_BYTE_GRAY);
 		
@@ -456,7 +456,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void imageTypeCalledDifferentType()
+	public void imageTypeCalledDifferentType() throws IOException
 	{
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_BYTE_GRAY);
 		
@@ -479,7 +479,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=IllegalStateException.class)
-	public void imageTypeCalledTwice()
+	public void imageTypeCalledTwice() throws IOException
 	{
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_BYTE_GRAY);
 		
@@ -1752,7 +1752,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void of_BufferedImage_asBufferedImage()
+	public void of_BufferedImage_asBufferedImage() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -1776,7 +1776,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=IllegalArgumentException.class)
-	public void of_BufferedImages_asBufferedImage()
+	public void of_BufferedImages_asBufferedImage() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -1797,7 +1797,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void of_BufferedImage_asBufferedImages()
+	public void of_BufferedImage_asBufferedImages() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -1822,7 +1822,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void of_BufferedImages_asBufferedImages()
+	public void of_BufferedImages_asBufferedImages() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -1849,7 +1849,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void fromImages_Single_asBufferedImage()
+	public void fromImages_Single_asBufferedImage() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -1873,7 +1873,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=IllegalArgumentException.class)
-	public void fromImages_Multiple_asBufferedImage()
+	public void fromImages_Multiple_asBufferedImage() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -1894,7 +1894,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void fromImages_Single_asBufferedImages()
+	public void fromImages_Single_asBufferedImages() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -1919,7 +1919,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void fromImages_Multiple_asBufferedImages()
+	public void fromImages_Multiple_asBufferedImages() throws IOException
 	{
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
