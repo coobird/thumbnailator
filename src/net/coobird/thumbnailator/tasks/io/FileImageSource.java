@@ -12,9 +12,21 @@ import javax.imageio.stream.ImageInputStream;
 
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 
+/**
+ * 
+ * @author coobird
+ *
+ */
 public class FileImageSource extends AbstractImageSource
 {
+	/**
+	 * The index used to obtain the first image in an image file.
+	 */
 	private static final int FIRST_IMAGE_INDEX = 0;
+	
+	/**
+	 * The file from which the image should be obtained. 
+	 */
 	private final File sourceFile;
 	
 	/**
@@ -78,8 +90,9 @@ public class FileImageSource extends AbstractImageSource
 	}
 
 	/**
-	 * Returns the source file.
-	 * @return 		The {@code File} to the source file.
+	 * Returns the source file from which an image is read.
+	 * 
+	 * @return 		The {@code File} representation of the source file.
 	 */
 	public File getFile()
 	{
