@@ -22,7 +22,26 @@ public class URLImageSourceTest
 		{
 			// given
 			// when
-			new URLImageSource(null);
+			URL url = null;
+			new URLImageSource(url);
+		}
+		catch (NullPointerException e)
+		{
+			// then
+			assertEquals("URL cannot be null.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Test(expected=NullPointerException.class)
+	public void givenNullString() throws IOException
+	{
+		try
+		{
+			// given
+			// when
+			String url = null;
+			new URLImageSource(url);
 		}
 		catch (NullPointerException e)
 		{
@@ -40,6 +59,23 @@ public class URLImageSourceTest
 			// given
 			// when
 			new URLImageSource(new URL("file:test-resources/Thumbnailator/grid.png"), null);
+		}
+		catch (NullPointerException e)
+		{
+			// then
+			assertEquals("Proxy cannot be null.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Test(expected=NullPointerException.class)
+	public void givenString_givenNullProxy() throws IOException
+	{
+		try
+		{
+			// given
+			// when
+			new URLImageSource("file:test-resources/Thumbnailator/grid.png", null);
 		}
 		catch (NullPointerException e)
 		{
