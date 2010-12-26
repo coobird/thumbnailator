@@ -13,6 +13,7 @@ import javax.imageio.stream.ImageInputStream;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 
 /**
+ * An {@link ImageSource} which reads the source image from a file.
  * 
  * @author coobird
  *
@@ -30,20 +31,40 @@ public class FileImageSource extends AbstractImageSource
 	private final File sourceFile;
 	
 	/**
-	 * @param sourceFile
+	 * Instantiates a {@link FileImageSource} with the specified file as
+	 * the source image.
+	 * 
+	 * @param sourceFile		The source image file.
+	 * @throws NullPointerException	If the image is null.
 	 */
 	public FileImageSource(File sourceFile)
 	{
 		super();
+		
+		if (sourceFile == null)
+		{
+			throw new NullPointerException("File cannot be null.");
+		}
+		
 		this.sourceFile = sourceFile;
 	}
 	
 	/**
-	 * @param sourceFile
+	 * Instantiates a {@link FileImageSource} with the specified file as
+	 * the source image.
+	 * 
+	 * @param sourceFilePath	The filepath of the source image file.
+	 * @throws NullPointerException	If the image is null.
 	 */
 	public FileImageSource(String sourceFilePath)
 	{
 		super();
+		
+		if (sourceFilePath == null)
+		{
+			throw new NullPointerException("File cannot be null.");
+		}
+		
 		this.sourceFile = new File(sourceFilePath);
 	}
 
