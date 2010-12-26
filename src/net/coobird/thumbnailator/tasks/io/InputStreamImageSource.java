@@ -11,13 +11,33 @@ import javax.imageio.stream.ImageInputStream;
 
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 
+/**
+ * An {@link ImageSource} which uses an {@link InputStream} to read the
+ * source image.
+ * 
+ * @author coobird
+ *
+ */
 public class InputStreamImageSource extends AbstractImageSource
 {
+	/**
+	 * The index used to obtain the first image in an image file.
+	 */
 	private static final int FIRST_IMAGE_INDEX = 0;
+	
+	/**
+	 * The {@link InputStream} from which the source image is to be read. 
+	 */
 	private final InputStream is;
 	
 	/**
-	 * @param is
+	 * Instantiates an {@link InputStreamImageSource} with the 
+	 * {@link InputStream} which will be used to read the source image.
+	 * 
+	 * @param is		The {@link InputStream} which is to be used to obtain
+	 * 					the source image.
+	 * @throws NullPointerException		If the {@link InputStream} is 
+	 * 									{@code null}.
 	 */
 	public InputStreamImageSource(InputStream is)
 	{

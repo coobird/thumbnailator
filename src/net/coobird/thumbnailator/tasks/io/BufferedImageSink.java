@@ -3,9 +3,23 @@ package net.coobird.thumbnailator.tasks.io;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+/**
+ * An {@link ImageSink} which stores the resulting thumbnail to a 
+ * {@link BufferedImage}.
+ * 
+ * @author coobird
+ *
+ */
 public class BufferedImageSink extends AbstractImageSink
 {
+	/**
+	 * The {@link BufferedImage} which holds the thumbnail.
+	 */
 	private BufferedImage img;
+	
+	/**
+	 * Indicates whether the thumbnail has been written to this object. 
+	 */
 	private boolean written = false;
 	
 	public void write(BufferedImage img) throws IOException
@@ -14,6 +28,13 @@ public class BufferedImageSink extends AbstractImageSink
 		written = true;
 	}
 	
+	/**
+	 * Returns the thumbnail.
+	 * 
+	 * @return							The thumbnail.
+	 * @throws IllegalStateException	If a thumbnail has not been stored to
+	 * 									this {@link BufferedImageSink} yet. 
+	 */
 	public BufferedImage getImage()
 	{
 		if (!written)

@@ -16,30 +16,59 @@ import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 
 /**
- * 
+ * An {@link ImageSink} which writes the resulting thumbnail to a file.
  * 
  * @author coobird
  *
  */
 public class FileImageSink extends AbstractImageSink
 {
+	/**
+	 * The file to which the thumbnail is written to.
+	 * <p>
+	 * Under certain circumstances, the {@link File} object can be replaced
+	 * in the course of processing. This can occur in cases where the file
+	 * extension has been changed due to incongruence between the extension
+	 * and the desired output format.
+	 */
 	private File destinationFile;
 	
 	/**
-	 * @param destinationFile
+	 * Instantiates a {@link FileImageSink} with the file to which the thumbnail
+	 * should be written to.
+	 * 
+	 * @param destinationFile		The destination file.
+	 * @throws NullPointerException	If the file is null.
 	 */
 	public FileImageSink(File destinationFile)
 	{
 		super();
+		
+		if (destinationFile == null)
+		{
+			throw new NullPointerException("File cannot be null.");
+		}
+		
 		this.destinationFile = destinationFile;
 	}
 	
 	/**
-	 * @param destinationFile
+	 * Instantiates a {@link FileImageSink} with the file to which the thumbnail
+	 * should be written to.
+	 * 
+	 * @param destinationFilePath	The destination file path.
+	 * @throws NullPointerException	If the filepath is null.
 	 */
 	public FileImageSink(String destinationFilePath)
 	{
-		this(new File(destinationFilePath));
+		super();
+		
+		if (destinationFilePath == null)
+		{
+			throw new NullPointerException("File cannot be null.");
+		}
+		
+		this.destinationFile = new File(destinationFilePath);
 	}
 	
 	/**

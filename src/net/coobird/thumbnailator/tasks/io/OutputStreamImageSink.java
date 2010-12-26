@@ -15,16 +15,38 @@ import net.coobird.thumbnailator.BufferedImages;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 
+/**
+ * An {@link ImageSink} which specifies an {@link OutputStream} to which the
+ * thumbnail image should be written to.
+ * 
+ * @author coobird
+ *
+ */
 public class OutputStreamImageSink extends AbstractImageSink
 {
+	/**
+	 * The {@link OutputStream} to which the thumbnail image is to be 
+	 * written to.
+	 */
 	private final OutputStream os;
 	
 	/**
-	 * @param os
+	 * Instantiates an {@link OutputStreamImageSink} with the 
+	 * {@link OutputStream} to which the thumbnail should be written to.
+	 * 
+	 * @param os		The {@link OutputStream} to write the thumbnail to.
+	 * @throws NullPointerException		If the {@link OutputStream} is 
+	 * 									{@code null}.
 	 */
 	public OutputStreamImageSink(OutputStream os)
 	{
 		super();
+		
+		if (os == null)
+		{
+			throw new NullPointerException("OutputStream cannot be null.");
+		}
+		
 		this.os = os;
 	}
 
