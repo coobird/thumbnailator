@@ -7,6 +7,8 @@ import java.io.IOException;
  * An interface to be implemented by classes which read or retrieve images
  * from which a thumbnail should be produced.
  * 
+ * @param <T> 		The source class from which the source image is retrieved
+ * 					or read.
  * @author coobird
  *
  */
