@@ -12,7 +12,7 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * @author coobird
  *
  */
-public interface ImageSink
+public interface ImageSink<T>
 {
 	/**
 	 * Writes the resulting image to a destination.
@@ -41,4 +41,6 @@ public interface ImageSink
 	 * 							writing parameters.
 	 */
 	public void setThumbnailParameter(ThumbnailParameter param);
+	
+	public T getSink();
 }

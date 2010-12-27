@@ -94,7 +94,7 @@ public class FileThumbnailTaskTest
 		InputStream is = mock(InputStream.class);
 		OutputStream os = mock(OutputStream.class);
 		
-		ThumbnailTask task = new StreamThumbnailTask(param, is, os);
+		StreamThumbnailTask task = new StreamThumbnailTask(param, is, os);
 		
 		assertEquals(param, task.getParam());
 

@@ -7,12 +7,12 @@ import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.tasks.io.ImageSink;
 import net.coobird.thumbnailator.tasks.io.ImageSource;
 
-public class SourceSinkThumbnailTask extends ThumbnailTask
+public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D>
 {
-	private final ImageSource source;
-	private final ImageSink destination;
+	private final ImageSource<S> source;
+	private final ImageSink<D> destination;
 
-	public SourceSinkThumbnailTask(ThumbnailParameter param, ImageSource source, ImageSink destination)
+	public SourceSinkThumbnailTask(ThumbnailParameter param, ImageSource<S> source, ImageSink<D> destination)
 	{
 		super(param);
 		this.source = source;
@@ -45,5 +45,17 @@ public class SourceSinkThumbnailTask extends ThumbnailTask
 		
 		destination.setOutputFormatName(formatName);
 		destination.write(img);
+	}
+
+	@Override
+	public S getSource()
+	{
+		return source.getSource();
+	}
+	
+	@Override
+	public D getDestination()
+	{
+		return destination.getSink();
 	}
 }

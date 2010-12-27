@@ -12,7 +12,7 @@ import java.net.URL;
  * @author coobird
  *
  */
-public class URLImageSource extends AbstractImageSource
+public class URLImageSource extends AbstractImageSource<URL>
 {
 	/**
 	 * The URL from which to retrieve the source image.
@@ -159,7 +159,7 @@ public class URLImageSource extends AbstractImageSource
 	 * 
 	 * @return the url		The URL to the source image.s
 	 */
-	public URL getUrl()
+	public URL getSource()
 	{
 		return url;
 	}

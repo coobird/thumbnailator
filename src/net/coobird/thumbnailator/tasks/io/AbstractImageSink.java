@@ -8,7 +8,7 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * @author coobird
  *
  */
-public abstract class AbstractImageSink implements ImageSink
+public abstract class AbstractImageSink<T> implements ImageSink<T>
 {
 	/**
 	 * The name of the format to output the image as.

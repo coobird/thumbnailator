@@ -16,7 +16,7 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * @author coobird
  *
  */
-public abstract class ThumbnailTask
+public abstract class ThumbnailTask<S, D>
 {
 	/**
 	 * The parameters to use when creating a thumbnail.
@@ -87,4 +87,8 @@ public abstract class ThumbnailTask
 	{
 		return param;
 	}
+	
+	public abstract S getSource();
+	
+	public abstract D getDestination();
 }

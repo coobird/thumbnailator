@@ -18,7 +18,7 @@ import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
  * @author coobird
  *
  */
-public class InputStreamImageSource extends AbstractImageSource
+public class InputStreamImageSource extends AbstractImageSource<InputStream>
 {
 	/**
 	 * The index used to obtain the first image in an image file.
@@ -78,5 +78,10 @@ public class InputStreamImageSource extends AbstractImageSource
 		iis.close();
 		
 		return img;
+	}
+
+	public InputStream getSource()
+	{
+		return is;
 	}
 }
