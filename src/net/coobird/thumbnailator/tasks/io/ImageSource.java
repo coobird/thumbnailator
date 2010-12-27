@@ -28,5 +28,10 @@ public interface ImageSource<T>
 	 */
 	public String getInputFormatName();
 	
+	/**
+	 * Returns the source from which the image is read or retrieved.
+	 * 
+	 * @return					The source of the image.
+	 */
 	public T getSource();
 }

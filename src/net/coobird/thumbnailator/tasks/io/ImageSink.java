@@ -42,5 +42,11 @@ public interface ImageSink<T>
 	 */
 	public void setThumbnailParameter(ThumbnailParameter param);
 	
+	/**
+	 * Returns the destination to which the thumbnail will be stored or 
+	 * written.
+	 * 
+	 * @return					The destination for the thumbnail image.
+	 */
 	public T getSink();
 }
