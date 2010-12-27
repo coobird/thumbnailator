@@ -19,6 +19,28 @@ import org.junit.Test;
 public class FileThumbnailTaskTest
 {
 
+	@Test(expected=NullPointerException.class)
+	public void nullParameter() throws IOException
+	{
+		// given
+		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
+		outputFile.deleteOnExit();
+		
+		try
+		{
+			// when
+			new FileThumbnailTask(null, inputFile, outputFile);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			// then
+			assertEquals("The parameter is null.", e.getMessage());
+			throw e;
+		}
+	}
+	
 	@Test
 	public void testRead_CorrectUsage() throws IOException
 	{
@@ -72,7 +94,7 @@ public class FileThumbnailTaskTest
 		InputStream is = mock(InputStream.class);
 		OutputStream os = mock(OutputStream.class);
 		
-		ThumbnailTask task = new StreamThumbnailTask(param, is, os);
+		StreamThumbnailTask task = new StreamThumbnailTask(param, is, os);
 		
 		assertEquals(param, task.getParam());
 
