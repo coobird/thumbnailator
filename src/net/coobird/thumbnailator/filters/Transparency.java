@@ -15,6 +15,9 @@ import java.awt.image.BufferedImage;
  */
 public class Transparency implements ImageFilter
 {
+	/**
+	 * The alpha composite to use when drawing the transparent image.
+	 */
 	private final AlphaComposite composite;
 
 	/**
@@ -42,7 +45,8 @@ public class Transparency implements ImageFilter
 	/**
 	 * Instantiates a {@link Transparency} filter with the specified opacity.
 	 * <p>
-	 * This is a convenience constructor for {@link Transparency(float)}.
+	 * This is a convenience constructor for the 
+	 * {@link Transparency#Transparency(float)} constructor.
 	 * 
 	 * @param alpha		The opacity of the resulting image. The value should be
 	 * 					between {@code 0.0f} (transparent) to {@code 1.0f} 
