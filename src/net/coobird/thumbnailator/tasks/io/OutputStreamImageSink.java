@@ -22,7 +22,7 @@ import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
  * @author coobird
  *
  */
-public class OutputStreamImageSink extends AbstractImageSink
+public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 {
 	/**
 	 * The {@link OutputStream} to which the thumbnail image is to be 
@@ -135,5 +135,10 @@ public class OutputStreamImageSink extends AbstractImageSink
 		writer.write(null, new IIOImage(img, null, null), writeParam);
 		
 		ios.close();
+	}
+
+	public OutputStream getSink()
+	{
+		return os;
 	}
 }

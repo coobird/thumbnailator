@@ -10,7 +10,7 @@ import java.io.IOException;
  * @author coobird
  *
  */
-public interface ImageSource
+public interface ImageSource<T>
 {
 	/**
 	 * Retrieves the image from the source.
@@ -27,4 +27,6 @@ public interface ImageSource
 	 * @return					The image format name.
 	 */
 	public String getInputFormatName();
+	
+	public T getSource();
 }

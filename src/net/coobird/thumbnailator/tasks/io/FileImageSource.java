@@ -18,7 +18,7 @@ import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
  * @author coobird
  *
  */
-public class FileImageSource extends AbstractImageSource
+public class FileImageSource extends AbstractImageSource<File>
 {
 	/**
 	 * The index used to obtain the first image in an image file.
@@ -115,7 +115,7 @@ public class FileImageSource extends AbstractImageSource
 	 * 
 	 * @return 		The {@code File} representation of the source file.
 	 */
-	public File getFile()
+	public File getSource()
 	{
 		return sourceFile;
 	}

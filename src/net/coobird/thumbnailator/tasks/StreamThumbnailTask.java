@@ -22,12 +22,12 @@ import net.coobird.thumbnailator.tasks.io.OutputStreamImageSink;
  * @author coobird
  *
  */
-public class StreamThumbnailTask extends ThumbnailTask
+public class StreamThumbnailTask extends ThumbnailTask<InputStream, OutputStream>
 {
 	/**
 	 * The {@link SourceSinkThumbnailTask} used to perform the task.
 	 */
-	private final SourceSinkThumbnailTask task;
+	private final SourceSinkThumbnailTask<InputStream, OutputStream> task;
 	
 	/**
 	 * Creates a {@link ThumbnailTask} in which streamed image data from the 
@@ -43,7 +43,7 @@ public class StreamThumbnailTask extends ThumbnailTask
 	public StreamThumbnailTask(ThumbnailParameter param, InputStream is, OutputStream os)
 	{
 		super(param);
-		this.task = new SourceSinkThumbnailTask(
+		this.task = new SourceSinkThumbnailTask<InputStream, OutputStream>(
 				param,
 				new InputStreamImageSource(is),
 				new OutputStreamImageSink(os)
@@ -66,5 +66,17 @@ public class StreamThumbnailTask extends ThumbnailTask
 	public ThumbnailParameter getParam()
 	{
 		return task.getParam();
+	}
+	
+	@Override
+	public InputStream getSource()
+	{
+		return task.getSource();
+	}
+
+	@Override
+	public OutputStream getDestination()
+	{
+		return task.getDestination();
 	}
 }

@@ -10,7 +10,7 @@ import java.io.IOException;
  * @author coobird
  *
  */
-public class BufferedImageSource extends AbstractImageSource
+public class BufferedImageSource extends AbstractImageSource<BufferedImage>
 {
 	/**
 	 * The identifier to use for the input format name.
@@ -45,6 +45,11 @@ public class BufferedImageSource extends AbstractImageSource
 	public BufferedImage read() throws IOException
 	{
 		inputFormatName = INPUT_FORMAT_NAME;
+		return img;
+	}
+
+	public BufferedImage getSource()
+	{
 		return img;
 	}
 }

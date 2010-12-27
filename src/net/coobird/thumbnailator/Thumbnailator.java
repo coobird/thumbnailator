@@ -52,7 +52,7 @@ public final class Thumbnailator
 	 * @throws IOException		Thrown when a problem occurs when creating a
 	 * 							thumbnail.
 	 */
-	public static void createThumbnail(ThumbnailTask task) throws IOException
+	public static void createThumbnail(ThumbnailTask<?, ?> task) throws IOException
 	{
 		ThumbnailParameter param = task.getParam();
 		

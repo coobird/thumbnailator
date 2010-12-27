@@ -6,7 +6,7 @@ package net.coobird.thumbnailator.tasks.io;
  * @author coobird
  *
  */
-public abstract class AbstractImageSource implements ImageSource
+public abstract class AbstractImageSource<T> implements ImageSource<T>
 {
 	/**
 	 * The image format of the input image.

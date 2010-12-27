@@ -21,7 +21,7 @@ import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
  * @author coobird
  *
  */
-public class FileImageSink extends AbstractImageSink
+public class FileImageSink extends AbstractImageSink<File>
 {
 	/**
 	 * The file to which the thumbnail is written to.
@@ -217,7 +217,7 @@ public class FileImageSink extends AbstractImageSink
 	 * 
 	 * @return the destinationFile
 	 */
-	public File getDestinationFile()
+	public File getSink()
 	{
 		return destinationFile;
 	}

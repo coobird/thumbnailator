@@ -3,8 +3,10 @@ package net.coobird.thumbnailator.tasks;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
 
@@ -14,8 +16,6 @@ import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 import net.coobird.thumbnailator.tasks.io.BufferedImageSink;
 import net.coobird.thumbnailator.tasks.io.FileImageSource;
-import net.coobird.thumbnailator.tasks.io.ImageSink;
-import net.coobird.thumbnailator.tasks.io.ImageSource;
 import net.coobird.thumbnailator.tasks.io.InputStreamImageSource;
 import net.coobird.thumbnailator.tasks.io.OutputStreamImageSink;
 
@@ -40,11 +40,11 @@ public class SourceSinkThumbnailTaskTest
 		
 		// when
 		Thumbnailator.createThumbnail(
-				new SourceSinkThumbnailTask(param, source, destination)
+				new SourceSinkThumbnailTask<InputStream, BufferedImage>(param, source, destination)
 		);
 
 		// then
-		BufferedImage thumbnail = destination.getImage();
+		BufferedImage thumbnail = destination.getSink();
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -66,7 +66,7 @@ public class SourceSinkThumbnailTaskTest
 
 		// when
 		Thumbnailator.createThumbnail(
-				new SourceSinkThumbnailTask(param, source, destination)
+				new SourceSinkThumbnailTask<InputStream, OutputStream>(param, source, destination)
 		);
 		
 		// then
@@ -97,7 +97,7 @@ public class SourceSinkThumbnailTaskTest
 		
 		// when
 		Thumbnailator.createThumbnail(
-				new SourceSinkThumbnailTask(param, source, destination)
+				new SourceSinkThumbnailTask<InputStream, OutputStream>(param, source, destination)
 		);
 		
 		// then
@@ -120,12 +120,12 @@ public class SourceSinkThumbnailTaskTest
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		ImageSource source = new FileImageSource("test-resources/Thumbnailator/grid.bmp");
-		ImageSink destination = new OutputStreamImageSink(os);
+		FileImageSource source = new FileImageSource("test-resources/Thumbnailator/grid.bmp");
+		OutputStreamImageSink destination = new OutputStreamImageSink(os);
 		
 		// when
 		Thumbnailator.createThumbnail(
-				new SourceSinkThumbnailTask(param, source, destination)
+				new SourceSinkThumbnailTask<File, OutputStream>(param, source, destination)
 		);
 		
 		// then

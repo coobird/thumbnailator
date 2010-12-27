@@ -10,7 +10,7 @@ import java.io.IOException;
  * @author coobird
  *
  */
-public class BufferedImageSink extends AbstractImageSink
+public class BufferedImageSink extends AbstractImageSink<BufferedImage>
 {
 	/**
 	 * The {@link BufferedImage} which holds the thumbnail.
@@ -35,7 +35,7 @@ public class BufferedImageSink extends AbstractImageSink
 	 * @throws IllegalStateException	If a thumbnail has not been stored to
 	 * 									this {@link BufferedImageSink} yet. 
 	 */
-	public BufferedImage getImage()
+	public BufferedImage getSink()
 	{
 		if (!written)
 		{

@@ -18,12 +18,12 @@ import net.coobird.thumbnailator.tasks.io.FileImageSource;
  * @author coobird
  *
  */
-public class FileThumbnailTask extends ThumbnailTask
+public class FileThumbnailTask extends ThumbnailTask<File, File>
 {
 	/**
 	 * The {@link SourceSinkThumbnailTask} used to perform the task.
 	 */
-	private final SourceSinkThumbnailTask task;
+	private final SourceSinkThumbnailTask<File, File> task;
 	
 	/**
 	 * Creates a {@link ThumbnailTask} in which image data is read from the 
@@ -38,7 +38,7 @@ public class FileThumbnailTask extends ThumbnailTask
 	public FileThumbnailTask(ThumbnailParameter param, File sourceFile, File destinationFile)
 	{
 		super(param);
-		this.task = new SourceSinkThumbnailTask(
+		this.task = new SourceSinkThumbnailTask<File, File>(
 				param,
 				new FileImageSource(sourceFile),
 				new FileImageSink(destinationFile)
@@ -61,5 +61,17 @@ public class FileThumbnailTask extends ThumbnailTask
 	public ThumbnailParameter getParam()
 	{
 		return task.getParam();
+	}
+
+	@Override
+	public File getSource()
+	{
+		return task.getSource();
+	}
+	
+	@Override
+	public File getDestination()
+	{
+		return task.getDestination();
 	}
 }
