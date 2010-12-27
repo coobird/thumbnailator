@@ -9,6 +9,9 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * An interface to be implemented by classes which stores the image resulting
  * from a thumbnail generation task.
  * 
+ * @param <T> 		The destination class to which the thumbnail is stored
+ * 					or written.
+ *  
  * @author coobird
  *
  */

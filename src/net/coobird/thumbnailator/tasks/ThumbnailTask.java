@@ -11,7 +11,10 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * <p>
  * If the image handled by a {@link ThumbnailTask} contains multiple images,
  * only the first image will be read by the {@link #read()} method. Any
- * subsequent images will be ignored. 
+ * subsequent images will be ignored.
+ * 
+ * @param <S>		The class from which the image is retrieved or read.
+ * @param <D>		The class to which the thumbnail is stored or written.
  * 
  * @author coobird
  *
