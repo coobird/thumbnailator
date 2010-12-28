@@ -91,7 +91,17 @@ public abstract class ThumbnailTask<S, D>
 		return param;
 	}
 	
+	/**
+	 * Returns the source from which the source image is retrieved or read.
+	 * 
+	 * @return		The source.
+	 */
 	public abstract S getSource();
 	
+	/**
+	 * Returns the destination to which the thumbnail is stored or written.
+	 * 
+	 * @return		The destination.
+	 */
 	public abstract D getDestination();
 }
