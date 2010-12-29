@@ -11,12 +11,15 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * <p>
  * If the image handled by a {@link ThumbnailTask} contains multiple images,
  * only the first image will be read by the {@link #read()} method. Any
- * subsequent images will be ignored. 
+ * subsequent images will be ignored.
+ * 
+ * @param <S>		The class from which the image is retrieved or read.
+ * @param <D>		The class to which the thumbnail is stored or written.
  * 
  * @author coobird
  *
  */
-public abstract class ThumbnailTask
+public abstract class ThumbnailTask<S, D>
 {
 	/**
 	 * The parameters to use when creating a thumbnail.
@@ -41,9 +44,14 @@ public abstract class ThumbnailTask
 	 * creating thumbnails.
 	 * 
 	 * @param param			The parameters to use when creating thumbnails.
+	 * @throws NullPointerException		If the parameter is {@code null}.
 	 */
 	protected ThumbnailTask(ThumbnailParameter param)
 	{
+		if (param == null)
+		{
+			throw new NullPointerException("The parameter is null.");
+		}
 		this.param = param;
 	}
 	
@@ -82,4 +90,18 @@ public abstract class ThumbnailTask
 	{
 		return param;
 	}
+	
+	/**
+	 * Returns the source from which the source image is retrieved or read.
+	 * 
+	 * @return		The source.
+	 */
+	public abstract S getSource();
+	
+	/**
+	 * Returns the destination to which the thumbnail is stored or written.
+	 * 
+	 * @return		The destination.
+	 */
+	public abstract D getDestination();
 }

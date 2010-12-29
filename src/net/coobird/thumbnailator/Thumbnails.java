@@ -9,23 +9,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.filters.Pipeline;
 import net.coobird.thumbnailator.filters.Rotation;
 import net.coobird.thumbnailator.filters.Watermark;
-import net.coobird.thumbnailator.makers.FixedSizeThumbnailMaker;
-import net.coobird.thumbnailator.makers.ScaledThumbnailMaker;
-import net.coobird.thumbnailator.makers.ThumbnailMaker;
 import net.coobird.thumbnailator.resizers.BicubicResizer;
 import net.coobird.thumbnailator.resizers.BilinearResizer;
 import net.coobird.thumbnailator.resizers.ProgressiveBilinearResizer;
@@ -37,6 +30,13 @@ import net.coobird.thumbnailator.resizers.configurations.Dithering;
 import net.coobird.thumbnailator.resizers.configurations.Rendering;
 import net.coobird.thumbnailator.resizers.configurations.ScalingMode;
 import net.coobird.thumbnailator.tasks.FileThumbnailTask;
+import net.coobird.thumbnailator.tasks.SourceSinkThumbnailTask;
+import net.coobird.thumbnailator.tasks.io.BufferedImageSink;
+import net.coobird.thumbnailator.tasks.io.BufferedImageSource;
+import net.coobird.thumbnailator.tasks.io.FileImageSink;
+import net.coobird.thumbnailator.tasks.io.FileImageSource;
+import net.coobird.thumbnailator.tasks.io.ImageSource;
+import net.coobird.thumbnailator.tasks.io.OutputStreamImageSink;
 
 /**
  * This class provides a fluent interface to create thumbnails.
@@ -570,11 +570,11 @@ public final class Thumbnails
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty array.
 	 */
-	public static Builder of(String... files)
+	public static Builder<File> of(String... files)
 	{
 		checkForNull(files, "Cannot specify null for input files.");
 		checkForEmpty(files, "Cannot specify an empty array for input files.");
-		return new Builder(files);
+		return Builder.of(files);
 	}
 	
 	/**
@@ -587,11 +587,11 @@ public final class Thumbnails
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty array.
 	 */
-	public static Builder of(File... files)
+	public static Builder<File> of(File... files)
 	{
 		checkForNull(files, "Cannot specify null for input files.");
 		checkForEmpty(files, "Cannot specify an empty array for input files.");
-		return new Builder(files);
+		return Builder.of(files);
 	}
 	
 	/**
@@ -604,11 +604,11 @@ public final class Thumbnails
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty array.
 	 */
-	public static Builder of(BufferedImage... images)
+	public static Builder<BufferedImage> of(BufferedImage... images)
 	{
 		checkForNull(images, "Cannot specify null for images.");
 		checkForEmpty(images, "Cannot specify an empty array for images.");
-		return new Builder(images);
+		return Builder.of(images);
 	}
 
 	/**
@@ -621,7 +621,7 @@ public final class Thumbnails
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
 	 */
-	public static Builder fromFilenames(Collection<String> files)
+	public static Builder<File> fromFilenames(Collection<String> files)
 	{
 		checkForNull(files, "Cannot specify null for input files.");
 		checkForEmpty(files, "Cannot specify an empty collection for input files.");
@@ -638,7 +638,7 @@ public final class Thumbnails
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
 	 */
-	public static Builder fromFiles(Collection<File> files)
+	public static Builder<File> fromFiles(Collection<File> files)
 	{
 		checkForNull(files, "Cannot specify null for input files.");
 		checkForEmpty(files, "Cannot specify an empty collection for input files.");
@@ -655,7 +655,7 @@ public final class Thumbnails
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
 	 */
-	public static Builder fromImages(Collection<BufferedImage> images)
+	public static Builder<BufferedImage> fromImages(Collection<BufferedImage> images)
 	{
 		checkForNull(images, "Cannot specify null for images.");
 		checkForEmpty(images, "Cannot specify an empty collection for images.");
@@ -678,31 +678,47 @@ public final class Thumbnails
 	 * @author coobird
 	 *
 	 */
-	public static class Builder
+	public static class Builder<T>
 	{
-		private List<File> files = null;
-		private List<BufferedImage> images = null;
+		private final List<ImageSource<T>> sources;
 		
-		private Builder(String... filenames)
+		private Builder(List<ImageSource<T>> sources)
 		{
+			this.sources = sources;
 			statusMap.put(Properties.OUTPUT_FORMAT, Status.OPTIONAL);
-			files = new ArrayList<File>();
-			for (String filename : filenames)
+		}
+		
+		private static Builder<File> of(String... filenames)
+		{
+			List<ImageSource<File>> sources = new ArrayList<ImageSource<File>>();
+			for (String f : filenames)
 			{
-				files.add(new File(filename));
+				sources.add(new FileImageSource(f));
 			}
+			
+			return new Builder<File>(sources);
 		}
 		
-		private Builder(File... files)
+		private static Builder<File> of(File... files)
 		{
-			statusMap.put(Properties.OUTPUT_FORMAT, Status.OPTIONAL);
-			this.files = Arrays.asList(files);
+			List<ImageSource<File>> sources = new ArrayList<ImageSource<File>>();
+			for (File f : files)
+			{
+				sources.add(new FileImageSource(f));
+			}
+			
+			return new Builder<File>(sources);
 		}
 		
-		private Builder(BufferedImage... images)
+		private static Builder<BufferedImage> of(BufferedImage... images)
 		{
-			statusMap.put(Properties.OUTPUT_FORMAT, Status.OPTIONAL);
-			this.images = Arrays.asList(images);
+			List<ImageSource<BufferedImage>> sources = new ArrayList<ImageSource<BufferedImage>>();
+			for (BufferedImage img : images)
+			{
+				sources.add(new BufferedImageSource(img));
+			}
+			
+			return new Builder<BufferedImage>(sources);
 		}
 
 		/**
@@ -863,7 +879,7 @@ public final class Thumbnails
 		 * @param height		The height of the thumbnail.
 		 * @return				Reference to this object.
 		 */
-		public Builder size(int width, int height)
+		public Builder<T> size(int width, int height)
 		{
 			updateStatus(Properties.SIZE, Status.ALREADY_SET);
 			updateStatus(Properties.SCALE, Status.CANNOT_SET);
@@ -892,7 +908,7 @@ public final class Thumbnails
 		 * 						greater than {@code 0.0}.
 		 * @return				Reference to this object.
 		 */
-		public Builder scale(double scale)
+		public Builder<T> scale(double scale)
 		{
 			updateStatus(Properties.SCALE, Status.ALREADY_SET);
 			updateStatus(Properties.SIZE, Status.CANNOT_SET);
@@ -921,7 +937,7 @@ public final class Thumbnails
 		 * @param type			The image type of the thumbnail.
 		 * @return				Reference to this object.
 		 */
-		public Builder imageType(int type)
+		public Builder<T> imageType(int type)
 		{
 			updateStatus(Properties.IMAGE_TYPE, Status.ALREADY_SET);
 			imageType = type;
@@ -939,7 +955,7 @@ public final class Thumbnails
 		 * @param config		The scaling mode to use.
 		 * @return				Reference to this object.
 		 */
-		public Builder scalingMode(ScalingMode config)
+		public Builder<T> scalingMode(ScalingMode config)
 		{
 			checkForNull(config, "Scaling mode is null.");
 			updateStatus(Properties.SCALING_MODE, Status.ALREADY_SET);
@@ -959,7 +975,7 @@ public final class Thumbnails
 		 * @param resizer		The scaling operation to use.
 		 * @return				Reference to this object.
 		 */
-		public Builder resizer(Resizer resizer)
+		public Builder<T> resizer(Resizer resizer)
 		{
 			checkForNull(resizer, "Resizer is null.");
 			updateStatus(Properties.RESIZER, Status.ALREADY_SET);
@@ -980,7 +996,7 @@ public final class Thumbnails
 		 * @param config		The alpha interpolation mode.
 		 * @return				Reference to this object.
 		 */
-		public Builder alphaInterpolation(AlphaInterpolation config)
+		public Builder<T> alphaInterpolation(AlphaInterpolation config)
 		{
 			checkForNull(config, "Alpha interpolation is null.");
 			updateStatus(Properties.ALPHA_INTERPOLATION, Status.ALREADY_SET);
@@ -1000,7 +1016,7 @@ public final class Thumbnails
 		 * @param config		The dithering mode.
 		 * @return				Reference to this object.
 		 */
-		public Builder dithering(Dithering config)
+		public Builder<T> dithering(Dithering config)
 		{
 			checkForNull(config, "Dithering is null.");
 			updateStatus(Properties.DITHERING, Status.ALREADY_SET);
@@ -1020,7 +1036,7 @@ public final class Thumbnails
 		 * @param config		The antialiasing mode.
 		 * @return				Reference to this object.
 		 */
-		public Builder antialiasing(Antialiasing config)
+		public Builder<T> antialiasing(Antialiasing config)
 		{
 			checkForNull(config, "Antialiasing is null.");
 			updateStatus(Properties.ANTIALIASING, Status.ALREADY_SET);
@@ -1040,7 +1056,7 @@ public final class Thumbnails
 		 * @param config		The rendering mode.
 		 * @return				Reference to this object.
 		 */
-		public Builder rendering(Rendering config)
+		public Builder<T> rendering(Rendering config)
 		{
 			checkForNull(config, "Rendering is null.");
 			updateStatus(Properties.RENDERING, Status.ALREADY_SET);
@@ -1072,7 +1088,7 @@ public final class Thumbnails
 		 * 									the {@link #scale(double)} method
 		 * 									has been called.
 		 */
-		public Builder keepAspectRatio(boolean keep)
+		public Builder<T> keepAspectRatio(boolean keep)
 		{
 			if (statusMap.get(Properties.SCALE) == Status.ALREADY_SET)
 			{
@@ -1112,7 +1128,7 @@ public final class Thumbnails
 		 * 									{@code 0.0f} or is greater than
 		 * 									{@code 1.0f}.
 		 */
-		public Builder outputQuality(float quality)
+		public Builder<T> outputQuality(float quality)
 		{
 			if (quality < 0.0f || quality > 1.0f)
 			{
@@ -1150,7 +1166,7 @@ public final class Thumbnails
 		 * 									{@code 0.0d} or is greater than
 		 * 									{@code 1.0d}.
  		 */
-		public Builder outputQuality(double quality)
+		public Builder<T> outputQuality(double quality)
 		{
 			if (quality < 0.0d || quality > 1.0d)
 			{
@@ -1186,7 +1202,7 @@ public final class Thumbnails
 		 * @throws IllegalArgumentException	If an unsupported format is
 		 * 									specified.
 		 */
-		public Builder outputFormat(String format)
+		public Builder<T> outputFormat(String format)
 		{
 			if (!ThumbnailatorUtils.isSupportedOutputFormat(format))
 			{
@@ -1225,7 +1241,7 @@ public final class Thumbnails
 		 * 									format has not been specified before
 		 * 									this method was called.
 		 */
-		public Builder outputFormatType(String formatType)
+		public Builder<T> outputFormatType(String formatType)
 		{
 			/*
 			 * If the output format is the original format, and the format type
@@ -1280,7 +1296,7 @@ public final class Thumbnails
 		 * @param w				The watermark to apply to the thumbnail.
 		 * @return				Reference to this object.
 		 */
-		public Builder watermark(Watermark w)
+		public Builder<T> watermark(Watermark w)
 		{
 			if (w == null)
 			{
@@ -1314,7 +1330,7 @@ watermark(Positions.CENTER, image, 0.5f);
 		 * @param image			The image of the watermark.
 		 * @return				Reference to this object.
 		 */
-		public Builder watermark(BufferedImage image)
+		public Builder<T> watermark(BufferedImage image)
 		{
 			return watermark(Positions.CENTER, image, 0.5f);
 		}
@@ -1347,7 +1363,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * 						opaque.
 		 * @return				Reference to this object.
 		 */
-		public Builder watermark(BufferedImage image, float opacity)
+		public Builder<T> watermark(BufferedImage image, float opacity)
 		{
 			return watermark(Positions.CENTER, image, opacity);
 		}
@@ -1374,7 +1390,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * 						opaque.
 		 * @return				Reference to this object.
 		 */
-		public Builder watermark(Position position, BufferedImage image, float opacity)
+		public Builder<T> watermark(Position position, BufferedImage image, float opacity)
 		{
 			filterPipeline.add(new Watermark(position, image, opacity));
 			return this;
@@ -1400,7 +1416,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * @param angle			Angle in degrees.
 		 * @return				Reference to this object.
 		 */
-		public Builder rotate(double angle)
+		public Builder<T> rotate(double angle)
 		{
 			filterPipeline.add(Rotation.newRotator(angle));
 			return this;
@@ -1425,7 +1441,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * @param filter		An image filter to apply to the thumbnail.
 		 * @return				Reference to this object.
 		 */
-		public Builder addFilter(ImageFilter filter)
+		public Builder<T> addFilter(ImageFilter filter)
 		{
 			if (filter == null)
 			{
@@ -1450,7 +1466,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * @param filters		A list of filters to apply to the thumbnail.
 		 * @return				Reference to this object.
 		 */
-		public Builder addFilters(List<ImageFilter> filters)
+		public Builder<T> addFilters(List<ImageFilter> filters)
 		{
 			if (filters == null)
 			{
@@ -1539,38 +1555,6 @@ watermark(Positions.CENTER, image, opacity);
 		}
 
 		/**
-		 * Returns a {@link ThumbnailMaker} which is appropriate for the
-		 * currrent builder state.
-		 * 
-		 * @param r			The {@link Resizer} to use with the 
-		 * 					{@link ThumbnailMaker}.
-		 * @param imageType	The image type for the thumbnail.
-		 * @return			The {@link ThumbnailMaker} which is suitable for
-		 * 					the current builder state.
-		 */
-		private ThumbnailMaker makeThumbnailMaker(Resizer r, int imageType)
-		{
-			int imageTypeToUse = imageType;
-			if (imageType == IMAGE_TYPE_UNSPECIFIED)
-			{
-				imageTypeToUse = ThumbnailParameter.DEFAULT_IMAGE_TYPE;
-			}
-			
-			if (!Double.isNaN(scale))
-			{
-				return new ScaledThumbnailMaker(scale)
-						.resizer(r)
-						.imageType(imageTypeToUse);
-			}
-			else
-			{
-				return new FixedSizeThumbnailMaker(width, height, keepAspectRatio)
-						.resizer(r)
-						.imageType(imageTypeToUse);
-			}
-		}
-		
-		/**
 		 * Returns a {@link ThumbnailParameter} from the current builder state.
 		 * 
 		 * @return			A {@link ThumbnailParameter} from the current
@@ -1583,7 +1567,7 @@ watermark(Positions.CENTER, image, opacity);
 			int imageTypeToUse = imageType;
 			if (imageType == IMAGE_TYPE_UNSPECIFIED)
 			{
-				imageTypeToUse = ThumbnailParameter.DEFAULT_IMAGE_TYPE;
+				imageTypeToUse = ThumbnailParameter.ORIGINAL_IMAGE_TYPE;
 			}
 			
 			if (Double.isNaN(scale))
@@ -1615,129 +1599,36 @@ watermark(Positions.CENTER, image, opacity);
 		}
 
 		/**
-		 * Returns an {@link Iterable} which iterates over given files or
-		 * images to return the original images from which the thumbnails
-		 * should be made.
-		 * 
-		 * @return			An {@link Iterable} which provides the original
-		 * 					images for which thumbnails should be made for. 
-		 */
-		private Iterable<BufferedImage> getOriginalImages()
-		{
-			class BufferedImageIterator implements Iterator<BufferedImage>
-			{
-				private final Iterator<BufferedImage> iter;
-				
-				public BufferedImageIterator(List<BufferedImage> images)
-				{
-					iter = images.iterator();
-				}
-		
-				public boolean hasNext()
-				{
-					return iter.hasNext();
-				}
-		
-				public BufferedImage next()
-				{
-					return iter.next();
-				}
-		
-				public void remove()
-				{
-					throw new UnsupportedOperationException("Cannot remove elements from this iterator.");
-				}
-			}
-			
-			class FileIterator implements Iterator<BufferedImage>
-			{
-				private final Iterator<File> iter;
-				
-				public FileIterator(List<File> files)
-				{
-					iter = files.iterator();
-				}
-				
-				public boolean hasNext()
-				{
-					return iter.hasNext();
-				}
-				
-				public BufferedImage next()
-				{
-					try
-					{
-						return ImageIO.read(iter.next());
-					}
-					catch (IOException e)
-					{
-						throw new IllegalArgumentException("Could not open image file.", e);
-					}
-				}
-				
-				public void remove()
-				{
-					throw new UnsupportedOperationException(
-							"Cannot remove elements from this iterator.");
-				}
-				
-			}
-			
-			if (images != null)
-			{
-				return new Iterable<BufferedImage>() {
-					public Iterator<BufferedImage> iterator()
-					{
-						return new BufferedImageIterator(images);
-					}
-				};
-			}
-			else if (files != null)
-			{
-				return new Iterable<BufferedImage>() {
-					public Iterator<BufferedImage> iterator()
-					{
-						return new FileIterator(files);
-					}
-				};
-			}
-			else
-			{
-				throw new IllegalStateException(
-						"No input source has been set.");
-			}
-		}
-
-		/**
 		 * Create the thumbnails and return as a {@link List} of 
 		 * {@link BufferedImage}s.
 		 * 
 		 * @return		A list of thumbnails.
+		 * @throws IOException 
 		 */
-		public List<BufferedImage> asBufferedImages()
+		public List<BufferedImage> asBufferedImages() throws IOException
 		{
+			/*
+			 * TODO Note that this method could cause OutOfMemoryErrors
+			 * if there are too many thumbnails, as all thumbnails are sent
+			 * to the List.
+			 * 
+			 * Probably should provide a method which returns a iterator
+			 * rather than a List.
+			 */
 			checkReadiness();
-			Resizer r = makeResizer();
 			
 			List<BufferedImage> thumbnails = new ArrayList<BufferedImage>();
 			
 			// Create thumbnails
-			/*
-			 * TODO This code could cause very large images to cause
-			 * OutOfMemoryErrors -- getOriginalImages will open each image at a  
-			 * time, however, if each image is large, then it could deplete 
-			 * the heap.
-			 */
-			for (BufferedImage img : getOriginalImages())
+			for (ImageSource<T> source : sources)
 			{
-				ThumbnailMaker maker = makeThumbnailMaker(r, img.getType());
+				BufferedImageSink destination = new BufferedImageSink();
 				
-				BufferedImage thumbnailImg = maker.make(img);
+				Thumbnailator.createThumbnail(
+					new SourceSinkThumbnailTask<T, BufferedImage>(makeParam(), source, destination)
+				);
 				
-				// Apply image filters
-				thumbnailImg = filterPipeline.apply(thumbnailImg);
-				
-				thumbnails.add(thumbnailImg);
+				thumbnails.add(destination.getSink());
 			}
 			
 			return thumbnails;
@@ -1746,40 +1637,30 @@ watermark(Positions.CENTER, image, opacity);
 		/**
 		 * Creates a thumbnail and returns it as a {@link BufferedImage}.
 		 * <p>
-		 * When multiple images are specified through one of the 
-		 * {@link Thumbnails#of} methods, only the first image will be
-		 * processed.
+		 * To call this method, the thumbnail must have been created from a
+		 * single source.
 		 * 
 		 * @return		A thumbnail as a {@link BufferedImage}.
+		 * @throws IOException 
 		 * @throws IllegalArgumentException		If multiple original images are
 		 * 										specified.
 		 */
-		public BufferedImage asBufferedImage()
+		public BufferedImage asBufferedImage() throws IOException
 		{
 			checkReadiness();
 			
-			if (images == null)
-			{
-				throw new IllegalStateException("Cannot create thumbnails to images if original images are not from images.");
-			}
-			
-			if (images.size() > 1)
+			if (sources.size() > 1)
 			{
 				throw new IllegalArgumentException("Cannot create one thumbnail from multiple original images.");
 			}
 			
-			Resizer r = makeResizer();
+			BufferedImageSink destination = new BufferedImageSink();
 			
-			BufferedImage img = getOriginalImages().iterator().next();
-			
-			// Create thumbnails
-			ThumbnailMaker maker = makeThumbnailMaker(r, img.getType());
-			BufferedImage thumbnailImg = maker.make(img);
-			
-			// Apply image filters
-			thumbnailImg = filterPipeline.apply(thumbnailImg);
-			
-			return thumbnailImg;
+			Thumbnailator.createThumbnail(
+				new SourceSinkThumbnailTask<T, BufferedImage>(makeParam(), sources.get(0), destination)
+			);
+				
+			return destination.getSink();
 		}
 		
 		/*
@@ -1813,7 +1694,7 @@ watermark(Positions.CENTER, image, opacity);
 		{
 			checkReadiness();
 			
-			if (files == null)
+			if (!(sources.get(0) instanceof FileImageSource))
 			{
 				throw new IllegalStateException("Cannot create thumbnails to files if original images are not from files.");
 			}
@@ -1825,11 +1706,12 @@ watermark(Positions.CENTER, image, opacity);
 
 			List<File> destinationFiles = new ArrayList<File>();
 			
-			
 			ThumbnailParameter param = makeParam();
 			
-			for (File f : files)
+			for (ImageSource<T> source : sources)
 			{
+				File f = ((FileImageSource)source).getSource();
+				
 				File destinationFile = 
 					new File(f.getParent(), rename.apply(f.getName()));
 				
@@ -1866,8 +1748,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * Create a thumbnail and writes it to a {@link File}.
 		 * <p>
 		 * To call this method, the thumbnail must have been created from a
-		 * single {@link File} by calling the {@link Thumbnails#of(File...)}
-		 * method.
+		 * single source.
 		 * 
 		 * @param outFile			The file to which the thumbnail is to be
 		 * 							written to.
@@ -1883,18 +1764,50 @@ watermark(Positions.CENTER, image, opacity);
 		{
 			checkReadiness();
 			
-			if (files == null)
-			{
-				throw new IllegalStateException("Cannot create thumbnails to files if original images are not from files.");
-			}
-			else if (files.size() > 1)
+			if (sources.size() > 1)
 			{
 				throw new IllegalArgumentException("Cannot output multiple thumbnails to one file.");
 			}
 			
-			ThumbnailParameter param = makeParam();
+			ImageSource<T> source = sources.get(0);
+			FileImageSink destination = new FileImageSink(outFile);
 			
-			Thumbnailator.createThumbnail(new FileThumbnailTask(param, files.get(0), outFile));
+			Thumbnailator.createThumbnail(
+					new SourceSinkThumbnailTask<T, File>(makeParam(), source, destination)
+			);
+		}
+		
+		/**
+		 * Create a thumbnail and writes it to a {@link OutputStream}.
+		 * <p>
+		 * To call this method, the thumbnail must have been created from a
+		 * single source.
+		 * 
+		 * @param os				The output stream to which the thumbnail
+		 * 							is to be written to.
+		 * 
+		 * @throws IOException		If a problem occurs while writing the
+		 * 							thumbnails. 
+		 * @throws IllegalStateException		If the original images are not
+		 * 										from files.
+		 * @throws IllegalArgumentException		If multiple original image files
+		 * 										are	specified.
+		 */
+		public void toOutputStream(OutputStream os) throws IOException
+		{
+			checkReadiness();
+			
+			if (sources.size() > 1)
+			{
+				throw new IllegalArgumentException("Cannot output multiple thumbnails to one stream.");
+			}
+			
+			ImageSource<T> source = sources.get(0);
+			OutputStreamImageSink destination = new OutputStreamImageSink(os);
+			
+			Thumbnailator.createThumbnail(
+					new SourceSinkThumbnailTask<T, OutputStream>(makeParam(), source, destination)
+			);
 		}
 	}
 }
