@@ -36,6 +36,11 @@ public class FileImageSink extends AbstractImageSink<File>
 	/**
 	 * Instantiates a {@link FileImageSink} with the file to which the thumbnail
 	 * should be written to.
+	 * <p>
+	 * The output format to use will be determined from the file extension.
+	 * If another format should be used, then the 
+	 * {@link #setOutputFormatName(String)} should be called with the desired
+	 * output format name.
 	 * 
 	 * @param destinationFile		The destination file.
 	 * @throws NullPointerException	If the file is null.
@@ -50,11 +55,17 @@ public class FileImageSink extends AbstractImageSink<File>
 		}
 		
 		this.destinationFile = destinationFile;
+		this.outputFormat = getExtension(destinationFile);
 	}
 	
 	/**
 	 * Instantiates a {@link FileImageSink} with the file to which the thumbnail
 	 * should be written to.
+	 * <p>
+	 * The output format to use will be determined from the file extension.
+	 * If another format should be used, then the 
+	 * {@link #setOutputFormatName(String)} should be called with the desired
+	 * output format name.
 	 * 
 	 * @param destinationFilePath	The destination file path.
 	 * @throws NullPointerException	If the filepath is null.
@@ -69,6 +80,7 @@ public class FileImageSink extends AbstractImageSink<File>
 		}
 		
 		this.destinationFile = new File(destinationFilePath);
+		this.outputFormat = getExtension(destinationFile);
 	}
 	
 	/**
@@ -80,8 +92,13 @@ public class FileImageSink extends AbstractImageSink<File>
 	 * @return						Returns {@code true} if the specified file
 	 * 								extension is valid for the specified format.
 	 */
-	private boolean isMatchingFormat(String formatName, String fileExtension)
+	private static boolean isMatchingFormat(String formatName, String fileExtension)
 	{
+		if (formatName == null || fileExtension == null)
+		{
+			return false;
+		}
+		
 		String[] suffixes = ImageIO.getImageWritersByFormatName(formatName)
 							.next().getOriginatingProvider().getFileSuffixes();
 		
@@ -94,9 +111,35 @@ public class FileImageSink extends AbstractImageSink<File>
 		}
 		return false;
 	}
+	
+	/**
+	 * Returns the file extension of the given {@link File}.
+	 * 
+	 * @param f			The file.
+	 * @return			The extension of the file.
+	 */
+	private static String getExtension(File f)
+	{
+		String fileName = f.getName();
+		if (
+				fileName.indexOf('.') != -1 
+				&& fileName.lastIndexOf('.') != fileName.length() - 1
+		)
+		{
+			int lastIndex = fileName.lastIndexOf('.');
+			return fileName.substring(lastIndex + 1); 
+		}
+		
+		return null;
+	}
 
 	public void write(BufferedImage img) throws IOException
 	{
+		if (img == null)
+		{
+			throw new NullPointerException("Cannot write a null image.");
+		}
+		
 		/* TODO refactor.
 		 * The following code has been adapted from the 
 		 * StreamThumbnailTask.write method.
@@ -110,16 +153,7 @@ public class FileImageSink extends AbstractImageSink<File>
 		 * 
 		 * Else, append the extension for the output format to the filename. 
 		 */
-		String fileExtension = null; 
-		String fileName = destinationFile.getName();
-		if (
-				fileName.indexOf('.') != -1 
-				&& fileName.lastIndexOf('.') != fileName.length() - 1
-		)
-		{
-			int lastIndex = fileName.lastIndexOf('.');
-			fileExtension = fileName.substring(lastIndex + 1); 
-		}
+		String fileExtension = getExtension(destinationFile); 
 		
 		String formatName = outputFormat;
 		if (fileExtension == null || !isMatchingFormat(formatName, fileExtension)) 
@@ -142,7 +176,7 @@ public class FileImageSink extends AbstractImageSink<File>
 		ImageWriter writer = writers.next();
 		
 		ImageWriteParam writeParam = writer.getDefaultWriteParam();
-		if (writeParam.canWriteCompressed())
+		if (writeParam.canWriteCompressed() && param != null)
 		{
 			writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
 			
