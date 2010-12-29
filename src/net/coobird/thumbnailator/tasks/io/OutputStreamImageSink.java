@@ -57,6 +57,12 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 			throw new IllegalStateException("Output format has not been set.");
 		}
 		
+		if (img == null)
+		{
+			throw new NullPointerException("Cannot write a null image.");
+		}
+
+		
 		String formatName = outputFormat;
 			
 		Iterator<ImageWriter> writers = 
@@ -78,18 +84,6 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 			writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
 			
 			/*
-			 * Sets the compression quality, if specified.
-			 * 
-			 * Note:
-			 * The value to denote that the codec's default compression quality
-			 * should be used is Float.NaN. 
-			 */
-			if (!Float.isNaN(param.getOutputQuality()))
-			{
-				writeParam.setCompressionQuality(param.getOutputQuality());
-			}
-			
-			/*
 			 * Sets the compression format type, if specified.
 			 * 
 			 * Note:
@@ -99,6 +93,18 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 			if (param.getOutputFormatType() != ThumbnailParameter.DEFAULT_FORMAT_TYPE)
 			{
 				writeParam.setCompressionType(param.getOutputFormatType());
+			}
+			
+			/*
+			 * Sets the compression quality, if specified.
+			 * 
+			 * Note:
+			 * The value to denote that the codec's default compression quality
+			 * should be used is Float.NaN. 
+			 */
+			if (!Float.isNaN(param.getOutputQuality()))
+			{
+				writeParam.setCompressionQuality(param.getOutputQuality());
 			}
 		}
 		
