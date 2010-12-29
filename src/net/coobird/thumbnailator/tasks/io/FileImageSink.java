@@ -17,6 +17,15 @@ import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 
 /**
  * An {@link ImageSink} which writes the resulting thumbnail to a file.
+ * <p>
+ * Under certain circumstances, the destination file can change in the course
+ * of processing. 
+ * <p>
+ * This can occur in cases where the file extension does not
+ * match the output format set by the {@link #setOutputFormatName(String)}
+ * method. In this case, the file name will have a file extension corresponding
+ * to the output format set in the above method to be appended to the file
+ * name originally provided when instantiating the {@link FileImageSink} object. 
  * 
  * @author coobird
  *
