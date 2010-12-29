@@ -11,9 +11,9 @@ import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
 
-import net.coobird.thumbnailator.BufferedImages;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
+import net.coobird.thumbnailator.util.BufferedImages;
 
 /**
  * An {@link ImageSink} which specifies an {@link OutputStream} to which the
