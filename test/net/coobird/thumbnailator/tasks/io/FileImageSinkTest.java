@@ -8,9 +8,12 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 
 import org.junit.Test;
+import static org.mockito.Mockito.*;
+
 import static org.junit.Assert.*;
 
 
@@ -182,6 +185,104 @@ public class FileImageSinkTest
 		
 		String formatName = getFormatName(new FileInputStream(outputFile));
 		assertEquals("JPEG", formatName);
+	}
+	
+	@Test
+	public void write_ValidImage_SetThumbnailParameter_BMP_QualityAndOutputFormatType_BothDefault() throws IOException
+	{
+		// given
+		File outputFile = new File("test-resources/Thumbnailator/test.bmp");
+		outputFile.deleteOnExit();
+		
+		BufferedImage imgToWrite = 
+			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+		
+		ThumbnailParameter param = mock(ThumbnailParameter.class);
+		when(param.getOutputQuality()).thenReturn(ThumbnailParameter.DEFAULT_QUALITY);
+		when(param.getOutputFormatType()).thenReturn(ThumbnailParameter.DEFAULT_FORMAT_TYPE);
+		
+		FileImageSink sink = new FileImageSink(outputFile);
+		sink.setThumbnailParameter(param);
+		
+		// when
+		sink.write(imgToWrite);
+		
+		// then
+		assertEquals(outputFile, sink.getSink());
+		
+		BufferedImage writtenImg = ImageIO.read(outputFile);
+		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
+		
+		String formatName = getFormatName(new FileInputStream(outputFile));
+		assertEquals("bmp", formatName);
+		
+		verify(param, atLeastOnce()).getOutputQuality();
+		verify(param, atLeastOnce()).getOutputFormatType();
+	}
+	
+	@Test
+	public void write_ValidImage_SetThumbnailParameter_BMP_QualityAndOutputFormatType_BothNonDefault() throws IOException
+	{
+		// given
+		File outputFile = new File("test-resources/Thumbnailator/test.bmp");
+		outputFile.deleteOnExit();
+		
+		BufferedImage imgToWrite = 
+			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+		
+		ThumbnailParameter param = mock(ThumbnailParameter.class);
+		when(param.getOutputQuality()).thenReturn(0.5f);
+		when(param.getOutputFormatType()).thenReturn("BI_BITFIELDS");
+		
+		FileImageSink sink = new FileImageSink(outputFile);
+		sink.setThumbnailParameter(param);
+		
+		// when
+		sink.write(imgToWrite);
+		
+		// then
+		assertEquals(outputFile, sink.getSink());
+		
+		BufferedImage writtenImg = ImageIO.read(outputFile);
+		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
+		
+		String formatName = getFormatName(new FileInputStream(outputFile));
+		assertEquals("bmp", formatName);
+		
+		verify(param, atLeastOnce()).getOutputQuality();
+		verify(param, atLeastOnce()).getOutputFormatType();
+	}
+	
+	@Test
+	public void write_ValidImage_SetThumbnailParameter_BMP_OutputFormatType() throws IOException
+	{
+		// given
+		File outputFile = new File("test-resources/Thumbnailator/test.bmp");
+		outputFile.deleteOnExit();
+		
+		BufferedImage imgToWrite = 
+			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+		
+		ThumbnailParameter param = mock(ThumbnailParameter.class);
+		when(param.getOutputQuality()).thenReturn(ThumbnailParameter.DEFAULT_QUALITY);
+		when(param.getOutputFormatType()).thenReturn("BI_BITFIELDS");
+		
+		FileImageSink sink = new FileImageSink(outputFile);
+		sink.setThumbnailParameter(param);
+		
+		// when
+		sink.write(imgToWrite);
+		
+		// then
+		assertEquals(outputFile, sink.getSink());
+		
+		BufferedImage writtenImg = ImageIO.read(outputFile);
+		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
+		
+		String formatName = getFormatName(new FileInputStream(outputFile));
+		assertEquals("bmp", formatName);
+		
+		verify(param, atLeastOnce()).getOutputFormatType();
 	}
 	
 	/**

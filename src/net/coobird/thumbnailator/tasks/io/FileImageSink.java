@@ -181,18 +181,6 @@ public class FileImageSink extends AbstractImageSink<File>
 			writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
 			
 			/*
-			 * Sets the compression quality, if specified.
-			 * 
-			 * Note:
-			 * The value to denote that the codec's default compression quality
-			 * should be used is Float.NaN. 
-			 */
-			if (!Float.isNaN(param.getOutputQuality()))
-			{
-				writeParam.setCompressionQuality(param.getOutputQuality());
-			}
-			
-			/*
 			 * Sets the compression format type, if specified.
 			 * 
 			 * Note:
@@ -202,6 +190,18 @@ public class FileImageSink extends AbstractImageSink<File>
 			if (param.getOutputFormatType() != ThumbnailParameter.DEFAULT_FORMAT_TYPE)
 			{
 				writeParam.setCompressionType(param.getOutputFormatType());
+			}
+			
+			/*
+			 * Sets the compression quality, if specified.
+			 * 
+			 * Note:
+			 * The value to denote that the codec's default compression quality
+			 * should be used is Float.NaN. 
+			 */
+			if (!Float.isNaN(param.getOutputQuality()))
+			{
+				writeParam.setCompressionQuality(param.getOutputQuality());
 			}
 		}
 		
