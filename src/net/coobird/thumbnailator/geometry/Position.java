@@ -1,4 +1,4 @@
-package net.coobird.thumbnailator;
+package net.coobird.thumbnailator.geometry;
 
 import java.awt.Point;
 
