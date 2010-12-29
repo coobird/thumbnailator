@@ -17,6 +17,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
+import net.coobird.thumbnailator.name.Rename;
 import net.coobird.thumbnailator.resizers.Resizer;
 import net.coobird.thumbnailator.resizers.Resizers;
 import net.coobird.thumbnailator.resizers.configurations.ScalingMode;
