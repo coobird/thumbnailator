@@ -7,8 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-import net.coobird.thumbnailator.BufferedImages;
 import net.coobird.thumbnailator.geometry.Position;
+import net.coobird.thumbnailator.util.BufferedImages;
 
 /**
  * An {@link ImageFilter} which will overlay a text caption to an image.

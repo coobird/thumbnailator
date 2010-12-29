@@ -1,4 +1,4 @@
-package net.coobird.thumbnailator;
+package net.coobird.thumbnailator.util;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

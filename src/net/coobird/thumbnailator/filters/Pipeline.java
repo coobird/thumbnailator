@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import net.coobird.thumbnailator.BufferedImages;
+import net.coobird.thumbnailator.util.BufferedImages;
 
 /**
  * An {@link ImageFilter} which will apply multiple {@link ImageFilter}s in a 
