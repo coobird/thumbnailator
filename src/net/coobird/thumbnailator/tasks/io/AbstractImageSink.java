@@ -1,5 +1,8 @@
 package net.coobird.thumbnailator.tasks.io;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 import net.coobird.thumbnailator.ThumbnailParameter;
 
 /**
@@ -28,5 +31,13 @@ public abstract class AbstractImageSink<T> implements ImageSink<T>
 	public void setThumbnailParameter(ThumbnailParameter param)
 	{
 		this.param = param;
+	}
+
+	public void write(BufferedImage img) throws IOException
+	{
+		if (img == null)
+		{
+			throw new NullPointerException("Cannot write a null image.");
+		}
 	}
 }
