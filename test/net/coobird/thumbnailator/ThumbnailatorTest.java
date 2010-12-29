@@ -21,6 +21,7 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
+import net.coobird.thumbnailator.name.Rename;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 
 import org.junit.Ignore;
