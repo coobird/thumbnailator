@@ -1758,6 +1758,11 @@ watermark(Positions.CENTER, image, opacity);
 		{
 			checkReadiness();
 			
+			if (images == null)
+			{
+				throw new IllegalStateException("Cannot create thumbnails to images if original images are not from images.");
+			}
+			
 			if (images.size() > 1)
 			{
 				throw new IllegalArgumentException("Cannot create one thumbnail from multiple original images.");
