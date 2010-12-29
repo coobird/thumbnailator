@@ -12,7 +12,7 @@
 	<property name="tests" location="test" />
 
 	<!-- Set version number -->
-	<property name="version" value="0.2.8" />
+	<property name="version" value="0.2.9" />
 	
 	<target name="init">
 	</target>
