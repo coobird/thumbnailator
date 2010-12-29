@@ -23,6 +23,7 @@ public interface ImageSink<T>
 	 * @param img				The image to write or store.
 	 * @throws IOException		When a problem occurs while writing or storing
 	 * 							the image.
+	 * @throws NullPointerException		If the image is null.
 	 */
 	public void write(BufferedImage img) throws IOException;
 	

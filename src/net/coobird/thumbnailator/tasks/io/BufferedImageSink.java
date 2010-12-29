@@ -24,10 +24,7 @@ public class BufferedImageSink extends AbstractImageSink<BufferedImage>
 	
 	public void write(BufferedImage img) throws IOException
 	{
-		if (img == null)
-		{
-			throw new NullPointerException("Cannot write a null image.");
-		}
+		super.write(img);
 		
 		this.img = img;
 		written = true;

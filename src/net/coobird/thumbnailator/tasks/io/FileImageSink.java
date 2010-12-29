@@ -135,10 +135,7 @@ public class FileImageSink extends AbstractImageSink<File>
 
 	public void write(BufferedImage img) throws IOException
 	{
-		if (img == null)
-		{
-			throw new NullPointerException("Cannot write a null image.");
-		}
+		super.write(img);
 		
 		/* TODO refactor.
 		 * The following code has been adapted from the 

@@ -52,16 +52,12 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 
 	public void write(BufferedImage img) throws IOException
 	{
+		super.write(img);
+		
 		if (outputFormat == null)
 		{
 			throw new IllegalStateException("Output format has not been set.");
 		}
-		
-		if (img == null)
-		{
-			throw new NullPointerException("Cannot write a null image.");
-		}
-
 		
 		String formatName = outputFormat;
 			
