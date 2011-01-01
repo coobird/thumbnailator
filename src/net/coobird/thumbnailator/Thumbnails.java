@@ -1251,7 +1251,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * {@link #iterableBufferedImages()} method would be preferable. 
 		 * 
 		 * @return		A list of thumbnails.
-		 * @throws IOException
+		 * @throws IOException					If an problem occurred during
+		 * 										the reading of the original
+		 * 										images.
 		 */
 		public List<BufferedImage> asBufferedImages() throws IOException
 		{
@@ -1281,7 +1283,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * single source.
 		 * 
 		 * @return		A thumbnail as a {@link BufferedImage}.
-		 * @throws IOException 
+		 * @throws IOException					If an problem occurred during
+		 * 										the reading of the original
+		 * 										image.
 		 * @throws IllegalArgumentException		If multiple original images are
 		 * 										specified.
 		 */
@@ -1315,9 +1319,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * 							files to write.
 		 * @return					A list of {@link File}s of the thumbnails
 		 * 							which were created.
-		 * 
-		 * @throws IOException		If a problem occurs while writing the
-		 * 							thumbnails to files. 
+		 * @throws IOException		If a problem occurs while reading the
+		 * 							original images or writing the thumbnails 
+		 * 							to files. 
 		 */
 		public List<File> asFiles(Iterable<File> files) throws IOException
 		{
@@ -1361,9 +1365,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * @param iterable			An {@link Iterable} which returns an
 		 * 							{@link Iterator} which returns file names
 		 * 							which should be assigned to each thumbnail.
-		 * 
-		 * @throws IOException		If a problem occurs while writing the
-		 * 							thumbnails to files. 
+		 * @throws IOException		If a problem occurs while reading the
+		 * 							original images or writing the thumbnails 
+		 * 							to files.
 		 */
 		public void toFiles(Iterable<File> iterable) throws IOException
 		{
@@ -1383,9 +1387,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * 							files to write.
 		 * @return					A list of {@link File}s of the thumbnails
 		 * 							which were created.
-		 * 
-		 * @throws IOException		If a problem occurs while writing the
-		 * 							thumbnails to files. 
+		 * @throws IOException		If a problem occurs while reading the
+		 * 							original images or writing the thumbnails 
+		 * 							to files. 
 		 * @throws IllegalStateException		If the original images are not
 		 * 										from files.
 		 */
@@ -1432,8 +1436,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * @param rename			The rename function which is used to
 		 * 							determine the filenames of the thumbnail
 		 * 							files to write.
-		 * 
-		 * @throws IOException		If a problem occurs while writing the
+		 * @throws IOException		If a problem occurs while reading the
+		 * 							original images or writing the thumbnails 
+		 * 							to files. 
 		 * 							thumbnails to files. 
 		 * @throws IllegalStateException		If the original images are not
 		 * 										from files.
@@ -1451,9 +1456,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * 
 		 * @param outFile			The file to which the thumbnail is to be
 		 * 							written to.
-		 * 
-		 * @throws IOException		If a problem occurs while writing the
-		 * 							thumbnails to files. 
+		 * @throws IOException		If a problem occurs while reading the
+		 * 							original images or writing the thumbnails 
+		 * 							to files. 
 		 * @throws IllegalArgumentException		If multiple original image files
 		 * 										are	specified.
 		 */
@@ -1482,9 +1487,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * 
 		 * @param outFile			The file to which the thumbnail is to be
 		 * 							written to.
-		 * 
-		 * @throws IOException		If a problem occurs while writing the
-		 * 							thumbnails to files. 
+		 * @throws IOException		If a problem occurs while reading the
+		 * 							original images or writing the thumbnails 
+		 * 							to files. 
 		 * @throws IllegalArgumentException		If multiple original image files
 		 * 										are	specified.
 		 */
@@ -1513,9 +1518,8 @@ watermark(Positions.CENTER, image, opacity);
 		 * 
 		 * @param os				The output stream to which the thumbnail
 		 * 							is to be written to.
-		 * 
-		 * @throws IOException		If a problem occurs while writing the
-		 * 							thumbnails. 
+		 * @throws IOException		If a problem occurs while reading the
+		 * 							original images or writing the thumbnails. 
 		 * @throws IllegalArgumentException		If multiple original image files
 		 * 										are	specified.
 		 */
