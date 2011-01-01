@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -285,6 +286,49 @@ public final class Thumbnails
 			}
 			
 			return new Builder<BufferedImage>(sources);
+		}
+
+		private final class BufferedImageIterable implements
+				Iterable<BufferedImage>
+		{
+			public Iterator<BufferedImage> iterator()
+			{
+				return new Iterator<BufferedImage>() {
+					
+					Iterator<ImageSource<T>> sourceIter = sources.iterator();
+
+					public boolean hasNext()
+					{
+						return sourceIter.hasNext();
+					}
+
+					public BufferedImage next()
+					{
+						ImageSource<T> source = sourceIter.next();
+						BufferedImageSink destination = new BufferedImageSink();
+						
+						try
+						{
+							Thumbnailator.createThumbnail(
+									new SourceSinkThumbnailTask<T, BufferedImage>(makeParam(), source, destination)
+							);
+						}
+						catch (IOException e)
+						{
+							return null;
+						}
+						
+						return destination.getSink();
+					}
+
+					public void remove()
+					{
+						throw new UnsupportedOperationException(
+								"Cannot remove elements from this iterator."
+						);
+					}
+				};
+			}
 		}
 
 		/**
@@ -1165,22 +1209,43 @@ watermark(Positions.CENTER, image, opacity);
 		}
 
 		/**
-		 * Create the thumbnails and return as a {@link List} of 
+		 * Create the thumbnails and return as a {@link Iterable} of 
 		 * {@link BufferedImage}s.
+		 * <p>
+		 * If an {@link IOException} occurs during the processing of the
+		 * thumbnail, the {@link Iterable} will return a {@code null} for that
+		 * element.
 		 * 
 		 * @return		A list of thumbnails.
 		 * @throws IOException 
 		 */
+		public Iterable<BufferedImage> iterableBufferedImages() throws IOException
+		{
+			checkReadiness();
+			/*
+			 * TODO To get the precise error information, there would have to
+			 * be an event notification mechanism.
+			 */
+			return new BufferedImageIterable();
+		}
+		
+		/**
+		 * Create the thumbnails and return as a {@link List} of 
+		 * {@link BufferedImage}s.
+		 * <p>
+		 * <h3>Note about performance</h3>
+		 * If there are many thumbnails generated at once, it is possible that
+		 * the Java virtual machine's heap space will run out and an
+		 * {@link OutOfMemoryError} could result.
+		 * <p>
+		 * If many thumbnails are being processed at once, then using the
+		 * {@link #iterableBufferedImages()} method would be preferable. 
+		 * 
+		 * @return		A list of thumbnails.
+		 * @throws IOException
+		 */
 		public List<BufferedImage> asBufferedImages() throws IOException
 		{
-			/*
-			 * TODO Note that this method could cause OutOfMemoryErrors
-			 * if there are too many thumbnails, as all thumbnails are sent
-			 * to the List.
-			 * 
-			 * Probably should provide a method which returns a iterator
-			 * rather than a List.
-			 */
 			checkReadiness();
 			
 			List<BufferedImage> thumbnails = new ArrayList<BufferedImage>();
@@ -1229,13 +1294,72 @@ watermark(Positions.CENTER, image, opacity);
 			return destination.getSink();
 		}
 		
-		/*
-		 * TODO A method which will accept a function used to generate names.
-		 * Perhaps an Iterator which creates names.
+		/**
+		 * Creates the thumbnails and stores them to the files, and returns
+		 * a {@link List} of {@link File}s to the thumbnails. 
+		 * <p>
+		 * The file names for the thumbnails are obtained from the given
+		 * {@link Iterable}.
 		 * 
-		 * This way, the source can be a list of BufferedImages, and the
-		 * thumbnails can be output to files.
+		 * @param rename			The rename function which is used to
+		 * 							determine the filenames of the thumbnail
+		 * 							files to write.
+		 * @return					A list of {@link File}s of the thumbnails
+		 * 							which were created.
+		 * 
+		 * @throws IOException		If a problem occurs while writing the
+		 * 							thumbnails to files. 
 		 */
+		public List<File> asFiles(Iterable<File> files) throws IOException
+		{
+			checkReadiness();
+			
+			if (files == null)
+			{
+				throw new NullPointerException("Rename is null.");
+			}
+			
+			List<File> destinationFiles = new ArrayList<File>();
+			
+			ThumbnailParameter param = makeParam();
+			
+			Iterator<File> filenameIter = files.iterator();
+			
+			for (ImageSource<T> source : sources)
+			{
+				if (!filenameIter.hasNext())
+				{
+					throw new IndexOutOfBoundsException("Not enough file names provided by iterator.");
+				}
+				
+				// Determine the destination file name, include it in the resulting list.
+				File destinationFile = filenameIter.next();
+				destinationFiles.add(destinationFile);
+				FileImageSink destination = new FileImageSink(destinationFile);
+				
+				Thumbnailator.createThumbnail(new SourceSinkThumbnailTask<T, File>(param, source, destination));
+			}
+			
+			return destinationFiles;
+		}
+		
+		/**
+		 * Creates the thumbnails and stores them to the files.
+		 * <p>
+		 * The file names for the thumbnails are obtained from the given
+		 * {@link Iterable}.
+		 * 
+		 * @param iterable			An {@link Iterable} which returns an
+		 * 							{@link Iterator} which returns file names
+		 * 							which should be assigned to each thumbnail.
+		 * 
+		 * @throws IOException		If a problem occurs while writing the
+		 * 							thumbnails to files. 
+		 */
+		public void toFiles(Iterable<File> iterable) throws IOException
+		{
+			asFiles(iterable);
+		}
 		
 		/**
 		 * Creates the thumbnails and stores them to the files, using the 
@@ -1321,8 +1445,6 @@ watermark(Positions.CENTER, image, opacity);
 		 * 
 		 * @throws IOException		If a problem occurs while writing the
 		 * 							thumbnails to files. 
-		 * @throws IllegalStateException		If the original images are not
-		 * 										from files.
 		 * @throws IllegalArgumentException		If multiple original image files
 		 * 										are	specified.
 		 */
@@ -1344,6 +1466,37 @@ watermark(Positions.CENTER, image, opacity);
 		}
 		
 		/**
+		 * Create a thumbnail and writes it to a {@link File}.
+		 * <p>
+		 * To call this method, the thumbnail must have been created from a
+		 * single source.
+		 * 
+		 * @param outFile			The file to which the thumbnail is to be
+		 * 							written to.
+		 * 
+		 * @throws IOException		If a problem occurs while writing the
+		 * 							thumbnails to files. 
+		 * @throws IllegalArgumentException		If multiple original image files
+		 * 										are	specified.
+		 */
+		public void toFile(String outFilepath) throws IOException
+		{
+			checkReadiness();
+			
+			if (sources.size() > 1)
+			{
+				throw new IllegalArgumentException("Cannot output multiple thumbnails to one file.");
+			}
+			
+			ImageSource<T> source = sources.get(0);
+			FileImageSink destination = new FileImageSink(outFilepath);
+			
+			Thumbnailator.createThumbnail(
+					new SourceSinkThumbnailTask<T, File>(makeParam(), source, destination)
+			);
+		}
+		
+		/**
 		 * Create a thumbnail and writes it to a {@link OutputStream}.
 		 * <p>
 		 * To call this method, the thumbnail must have been created from a
@@ -1354,8 +1507,6 @@ watermark(Positions.CENTER, image, opacity);
 		 * 
 		 * @throws IOException		If a problem occurs while writing the
 		 * 							thumbnails. 
-		 * @throws IllegalStateException		If the original images are not
-		 * 										from files.
 		 * @throws IllegalArgumentException		If multiple original image files
 		 * 										are	specified.
 		 */
