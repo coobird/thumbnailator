@@ -1212,14 +1212,23 @@ watermark(Positions.CENTER, image, opacity);
 		 * Create the thumbnails and return as a {@link Iterable} of 
 		 * {@link BufferedImage}s.
 		 * <p>
+		 * For situations where multiple thumbnails are being generated, this
+		 * method is preferred over the {@link #asBufferedImages()} method,
+		 * as (1) the processing does not have to complete before the method
+		 * returns and (2) the thumbnails can be retrieved one at a time,
+		 * potentially reducing the number of thumbnails which need to be 
+		 * retained in the heap memory, potentially reducing the chance of 
+		 * {@link OutOfMemoryError}s from occurring.  
+		 * <p>
 		 * If an {@link IOException} occurs during the processing of the
 		 * thumbnail, the {@link Iterable} will return a {@code null} for that
 		 * element.
 		 * 
-		 * @return		A list of thumbnails.
-		 * @throws IOException 
+		 * @return		An {@link Iterable} which will provide an 
+		 * 				{@link Iterator} which returns thumbnails as
+		 * 				{@link BufferedImage}s.
 		 */
-		public Iterable<BufferedImage> iterableBufferedImages() throws IOException
+		public Iterable<BufferedImage> iterableBufferedImages()
 		{
 			checkReadiness();
 			/*
