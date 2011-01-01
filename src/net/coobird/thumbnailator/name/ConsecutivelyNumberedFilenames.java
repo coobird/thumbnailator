@@ -98,8 +98,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * {@link Formatter} class.
 	 * <p>
 	 * <h3>File name sequence</h3>
-	 * For a case where the parent directory is {@code /foo/bar/}, 
-	 * with format string {@code image-%d}: 
+	 * For a case where the format string is {@code image-%d}: 
 	 * <ol>
 	 * <li><code>image-0</code></li>
 	 * <li><code>image-1</code></li>
@@ -156,7 +155,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * <p>
 	 * <h3>File name sequence</h3>
 	 * For a case where the parent directory is {@code /foo/bar/}, 
-	 * with format string {@code image-%d}: 
+	 * with the format string {@code image-%d}: 
 	 * <ol>
 	 * <li><code>/foo/bar/image-0</code></li>
 	 * <li><code>/foo/bar/image-1</code></li>
@@ -189,7 +188,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * <p>
 	 * <h3>File name sequence</h3>
 	 * For a case where the parent directory is {@code /foo/bar/}, and the
-	 * specified value is {@code 5}, with format string {@code image-%d}: 
+	 * specified value is {@code 5}, with the format string {@code image-%d}: 
 	 * <ol>
 	 * <li><code>image-5</code></li>
 	 * <li><code>image-6</code></li>
