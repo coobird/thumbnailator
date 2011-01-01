@@ -1314,9 +1314,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * The file names for the thumbnails are obtained from the given
 		 * {@link Iterable}.
 		 * 
-		 * @param rename			The rename function which is used to
-		 * 							determine the filenames of the thumbnail
-		 * 							files to write.
+		 * @param iterable			An {@link Iterable} which returns an
+		 * 							{@link Iterator} which returns file names
+		 * 							which should be assigned to each thumbnail.
 		 * @return					A list of {@link File}s of the thumbnails
 		 * 							which were created.
 		 * @throws IOException		If a problem occurs while reading the
@@ -1485,7 +1485,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * To call this method, the thumbnail must have been created from a
 		 * single source.
 		 * 
-		 * @param outFile			The file to which the thumbnail is to be
+		 * @param outFilepath		The file to which the thumbnail is to be
 		 * 							written to.
 		 * @throws IOException		If a problem occurs while reading the
 		 * 							original images or writing the thumbnails 
