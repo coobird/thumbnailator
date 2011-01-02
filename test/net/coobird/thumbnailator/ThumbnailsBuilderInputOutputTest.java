@@ -1,12 +1,17 @@
 package net.coobird.thumbnailator;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -755,6 +760,69 @@ public class ThumbnailsBuilderInputOutputTest
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.of(File)</li>
+	 * <li>toOutputStream()</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Processing completes successfully.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void of_File_toOutputStream() throws IOException
+	{
+		// given
+		File f1 = new File("test-resources/Thumbnailator/grid.png");
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		
+		// when
+		Thumbnails.of(f1)
+			.size(50, 50)
+			.toOutputStream(os);
+			
+		// then
+		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.of(File)</li>
+	 * <li>iterableBufferedImages()</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Processing completes successfully.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void of_File_iterableBufferedImages() throws IOException
+	{
+		// given
+		File f1 = new File("test-resources/Thumbnailator/grid.png");
+		
+		// when
+		Iterable<BufferedImage> thumbnails = Thumbnails.of(f1)
+			.size(50, 50)
+			.iterableBufferedImages();
+		
+		// then
+		Iterator<BufferedImage> iter = thumbnails.iterator();
+		
+		BufferedImage thumbnail = iter.next();
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+		
+		assertFalse(iter.hasNext());
+	}
 
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
@@ -999,6 +1067,81 @@ public class ThumbnailsBuilderInputOutputTest
 		assertEquals(50, thumbnail2.getWidth());
 		assertEquals(50, thumbnail2.getHeight());
 	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.of(File, File)</li>
+	 * <li>toOutputStream()</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void of_Files_toOutputStream() throws IOException
+	{
+		// given
+		File f = new File("test-resources/Thumbnailator/grid.png");
+		OutputStream os = mock(OutputStream.class);
+		
+		try
+		{
+			// when
+			Thumbnails.of(f, f)
+				.size(50, 50)
+				.toOutputStream(os);
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertEquals("Cannot output multiple thumbnails to a single OutputStream.", e.getMessage());
+			verifyZeroInteractions(os);
+			throw e;
+		}
+	}
+	
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.of(File, File)</li>
+	 * <li>iterableBufferedImages()</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Two images are generated and an Iterable which can iterate over the
+	 * two BufferedImages is returned.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void of_Files_iterableBufferedImages() throws IOException
+	{
+		// given
+		File f1 = new File("test-resources/Thumbnailator/grid.png");
+		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
+		
+		// when
+		Iterable<BufferedImage> thumbnails = Thumbnails.of(f1, f2)
+			.size(50, 50)
+			.iterableBufferedImages();
+		
+		// then
+		Iterator<BufferedImage> iter = thumbnails.iterator();
+		
+		BufferedImage thumbnail1 = iter.next();
+		assertEquals(50, thumbnail1.getWidth());
+		assertEquals(50, thumbnail1.getHeight());
+		
+		BufferedImage thumbnail2 = iter.next();
+		assertEquals(50, thumbnail2.getWidth());
+		assertEquals(50, thumbnail2.getHeight());
+		
+		assertFalse(iter.hasNext());
+	}	
 
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
