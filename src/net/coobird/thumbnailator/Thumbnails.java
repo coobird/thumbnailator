@@ -1532,7 +1532,7 @@ watermark(Positions.CENTER, image, opacity);
 			
 			if (sources.size() > 1)
 			{
-				throw new IllegalArgumentException("Cannot output multiple thumbnails to one stream.");
+				throw new IllegalArgumentException("Cannot output multiple thumbnails to a single OutputStream.");
 			}
 			
 			ImageSource<T> source = sources.get(0);
