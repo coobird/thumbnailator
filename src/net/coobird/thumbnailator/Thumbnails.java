@@ -1323,26 +1323,28 @@ watermark(Positions.CENTER, image, opacity);
 		 * 							original images or writing the thumbnails 
 		 * 							to files. 
 		 */
-		public List<File> asFiles(Iterable<File> files) throws IOException
+		public List<File> asFiles(Iterable<File> iterable) throws IOException
 		{
 			checkReadiness();
 			
-			if (files == null)
+			if (iterable == null)
 			{
-				throw new NullPointerException("Rename is null.");
+				throw new NullPointerException("File name iterable is null.");
 			}
 			
 			List<File> destinationFiles = new ArrayList<File>();
 			
 			ThumbnailParameter param = makeParam();
 			
-			Iterator<File> filenameIter = files.iterator();
+			Iterator<File> filenameIter = iterable.iterator();
 			
 			for (ImageSource<T> source : sources)
 			{
 				if (!filenameIter.hasNext())
 				{
-					throw new IndexOutOfBoundsException("Not enough file names provided by iterator.");
+					throw new IndexOutOfBoundsException(
+							"Not enough file names provided by iterator."
+					);
 				}
 				
 				// Determine the destination file name, include it in the resulting list.
@@ -1350,7 +1352,9 @@ watermark(Positions.CENTER, image, opacity);
 				destinationFiles.add(destinationFile);
 				FileImageSink destination = new FileImageSink(destinationFile);
 				
-				Thumbnailator.createThumbnail(new SourceSinkThumbnailTask<T, File>(param, source, destination));
+				Thumbnailator.createThumbnail(
+						new SourceSinkThumbnailTask<T, File>(param, source, destination)
+				);
 			}
 			
 			return destinationFiles;
