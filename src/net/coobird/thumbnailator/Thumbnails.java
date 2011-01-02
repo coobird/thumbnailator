@@ -1347,14 +1347,13 @@ watermark(Positions.CENTER, image, opacity);
 					);
 				}
 				
-				// Determine the destination file name, include it in the resulting list.
-				File destinationFile = filenameIter.next();
-				destinationFiles.add(destinationFile);
-				FileImageSink destination = new FileImageSink(destinationFile);
+				FileImageSink destination = new FileImageSink(filenameIter.next());
 				
 				Thumbnailator.createThumbnail(
 						new SourceSinkThumbnailTask<T, File>(param, source, destination)
 				);
+				
+				destinationFiles.add(destination.getSink());
 			}
 			
 			return destinationFiles;
