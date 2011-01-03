@@ -436,10 +436,10 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_BufferedImage_toFiles_Iterable_NoOutputFormatSpecified() throws IOException
 	{
 		// given
-		BufferedImage img1 = new BufferedImageBuilder(200, 200).build();
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		Thumbnails.of(img1)
+		Thumbnails.of(img)
 			.size(50, 50)
 			.toFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
 		
@@ -471,10 +471,10 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_BufferedImage_asFiles_Iterable_NoOutputFormatSpecified() throws IOException
 	{
 		// given
-		BufferedImage img1 = new BufferedImageBuilder(200, 200).build();
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		List<File> thumbnails = Thumbnails.of(img1)
+		List<File> thumbnails = Thumbnails.of(img)
 			.size(50, 50)
 			.asFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
 		
@@ -485,6 +485,9 @@ public class ThumbnailsBuilderInputOutputTest
 		assertEquals("png", getFormatName(new FileInputStream(thumbnails.get(0))));
 		assertEquals(50, fromFileImage1.getWidth());
 		assertEquals(50, fromFileImage1.getHeight());
+		
+		// clean up
+		thumbnails.get(0).deleteOnExit();
 	}
 	
 	/**
@@ -537,9 +540,10 @@ public class ThumbnailsBuilderInputOutputTest
 			.asBufferedImages();
 		
 		// then
+		assertEquals(1, thumbnails.size());
+		
 		assertEquals(100, thumbnails.get(0).getWidth());
 		assertEquals(100, thumbnails.get(0).getHeight());
-		assertEquals(1, thumbnails.size());
 	}
 	
 	/**
@@ -576,7 +580,6 @@ public class ThumbnailsBuilderInputOutputTest
 			assertEquals("Output format not specified.", e.getMessage());
 			throw e;
 		}
-
 	}
 	
 	/**
@@ -613,7 +616,6 @@ public class ThumbnailsBuilderInputOutputTest
 			assertEquals("Output format not specified.", e.getMessage());
 			throw e;
 		}
-		
 	}
 	
 	/**
@@ -1084,8 +1086,11 @@ public class ThumbnailsBuilderInputOutputTest
 		assertEquals("png", getFormatName(new FileInputStream(thumbnails.get(1))));
 		assertEquals(50, fromFileImage2.getWidth());
 		assertEquals(50, fromFileImage2.getHeight());
+		
+		// clean up
+		thumbnails.get(0).deleteOnExit();
+		thumbnails.get(1).deleteOnExit();
 	}
-	
 
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
@@ -1133,17 +1138,21 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void of_BufferedImages_asBufferedImages_NoOutputFormatSpecified() throws IOException
 	{
+		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
+		// when
 		List<BufferedImage> thumbnails = Thumbnails.of(img, img)
 			.size(100, 100)
 			.asBufferedImages();
+		
+		// then
+		assertEquals(2, thumbnails.size());
 		
 		assertEquals(100, thumbnails.get(0).getWidth());
 		assertEquals(100, thumbnails.get(0).getHeight());
 		assertEquals(100, thumbnails.get(1).getWidth());
 		assertEquals(100, thumbnails.get(1).getHeight());
-		assertEquals(2, thumbnails.size());
 	}
 	
 	/**
@@ -1216,7 +1225,6 @@ public class ThumbnailsBuilderInputOutputTest
 			assertEquals("Output format not specified.", e.getMessage());
 			throw e;
 		}
-		
 	}
 	
 	/**
@@ -1324,6 +1332,11 @@ public class ThumbnailsBuilderInputOutputTest
 			assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
 			throw e;
 		}
+		finally
+		{
+			// clean up
+			new File(destFilePath).deleteOnExit();
+		}
 	}
 
 	/**
@@ -1406,6 +1419,10 @@ public class ThumbnailsBuilderInputOutputTest
 		BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
 		assertEquals(50, fromFileImage2.getWidth());
 		assertEquals(50, fromFileImage2.getHeight());
+		
+		// clean up
+		thumbnails.get(0).deleteOnExit();
+		thumbnails.get(1).deleteOnExit();
 	}
 
 	/**
@@ -1604,12 +1621,15 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void fromImages_Single_asBufferedImage() throws IOException
 	{
+		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
+		// when
 		BufferedImage thumbnail = Thumbnails.fromImages(Arrays.asList(img))
 			.size(100, 100)
 			.asBufferedImage();
 		
+		// then
 		assertEquals(100, thumbnail.getWidth());
 		assertEquals(100, thumbnail.getHeight());
 	}
@@ -1628,11 +1648,22 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test(expected=IllegalArgumentException.class)
 	public void fromImages_Multiple_asBufferedImage() throws IOException
 	{
+		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		Thumbnails.fromImages(Arrays.asList(img, img))
-			.size(100, 100)
-			.asBufferedImage();
+		try
+		{
+			// when
+			Thumbnails.fromImages(Arrays.asList(img, img))
+				.size(100, 100)
+				.asBufferedImage();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertEquals("Cannot create one thumbnail from multiple original images.", e.getMessage());
+			throw e;
+		}
 	}
 
 	/**
@@ -1649,15 +1680,19 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void fromImages_Single_asBufferedImages() throws IOException
 	{
+		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
+		// when
 		List<BufferedImage> thumbnails = Thumbnails.fromImages(Arrays.asList(img))
 			.size(100, 100)
 			.asBufferedImages();
 		
+		// then
+		assertEquals(1, thumbnails.size());
+		
 		assertEquals(100, thumbnails.get(0).getWidth());
 		assertEquals(100, thumbnails.get(0).getHeight());
-		assertEquals(1, thumbnails.size());
 	}
 
 	/**
@@ -1674,17 +1709,21 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void fromImages_Multiple_asBufferedImages() throws IOException
 	{
+		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
+		// when
 		List<BufferedImage> thumbnails = Thumbnails.fromImages(Arrays.asList(img, img))
 			.size(100, 100)
 			.asBufferedImages();
+		
+		// then
+		assertEquals(2, thumbnails.size());
 		
 		assertEquals(100, thumbnails.get(0).getWidth());
 		assertEquals(100, thumbnails.get(0).getHeight());
 		assertEquals(100, thumbnails.get(1).getWidth());
 		assertEquals(100, thumbnails.get(1).getHeight());
-		assertEquals(2, thumbnails.size());
 	}
 
 	/**
@@ -1702,16 +1741,18 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void of_File_toFile() throws IOException
 	{
+		// given
 		File f = new File("test-resources/Thumbnailator/grid.png");
 		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
+		// when
 		Thumbnails.of(f)
 			.size(50, 50)
 			.toFile(outFile);
-		
+
+		// then
 		BufferedImage fromFileImage = ImageIO.read(outFile);
-		
 		assertEquals(50, fromFileImage.getWidth());
 		assertEquals(50, fromFileImage.getHeight());
 	}
@@ -1732,16 +1773,18 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void of_File_toFiles_Rename() throws IOException
 	{
+		// given
 		File f1 = new File("test-resources/Thumbnailator/grid.png");
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
+		// when
 		Thumbnails.of(f1)
 			.size(50, 50)
 			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
+		// then
 		BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-		
 		assertEquals(50, fromFileImage1.getWidth());
 		assertEquals(50, fromFileImage1.getHeight());
 	}
@@ -1762,18 +1805,20 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void of_File_asFiles_Rename() throws IOException
 	{
+		// given
 		File f1 = new File("test-resources/Thumbnailator/grid.png");
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
+		// when
 		List<File> thumbnails = Thumbnails.of(f1)
 			.size(50, 50)
 			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
+		// then
 		assertEquals(1, thumbnails.size());
 		
 		BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-		
 		assertEquals(50, fromFileImage1.getWidth());
 		assertEquals(50, fromFileImage1.getHeight());
 	}
@@ -2015,13 +2060,24 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test(expected=IllegalArgumentException.class)
 	public void of_Files_toFile() throws IOException
 	{
+		// given
 		File f = new File("test-resources/Thumbnailator/grid.png");
 		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
-		Thumbnails.of(f, f)
-			.size(50, 50)
-			.toFile(outFile);
+		try
+		{
+			// when
+			Thumbnails.of(f, f)
+				.size(50, 50)
+				.toFile(outFile);
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
+			throw e;
+		}
 	}
 
 	/**
@@ -2040,22 +2096,26 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void of_Files_toFiles_Rename() throws IOException
 	{
+		// given
 		File f1 = new File("test-resources/Thumbnailator/grid.png");
 		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
+		
+		// when
+		Thumbnails.of(f1, f2)
+			.size(50, 50)
+			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+		
+		// then
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
 		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
-		Thumbnails.of(f1, f2)
-			.size(50, 50)
-			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-		
 		BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-		BufferedImage fromFileImage2 = ImageIO.read(outFile2);
-		
 		assertEquals(50, fromFileImage1.getWidth());
 		assertEquals(50, fromFileImage1.getHeight());
+		
+		BufferedImage fromFileImage2 = ImageIO.read(outFile2);
 		assertEquals(50, fromFileImage2.getWidth());
 		assertEquals(50, fromFileImage2.getHeight());
 	}
@@ -2076,24 +2136,28 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void of_Files_asFiles_Rename() throws IOException
 	{
+		// given
 		File f1 = new File("test-resources/Thumbnailator/grid.png");
 		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
+		
+		// when
+		List<File> thumbnails = Thumbnails.of(f1, f2)
+			.size(50, 50)
+			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+		
+		// then
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
 		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
-		List<File> thumbnails = Thumbnails.of(f1, f2)
-			.size(50, 50)
-			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-		
 		assertEquals(2, thumbnails.size());
 		
 		BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-		BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
-		
 		assertEquals(50, fromFileImage1.getWidth());
 		assertEquals(50, fromFileImage1.getHeight());
+		
+		BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
 		assertEquals(50, fromFileImage2.getWidth());
 		assertEquals(50, fromFileImage2.getHeight());
 	}
@@ -2173,6 +2237,10 @@ public class ThumbnailsBuilderInputOutputTest
 		BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
 		assertEquals(50, fromFileImage2.getWidth());
 		assertEquals(50, fromFileImage2.getHeight());
+		
+		// clean up
+		thumbnails.get(0).deleteOnExit();
+		thumbnails.get(1).deleteOnExit();
 	}
 
 	/**
@@ -2313,7 +2381,7 @@ public class ThumbnailsBuilderInputOutputTest
 		thumbnail = ImageIO.read(new ByteArrayInputStream(os2.toByteArray()));
 		assertEquals("png", getFormatName(new ByteArrayInputStream(os2.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
-		assertEquals(50, thumbnail.getHeight());		
+		assertEquals(50, thumbnail.getHeight());
 	}
 
 	/**
@@ -2370,14 +2438,17 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void fromFiles_Single_toFile() throws IOException
 	{
+		// given
 		File f = new File("test-resources/Thumbnailator/grid.png");
 		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
+		// when
 		Thumbnails.fromFiles(Arrays.asList(f))
 			.size(50, 50)
 			.toFile(outFile);
 		
+		// then
 		BufferedImage fromFileImage = ImageIO.read(outFile);
 		
 		assertEquals(50, fromFileImage.getWidth());
@@ -2399,10 +2470,12 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test(expected=IllegalArgumentException.class)
 	public void fromFiles_Multiple_toFile() throws IOException
 	{
+		// given
 		File f = new File("test-resources/Thumbnailator/grid.png");
 		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
+		// when
 		Thumbnails.fromFiles(Arrays.asList(f, f))
 			.size(50, 50)
 			.toFile(outFile);
@@ -2424,14 +2497,17 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void fromFiles_Single_toFiles() throws IOException
 	{
+		// given
 		File f1 = new File("test-resources/Thumbnailator/grid.png");
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
+		// when
 		Thumbnails.fromFiles(Arrays.asList(f1))
 			.size(50, 50)
 			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
+		// then
 		BufferedImage fromFileImage1 = ImageIO.read(outFile1);
 		
 		assertEquals(50, fromFileImage1.getWidth());
@@ -2454,16 +2530,20 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void fromFiles_Multiple_toFiles() throws IOException
 	{
+		// given
 		File f1 = new File("test-resources/Thumbnailator/grid.png");
 		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
+		
+		// when
+		Thumbnails.fromFiles(Arrays.asList(f1, f2))
+			.size(50, 50)
+			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+		
+		// then
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
 		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
-		
-		Thumbnails.fromFiles(Arrays.asList(f1, f2))
-			.size(50, 50)
-			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		BufferedImage fromFileImage1 = ImageIO.read(outFile1);
 		BufferedImage fromFileImage2 = ImageIO.read(outFile2);
@@ -2490,14 +2570,17 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void fromFiles_Single_asFiles() throws IOException
 	{
+		// given
 		File f1 = new File("test-resources/Thumbnailator/grid.png");
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
+		// when
 		List<File> thumbnails = Thumbnails.fromFiles(Arrays.asList(f1))
 			.size(50, 50)
 			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
+		// then
 		assertEquals(1, thumbnails.size());
 		
 		BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
@@ -2522,21 +2605,25 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void fromFiles_Multiple_asFiles() throws IOException
 	{
+		// given
 		File f1 = new File("test-resources/Thumbnailator/grid.png");
 		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
+		
+		// when
+		List<File> thumbnails = Thumbnails.fromFiles(Arrays.asList(f1, f2))
+			.size(50, 50)
+			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+		
+		// then
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
 		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
-		List<File> thumbnails = Thumbnails.fromFiles(Arrays.asList(f1, f2))
-			.size(50, 50)
-			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-		
 		assertEquals(2, thumbnails.size());
 		
 		BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-		BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(0));
+		BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
 		
 		assertEquals(50, fromFileImage1.getWidth());
 		assertEquals(50, fromFileImage1.getHeight());
@@ -2559,14 +2646,17 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void of_String_toFile() throws IOException
 	{
+		// given
 		String f = "test-resources/Thumbnailator/grid.png";
 		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
+		// when
 		Thumbnails.of(f)
 			.size(50, 50)
 			.toFile(outFile);
 		
+		// then
 		BufferedImage fromFileImage = ImageIO.read(outFile);
 		
 		assertEquals(50, fromFileImage.getWidth());
@@ -2588,10 +2678,12 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test(expected=IllegalArgumentException.class)
 	public void of_Strings_toFile() throws IOException
 	{
+		// given
 		String f = "test-resources/Thumbnailator/grid.png";
 		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
+		// when
 		Thumbnails.of(f, f)
 			.size(50, 50)
 			.toFile(outFile);
@@ -2613,14 +2705,17 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void of_String_toFiles() throws IOException
 	{
+		// given
 		String f1 = "test-resources/Thumbnailator/grid.png";
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
+		// when
 		Thumbnails.of(f1)
 			.size(50, 50)
 			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
+		// then
 		BufferedImage fromFileImage1 = ImageIO.read(outFile1);
 		
 		assertEquals(50, fromFileImage1.getWidth());
@@ -2643,16 +2738,20 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void of_Strings_toFiles() throws IOException
 	{
+		// given
 		String f1 = "test-resources/Thumbnailator/grid.png";
 		String f2 = "test-resources/Thumbnailator/grid.jpg";
+		
+		// when
+		Thumbnails.of(f1, f2)
+			.size(50, 50)
+			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+		
+		// then
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
 		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
-		
-		Thumbnails.of(f1, f2)
-			.size(50, 50)
-			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		BufferedImage fromFileImage1 = ImageIO.read(outFile1);
 		BufferedImage fromFileImage2 = ImageIO.read(outFile2);
@@ -2679,14 +2778,17 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void of_String_asFiles() throws IOException
 	{
+		// given
 		String f1 = "test-resources/Thumbnailator/grid.png";
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
+		// when
 		List<File> thumbnails = Thumbnails.of(f1)
 			.size(50, 50)
 			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
+		// then
 		assertEquals(1, thumbnails.size());
 		
 		BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
@@ -2711,16 +2813,20 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void of_Strings_asFiles() throws IOException
 	{
+		// given
 		String f1 = "test-resources/Thumbnailator/grid.png";
 		String f2 = "test-resources/Thumbnailator/grid.jpg";
+		
+		// when
+		List<File> thumbnails = Thumbnails.of(f1, f2)
+			.size(50, 50)
+			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+		
+		// then
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
 		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
-		
-		List<File> thumbnails = Thumbnails.of(f1, f2)
-			.size(50, 50)
-			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		assertEquals(2, thumbnails.size());
 		
@@ -2748,14 +2854,17 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void fromFilenames_Single_toFile() throws IOException
 	{
+		// given
 		String f = "test-resources/Thumbnailator/grid.png";
 		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
+		// when
 		Thumbnails.fromFilenames(Arrays.asList(f))
 			.size(50, 50)
 			.toFile(outFile);
 		
+		// then
 		BufferedImage fromFileImage = ImageIO.read(outFile);
 		
 		assertEquals(50, fromFileImage.getWidth());
@@ -2777,10 +2886,12 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test(expected=IllegalArgumentException.class)
 	public void fromFilenames_Multiple_toFile() throws IOException
 	{
+		// given
 		String f = "test-resources/Thumbnailator/grid.png";
 		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
+		// when
 		Thumbnails.fromFilenames(Arrays.asList(f, f))
 			.size(50, 50)
 			.toFile(outFile);
@@ -2802,14 +2913,17 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void fromFilenames_Single_toFiles() throws IOException
 	{
+		// given
 		String f1 = "test-resources/Thumbnailator/grid.png";
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
+		// when
 		Thumbnails.fromFilenames(Arrays.asList(f1))
 			.size(50, 50)
 			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
+		// then
 		BufferedImage fromFileImage1 = ImageIO.read(outFile1);
 		
 		assertEquals(50, fromFileImage1.getWidth());
@@ -2832,16 +2946,20 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void fromFilenames_Multiple_toFiles() throws IOException
 	{
+		// given
 		String f1 = "test-resources/Thumbnailator/grid.png";
 		String f2 = "test-resources/Thumbnailator/grid.jpg";
+		
+		// when
+		Thumbnails.fromFilenames(Arrays.asList(f1, f2))
+			.size(50, 50)
+			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+		
+		// then
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
 		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
-		
-		Thumbnails.fromFilenames(Arrays.asList(f1, f2))
-			.size(50, 50)
-			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		BufferedImage fromFileImage1 = ImageIO.read(outFile1);
 		BufferedImage fromFileImage2 = ImageIO.read(outFile2);
@@ -2868,14 +2986,17 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void fromFilenames_Single_asFiles() throws IOException
 	{
+		// given
 		String f1 = "test-resources/Thumbnailator/grid.png";
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
+		// when
 		List<File> thumbnails = Thumbnails.fromFilenames(Arrays.asList(f1))
 			.size(50, 50)
 			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
+		// then
 		assertEquals(1, thumbnails.size());
 		
 		BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
@@ -2900,16 +3021,20 @@ public class ThumbnailsBuilderInputOutputTest
 	@Test
 	public void fromFilenames_Multiple_asFiles() throws IOException
 	{
+		// given
 		String f1 = "test-resources/Thumbnailator/grid.png";
 		String f2 = "test-resources/Thumbnailator/grid.jpg";
+		
+		// when
+		List<File> thumbnails = Thumbnails.fromFilenames(Arrays.asList(f1, f2))
+			.size(50, 50)
+			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+		
+		// then
 		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
 		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
-		
-		List<File> thumbnails = Thumbnails.fromFilenames(Arrays.asList(f1, f2))
-			.size(50, 50)
-			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		assertEquals(2, thumbnails.size());
 		
