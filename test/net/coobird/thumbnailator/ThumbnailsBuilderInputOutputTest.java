@@ -479,9 +479,6 @@ public class ThumbnailsBuilderInputOutputTest
 			.asFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
-		File outFile = new File("test-resources/Thumbnailator/temp-0.png");
-		outFile.deleteOnExit();
-		
 		assertEquals(1, thumbnails.size());
 		
 		BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
