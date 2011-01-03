@@ -21,6 +21,13 @@ public abstract class AbstractImageSource<T> implements ImageSource<T>
 	/**
 	 * Indicates that the {@link ImageSource} has completed reading the input
 	 * file, and returns the value given in the argument. 
+	 * <p>
+	 * This method should be used by implementation classes when returning
+	 * the result of the {@link #read()} method, as shown in the following
+	 * example code:
+<pre>
+return finishedReading(sourceImage);
+</pre>
 	 * 
 	 * @param <V>			The return value type.
 	 * @param returnValue	The return value of the {@link #read()} method.
