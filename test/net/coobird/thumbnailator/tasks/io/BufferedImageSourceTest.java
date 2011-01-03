@@ -43,6 +43,6 @@ public class BufferedImageSourceTest
 		assertSame(sourceImage, img);
 		assertEquals(100, img.getWidth());
 		assertEquals(100, img.getHeight());
-		assertEquals(BufferedImageSource.INPUT_FORMAT_NAME, source.getInputFormatName());
+		assertEquals(null, source.getInputFormatName());
 	}
 }
