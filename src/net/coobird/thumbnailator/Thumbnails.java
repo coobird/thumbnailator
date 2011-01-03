@@ -1525,6 +1525,10 @@ watermark(Positions.CENTER, image, opacity);
 		 * 							original images or writing the thumbnails. 
 		 * @throws IllegalArgumentException		If multiple original image files
 		 * 										are	specified.
+		 * @throws IllegalStateException		If the output format has not
+		 * 										been specified through the
+		 * 										{@link #outputFormat(String)}
+		 * 										method.
 		 */
 		public void toOutputStream(OutputStream os) throws IOException
 		{
@@ -1536,6 +1540,21 @@ watermark(Positions.CENTER, image, opacity);
 			}
 			
 			ImageSource<T> source = sources.get(0);
+			/*
+			 * if the image is from a BufferedImage, then we require that the
+			 * output format be set. (or else, we can't tell what format to
+			 * output as!) 
+			 */
+			if (source instanceof BufferedImageSource)
+			{
+				if (outputFormat == ThumbnailParameter.ORIGINAL_FORMAT)
+				{
+					throw new IllegalStateException(
+							"Output format not specified."
+					);
+				}
+			}
+			
 			OutputStreamImageSink destination = new OutputStreamImageSink(os);
 			
 			Thumbnailator.createThumbnail(
