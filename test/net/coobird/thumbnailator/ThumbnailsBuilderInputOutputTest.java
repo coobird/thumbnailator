@@ -1931,6 +1931,38 @@ public class ThumbnailsBuilderInputOutputTest
 			
 		// then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
+		assertEquals("png", getFormatName(new ByteArrayInputStream(os.toByteArray())));
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.of(File)</li>
+	 * <li>toOutputStreams()</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Processing completes successfully.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void of_File_toOutputStreams() throws IOException
+	{
+		// given
+		File f1 = new File("test-resources/Thumbnailator/grid.png");
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		
+		// when
+		Thumbnails.of(f1)
+			.size(50, 50)
+			.toOutputStreams(Arrays.asList(os));
+		
+		// then
+		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
+		assertEquals("png", getFormatName(new ByteArrayInputStream(os.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -2247,6 +2279,42 @@ public class ThumbnailsBuilderInputOutputTest
 		}
 	}
 	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.of(File, File)</li>
+	 * <li>toOutputStreams()</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Processing will be successful.</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void of_Files_toOutputStreams() throws IOException
+	{
+		// given
+		File f = new File("test-resources/Thumbnailator/grid.png");
+		ByteArrayOutputStream os1 = new ByteArrayOutputStream();
+		ByteArrayOutputStream os2 = new ByteArrayOutputStream();
+		
+		// when
+		Thumbnails.of(f, f)
+			.size(50, 50)
+			.toOutputStreams(Arrays.asList(os1, os2));
+		
+		//then
+		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os1.toByteArray()));
+		assertEquals("png", getFormatName(new ByteArrayInputStream(os1.toByteArray())));
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+		
+		thumbnail = ImageIO.read(new ByteArrayInputStream(os2.toByteArray()));
+		assertEquals("png", getFormatName(new ByteArrayInputStream(os2.toByteArray())));
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());		
+	}
 
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
