@@ -151,7 +151,7 @@ public class URLImageSource extends AbstractImageSource<URL>
 		
 		this.inputFormatName = source.getInputFormatName();
 		
-		return img;
+		return finishedReading(img);
 	}
 
 	/**

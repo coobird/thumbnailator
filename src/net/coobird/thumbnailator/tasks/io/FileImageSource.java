@@ -107,7 +107,7 @@ public class FileImageSource extends AbstractImageSource<File>
 		
 		iis.close();
 		
-		return img;
+		return finishedReading(img);
 	}
 
 	/**
