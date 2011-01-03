@@ -77,7 +77,7 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream>
 		
 		iis.close();
 		
-		return img;
+		return finishedReading(img);
 	}
 
 	public InputStream getSource()

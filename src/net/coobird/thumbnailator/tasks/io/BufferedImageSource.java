@@ -13,11 +13,6 @@ import java.io.IOException;
 public class BufferedImageSource extends AbstractImageSource<BufferedImage>
 {
 	/**
-	 * The identifier to use for the input format name.
-	 */
-	public static final String INPUT_FORMAT_NAME = "BufferedImage";
-	
-	/**
 	 * The image that should be used as the source for making a thumbnail. 
 	 */
 	private final BufferedImage img;
@@ -44,8 +39,8 @@ public class BufferedImageSource extends AbstractImageSource<BufferedImage>
 
 	public BufferedImage read() throws IOException
 	{
-		inputFormatName = INPUT_FORMAT_NAME;
-		return img;
+		inputFormatName = null;
+		return finishedReading(img);
 	}
 
 	public BufferedImage getSource()

@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
@@ -162,9 +163,23 @@ public class FileImageSink extends AbstractImageSink<File>
 		String fileExtension = getExtension(destinationFile); 
 		
 		String formatName = outputFormat;
-		if (fileExtension == null || !isMatchingFormat(formatName, fileExtension)) 
+		if (formatName != null && (fileExtension == null || !isMatchingFormat(formatName, fileExtension))) 
 		{
 			destinationFile = new File(destinationFile.getAbsolutePath() + "." + formatName);
+		}
+		
+		/*
+		 * If a formatName is not specified, then attempt to determine it from
+		 * the file extension.
+		 */
+		if (formatName == null && fileExtension != null)
+		{
+			Iterator<ImageReader> rIter = ImageIO.getImageReadersBySuffix(fileExtension);
+			
+			if (rIter.hasNext())
+			{
+				formatName = rIter.next().getFormatName();
+			}
 		}
 		
 		// Checks for available writers for the format.
