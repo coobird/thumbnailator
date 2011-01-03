@@ -1561,5 +1561,65 @@ watermark(Positions.CENTER, image, opacity);
 					new SourceSinkThumbnailTask<T, OutputStream>(makeParam(), source, destination)
 			);
 		}
+		
+		/**
+		 * Creates the thumbnails and writes them to {@link OutputStream}s
+		 * provided by the {@link Iterable}. 
+		 * 
+		 * @param iterable			An {@link Iterable} which returns an
+		 * 							{@link Iterator} which returns the
+		 * 							output stream which should be assigned to
+		 * 							each thumbnail.
+		 * @throws IOException		If a problem occurs while reading the
+		 * 							original images or writing the thumbnails. 
+		 * @throws IllegalStateException		If the output format has not
+		 * 										been specified through the
+		 * 										{@link #outputFormat(String)}
+		 * 										method.
+		 */
+		public void toOutputStreams(Iterable<OutputStream> iterable) throws IOException
+		{
+			checkReadiness();
+			
+			/*
+			 * if the image is from a BufferedImage, then we require that the
+			 * output format be set. (or else, we can't tell what format to
+			 * output as!) 
+			 */
+			if (sources.get(0) instanceof BufferedImageSource)
+			{
+				if (outputFormat == ThumbnailParameter.ORIGINAL_FORMAT)
+				{
+					throw new IllegalStateException(
+							"Output format not specified."
+					);
+				}
+			}
+			
+			if (iterable == null)
+			{
+				throw new NullPointerException("OutputStream iterable is null.");
+			}
+			
+			ThumbnailParameter param = makeParam();
+			
+			Iterator<OutputStream> osIter = iterable.iterator();
+			
+			for (ImageSource<T> source : sources)
+			{
+				if (!osIter.hasNext())
+				{
+					throw new IndexOutOfBoundsException(
+							"Not enough file names provided by iterator."
+					);
+				}
+				
+				OutputStreamImageSink destination = new OutputStreamImageSink(osIter.next());
+				
+				Thumbnailator.createThumbnail(
+						new SourceSinkThumbnailTask<T, OutputStream>(param, source, destination)
+				);
+			}
+		}
 	}
 }
