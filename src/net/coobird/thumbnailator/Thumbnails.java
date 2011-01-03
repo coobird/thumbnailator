@@ -1577,7 +1577,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * 										{@link #outputFormat(String)}
 		 * 										method.
 		 */
-		public void toOutputStreams(Iterable<OutputStream> iterable) throws IOException
+		public void toOutputStreams(Iterable<? extends OutputStream> iterable) throws IOException
 		{
 			checkReadiness();
 			
@@ -1603,7 +1603,7 @@ watermark(Positions.CENTER, image, opacity);
 			
 			ThumbnailParameter param = makeParam();
 			
-			Iterator<OutputStream> osIter = iterable.iterator();
+			Iterator<? extends OutputStream> osIter = iterable.iterator();
 			
 			for (ImageSource<T> source : sources)
 			{
