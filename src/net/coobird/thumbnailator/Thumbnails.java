@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -1474,12 +1475,7 @@ watermark(Positions.CENTER, image, opacity);
 				throw new IllegalArgumentException("Cannot output multiple thumbnails to one file.");
 			}
 			
-			ImageSource<T> source = sources.get(0);
-			FileImageSink destination = new FileImageSink(outFile);
-			
-			Thumbnailator.createThumbnail(
-					new SourceSinkThumbnailTask<T, File>(makeParam(), source, destination)
-			);
+			toFiles(Arrays.asList(outFile));
 		}
 		
 		/**
@@ -1539,27 +1535,7 @@ watermark(Positions.CENTER, image, opacity);
 				throw new IllegalArgumentException("Cannot output multiple thumbnails to a single OutputStream.");
 			}
 			
-			ImageSource<T> source = sources.get(0);
-			/*
-			 * if the image is from a BufferedImage, then we require that the
-			 * output format be set. (or else, we can't tell what format to
-			 * output as!) 
-			 */
-			if (source instanceof BufferedImageSource)
-			{
-				if (outputFormat == ThumbnailParameter.ORIGINAL_FORMAT)
-				{
-					throw new IllegalStateException(
-							"Output format not specified."
-					);
-				}
-			}
-			
-			OutputStreamImageSink destination = new OutputStreamImageSink(os);
-			
-			Thumbnailator.createThumbnail(
-					new SourceSinkThumbnailTask<T, OutputStream>(makeParam(), source, destination)
-			);
+			toOutputStreams(Arrays.asList(os));
 		}
 		
 		/**
