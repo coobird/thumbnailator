@@ -100,6 +100,31 @@ public class OutputStreamImageSinkTest
 		}
 	}
 	
+	@Test(expected=IllegalStateException.class)
+	public void write_ValidImage_SetOutputFormat_OriginalFormat() throws IOException
+	{
+		// given
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		
+		BufferedImage imgToWrite = 
+			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+		
+		OutputStreamImageSink sink = new OutputStreamImageSink(os);
+		sink.setOutputFormatName(ThumbnailParameter.ORIGINAL_FORMAT);
+		
+		try
+		{
+			// when
+			sink.write(imgToWrite);
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+			assertEquals("Output format has not been set.", e.getMessage());
+			throw e;
+		}
+	}
+	
 	@Test
 	public void write_ValidImage_SetOutputFormat() throws IOException
 	{
