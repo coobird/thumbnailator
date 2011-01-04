@@ -18,7 +18,7 @@ import org.junit.Test;
 public class ThumbnailsBuilderNullEmptyOutputTest
 {
 	@Test(expected=NullPointerException.class)
-	public void of_Files_asFiles_Iterable_Null() throws IOException
+	public void asFiles_Iterable_Null() throws IOException
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
@@ -39,7 +39,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	}
 	
 	@Test(expected=IndexOutOfBoundsException.class)
-	public void of_Files_asFiles_Iterable_Empty() throws IOException
+	public void asFiles_Iterable_Empty() throws IOException
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
@@ -60,7 +60,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	}
 	
 	@Test(expected=IndexOutOfBoundsException.class)
-	public void of_Files_asFiles_Iterable_NotEnough() throws IOException
+	public void asFiles_Iterable_NotEnough() throws IOException
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
@@ -83,7 +83,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void of_Files_toFiles_Iterable_Null() throws IOException
+	public void toFiles_Iterable_Null() throws IOException
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
@@ -104,7 +104,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	}
 	
 	@Test(expected=IndexOutOfBoundsException.class)
-	public void of_Files_toFiles_Iterable_Empty() throws IOException
+	public void toFiles_Iterable_Empty() throws IOException
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
@@ -125,7 +125,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	}
 	
 	@Test(expected=IndexOutOfBoundsException.class)
-	public void of_Files_toFiles_Iterable_NotEnough() throws IOException
+	public void toFiles_Iterable_NotEnough() throws IOException
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
@@ -148,7 +148,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	}
 
 	@Test(expected=NullPointerException.class)
-	public void of_Files_asFiles_Rename_Null() throws IOException
+	public void asFiles_Rename_Null() throws IOException
 	{
 		// given
 		File f = new File("test-resources/Thumbnailator/grid.png");
@@ -169,7 +169,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	}
 
 	@Test(expected=NullPointerException.class)
-	public void of_Files_toFiles_Rename_Null() throws IOException
+	public void toFiles_Rename_Null() throws IOException
 	{
 		// given
 		File f = new File("test-resources/Thumbnailator/grid.png");
@@ -190,7 +190,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void of_Files_toFile_File_Null() throws IOException
+	public void toFile_File_Null() throws IOException
 	{
 		// given
 		File f = new File("test-resources/Thumbnailator/grid.png");
@@ -211,7 +211,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void of_Files_toFile_String_Null() throws IOException
+	public void toFile_String_Null() throws IOException
 	{
 		// given
 		File f = new File("test-resources/Thumbnailator/grid.png");
@@ -232,7 +232,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void of_Files_toOutputStream() throws IOException
+	public void toOutputStream() throws IOException
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
@@ -254,7 +254,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void of_Files_toOutputStreams_Iterable_Null() throws IOException
+	public void toOutputStreams_Iterable_Null() throws IOException
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
@@ -276,7 +276,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	}
 	
 	@Test(expected=IndexOutOfBoundsException.class)
-	public void of_Files_toOutputStreams_Iterable_Empty() throws IOException
+	public void toOutputStreams_Iterable_Empty() throws IOException
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
@@ -298,7 +298,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	}
 	
 	@Test(expected=IndexOutOfBoundsException.class)
-	public void of_Files_toOutputStreams_Iterable_NotEnough() throws IOException
+	public void toOutputStreams_Iterable_NotEnough() throws IOException
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
