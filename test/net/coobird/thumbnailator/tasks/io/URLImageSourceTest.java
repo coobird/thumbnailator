@@ -149,4 +149,23 @@ public class URLImageSourceTest
 		}
 		fail();
 	}
+	
+	@Test(expected=IllegalStateException.class)
+	public void fileExists_getInputFormatNameBeforeRead() throws IOException
+	{
+		// given
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Thumbnailator/grid.png"));
+		
+		try
+		{
+			// when
+			source.getInputFormatName();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+			assertEquals("Input has not been read yet.", e.getMessage());
+			throw e;
+		}
+	}
 }

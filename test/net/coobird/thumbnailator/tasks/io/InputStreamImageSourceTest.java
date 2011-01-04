@@ -126,4 +126,23 @@ public class InputStreamImageSourceTest
 		}
 		fail();
 	}
+	
+	@Test(expected=IllegalStateException.class)
+	public void fileExists_getInputFormatNameBeforeRead() throws IOException
+	{
+		// given
+		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream("test-resources/Thumbnailator/grid.png"));
+		
+		try
+		{
+			// when
+			source.getInputFormatName();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+			assertEquals("Input has not been read yet.", e.getMessage());
+			throw e;
+		}
+	}
 }
