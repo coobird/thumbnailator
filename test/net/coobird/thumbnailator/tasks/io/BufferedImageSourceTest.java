@@ -45,4 +45,24 @@ public class BufferedImageSourceTest
 		assertEquals(100, img.getHeight());
 		assertEquals(null, source.getInputFormatName());
 	}
+	
+	@Test(expected=IllegalStateException.class)
+	public void givenValidImage_getInputFormatNameBeforeRead() throws IOException
+	{
+		// given
+		BufferedImage sourceImage = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		BufferedImageSource source = new BufferedImageSource(sourceImage);
+		
+		try
+		{
+			// when
+			source.getInputFormatName();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+			assertEquals("Input has not been read yet.", e.getMessage());
+			throw e;
+		}
+	}
 }
