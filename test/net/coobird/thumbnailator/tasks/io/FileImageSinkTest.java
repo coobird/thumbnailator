@@ -9,6 +9,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 
 import org.junit.Test;
@@ -187,6 +188,34 @@ public class FileImageSinkTest
 		assertEquals("JPEG", formatName);
 	}
 	
+	@Test
+	public void write_ValidImage_SetOutputFormat_OutputFileHasNoExtension() throws IOException
+	{
+		// given
+		File outputFile = new File("test-resources/Thumbnailator/test");
+		
+		BufferedImage imgToWrite = 
+			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+		
+		FileImageSink sink = new FileImageSink(outputFile);
+		
+		// when
+		sink.setOutputFormatName("JPEG");
+		sink.write(imgToWrite);
+		
+		// then
+		outputFile = new File("test-resources/Thumbnailator/test.JPEG");
+		outputFile.deleteOnExit();
+		
+		assertEquals(outputFile.getAbsoluteFile(), sink.getSink().getAbsoluteFile());
+		
+		BufferedImage writtenImg = ImageIO.read(outputFile);
+		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
+		
+		String formatName = getFormatName(new FileInputStream(outputFile));
+		assertEquals("JPEG", formatName);
+	}
+
 	@Test
 	public void write_ValidImage_SetThumbnailParameter_BMP_QualityAndOutputFormatType_BothDefault() throws IOException
 	{
@@ -413,6 +442,32 @@ public class FileImageSinkTest
 		
 		String formatName = getFormatName(new FileInputStream(outputFile));
 		assertEquals("JPEG", formatName);
+	}
+	
+	@Test(expected=UnsupportedFormatException.class)
+	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_NoFileExtension() throws IOException
+	{
+		// given
+		File outputFile = new File("test-resources/Thumbnailator/test");
+		outputFile.deleteOnExit();
+		
+		BufferedImage imgToWrite = 
+			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+		
+		FileImageSink sink = new FileImageSink(outputFile);
+		
+		try
+		{
+			// when
+			sink.setOutputFormatName(ThumbnailParameter.ORIGINAL_FORMAT);
+			sink.write(imgToWrite);
+		}
+		catch (UnsupportedFormatException e)
+		{
+			// then
+			assertEquals("Could not determine output format.", e.getMessage());
+			throw e;
+		}
 	}
 	
 	/**

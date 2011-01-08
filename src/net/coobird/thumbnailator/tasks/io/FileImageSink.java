@@ -143,6 +143,20 @@ public class FileImageSink extends AbstractImageSink<File>
 		return null;
 	}
 
+	/**
+	 * Writes the resulting image to a file.
+	 * 
+	 * @param img							The image to write.
+	 * @throws UnsupportedFormatException	When an unsupported format has been
+	 * 										specified by the 
+	 * 										{@link #setOutputFormatName(String)}
+	 * 										method, or if the output format
+	 * 										has not been set and cannot be
+	 * 										determined from the file name.
+	 * @throws IOException					When a problem occurs while writing
+	 * 										the image.
+	 * @throws NullPointerException		If the image is {@code null}.
+	 */
 	public void write(BufferedImage img) throws IOException
 	{
 		super.write(img);
@@ -180,6 +194,14 @@ public class FileImageSink extends AbstractImageSink<File>
 			{
 				formatName = rIter.next().getFormatName();
 			}
+		}
+		
+		if (formatName == null)
+		{
+			throw new UnsupportedFormatException(
+					formatName, 
+					"Could not determine output format."
+			);
 		}
 		
 		// Checks for available writers for the format.
