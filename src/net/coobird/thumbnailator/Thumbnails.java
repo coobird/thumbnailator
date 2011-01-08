@@ -5,6 +5,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ import net.coobird.thumbnailator.tasks.io.BufferedImageSource;
 import net.coobird.thumbnailator.tasks.io.FileImageSink;
 import net.coobird.thumbnailator.tasks.io.FileImageSource;
 import net.coobird.thumbnailator.tasks.io.ImageSource;
+import net.coobird.thumbnailator.tasks.io.InputStreamImageSource;
 import net.coobird.thumbnailator.tasks.io.OutputStreamImageSink;
 import net.coobird.thumbnailator.tasks.io.URLImageSource;
 
@@ -182,6 +184,23 @@ public final class Thumbnails
 	}
 	
 	/**
+	 * Indicate to make thumbnails from the specified {@link InputStream}s.  
+	 * 
+	 * @param inputStreams		{@link InputStream}s which provide the images
+	 * 							for which thumbnails are to be produced for.
+	 * @return			Reference to a builder object which is used to
+	 * 					specify the parameters for creating the thumbnail.
+	 * @throws NullPointerException		If the argument is {@code null}.
+	 * @throws IllegalArgumentException	If the argument is an empty array.
+	 */
+	public static Builder<InputStream> of(InputStream... inputStreams)
+	{
+		checkForNull(inputStreams, "Cannot specify null for InputStreams.");
+		checkForEmpty(inputStreams, "Cannot specify an empty array for InputStreams.");
+		return Builder.of(inputStreams);
+	}
+	
+	/**
 	 * Indicate to make thumbnails from the specified {@link BufferedImage}s.
 	 * 
 	 * @param images	{@link BufferedImage}s for which thumbnails
@@ -247,6 +266,24 @@ public final class Thumbnails
 		checkForNull(urls, "Cannot specify null for input URLs.");
 		checkForEmpty(urls, "Cannot specify an empty collection for input URLs.");
 		return of(urls.toArray(new URL[urls.size()]));
+	}
+	
+	/**
+	 * Indicate to make thumbnails for images obtained from the specified 
+	 * {@link InputStream}s.
+	 * 
+	 * @param urls		{@link InputStream}s which provide images for which 
+	 * 					thumbnails are to be produced.
+	 * @return			Reference to a builder object which is used to
+	 * 					specify the parameters for creating the thumbnail.
+	 * @throws NullPointerException		If the argument is {@code null}.
+	 * @throws IllegalArgumentException	If the argument is an empty collection.
+	 */
+	public static Builder<InputStream> fromInputStreams(Collection<? extends InputStream> inputStreams)
+	{
+		checkForNull(inputStreams, "Cannot specify null for InputStreams.");
+		checkForEmpty(inputStreams, "Cannot specify an empty collection for InputStreams.");
+		return of(inputStreams.toArray(new InputStream[inputStreams.size()]));
 	}
 	
 	/**
@@ -323,6 +360,17 @@ public final class Thumbnails
 			}
 			
 			return new Builder<URL>(sources);
+		}
+		
+		private static Builder<InputStream> of(InputStream... inputStreams)
+		{
+			List<ImageSource<InputStream>> sources = new ArrayList<ImageSource<InputStream>>();
+			for (InputStream is : inputStreams)
+			{
+				sources.add(new InputStreamImageSource(is));
+			}
+			
+			return new Builder<InputStream>(sources);
 		}
 		
 		private static Builder<BufferedImage> of(BufferedImage... images)
