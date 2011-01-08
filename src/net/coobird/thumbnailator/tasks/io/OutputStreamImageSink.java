@@ -50,6 +50,22 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 		this.os = os;
 	}
 
+	/**
+	 * Writes the resulting image to the {@link OutputStream}.
+	 * 
+	 * @param img							The image to write.
+	 * @throws UnsupportedFormatException	When an unsupported format has been
+	 * 										specified by the 
+	 * 										{@link #setOutputFormatName(String)}
+	 * 										method.
+	 * @throws IOException					When a problem occurs while writing
+	 * 										the image.
+	 * @throws NullPointerException		If the image is {@code null}.
+	 * @throws IllegalStateException	If the output format has not been set
+	 * 									by calling the
+	 * 									{@link #setOutputFormatName(String)}
+	 * 									method.
+	 */
 	public void write(BufferedImage img) throws IOException
 	{
 		super.write(img);
