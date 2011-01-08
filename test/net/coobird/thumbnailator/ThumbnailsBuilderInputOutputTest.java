@@ -515,6 +515,32 @@ public class ThumbnailsBuilderInputOutputTest
 			throw e;
 		}
 	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromInputStreams(Collection)</li>
+	 * <li>where the Collection is empty.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void fromInputStreams_Collection_empty()
+	{
+		try
+		{
+			Thumbnails.fromInputStreams(Collections.<InputStream>emptyList());
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			assertEquals("Cannot specify an empty collection for InputStreams.", e.getMessage());
+			throw e;
+		}
+	}
 
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
