@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -39,6 +40,7 @@ import net.coobird.thumbnailator.tasks.io.FileImageSink;
 import net.coobird.thumbnailator.tasks.io.FileImageSource;
 import net.coobird.thumbnailator.tasks.io.ImageSource;
 import net.coobird.thumbnailator.tasks.io.OutputStreamImageSink;
+import net.coobird.thumbnailator.tasks.io.URLImageSource;
 
 /**
  * This class provides a fluent interface to create thumbnails.
@@ -163,6 +165,23 @@ public final class Thumbnails
 	}
 	
 	/**
+	 * Indicate to make thumbnails from the specified {@link URL}s.  
+	 * 
+	 * @param urls		{@link URL} objects of image files for which thumbnails
+	 * 					are to be produced for.
+	 * @return			Reference to a builder object which is used to
+	 * 					specify the parameters for creating the thumbnail.
+	 * @throws NullPointerException		If the argument is {@code null}.
+	 * @throws IllegalArgumentException	If the argument is an empty array.
+	 */
+	public static Builder<URL> of(URL... urls)
+	{
+		checkForNull(urls, "Cannot specify null for input URLs.");
+		checkForEmpty(urls, "Cannot specify an empty array for input URLs.");
+		return Builder.of(urls);
+	}
+	
+	/**
 	 * Indicate to make thumbnails from the specified {@link BufferedImage}s.
 	 * 
 	 * @param images	{@link BufferedImage}s for which thumbnails
@@ -211,6 +230,23 @@ public final class Thumbnails
 		checkForNull(files, "Cannot specify null for input files.");
 		checkForEmpty(files, "Cannot specify an empty collection for input files.");
 		return of(files.toArray(new File[files.size()]));
+	}
+
+	/**
+	 * Indicate to make thumbnails for images with the specified {@link URL}s.  
+	 * 
+	 * @param urls		URLs of the images for which thumbnails
+	 * 					are to be produced.
+	 * @return			Reference to a builder object which is used to
+	 * 					specify the parameters for creating the thumbnail.
+	 * @throws NullPointerException		If the argument is {@code null}.
+	 * @throws IllegalArgumentException	If the argument is an empty collection.
+	 */
+	public static Builder<URL> fromURLs(Collection<URL> urls)
+	{
+		checkForNull(urls, "Cannot specify null for input URLs.");
+		checkForEmpty(urls, "Cannot specify an empty collection for input URLs.");
+		return of(urls.toArray(new URL[urls.size()]));
 	}
 	
 	/**
@@ -276,6 +312,17 @@ public final class Thumbnails
 			}
 			
 			return new Builder<File>(sources);
+		}
+		
+		private static Builder<URL> of(URL... urls)
+		{
+			List<ImageSource<URL>> sources = new ArrayList<ImageSource<URL>>();
+			for (URL url : urls)
+			{
+				sources.add(new URLImageSource(url));
+			}
+			
+			return new Builder<URL>(sources);
 		}
 		
 		private static Builder<BufferedImage> of(BufferedImage... images)
