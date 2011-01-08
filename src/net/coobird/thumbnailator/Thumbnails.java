@@ -272,8 +272,8 @@ public final class Thumbnails
 	 * Indicate to make thumbnails for images obtained from the specified 
 	 * {@link InputStream}s.
 	 * 
-	 * @param urls		{@link InputStream}s which provide images for which 
-	 * 					thumbnails are to be produced.
+	 * @param inputStreams		{@link InputStream}s which provide images for
+	 * 							which thumbnails are to be produced.
 	 * @return			Reference to a builder object which is used to
 	 * 					specify the parameters for creating the thumbnail.
 	 * @throws NullPointerException		If the argument is {@code null}.
