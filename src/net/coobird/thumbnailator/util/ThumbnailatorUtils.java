@@ -1,4 +1,4 @@
-package net.coobird.thumbnailator;
+package net.coobird.thumbnailator.util;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriter;
+
+import net.coobird.thumbnailator.ThumbnailParameter;
 
 /**
  * A utility class for Thumbnailator.
