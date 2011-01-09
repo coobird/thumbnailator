@@ -90,7 +90,7 @@
 	        </manifest>
 	    </jar>
 		
-	    <jar jarfile="${dist}/${version}/Thumbnailator-${version}-src.jar">
+	    <jar jarfile="${dist}/${version}/Thumbnailator-${version}-all.jar">
 	    	<fileset dir="${build}" />
 	    	<fileset dir="${src}" excludes="**/package.info" />
 			<fileset dir="${resources}" />
@@ -133,9 +133,9 @@
 			username="${gc.username}" 
 			password="${gc.password}" 
 			projectname="thumbnailator" 
-			filename="${dist}/${version}/Thumbnailator-${version}-src.jar" 
-			targetfilename="Thumbnailator-${version}-src.jar"
-			summary="Thumbnailator JAR file with sources - Recommended for development"
+			filename="${dist}/${version}/Thumbnailator-${version}-all.jar" 
+			targetfilename="Thumbnailator-${version}-all.jar"
+			summary="Thumbnailator JAR file with sources included - Recommended for development"
 			labels="Featured" />
 		
 	    <gcupload 

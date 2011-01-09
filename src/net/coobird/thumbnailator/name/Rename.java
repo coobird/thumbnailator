@@ -1,4 +1,4 @@
-package net.coobird.thumbnailator;
+package net.coobird.thumbnailator.name;
 
 /**
  * This class is used to rename file names.

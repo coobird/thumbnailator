@@ -18,6 +18,7 @@ import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.makers.FixedSizeThumbnailMaker;
 import net.coobird.thumbnailator.makers.ScaledThumbnailMaker;
+import net.coobird.thumbnailator.name.Rename;
 import net.coobird.thumbnailator.resizers.ResizerFactory;
 import net.coobird.thumbnailator.resizers.Resizers;
 import net.coobird.thumbnailator.tasks.FileThumbnailTask;
@@ -52,12 +53,36 @@ public final class Thumbnailator
 	 * @throws IOException		Thrown when a problem occurs when creating a
 	 * 							thumbnail.
 	 */
-	public static void createThumbnail(ThumbnailTask task) throws IOException
+	public static void createThumbnail(ThumbnailTask<?, ?> task) throws IOException
 	{
 		ThumbnailParameter param = task.getParam();
 		
 		// Obtain the original image.
 		BufferedImage sourceImage = task.read();
+
+		// Decide the image type of the destination image.
+		int imageType = param.getType();
+		/*
+		 * If the imageType indicates that the image type of the original image
+		 * should be used in the thumbnail, then obtain the image type of the
+		 * original.
+		 * 
+		 * If the original type is a custom type, then the default image type
+		 * will be used.
+		 */
+		if (param.useOriginalImageType())
+		{
+			int imageTypeToUse = sourceImage.getType();
+			
+			if (imageTypeToUse == BufferedImage.TYPE_CUSTOM)
+			{
+				imageType = ThumbnailParameter.DEFAULT_IMAGE_TYPE;
+			}
+			else
+			{
+				imageType = sourceImage.getType();
+			}
+		}
 		
 		BufferedImage destinationImage;
 		
@@ -72,7 +97,7 @@ public final class Thumbnailator
 				new FixedSizeThumbnailMaker()
 					.size(destinationWidth, destinationHeight)
 					.keepAspectRatio(param.isKeepAspectRatio())
-					.imageType(param.getType())
+					.imageType(imageType)
 					.resizer(param.getResizer())
 					.make(sourceImage);
 		}
@@ -82,7 +107,7 @@ public final class Thumbnailator
 			destinationImage =
 				new ScaledThumbnailMaker()
 					.scale(param.getScalingFactor())
-					.imageType(param.getType())
+					.imageType(imageType)
 					.resizer(param.getResizer())
 					.make(sourceImage);
 		}
