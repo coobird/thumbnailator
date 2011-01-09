@@ -59,12 +59,13 @@ import net.coobird.thumbnailator.util.ThumbnailatorUtils;
  * <pre>
 Thumbnails.of(directory.listFiles())
     .size(200, 200)
-    .keepAspectRatio(true)
     .outputFormat("jpeg")
     .asFiles(Rename.PREFIX_DOT_THUMBNAIL);
  * </pre>
  * </DD>
  * </DL>
+ * For more examples, please visit the <a href="http://code.google.com/p/thumbnailator/">
+ * Thumbnailator</a> project page.
  * 
  * @author coobird
  *
