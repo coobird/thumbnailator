@@ -43,6 +43,7 @@ import net.coobird.thumbnailator.tasks.io.ImageSource;
 import net.coobird.thumbnailator.tasks.io.InputStreamImageSource;
 import net.coobird.thumbnailator.tasks.io.OutputStreamImageSink;
 import net.coobird.thumbnailator.tasks.io.URLImageSource;
+import net.coobird.thumbnailator.util.ThumbnailatorUtils;
 
 /**
  * This class provides a fluent interface to create thumbnails.

@@ -3,6 +3,8 @@ package net.coobird.thumbnailator;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import net.coobird.thumbnailator.util.ThumbnailatorUtils;
+
 import org.junit.Test;
 
 /**
