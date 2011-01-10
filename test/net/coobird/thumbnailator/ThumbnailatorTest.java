@@ -2707,7 +2707,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
-		File outputFile = new File("@\\*&!!#"); 
+		File outputFile = new File("/@\\*&!!#"); 
 		
 		try
 		{
