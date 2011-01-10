@@ -67,7 +67,7 @@
 			windowtitle="Thumbnailator API Documenatation (Version ${version})"
 			locale="en_US" >
 			
-			<link href="http://download-llnw.oracle.com/javase/1.5.0/docs/api/" />
+			<link href="http://download.oracle.com/javase/1.5.0/docs/api/" />
 		</javadoc>
 		
 		<!-- Create the distribution directory -->
