@@ -35,19 +35,19 @@ Resizers.BILINEAR.resize(sourceImage, destImage);
 public enum Resizers implements Resizer
 {
 	/**
-	 * Returns a {@link Resizer} which performs resizing operations using 
+	 * A {@link Resizer} which performs resizing operations using 
 	 * bilinear interpolation.
 	 */
 	BILINEAR(new BilinearResizer()),
 	
 	/**
-	 * Returns a {@link Resizer} which performs resizing operations using 
+	 * A {@link Resizer} which performs resizing operations using 
 	 * bicubic interpolation.
 	 */
 	BICUBIC(new BicubicResizer()),
 
 	/**
-	 * Returns a {@link Resizer} which performs resizing operations using 
+	 * A {@link Resizer} which performs resizing operations using 
 	 * progressive bilinear scaling.
 	 * <p>
 	 * For details on this technique, refer to the documentation of the
