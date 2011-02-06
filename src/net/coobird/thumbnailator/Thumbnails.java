@@ -126,9 +126,9 @@ public final class Thumbnails
 		}
 	}
 	
-	private static void checkForEmpty(Collection<?> o, String message)
+	private static void checkForEmpty(Iterable<?> o, String message)
 	{
-		if (o.size() == 0)
+		if (!o.iterator().hasNext())
 		{
 			throw new IllegalArgumentException(message);
 		}
@@ -148,7 +148,7 @@ public final class Thumbnails
 	{
 		checkForNull(files, "Cannot specify null for input files.");
 		checkForEmpty(files, "Cannot specify an empty array for input files.");
-		return Builder.of(files);
+		return Builder.ofStrings(Arrays.asList(files));
 	}
 	
 	/**
@@ -165,7 +165,7 @@ public final class Thumbnails
 	{
 		checkForNull(files, "Cannot specify null for input files.");
 		checkForEmpty(files, "Cannot specify an empty array for input files.");
-		return Builder.of(files);
+		return Builder.ofFiles(Arrays.asList(files));
 	}
 	
 	/**
@@ -182,7 +182,7 @@ public final class Thumbnails
 	{
 		checkForNull(urls, "Cannot specify null for input URLs.");
 		checkForEmpty(urls, "Cannot specify an empty array for input URLs.");
-		return Builder.of(urls);
+		return Builder.ofUrls(Arrays.asList(urls));
 	}
 	
 	/**
@@ -195,11 +195,11 @@ public final class Thumbnails
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty array.
 	 */
-	public static Builder<InputStream> of(InputStream... inputStreams)
+	public static Builder<? extends InputStream> of(InputStream... inputStreams)
 	{
 		checkForNull(inputStreams, "Cannot specify null for InputStreams.");
 		checkForEmpty(inputStreams, "Cannot specify an empty array for InputStreams.");
-		return Builder.of(inputStreams);
+		return Builder.ofInputStreams(Arrays.asList(inputStreams));
 	}
 	
 	/**
@@ -216,7 +216,7 @@ public final class Thumbnails
 	{
 		checkForNull(images, "Cannot specify null for images.");
 		checkForEmpty(images, "Cannot specify an empty array for images.");
-		return Builder.of(images);
+		return Builder.ofBufferedImages(Arrays.asList(images));
 	}
 
 	/**
@@ -229,11 +229,11 @@ public final class Thumbnails
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
 	 */
-	public static Builder<File> fromFilenames(Collection<String> files)
+	public static Builder<File> fromFilenames(Iterable<String> files)
 	{
 		checkForNull(files, "Cannot specify null for input files.");
 		checkForEmpty(files, "Cannot specify an empty collection for input files.");
-		return of(files.toArray(new String[files.size()]));
+		return Builder.ofStrings(files);
 	}
 	
 	/**
@@ -246,11 +246,11 @@ public final class Thumbnails
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
 	 */
-	public static Builder<File> fromFiles(Collection<File> files)
+	public static Builder<File> fromFiles(Iterable<File> files)
 	{
 		checkForNull(files, "Cannot specify null for input files.");
 		checkForEmpty(files, "Cannot specify an empty collection for input files.");
-		return of(files.toArray(new File[files.size()]));
+		return Builder.ofFiles(files);
 	}
 
 	/**
@@ -263,11 +263,11 @@ public final class Thumbnails
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
 	 */
-	public static Builder<URL> fromURLs(Collection<URL> urls)
+	public static Builder<URL> fromURLs(Iterable<URL> urls)
 	{
 		checkForNull(urls, "Cannot specify null for input URLs.");
 		checkForEmpty(urls, "Cannot specify an empty collection for input URLs.");
-		return of(urls.toArray(new URL[urls.size()]));
+		return Builder.ofUrls(urls);
 	}
 	
 	/**
@@ -281,11 +281,11 @@ public final class Thumbnails
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
 	 */
-	public static Builder<InputStream> fromInputStreams(Collection<? extends InputStream> inputStreams)
+	public static Builder<InputStream> fromInputStreams(Iterable<? extends InputStream> inputStreams)
 	{
 		checkForNull(inputStreams, "Cannot specify null for InputStreams.");
 		checkForEmpty(inputStreams, "Cannot specify an empty collection for InputStreams.");
-		return of(inputStreams.toArray(new InputStream[inputStreams.size()]));
+		return Builder.ofInputStreams(inputStreams);
 	}
 	
 	/**
@@ -298,11 +298,11 @@ public final class Thumbnails
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
 	 */
-	public static Builder<BufferedImage> fromImages(Collection<BufferedImage> images)
+	public static Builder<BufferedImage> fromImages(Iterable<BufferedImage> images)
 	{
 		checkForNull(images, "Cannot specify null for images.");
 		checkForEmpty(images, "Cannot specify an empty collection for images.");
-		return of(images.toArray(new BufferedImage[images.size()]));
+		return Builder.ofBufferedImages(images);
 	}
 
 	/**
@@ -323,67 +323,212 @@ public final class Thumbnails
 	 */
 	public static class Builder<T>
 	{
-		private final List<ImageSource<T>> sources;
+		private final Iterable<ImageSource<T>> sources;
 		
-		private Builder(List<ImageSource<T>> sources)
+		private Builder(Iterable<ImageSource<T>> sources)
 		{
 			this.sources = sources;
 			statusMap.put(Properties.OUTPUT_FORMAT, Status.OPTIONAL);
 		}
 		
-		private static Builder<File> of(String... filenames)
+		private static final class StringImageSourceIterator implements
+				Iterable<ImageSource<File>>
 		{
-			List<ImageSource<File>> sources = new ArrayList<ImageSource<File>>();
-			for (String f : filenames)
+			private final Iterable<String> filenames;
+		
+			private StringImageSourceIterator(Iterable<String> filenames)
 			{
-				sources.add(new FileImageSource(f));
+				this.filenames = filenames;
 			}
-			
-			return new Builder<File>(sources);
+		
+			public Iterator<ImageSource<File>> iterator()
+			{
+				return new Iterator<ImageSource<File>>() {
+					
+					Iterator<String> iter = filenames.iterator();
+					
+					public boolean hasNext()
+					{
+						return iter.hasNext();
+					}
+		
+					public ImageSource<File> next()
+					{
+						return new FileImageSource(iter.next());
+					}
+		
+					public void remove()
+					{
+						throw new UnsupportedOperationException();
+					}
+				};
+			}
 		}
 		
-		private static Builder<File> of(File... files)
+		private static final class FileImageSourceIterator implements
+				Iterable<ImageSource<File>>
 		{
-			List<ImageSource<File>> sources = new ArrayList<ImageSource<File>>();
-			for (File f : files)
+			private final Iterable<File> files;
+			
+			private FileImageSourceIterator(Iterable<File> files)
 			{
-				sources.add(new FileImageSource(f));
+				this.files = files;
 			}
 			
-			return new Builder<File>(sources);
+			public Iterator<ImageSource<File>> iterator()
+			{
+				return new Iterator<ImageSource<File>>() {
+					
+					Iterator<File> iter = files.iterator();
+					
+					public boolean hasNext()
+					{
+						return iter.hasNext();
+					}
+					
+					public ImageSource<File> next()
+					{
+						return new FileImageSource(iter.next());
+					}
+					
+					public void remove()
+					{
+						throw new UnsupportedOperationException();
+					}
+				};
+			}
 		}
 		
-		private static Builder<URL> of(URL... urls)
+		private static final class URLImageSourceIterator implements
+				Iterable<ImageSource<URL>>
 		{
-			List<ImageSource<URL>> sources = new ArrayList<ImageSource<URL>>();
-			for (URL url : urls)
+			private final Iterable<URL> urls;
+			
+			private URLImageSourceIterator(Iterable<URL> urls)
 			{
-				sources.add(new URLImageSource(url));
+				this.urls = urls;
 			}
 			
-			return new Builder<URL>(sources);
+			public Iterator<ImageSource<URL>> iterator()
+			{
+				return new Iterator<ImageSource<URL>>() {
+					
+					Iterator<URL> iter = urls.iterator();
+					
+					public boolean hasNext()
+					{
+						return iter.hasNext();
+					}
+					
+					public ImageSource<URL> next()
+					{
+						return new URLImageSource(iter.next());
+					}
+					
+					public void remove()
+					{
+						throw new UnsupportedOperationException();
+					}
+				};
+			}
 		}
 		
-		private static Builder<InputStream> of(InputStream... inputStreams)
+		private static final class InputStreamImageSourceIterator implements
+				Iterable<ImageSource<InputStream>>
 		{
-			List<ImageSource<InputStream>> sources = new ArrayList<ImageSource<InputStream>>();
-			for (InputStream is : inputStreams)
+			private final Iterable<? extends InputStream> inputStreams;
+			
+			private InputStreamImageSourceIterator(Iterable<? extends InputStream> inputStreams)
 			{
-				sources.add(new InputStreamImageSource(is));
+				this.inputStreams = inputStreams;
 			}
 			
-			return new Builder<InputStream>(sources);
+			public Iterator<ImageSource<InputStream>> iterator()
+			{
+				return new Iterator<ImageSource<InputStream>>() {
+					
+					Iterator<? extends InputStream> iter = inputStreams.iterator();
+					
+					public boolean hasNext()
+					{
+						return iter.hasNext();
+					}
+					
+					public ImageSource<InputStream> next()
+					{
+						return new InputStreamImageSource(iter.next());
+					}
+					
+					public void remove()
+					{
+						throw new UnsupportedOperationException();
+					}
+				};
+			}
 		}
 		
-		private static Builder<BufferedImage> of(BufferedImage... images)
+		private static final class BufferedImageImageSourceIterator implements
+			Iterable<ImageSource<BufferedImage>>
 		{
-			List<ImageSource<BufferedImage>> sources = new ArrayList<ImageSource<BufferedImage>>();
-			for (BufferedImage img : images)
+			private final Iterable<BufferedImage> image;
+			
+			private BufferedImageImageSourceIterator(Iterable<BufferedImage> images)
 			{
-				sources.add(new BufferedImageSource(img));
+				this.image = images;
 			}
 			
-			return new Builder<BufferedImage>(sources);
+			public Iterator<ImageSource<BufferedImage>> iterator()
+			{
+				return new Iterator<ImageSource<BufferedImage>>() {
+					
+					Iterator<BufferedImage> iter = image.iterator();
+					
+					public boolean hasNext()
+					{
+						return iter.hasNext();
+					}
+					
+					public ImageSource<BufferedImage> next()
+					{
+						return new BufferedImageSource(iter.next());
+					}
+					
+					public void remove()
+					{
+						throw new UnsupportedOperationException();
+					}
+				};
+			}
+		}
+
+		private static Builder<File> ofStrings(Iterable<String> filenames)
+		{
+			Iterable<ImageSource<File>> iter = new StringImageSourceIterator(filenames);
+			return new Builder<File>(iter);
+		}
+		
+		private static Builder<File> ofFiles(Iterable<File> files)
+		{
+			Iterable<ImageSource<File>> iter = new FileImageSourceIterator(files);
+			return new Builder<File>(iter);
+		}
+		
+		private static Builder<URL> ofUrls(Iterable<URL> urls)
+		{
+			Iterable<ImageSource<URL>> iter = new URLImageSourceIterator(urls);
+			return new Builder<URL>(iter);
+		}
+		
+		private static Builder<InputStream> ofInputStreams(Iterable<? extends InputStream> inputStreams)
+		{
+			Iterable<ImageSource<InputStream>> iter = new InputStreamImageSourceIterator(inputStreams);
+			return new Builder<InputStream>(iter);
+		}
+		
+		private static Builder<BufferedImage> ofBufferedImages(Iterable<BufferedImage> images)
+		{
+			Iterable<ImageSource<BufferedImage>> iter = new BufferedImageImageSourceIterator(images);
+			return new Builder<BufferedImage>(iter);
 		}
 
 		private final class BufferedImageIterable implements
@@ -1391,7 +1536,10 @@ watermark(Positions.CENTER, image, opacity);
 		{
 			checkReadiness();
 			
-			if (sources.size() > 1)
+			Iterator<ImageSource<T>> iter = sources.iterator();
+			ImageSource<T> source = iter.next();
+			
+			if (iter.hasNext())
 			{
 				throw new IllegalArgumentException("Cannot create one thumbnail from multiple original images.");
 			}
@@ -1399,7 +1547,7 @@ watermark(Positions.CENTER, image, opacity);
 			BufferedImageSink destination = new BufferedImageSink();
 			
 			Thumbnailator.createThumbnail(
-				new SourceSinkThumbnailTask<T, BufferedImage>(makeParam(), sources.get(0), destination)
+				new SourceSinkThumbnailTask<T, BufferedImage>(makeParam(), source, destination)
 			);
 				
 			return destination.getSink();
@@ -1498,11 +1646,6 @@ watermark(Positions.CENTER, image, opacity);
 		{
 			checkReadiness();
 			
-			if (!(sources.get(0) instanceof FileImageSource))
-			{
-				throw new IllegalStateException("Cannot create thumbnails to files if original images are not from files.");
-			}
-			
 			if (rename == null)
 			{
 				throw new NullPointerException("Rename is null.");
@@ -1514,6 +1657,11 @@ watermark(Positions.CENTER, image, opacity);
 			
 			for (ImageSource<T> source : sources)
 			{
+				if (!(source instanceof FileImageSource))
+				{
+					throw new IllegalStateException("Cannot create thumbnails to files if original images are not from files.");
+				}
+				
 				File f = ((FileImageSource)source).getSource();
 				
 				File destinationFile = 
@@ -1567,12 +1715,19 @@ watermark(Positions.CENTER, image, opacity);
 		{
 			checkReadiness();
 			
-			if (sources.size() > 1)
+			Iterator<ImageSource<T>> iter = sources.iterator();
+			ImageSource<T> source = iter.next();
+			
+			if (iter.hasNext())
 			{
 				throw new IllegalArgumentException("Cannot output multiple thumbnails to one file.");
 			}
 			
-			toFiles(Arrays.asList(outFile));
+			FileImageSink destination = new FileImageSink(outFile);
+			
+			Thumbnailator.createThumbnail(
+					new SourceSinkThumbnailTask<T, File>(makeParam(), source, destination)
+			);
 		}
 		
 		/**
@@ -1593,12 +1748,14 @@ watermark(Positions.CENTER, image, opacity);
 		{
 			checkReadiness();
 			
-			if (sources.size() > 1)
+			Iterator<ImageSource<T>> iter = sources.iterator(); 
+			ImageSource<T> source = iter.next();
+			
+			if (iter.hasNext())
 			{
 				throw new IllegalArgumentException("Cannot output multiple thumbnails to one file.");
 			}
 			
-			ImageSource<T> source = sources.get(0);
 			FileImageSink destination = new FileImageSink(outFilepath);
 			
 			Thumbnailator.createThumbnail(
@@ -1627,12 +1784,34 @@ watermark(Positions.CENTER, image, opacity);
 		{
 			checkReadiness();
 			
-			if (sources.size() > 1)
+			Iterator<ImageSource<T>> iter = sources.iterator(); 
+			ImageSource<T> source = iter.next();
+			
+			if (iter.hasNext())
 			{
 				throw new IllegalArgumentException("Cannot output multiple thumbnails to a single OutputStream.");
 			}
 			
-			toOutputStreams(Arrays.asList(os));
+			/*
+			 * if the image is from a BufferedImage, then we require that the
+			 * output format be set. (or else, we can't tell what format to
+			 * output as!) 
+			 */
+			if (source instanceof BufferedImageSource)
+			{
+				if (outputFormat == ThumbnailParameter.ORIGINAL_FORMAT)
+				{
+					throw new IllegalStateException(
+							"Output format not specified."
+					);
+				}
+			}
+			
+			OutputStreamImageSink destination = new OutputStreamImageSink(os);
+			
+			Thumbnailator.createThumbnail(
+					new SourceSinkThumbnailTask<T, OutputStream>(makeParam(), source, destination)
+			);
 		}
 		
 		/**
@@ -1654,32 +1833,30 @@ watermark(Positions.CENTER, image, opacity);
 		{
 			checkReadiness();
 			
-			/*
-			 * if the image is from a BufferedImage, then we require that the
-			 * output format be set. (or else, we can't tell what format to
-			 * output as!) 
-			 */
-			if (sources.get(0) instanceof BufferedImageSource)
-			{
-				if (outputFormat == ThumbnailParameter.ORIGINAL_FORMAT)
-				{
-					throw new IllegalStateException(
-							"Output format not specified."
-					);
-				}
-			}
-			
 			if (iterable == null)
 			{
 				throw new NullPointerException("OutputStream iterable is null.");
 			}
 			
-			ThumbnailParameter param = makeParam();
-			
 			Iterator<? extends OutputStream> osIter = iterable.iterator();
 			
 			for (ImageSource<T> source : sources)
 			{
+				/*
+				 * if the image is from a BufferedImage, then we require that the
+				 * output format be set. (or else, we can't tell what format to
+				 * output as!) 
+				 */
+				if (source instanceof BufferedImageSource)
+				{
+					if (outputFormat == ThumbnailParameter.ORIGINAL_FORMAT)
+					{
+						throw new IllegalStateException(
+								"Output format not specified."
+						);
+					}
+				}
+				
 				if (!osIter.hasNext())
 				{
 					throw new IndexOutOfBoundsException(
@@ -1690,7 +1867,7 @@ watermark(Positions.CENTER, image, opacity);
 				OutputStreamImageSink destination = new OutputStreamImageSink(osIter.next());
 				
 				Thumbnailator.createThumbnail(
-						new SourceSinkThumbnailTask<T, OutputStream>(param, source, destination)
+						new SourceSinkThumbnailTask<T, OutputStream>(makeParam(), source, destination)
 				);
 			}
 		}
