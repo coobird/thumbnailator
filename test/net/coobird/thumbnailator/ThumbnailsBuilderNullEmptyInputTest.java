@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Collection;
 import java.util.Collections;
 
 import org.junit.Test;
@@ -310,7 +311,7 @@ public class ThumbnailsBuilderNullEmptyInputTest
 	{
 		try
 		{
-			Thumbnails.fromImages(null);
+			Thumbnails.fromImages((Collection<BufferedImage>)null);
 			fail();
 		}
 		catch (NullPointerException e)
@@ -336,7 +337,7 @@ public class ThumbnailsBuilderNullEmptyInputTest
 	{
 		try
 		{
-			Thumbnails.fromFiles(null);
+			Thumbnails.fromFiles((Collection<File>)null);
 			fail();
 		}
 		catch (NullPointerException e)
@@ -362,7 +363,7 @@ public class ThumbnailsBuilderNullEmptyInputTest
 	{
 		try
 		{
-			Thumbnails.fromFilenames(null);
+			Thumbnails.fromFilenames((Collection<String>)null);
 			fail();
 		}
 		catch (NullPointerException e)
@@ -388,7 +389,7 @@ public class ThumbnailsBuilderNullEmptyInputTest
 	{
 		try
 		{
-			Thumbnails.fromURLs(null);
+			Thumbnails.fromURLs((Collection<URL>)null);
 			fail();
 		}
 		catch (NullPointerException e)
@@ -519,6 +520,240 @@ public class ThumbnailsBuilderNullEmptyInputTest
 		try
 		{
 			Thumbnails.fromInputStreams(Collections.<InputStream>emptyList());
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			assertEquals("Cannot specify an empty collection for InputStreams.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromImages(Iterable)</li>
+	 * <li>where the Iterable is null.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=NullPointerException.class)
+	public void fromImages_Iterable_null()
+	{
+		try
+		{
+			Thumbnails.fromImages((Iterable<BufferedImage>)null);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			assertEquals("Cannot specify null for images.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromFiles(Iterable)</li>
+	 * <li>where the Iterable is null.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=NullPointerException.class)
+	public void fromFiles_Iterable_null()
+	{
+		try
+		{
+			Thumbnails.fromFiles((Iterable<File>)null);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			assertEquals("Cannot specify null for input files.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromFilenames(Iterable)</li>
+	 * <li>where the Iterable is null.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=NullPointerException.class)
+	public void fromFilenames_Iterable_null()
+	{
+		try
+		{
+			Thumbnails.fromFilenames((Iterable<String>)null);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			assertEquals("Cannot specify null for input files.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromURLs(Iterable)</li>
+	 * <li>where the Iterable is null.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A NullPointerException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=NullPointerException.class)
+	public void fromURLs_Iterable_null()
+	{
+		try
+		{
+			Thumbnails.fromURLs((Iterable<URL>)null);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			assertEquals("Cannot specify null for input URLs.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromImages(Iterable)</li>
+	 * <li>where the Iterable is empty.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void fromImages_Iterable_empty()
+	{
+		try
+		{
+			Thumbnails.fromImages((Iterable<BufferedImage>)Collections.<BufferedImage>emptyList());
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			assertEquals("Cannot specify an empty collection for images.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromFiles(Iterable)</li>
+	 * <li>where the Iterable is empty.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void fromFiles_Iterable_empty()
+	{
+		try
+		{
+			Thumbnails.fromFiles((Iterable<File>)Collections.<File>emptyList());
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			assertEquals("Cannot specify an empty collection for input files.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromFilenames(Iterable)</li>
+	 * <li>where the Iterable is empty.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void fromFilenames_Iterable_empty()
+	{
+		try
+		{
+			Thumbnails.fromFilenames((Iterable<String>)Collections.<String>emptyList());
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			assertEquals("Cannot specify an empty collection for input files.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromURLs(Iterable)</li>
+	 * <li>where the Iterable is empty.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void fromURLs_Iterable_empty()
+	{
+		try
+		{
+			Thumbnails.fromURLs((Iterable<URL>)Collections.<URL>emptyList());
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			assertEquals("Cannot specify an empty collection for input URLs.", e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>Thumbnails.fromInputStreams(Iterable)</li>
+	 * <li>where the Iterable is empty.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalArgumentException.class)
+	public void fromInputStreams_Iterable_empty()
+	{
+		try
+		{
+			Thumbnails.fromInputStreams((Iterable<InputStream>)Collections.<InputStream>emptyList());
 			fail();
 		}
 		catch (IllegalArgumentException e)
