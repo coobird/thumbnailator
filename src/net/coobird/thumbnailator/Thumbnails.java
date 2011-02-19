@@ -826,6 +826,39 @@ public final class Thumbnails
 		}
 		
 		/**
+		 * Sets the size of the thumbnail.
+		 * <p>
+		 * The thumbnails will be forced to the specified size, therefore,
+		 * the aspect ratio of the original image will not be preserved in
+		 * the thumbnails. Calling this method will be equivalent to calling
+		 * the {@link #size(int, int)} method in conjunction with the 
+		 * {@link #keepAspectRatio(boolean)} method with the value {@code false}.
+		 * <p>
+		 * Once this method is called, calling the {@link #scale(double)} method
+		 * will result in an {@link IllegalStateException}.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @param width			The width of the thumbnail.
+		 * @param height		The height of the thumbnail.
+		 * @return				Reference to this object.
+		 */
+		public Builder<T> forceSize(int width, int height)
+		{
+			updateStatus(Properties.SIZE, Status.ALREADY_SET);
+			updateStatus(Properties.KEEP_ASPECT_RATIO, Status.ALREADY_SET);
+			updateStatus(Properties.SCALE, Status.CANNOT_SET);
+			
+			validateDimensions(width, height);
+			this.width = width;
+			this.height = height;
+			this.keepAspectRatio = false;
+			
+			return this;
+		}
+		
+		/**
 		 * Sets the scaling factor of the thumbnail.
 		 * <p>
 		 * Once this method is called, caling the {@link #size(int, int)} method

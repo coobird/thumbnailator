@@ -59,6 +59,27 @@ public class ThumbnailsBuilderTest
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
+	 * <li>The size method is called twice.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void sizeTwice() throws IOException
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		Thumbnails.of(img)
+			.size(50, 50)
+			.size(50, 50)
+			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
 	 * <li>The size method is called.</li>
 	 * <li>The keepAspectRatio method is true.</li>
 	 * </ol>
@@ -109,6 +130,96 @@ public class ThumbnailsBuilderTest
 		
 		assertEquals(120, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
+	}
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The forceSize method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The thumbnail is successfully created.</li>
+	 * <li>The thumbnail dimensions are that which is specified by the 
+	 * size method.</li>
+	 * </ol>
+	 */
+	@Test
+	public void forceSizeOnly() throws IOException
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.forceSize(50, 50)
+			.asBufferedImage();
+		
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The forceSize method is called twice.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void forceSizeTwice() throws IOException
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		Thumbnails.of(img)
+			.forceSize(50, 50)
+			.forceSize(50, 50)
+			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The forceSize method is called.</li>
+	 * <li>The keepAspectRatio method is called with true.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void forceSizeWithAspectRatioTrue() throws IOException
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		Thumbnails.of(img)
+			.forceSize(50, 50)
+			.keepAspectRatio(true)
+			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The forceSize method is called.</li>
+	 * <li>The keepAspectRatio method is called with false.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void forceSizeWithAspectRatioFalse() throws IOException
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		Thumbnails.of(img)
+			.forceSize(50, 50)
+			.keepAspectRatio(false)
+			.asBufferedImage();
 	}
 
 	/**
