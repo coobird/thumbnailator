@@ -1,0 +1,169 @@
+package net.coobird.thumbnailator.filters;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.image.BufferedImage;
+
+import net.coobird.thumbnailator.geometry.Position;
+
+/**
+ * An {@link ImageFilter} which will enclose an image into a specified
+ * enclosing image.
+ * <p>
+ * The intended use of this {@code ImageFilter} is to take an image and place
+ * it inside of a larger image, creating a border around the original image.
+ * This can be useful when the dimensions of a thumbnail must always be the
+ * same dimensions, and the original images are of differing dimensions.
+ * <p>
+ * The fill color used for the enclosing image can be specified, along with
+ * whether or not to crop an image if it is larger than the enclosing image. 
+ * 
+ * @author coobird
+ *
+ */
+public class Canvas implements ImageFilter
+{
+	/**
+	 * The width of the enclosing image.
+	 */
+	private int width;
+	
+	/**
+	 * The width of the enclosing image.
+	 */
+	private int height;
+	
+	/**
+	 * The positioning of the enclosed image. 
+	 */
+	private final Position position;
+	
+	/**
+	 * The fill color for the background.
+	 */
+	private Color fillColor;
+	
+	/**
+	 * Whether or not to crop the enclosed image if the enclosing image is
+	 * smaller than the enclosed image.
+	 */
+	private final boolean crop;
+	
+	/**
+	 * Instantiates a {@code Canvas} filter.
+	 * <p>
+	 * No fill color will be applied to the filtered image. If the image to
+	 * filter does not have a transparency channel, the image will be filled
+	 * black.
+	 * <p>
+	 * Crops the enclosed image if the enclosing image is smaller.
+	 * 
+	 * @param width			The width of the filtered image.
+	 * @param height		The height of the filtered image.
+	 * @param position		The position to place the enclosed image.
+	 */
+	public Canvas(int width, int height, Position position)
+	{
+		this(width, height, position, true, null);
+	}
+	
+	/**
+	 * Instantiates a {@code Canvas} filter.
+	 * <p>
+	 * No fill color will be applied to the filtered image. If the image to
+	 * filter does not have a transparency channel, the image will be filled
+	 * black.
+	 * 
+	 * @param width			The width of the filtered image.
+	 * @param height		The height of the filtered image.
+	 * @param position		The position to place the enclosed image.
+	 * @param crop			Whether or not to crop the enclosed image if the
+	 * 						enclosed image has dimensions which are larger than
+	 * 						the specified {@code width} and {@code height}.
+	 */
+	public Canvas(int width, int height, Position position, boolean crop)
+	{
+		this(width, height, position, crop, null);
+	}
+	
+	/**
+	 * Instantiates a {@code Canvas} filter.
+	 * <p>
+	 * Crops the enclosed image if the enclosing image is smaller.
+	 * 
+	 * @param width			The width of the filtered image.
+	 * @param height		The height of the filtered image.
+	 * @param position		The position to place the enclosed image.
+	 * @param fillColor		The color to fill portions of the image which is
+	 * 						not covered by the enclosed image.
+	 */
+	public Canvas(int width, int height, Position position, Color fillColor)
+	{
+		this(width, height, position, true, fillColor);
+	}
+	
+	/**
+	 * Instantiates a {@code Canvas} filter.
+	 * 
+	 * @param width			The width of the filtered image.
+	 * @param height		The height of the filtered image.
+	 * @param position		The position to place the enclosed image.
+	 * @param crop			Whether or not to crop the enclosed image if the
+	 * 						enclosed image has dimensions which are larger than
+	 * 						the specified {@code width} and {@code height}.
+	 * @param fillColor		The color to fill portions of the image which is
+	 * 						not covered by the enclosed image.
+	 */
+	public Canvas(int width, int height, Position position, boolean crop, Color fillColor)
+	{
+		super();
+		this.width = width;
+		this.height = height;
+		this.position = position;
+		this.crop = crop;
+		this.fillColor = fillColor;
+	}
+
+	public BufferedImage apply(BufferedImage img)
+	{
+		/*
+		 * To prevent cropping when cropping is disabled, if the dimension of 
+		 * the enclosed image exceeds the dimension of the enclosing image, 
+		 * then the enclosing image will have its dimension enlarged.
+		 * 
+		 */
+		if (!crop && img.getWidth() > width)
+		{
+			width = img.getWidth();
+		}
+		if (!crop && img.getHeight() > height)
+		{
+			height = img.getHeight();
+		}
+		
+		Point p = position.calculate(
+				width, height, img.getWidth(), img.getHeight(),
+				0, 0, 0, 0
+		);
+		
+		BufferedImage finalImage = 
+			new BufferedImage(width, height, img.getType());
+		
+		Graphics g = finalImage.getGraphics();
+		
+		if (fillColor == null && img.getColorModel().hasAlpha()) {
+			g.setColor(Color.black);
+			g.fillRect(0, 0, width, height);
+		}
+		else if (fillColor != null) {
+			g.setColor(fillColor);
+			g.fillRect(0, 0, width, height);
+		}
+		
+		g.drawImage(img, p.x, p.y, null);
+		g.dispose();
+		
+		return finalImage;
+	}
+}
