@@ -1,4 +1,4 @@
-package net.coobird.thumbnailator.filter;
+package net.coobird.thumbnailator.filters;
 
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
