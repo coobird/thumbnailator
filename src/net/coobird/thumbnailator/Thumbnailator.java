@@ -19,7 +19,7 @@ import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.makers.FixedSizeThumbnailMaker;
 import net.coobird.thumbnailator.makers.ScaledThumbnailMaker;
 import net.coobird.thumbnailator.name.Rename;
-import net.coobird.thumbnailator.resizers.ResizerFactory;
+import net.coobird.thumbnailator.resizers.DefaultResizerFactory;
 import net.coobird.thumbnailator.resizers.Resizers;
 import net.coobird.thumbnailator.tasks.FileThumbnailTask;
 import net.coobird.thumbnailator.tasks.StreamThumbnailTask;
@@ -163,7 +163,7 @@ public final class Thumbnailator
 		
 		BufferedImage thumbnailImage = 
 			new FixedSizeThumbnailMaker(width, height, true)
-					.resizer(ResizerFactory.getResizer(imgSize, thumbnailSize))
+					.resizer(DefaultResizerFactory.getResizer(imgSize, thumbnailSize))
 					.make(img); 
 		
 		return thumbnailImage;
