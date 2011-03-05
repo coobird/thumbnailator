@@ -6,7 +6,7 @@ import java.util.Map;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.resizers.Resizer;
-import net.coobird.thumbnailator.resizers.ResizerFactory;
+import net.coobird.thumbnailator.resizers.DefaultResizerFactory;
 
 /**
  * An abstract class which provides support functionalities for
@@ -228,6 +228,6 @@ public abstract class ThumbnailMaker
 	 */
 	public ThumbnailMaker defaultResizer()
 	{
-		return resizer(ResizerFactory.getResizer());
+		return resizer(DefaultResizerFactory.getResizer());
 	}
 }

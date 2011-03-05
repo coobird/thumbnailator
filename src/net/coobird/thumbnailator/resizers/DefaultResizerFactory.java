@@ -10,7 +10,7 @@ import java.awt.Dimension;
  * <DL>
  * <DT><B>Usage:</B></DT>
  * <DD>
- * The following example code demonstrates how to use {@link ResizerFactory}
+ * The following example code demonstrates how to use {@link DefaultResizerFactory}
  * in order to obtain the optimal {@link Resizer}, and using that in order to
  * perform the resizing operation.
  * <p>
@@ -38,7 +38,7 @@ resizer.resize(sourceImage, destImage);
  * @author coobird
  *
  */
-public class ResizerFactory
+public class DefaultResizerFactory
 {
 	/**
 	 * Returns the default {@link Resizer}.
