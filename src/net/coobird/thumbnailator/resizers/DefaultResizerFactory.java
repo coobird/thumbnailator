@@ -38,14 +38,21 @@ resizer.resize(sourceImage, destImage);
  * @author coobird
  *
  */
-public class DefaultResizerFactory
+public class DefaultResizerFactory implements ResizerFactory
 {
+	private static final DefaultResizerFactory INSTANCE = new DefaultResizerFactory();
+	
+	public static ResizerFactory getInstance()
+	{
+		return INSTANCE;
+	}
+	
 	/**
 	 * Returns the default {@link Resizer}.
 	 * 
 	 * @return				The default {@code Resizer}.
 	 */
-	public static Resizer getResizer()
+	public Resizer getResizer()
 	{
 		return Resizers.BILINEAR;
 	}
@@ -59,8 +66,7 @@ public class DefaultResizerFactory
 	 * @return						The suitable {@code Resizer} to perform the
 	 * 								resizing operation for the given condition.
 	 */
-	public static Resizer getResizer(
-			Dimension originalSize, Dimension thumbnailSize)
+	public Resizer getResizer(Dimension originalSize, Dimension thumbnailSize)
 	{
 		int ow = originalSize.width;
 		int oh = originalSize.height;

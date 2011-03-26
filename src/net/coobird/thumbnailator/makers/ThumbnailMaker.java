@@ -228,6 +228,6 @@ public abstract class ThumbnailMaker
 	 */
 	public ThumbnailMaker defaultResizer()
 	{
-		return resizer(DefaultResizerFactory.getResizer());
+		return resizer(DefaultResizerFactory.getInstance().getResizer());
 	}
 }
