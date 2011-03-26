@@ -22,7 +22,7 @@ Dimension sourceSize = new Dimension(sourceImage.getWidth(), sourceImage.getHeig
 Dimension destSize = new Dimension(destImage.getWidth(), destImage.getHeight());
 
 // Obtain the optimal Resizer for this resizing operation.
-Resizer resizer = ResizerFactory.getResizer(sourceSize, destSize);
+Resizer resizer = DefaultResizerFactory.getInstance().getResizer(sourceSize, destSize);
 
 // Perform the resizing using the Resizer obtained from the ResizerFactory.
 resizer.resize(sourceImage, destImage);
@@ -47,25 +47,11 @@ public class DefaultResizerFactory implements ResizerFactory
 		return INSTANCE;
 	}
 	
-	/**
-	 * Returns the default {@link Resizer}.
-	 * 
-	 * @return				The default {@code Resizer}.
-	 */
 	public Resizer getResizer()
 	{
 		return Resizers.BILINEAR;
 	}
 	
-	/**
-	 * Returns a suitable {@link Resizer}, given the {@link Dimension}s of the
-	 * original image and the thumbnail image.
-	 *  
-	 * @param originalSize			The size of the original image.
-	 * @param thumbnailSize			The size of the thumbnail.
-	 * @return						The suitable {@code Resizer} to perform the
-	 * 								resizing operation for the given condition.
-	 */
 	public Resizer getResizer(Dimension originalSize, Dimension thumbnailSize)
 	{
 		int ow = originalSize.width;
