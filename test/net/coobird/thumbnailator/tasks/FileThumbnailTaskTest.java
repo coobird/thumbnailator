@@ -46,6 +46,7 @@ public class FileThumbnailTaskTest
 	{
 		ThumbnailParameter param = new ThumbnailParameter(
 				new Dimension(50, 50),
+				null,
 				true,
 				"jpg",
 				ThumbnailParameter.DEFAULT_FORMAT_TYPE,
@@ -82,6 +83,7 @@ public class FileThumbnailTaskTest
 	{
 		ThumbnailParameter param = new ThumbnailParameter(
 				new Dimension(50, 50),
+				null,
 				true,
 				"jpg",
 				ThumbnailParameter.DEFAULT_FORMAT_TYPE,
