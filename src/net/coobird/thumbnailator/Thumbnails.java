@@ -1,6 +1,7 @@
 package net.coobird.thumbnailator;
 
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -912,6 +913,19 @@ public final class Thumbnails
 			
 			this.sourceRegion = 
 				new Region(new Coordinate(x, y), new Dimension(width, height));
+			
+			return this;
+		}
+		
+		public Builder<T> sourceRegion(Rectangle region)
+		{
+			updateStatus(Properties.SOURCE_REGION, Status.ALREADY_SET);
+			
+			int x = region.x;
+			int y = region.y;
+			
+			this.sourceRegion = 
+				new Region(new Coordinate(x, y), region.getSize());
 			
 			return this;
 		}
