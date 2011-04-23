@@ -3,6 +3,8 @@ package net.coobird.thumbnailator.tasks.io;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import net.coobird.thumbnailator.ThumbnailParameter;
+
 /**
  * An interface to be implemented by classes which read or retrieve images
  * from which a thumbnail should be produced.
@@ -33,6 +35,15 @@ public interface ImageSource<T>
 	 * 									read yet. 
 	 */
 	public String getInputFormatName();
+	
+	/**
+	 * Sets the {@link ThumbnailParameter} from which to retrieve parameters
+	 * to use when retrieving the image.
+	 * 
+	 * @param param				The {@link ThumbnailParameter} with image
+	 * 							reading parameters.
+	 */
+	public void setThumbnailParameter(ThumbnailParameter param);	
 	
 	/**
 	 * Returns the source from which the image is read or retrieved.
