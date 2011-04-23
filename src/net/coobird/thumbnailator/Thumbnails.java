@@ -20,8 +20,10 @@ import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.filters.Pipeline;
 import net.coobird.thumbnailator.filters.Rotation;
 import net.coobird.thumbnailator.filters.Watermark;
+import net.coobird.thumbnailator.geometry.Coordinate;
 import net.coobird.thumbnailator.geometry.Position;
 import net.coobird.thumbnailator.geometry.Positions;
+import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.name.Rename;
 import net.coobird.thumbnailator.resizers.BicubicResizer;
 import net.coobird.thumbnailator.resizers.BilinearResizer;
@@ -701,7 +703,8 @@ public final class Thumbnails
 			OUTPUT_FORMAT("outputFormat"),
 			OUTPUT_FORMAT_TYPE("outputFormatType"),
 			OUTPUT_QUALITY("outputQuality"),
-			RESIZER("resizer"),
+			RESIZER("resizer"), 
+			SOURCE_REGION("sourceRegion"),
 			;
 			
 			private final String name;
@@ -728,6 +731,7 @@ public final class Thumbnails
 		{
 			statusMap.put(Properties.SIZE, Status.NOT_READY);
 			statusMap.put(Properties.SCALE, Status.NOT_READY);
+			statusMap.put(Properties.SOURCE_REGION, Status.OPTIONAL);
 			statusMap.put(Properties.IMAGE_TYPE, Status.OPTIONAL);
 			statusMap.put(Properties.SCALING_MODE, Status.OPTIONAL);
 			statusMap.put(Properties.ALPHA_INTERPOLATION, Status.OPTIONAL);
@@ -778,6 +782,8 @@ public final class Thumbnails
 		private int width = -1;
 		private int height = -1;
 		private double scale = Double.NaN;
+		
+		private Region sourceRegion;
 		
 		private int imageType = IMAGE_TYPE_UNSPECIFIED;
 		private boolean keepAspectRatio = true;
@@ -889,6 +895,43 @@ public final class Thumbnails
 			}
 			
 			this.scale = scale;
+			
+			return this;
+		}
+		
+		public Builder<T> sourceRegion(Region sourceRegion)
+		{
+			updateStatus(Properties.SOURCE_REGION, Status.ALREADY_SET);
+			this.sourceRegion = sourceRegion;
+			return this;
+		}
+		
+		public Builder<T> sourceRegion(int x, int y, int width, int height)
+		{
+			updateStatus(Properties.SOURCE_REGION, Status.ALREADY_SET);
+			
+			this.sourceRegion = 
+				new Region(new Coordinate(x, y), new Dimension(width, height));
+			
+			return this;
+		}
+		
+		public Builder<T> sourceRegion(Position position, int width, int height)
+		{
+			updateStatus(Properties.SOURCE_REGION, Status.ALREADY_SET);
+			
+			this.sourceRegion = 
+				new Region(position, new Dimension(width, height));
+			
+			return this;
+		}
+		
+		public Builder<T> sourceRegion(int x, int y, Dimension dimension)
+		{
+			updateStatus(Properties.SOURCE_REGION, Status.ALREADY_SET);
+			
+			this.sourceRegion = 
+				new Region(new Coordinate(x, y), dimension);
 			
 			return this;
 		}
@@ -1541,6 +1584,7 @@ watermark(Positions.CENTER, image, opacity);
 			{
 				return new ThumbnailParameter(
 						new Dimension(width, height),
+						sourceRegion,
 						keepAspectRatio,
 						outputFormat,
 						outputFormatType,
@@ -1554,6 +1598,7 @@ watermark(Positions.CENTER, image, opacity);
 			{
 				return new ThumbnailParameter(
 						scale,
+						sourceRegion,
 						keepAspectRatio,
 						outputFormat,
 						outputFormatType,
