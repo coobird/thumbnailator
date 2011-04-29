@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.spi.IIORegistry;
+import javax.imageio.spi.ImageWriterSpi;
 
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
@@ -214,6 +218,210 @@ public class FileImageSinkTest
 		
 		String formatName = getFormatName(new FileInputStream(outputFile));
 		assertEquals("JPEG", formatName);
+	}
+	
+	@Test
+	public void write_ValidImage_InvalidFileExtension() throws IOException
+	{
+		// given
+		File outputFile = new File("test-resources/Thumbnailator/test.foo");
+		outputFile.deleteOnExit();
+		
+		BufferedImage imgToWrite = 
+			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+		
+		FileImageSink sink = new FileImageSink(outputFile);
+		
+		// when
+		try
+		{
+			sink.write(imgToWrite);
+			fail();
+		}
+		catch (UnsupportedFormatException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void write_ValidImage_InvalidFileExtension_OutputFormatSetToValidFormat() throws IOException
+	{
+		// given
+		File outputFile = new File("test-resources/Thumbnailator/test.foo");
+		File actualOutputFile = new File("test-resources/Thumbnailator/test.foo.png");
+		actualOutputFile.deleteOnExit();
+		
+		BufferedImage imgToWrite = 
+			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+		
+		FileImageSink sink = new FileImageSink(outputFile);
+		sink.setOutputFormatName("png");
+		
+		// when
+		sink.write(imgToWrite);
+		
+		// then
+		assertEquals(actualOutputFile.getCanonicalFile(), sink.getSink().getCanonicalFile());
+		
+		BufferedImage writtenImg = ImageIO.read(actualOutputFile);
+		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
+		
+		String formatName = getFormatName(new FileInputStream(actualOutputFile));
+		assertEquals("png", formatName);
+	}
+	
+	@Test
+	public void write_ValidImage_WriterCantCompress() throws IOException
+	{
+		// given
+		ImageWriteParam iwParam = mock(ImageWriteParam.class);
+		ImageWriter writer = mock(ImageWriter.class);
+		ImageWriterSpi spi = mock(ImageWriterSpi.class);
+		
+		when(iwParam.canWriteCompressed()).thenReturn(false);
+		
+		when(writer.getDefaultWriteParam()).thenReturn(iwParam);
+		when(writer.getOriginatingProvider()).thenReturn(spi);
+		
+		when(spi.getFormatNames()).thenReturn(new String[] {"foo", "FOO"});
+		when(spi.getFileSuffixes()).thenReturn(new String[] {"foo", "FOO"});
+		when(spi.createWriterInstance()).thenReturn(writer);
+		when(spi.createWriterInstance(anyObject())).thenReturn(writer);
+		IIORegistry.getDefaultInstance().registerServiceProvider(spi);
+		
+		File outputFile = new File("test-resources/Thumbnailator/test.foo");
+		outputFile.deleteOnExit();
+		
+		BufferedImage imgToWrite = 
+			new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+		
+		ThumbnailParameter param = mock(ThumbnailParameter.class);
+		when(param.getOutputQuality()).thenReturn(0.8f);
+		when(param.getOutputFormatType()).thenReturn(ThumbnailParameter.DEFAULT_FORMAT_TYPE);
+		
+		FileImageSink sink = new FileImageSink(outputFile);
+		sink.setThumbnailParameter(param);
+		
+		// when
+		sink.write(imgToWrite);
+		
+		// then
+		assertEquals(outputFile, sink.getSink());
+
+		verify(iwParam, never()).setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+		verify(iwParam, never()).setCompressionType(anyString());
+		verify(iwParam, never()).setCompressionQuality(anyFloat());
+		
+		// - check to see that parameters were not read, as this format doesn't
+		// support compression.
+		verify(param, never()).getOutputQuality();
+		verify(param, never()).getOutputFormatType();
+		
+		// clean up
+		IIORegistry.getDefaultInstance().deregisterServiceProvider(spi);
+	}
+	
+	@Test
+	public void write_ValidImage_WriterCanCompress_NoCompressionTypeFromWriter() throws IOException
+	{
+		// given
+		ImageWriteParam iwParam = mock(ImageWriteParam.class);
+		ImageWriter writer = mock(ImageWriter.class);
+		ImageWriterSpi spi = mock(ImageWriterSpi.class);
+		
+		when(iwParam.canWriteCompressed()).thenReturn(true);
+		when(iwParam.getCompressionTypes()).thenReturn(null);
+		
+		when(writer.getDefaultWriteParam()).thenReturn(iwParam);
+		when(writer.getOriginatingProvider()).thenReturn(spi);
+		
+		when(spi.getFormatNames()).thenReturn(new String[] {"foo", "FOO"});
+		when(spi.getFileSuffixes()).thenReturn(new String[] {"foo", "FOO"});
+		when(spi.createWriterInstance()).thenReturn(writer);
+		when(spi.createWriterInstance(anyObject())).thenReturn(writer);
+		IIORegistry.getDefaultInstance().registerServiceProvider(spi);
+		
+		File outputFile = new File("test-resources/Thumbnailator/test.foo");
+		outputFile.deleteOnExit();
+		
+		BufferedImage imgToWrite = 
+			new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+		
+		ThumbnailParameter param = mock(ThumbnailParameter.class);
+		when(param.getOutputQuality()).thenReturn(0.8f);
+		when(param.getOutputFormatType()).thenReturn(ThumbnailParameter.DEFAULT_FORMAT_TYPE);
+		
+		FileImageSink sink = new FileImageSink(outputFile);
+		sink.setThumbnailParameter(param);
+		
+		// when
+		sink.write(imgToWrite);
+		
+		// then
+		assertEquals(outputFile, sink.getSink());
+		
+		verify(iwParam, atLeastOnce()).setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+		verify(iwParam, never()).setCompressionType(anyString());
+		verify(iwParam, atLeastOnce()).setCompressionQuality(0.8f);
+		
+		// - check to see that parameters was read
+		verify(param, atLeastOnce()).getOutputQuality();
+		verify(param, atLeastOnce()).getOutputFormatType();
+		
+		// clean up
+		IIORegistry.getDefaultInstance().deregisterServiceProvider(spi);
+	}
+	
+	@Test
+	public void write_ValidImage_WriterCanCompress_HasCompressionTypeFromWriter() throws IOException
+	{
+		// given
+		ImageWriteParam iwParam = mock(ImageWriteParam.class);
+		ImageWriter writer = mock(ImageWriter.class);
+		ImageWriterSpi spi = mock(ImageWriterSpi.class);
+		
+		when(iwParam.canWriteCompressed()).thenReturn(true);
+		when(iwParam.getCompressionTypes()).thenReturn(new String[] {"FOOBAR"});
+		
+		when(writer.getDefaultWriteParam()).thenReturn(iwParam);
+		when(writer.getOriginatingProvider()).thenReturn(spi);
+		
+		when(spi.getFormatNames()).thenReturn(new String[] {"foo", "FOO"});
+		when(spi.getFileSuffixes()).thenReturn(new String[] {"foo", "FOO"});
+		when(spi.createWriterInstance()).thenReturn(writer);
+		when(spi.createWriterInstance(anyObject())).thenReturn(writer);
+		IIORegistry.getDefaultInstance().registerServiceProvider(spi);
+		
+		File outputFile = new File("test-resources/Thumbnailator/test.foo");
+		outputFile.deleteOnExit();
+		
+		BufferedImage imgToWrite = 
+			new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+		
+		ThumbnailParameter param = mock(ThumbnailParameter.class);
+		when(param.getOutputQuality()).thenReturn(0.8f);
+		when(param.getOutputFormatType()).thenReturn(ThumbnailParameter.DEFAULT_FORMAT_TYPE);
+		
+		FileImageSink sink = new FileImageSink(outputFile);
+		sink.setThumbnailParameter(param);
+		
+		// when
+		sink.write(imgToWrite);
+		
+		// then
+		assertEquals(outputFile, sink.getSink());
+		
+		verify(iwParam, atLeastOnce()).setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+		verify(iwParam, atLeastOnce()).setCompressionType("FOOBAR");
+		verify(iwParam, atLeastOnce()).setCompressionQuality(0.8f);
+		
+		// - check to see that parameters was read
+		verify(param, atLeastOnce()).getOutputQuality();
+		verify(param, atLeastOnce()).getOutputFormatType();
+		
+		// clean up
+		IIORegistry.getDefaultInstance().deregisterServiceProvider(spi);
 	}
 
 	@Test

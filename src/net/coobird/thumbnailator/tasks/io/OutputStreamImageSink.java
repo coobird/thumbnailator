@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -14,6 +15,7 @@ import javax.imageio.stream.ImageOutputStream;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 import net.coobird.thumbnailator.util.BufferedImages;
+import net.coobird.thumbnailator.util.ThumbnailatorUtils;
 
 /**
  * An {@link ImageSink} which specifies an {@link OutputStream} to which the
@@ -91,7 +93,7 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 		ImageWriter writer = writers.next();
 		
 		ImageWriteParam writeParam = writer.getDefaultWriteParam();
-		if (writeParam.canWriteCompressed())
+		if (writeParam.canWriteCompressed() && param != null)
 		{
 			writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
 			
@@ -106,7 +108,17 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 			{
 				writeParam.setCompressionType(param.getOutputFormatType());
 			}
-			
+			else
+			{
+				List<String> supportedFormats = 
+					ThumbnailatorUtils.getSupportedOutputFormatTypes(formatName);
+				
+				if (!supportedFormats.isEmpty())
+				{
+					writeParam.setCompressionType(supportedFormats.get(0));
+				}
+			}
+	
 			/*
 			 * Sets the compression quality, if specified.
 			 * 
