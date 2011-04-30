@@ -21,6 +21,7 @@ import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.filters.Pipeline;
 import net.coobird.thumbnailator.filters.Rotation;
 import net.coobird.thumbnailator.filters.Watermark;
+import net.coobird.thumbnailator.geometry.AbsoluteSize;
 import net.coobird.thumbnailator.geometry.Coordinate;
 import net.coobird.thumbnailator.geometry.Position;
 import net.coobird.thumbnailator.geometry.Positions;
@@ -912,7 +913,7 @@ public final class Thumbnails
 			updateStatus(Properties.SOURCE_REGION, Status.ALREADY_SET);
 			
 			this.sourceRegion = 
-				new Region(new Coordinate(x, y), new Dimension(width, height));
+				new Region(new Coordinate(x, y), new AbsoluteSize(width, height));
 			
 			return this;
 		}
@@ -925,7 +926,7 @@ public final class Thumbnails
 			int y = region.y;
 			
 			this.sourceRegion = 
-				new Region(new Coordinate(x, y), region.getSize());
+				new Region(new Coordinate(x, y), new AbsoluteSize(region.getSize()));
 			
 			return this;
 		}
@@ -935,7 +936,7 @@ public final class Thumbnails
 			updateStatus(Properties.SOURCE_REGION, Status.ALREADY_SET);
 			
 			this.sourceRegion = 
-				new Region(position, new Dimension(width, height));
+				new Region(position, new AbsoluteSize(width, height));
 			
 			return this;
 		}
@@ -945,7 +946,7 @@ public final class Thumbnails
 			updateStatus(Properties.SOURCE_REGION, Status.ALREADY_SET);
 			
 			this.sourceRegion = 
-				new Region(new Coordinate(x, y), dimension);
+				new Region(new Coordinate(x, y), new AbsoluteSize(dimension));
 			
 			return this;
 		}

@@ -1,6 +1,8 @@
 package net.coobird.thumbnailator.geometry;
 
 import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
 
 /**
  * A representation of a region, using a {@link Position} object and a
@@ -17,22 +19,22 @@ public final class Region
 	private final Position position;
 	
 	/**
-	 * Dimension of the region.
+	 * Size of the region.
 	 */
-	private final Dimension dimension;
+	private final Size size;
 	
 	/**
 	 * Instantiates a representation of a region from a {@link Position} and
-	 * {@link Dimension}. 
+	 * {@link Size}. 
 	 * 
 	 * @param position		Position of the region.
-	 * @param dimension		Dimension of the region.
+	 * @param size			Size of the region.
 	 */
-	public Region(Position position, Dimension dimension)
+	public Region(Position position, Size size)
 	{
 		super();
 		this.position = position;
-		this.dimension = dimension;
+		this.size = size;
 	}
 	
 	/**
@@ -46,13 +48,26 @@ public final class Region
 	}
 	
 	/**
-	 * Returns the dimensions of the region.
+	 * Returns the size of the region.
 	 * 
-	 * @return 				Dimension of the region.
+	 * @return 				Size of the region.
 	 */
-	public Dimension getDimension()
+	public Size getSize()
 	{
-		return dimension;
+		return size;
+	}
+	
+	public Rectangle calculate(int enclosingWidth, int enclosingHeight)
+	{
+		Dimension d = size.calculate(enclosingWidth, enclosingHeight);
+		int width = d.width;
+		int height = d.height;
+
+		Point p = position.calculate(
+				enclosingWidth, enclosingHeight, width, height, 0, 0, 0, 0
+		);
+		
+		return new Rectangle(p, d);
 	}
 
 	/* (non-Javadoc)
@@ -61,6 +76,6 @@ public final class Region
 	@Override
 	public String toString()
 	{
-		return "Region [dimension=" + dimension + ", position=" + position + "]";
+		return "Region [position=" + position + ", size=" + size + "]";
 	}
 }
