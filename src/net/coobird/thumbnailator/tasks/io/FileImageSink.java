@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -15,6 +17,7 @@ import javax.imageio.stream.ImageOutputStream;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 import net.coobird.thumbnailator.util.BufferedImages;
+import net.coobird.thumbnailator.util.ThumbnailatorUtils;
 
 /**
  * An {@link ImageSink} which writes the resulting thumbnail to a file.
@@ -109,8 +112,17 @@ public class FileImageSink extends AbstractImageSink<File>
 			return false;
 		}
 		
-		String[] suffixes = ImageIO.getImageWritersByFormatName(formatName)
-							.next().getOriginatingProvider().getFileSuffixes();
+		ImageWriter iw;
+		try
+		{
+			iw = ImageIO.getImageWritersByFormatName(formatName).next();
+		}
+		catch (NoSuchElementException e)
+		{
+			return false;
+		}
+		
+		String[] suffixes = iw.getOriginatingProvider().getFileSuffixes();
 		
 		for (String suffix : suffixes)
 		{
@@ -233,6 +245,16 @@ public class FileImageSink extends AbstractImageSink<File>
 			if (param.getOutputFormatType() != ThumbnailParameter.DEFAULT_FORMAT_TYPE)
 			{
 				writeParam.setCompressionType(param.getOutputFormatType());
+			}
+			else
+			{
+				List<String> supportedFormats = 
+					ThumbnailatorUtils.getSupportedOutputFormatTypes(formatName);
+				
+				if (!supportedFormats.isEmpty())
+				{
+					writeParam.setCompressionType(supportedFormats.get(0));
+				}
 			}
 			
 			/*
