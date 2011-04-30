@@ -20,4 +20,13 @@ public class AbsoluteSize implements Size
 	{
 		return new Dimension(size);
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString()
+	{
+		return "AbsoluteSize [width=" + size.width + ", height=" + size.height + "]";
+	}
 }
