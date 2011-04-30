@@ -57,17 +57,30 @@ public final class Region
 		return size;
 	}
 	
-	public Rectangle calculate(int enclosingWidth, int enclosingHeight)
+	/**
+	 * Calculates the position and size of the enclosed region, relative to the
+	 * enclosing region.
+	 * <p>
+	 * The portions of the enclosed region which lies outside of the enclosing
+	 * region are ignored. Effectively, the {@link Rectangle} returned by this
+	 * method is a intersection of the enclosing and enclose regions.
+	 * 
+	 * @param width		Width of the enclosing region.
+	 * @param height	Height of the enclosing region.
+	 * @return			Position and size of the enclosed region.
+	 */
+	public Rectangle calculate(int width, int height)
 	{
-		Dimension d = size.calculate(enclosingWidth, enclosingHeight);
-		int width = d.width;
-		int height = d.height;
+		Dimension d = size.calculate(width, height);
 
 		Point p = position.calculate(
-				enclosingWidth, enclosingHeight, width, height, 0, 0, 0, 0
+				width, height, d.width, d.height, 0, 0, 0, 0
 		);
 		
-		return new Rectangle(p, d);
+		Rectangle outerRectangle = new Rectangle(0, 0, width, height);
+		Rectangle innerRectangle = new Rectangle(p, d);
+		
+		return outerRectangle.intersection(innerRectangle);
 	}
 
 	/* (non-Javadoc)
