@@ -29,10 +29,21 @@ public final class Region
 	 * 
 	 * @param position		Position of the region.
 	 * @param size			Size of the region.
+	 * @throws NullPointerException		When the position and/or the size is
+	 * 									{@code null}.
 	 */
 	public Region(Position position, Size size)
 	{
 		super();
+		if (position == null)
+		{
+			throw new NullPointerException("Position cannot be null.");
+		}
+		if (size == null)
+		{
+			throw new NullPointerException("Size cannot be null.");
+		}
+		
 		this.position = position;
 		this.size = size;
 	}
