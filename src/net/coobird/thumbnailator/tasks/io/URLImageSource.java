@@ -139,6 +139,8 @@ public class URLImageSource extends AbstractImageSource<URL>
 			throw new IOException("Could not open connection to URL: " + url);
 		}
 		
+		source.setThumbnailParameter(param);
+		
 		BufferedImage img;
 		try
 		{
