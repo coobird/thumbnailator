@@ -18,4 +18,13 @@ public class RelativeSize implements Size
 		int newHeight = (int)Math.round(height * scalingFactor);
 		return new Dimension(newWidth, newHeight);
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString()
+	{
+		return "RelativeSize [scalingFactor=" + scalingFactor + "]";
+	}
 }
