@@ -26,6 +26,7 @@ import net.coobird.thumbnailator.geometry.Coordinate;
 import net.coobird.thumbnailator.geometry.Position;
 import net.coobird.thumbnailator.geometry.Positions;
 import net.coobird.thumbnailator.geometry.Region;
+import net.coobird.thumbnailator.geometry.Size;
 import net.coobird.thumbnailator.name.Rename;
 import net.coobird.thumbnailator.resizers.BicubicResizer;
 import net.coobird.thumbnailator.resizers.BilinearResizer;
@@ -901,54 +902,147 @@ public final class Thumbnails
 			return this;
 		}
 		
+		/**
+		 * Specifies the source region from which the thumbnail is to be
+		 * created from.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @param sourceRegion	Source region to use when creating a thumbnail.
+		 * 						<p>
+		 * @return				Reference to this object.
+		 * @throws NullPointerException	If the source region object is
+		 * 								{@code null}.
+		 */
 		public Builder<T> sourceRegion(Region sourceRegion)
 		{
+			if (sourceRegion == null)
+			{
+				throw new NullPointerException("Region cannot be null.");
+			}
+			
 			updateStatus(Properties.SOURCE_REGION, Status.ALREADY_SET);
 			this.sourceRegion = sourceRegion;
 			return this;
 		}
 		
+		/**
+		 * Specifies the source region from which the thumbnail is to be
+		 * created from.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @param position		Position of the source region.
+		 * @param size			Size of the source region.
+		 * @return				Reference to this object.
+		 * @throws NullPointerException	If the position and/or size is 
+		 * 								{@code null}.
+		 */
+		public Builder<T> sourceRegion(Position position, Size size)
+		{
+			if (position == null)
+			{
+				throw new NullPointerException("Position cannot be null.");
+			}
+			if (size == null)
+			{
+				throw new NullPointerException("Size cannot be null.");
+			}
+			
+			return sourceRegion(new Region(position, size));
+		}
+
+		/**
+		 * Specifies the source region from which the thumbnail is to be
+		 * created from.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @param x				The horizontal-compoennt of the top left-hand 
+		 * 						corner of the source region.
+		 * @param y				The vertical-compoennt of the top left-hand 
+		 * 						corner of the source region.
+		 * @param width			Width of the source region.
+		 * @param height		Height of the source region.
+		 * @return				Reference to this object.
+		 * @throws IllegalArgumentException	If the width and/or height is 
+		 * 									less than or equal to {@code 0}.
+		 */
 		public Builder<T> sourceRegion(int x, int y, int width, int height)
 		{
-			updateStatus(Properties.SOURCE_REGION, Status.ALREADY_SET);
+			if (width <= 0 || height <= 0)
+			{
+				throw new IllegalArgumentException(
+						"Width and height must be greater than 0."
+				);
+			}
 			
-			this.sourceRegion = 
-				new Region(new Coordinate(x, y), new AbsoluteSize(width, height));
-			
-			return this;
+			return sourceRegion(
+					new Coordinate(x, y),
+					new AbsoluteSize(width, height)
+			);
 		}
 		
-		public Builder<T> sourceRegion(Rectangle region)
-		{
-			updateStatus(Properties.SOURCE_REGION, Status.ALREADY_SET);
-			
-			int x = region.x;
-			int y = region.y;
-			
-			this.sourceRegion = 
-				new Region(new Coordinate(x, y), new AbsoluteSize(region.getSize()));
-			
-			return this;
-		}
-		
+		/**
+		 * Specifies the source region from which the thumbnail is to be
+		 * created from.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @param position		Position of the source region.
+		 * @param width			Width of the source region.
+		 * @param height		Height of the source region.
+		 * @return				Reference to this object.
+		 * @throws NullPointerException		If the position and/or size is 
+		 * 									{@code null}.
+		 * @throws IllegalArgumentException	If the width and/or height is 
+		 * 									less than or equal to {@code 0}.
+		 */
 		public Builder<T> sourceRegion(Position position, int width, int height)
 		{
-			updateStatus(Properties.SOURCE_REGION, Status.ALREADY_SET);
+			if (position == null)
+			{
+				throw new NullPointerException("Position cannot be null.");
+			}
+			if (width <= 0 || height <= 0)
+			{
+				throw new IllegalArgumentException(
+						"Width and height must be greater than 0."
+				);
+			}
 			
-			this.sourceRegion = 
-				new Region(position, new AbsoluteSize(width, height));
-			
-			return this;
+			return sourceRegion(
+					position,
+					new AbsoluteSize(width, height)
+			);
 		}
 		
-		public Builder<T> sourceRegion(int x, int y, Dimension dimension)
+		/**
+		 * Specifies the source region from which the thumbnail is to be
+		 * created from.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @param region		A rectangular region which specifies the source
+		 * 						region to use when creating the thumbnail.
+		 * @throws NullPointerException		If the region is {@code null}.
+		 */
+		public Builder<T> sourceRegion(Rectangle region)
 		{
-			updateStatus(Properties.SOURCE_REGION, Status.ALREADY_SET);
+			if (region == null)
+			{
+				throw new NullPointerException("Region cannot be null.");
+			}
 			
-			this.sourceRegion = 
-				new Region(new Coordinate(x, y), new AbsoluteSize(dimension));
-			
-			return this;
+			return sourceRegion(
+					new Coordinate(region.x, region.y),
+					new AbsoluteSize(region.getSize())
+			);
 		}
 		
 		/**
