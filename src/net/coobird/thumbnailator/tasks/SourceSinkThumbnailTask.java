@@ -58,6 +58,7 @@ public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D>
 			throw new NullPointerException("ImageSink cannot be null.");
 		}
 		
+		source.setThumbnailParameter(param);
 		this.source = source;
 		
 		destination.setThumbnailParameter(param);
