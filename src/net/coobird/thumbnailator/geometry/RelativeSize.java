@@ -39,6 +39,12 @@ public class RelativeSize implements Size
 
 	public Dimension calculate(int width, int height)
 	{
+		if (width <= 0 || height <= 0)
+		{
+			throw new IllegalArgumentException(
+					"Width and height must be greater than 0."
+			);
+		}
 		int newWidth = (int)Math.round(width * scalingFactor);
 		int newHeight = (int)Math.round(height * scalingFactor);
 		return new Dimension(newWidth, newHeight);
