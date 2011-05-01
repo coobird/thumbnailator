@@ -2,6 +2,13 @@ package net.coobird.thumbnailator.geometry;
 
 import java.awt.Dimension;
 
+/**
+ * This interface is implemented by classes which calculate the size of an
+ * object inside of an enclosing object.
+ * 
+ * @author coobird
+ *
+ */
 public interface Size
 {
 	/**
