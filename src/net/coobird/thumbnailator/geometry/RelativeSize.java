@@ -50,8 +50,10 @@ public class RelativeSize implements Size
 		return new Dimension(newWidth, newHeight);
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/** 
+	 * Returns a {@code String} representation of this object.
+	 * 
+	 * @return		{@code String} representation of this object.
 	 */
 	@Override
 	public String toString()

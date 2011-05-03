@@ -61,8 +61,10 @@ public class AbsoluteSize implements Size
 		return new Dimension(size);
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/** 
+	 * Returns a {@code String} representation of this object.
+	 * 
+	 * @return		{@code String} representation of this object.
 	 */
 	@Override
 	public String toString()
