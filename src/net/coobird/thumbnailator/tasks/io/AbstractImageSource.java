@@ -19,6 +19,11 @@ public abstract class AbstractImageSource<T> implements ImageSource<T>
 	protected boolean hasReadInput = false;
 	
 	/**
+	 * Default constructor.
+	 */
+	protected AbstractImageSource() {}
+	
+	/**
 	 * Indicates that the {@link ImageSource} has completed reading the input
 	 * file, and returns the value given in the argument. 
 	 * <p>
