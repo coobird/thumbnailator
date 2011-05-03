@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,10 +15,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
+import net.coobird.thumbnailator.geometry.AbsoluteSize;
+import net.coobird.thumbnailator.geometry.Coordinate;
+import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.name.Rename;
 import net.coobird.thumbnailator.resizers.Resizer;
 import net.coobird.thumbnailator.resizers.Resizers;
 import net.coobird.thumbnailator.resizers.configurations.ScalingMode;
+import net.coobird.thumbnailator.test.BufferedImageComparer;
 
 import org.junit.Test;
 
@@ -599,6 +604,477 @@ public class ThumbnailsBuilderTest
 			.asBufferedImage();
 	}
 	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>sourceRegion(Region) is called with valid parameters</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The thumbnail is successfully produced</li>
+	 * <li>The specified range is used as the source</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void sourceRegion_Region() throws IOException
+	{
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		outFile.deleteOnExit();
+		
+		// when
+		Thumbnails.of(img)
+			.sourceRegion(new Region(new Coordinate(0, 0), new AbsoluteSize(50, 50)))
+			.size(50, 50)
+			.toFile(outFile);
+		
+		// then
+		BufferedImage thumbnail = ImageIO.read(outFile);
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+		assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, img.getSubimage(0, 0, 50, 50)));
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>sourceRegion(Region) is called with null</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An NullPointerException is thrown</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void sourceRegion_Region_Null() throws IOException
+	{
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		outFile.deleteOnExit();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.sourceRegion((Region)null)
+				.size(50, 50)
+				.toFile(outFile);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>sourceRegion(Rectangle) is called with valid parameters</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The thumbnail is successfully produced</li>
+	 * <li>The specified range is used as the source</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void sourceRegion_Rectangle() throws IOException
+	{
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		outFile.deleteOnExit();
+		
+		// when
+		Thumbnails.of(img)
+			.sourceRegion(new Rectangle(0, 0, 50, 50))
+			.size(50, 50)
+			.toFile(outFile);
+		
+		// then
+		BufferedImage thumbnail = ImageIO.read(outFile);
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+		assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, img.getSubimage(0, 0, 50, 50)));
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>sourceRegion(Region) is called with null</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An NullPointerException is thrown</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void sourceRegion_Rectangle_Null() throws IOException
+	{
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		outFile.deleteOnExit();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.sourceRegion((Rectangle)null)
+				.size(50, 50)
+				.toFile(outFile);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>sourceRegion(Position, Size) is called with valid parameters</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The thumbnail is successfully produced</li>
+	 * <li>The specified range is used as the source</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void sourceRegion_PositionSize() throws IOException
+	{
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		outFile.deleteOnExit();
+		
+		// when
+		Thumbnails.of(img)
+			.sourceRegion(new Coordinate(0, 0), new AbsoluteSize(50, 50))
+			.size(50, 50)
+			.toFile(outFile);
+		
+		// then
+		BufferedImage thumbnail = ImageIO.read(outFile);
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+		assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, img.getSubimage(0, 0, 50, 50)));
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>sourceRegion(Position, Size) is called with Position as null</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An NullPointerException is thrown</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void sourceRegion_PositionSize_PositionNull() throws IOException
+	{
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		outFile.deleteOnExit();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.sourceRegion(null, new AbsoluteSize(50, 50))
+				.size(50, 50)
+				.toFile(outFile);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>sourceRegion(Position, Size) is called with Size as null</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An NullPointerException is thrown</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void sourceRegion_PositionSize_SizeNull() throws IOException
+	{
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		outFile.deleteOnExit();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.sourceRegion(new Coordinate(0, 0), null)
+				.size(50, 50)
+				.toFile(outFile);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			// then
+		}
+	}
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>sourceRegion(Position, int, int) is called with valid parameters</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The thumbnail is successfully produced</li>
+	 * <li>The specified range is used as the source</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void sourceRegion_PositionIntInt() throws IOException
+	{
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		outFile.deleteOnExit();
+		
+		// when
+		Thumbnails.of(img)
+			.sourceRegion(new Coordinate(0, 0), 50, 50)
+			.size(50, 50)
+			.toFile(outFile);
+		
+		// then
+		BufferedImage thumbnail = ImageIO.read(outFile);
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+		assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, img.getSubimage(0, 0, 50, 50)));
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>sourceRegion(Position, int, int) is called with Position as null</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An NullPointerException is thrown</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void sourceRegion_PositionIntInt_PositionNull() throws IOException
+	{
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		outFile.deleteOnExit();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.sourceRegion(null, 50, 50)
+				.size(50, 50)
+				.toFile(outFile);
+			fail();
+		}
+		catch (NullPointerException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>sourceRegion(Position, int, int) is called with width as non-positive</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalArgumentException is thrown</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void sourceRegion_PositionIntInt_WidthNonPositive() throws IOException
+	{
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		outFile.deleteOnExit();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.sourceRegion(new Coordinate(0, 0), -1, 50)
+				.size(50, 50)
+				.toFile(outFile);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>sourceRegion(Position, int, int) is called with height as non-positive</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalArgumentException is thrown</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void sourceRegion_PositionIntInt_HeightNonPositive() throws IOException
+	{
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		outFile.deleteOnExit();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+			.sourceRegion(new Coordinate(0, 0), 50, -1)
+			.size(50, 50)
+			.toFile(outFile);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>sourceRegion(int, int, int, int) is called with valid parameters</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The thumbnail is successfully produced</li>
+	 * <li>The specified range is used as the source</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void sourceRegion_IntIntIntInt() throws IOException
+	{
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		outFile.deleteOnExit();
+		
+		// when
+		Thumbnails.of(img)
+			.sourceRegion(0, 0, 50, 50)
+			.size(50, 50)
+			.toFile(outFile);
+		
+		// then
+		BufferedImage thumbnail = ImageIO.read(outFile);
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+		assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, img.getSubimage(0, 0, 50, 50)));
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>sourceRegion(int, int, int, int) is called with width as non-positive</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalArgumentException is thrown</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void sourceRegion_IntIntIntInt_WidthNonPositive() throws IOException
+	{
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		outFile.deleteOnExit();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.sourceRegion(0, 0, -1, 50)
+				.size(50, 50)
+				.toFile(outFile);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>sourceRegion(int, int, int, int) is called with height as non-positive</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalArgumentException is thrown</li>
+	 * </ol>
+	 * @throws IOException 
+	 */	
+	@Test
+	public void sourceRegion_IntIntIntInt_HeightNonPositive() throws IOException
+	{
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		outFile.deleteOnExit();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+			.sourceRegion(0, 0, 50, -1)
+			.size(50, 50)
+			.toFile(outFile);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
