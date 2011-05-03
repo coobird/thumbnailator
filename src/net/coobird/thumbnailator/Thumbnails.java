@@ -233,6 +233,8 @@ public final class Thumbnails
 	 * 					specify the parameters for creating the thumbnail.
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
+	 * @deprecated		use {@link #fromFilenames(Iterable)}. <b> This method
+	 * 					will be removed in Thumbnailator 0.4.0.</b>
 	 */
 	@Deprecated
 	public static Builder<File> fromFilenames(Collection<String> files)
@@ -249,6 +251,8 @@ public final class Thumbnails
 	 * 					specify the parameters for creating the thumbnail.
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
+	 * @deprecated		use {@link #fromFiles(Iterable)}. <b> This method
+	 * 					will be removed in Thumbnailator 0.4.0.</b>
 	 */
 	@Deprecated
 	public static Builder<File> fromFiles(Collection<File> files)
@@ -265,6 +269,8 @@ public final class Thumbnails
 	 * 					specify the parameters for creating the thumbnail.
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
+	 * @deprecated		use {@link #fromURLs(Iterable)}. <b> This method
+	 * 					will be removed in Thumbnailator 0.4.0.</b>
 	 */
 	@Deprecated
 	public static Builder<URL> fromURLs(Collection<URL> urls)
@@ -282,6 +288,8 @@ public final class Thumbnails
 	 * 					specify the parameters for creating the thumbnail.
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
+	 * @deprecated		use {@link #fromInputStreams(Iterable)}. <b> This method
+	 * 					will be removed in Thumbnailator 0.4.0.</b>
 	 */
 	@Deprecated
 	public static Builder<InputStream> fromInputStreams(Collection<? extends InputStream> inputStreams)
@@ -298,6 +306,8 @@ public final class Thumbnails
 	 * 					specify the parameters for creating the thumbnail.
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
+	 * @deprecated		use {@link #fromImages(Iterable)}. <b> This method
+	 * 					will be removed in Thumbnailator 0.4.0.</b>
 	 */
 	@Deprecated
 	public static Builder<BufferedImage> fromImages(Collection<BufferedImage> images)
