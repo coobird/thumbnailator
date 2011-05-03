@@ -94,8 +94,10 @@ public final class Region
 		return outerRectangle.intersection(innerRectangle);
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/** 
+	 * Returns a {@code String} representation of this region.
+	 * 
+	 * @return		{@code String} representation of this region.
 	 */
 	@Override
 	public String toString()
