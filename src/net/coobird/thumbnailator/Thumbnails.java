@@ -409,9 +409,13 @@ public final class Thumbnails
 	 * <li>{@link Thumbnails#of(BufferedImage...)}</li>
 	 * <li>{@link Thumbnails#of(File...)}</li>
 	 * <li>{@link Thumbnails#of(String...)}</li>
-	 * <li>{@link Thumbnails#fromImages(Collection)}</li>
-	 * <li>{@link Thumbnails#fromFiles(Collection)}</li>
-	 * <li>{@link Thumbnails#fromFilenames(Collection)}</li>
+	 * <li>{@link Thumbnails#of(InputStream...)}</li>
+	 * <li>{@link Thumbnails#of(URL...)}</li>
+	 * <li>{@link Thumbnails#fromImages(Iterable)}</li>
+	 * <li>{@link Thumbnails#fromFiles(Iterable)}</li>
+	 * <li>{@link Thumbnails#fromFilenames(Iterable)}</li>
+	 * <li>{@link Thumbnails#fromInputStreams(Iterable)}</li>
+	 * <li>{@link Thumbnails#fromURLs(Iterable)}</li>
 	 * </ul>
  	 * 
 	 * @author coobird
