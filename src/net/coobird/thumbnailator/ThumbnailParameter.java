@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.coobird.thumbnailator.filters.ImageFilter;
+import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.resizers.Resizer;
 
 /**
@@ -122,10 +123,24 @@ public class ThumbnailParameter
 	
 	
 	/**
+	 * The region of the source image to use when creating a thumbnail.
+	 * <p>
+	 * A value of {@code null} represents that the entire source image should
+	 * be used to create the thumbnail.
+	 */
+	private final Region sourceRegion;
+	
+	
+	/**
 	 * Creates an object holding the parameters needed in order to make a
 	 * thumbnail.
 	 * 
 	 * @param thumbnailSize		The size of the thumbnail to generate.
+	 * @param sourceRegion		The region of the source image to use when 
+	 * 							creating a thumbnail.
+	 * 							A value of {@code null} indicates that the 
+	 * 							entire source image should be used to create
+	 * 							the thumbnail.
 	 * @param keepAspectRatio	Indicates whether or not the thumbnail should
 	 * 							maintain the aspect ratio of the original image.
 	 * @param outputFormat		A string indicating the compression format
@@ -170,6 +185,7 @@ public class ThumbnailParameter
 	 */
 	public ThumbnailParameter(
 			Dimension thumbnailSize,
+			Region sourceRegion,
 			boolean keepAspectRatio,
 			String outputFormat,
 			String outputFormatType,
@@ -189,6 +205,7 @@ public class ThumbnailParameter
 		}
 
 		this.thumbnailSize = thumbnailSize;
+		this.sourceRegion = sourceRegion;
 		this.scalingFactor = Double.NaN;
 		
 		this.keepAspectRatio = keepAspectRatio;
@@ -229,6 +246,11 @@ public class ThumbnailParameter
 	 * 
 	 * @param scalingFactor		The scaling factor to use when creating a
 	 * 							thumbnail from the original image.
+	 * @param sourceRegion		The region of the source image to use when 
+	 * 							creating a thumbnail.
+	 * 							A value of {@code null} indicates that the 
+	 * 							entire source image should be used to create
+	 * 							the thumbnail.
 	 * @param keepAspectRatio	Indicates whether or not the thumbnail should
 	 * 							maintain the aspect ratio of the original image.
 	 * @param outputFormat		A string indicating the compression format
@@ -274,6 +296,7 @@ public class ThumbnailParameter
 	 */
 	public ThumbnailParameter(
 			double scalingFactor,
+			Region sourceRegion,
 			boolean keepAspectRatio,
 			String outputFormat,
 			String outputFormatType,
@@ -293,6 +316,7 @@ public class ThumbnailParameter
 		} 
 
 		this.scalingFactor = scalingFactor;
+		this.sourceRegion = sourceRegion;
 		this.thumbnailSize = null;
 		
 		this.keepAspectRatio = keepAspectRatio;
@@ -463,5 +487,21 @@ public class ThumbnailParameter
 	public boolean useOriginalImageType()
 	{
 		return imageType == ORIGINAL_IMAGE_TYPE;
+	}
+	
+	
+	/**
+	 * Returns the region of the source image to use when creating a thumbnail,
+	 * represented by a {@link Region} object.
+	 * 
+	 * @return		The {@code Region} object representing the source region
+	 * 				to use when creating a thumbnail.
+	 * 				<p>
+     * 				A value of {@code null} indicates that the entire source
+     * 				image should be used to create the thumbnail.
+	 */
+	public Region getSourceRegion()
+	{
+		return sourceRegion;
 	}
 }

@@ -1,14 +1,17 @@
 package net.coobird.thumbnailator.tasks.io;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
+import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 
 /**
@@ -73,7 +76,24 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream>
 		reader.setInput(iis);
 		inputFormatName = reader.getFormatName();
 		
-		BufferedImage img = reader.read(FIRST_IMAGE_INDEX);
+		BufferedImage img;
+		if (param != null && param.getSourceRegion() != null)
+		{
+			Region region = param.getSourceRegion();
+			int width = reader.getWidth(FIRST_IMAGE_INDEX);
+			int height = reader.getHeight(FIRST_IMAGE_INDEX);
+			
+			Rectangle sourceRegion = region.calculate(width, height);
+			
+			ImageReadParam irParam = reader.getDefaultReadParam();
+			irParam.setSourceRegion(sourceRegion);
+			
+			img = reader.read(FIRST_IMAGE_INDEX, irParam); 
+		}
+		else
+		{
+			img = reader.read(FIRST_IMAGE_INDEX); 
+		}
 		
 		iis.close();
 		
