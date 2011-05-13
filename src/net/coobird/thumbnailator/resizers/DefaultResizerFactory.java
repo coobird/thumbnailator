@@ -41,6 +41,11 @@ resizer.resize(sourceImage, destImage);
 public class DefaultResizerFactory implements ResizerFactory
 {
 	private static final DefaultResizerFactory INSTANCE = new DefaultResizerFactory();
+
+	/**
+	 * This class is not intended to be instantiated via the constructor. 
+	 */
+	private DefaultResizerFactory() {}
 	
 	public static ResizerFactory getInstance()
 	{
@@ -49,7 +54,7 @@ public class DefaultResizerFactory implements ResizerFactory
 	
 	public Resizer getResizer()
 	{
-		return Resizers.BILINEAR;
+		return Resizers.PROGRESSIVE;
 	}
 	
 	public Resizer getResizer(Dimension originalSize, Dimension thumbnailSize)
