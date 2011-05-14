@@ -2,6 +2,13 @@ package net.coobird.thumbnailator.resizers;
 
 import java.awt.Dimension;
 
+/**
+ * This interface is implemented by all classes which will return a 
+ * {@link Resizer} that should be used when creating a thumbnail.
+ * 
+ * @author coobird
+ *
+ */
 public interface ResizerFactory
 {
 	/**

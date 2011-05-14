@@ -47,6 +47,11 @@ public class DefaultResizerFactory implements ResizerFactory
 	 */
 	private DefaultResizerFactory() {}
 	
+	/**
+	 * Returns an instance of this class.
+	 * 
+	 * @return		An instance of this class.
+	 */
 	public static ResizerFactory getInstance()
 	{
 		return INSTANCE;
