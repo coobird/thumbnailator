@@ -99,7 +99,7 @@ public final class Thumbnailator
 					.size(destinationWidth, destinationHeight)
 					.keepAspectRatio(param.isKeepAspectRatio())
 					.imageType(imageType)
-					.resizer(param.getResizer())
+					.resizerFactory(param.getResizerFactory())
 					.make(sourceImage);
 		}
 		else if (!Double.isNaN(param.getScalingFactor()))
@@ -109,7 +109,7 @@ public final class Thumbnailator
 				new ScaledThumbnailMaker()
 					.scale(param.getScalingFactor())
 					.imageType(imageType)
-					.resizer(param.getResizer())
+					.resizerFactory(param.getResizerFactory())
 					.make(sourceImage);
 		}
 		else
