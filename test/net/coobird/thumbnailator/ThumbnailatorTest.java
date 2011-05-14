@@ -2,6 +2,7 @@ package net.coobird.thumbnailator;
 
 import static org.junit.Assert.*;
 
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -21,14 +22,19 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
+import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 import net.coobird.thumbnailator.name.Rename;
+import net.coobird.thumbnailator.resizers.DefaultResizerFactory;
+import net.coobird.thumbnailator.resizers.ResizerFactory;
+import net.coobird.thumbnailator.tasks.SourceSinkThumbnailTask;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
+import net.coobird.thumbnailator.tasks.io.BufferedImageSink;
+import net.coobird.thumbnailator.tasks.io.BufferedImageSource;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -3156,6 +3162,92 @@ public class ThumbnailatorTest
 		
 		assertEquals(50, thumbnail.getWidth(null));
 		assertEquals(50, thumbnail.getHeight(null));
+	}
+	
+	/**
+	 * Test for 
+	 * {@link Thumbnailator#createThumbnail(net.coobird.thumbnailator.tasks.ThumbnailTask)}
+	 * where,
+	 * 
+	 * 1) The correct parameters are given.
+	 * 2) The size is specified for the ThumbnailParameter.
+	 * 
+	 * Expected outcome is,
+	 * 
+	 * 1) The ResizerFactory is being used.
+	 * 
+	 * @throws IOException
+	 */
+	@Test
+	public void testCreateThumbnail_ThumbnailTask_ResizerFactoryBeingUsed_UsingSize() throws IOException
+	{
+		// given
+		BufferedImageSource source = new BufferedImageSource(
+				new BufferedImageBuilder(200, 200, BufferedImage.TYPE_INT_ARGB).build()
+		);
+		BufferedImageSink sink = new BufferedImageSink();
+		ResizerFactory resizerFactory = spy(DefaultResizerFactory.getInstance());
+		
+		ThumbnailParameter param = 
+			new ThumbnailParameterBuilder()
+				.size(100, 100)
+				.resizerFactory(resizerFactory)
+				.build();
+		
+		
+		// when
+		Thumbnailator.createThumbnail(
+				new SourceSinkThumbnailTask<BufferedImage, BufferedImage>(
+						param, source, sink
+				)
+		);
+		
+		// then
+		verify(resizerFactory)
+				.getResizer(new Dimension(200, 200), new Dimension(100, 100));
+	}
+	
+	/**
+	 * Test for 
+	 * {@link Thumbnailator#createThumbnail(net.coobird.thumbnailator.tasks.ThumbnailTask)}
+	 * where,
+	 * 
+	 * 1) The correct parameters are given.
+	 * 2) The scale is specified for the ThumbnailParameter.
+	 * 
+	 * Expected outcome is,
+	 * 
+	 * 1) The ResizerFactory is being used.
+	 * 
+	 * @throws IOException
+	 */
+	@Test
+	public void testCreateThumbnail_ThumbnailTask_ResizerFactoryBeingUsed_UsingScale() throws IOException
+	{
+		// given
+		BufferedImageSource source = new BufferedImageSource(
+				new BufferedImageBuilder(200, 200, BufferedImage.TYPE_INT_ARGB).build()
+		);
+		BufferedImageSink sink = new BufferedImageSink();
+		ResizerFactory resizerFactory = spy(DefaultResizerFactory.getInstance());
+		
+		ThumbnailParameter param = 
+			new ThumbnailParameterBuilder()
+				.scale(0.5)
+				.resizerFactory(resizerFactory)
+				.build();
+		
+		
+		// when
+		Thumbnailator.createThumbnail(
+				new SourceSinkThumbnailTask<BufferedImage, BufferedImage>(
+						param, source, sink
+				)
+		);
+		
+		// then
+		verify(resizerFactory)
+		.getResizer(new Dimension(200, 200), new Dimension(100, 100));
 	}
 	
 	/**
