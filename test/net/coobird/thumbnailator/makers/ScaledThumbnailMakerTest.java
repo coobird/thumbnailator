@@ -4,8 +4,9 @@ import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
+import net.coobird.thumbnailator.resizers.ProgressiveBilinearResizer;
+import net.coobird.thumbnailator.resizers.Resizer;
 import net.coobird.thumbnailator.resizers.ResizerFactory;
-import net.coobird.thumbnailator.resizers.Resizers;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -141,9 +142,10 @@ public class ScaledThumbnailMakerTest
 	{
 		// given
 		BufferedImage img = makeTestImage200x200();
+		Resizer spyResizer = spy(new ProgressiveBilinearResizer());
 		ResizerFactory resizerFactory = mock(ResizerFactory.class);
 		when(resizerFactory.getResizer(any(Dimension.class), any(Dimension.class)))
-				.thenReturn(Resizers.PROGRESSIVE);
+				.thenReturn(spyResizer);
 		
 		// when
 		new ScaledThumbnailMaker(0.5)
@@ -153,5 +155,6 @@ public class ScaledThumbnailMakerTest
 		// then
 		verify(resizerFactory, atLeastOnce())
 				.getResizer(new Dimension(200, 200), new Dimension(100, 100));
+		verify(spyResizer).resize(eq(img), any(BufferedImage.class));
 	}
 }
