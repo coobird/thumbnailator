@@ -36,6 +36,7 @@ resizer.resize(sourceImage, destImage);
  * @see Resizers
  *  
  * @author coobird
+ * @since	0.4.0
  *
  */
 public class DefaultResizerFactory implements ResizerFactory

@@ -253,6 +253,7 @@ public abstract class ThumbnailMaker
 	 * 						{@link Resizer} used when resizing the image
 	 * 						to create the thumbnail.
 	 * @return				A reference to this object.
+	 * @since	0.4.0
 	 */
 	public ThumbnailMaker resizerFactory(ResizerFactory resizerFactory)
 	{
@@ -266,6 +267,7 @@ public abstract class ThumbnailMaker
 	 * Sets the {@link ResizerFactory} to use {@link DefaultResizerFactory}.
 	 * 
 	 * @return				A reference to this object.
+	 * @since	0.4.0
 	 */
 	public ThumbnailMaker defaultResizerFactory()
 	{

@@ -153,6 +153,7 @@ public final class ThumbnailParameterBuilder
 	 * @param sourceRegion		The region of the source image to use when
 	 * 							creating a thumbnail.
 	 * @return			A reference to this object.
+	 * @since	0.3.4
 	 */
 	public ThumbnailParameterBuilder region(Region sourceRegion)
 	{
@@ -272,6 +273,7 @@ public final class ThumbnailParameterBuilder
 	 * @param resizerFactory	The {@link ResizerFactory} to use when obtaining
 	 * 							a {@link Resizer} to create the thumbnail.
 	 * @return					A reference to this object.
+	 * @since	0.4.0
 	 */
 	public ThumbnailParameterBuilder resizerFactory(ResizerFactory resizerFactory)
 	{
