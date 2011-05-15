@@ -7,7 +7,7 @@ import java.awt.Dimension;
  * unconditionally.
  * 
  * @author coobird
- *
+ * @since	0.4.0
  */
 public class FixedResizerFactory implements ResizerFactory
 {

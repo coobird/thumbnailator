@@ -7,6 +7,7 @@ import java.awt.Dimension;
  * {@link Resizer} that should be used when creating a thumbnail.
  * 
  * @author coobird
+ * @since	0.4.0
  *
  */
 public interface ResizerFactory
