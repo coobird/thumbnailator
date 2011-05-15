@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.util.Collections;
 
 import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.resizers.Resizer;
+import net.coobird.thumbnailator.resizers.ResizerFactory;
 import net.coobird.thumbnailator.resizers.Resizers;
 
 import org.junit.Test;
@@ -161,4 +163,81 @@ public class ThumbnailParameterBuilderTest
 		new ThumbnailParameterBuilder().scale(Double.NEGATIVE_INFINITY).build();
 		fail();
 	}
+	
+	/**
+	 * Test for the {@link ThumbnailParameterBuilder#build()} method, where
+	 * <ol>
+	 * <li>Where resizer is called with a specific Resizer</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A ThumbnailParameter will contain the specified Resizer.</li>
+	 * </ol>
+	 */
+	@Test
+	public void build_calledResizer_returnsGivenResizer()
+	{
+		ThumbnailParameter param = new ThumbnailParameterBuilder()
+			.scale(0.5)
+			.resizer(Resizers.BICUBIC)
+			.build();
+		
+		assertEquals(Resizers.BICUBIC, param.getResizer());
+	}
+	
+	/**
+	 * Test for the {@link ThumbnailParameterBuilder#build()} method, where
+	 * <ol>
+	 * <li>Where resizer is called with a specific Resizer</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A ThumbnailParameter will contain a ResizerFactory which will return
+	 * the specified Resizer.</li>
+	 * </ol>
+	 */
+	@Test
+	public void build_calledResizer_returnedResizerFactoryReturnsResizer()
+	{
+		ThumbnailParameter param = new ThumbnailParameterBuilder()
+			.scale(0.5)
+			.resizer(Resizers.BICUBIC)
+			.build();
+		
+		assertEquals(Resizers.BICUBIC, param.getResizerFactory().getResizer());
+	}
+	
+	/**
+	 * Test for the {@link ThumbnailParameterBuilder#build()} method, where
+	 * <ol>
+	 * <li>Where resizerFactory is called with a specific ResizerFactory</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A ThumbnailParameter will contain the specified ResizerFactory.</li>
+	 * </ol>
+	 */
+	@Test
+	public void build_calledResizerFactory()
+	{
+		ResizerFactory rf = new ResizerFactory() {
+			public Resizer getResizer(Dimension arg0, Dimension arg1)
+			{
+				return null;
+			}
+			
+			public Resizer getResizer()
+			{
+				return null;
+			}
+		};
+		
+		ThumbnailParameter param = new ThumbnailParameterBuilder()
+			.scale(0.5)
+			.resizerFactory(rf)
+			.build();
+		
+		assertEquals(rf, param.getResizerFactory());
+	}
+
 }
