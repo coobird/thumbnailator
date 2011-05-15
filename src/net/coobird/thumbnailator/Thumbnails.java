@@ -1132,8 +1132,8 @@ public final class Thumbnails
 		}
 		
 		/**
-		 * TODO
-		 * Sets the resizing operation to use when creating the thumbnail.
+		 * Sets the {@link ResizerFactory} object to use to decide what kind of
+		 * resizing operation is to be used when creating the thumbnail.
 		 * <p>
 		 * Calling this method to set this parameter is optional.
 		 * <p>
