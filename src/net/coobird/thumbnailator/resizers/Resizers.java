@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
  * The instance held by a value of this enum is a single instance. When using
  * specific implementations of {@link Resizer}s, it is preferable to obtain
  * an instance of a {@link Resizer} through this enum or the 
- * {@link ResizerFactory} class in order to prevent many instances of the
+ * {@link DefaultResizerFactory} class in order to prevent many instances of the
  * {@link Resizer} class implementations from being instantiated.
  * <p>
  * <DL>
@@ -27,7 +27,7 @@ Resizers.BILINEAR.resize(sourceImage, destImage);
  * </DD>
  * </DL>
  * 
- * @see ResizerFactory
+ * @see DefaultResizerFactory
  * 
  * @author coobird
  *

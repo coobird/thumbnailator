@@ -7,6 +7,7 @@ import java.awt.Dimension;
  * object inside of an enclosing object.
  * 
  * @author coobird
+ * @since	0.3.4
  *
  */
 public interface Size
