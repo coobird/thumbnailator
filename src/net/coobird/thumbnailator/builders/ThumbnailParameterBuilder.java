@@ -9,6 +9,7 @@ import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.resizers.DefaultResizerFactory;
 import net.coobird.thumbnailator.resizers.FixedResizerFactory;
+import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.resizers.Resizer;
 import net.coobird.thumbnailator.resizers.ResizerFactory;
 
@@ -25,6 +26,8 @@ import net.coobird.thumbnailator.resizers.ResizerFactory;
  * <dd>Unassigned. Must be set by the {@link #size(int, int)} method.</dd>
  * <dt>scaling factor</dt>
  * <dd>Unassigned. Must be set by the {@link #scale(double)} method.</dd>
+ * <dt>source region</dt>
+ * <dd>Uses the entire source image.</dd>
  * <dt>image type</dt>
  * <dd>See {@link ThumbnailParameter#DEFAULT_IMAGE_TYPE}. Same as
  * {@link BufferedImage#TYPE_INT_ARGB}.</dd>
@@ -63,6 +66,7 @@ public final class ThumbnailParameterBuilder
 	private String thumbnailFormatType = ThumbnailParameter.DEFAULT_FORMAT_TYPE;
 	private List<ImageFilter> filters = Collections.emptyList();
 	private ResizerFactory resizerFactory = DefaultResizerFactory.getInstance();
+	private Region sourceRegion = null;
 	
 	/**
 	 * Creates an instance of a {@link ThumbnailParameterBuilder}.
@@ -140,6 +144,19 @@ public final class ThumbnailParameterBuilder
 		} 
 		
 		this.scalingFactor = scalingFactor;
+		return this;
+	}
+	
+	/**
+	 * Sets the region of the source image to use when creating a thumbnail.
+	 * 
+	 * @param sourceRegion		The region of the source image to use when
+	 * 							creating a thumbnail.
+	 * @return			A reference to this object.
+	 */
+	public ThumbnailParameterBuilder region(Region sourceRegion)
+	{
+		this.sourceRegion = sourceRegion;
 		return this;
 	}
 	
@@ -286,6 +303,7 @@ public final class ThumbnailParameterBuilder
 			// If scaling factor has been set.
 			return new ThumbnailParameter(
 					scalingFactor,
+					sourceRegion,
 					keepAspectRatio,
 					thumbnailFormat,
 					thumbnailFormatType,
@@ -300,6 +318,7 @@ public final class ThumbnailParameterBuilder
 		{
 			return new ThumbnailParameter(
 					new Dimension(width, height),
+					sourceRegion,
 					keepAspectRatio,
 					thumbnailFormat,
 					thumbnailFormatType,

@@ -284,6 +284,12 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 		}
 	}
 
+	/**
+	 * Returns an iterator which generates file names according to the rules
+	 * specified by this object.
+	 * 
+	 * @return		An iterator which generates file names.
+	 */
 	public Iterator<File> iterator()
 	{
 		return iter;

@@ -23,6 +23,11 @@ public abstract class AbstractImageSink<T> implements ImageSink<T>
 	 */
 	protected ThumbnailParameter param;
 	
+	/**
+	 * Default constructor.
+	 */
+	protected AbstractImageSink() {}
+	
 	public void setOutputFormatName(String format)
 	{
 		outputFormat = format;

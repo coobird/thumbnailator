@@ -1,5 +1,7 @@
 package net.coobird.thumbnailator.tasks.io;
 
+import net.coobird.thumbnailator.ThumbnailParameter;
+
 /**
  * An abstract class for {@link ImageSource}s.
  * 
@@ -14,9 +16,19 @@ public abstract class AbstractImageSource<T> implements ImageSource<T>
 	protected String inputFormatName;
 	
 	/**
+	 * The parameters that should be used when retrieving the image. 
+	 */
+	protected ThumbnailParameter param;
+	
+	/**
 	 * Indicates whether the input has already been read.
 	 */
 	protected boolean hasReadInput = false;
+	
+	/**
+	 * Default constructor.
+	 */
+	protected AbstractImageSource() {}
 	
 	/**
 	 * Indicates that the {@link ImageSource} has completed reading the input
@@ -37,6 +49,11 @@ return finishedReading(sourceImage);
 	{
 		hasReadInput = true;
 		return returnValue;
+	}
+	
+	public void setThumbnailParameter(ThumbnailParameter param)
+	{
+		this.param = param;
 	}
 	
 	public String getInputFormatName()

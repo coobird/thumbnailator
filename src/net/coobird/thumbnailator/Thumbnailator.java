@@ -253,6 +253,7 @@ public final class Thumbnailator
 		ThumbnailParameter param = 
 			new ThumbnailParameter(
 					new Dimension(width, height),
+					null,
 					true,
 					format,
 					ThumbnailParameter.DEFAULT_FORMAT_TYPE,
@@ -392,6 +393,7 @@ public final class Thumbnailator
 		ThumbnailParameter param = 
 			new ThumbnailParameter(
 					new Dimension(width, height),
+					null,
 					true,
 					format,
 					ThumbnailParameter.DEFAULT_FORMAT_TYPE,

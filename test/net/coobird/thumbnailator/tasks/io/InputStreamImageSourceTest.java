@@ -5,11 +5,20 @@ import static org.mockito.Mockito.*;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.imageio.ImageIO;
+
+import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
+import net.coobird.thumbnailator.geometry.AbsoluteSize;
+import net.coobird.thumbnailator.geometry.Coordinate;
+import net.coobird.thumbnailator.geometry.Positions;
+import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
+import net.coobird.thumbnailator.test.BufferedImageComparer;
 
 import org.junit.Test;
 
@@ -144,5 +153,139 @@ public class InputStreamImageSourceTest
 			assertEquals("Input has not been read yet.", e.getMessage());
 			throw e;
 		}
+	}
+	
+	/*
+	 *
+	 *     +------+-----------+
+	 *     |XXXXXX|           |
+	 *     |XXXXXX|           |
+	 *     +------+           |
+	 *     |      region      |
+	 *     |                  |
+	 *     |                  |
+	 *     |                  |
+	 *     |                  |
+	 *     +------------------+
+	 *                        source
+	 */
+	@Test
+	public void appliesSourceRegion() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		
+		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		source.setThumbnailParameter(
+				new ThumbnailParameterBuilder()
+					.region(new Region(Positions.TOP_LEFT, new AbsoluteSize(40, 40)))
+					.size(20, 20)
+					.build()
+		);
+		
+		// when
+		BufferedImage img = source.read();
+			
+		// then
+		BufferedImage expectedImg = sourceImage.getSubimage(0, 0, 40, 40);
+		assertTrue(BufferedImageComparer.isRGBSimilar(expectedImg, img));
+	}
+	
+	/*
+	 *
+	 *     +------------------+ source
+	 *     |  +------------------+       
+	 *     |  |XXXXXXXXXXXXXXX|  |
+	 *     |  |XXXXXXXXXXXXXXX|  |
+	 *     |  |XX  final  XXXX|  |
+	 *     |  |XX  region XXXX|  |
+	 *     |  |XXXXXXXXXXXXXXX|  |
+	 *     |  |XXXXXXXXXXXXXXX|  |
+	 *     |  |XXXXXXXXXXXXXXX|  |
+	 *     +--|---------------+  |
+	 *        +------------------+
+	 *                             region
+	 */
+	@Test
+	public void appliesSourceRegionTooBig() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		
+		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		source.setThumbnailParameter(
+				new ThumbnailParameterBuilder()
+					.region(new Region(new Coordinate(20, 20), new AbsoluteSize(100, 100)))
+					.size(80, 80)
+					.build()
+		);
+		
+		// when
+		BufferedImage img = source.read();
+		
+		// then
+		BufferedImage expectedImg = sourceImage.getSubimage(20, 20, 80, 80);
+		assertTrue(BufferedImageComparer.isRGBSimilar(expectedImg, img));
+	}
+	
+	/*
+	 *   +-----------------+
+	 *   |                 |
+	 *   | +---------------|--+
+	 *   | |XXXXXXXXXXXXXXX|  |
+	 *   | |XXXXXXXXXXXXXXX|  |
+	 *   | |XXXX final XXXX|  |
+	 *   | |XXXX regionXXXX|  |
+	 *   | |XXXXXXXXXXXXXXX|  |
+	 *   | |XXXXXXXXXXXXXXX|  |
+	 *   +-----------------+  |
+	 *     |                region
+	 *     +------------------+
+	 *                        source
+	 */
+	@Test
+	public void appliesSourceRegionBeyondOrigin() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		
+		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		source.setThumbnailParameter(
+				new ThumbnailParameterBuilder()
+					.region(new Region(new Coordinate(-20, -20), new AbsoluteSize(100, 100)))
+					.size(80, 80)
+					.build()
+		);
+		
+		// when
+		BufferedImage img = source.read();
+		
+		// then
+		BufferedImage expectedImg = sourceImage.getSubimage(0, 0, 80, 80);
+		assertTrue(BufferedImageComparer.isRGBSimilar(expectedImg, img));
+	}
+	
+	@Test
+	public void appliesSourceRegionNotSpecified() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		
+		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		source.setThumbnailParameter(
+				new ThumbnailParameterBuilder()
+					.size(20, 20)
+					.build()
+		);
+		
+		// when
+		BufferedImage img = source.read();
+		
+		// then
+		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
 	}
 }

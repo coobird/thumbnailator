@@ -1,7 +1,10 @@
 package net.coobird.thumbnailator.tasks.io;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+
+import net.coobird.thumbnailator.geometry.Region;
 
 /**
  * An {@link ImageSource} which uses a {@link BufferedImage} as the source
@@ -40,7 +43,18 @@ public class BufferedImageSource extends AbstractImageSource<BufferedImage>
 	public BufferedImage read() throws IOException
 	{
 		inputFormatName = null;
-		return finishedReading(img);
+		
+		if (param != null && param.getSourceRegion() != null)
+		{
+			Region region = param.getSourceRegion();
+			Rectangle r = region.calculate(img.getWidth(), img.getHeight());
+			
+			return finishedReading(img.getSubimage(r.x, r.y, r.width, r.height));
+		}
+		else
+		{
+			return finishedReading(img);
+		}
 	}
 
 	public BufferedImage getSource()

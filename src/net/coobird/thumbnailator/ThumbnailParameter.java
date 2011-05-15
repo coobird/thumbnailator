@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.resizers.FixedResizerFactory;
+import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.resizers.Resizer;
 import net.coobird.thumbnailator.resizers.ResizerFactory;
 
@@ -121,6 +122,14 @@ public class ThumbnailParameter
 	 * to be used when performing an image resizing operation.
 	 */
 	private final ResizerFactory resizerFactory;
+
+	/**
+	 * The region of the source image to use when creating a thumbnail.
+	 * <p>
+	 * A value of {@code null} represents that the entire source image should
+	 * be used to create the thumbnail.
+	 */
+	private final Region sourceRegion;
 	
 	/**
 	 * Private constructor which sets all the required fields, and performs
@@ -129,6 +138,11 @@ public class ThumbnailParameter
 	 * This constructor is to be called from all the public constructors.
 	 * 
 	 * @param thumbnailSize		The size of the thumbnail to generate.
+	 * @param sourceRegion		The region of the source image to use when 
+	 * 							creating a thumbnail.
+	 * 							A value of {@code null} indicates that the 
+	 * 							entire source image should be used to create
+	 * 							the thumbnail.
 	 * @param scalingFactor		The scaling factor to use when creating a
 	 * 							thumbnail from the original image.
 	 * @param keepAspectRatio	Indicates whether or not the thumbnail should
@@ -180,6 +194,7 @@ public class ThumbnailParameter
 	private ThumbnailParameter(
 			Dimension thumbnailSize,
 			double scalingFactor,
+			Region sourceRegion,
 			boolean keepAspectRatio,
 			String outputFormat,
 			String outputFormatType,
@@ -192,6 +207,8 @@ public class ThumbnailParameter
 		// The following 2 fields are set by the public constructors.
 		this.thumbnailSize = thumbnailSize;
 		this.scalingFactor = scalingFactor;
+
+		this.sourceRegion = sourceRegion;
 		
 		this.keepAspectRatio = keepAspectRatio;
 		
@@ -318,6 +335,7 @@ public class ThumbnailParameter
 		this(
 				thumbnailSize,
 				Double.NaN,
+				null,
 				keepAspectRatio,
 				outputFormat,
 				outputFormatType,
@@ -394,6 +412,7 @@ public class ThumbnailParameter
 		this(
 				null,
 				scalingFactor,
+				null,
 				keepAspectRatio,
 				outputFormat,
 				outputFormatType,
@@ -411,6 +430,177 @@ public class ThumbnailParameter
 	 * thumbnail.
 	 * 
 	 * @param thumbnailSize		The size of the thumbnail to generate.
+	 * @param sourceRegion		The region of the source image to use when 
+	 * 							creating a thumbnail.
+	 * 							A value of {@code null} indicates that the 
+	 * 							entire source image should be used to create
+	 * 							the thumbnail.
+	 * @param keepAspectRatio	Indicates whether or not the thumbnail should
+	 * 							maintain the aspect ratio of the original image.
+	 * @param outputFormat		A string indicating the compression format
+	 * 							that should be applied on the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#ORIGINAL_FORMAT} 
+	 * 							should be provided if the same image format as
+	 * 							the original should	be used for the thumbnail.
+	 * @param outputFormatType	A string indicating the compression type that
+	 * 							should be used when writing the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DEFAULT_FORMAT_TYPE} 
+	 * 							should be provided if the thumbnail should be
+	 * 							written using the default compression type of
+	 * 							the codec specified in {@code outputFormat}.
+	 * @param outputQuality		A value from {@code 0.0f} to {@code 1.0f} which
+	 * 							indicates the quality setting to use for the
+	 * 							compression of the thumbnail. {@code 0.0f}
+	 * 							indicates the lowest quality, {@code 1.0f}
+	 * 							indicates the highest quality setting for the 
+	 * 							compression.
+	 * 							{@link ThumbnailParameter#DEFAULT_QUALITY}
+	 * 							should be specified when the codec's default
+	 * 							compression quality settings should be used.
+	 * @param imageType 		The {@link BufferedImage} image type of the 
+	 * 							thumbnail.
+	 * 							A value of
+	 * 							{@link ThumbnailParameter#DEFAULT_IMAGE_TYPE}
+	 *							should be specified when the default image
+	 *							type should be used when creating the thumbnail.
+	 * @param filters			The {@link ImageFilter}s to apply to the
+	 * 							thumbnail.
+	 * 							A value of {@code null} will be recognized as
+	 * 							no filters are to be applied.
+	 * 							The filters are applied after the original
+	 * 							image has been resized.
+	 * @param resizer			The {@link Resizer} to use when performing the
+	 * 							resizing operation to create a thumbnail.
+	 * 
+	 * @throws IllegalArgumentException 	If size is {@code null} or if the 
+	 * 										dimensions are negative, or if the 
+	 * 										{@link Resizer} is null.
+	 * @since	0.3.4
+	 */
+	public ThumbnailParameter(
+			Dimension thumbnailSize,
+			Region sourceRegion,
+			boolean keepAspectRatio,
+			String outputFormat,
+			String outputFormatType,
+			float outputQuality,
+			int imageType,
+			List<ImageFilter> filters,
+			Resizer resizer
+	)
+	{
+		this(
+				thumbnailSize,
+				Double.NaN,
+				sourceRegion,
+				keepAspectRatio,
+				outputFormat,
+				outputFormatType,
+				outputQuality,
+				imageType,
+				filters,
+				new FixedResizerFactory(resizer)
+		);
+		
+		validateThumbnailSize();
+	}
+	
+	/**
+	 * Creates an object holding the parameters needed in order to make a
+	 * thumbnail.
+	 * 
+	 * @param scalingFactor		The scaling factor to use when creating a
+	 * 							thumbnail from the original image.
+	 * @param sourceRegion		The region of the source image to use when 
+	 * 							creating a thumbnail.
+	 * 							A value of {@code null} indicates that the 
+	 * 							entire source image should be used to create
+	 * 							the thumbnail.
+	 * @param keepAspectRatio	Indicates whether or not the thumbnail should
+	 * 							maintain the aspect ratio of the original image.
+	 * @param outputFormat		A string indicating the compression format
+	 * 							that should be applied on the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#ORIGINAL_FORMAT} 
+	 * 							should be provided if the same image format as
+	 * 							the original should	be used for the thumbnail.
+	 * @param outputFormatType	A string indicating the compression type that
+	 * 							should be used when writing the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DEFAULT_FORMAT_TYPE} 
+	 * 							should be provided if the thumbnail should be
+	 * 							written using the default compression type of
+	 * 							the codec specified in {@code outputFormat}.
+	 * @param outputQuality		A value from {@code 0.0f} to {@code 1.0f} which
+	 * 							indicates the quality setting to use for the
+	 * 							compression of the thumbnail. {@code 0.0f}
+	 * 							indicates the lowest quality, {@code 1.0f}
+	 * 							indicates the highest quality setting for the 
+	 * 							compression.
+	 * 							{@link ThumbnailParameter#DEFAULT_QUALITY}
+	 * 							should be specified when the codec's default
+	 * 							compression quality settings should be used.
+	 * @param imageType 		The {@link BufferedImage} image type of the 
+	 * 							thumbnail.
+	 * 							A value of
+	 * 							{@link ThumbnailParameter#DEFAULT_IMAGE_TYPE}
+	 *							should be specified when the default image
+	 *							type should be used when creating the thumbnail.
+	 * @param filters			The {@link ImageFilter}s to apply to the
+	 * 							thumbnail.
+	 * 							A value of {@code null} will be recognized as
+	 * 							no filters are to be applied.
+	 * 							The filters are applied after the original
+	 * 							image has been resized.
+	 * @param resizer			The {@link Resizer} to use when performing the
+	 * 							resizing operation to create a thumbnail.
+	 * 
+	 * @throws IllegalArgumentException 	If the scaling factor is not a
+	 * 										rational number or is less than or
+	 * 										equal to 0, or if the 
+	 * 										{@link Resizer} is null. 
+	 * @since	0.3.4
+	 */
+	public ThumbnailParameter(
+			double scalingFactor,
+			Region sourceRegion,
+			boolean keepAspectRatio,
+			String outputFormat,
+			String outputFormatType,
+			float outputQuality,
+			int imageType,
+			List<ImageFilter> filters,
+			Resizer resizer
+	)
+	{
+		this(
+				null,
+				scalingFactor,
+				sourceRegion,
+				keepAspectRatio,
+				outputFormat,
+				outputFormatType,
+				outputQuality,
+				imageType,
+				filters,
+				new FixedResizerFactory(resizer)
+		);
+		
+		validateScalingFactor();
+	}
+	
+	/**
+	 * Creates an object holding the parameters needed in order to make a
+	 * thumbnail.
+	 * 
+	 * @param thumbnailSize		The size of the thumbnail to generate.
+	 * @param sourceRegion		The region of the source image to use when 
+	 * 							creating a thumbnail.
+	 * 							A value of {@code null} indicates that the 
+	 * 							entire source image should be used to create
+	 * 							the thumbnail.
 	 * @param keepAspectRatio	Indicates whether or not the thumbnail should
 	 * 							maintain the aspect ratio of the original image.
 	 * @param outputFormat		A string indicating the compression format
@@ -453,10 +643,12 @@ public class ThumbnailParameter
 	 * 
 	 * @throws IllegalArgumentException 	If size is {@code null} or if the 
 	 * 										dimensions are negative, or if the 
-	 * 										{@link ResizerFactory} is null. 
+	 * 										{@link ResizerFactory} is null.
+	 * @since	0.4.0 
 	 */
 	public ThumbnailParameter(
 			Dimension thumbnailSize,
+			Region sourceRegion,
 			boolean keepAspectRatio,
 			String outputFormat,
 			String outputFormatType,
@@ -469,6 +661,7 @@ public class ThumbnailParameter
 		this(
 				thumbnailSize,
 				Double.NaN,
+				sourceRegion,
 				keepAspectRatio,
 				outputFormat,
 				outputFormatType,
@@ -487,6 +680,11 @@ public class ThumbnailParameter
 	 * 
 	 * @param scalingFactor		The scaling factor to use when creating a
 	 * 							thumbnail from the original image.
+	 * @param sourceRegion		The region of the source image to use when 
+	 * 							creating a thumbnail.
+	 * 							A value of {@code null} indicates that the 
+	 * 							entire source image should be used to create
+	 * 							the thumbnail.
 	 * @param keepAspectRatio	Indicates whether or not the thumbnail should
 	 * 							maintain the aspect ratio of the original image.
 	 * @param outputFormat		A string indicating the compression format
@@ -532,9 +730,11 @@ public class ThumbnailParameter
 	 * 										rational number or is less than or
 	 * 										equal to 0, or if the 
 	 * 										{@link ResizerFactory} is null.
+	 * @since	0.4.0 
 	 */
 	public ThumbnailParameter(
 			double scalingFactor,
+			Region sourceRegion,
 			boolean keepAspectRatio,
 			String outputFormat,
 			String outputFormatType,
@@ -547,6 +747,7 @@ public class ThumbnailParameter
 		this(
 				null,
 				scalingFactor,
+				sourceRegion,
 				keepAspectRatio,
 				outputFormat,
 				outputFormatType,
@@ -708,5 +909,20 @@ public class ThumbnailParameter
 	public boolean useOriginalImageType()
 	{
 		return imageType == ORIGINAL_IMAGE_TYPE;
+	}
+	
+	/**
+	 * Returns the region of the source image to use when creating a thumbnail,
+	 * represented by a {@link Region} object.
+	 * 
+	 * @return		The {@code Region} object representing the source region
+	 * 				to use when creating a thumbnail.
+	 * 				<p>
+     * 				A value of {@code null} indicates that the entire source
+     * 				image should be used to create the thumbnail.
+	 */
+	public Region getSourceRegion()
+	{
+		return sourceRegion;
 	}
 }
