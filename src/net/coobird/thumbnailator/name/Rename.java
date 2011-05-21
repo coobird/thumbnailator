@@ -170,6 +170,8 @@ public abstract class Rename
 	 * specified name and thumbnail creation parameters.
 	 * 
 	 * @param name			Name to apply the function on.
+	 * 						<em>The file name should not include the directory 
+	 * 						in which the file resides in.</em>
 	 * @param param			Parameters used to create the thumbnail.
 	 * @return				The name after the function has been applied.
 	 */
