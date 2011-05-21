@@ -56,5 +56,64 @@ public class NullResizerTest
 		// then
 		assertTrue(BufferedImageComparer.isRGBSimilar(srcImage.getSubimage(0, 0, 50, 50), destImage));
 	}
-
+	
+	@Test
+	public void resizeNullAndNull()
+	{
+		// given
+		BufferedImage srcImage = null;
+		BufferedImage destImage = null;
+		
+		try
+		{
+			// when
+			new NullResizer().resize(srcImage, destImage);
+			fail();
+		}
+		catch (Exception e)
+		{
+			// then
+			assertEquals("The source and/or destination image is null.", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void resizeSpecifiedAndNull()
+	{
+		// given
+		BufferedImage srcImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage destImage = null;
+		
+		try
+		{
+			// when
+			new NullResizer().resize(srcImage, destImage);
+			fail();
+		}
+		catch (Exception e)
+		{
+			// then
+			assertEquals("The source and/or destination image is null.", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void resizeNullAndSpecified()
+	{
+		// given
+		BufferedImage srcImage = null;
+		BufferedImage destImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+		
+		try
+		{
+			// when
+			new NullResizer().resize(srcImage, destImage);
+			fail();
+		}
+		catch (Exception e)
+		{
+			// then
+			assertEquals("The source and/or destination image is null.", e.getMessage());
+		}
+	}
 }
