@@ -322,7 +322,7 @@ public class ThumbnailatorTest
 		{
 			String fileName = f.getName();
 			String newFileName = 
-				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName);
+				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
 			
 			new File(f.getParent(), newFileName).deleteOnExit();
 		}
@@ -385,7 +385,7 @@ public class ThumbnailatorTest
 		{
 			String fileName = f.getName();
 			String newFileName = 
-				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName);
+				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
 			
 			new File(f.getParent(), newFileName).deleteOnExit();
 		}
@@ -434,7 +434,7 @@ public class ThumbnailatorTest
 		{
 			String fileName = f.getName();
 			String newFileName = 
-				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName);
+				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
 			
 			new File(f.getParent(), newFileName).deleteOnExit();
 		}
@@ -491,7 +491,7 @@ public class ThumbnailatorTest
 		{
 			String fileName = f.getName();
 			String newFileName = 
-				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName);
+				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
 			
 			new File(f.getParent(), newFileName).deleteOnExit();
 		}
@@ -794,7 +794,7 @@ public class ThumbnailatorTest
 		{
 			String fileName = f.getName();
 			String newFileName = 
-				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName);
+				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
 			
 			new File(f.getParent(), newFileName).deleteOnExit();
 		}
@@ -856,7 +856,7 @@ public class ThumbnailatorTest
 		{
 			String fileName = f.getName();
 			String newFileName = 
-				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName);
+				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
 			
 			new File(f.getParent(), newFileName).deleteOnExit();
 		}
@@ -905,7 +905,7 @@ public class ThumbnailatorTest
 		{
 			String fileName = f.getName();
 			String newFileName = 
-				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName);
+				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
 			
 			new File(f.getParent(), newFileName).deleteOnExit();
 		}

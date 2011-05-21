@@ -15,6 +15,7 @@ import java.util.Collections;
 import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
+import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.makers.FixedSizeThumbnailMaker;
 import net.coobird.thumbnailator.makers.ScaledThumbnailMaker;
@@ -443,10 +444,15 @@ public final class Thumbnailator
 		
 		ArrayList<File> resultFiles = new ArrayList<File>();
 		
+		ThumbnailParameter param = 
+			new ThumbnailParameterBuilder()
+				.size(width, height)
+				.build();
+		
 		for (File inFile : files)
 		{
 			File outFile = 
-				new File(inFile.getParent(), rename.apply(inFile.getName()));
+				new File(inFile.getParent(), rename.apply(inFile.getName(), param));
 			
 			createThumbnail(inFile, outFile, width, height);
 			
@@ -488,10 +494,15 @@ public final class Thumbnailator
 			throw new NullPointerException("Rename is null.");
 		}
 		
+		ThumbnailParameter param = 
+			new ThumbnailParameterBuilder()
+				.size(width, height)
+				.build();
+		
 		for (File inFile : files)
 		{
 			File outFile = 
-				new File(inFile.getParent(), rename.apply(inFile.getName()));
+				new File(inFile.getParent(), rename.apply(inFile.getName(), param));
 			
 			createThumbnail(inFile, outFile, width, height);
 		}
