@@ -64,8 +64,28 @@ public abstract class Rename
 	 * <li>Before: {@code picture.jpg}</li>
 	 * <li>After: {@code thumbnail-picture.jpg}</li>
 	 * </ul>
+	 * 
+	 * @deprecated 		Please use the correctly spelled 
+	 * 					{@link Rename#PREFIX_HYPHEN_THUMBNAIL}. This constant
+	 * 					will be removed in Thumbnailator 0.5.0.
 	 */
-	public static final Rename PREFIX_HYPTHEN_THUMBNAIL = new Rename() {
+	@Deprecated
+	public static final Rename PREFIX_HYPTHEN_THUMBNAIL = Rename.PREFIX_HYPHEN_THUMBNAIL;
+	
+	/**
+	 * Appends {@code thumbnail-} to the beginning of the file name.
+	 * <p>
+	 * Note: The {@link #apply(String, ThumbnailParameter)} method does not use
+	 * the {@code param} parameter. A value of {@code null} for {@code param} is
+	 * permitted.
+	 * <p>
+	 * <dt>Example</dt>
+	 * <ul>
+	 * <li>Before: {@code picture.jpg}</li>
+	 * <li>After: {@code thumbnail-picture.jpg}</li>
+	 * </ul>
+	 */
+	public static final Rename PREFIX_HYPHEN_THUMBNAIL = new Rename() {
 		@Override
 		public String apply(String fileName, ThumbnailParameter param)
 		{
@@ -108,8 +128,29 @@ public abstract class Rename
 	 * <li>Before: {@code picture.jpg}</li>
 	 * <li>After: {@code picture-thumbnail.jpg}</li>
 	 * </ul>
+	 * 
+	 * @deprecated 		Please use the correctly spelled 
+	 * 					{@link Rename#SUFFIX_HYPHEN_THUMBNAIL}. This constant
+	 * 					will be removed in Thumbnailator 0.5.0.
 	 */
-	public static final Rename SUFFIX_HYPTHEN_THUMBNAIL = new Rename() {
+	@Deprecated
+	public static final Rename SUFFIX_HYPTHEN_THUMBNAIL = Rename.SUFFIX_HYPHEN_THUMBNAIL;
+	
+	/**
+	 * Appends {@code -thumbnail} to the file name prior to the extension of
+	 * the file.
+	 * <p>
+	 * Note: The {@link #apply(String, ThumbnailParameter)} method does not use
+	 * the {@code param} parameter. A value of {@code null} for {@code param} is
+	 * permitted.
+	 * <p>
+	 * <dt>Example</dt>
+	 * <ul>
+	 * <li>Before: {@code picture.jpg}</li>
+	 * <li>After: {@code picture-thumbnail.jpg}</li>
+	 * </ul>
+	 */
+	public static final Rename SUFFIX_HYPHEN_THUMBNAIL = new Rename() {
 		@Override
 		public String apply(String fileName, ThumbnailParameter param)
 		{
