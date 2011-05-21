@@ -33,6 +33,7 @@ import net.coobird.thumbnailator.tasks.io.BufferedImageSource;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
@@ -3247,7 +3248,55 @@ public class ThumbnailatorTest
 		
 		// then
 		verify(resizerFactory)
-		.getResizer(new Dimension(200, 200), new Dimension(100, 100));
+			.getResizer(new Dimension(200, 200), new Dimension(100, 100));
+	}
+
+	@Test
+	public void renameGivenThumbnailParameter_createThumbnails() throws IOException
+	{
+		// given
+		Rename rename = mock(Rename.class);
+		when(rename.apply(anyString(), any(ThumbnailParameter.class)))
+			.thenReturn("thumbnail.grid.png");
+				
+		File f = new File("test-resources/Thumbnailator/grid.png");
+		
+		// when
+		Thumbnailator.createThumbnails(Arrays.asList(f), rename, 50, 50);
+		
+		// then
+		ArgumentCaptor<ThumbnailParameter> ac = 
+			ArgumentCaptor.forClass(ThumbnailParameter.class);
+		
+		verify(rename).apply(eq(f.getName()), ac.capture());
+		assertEquals(new Dimension(50, 50), ac.getValue().getSize());
+		
+		// clean up
+		new File("test-resources/Thumbnailator/thumbnail.grid.png").deleteOnExit();
+	}
+	
+	@Test
+	public void renameGivenThumbnailParameter_createThumbnailsAsCollection() throws IOException
+	{
+		// given
+		Rename rename = mock(Rename.class);
+		when(rename.apply(anyString(), any(ThumbnailParameter.class)))
+			.thenReturn("thumbnail.grid.png");
+		
+		File f = new File("test-resources/Thumbnailator/grid.png");
+		
+		// when
+		Thumbnailator.createThumbnailsAsCollection(Arrays.asList(f), rename, 50, 50);
+		
+		// then
+		ArgumentCaptor<ThumbnailParameter> ac = 
+			ArgumentCaptor.forClass(ThumbnailParameter.class);
+		
+		verify(rename).apply(eq(f.getName()), ac.capture());
+		assertEquals(new Dimension(50, 50), ac.getValue().getSize());
+		
+		// clean up
+		new File("test-resources/Thumbnailator/thumbnail.grid.png").deleteOnExit();
 	}
 	
 	/**
