@@ -3,10 +3,11 @@ package net.coobird.thumbnailator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
+import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -30,6 +31,7 @@ import net.coobird.thumbnailator.resizers.configurations.ScalingMode;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 
 /**
@@ -2508,5 +2510,31 @@ public class ThumbnailsBuilderTest
 		
 		// then
 		fail();
+	}
+	
+	@Test
+	public void renameGivenThumbnailParameter() throws IOException
+	{
+		// given
+		Rename rename = mock(Rename.class);
+		when(rename.apply(anyString(), any(ThumbnailParameter.class)))
+			.thenReturn("thumbnail.grid.png");
+		
+		File f = new File("test-resources/Thumbnailator/grid.png");
+		
+		// when
+		Thumbnails.of(f)
+			.size(50, 50)
+			.asFiles(rename);
+		
+		// then
+		ArgumentCaptor<ThumbnailParameter> ac = 
+			ArgumentCaptor.forClass(ThumbnailParameter.class);
+		
+		verify(rename).apply(eq(f.getName()), ac.capture());
+		assertEquals(new Dimension(50, 50), ac.getValue().getSize());
+		
+		// clean up
+		new File("test-resources/Thumbnailator/thumbnail.grid.png").deleteOnExit();
 	}
 }
