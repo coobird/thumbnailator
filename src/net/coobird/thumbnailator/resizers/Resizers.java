@@ -35,6 +35,12 @@ Resizers.BILINEAR.resize(sourceImage, destImage);
 public enum Resizers implements Resizer
 {
 	/**
+	 * A {@link Resizer} which does not perform resizing operations. The source
+	 * image will be copied over to the destination image.
+	 */
+	NULL(new NullResizer()),
+	
+	/**
 	 * A {@link Resizer} which performs resizing operations using 
 	 * bilinear interpolation.
 	 */
