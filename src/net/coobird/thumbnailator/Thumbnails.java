@@ -2000,7 +2000,7 @@ watermark(Positions.CENTER, image, opacity);
 				File f = ((FileImageSource)source).getSource();
 				
 				File destinationFile = 
-					new File(f.getParent(), rename.apply(f.getName()));
+					new File(f.getParent(), rename.apply(f.getName(), param));
 				
 				destinationFiles.add(destinationFile);
 				
