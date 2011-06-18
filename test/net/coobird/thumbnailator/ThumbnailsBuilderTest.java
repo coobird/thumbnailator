@@ -104,6 +104,62 @@ public class ThumbnailsBuilderTest
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
 	 * <li>The size method is called.</li>
+	 * <li>The height is Integer.MAX_VALUE.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The image is created</li>
+	 * <li>The thumbnail has the size based on the width</li>
+	 * </ol>
+	 */
+	@Test
+	public void sizeWithHeightAsALargeNumber() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(50, Integer.MAX_VALUE)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The size method is called.</li>
+	 * <li>The width is Integer.MAX_VALUE.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The image is created</li>
+	 * <li>The thumbnail has the size based on the height</li>
+	 * </ol>
+	 */
+	@Test
+	public void sizeWithWidthAsALargeNumber() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(Integer.MAX_VALUE, 50)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The size method is called.</li>
 	 * <li>The width and height is 0.</li>
 	 * </ol>
 	 * and the expected outcome is,
