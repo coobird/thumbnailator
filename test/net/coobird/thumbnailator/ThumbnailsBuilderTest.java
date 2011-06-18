@@ -237,6 +237,136 @@ public class ThumbnailsBuilderTest
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
+	 * <li>The width method is called twice.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void widthTwice() throws IOException
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		Thumbnails.of(img)
+			.width(50)
+			.width(50)
+			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The width method is called.</li>
+	 * <li>Then, the size method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void widthThenSize() throws IOException
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		Thumbnails.of(img)
+			.width(50)
+			.size(50, 50)
+			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The size method is called.</li>
+	 * <li>Then, the width method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void sizeThenWidth() throws IOException
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		Thumbnails.of(img)
+			.size(50, 50)
+			.width(50)
+			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The height method is called twice.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void heightTwice() throws IOException
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		Thumbnails.of(img)
+			.height(50)
+			.height(50)
+			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The height method is called.</li>
+	 * <li>Then the size method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void heightThenSize() throws IOException
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		Thumbnails.of(img)
+			.height(50)
+			.size(50, 50)
+			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The size method is called.</li>
+	 * <li>Then, the height method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void sizeThenHeight() throws IOException
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		Thumbnails.of(img)
+			.size(50, 50)
+			.height(50)
+			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
 	 * <li>The size method is called.</li>
 	 * <li>The keepAspectRatio method is true.</li>
 	 * </ol>
@@ -2325,5 +2455,505 @@ public class ThumbnailsBuilderTest
 			assertEquals("Scaling mode is null.", e.getMessage());
 			throw e;
 		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The width method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The thumbnail size is constrained by the width</li>
+	 * <li>The thumbnail size maintains the aspect ratio of the original</li>
+	 * </ol>
+	 */	
+	@Test
+	public void width() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.width(50)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(25, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The height method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The thumbnail size is constrained by the width</li>
+	 * <li>The thumbnail size maintains the aspect ratio of the original</li>
+	 * </ol>
+	 */	
+	@Test
+	public void height() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.height(50)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The width method is called</li>
+	 * <li>The height method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The thumbnail size is constrained by the width</li>
+	 * <li>The thumbnail size is constrained by the height</li>
+	 * <li>The image is constrained to the smallest dimension</li>
+	 * <li>The thumbnail size maintains the aspect ratio of the original</li>
+	 * </ol>
+	 */	
+	@Test
+	public void widthAndHeight() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.width(50)
+			.height(50)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(25, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The height method is called</li>
+	 * <li>The width method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The thumbnail size is constrained by the width</li>
+	 * <li>The thumbnail size is constrained by the height</li>
+	 * <li>The image is constrained to the smallest dimension</li>
+	 * <li>The thumbnail size maintains the aspect ratio of the original</li>
+	 * </ol>
+	 */	
+	@Test
+	public void heightAndWidth() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.height(50)
+			.width(50)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(25, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The width method is called</li>
+	 * <li>The keepAspectRatio is called with false</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void widthNotPreservingTheAspectRatio() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.keepAspectRatio(false)
+				.width(50)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The height method is called</li>
+	 * <li>The keepAspectRatio method is called with false</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void heightNotPreservingTheAspectRatio() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.height(50)
+				.keepAspectRatio(false)
+				.asBufferedImage();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The width method is called</li>
+	 * <li>The height method is called</li>
+	 * <li>The keepAspectRatio is called with false</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void widthAndHeightNotPreservingTheAspectRatio() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.width(50)
+				.height(50)
+				.keepAspectRatio(false)
+				.asBufferedImage();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The width method is called</li>
+	 * <li>The height method is called</li>
+	 * <li>The keepAspectRatio is called with false</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void heightAndWidthNotPreservingTheAspectRatio() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.height(50)
+				.width(50)
+				.keepAspectRatio(false)
+				.asBufferedImage();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The keepAspectRatio is called with false, first</li>
+	 * <li>The width method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void widthNotPreservingTheAspectRatioFirst() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.keepAspectRatio(false)
+				.width(50)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The keepAspectRatio is called with false, first</li>
+	 * <li>The height method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void heightNotPreservingTheAspectRatioFirst() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.keepAspectRatio(false)
+				.height(50)
+				.asBufferedImage();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The keepAspectRatio is called with false, first</li>
+	 * <li>The width method is called</li>
+	 * <li>The height method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void widthAndHeightNotPreservingTheAspectRatioFirst() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.keepAspectRatio(false)
+				.width(50)
+				.height(50)
+				.asBufferedImage();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The keepAspectRatio is called with false, first</li>
+	 * <li>The width method is called</li>
+	 * <li>The height method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void heightAndWidthNotPreservingTheAspectRatioFirst() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.keepAspectRatio(false)
+				.height(50)
+				.width(50)
+				.asBufferedImage();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The width method is called</li>
+	 * <li>The keepAspectRatio is called with true</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The thumbnail size is constrained by the width</li>
+	 * <li>The thumbnail size maintains the aspect ratio of the original</li>
+	 * </ol>
+	 */	
+	@Test
+	public void widthAndPreservingTheAspectRatio() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.width(50)
+			.keepAspectRatio(true)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(25, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The height method is called</li>
+	 * <li>The keepAspectRatio is called with true</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The thumbnail size is constrained by the width</li>
+	 * <li>The thumbnail size maintains the aspect ratio of the original</li>
+	 * </ol>
+	 */	
+	@Test
+	public void heightAndPreservingTheAspectRatio() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.height(50)
+			.keepAspectRatio(true)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The width method is called</li>
+	 * <li>The height method is called</li>
+	 * <li>The keepAspectRatio is called with true</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The thumbnail size is constrained by the width</li>
+	 * <li>The thumbnail size is constrained by the height</li>
+	 * <li>The image is constrained to the smallest dimension</li>
+	 * <li>The thumbnail size maintains the aspect ratio of the original</li>
+	 * </ol>
+	 */	
+	@Test
+	public void widthAndHeightAndPreservingTheAspectRatio() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.width(50)
+			.height(50)
+			.keepAspectRatio(true)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(25, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The height method is called</li>
+	 * <li>The width method is called</li>
+	 * <li>The keepAspectRatio is called with true</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The thumbnail size is constrained by the width</li>
+	 * <li>The thumbnail size is constrained by the height</li>
+	 * <li>The image is constrained to the smallest dimension</li>
+	 * <li>The thumbnail size maintains the aspect ratio of the original</li>
+	 * </ol>
+	 */	
+	@Test
+	public void heightAndWidthAndPreservingTheAspectRatio() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.height(50)
+			.width(50)
+			.keepAspectRatio(true)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(25, thumbnail.getHeight());
 	}
 }
