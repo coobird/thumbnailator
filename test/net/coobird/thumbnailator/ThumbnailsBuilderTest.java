@@ -40,6 +40,102 @@ public class ThumbnailsBuilderTest
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
 	 * <li>The size method is called.</li>
+	 * <li>The width is 0.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 */
+	@Test
+	public void sizeWithZeroWidth() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.size(0, 50)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The size method is called.</li>
+	 * <li>The height is 0.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 */
+	@Test
+	public void sizeWithZeroHeight() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.size(50, 0)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The size method is called.</li>
+	 * <li>The width and height is 0.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalArgumentException is thrown.</li>
+	 * </ol>
+	 */
+	@Test
+	public void sizeWithZeroWidthAndHeight() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.size(0, 0)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The size method is called.</li>
 	 * </ol>
 	 * and the expected outcome is,
 	 * <ol>
