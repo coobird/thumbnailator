@@ -6,6 +6,7 @@ import java.awt.Dimension;
  * Calculates the size of an enclosed object relative to the enclosing object.
  * 
  * @author coobird
+ * @since	0.3.4
  *
  */
 public class RelativeSize implements Size

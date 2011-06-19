@@ -1,13 +1,16 @@
 package net.coobird.thumbnailator.makers;
 
-import static junit.framework.Assert.*;
-
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
+import net.coobird.thumbnailator.resizers.ProgressiveBilinearResizer;
+import net.coobird.thumbnailator.resizers.Resizer;
+import net.coobird.thumbnailator.resizers.ResizerFactory;
 
 import org.junit.Test;
-
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * A class which tests the behavior of the 
@@ -274,5 +277,37 @@ public class FixedSizeThumbnailMakerTest
 		new FixedSizeThumbnailMaker(50, 100, true)
 			.keepAspectRatio(true)
 			.make(img);
+	}
+	
+	/**
+	 * Test for the {@link FixedSizeThumbnailMaker} class where,
+	 * <ol>
+	 * <li>An thumbnail is to be made</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The ResizerFactory is used to obtain a Resizer.</li>
+	 * </ol>
+	 */
+	@Test
+	public void verifyResizerFactoryBeingCalled()
+	{
+		// given
+		BufferedImage img = makeTestImage200x200();
+		Resizer spyResizer = spy(new ProgressiveBilinearResizer());
+		ResizerFactory resizerFactory = mock(ResizerFactory.class);
+		when(resizerFactory.getResizer(any(Dimension.class), any(Dimension.class)))
+				.thenReturn(spyResizer);
+		
+		// when
+		new FixedSizeThumbnailMaker(100, 100)
+				.keepAspectRatio(true)
+				.resizerFactory(resizerFactory)
+				.make(img);
+		
+		// then
+		verify(resizerFactory, atLeastOnce())
+				.getResizer(new Dimension(200, 200), new Dimension(100, 100));
+		verify(spyResizer).resize(eq(img), any(BufferedImage.class));
 	}
 }
