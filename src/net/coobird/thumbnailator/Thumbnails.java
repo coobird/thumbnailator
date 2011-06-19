@@ -711,6 +711,8 @@ public final class Thumbnails
 		private static enum Properties implements Property
 		{
 			SIZE("size"),
+			WIDTH("width"),
+			HEIGHT("height"),
 			SCALE("scale"),
 			IMAGE_TYPE("imageType"),
 			SCALING_MODE("scalingMode"),
@@ -750,6 +752,8 @@ public final class Thumbnails
 		 */
 		{
 			statusMap.put(Properties.SIZE, Status.NOT_READY);
+			statusMap.put(Properties.WIDTH, Status.OPTIONAL);
+			statusMap.put(Properties.HEIGHT, Status.OPTIONAL);
 			statusMap.put(Properties.SCALE, Status.NOT_READY);
 			statusMap.put(Properties.SOURCE_REGION, Status.OPTIONAL);
 			statusMap.put(Properties.IMAGE_TYPE, Status.OPTIONAL);
@@ -801,12 +805,14 @@ public final class Thumbnails
 		 */
 		private static int IMAGE_TYPE_UNSPECIFIED = -1;
 		
+		private static final int DIMENSION_NOT_SPECIFIED = -1;
+		
 		/*
 		 * Defines the fields for the builder interface, and assigns the
 		 * default values.
 		 */
-		private int width = -1;
-		private int height = -1;
+		private int width = DIMENSION_NOT_SPECIFIED;
+		private int height = DIMENSION_NOT_SPECIFIED;
 		private double scale = Double.NaN;
 		
 		private Region sourceRegion;
@@ -852,6 +858,76 @@ public final class Thumbnails
 			
 			validateDimensions(width, height);
 			this.width = width;
+			this.height = height;
+			
+			return this;
+		}
+		
+		/**
+		 * Sets the width of the thumbnail.
+		 * <p>
+		 * The thumbnail will have the dimensions constrained by the specified
+		 * width, and the aspect ratio of the original image will be preserved
+		 * by the thumbnail.
+		 * <p>
+		 * Once this method is called, calling the {@link #size(int, int)} or 
+		 * the {@link #scale(double)} method will result in an 
+		 * {@link IllegalStateException}.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @param width			The width of the thumbnail.
+		 * @return				Reference to this object.
+		 */
+		public Builder<T> width(int width)
+		{
+			if (statusMap.get(Properties.SIZE) != Status.CANNOT_SET)
+			{
+				updateStatus(Properties.SIZE, Status.CANNOT_SET);
+			}
+			if (statusMap.get(Properties.SCALE) != Status.CANNOT_SET)
+			{
+				updateStatus(Properties.SCALE, Status.CANNOT_SET);
+			}
+			updateStatus(Properties.WIDTH, Status.ALREADY_SET);
+			
+			validateDimensions(width, Integer.MAX_VALUE);
+			this.width = width;
+			
+			return this;
+		}
+		
+		/**
+		 * Sets the height of the thumbnail.
+		 * <p>
+		 * The thumbnail will have the dimensions constrained by the specified
+		 * height, and the aspect ratio of the original image will be preserved
+		 * by the thumbnail.
+		 * <p>
+		 * Once this method is called, calling the {@link #size(int, int)} or 
+		 * the {@link #scale(double)} method will result in an 
+		 * {@link IllegalStateException}.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @param height		The height of the thumbnail.
+		 * @return				Reference to this object.
+		 */
+		public Builder<T> height(int height)
+		{
+			if (statusMap.get(Properties.SIZE) != Status.CANNOT_SET)
+			{
+				updateStatus(Properties.SIZE, Status.CANNOT_SET);
+			}
+			if (statusMap.get(Properties.SCALE) != Status.CANNOT_SET)
+			{
+				updateStatus(Properties.SCALE, Status.CANNOT_SET);
+			}
+			updateStatus(Properties.HEIGHT, Status.ALREADY_SET);
+			
+			validateDimensions(Integer.MAX_VALUE, height);
 			this.height = height;
 			
 			return this;
@@ -1278,11 +1354,18 @@ public final class Thumbnails
 		 * 						{@code false} otherwise.
 		 * @return				Reference to this object.
 		 * 
-		 * @throws IllegalStateException	If the {@link #size(int, int)} has
+		 * @throws IllegalStateException	If
+		 * 									<ol> 
+		 * 									<li>the {@link #size(int, int)} has
 		 * 									not yet been called to specify the
-		 * 									size of the thumbnail, or if
-		 * 									the {@link #scale(double)} method
-		 * 									has been called.
+		 * 									size of the thumbnail, or</li>
+		 * 									<li>the {@link #scale(double)} 
+		 * 									method has been called, or</li>
+		 * 									<li>the {@link #width(int)} and/or 
+		 * 									{@link #height(int)} has been called
+		 * 									and not preserving the aspect ratio
+		 * 									is desired.</li>
+		 * 									</ol>
 		 */
 		public Builder<T> keepAspectRatio(boolean keep)
 		{
@@ -1292,11 +1375,20 @@ public final class Thumbnails
 						"keep the aspect ratio if the scaling factor has " +
 						"already been specified.");
 			}
-			if (statusMap.get(Properties.SIZE) != Status.ALREADY_SET)
+			if (statusMap.get(Properties.SIZE) == Status.NOT_READY)
 			{
 				throw new IllegalStateException("Cannot specify whether to " +
 						"keep the aspect ratio unless the size parameter has " +
 						"already been specified.");
+			}
+			if ((statusMap.get(Properties.WIDTH) == Status.ALREADY_SET ||
+					statusMap.get(Properties.HEIGHT) == Status.ALREADY_SET) &&
+					!keep
+			)
+			{
+				throw new IllegalStateException("The aspect ratio must be " +
+						"preserved when the width and/or height parameter " +
+						"has already been specified.");
 			}
 			
 			updateStatus(Properties.KEEP_ASPECT_RATIO, Status.ALREADY_SET);
@@ -1758,6 +1850,32 @@ watermark(Positions.CENTER, image, opacity);
 			
 			if (Double.isNaN(scale))
 			{
+				// If the dimensions were specified, do the following.
+				
+				// Check that at least one dimension is specified.
+				// If it's not, it's a bug.
+				if (
+						width == DIMENSION_NOT_SPECIFIED && 
+						height == DIMENSION_NOT_SPECIFIED
+				)
+				{
+					throw new IllegalStateException(
+							"The width or height must be specified. If this " +
+							"exception is thrown, it is due to a bug in the " +
+							"Thumbnailator library."
+					);
+				}
+				
+				// Set the unspecified dimension to a default value.
+				if (width == DIMENSION_NOT_SPECIFIED)
+				{
+					width = Integer.MAX_VALUE;
+				}
+				if (height == DIMENSION_NOT_SPECIFIED)
+				{
+					height = Integer.MAX_VALUE;
+				}
+				
 				return new ThumbnailParameter(
 						new Dimension(width, height),
 						sourceRegion,
@@ -1772,6 +1890,7 @@ watermark(Positions.CENTER, image, opacity);
 			}
 			else
 			{
+				// If the scaling factor was specified
 				return new ThumbnailParameter(
 						scale,
 						sourceRegion,
