@@ -36,7 +36,7 @@ public enum Resizers implements Resizer
 {
 	/**
 	 * A {@link Resizer} which does not perform resizing operations. The source
-	 * image will be copied over to the destination image.
+	 * image will be drawn at the origin of the destination image.
 	 */
 	NULL(new NullResizer()),
 	

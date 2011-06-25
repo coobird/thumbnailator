@@ -13,10 +13,15 @@ import java.util.Map;
  * The source image will be drawn at the origin of the destination image.
  * 
  * @author coobird
+ * @since	0.4.0
  *
  */
 public class NullResizer extends AbstractResizer
 {
+	/**
+	 * Instantiates the {@code NullResizer} which draws the source image at
+	 * the origin of the destination image.
+	 */
 	public NullResizer()
 	{
 		this(
@@ -25,6 +30,13 @@ public class NullResizer extends AbstractResizer
 		);
 	}
 	
+	/**
+	 * This constructor is {@code private} to prevent the rendering hints
+	 * from being set, as this {@link Resizer} does not perform any resizing.
+	 * 
+	 * @param interpolationValue		Not used.
+	 * @param hints						Not used.
+	 */
 	private NullResizer(Object interpolationValue, Map<Key, Object> hints)
 	{
 		super(interpolationValue, hints);
