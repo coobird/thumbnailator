@@ -168,7 +168,7 @@ public class URLImageSource extends AbstractImageSource<URL>
 
 	/**
 	 * Returns the proxy to use when connecting to the URL to retrieve the
-	 * source iamge.
+	 * source image.
 	 * 
 	 * @return the proxy	The proxy used to connect to a URL.
 	 */

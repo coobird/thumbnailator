@@ -6,6 +6,7 @@ import static org.junit.matchers.JUnitMatchers.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.Proxy;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
@@ -21,9 +22,21 @@ import org.junit.Test;
 
 public class URLImageSourceTest
 {
-	/*
-	 * TODO Need test cases which utilize a proxy.
-	 */
+	@Test
+	public void proxySpecfied() throws IOException
+	{
+		// given
+		Proxy proxy = Proxy.NO_PROXY;
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Thumbnailator/grid.png"), proxy);
+		
+		// when
+		BufferedImage img = source.read();
+		
+		// then
+		assertEquals(100, img.getWidth());
+		assertEquals(100, img.getHeight());
+		assertEquals("png", source.getInputFormatName());
+	}
 	
 	@Test(expected=NullPointerException.class)
 	public void givenNullURL() throws IOException
