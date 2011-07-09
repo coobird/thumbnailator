@@ -2,6 +2,7 @@ package net.coobird.thumbnailator.tasks.io;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -270,8 +271,23 @@ public class FileImageSink extends AbstractImageSink<File>
 			}
 		}
 		
-		ImageOutputStream ios = 
-			ImageIO.createImageOutputStream(destinationFile);
+		/*
+		 * Here, an explicit FileOutputStream is being created, as using a
+		 * File object directly to obtain an ImageOutputStream was causing
+		 * a problem where if the destination file already exists, then the
+		 * image data was being written to the beginning of the file rather than
+		 * creating a new file. 
+		 */
+		ImageOutputStream ios;
+		try
+		{
+			FileOutputStream fos = new FileOutputStream(destinationFile);
+			ios = ImageIO.createImageOutputStream(fos);
+		}
+		catch (IOException e)
+		{
+			throw new IOException("Could not open output file.");
+		}
 		
 		if (ios == null)
 		{
