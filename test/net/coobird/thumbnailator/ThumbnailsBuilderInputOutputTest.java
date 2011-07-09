@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -5380,6 +5381,47 @@ public class ThumbnailsBuilderInputOutputTest
 		assertEquals(100, thumbnails.get(0).getHeight());
 		assertEquals(100, thumbnails.get(1).getWidth());
 		assertEquals(100, thumbnails.get(1).getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>input is a file</li>
+	 * <li>output is via toFile</li>
+	 * <li>where the input and output file is the same</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The file size will be smaller after the resize.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void fileSizeDecreasesAfterResize() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
+		
+		// copy the image to a temporary file.
+		FileInputStream fis = new FileInputStream(sourceFile);
+		FileOutputStream fos = new FileOutputStream(f);
+		fis.getChannel().transferTo(0, sourceFile.length(), fos.getChannel());
+		fis.close();
+		fos.close();
+		
+		// given
+		long fileSizeBefore = f.length();
+		
+		// when
+		Thumbnails.of(f)
+			.size(100, 100)
+			.toFile(f);
+		
+		// then
+		long fileSizeAfter = f.length();
+		f.delete();
+		
+		assertTrue(fileSizeAfter < fileSizeBefore);
 	}
 	
 	/**
