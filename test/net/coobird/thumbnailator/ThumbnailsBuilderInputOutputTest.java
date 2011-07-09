@@ -5403,11 +5403,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
 		
 		// copy the image to a temporary file.
-		FileInputStream fis = new FileInputStream(sourceFile);
-		FileOutputStream fos = new FileOutputStream(f);
-		fis.getChannel().transferTo(0, sourceFile.length(), fos.getChannel());
-		fis.close();
-		fos.close();
+		copyFile(sourceFile, f);
 		
 		// given
 		long fileSizeBefore = f.length();
@@ -5422,6 +5418,174 @@ public class ThumbnailsBuilderInputOutputTest
 		f.delete();
 		
 		assertTrue(fileSizeAfter < fileSizeBefore);
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFile(File) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFile_File_AllowOverwrite() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, f);
+		
+		// given
+		long fileSizeBefore = f.length();
+		
+		// when
+		Thumbnails.of(f)
+			.size(100, 100)
+			.toFile(f, true);
+		
+		// then
+		long fileSizeAfter = f.length();
+		f.delete();
+		
+		assertTrue(fileSizeAfter < fileSizeBefore);
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFile(File) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFile_File_DisallowOverwrite() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, f);
+		
+		// given
+		// when
+		try
+		{
+			Thumbnails.of(f)
+				.size(100, 100)
+				.toFile(f, false);
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertEquals("The destination file exists.", e.getMessage());
+			assertTrue(sourceFile.length() == f.length());
+			f.delete();
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFile(String) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFile_String_AllowOverwrite() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, f);
+		
+		// given
+		long fileSizeBefore = f.length();
+		
+		// when
+		Thumbnails.of(f)
+			.size(100, 100)
+			.toFile(f.getAbsolutePath(), true);
+		
+		// then
+		long fileSizeAfter = f.length();
+		f.delete();
+		
+		assertTrue(fileSizeAfter < fileSizeBefore);
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFile(String) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFile_String_DisallowOverwrite() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, f);
+		
+		// given
+		// when
+		try
+		{
+			Thumbnails.of(f)
+				.size(100, 100)
+				.toFile(f.getAbsolutePath(), false);
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertEquals("The destination file exists.", e.getMessage());
+			assertTrue(sourceFile.length() == f.length());
+			f.delete();
+		}
+	}
+
+	/**
+	 * Copies a file.
+	 * 
+	 * @param sourceFile		The source file.
+	 * @param destFile			The destination file.
+	 * @throws IOException		If an IOException is thrown.
+	 */
+	private static void copyFile(File sourceFile, File destFile) throws IOException
+	{
+		FileInputStream fis = new FileInputStream(sourceFile);
+		FileOutputStream fos = new FileOutputStream(destFile);
+		fis.getChannel().transferTo(0, sourceFile.length(), fos.getChannel());
+		fis.close();
+		fos.close();
 	}
 	
 	/**
