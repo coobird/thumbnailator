@@ -2137,6 +2137,41 @@ watermark(Positions.CENTER, image, opacity);
 		 * To call this method, the thumbnail must have been created from a
 		 * single source.
 		 * 
+		 * @param outFile			The file to which the thumbnail is to be
+		 * 							written to.
+		 * @param allowOverwrite	Whether or not to overwrite the destination
+		 * 							file if it already exists.
+		 * @throws IOException		If a problem occurs while reading the
+		 * 							original images or writing the thumbnails 
+		 * 							to files. 
+		 * @throws IllegalArgumentException		If multiple original image files
+		 * 										are	specified.
+		 */
+		public void toFile(File outFile, boolean allowOverwrite) throws IOException
+		{
+			checkReadiness();
+			
+			Iterator<ImageSource<T>> iter = sources.iterator();
+			ImageSource<T> source = iter.next();
+			
+			if (iter.hasNext())
+			{
+				throw new IllegalArgumentException("Cannot output multiple thumbnails to one file.");
+			}
+			
+			FileImageSink destination = new FileImageSink(outFile, allowOverwrite);
+			
+			Thumbnailator.createThumbnail(
+					new SourceSinkThumbnailTask<T, File>(makeParam(), source, destination)
+			);
+		}
+		
+		/**
+		 * Create a thumbnail and writes it to a {@link File}.
+		 * <p>
+		 * To call this method, the thumbnail must have been created from a
+		 * single source.
+		 * 
 		 * @param outFilepath		The file to which the thumbnail is to be
 		 * 							written to.
 		 * @throws IOException		If a problem occurs while reading the
@@ -2158,6 +2193,41 @@ watermark(Positions.CENTER, image, opacity);
 			}
 			
 			FileImageSink destination = new FileImageSink(outFilepath);
+			
+			Thumbnailator.createThumbnail(
+					new SourceSinkThumbnailTask<T, File>(makeParam(), source, destination)
+			);
+		}
+		
+		/**
+		 * Create a thumbnail and writes it to a {@link File}.
+		 * <p>
+		 * To call this method, the thumbnail must have been created from a
+		 * single source.
+		 * 
+		 * @param outFilepath		The file to which the thumbnail is to be
+		 * 							written to.
+		 * @param allowOverwrite	Whether or not to overwrite the destination
+		 * 							file if it already exists.
+		 * @throws IOException		If a problem occurs while reading the
+		 * 							original images or writing the thumbnails 
+		 * 							to files. 
+		 * @throws IllegalArgumentException		If multiple original image files
+		 * 										are	specified.
+		 */
+		public void toFile(String outFilepath, boolean allowOverwrite) throws IOException
+		{
+			checkReadiness();
+			
+			Iterator<ImageSource<T>> iter = sources.iterator(); 
+			ImageSource<T> source = iter.next();
+			
+			if (iter.hasNext())
+			{
+				throw new IllegalArgumentException("Cannot output multiple thumbnails to one file.");
+			}
+			
+			FileImageSink destination = new FileImageSink(outFilepath, allowOverwrite);
 			
 			Thumbnailator.createThumbnail(
 					new SourceSinkThumbnailTask<T, File>(makeParam(), source, destination)
