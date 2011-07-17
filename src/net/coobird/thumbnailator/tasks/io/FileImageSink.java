@@ -47,6 +47,28 @@ public class FileImageSink extends AbstractImageSink<File>
 	 */
 	private File destinationFile;
 	
+	private final boolean allowOverwrite;
+	
+	/**
+	 * Instantiates a {@link FileImageSink} with the file to which the thumbnail
+	 * should be written to.
+	 * <p>
+	 * The output format to use will be determined from the file extension.
+	 * If another format should be used, then the 
+	 * {@link #setOutputFormatName(String)} should be called with the desired
+	 * output format name.
+	 * <p>
+	 * When the destination file exists, then this {@code FileImageSink} will
+	 * overwrite the existing file.
+	 * 
+	 * @param destinationFile		The destination file.
+	 * @throws NullPointerException	If the specified file is {@code null}.
+	 */
+	public FileImageSink(File destinationFile)
+	{
+		this(destinationFile, true);
+	}
+	
 	/**
 	 * Instantiates a {@link FileImageSink} with the file to which the thumbnail
 	 * should be written to.
@@ -57,9 +79,12 @@ public class FileImageSink extends AbstractImageSink<File>
 	 * output format name.
 	 * 
 	 * @param destinationFile		The destination file.
-	 * @throws NullPointerException	If the file is null.
+	 * @param allowOverwrite		Whether or not the {@code FileImageSink}
+	 * 								should overwrite the destination file if
+	 * 								it already exists.
+	 * @throws NullPointerException	If the specified file is {@code null}.
 	 */
-	public FileImageSink(File destinationFile)
+	public FileImageSink(File destinationFile, boolean allowOverwrite)
 	{
 		super();
 		
@@ -70,6 +95,27 @@ public class FileImageSink extends AbstractImageSink<File>
 		
 		this.destinationFile = destinationFile;
 		this.outputFormat = getExtension(destinationFile);
+		this.allowOverwrite = allowOverwrite;
+	}
+	
+	/**
+	 * Instantiates a {@link FileImageSink} with the file to which the thumbnail
+	 * should be written to.
+	 * <p>
+	 * The output format to use will be determined from the file extension.
+	 * If another format should be used, then the 
+	 * {@link #setOutputFormatName(String)} should be called with the desired
+	 * output format name.
+	 * <p>
+	 * When the destination file exists, then this {@code FileImageSink} will
+	 * overwrite the existing file.
+	 * 
+	 * @param destinationFilePath	The destination file path.
+	 * @throws NullPointerException	If the specified file path is {@code null}.
+	 */
+	public FileImageSink(String destinationFilePath)
+	{
+		this(destinationFilePath, true);
 	}
 	
 	/**
@@ -82,9 +128,12 @@ public class FileImageSink extends AbstractImageSink<File>
 	 * output format name.
 	 * 
 	 * @param destinationFilePath	The destination file path.
-	 * @throws NullPointerException	If the filepath is null.
+	 * @param allowOverwrite		Whether or not the {@code FileImageSink}
+	 * 								should overwrite the destination file if
+	 * 								it already exists.
+	 * @throws NullPointerException	If the specified file path is {@code null}.
 	 */
-	public FileImageSink(String destinationFilePath)
+	public FileImageSink(String destinationFilePath, boolean allowOverwrite)
 	{
 		super();
 		
@@ -95,6 +144,7 @@ public class FileImageSink extends AbstractImageSink<File>
 		
 		this.destinationFile = new File(destinationFilePath);
 		this.outputFormat = getExtension(destinationFile);
+		this.allowOverwrite = allowOverwrite;
 	}
 	
 	/**
@@ -168,7 +218,11 @@ public class FileImageSink extends AbstractImageSink<File>
 	 * 										determined from the file name.
 	 * @throws IOException					When a problem occurs while writing
 	 * 										the image.
-	 * @throws NullPointerException		If the image is {@code null}.
+	 * @throws NullPointerException			If the image is {@code null}.
+	 * @throws IllegalArgumentException		If this {@code FileImageSink} does
+	 * 										not permit overwriting the
+	 * 										destination file and the destination
+	 * 										file already exists.
 	 */
 	public void write(BufferedImage img) throws IOException
 	{
@@ -193,6 +247,10 @@ public class FileImageSink extends AbstractImageSink<File>
 		if (formatName != null && (fileExtension == null || !isMatchingFormat(formatName, fileExtension))) 
 		{
 			destinationFile = new File(destinationFile.getAbsolutePath() + "." + formatName);
+		}
+		
+		if (!allowOverwrite && destinationFile.exists()) {
+			throw new IllegalArgumentException("The destination file exists.");
 		}
 		
 		/*
