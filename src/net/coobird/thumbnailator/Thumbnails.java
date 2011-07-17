@@ -2103,6 +2103,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * <p>
 		 * To call this method, the thumbnail must have been created from a
 		 * single source.
+		 * <p>
+		 * If the destination file already exists, then the file will be
+		 * overwritten.
 		 * 
 		 * @param outFile			The file to which the thumbnail is to be
 		 * 							written to.
@@ -2114,21 +2117,7 @@ watermark(Positions.CENTER, image, opacity);
 		 */
 		public void toFile(File outFile) throws IOException
 		{
-			checkReadiness();
-			
-			Iterator<ImageSource<T>> iter = sources.iterator();
-			ImageSource<T> source = iter.next();
-			
-			if (iter.hasNext())
-			{
-				throw new IllegalArgumentException("Cannot output multiple thumbnails to one file.");
-			}
-			
-			FileImageSink destination = new FileImageSink(outFile);
-			
-			Thumbnailator.createThumbnail(
-					new SourceSinkThumbnailTask<T, File>(makeParam(), source, destination)
-			);
+			toFile(outFile, true);
 		}
 		
 		/**
@@ -2171,6 +2160,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * <p>
 		 * To call this method, the thumbnail must have been created from a
 		 * single source.
+		 * <p>
+		 * If the destination file already exists, then the file will be
+		 * overwritten.
 		 * 
 		 * @param outFilepath		The file to which the thumbnail is to be
 		 * 							written to.
@@ -2182,21 +2174,7 @@ watermark(Positions.CENTER, image, opacity);
 		 */
 		public void toFile(String outFilepath) throws IOException
 		{
-			checkReadiness();
-			
-			Iterator<ImageSource<T>> iter = sources.iterator(); 
-			ImageSource<T> source = iter.next();
-			
-			if (iter.hasNext())
-			{
-				throw new IllegalArgumentException("Cannot output multiple thumbnails to one file.");
-			}
-			
-			FileImageSink destination = new FileImageSink(outFilepath);
-			
-			Thumbnailator.createThumbnail(
-					new SourceSinkThumbnailTask<T, File>(makeParam(), source, destination)
-			);
+			toFile(outFilepath, true);
 		}
 		
 		/**
