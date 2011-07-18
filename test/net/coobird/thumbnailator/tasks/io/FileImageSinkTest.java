@@ -3,6 +3,7 @@ package net.coobird.thumbnailator.tasks.io;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -676,6 +677,124 @@ public class FileImageSinkTest
 			assertEquals("Could not determine output format.", e.getMessage());
 			throw e;
 		}
+	}
+	
+	@Test
+	public void constructorFile_write_allowOverwriteTrue() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
+		
+		// copy the image to a temporary file.
+		FileInputStream fis = new FileInputStream(sourceFile);
+		FileOutputStream fos = new FileOutputStream(f);
+		fis.getChannel().transferTo(0, sourceFile.length(), fos.getChannel());
+		fis.close();
+		fos.close();
+		
+		// given
+		FileImageSink sink = new FileImageSink(f, true);
+		
+		// when
+		sink.write(ImageIO.read(f));
+		
+		// then
+		assertTrue(f.exists());
+		
+		// clean ups
+		f.delete();
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void constructorFile_write_allowOverwriteFalse() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
+		
+		// copy the image to a temporary file.
+		FileInputStream fis = new FileInputStream(sourceFile);
+		FileOutputStream fos = new FileOutputStream(f);
+		fis.getChannel().transferTo(0, sourceFile.length(), fos.getChannel());
+		fis.close();
+		fos.close();
+		
+		// given
+		FileImageSink sink = new FileImageSink(f, false);
+		
+		// when
+		try
+		{
+			sink.write(ImageIO.read(f));
+		}
+		catch (IllegalArgumentException e)
+		{
+			assertEquals("The destination file exists.", e.getMessage());
+			throw e;
+		}
+		
+		// clean ups
+		f.delete();
+	}
+	
+	@Test
+	public void constructorString_write_allowOverwriteTrue() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
+		
+		// copy the image to a temporary file.
+		FileInputStream fis = new FileInputStream(sourceFile);
+		FileOutputStream fos = new FileOutputStream(f);
+		fis.getChannel().transferTo(0, sourceFile.length(), fos.getChannel());
+		fis.close();
+		fos.close();
+		
+		// given
+		FileImageSink sink = new FileImageSink(f.getAbsolutePath(), true);
+		
+		// when
+		sink.write(ImageIO.read(f));
+		
+		// then
+		assertTrue(f.exists());
+		
+		// clean ups
+		f.delete();
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void constructorString_write_allowOverwriteFalse() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
+		
+		// copy the image to a temporary file.
+		FileInputStream fis = new FileInputStream(sourceFile);
+		FileOutputStream fos = new FileOutputStream(f);
+		fis.getChannel().transferTo(0, sourceFile.length(), fos.getChannel());
+		fis.close();
+		fos.close();
+		
+		// given
+		FileImageSink sink = new FileImageSink(f.getAbsolutePath(), false);
+		
+		// when
+		try
+		{
+			sink.write(ImageIO.read(f));
+		}
+		catch (IllegalArgumentException e)
+		{
+			assertEquals("The destination file exists.", e.getMessage());
+			throw e;
+		}
+		
+		// clean ups
+		f.delete();
 	}
 	
 	/**

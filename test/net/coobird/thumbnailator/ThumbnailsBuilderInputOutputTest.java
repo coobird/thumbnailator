@@ -8,13 +8,16 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -22,6 +25,8 @@ import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.name.ConsecutivelyNumberedFilenames;
 import net.coobird.thumbnailator.name.Rename;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class ThumbnailsBuilderInputOutputTest
@@ -5380,6 +5385,2103 @@ public class ThumbnailsBuilderInputOutputTest
 		assertEquals(100, thumbnails.get(0).getHeight());
 		assertEquals(100, thumbnails.get(1).getWidth());
 		assertEquals(100, thumbnails.get(1).getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>input is a file</li>
+	 * <li>output is via toFile</li>
+	 * <li>where the input and output file is the same</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The file size will be smaller after the resize.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void fileSizeDecreasesAfterResize() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, f);
+		
+		// given
+		long fileSizeBefore = f.length();
+		
+		// when
+		Thumbnails.of(f)
+			.size(100, 100)
+			.toFile(f);
+		
+		// then
+		long fileSizeAfter = f.length();
+		f.delete();
+		
+		assertTrue(fileSizeAfter < fileSizeBefore);
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFile(File) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFile_File_AllowOverwrite() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File f = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, f);
+		
+		// given
+		long fileSizeBefore = f.length();
+		
+		// when
+		Thumbnails.of(f)
+			.size(100, 100)
+			.toFile(f, true);
+		
+		// then
+		long fileSizeAfter = f.length();
+		f.delete();
+		
+		assertTrue(fileSizeAfter < fileSizeBefore);
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFile(File) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFile_File_DisallowOverwrite() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File f = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, f);
+		
+		// given
+		// when
+		try
+		{
+			Thumbnails.of(f)
+				.size(100, 100)
+				.toFile(f, false);
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertEquals("The destination file exists.", e.getMessage());
+			assertTrue(sourceFile.length() == f.length());
+			f.delete();
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFile(String) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFile_String_AllowOverwrite() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File f = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, f);
+		
+		// given
+		long fileSizeBefore = f.length();
+		
+		// when
+		Thumbnails.of(f)
+			.size(100, 100)
+			.toFile(f.getAbsolutePath(), true);
+		
+		// then
+		long fileSizeAfter = f.length();
+		f.delete();
+		
+		assertTrue(fileSizeAfter < fileSizeBefore);
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFile(String) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFile_String_DisallowOverwrite() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File f = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, f);
+		
+		// given
+		// when
+		try
+		{
+			Thumbnails.of(f)
+				.size(100, 100)
+				.toFile(f.getAbsolutePath(), false);
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertEquals("The destination file exists.", e.getMessage());
+			assertTrue(sourceFile.length() == f.length());
+			f.delete();
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>single file specified, and it does not exist.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesIterable_AllowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatDoesntExist = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile)
+			.size(100, 100)
+			.toFiles(Arrays.asList(fileThatDoesntExist), true);
+		
+		// then
+		assertTrue(fileThatDoesntExist.exists());
+		
+		// clean up
+		originalFile.delete();
+		fileThatDoesntExist.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>single file specified, and it exists</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesIterable_AllowOverwrite_SingleFile_OutputFileExists() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatExists = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		copyFile(sourceFile, fileThatExists);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile)
+			.size(100, 100)
+			.toFiles(Arrays.asList(fileThatExists), true);
+		
+		// then
+		assertTrue(fileThatExists.exists());
+		assertFalse(sourceFile.length() == fileThatExists.length());
+		
+		// clean up
+		originalFile.delete();
+		fileThatExists.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>single file specified, and it does not exist.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesIterable_DisallowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatDoesntExist = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile)
+			.size(100, 100)
+			.toFiles(Arrays.asList(fileThatDoesntExist), false);
+		
+		// then
+		assertTrue(fileThatDoesntExist.exists());
+		
+		// clean up
+		originalFile.delete();
+		fileThatDoesntExist.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>single file specified, and it exists</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is not written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesIterable_DisallowOverwrite_SingleFile_OutputFileExists() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatExists = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		copyFile(sourceFile, fileThatExists);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile)
+			.size(100, 100)
+			.toFiles(Arrays.asList(fileThatExists), false);
+		
+		// then
+		assertTrue(fileThatExists.exists());
+		assertTrue(sourceFile.length() == fileThatExists.length());
+		
+		// clean up
+		originalFile.delete();
+		fileThatExists.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>multiple files are specified</li>
+	 * <li>all of the output files do not exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesIterable_AllowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatDoesntExist1 = createTempPng();
+		File fileThatDoesntExist2 = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile, originalFile)
+			.size(100, 100)
+			.toFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), true);
+		
+		// then
+		assertTrue(fileThatDoesntExist1.exists());
+		assertTrue(fileThatDoesntExist2.exists());
+		
+		// clean up
+		originalFile.delete();
+		fileThatDoesntExist1.delete();
+		fileThatDoesntExist2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>multiple files are specified</li>
+	 * <li>some of the output files exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesIterable_AllowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatDoesntExist = createTempPng();
+		File fileThatExists = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		copyFile(sourceFile, fileThatExists);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile, originalFile)
+			.size(100, 100)
+			.toFiles(Arrays.asList(fileThatDoesntExist, fileThatExists), true);
+		
+		// then
+		assertTrue(fileThatDoesntExist.exists());
+		assertTrue(fileThatExists.exists());
+		assertFalse(sourceFile.length() == fileThatExists.length());
+		
+		// clean up
+		originalFile.delete();
+		fileThatDoesntExist.delete();
+		fileThatExists.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>multiple files are specified</li>
+	 * <li>some of the output files exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesIterable_AllowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatExists1 = createTempPng();
+		File fileThatExists2 = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		copyFile(sourceFile, fileThatExists1);
+		copyFile(sourceFile, fileThatExists2);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile, originalFile)
+			.size(100, 100)
+			.toFiles(Arrays.asList(fileThatExists1, fileThatExists2), true);
+		
+		// then
+		assertTrue(fileThatExists1.exists());
+		assertTrue(fileThatExists2.exists());
+		assertFalse(sourceFile.length() == fileThatExists1.length());
+		assertFalse(sourceFile.length() == fileThatExists2.length());
+		
+		// clean up
+		originalFile.delete();
+		fileThatExists1.delete();
+		fileThatExists2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>multiple files are specified</li>
+	 * <li>all of the output files do not exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Only non-existent files are output</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesIterable_DisallowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatDoesntExist1 = createTempPng();
+		File fileThatDoesntExist2 = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile, originalFile)
+			.size(100, 100)
+			.toFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), false);
+		
+		// then
+		assertTrue(fileThatDoesntExist1.exists());
+		assertTrue(fileThatDoesntExist2.exists());
+		
+		// clean up
+		originalFile.delete();
+		fileThatDoesntExist1.delete();
+		fileThatDoesntExist2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>multiple files are specified</li>
+	 * <li>some of the output files exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Only non-existent files are output</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesIterable_DisallowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatDoesntExist = createTempPng();
+		File fileThatExists = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		copyFile(sourceFile, fileThatExists);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile, originalFile)
+			.size(100, 100)
+			.toFiles(Arrays.asList(fileThatDoesntExist, fileThatExists), false);
+		
+		// then
+		assertTrue(fileThatDoesntExist.exists());
+		assertTrue(fileThatExists.exists());
+		assertTrue(sourceFile.length() == fileThatExists.length());
+		
+		// clean up
+		originalFile.delete();
+		fileThatDoesntExist.delete();
+		fileThatExists.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>multiple files are specified</li>
+	 * <li>some of the output files exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Only non-existent files are output</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesIterable_DisallowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatExists1 = createTempPng();
+		File fileThatExists2 = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		copyFile(sourceFile, fileThatExists1);
+		copyFile(sourceFile, fileThatExists2);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile, originalFile)
+			.size(100, 100)
+			.toFiles(Arrays.asList(fileThatExists1, fileThatExists2), false);
+		
+		// then
+		assertTrue(fileThatExists1.exists());
+		assertTrue(fileThatExists2.exists());
+		assertTrue(sourceFile.length() == fileThatExists1.length());
+		assertTrue(sourceFile.length() == fileThatExists2.length());
+		
+		// clean up
+		originalFile.delete();
+		fileThatExists1.delete();
+		fileThatExists2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument asFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>single file specified, and it does not exist.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is written</li>
+	 * <li>The returned list contains only files which were written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesIterable_AllowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatDoesntExist1 = createTempPng();
+		File fileThatDoesntExist2 = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile, originalFile)
+			.size(100, 100)
+			.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), true);
+		
+		// then
+		assertTrue(fileThatDoesntExist1.exists());
+		assertTrue(fileThatDoesntExist2.exists());
+		assertEquals(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), list);
+		
+		// clean up
+		originalFile.delete();
+		fileThatDoesntExist1.delete();
+		fileThatDoesntExist2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>single file specified, and it does not exist.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * <li>The returned list contains only files which were written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesIterable_AllowOverwrite_SingleFile_OutputFileExists() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatExists1 = createTempPng();
+		File fileThatExists2 = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		copyFile(sourceFile, fileThatExists1);
+		copyFile(sourceFile, fileThatExists2);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile, originalFile)
+			.size(100, 100)
+			.asFiles(Arrays.asList(fileThatExists1, fileThatExists2), true);
+		
+		// then
+		assertTrue(fileThatExists1.exists());
+		assertTrue(fileThatExists2.exists());
+		assertFalse(sourceFile.length() == fileThatExists1.length());
+		assertFalse(sourceFile.length() == fileThatExists2.length());
+		assertEquals(Arrays.asList(fileThatExists1, fileThatExists2), list);
+		
+		// clean up
+		originalFile.delete();
+		fileThatExists1.delete();
+		fileThatExists2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>single file specified, and it does not exist.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is written</li>
+	 * <li>The returned list contains only files which were written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesIterable_DisallowOverwrite_SingleFiles_OutputFileDoesNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatDoesntExist1 = createTempPng();
+		File fileThatDoesntExist2 = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile, originalFile)
+			.size(100, 100)
+			.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), false);
+		
+		// then
+		assertTrue(fileThatDoesntExist1.exists());
+		assertTrue(fileThatDoesntExist2.exists());
+		assertEquals(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), list);
+		
+		// clean up
+		originalFile.delete();
+		fileThatDoesntExist1.delete();
+		fileThatDoesntExist2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>single file specified, and it does not exist.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is not written</li>
+	 * <li>The returned list is empty</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesIterable_DisallowOverwrite_SingleFile_OutputFileExists() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatExists1 = createTempPng();
+		File fileThatExists2 = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		copyFile(sourceFile, fileThatExists1);
+		copyFile(sourceFile, fileThatExists2);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile, originalFile)
+			.size(100, 100)
+			.asFiles(Arrays.asList(fileThatExists1, fileThatExists2), false);
+		
+		// then
+		assertTrue(fileThatExists1.exists());
+		assertTrue(fileThatExists2.exists());
+		assertTrue(sourceFile.length() == fileThatExists1.length());
+		assertTrue(sourceFile.length() == fileThatExists2.length());
+		assertEquals(Collections.emptyList(), list);
+		
+		// clean up
+		originalFile.delete();
+		fileThatExists1.delete();
+		fileThatExists2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument asFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>multiple files are specified</li>
+	 * <li>all of the output files do not exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * <li>The returned list contains only files which were written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesIterable_AllowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatDoesntExist1 = createTempPng();
+		File fileThatDoesntExist2 = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile, originalFile)
+			.size(100, 100)
+			.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), true);
+		
+		// then
+		assertTrue(fileThatDoesntExist1.exists());
+		assertTrue(fileThatDoesntExist2.exists());
+		assertEquals(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), list);
+		
+		// clean up
+		originalFile.delete();
+		fileThatDoesntExist1.delete();
+		fileThatDoesntExist2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>multiple files are specified</li>
+	 * <li>some of the output files exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * <li>The returned list contains only files which were written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesIterable_AllowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatDoesntExist = createTempPng();
+		File fileThatExists = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		copyFile(sourceFile, fileThatExists);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile, originalFile)
+			.size(100, 100)
+			.asFiles(Arrays.asList(fileThatDoesntExist, fileThatExists), true);
+		
+		// then
+		assertTrue(fileThatDoesntExist.exists());
+		assertTrue(fileThatExists.exists());
+		assertFalse(sourceFile.length() == fileThatExists.length());
+		assertEquals(Arrays.asList(fileThatDoesntExist, fileThatExists), list);
+		
+		// clean up
+		originalFile.delete();
+		fileThatDoesntExist.delete();
+		fileThatExists.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>multiple files are specified</li>
+	 * <li>some of the output files exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * <li>The returned list contains only files which were written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesIterable_AllowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatExists1 = createTempPng();
+		File fileThatExists2 = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		copyFile(sourceFile, fileThatExists1);
+		copyFile(sourceFile, fileThatExists2);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile, originalFile)
+			.size(100, 100)
+			.asFiles(Arrays.asList(fileThatExists1, fileThatExists2), true);
+		
+		// then
+		assertTrue(fileThatExists1.exists());
+		assertTrue(fileThatExists2.exists());
+		assertFalse(sourceFile.length() == fileThatExists1.length());
+		assertFalse(sourceFile.length() == fileThatExists2.length());
+		assertEquals(Arrays.asList(fileThatExists1, fileThatExists2), list);
+		
+		// clean up
+		originalFile.delete();
+		fileThatExists1.delete();
+		fileThatExists2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>multiple files are specified</li>
+	 * <li>all of the output files do not exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Only non-existent files are output</li>
+	 * <li>The returned list contains only files which were written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesIterable_DisallowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatDoesntExist1 = createTempPng();
+		File fileThatDoesntExist2 = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile, originalFile)
+			.size(100, 100)
+			.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), false);
+		
+		// then
+		assertTrue(fileThatDoesntExist1.exists());
+		assertTrue(fileThatDoesntExist2.exists());
+		assertEquals(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), list);
+		
+		// clean up
+		originalFile.delete();
+		fileThatDoesntExist1.delete();
+		fileThatDoesntExist2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>multiple files are specified</li>
+	 * <li>some of the output files exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Only non-existent files are output</li>
+	 * <li>The returned list contains only files which were written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesIterable_DisallowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatDoesntExist = createTempPng();
+		File fileThatExists = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		copyFile(sourceFile, fileThatExists);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile, originalFile)
+			.size(100, 100)
+			.asFiles(Arrays.asList(fileThatDoesntExist, fileThatExists), false);
+		
+		// then
+		assertTrue(fileThatDoesntExist.exists());
+		assertTrue(fileThatExists.exists());
+		assertTrue(sourceFile.length() == fileThatExists.length());
+		assertEquals(Arrays.asList(fileThatDoesntExist), list);
+		
+		// clean up
+		originalFile.delete();
+		fileThatDoesntExist.delete();
+		fileThatExists.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Iterable) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>multiple files are specified</li>
+	 * <li>some of the output files exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Only non-existent files are output</li>
+	 * <li>The returned list contains only files which were written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesIterable_DisallowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		File originalFile = createTempPng();
+		
+		File fileThatExists1 = createTempPng();
+		File fileThatExists2 = createTempPng();
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		copyFile(sourceFile, fileThatExists1);
+		copyFile(sourceFile, fileThatExists2);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile, originalFile)
+			.size(100, 100)
+			.asFiles(Arrays.asList(fileThatExists1, fileThatExists2), false);
+		
+		// then
+		assertTrue(fileThatExists1.exists());
+		assertTrue(fileThatExists2.exists());
+		assertTrue(sourceFile.length() == fileThatExists1.length());
+		assertTrue(sourceFile.length() == fileThatExists2.length());
+		assertEquals(Collections.emptyList(), list);
+		
+		// clean up
+		originalFile.delete();
+		fileThatExists1.delete();
+		fileThatExists2.delete();
+	}
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Rename) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>single file specified, and it does not exist.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesRename_AllowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile = createTempPng();
+		
+		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile)
+			.size(100, 100)
+			.toFiles(rename, true);
+		
+		// then
+		assertTrue(fileThatDoesntExist.exists());
+		
+		// clean up
+		originalFile.delete();
+		fileThatDoesntExist.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Rename) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>single file specified, and it exists</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesRename_AllowOverwrite_SingleFile_OutputFileExists() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile = createTempPng();
+		
+		File fileThatExists = makeRenamedFile(originalFile, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		copyFile(sourceFile, fileThatExists);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile)
+			.size(100, 100)
+			.toFiles(rename, true);
+		
+		// then
+		assertTrue(fileThatExists.exists());
+		assertFalse(sourceFile.length() == fileThatExists.length());
+		
+		// clean up
+		originalFile.delete();
+		fileThatExists.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Rename) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>single file specified, and it does not exist.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesRename_DisallowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile = createTempPng();
+		
+		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile)
+			.size(100, 100)
+			.toFiles(rename, false);
+		
+		// then
+		assertTrue(fileThatDoesntExist.exists());
+		
+		// clean up
+		originalFile.delete();
+		fileThatDoesntExist.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Rename) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>single file specified, and it exists</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is not written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesRename_DisallowOverwrite_SingleFile_OutputFileExists() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile = createTempPng();
+		
+		File fileThatExists = makeRenamedFile(originalFile, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		copyFile(sourceFile, fileThatExists);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile)
+			.size(100, 100)
+			.toFiles(rename, false);
+		
+		// then
+		assertTrue(fileThatExists.exists());
+		assertTrue(sourceFile.length() == fileThatExists.length());
+		
+		// clean up
+		originalFile.delete();
+		fileThatExists.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Rename) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>multiple files are specified</li>
+	 * <li>all of the output files do not exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesRename_AllowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile1 = createTempPng();
+		File originalFile2 = createTempPng();
+		
+		File fileThatDoesntExist1 = makeRenamedFile(originalFile1, rename);
+		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile1);
+		copyFile(sourceFile, originalFile2);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile1, originalFile2)
+			.size(100, 100)
+			.toFiles(rename, true);
+		
+		// then
+		assertTrue(fileThatDoesntExist1.exists());
+		assertTrue(fileThatDoesntExist2.exists());
+		
+		// clean up
+		originalFile1.delete();
+		originalFile2.delete();
+		fileThatDoesntExist1.delete();
+		fileThatDoesntExist2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Rename) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>multiple files are specified</li>
+	 * <li>some of the output files exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesRename_AllowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile1 = createTempPng();
+		File originalFile2 = createTempPng();
+		
+		File fileThatDoesntExist = makeRenamedFile(originalFile1, rename);
+		File fileThatExists = makeRenamedFile(originalFile2, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile1);
+		copyFile(sourceFile, originalFile2);
+		copyFile(sourceFile, fileThatExists);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile1, originalFile2)
+			.size(100, 100)
+			.toFiles(rename, true);
+		
+		// then
+		assertTrue(fileThatDoesntExist.exists());
+		assertTrue(fileThatExists.exists());
+		assertFalse(sourceFile.length() == fileThatExists.length());
+		
+		// clean up
+		originalFile1.delete();
+		originalFile2.delete();
+		fileThatDoesntExist.delete();
+		fileThatExists.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Rename) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>multiple files are specified</li>
+	 * <li>some of the output files exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesRename_AllowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile1 = createTempPng();
+		File originalFile2 = createTempPng();
+		
+		File fileThatExists1 = makeRenamedFile(originalFile1, rename);
+		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile1);
+		copyFile(sourceFile, originalFile2);
+		copyFile(sourceFile, fileThatExists1);
+		copyFile(sourceFile, fileThatExists2);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile1, originalFile2)
+			.size(100, 100)
+			.toFiles(rename, true);
+		
+		// then
+		assertTrue(fileThatExists1.exists());
+		assertTrue(fileThatExists2.exists());
+		assertFalse(sourceFile.length() == fileThatExists1.length());
+		assertFalse(sourceFile.length() == fileThatExists2.length());
+		
+		// clean up
+		originalFile1.delete();
+		originalFile2.delete();
+		fileThatExists1.delete();
+		fileThatExists2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Rename) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>multiple files are specified</li>
+	 * <li>all of the output files do not exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Only non-existent files are output</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesRename_DisallowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile1 = createTempPng();
+		File originalFile2 = createTempPng();
+		
+		File fileThatDoesntExist1 = makeRenamedFile(originalFile1, rename);
+		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile1);
+		copyFile(sourceFile, originalFile2);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile1, originalFile2)
+			.size(100, 100)
+			.toFiles(rename, false);
+		
+		// then
+		assertTrue(fileThatDoesntExist1.exists());
+		assertTrue(fileThatDoesntExist2.exists());
+		
+		// clean up
+		originalFile1.delete();
+		originalFile2.delete();
+		fileThatDoesntExist1.delete();
+		fileThatDoesntExist2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Rename) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>multiple files are specified</li>
+	 * <li>some of the output files exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Only non-existent files are output</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesRename_DisallowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile1 = createTempPng();
+		File originalFile2 = createTempPng();
+		
+		File fileThatDoesntExist = makeRenamedFile(originalFile1, rename);
+		File fileThatExists = makeRenamedFile(originalFile2, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile1);
+		copyFile(sourceFile, originalFile2);
+		copyFile(sourceFile, fileThatExists);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile1, originalFile2)
+			.size(100, 100)
+			.toFiles(rename, false);
+		
+		// then
+		assertTrue(fileThatDoesntExist.exists());
+		assertTrue(fileThatExists.exists());
+		assertTrue(sourceFile.length() == fileThatExists.length());
+		
+		// clean up
+		originalFile1.delete();
+		originalFile2.delete();
+		fileThatDoesntExist.delete();
+		fileThatExists.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument toFiles(Rename) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>multiple files are specified</li>
+	 * <li>some of the output files exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Only non-existent files are output</li>
+	 * </ol>
+	 */	
+	@Test
+	public void toFilesRename_DisallowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile1 = createTempPng();
+		File originalFile2 = createTempPng();
+		
+		File fileThatExists1 = makeRenamedFile(originalFile1, rename);
+		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile1);
+		copyFile(sourceFile, originalFile2);
+		copyFile(sourceFile, fileThatExists1);
+		copyFile(sourceFile, fileThatExists2);
+		
+		// given
+		
+		// when
+		Thumbnails.of(originalFile1, originalFile2)
+			.size(100, 100)
+			.toFiles(rename, false);
+		
+		// then
+		assertTrue(fileThatExists1.exists());
+		assertTrue(fileThatExists2.exists());
+		assertTrue(sourceFile.length() == fileThatExists1.length());
+		assertTrue(sourceFile.length() == fileThatExists2.length());
+		
+		// clean up
+		originalFile1.delete();
+		originalFile2.delete();
+		fileThatExists1.delete();
+		fileThatExists2.delete();
+	}
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument asFiles(Rename) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>single file specified, and it does not exist.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesRename_AllowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile = createTempPng();
+		
+		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile)
+			.size(100, 100)
+			.asFiles(rename, true);
+		
+		// then
+		assertTrue(fileThatDoesntExist.exists());
+		assertEquals(Arrays.asList(fileThatDoesntExist), list);
+		
+		// clean up
+		originalFile.delete();
+		fileThatDoesntExist.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument asFiles(Rename) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>single file specified, and it exists</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesRename_AllowOverwrite_SingleFile_OutputFileExists() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile = createTempPng();
+		
+		File fileThatExists = makeRenamedFile(originalFile, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		copyFile(sourceFile, fileThatExists);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile)
+			.size(100, 100)
+			.asFiles(rename, true);
+		
+		// then
+		assertTrue(fileThatExists.exists());
+		assertFalse(sourceFile.length() == fileThatExists.length());
+		assertEquals(Arrays.asList(fileThatExists), list);
+
+		// clean up
+		originalFile.delete();
+		fileThatExists.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument asFiles(Rename) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>single file specified, and it does not exist.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesRename_DisallowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile = createTempPng();
+		
+		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile)
+			.size(100, 100)
+			.asFiles(rename, false);
+		
+		// then
+		assertTrue(fileThatDoesntExist.exists());
+		assertEquals(Arrays.asList(fileThatDoesntExist), list);
+		
+		// clean up
+		originalFile.delete();
+		fileThatDoesntExist.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument asFiles(Rename) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>single file specified, and it exists</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is not written</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesRename_DisallowOverwrite_SingleFile_OutputFileExists() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile = createTempPng();
+		
+		File fileThatExists = makeRenamedFile(originalFile, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile);
+		copyFile(sourceFile, fileThatExists);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile)
+			.size(100, 100)
+			.asFiles(rename, false);
+		
+		// then
+		assertTrue(fileThatExists.exists());
+		assertTrue(sourceFile.length() == fileThatExists.length());
+		assertEquals(Collections.emptyList(), list);
+		
+		// clean up
+		originalFile.delete();
+		fileThatExists.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument asFiles(Rename) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>multiple files are specified</li>
+	 * <li>all of the output files do not exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesRename_AllowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile1 = createTempPng();
+		File originalFile2 = createTempPng();
+		
+		File fileThatDoesntExist1 = makeRenamedFile(originalFile1, rename);
+		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile1);
+		copyFile(sourceFile, originalFile2);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile1, originalFile2)
+			.size(100, 100)
+			.asFiles(rename, true);
+		
+		// then
+		assertTrue(fileThatDoesntExist1.exists());
+		assertTrue(fileThatDoesntExist2.exists());
+		assertEquals(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), list);
+		
+		// clean up
+		originalFile1.delete();
+		originalFile2.delete();
+		fileThatDoesntExist1.delete();
+		fileThatDoesntExist2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument asFiles(Rename) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>multiple files are specified</li>
+	 * <li>some of the output files exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesRename_AllowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile1 = createTempPng();
+		File originalFile2 = createTempPng();
+		
+		File fileThatDoesntExist = makeRenamedFile(originalFile1, rename);
+		File fileThatExists = makeRenamedFile(originalFile2, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile1);
+		copyFile(sourceFile, originalFile2);
+		copyFile(sourceFile, fileThatExists);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile1, originalFile2)
+			.size(100, 100)
+			.asFiles(rename, true);
+		
+		// then
+		assertTrue(fileThatDoesntExist.exists());
+		assertTrue(fileThatExists.exists());
+		assertFalse(sourceFile.length() == fileThatExists.length());
+		assertEquals(Arrays.asList(fileThatDoesntExist, fileThatExists), list);
+		
+		// clean up
+		originalFile1.delete();
+		originalFile2.delete();
+		fileThatDoesntExist.delete();
+		fileThatExists.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument asFiles(Rename) is called</li>
+	 * <li>allowOverwrite is true</li>
+	 * <li>multiple files are specified</li>
+	 * <li>some of the output files exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The destination file is overwritten</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesRename_AllowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile1 = createTempPng();
+		File originalFile2 = createTempPng();
+		
+		File fileThatExists1 = makeRenamedFile(originalFile1, rename);
+		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile1);
+		copyFile(sourceFile, originalFile2);
+		copyFile(sourceFile, fileThatExists1);
+		copyFile(sourceFile, fileThatExists2);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile1, originalFile2)
+			.size(100, 100)
+			.asFiles(rename, true);
+		
+		// then
+		assertTrue(fileThatExists1.exists());
+		assertTrue(fileThatExists2.exists());
+		assertFalse(sourceFile.length() == fileThatExists1.length());
+		assertFalse(sourceFile.length() == fileThatExists2.length());
+		assertEquals(Arrays.asList(fileThatExists1, fileThatExists2), list);
+		
+		// clean up
+		originalFile1.delete();
+		originalFile2.delete();
+		fileThatExists1.delete();
+		fileThatExists2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument asFiles(Rename) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>multiple files are specified</li>
+	 * <li>all of the output files do not exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Only non-existent files are output</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesRename_DisallowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile1 = createTempPng();
+		File originalFile2 = createTempPng();
+		
+		File fileThatDoesntExist1 = makeRenamedFile(originalFile1, rename);
+		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile1);
+		copyFile(sourceFile, originalFile2);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile1, originalFile2)
+			.size(100, 100)
+			.asFiles(rename, false);
+		
+		// then
+		assertTrue(fileThatDoesntExist1.exists());
+		assertTrue(fileThatDoesntExist2.exists());
+		assertEquals(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), list);
+		
+		// clean up
+		originalFile1.delete();
+		originalFile2.delete();
+		fileThatDoesntExist1.delete();
+		fileThatDoesntExist2.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument asFiles(Rename) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>multiple files are specified</li>
+	 * <li>some of the output files exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Only non-existent files are output</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesRename_DisallowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile1 = createTempPng();
+		File originalFile2 = createTempPng();
+		
+		File fileThatDoesntExist = makeRenamedFile(originalFile1, rename);
+		File fileThatExists = makeRenamedFile(originalFile2, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile1);
+		copyFile(sourceFile, originalFile2);
+		copyFile(sourceFile, fileThatExists);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile1, originalFile2)
+			.size(100, 100)
+			.asFiles(rename, false);
+		
+		// then
+		assertTrue(fileThatDoesntExist.exists());
+		assertTrue(fileThatExists.exists());
+		assertTrue(sourceFile.length() == fileThatExists.length());
+		assertEquals(Arrays.asList(fileThatDoesntExist), list);
+		
+		// clean up
+		originalFile1.delete();
+		originalFile2.delete();
+		fileThatDoesntExist.delete();
+		fileThatExists.delete();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>the two argument asFiles(Rename) is called</li>
+	 * <li>allowOverwrite is false</li>
+	 * <li>multiple files are specified</li>
+	 * <li>some of the output files exist</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>Only non-existent files are output</li>
+	 * </ol>
+	 */	
+	@Test
+	public void asFilesRename_DisallowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException
+	{
+		// set up
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+		File originalFile1 = createTempPng();
+		File originalFile2 = createTempPng();
+		
+		File fileThatExists1 = makeRenamedFile(originalFile1, rename);
+		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
+		
+		// copy the image to a temporary file.
+		copyFile(sourceFile, originalFile1);
+		copyFile(sourceFile, originalFile2);
+		copyFile(sourceFile, fileThatExists1);
+		copyFile(sourceFile, fileThatExists2);
+		
+		// given
+		
+		// when
+		List<File> list = Thumbnails.of(originalFile1, originalFile2)
+			.size(100, 100)
+			.asFiles(rename, false);
+		
+		// then
+		assertTrue(fileThatExists1.exists());
+		assertTrue(fileThatExists2.exists());
+		assertTrue(sourceFile.length() == fileThatExists1.length());
+		assertTrue(sourceFile.length() == fileThatExists2.length());
+		assertEquals(Collections.emptyList(), list);
+		
+		// clean up
+		originalFile1.delete();
+		originalFile2.delete();
+		fileThatExists1.delete();
+		fileThatExists2.delete();
+	}
+	
+	@BeforeClass
+	public static void makeTemporaryDirectory()
+	{
+		new File("test-resources/Thumbnailator/tmp").mkdir();
+	}
+
+	@AfterClass
+	public static void deleteTemporaryDirectory()
+	{
+		File tmpDir = new File("test-resources/Thumbnailator/tmp");
+		for (File f : tmpDir.listFiles())
+		{
+			f.delete();
+		}
+		tmpDir.delete();
+	}
+
+	private File createTempPng() throws IOException
+	{
+		return new File(
+				"test-resources/Thumbnailator/tmp",
+				"tmp-" + Math.abs(new Random().nextLong()) + ".png"
+		);
+	}
+
+	private File makeRenamedFile(File f, Rename rename)
+	{
+		return new File(f.getParent(), Rename.PREFIX_DOT_THUMBNAIL.apply(f.getName()));
+	}
+
+	/**
+	 * Copies a file.
+	 * 
+	 * @param sourceFile		The source file.
+	 * @param destFile			The destination file.
+	 * @throws IOException		If an IOException is thrown.
+	 */
+	private static void copyFile(File sourceFile, File destFile) throws IOException
+	{
+		FileInputStream fis = new FileInputStream(sourceFile);
+		FileOutputStream fos = new FileOutputStream(destFile);
+		fis.getChannel().transferTo(0, sourceFile.length(), fos.getChannel());
+		fis.close();
+		fos.close();
 	}
 	
 	/**
