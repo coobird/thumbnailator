@@ -1960,6 +1960,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * <p>
 		 * The file names for the thumbnails are obtained from the given
 		 * {@link Iterable}.
+		 * <p>
+		 * If the destination file already exists, then the file will be
+		 * overwritten.
 		 * 
 		 * @param iterable			An {@link Iterable} which returns an
 		 * 							{@link Iterator} which returns file names
@@ -1971,6 +1974,29 @@ watermark(Positions.CENTER, image, opacity);
 		 * 							to files. 
 		 */
 		public List<File> asFiles(Iterable<File> iterable) throws IOException
+		{
+			return asFiles(iterable, true);
+		}
+		
+		/**
+		 * Creates the thumbnails and stores them to the files, and returns
+		 * a {@link List} of {@link File}s to the thumbnails. 
+		 * <p>
+		 * The file names for the thumbnails are obtained from the given
+		 * {@link Iterable}.
+		 * 
+		 * @param iterable			An {@link Iterable} which returns an
+		 * 							{@link Iterator} which returns file names
+		 * 							which should be assigned to each thumbnail.
+		 * @param allowOverwrite	Whether or not to overwrite the destination
+		 * 							file if it already exists.
+		 * @return					A list of {@link File}s of the thumbnails
+		 * 							which were created.
+		 * @throws IOException		If a problem occurs while reading the
+		 * 							original images or writing the thumbnails 
+		 * 							to files. 
+		 */
+		public List<File> asFiles(Iterable<File> iterable, boolean allowOverwrite) throws IOException
 		{
 			checkReadiness();
 			
@@ -1994,13 +2020,24 @@ watermark(Positions.CENTER, image, opacity);
 					);
 				}
 				
-				FileImageSink destination = new FileImageSink(filenameIter.next());
+				FileImageSink destination = new FileImageSink(filenameIter.next(), allowOverwrite);
 				
-				Thumbnailator.createThumbnail(
-						new SourceSinkThumbnailTask<T, File>(param, source, destination)
-				);
-				
-				destinationFiles.add(destination.getSink());
+				try
+				{
+					Thumbnailator.createThumbnail(
+							new SourceSinkThumbnailTask<T, File>(param, source, destination)
+					);
+					
+					destinationFiles.add(destination.getSink());
+				}
+				catch (IllegalArgumentException e)
+				{
+					/*
+					 * Handle the IllegalArgumentException which is thrown when
+					 * the destination file already exists by not adding the
+					 * current file to the destinationFiles list.
+					 */
+				}
 			}
 			
 			return destinationFiles;
@@ -2022,6 +2059,26 @@ watermark(Positions.CENTER, image, opacity);
 		public void toFiles(Iterable<File> iterable) throws IOException
 		{
 			asFiles(iterable);
+		}
+		
+		/**
+		 * Creates the thumbnails and stores them to the files.
+		 * <p>
+		 * The file names for the thumbnails are obtained from the given
+		 * {@link Iterable}.
+		 * 
+		 * @param iterable			An {@link Iterable} which returns an
+		 * 							{@link Iterator} which returns file names
+		 * 							which should be assigned to each thumbnail.
+		 * @param allowOverwrite	Whether or not to overwrite the destination
+		 * 							file if it already exists.
+		 * @throws IOException		If a problem occurs while reading the
+		 * 							original images or writing the thumbnails 
+		 * 							to files.
+		 */
+		public void toFiles(Iterable<File> iterable, boolean allowOverwrite) throws IOException
+		{
+			asFiles(iterable, allowOverwrite);
 		}
 		
 		/**
