@@ -38,7 +38,6 @@ import net.coobird.thumbnailator.resizers.configurations.Antialiasing;
 import net.coobird.thumbnailator.resizers.configurations.Dithering;
 import net.coobird.thumbnailator.resizers.configurations.Rendering;
 import net.coobird.thumbnailator.resizers.configurations.ScalingMode;
-import net.coobird.thumbnailator.tasks.FileThumbnailTask;
 import net.coobird.thumbnailator.tasks.SourceSinkThumbnailTask;
 import net.coobird.thumbnailator.tasks.io.BufferedImageSink;
 import net.coobird.thumbnailator.tasks.io.BufferedImageSource;
@@ -2088,6 +2087,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * <p>
 		 * To call this method, the thumbnails must have been creates from
 		 * files by calling the {@link Thumbnails#of(File...)} method.
+		 * <p>
+		 * If the destination file already exists, then the file will be
+		 * overwritten.
 		 * 
 		 * @param rename			The rename function which is used to
 		 * 							determine the filenames of the thumbnail
@@ -2101,6 +2103,32 @@ watermark(Positions.CENTER, image, opacity);
 		 * 										from files.
 		 */
 		public List<File> asFiles(Rename rename) throws IOException
+		{
+			return asFiles(rename, true);
+		}
+		
+		/**
+		 * Creates the thumbnails and stores them to the files, using the 
+		 * {@code Rename} function to determine the filenames. The files
+		 * are returned as {@link List}.
+		 * <p>
+		 * To call this method, the thumbnails must have been creates from
+		 * files by calling the {@link Thumbnails#of(File...)} method.
+		 * 
+		 * @param rename			The rename function which is used to
+		 * 							determine the filenames of the thumbnail
+		 * 							files to write.
+		 * @param allowOverwrite	Whether or not to overwrite the destination
+		 * 							file if it already exists.
+		 * @return					A list of {@link File}s of the thumbnails
+		 * 							which were created.
+		 * @throws IOException		If a problem occurs while reading the
+		 * 							original images or writing the thumbnails 
+		 * 							to files. 
+		 * @throws IllegalStateException		If the original images are not
+		 * 										from files.
+		 */
+		public List<File> asFiles(Rename rename, boolean allowOverwrite) throws IOException
 		{
 			checkReadiness();
 			
@@ -2125,9 +2153,25 @@ watermark(Positions.CENTER, image, opacity);
 				File destinationFile = 
 					new File(f.getParent(), rename.apply(f.getName()));
 				
-				destinationFiles.add(destinationFile);
 				
-				Thumbnailator.createThumbnail(new FileThumbnailTask(param, f, destinationFile));
+				FileImageSink destination = new FileImageSink(destinationFile, allowOverwrite);
+				
+				try
+				{
+					Thumbnailator.createThumbnail(
+							new SourceSinkThumbnailTask<T, File>(param, source, destination)
+					);
+					
+					destinationFiles.add(destination.getSink());
+				}
+				catch (IllegalArgumentException e)
+				{
+					/*
+					 * Handle the IllegalArgumentException which is thrown when
+					 * the destination file already exists by not adding the
+					 * current file to the destinationFiles list.
+					 */
+				}
 			}
 			
 			return destinationFiles;
@@ -2139,6 +2183,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * <p>
 		 * To call this method, the thumbnails must have been creates from
 		 * files by calling the {@link Thumbnails#of(File...)} method.
+		 * <p>
+		 * If the destination file already exists, then the file will be
+		 * overwritten.
 		 * 
 		 * @param rename			The rename function which is used to
 		 * 							determine the filenames of the thumbnail
@@ -2153,6 +2200,30 @@ watermark(Positions.CENTER, image, opacity);
 		public void toFiles(Rename rename) throws IOException
 		{
 			asFiles(rename);
+		}
+		
+		/**
+		 * Creates the thumbnails and stores them to the files, using the 
+		 * {@code Rename} function to determine the filenames.
+		 * <p>
+		 * To call this method, the thumbnails must have been creates from
+		 * files by calling the {@link Thumbnails#of(File...)} method.
+		 * 
+		 * @param rename			The rename function which is used to
+		 * 							determine the filenames of the thumbnail
+		 * 							files to write.
+		 * @param allowOverwrite	Whether or not to overwrite the destination
+		 * 							file if it already exists.
+		 * @throws IOException		If a problem occurs while reading the
+		 * 							original images or writing the thumbnails 
+		 * 							to files. 
+		 * 							thumbnails to files. 
+		 * @throws IllegalStateException		If the original images are not
+		 * 										from files.
+		 */
+		public void toFiles(Rename rename, boolean allowOverwrite) throws IOException
+		{
+			asFiles(rename, allowOverwrite);
 		}
 
 		/**
