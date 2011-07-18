@@ -22,6 +22,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
+import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 import net.coobird.thumbnailator.name.ConsecutivelyNumberedFilenames;
 import net.coobird.thumbnailator.name.Rename;
 
@@ -7465,7 +7466,12 @@ public class ThumbnailsBuilderInputOutputTest
 
 	private File makeRenamedFile(File f, Rename rename)
 	{
-		return new File(f.getParent(), Rename.PREFIX_DOT_THUMBNAIL.apply(f.getName()));
+		ThumbnailParameter param = 
+			new ThumbnailParameterBuilder()
+				.size(100, 100)
+				.build();
+		
+		return new File(f.getParent(), Rename.PREFIX_DOT_THUMBNAIL.apply(f.getName(), param));
 	}
 
 	/**
