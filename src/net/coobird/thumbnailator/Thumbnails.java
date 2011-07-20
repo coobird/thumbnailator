@@ -323,6 +323,7 @@ public final class Thumbnails
 	 * 					specify the parameters for creating the thumbnail.
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
+	 * @since 	0.3.1
 	 */
 	public static Builder<File> fromFilenames(Iterable<String> files)
 	{
@@ -340,6 +341,7 @@ public final class Thumbnails
 	 * 					specify the parameters for creating the thumbnail.
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
+	 * @since 	0.3.1
 	 */
 	public static Builder<File> fromFiles(Iterable<File> files)
 	{
@@ -357,6 +359,7 @@ public final class Thumbnails
 	 * 					specify the parameters for creating the thumbnail.
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
+	 * @since 	0.3.1
 	 */
 	public static Builder<URL> fromURLs(Iterable<URL> urls)
 	{
@@ -375,6 +378,7 @@ public final class Thumbnails
 	 * 					specify the parameters for creating the thumbnail.
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
+	 * @since 	0.3.1
 	 */
 	public static Builder<InputStream> fromInputStreams(Iterable<? extends InputStream> inputStreams)
 	{
@@ -392,6 +396,7 @@ public final class Thumbnails
 	 * 					specify the parameters for creating the thumbnail.
 	 * @throws NullPointerException		If the argument is {@code null}.
 	 * @throws IllegalArgumentException	If the argument is an empty collection.
+	 * @since 	0.3.1
 	 */
 	public static Builder<BufferedImage> fromImages(Iterable<BufferedImage> images)
 	{
