@@ -869,6 +869,7 @@ public final class Thumbnails
 		 * 
 		 * @param width			The width of the thumbnail.
 		 * @return				Reference to this object.
+		 * @since 	0.3.5
 		 */
 		public Builder<T> width(int width)
 		{
@@ -904,6 +905,7 @@ public final class Thumbnails
 		 * 
 		 * @param height		The height of the thumbnail.
 		 * @return				Reference to this object.
+		 * @since 	0.3.5
 		 */
 		public Builder<T> height(int height)
 		{
@@ -941,6 +943,7 @@ public final class Thumbnails
 		 * @param width			The width of the thumbnail.
 		 * @param height		The height of the thumbnail.
 		 * @return				Reference to this object.
+		 * @since 	0.3.2
 		 */
 		public Builder<T> forceSize(int width, int height)
 		{
@@ -1003,6 +1006,7 @@ public final class Thumbnails
 		 * @return				Reference to this object.
 		 * @throws NullPointerException	If the source region object is
 		 * 								{@code null}.
+		 * @since 	0.3.4
 		 */
 		public Builder<T> sourceRegion(Region sourceRegion)
 		{
@@ -1028,6 +1032,7 @@ public final class Thumbnails
 		 * @return				Reference to this object.
 		 * @throws NullPointerException	If the position and/or size is 
 		 * 								{@code null}.
+		 * @since 	0.3.4
 		 */
 		public Builder<T> sourceRegion(Position position, Size size)
 		{
@@ -1059,6 +1064,7 @@ public final class Thumbnails
 		 * @return				Reference to this object.
 		 * @throws IllegalArgumentException	If the width and/or height is 
 		 * 									less than or equal to {@code 0}.
+		 * @since 	0.3.4
 		 */
 		public Builder<T> sourceRegion(int x, int y, int width, int height)
 		{
@@ -1090,6 +1096,7 @@ public final class Thumbnails
 		 * 									{@code null}.
 		 * @throws IllegalArgumentException	If the width and/or height is 
 		 * 									less than or equal to {@code 0}.
+		 * @since 	0.3.4
 		 */
 		public Builder<T> sourceRegion(Position position, int width, int height)
 		{
@@ -1120,6 +1127,7 @@ public final class Thumbnails
 		 * @param region		A rectangular region which specifies the source
 		 * 						region to use when creating the thumbnail.
 		 * @throws NullPointerException		If the region is {@code null}.
+		 * @since 	0.3.4
 		 */
 		public Builder<T> sourceRegion(Rectangle region)
 		{
@@ -1993,7 +2001,8 @@ watermark(Positions.CENTER, image, opacity);
 		 * 							which were created.
 		 * @throws IOException		If a problem occurs while reading the
 		 * 							original images or writing the thumbnails 
-		 * 							to files. 
+		 * 							to files.
+		 * @since 	0.3.7
 		 */
 		public List<File> asFiles(Iterable<File> iterable, boolean allowOverwrite) throws IOException
 		{
@@ -2074,6 +2083,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * @throws IOException		If a problem occurs while reading the
 		 * 							original images or writing the thumbnails 
 		 * 							to files.
+		 * @since 	0.3.7
 		 */
 		public void toFiles(Iterable<File> iterable, boolean allowOverwrite) throws IOException
 		{
@@ -2127,6 +2137,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * 							to files. 
 		 * @throws IllegalStateException		If the original images are not
 		 * 										from files.
+		 * @since 	0.3.7
 		 */
 		public List<File> asFiles(Rename rename, boolean allowOverwrite) throws IOException
 		{
@@ -2220,6 +2231,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * 							thumbnails to files. 
 		 * @throws IllegalStateException		If the original images are not
 		 * 										from files.
+		 * @since 	0.3.7
 		 */
 		public void toFiles(Rename rename, boolean allowOverwrite) throws IOException
 		{
