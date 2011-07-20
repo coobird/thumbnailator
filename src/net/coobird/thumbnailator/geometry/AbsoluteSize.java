@@ -7,6 +7,7 @@ import java.awt.Dimension;
  * should be the specified absolute size.
  * 
  * @author coobird
+ * @since 0.3.4
  *
  */
 public class AbsoluteSize implements Size
