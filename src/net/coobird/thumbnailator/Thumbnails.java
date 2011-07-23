@@ -2061,6 +2061,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * <p>
 		 * The file names for the thumbnails are obtained from the given
 		 * {@link Iterable}.
+		 * <p>
+		 * If the destination file already exists, then the file will be
+		 * overwritten.
 		 * 
 		 * @param iterable			An {@link Iterable} which returns an
 		 * 							{@link Iterator} which returns file names
