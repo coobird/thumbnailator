@@ -728,6 +728,7 @@ public final class Thumbnails
 			OUTPUT_QUALITY("outputQuality"),
 			RESIZER("resizer"), 
 			SOURCE_REGION("sourceRegion"),
+			ALLOW_OVERWRITE("allowOverwrite"),
 			;
 			
 			private final String name;
@@ -768,6 +769,7 @@ public final class Thumbnails
 			statusMap.put(Properties.OUTPUT_FORMAT_TYPE, Status.OPTIONAL);
 			statusMap.put(Properties.OUTPUT_QUALITY, Status.OPTIONAL);
 			statusMap.put(Properties.RESIZER, Status.OPTIONAL);
+			statusMap.put(Properties.ALLOW_OVERWRITE, Status.OPTIONAL);
 		}
 
 		/**
@@ -826,6 +828,8 @@ public final class Thumbnails
 		private Rendering rendering = Rendering.DEFAULT;
 		
 		private Resizer resizer = Resizers.PROGRESSIVE;
+		
+		private boolean allowOverwrite = true;
 		
 		/**
 		 * The {@link ImageFilter}s that should be applied when creating the
@@ -1145,6 +1149,42 @@ public final class Thumbnails
 					new Coordinate(region.x, region.y),
 					new AbsoluteSize(region.getSize())
 			);
+		}
+		
+		/**
+		 * Specifies whether or not to overwrite files which already exist if
+		 * they have been specified as destination files.
+		 * <p>
+		 * This method will change the output behavior of the following methods:
+		 * <ul>
+		 * <li>{@link #toFile(File)}</li>
+		 * <li>{@link #toFile(String)}</li>
+		 * <li>{@link #toFiles(Iterable)}</li>
+		 * <li>{@link #toFiles(Rename)}</li>
+		 * <li>{@link #asFiles(Iterable)}</li>
+		 * <li>{@link #asFiles(Rename)}</li>
+		 * </ul>
+		 * The behavior of methods which are not listed above will not be 
+		 * affected by calling this method.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @param allowOverwrite	If {@code true} then existing files will be
+		 * 							overwritten if specified as a destination.
+		 * 							If {@code false}, then the existing files
+		 * 							will not be altered. For specific behavior,
+		 * 							please refer to the specific output methods
+		 * 							listed above.
+		 * 						
+		 * @since 	0.3.7
+		 */
+		public Builder<T> allowOverwrite(boolean allowOverwrite)
+		{
+			updateStatus(Properties.ALLOW_OVERWRITE, Status.ALREADY_SET);
+			this.allowOverwrite = allowOverwrite;
+			
+			return this;
 		}
 		
 		/**
@@ -1970,29 +2010,12 @@ watermark(Positions.CENTER, image, opacity);
 		 * Creates the thumbnails and stores them to the files, and returns
 		 * a {@link List} of {@link File}s to the thumbnails. 
 		 * <p>
-		 * The file names for the thumbnails are obtained from the given
-		 * {@link Iterable}.
-		 * <p>
-		 * If the destination file already exists, then the file will be
-		 * overwritten.
-		 * 
-		 * @param iterable			An {@link Iterable} which returns an
-		 * 							{@link Iterator} which returns file names
-		 * 							which should be assigned to each thumbnail.
-		 * @return					A list of {@link File}s of the thumbnails
-		 * 							which were created.
-		 * @throws IOException		If a problem occurs while reading the
-		 * 							original images or writing the thumbnails 
-		 * 							to files. 
-		 */
-		public List<File> asFiles(Iterable<File> iterable) throws IOException
-		{
-			return asFiles(iterable, true);
-		}
-		
-		/**
-		 * Creates the thumbnails and stores them to the files, and returns
-		 * a {@link List} of {@link File}s to the thumbnails. 
+		 * When the destination file exists, and overwriting files has been
+		 * disabled by calling the {@link #allowOverwrite(boolean)} method 
+		 * with {@code false}, then the thumbnail with the destination file 
+		 * already existing will not be written and the corresponding 
+		 * {@code File} object will not be included in the {@code List} returned
+		 * by this method.
 		 * <p>
 		 * The file names for the thumbnails are obtained from the given
 		 * {@link Iterable}.
@@ -2000,8 +2023,6 @@ watermark(Positions.CENTER, image, opacity);
 		 * @param iterable			An {@link Iterable} which returns an
 		 * 							{@link Iterator} which returns file names
 		 * 							which should be assigned to each thumbnail.
-		 * @param allowOverwrite	Whether or not to overwrite the destination
-		 * 							file if it already exists.
 		 * @return					A list of {@link File}s of the thumbnails
 		 * 							which were created.
 		 * @throws IOException		If a problem occurs while reading the
@@ -2009,7 +2030,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * 							to files.
 		 * @since 	0.3.7
 		 */
-		public List<File> asFiles(Iterable<File> iterable, boolean allowOverwrite) throws IOException
+		public List<File> asFiles(Iterable<File> iterable) throws IOException
 		{
 			checkReadiness();
 			
@@ -2059,11 +2080,13 @@ watermark(Positions.CENTER, image, opacity);
 		/**
 		 * Creates the thumbnails and stores them to the files.
 		 * <p>
+		 * When the destination file exists, and overwriting files has been
+		 * disabled by calling the {@link #allowOverwrite(boolean)} method 
+		 * with {@code false}, then the thumbnail with the destination file 
+		 * already existing will not be written.
+		 * <p>
 		 * The file names for the thumbnails are obtained from the given
 		 * {@link Iterable}.
-		 * <p>
-		 * If the destination file already exists, then the file will be
-		 * overwritten.
 		 * 
 		 * @param iterable			An {@link Iterable} which returns an
 		 * 							{@link Iterator} which returns file names
@@ -2071,6 +2094,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * @throws IOException		If a problem occurs while reading the
 		 * 							original images or writing the thumbnails 
 		 * 							to files.
+		 * @since 	0.3.7
 		 */
 		public void toFiles(Iterable<File> iterable) throws IOException
 		{
@@ -2078,36 +2102,19 @@ watermark(Positions.CENTER, image, opacity);
 		}
 		
 		/**
-		 * Creates the thumbnails and stores them to the files.
-		 * <p>
-		 * The file names for the thumbnails are obtained from the given
-		 * {@link Iterable}.
-		 * 
-		 * @param iterable			An {@link Iterable} which returns an
-		 * 							{@link Iterator} which returns file names
-		 * 							which should be assigned to each thumbnail.
-		 * @param allowOverwrite	Whether or not to overwrite the destination
-		 * 							file if it already exists.
-		 * @throws IOException		If a problem occurs while reading the
-		 * 							original images or writing the thumbnails 
-		 * 							to files.
-		 * @since 	0.3.7
-		 */
-		public void toFiles(Iterable<File> iterable, boolean allowOverwrite) throws IOException
-		{
-			asFiles(iterable, allowOverwrite);
-		}
-		
-		/**
 		 * Creates the thumbnails and stores them to the files, using the 
 		 * {@code Rename} function to determine the filenames. The files
 		 * are returned as {@link List}.
 		 * <p>
+		 * When the destination file exists, and overwriting files has been
+		 * disabled by calling the {@link #allowOverwrite(boolean)} method 
+		 * with {@code false}, then the thumbnail with the destination file 
+		 * already existing will not be written and the corresponding 
+		 * {@code File} object will not be included in the {@code List} returned
+		 * by this method.
+		 * <p>
 		 * To call this method, the thumbnails must have been creates from
 		 * files by calling the {@link Thumbnails#of(File...)} method.
-		 * <p>
-		 * If the destination file already exists, then the file will be
-		 * overwritten.
 		 * 
 		 * @param rename			The rename function which is used to
 		 * 							determine the filenames of the thumbnail
@@ -2119,35 +2126,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * 							to files. 
 		 * @throws IllegalStateException		If the original images are not
 		 * 										from files.
+		 * @since 	0.3.7
 		 */
 		public List<File> asFiles(Rename rename) throws IOException
-		{
-			return asFiles(rename, true);
-		}
-		
-		/**
-		 * Creates the thumbnails and stores them to the files, using the 
-		 * {@code Rename} function to determine the filenames. The files
-		 * are returned as {@link List}.
-		 * <p>
-		 * To call this method, the thumbnails must have been creates from
-		 * files by calling the {@link Thumbnails#of(File...)} method.
-		 * 
-		 * @param rename			The rename function which is used to
-		 * 							determine the filenames of the thumbnail
-		 * 							files to write.
-		 * @param allowOverwrite	Whether or not to overwrite the destination
-		 * 							file if it already exists.
-		 * @return					A list of {@link File}s of the thumbnails
-		 * 							which were created.
-		 * @throws IOException		If a problem occurs while reading the
-		 * 							original images or writing the thumbnails 
-		 * 							to files. 
-		 * @throws IllegalStateException		If the original images are not
-		 * 										from files.
-		 * @since 	0.3.7
-		 */
-		public List<File> asFiles(Rename rename, boolean allowOverwrite) throws IOException
 		{
 			checkReadiness();
 			
@@ -2200,30 +2181,10 @@ watermark(Positions.CENTER, image, opacity);
 		 * Creates the thumbnails and stores them to the files, using the 
 		 * {@code Rename} function to determine the filenames.
 		 * <p>
-		 * To call this method, the thumbnails must have been creates from
-		 * files by calling the {@link Thumbnails#of(File...)} method.
-		 * <p>
-		 * If the destination file already exists, then the file will be
-		 * overwritten.
-		 * 
-		 * @param rename			The rename function which is used to
-		 * 							determine the filenames of the thumbnail
-		 * 							files to write.
-		 * @throws IOException		If a problem occurs while reading the
-		 * 							original images or writing the thumbnails 
-		 * 							to files. 
-		 * 							thumbnails to files. 
-		 * @throws IllegalStateException		If the original images are not
-		 * 										from files.
-		 */
-		public void toFiles(Rename rename) throws IOException
-		{
-			asFiles(rename);
-		}
-		
-		/**
-		 * Creates the thumbnails and stores them to the files, using the 
-		 * {@code Rename} function to determine the filenames.
+		 * When the destination file exists, and overwriting files has been
+		 * disabled by calling the {@link #allowOverwrite(boolean)} method 
+		 * with {@code false}, then the thumbnail with the destination file 
+		 * already existing will not be written.
 		 * <p>
 		 * To call this method, the thumbnails must have been creates from
 		 * files by calling the {@link Thumbnails#of(File...)} method.
@@ -2231,8 +2192,6 @@ watermark(Positions.CENTER, image, opacity);
 		 * @param rename			The rename function which is used to
 		 * 							determine the filenames of the thumbnail
 		 * 							files to write.
-		 * @param allowOverwrite	Whether or not to overwrite the destination
-		 * 							file if it already exists.
 		 * @throws IOException		If a problem occurs while reading the
 		 * 							original images or writing the thumbnails 
 		 * 							to files. 
@@ -2241,19 +2200,21 @@ watermark(Positions.CENTER, image, opacity);
 		 * 										from files.
 		 * @since 	0.3.7
 		 */
-		public void toFiles(Rename rename, boolean allowOverwrite) throws IOException
+		public void toFiles(Rename rename) throws IOException
 		{
-			asFiles(rename, allowOverwrite);
+			asFiles(rename);
 		}
 
 		/**
 		 * Create a thumbnail and writes it to a {@link File}.
 		 * <p>
+		 * When the destination file exists, and overwriting files has been
+		 * disabled by calling the {@link #allowOverwrite(boolean)} method 
+		 * with {@code false}, then an {@link IllegalArgumentException} will
+		 * be thrown. 
+		 * <p>
 		 * To call this method, the thumbnail must have been created from a
 		 * single source.
-		 * <p>
-		 * If the destination file already exists, then the file will be
-		 * overwritten.
 		 * 
 		 * @param outFile			The file to which the thumbnail is to be
 		 * 							written to.
@@ -2261,30 +2222,11 @@ watermark(Positions.CENTER, image, opacity);
 		 * 							original images or writing the thumbnails 
 		 * 							to files. 
 		 * @throws IllegalArgumentException		If multiple original image files
-		 * 										are	specified.
+		 * 										are	specified, or if the 
+		 * 										destination file exists, and
+		 * 										overwriting files is disabled.
 		 */
 		public void toFile(File outFile) throws IOException
-		{
-			toFile(outFile, true);
-		}
-		
-		/**
-		 * Create a thumbnail and writes it to a {@link File}.
-		 * <p>
-		 * To call this method, the thumbnail must have been created from a
-		 * single source.
-		 * 
-		 * @param outFile			The file to which the thumbnail is to be
-		 * 							written to.
-		 * @param allowOverwrite	Whether or not to overwrite the destination
-		 * 							file if it already exists.
-		 * @throws IOException		If a problem occurs while reading the
-		 * 							original images or writing the thumbnails 
-		 * 							to files. 
-		 * @throws IllegalArgumentException		If multiple original image files
-		 * 										are	specified.
-		 */
-		public void toFile(File outFile, boolean allowOverwrite) throws IOException
 		{
 			checkReadiness();
 			
@@ -2306,11 +2248,13 @@ watermark(Positions.CENTER, image, opacity);
 		/**
 		 * Create a thumbnail and writes it to a {@link File}.
 		 * <p>
+		 * When the destination file exists, and overwriting files has been
+		 * disabled by calling the {@link #allowOverwrite(boolean)} method 
+		 * with {@code false}, then an {@link IllegalArgumentException} will
+		 * be thrown. 
+		 * <p>
 		 * To call this method, the thumbnail must have been created from a
 		 * single source.
-		 * <p>
-		 * If the destination file already exists, then the file will be
-		 * overwritten.
 		 * 
 		 * @param outFilepath		The file to which the thumbnail is to be
 		 * 							written to.
@@ -2318,30 +2262,11 @@ watermark(Positions.CENTER, image, opacity);
 		 * 							original images or writing the thumbnails 
 		 * 							to files. 
 		 * @throws IllegalArgumentException		If multiple original image files
-		 * 										are	specified.
+		 * 										are	specified, or if the 
+		 * 										destination file exists, and
+		 * 										overwriting files is disabled.
 		 */
 		public void toFile(String outFilepath) throws IOException
-		{
-			toFile(outFilepath, true);
-		}
-		
-		/**
-		 * Create a thumbnail and writes it to a {@link File}.
-		 * <p>
-		 * To call this method, the thumbnail must have been created from a
-		 * single source.
-		 * 
-		 * @param outFilepath		The file to which the thumbnail is to be
-		 * 							written to.
-		 * @param allowOverwrite	Whether or not to overwrite the destination
-		 * 							file if it already exists.
-		 * @throws IOException		If a problem occurs while reading the
-		 * 							original images or writing the thumbnails 
-		 * 							to files. 
-		 * @throws IllegalArgumentException		If multiple original image files
-		 * 										are	specified.
-		 */
-		public void toFile(String outFilepath, boolean allowOverwrite) throws IOException
 		{
 			checkReadiness();
 			

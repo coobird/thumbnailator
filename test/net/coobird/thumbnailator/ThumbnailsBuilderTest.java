@@ -512,6 +512,58 @@ public class ThumbnailsBuilderTest
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
+	 * <li>The allowOverwrite method is called once.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>No exceptions are thrown.</li>
+	 * </ol>
+	 */
+	@Test
+	public void allowOverwriteCalledOnce() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		Thumbnails.of(img)
+			.size(50, 50)
+			.allowOverwrite(true)
+			.asBufferedImage();
+		
+		// then
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The allowOverwrite method is called twice.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void allowOverwriteCalledTwice() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		Thumbnails.of(img)
+			.size(50, 50)
+			.allowOverwrite(true)
+			.allowOverwrite(true)
+			.asBufferedImage();
+		
+		// then
+		fail();
+	}
+
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
 	 * <li>The scale method is called.</li>
 	 * </ol>
 	 * and the expected outcome is,

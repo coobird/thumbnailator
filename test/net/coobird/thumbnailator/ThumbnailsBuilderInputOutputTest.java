@@ -5451,7 +5451,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(f)
 			.size(100, 100)
-			.toFile(f, true);
+			.allowOverwrite(true)
+			.toFile(f);
 		
 		// then
 		long fileSizeAfter = f.length();
@@ -5487,7 +5488,8 @@ public class ThumbnailsBuilderInputOutputTest
 		{
 			Thumbnails.of(f)
 				.size(100, 100)
-				.toFile(f, false);
+				.allowOverwrite(false)
+				.toFile(f);
 			
 			fail();
 		}
@@ -5527,7 +5529,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(f)
 			.size(100, 100)
-			.toFile(f.getAbsolutePath(), true);
+			.allowOverwrite(true)
+			.toFile(f.getAbsolutePath());
 		
 		// then
 		long fileSizeAfter = f.length();
@@ -5563,7 +5566,8 @@ public class ThumbnailsBuilderInputOutputTest
 		{
 			Thumbnails.of(f)
 				.size(100, 100)
-				.toFile(f.getAbsolutePath(), false);
+				.allowOverwrite(false)
+				.toFile(f.getAbsolutePath());
 			
 			fail();
 		}
@@ -5606,7 +5610,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile)
 			.size(100, 100)
-			.toFiles(Arrays.asList(fileThatDoesntExist), true);
+			.allowOverwrite(true)
+			.toFiles(Arrays.asList(fileThatDoesntExist));
 		
 		// then
 		assertTrue(fileThatDoesntExist.exists());
@@ -5647,7 +5652,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile)
 			.size(100, 100)
-			.toFiles(Arrays.asList(fileThatExists), true);
+			.allowOverwrite(true)
+			.toFiles(Arrays.asList(fileThatExists));
 		
 		// then
 		assertTrue(fileThatExists.exists());
@@ -5688,7 +5694,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile)
 			.size(100, 100)
-			.toFiles(Arrays.asList(fileThatDoesntExist), false);
+			.allowOverwrite(false)
+			.toFiles(Arrays.asList(fileThatDoesntExist));
 		
 		// then
 		assertTrue(fileThatDoesntExist.exists());
@@ -5729,7 +5736,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile)
 			.size(100, 100)
-			.toFiles(Arrays.asList(fileThatExists), false);
+			.allowOverwrite(false)
+			.toFiles(Arrays.asList(fileThatExists));
 		
 		// then
 		assertTrue(fileThatExists.exists());
@@ -5772,7 +5780,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile, originalFile)
 			.size(100, 100)
-			.toFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), true);
+			.allowOverwrite(true)
+			.toFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2));
 		
 		// then
 		assertTrue(fileThatDoesntExist1.exists());
@@ -5817,7 +5826,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile, originalFile)
 			.size(100, 100)
-			.toFiles(Arrays.asList(fileThatDoesntExist, fileThatExists), true);
+			.allowOverwrite(true)
+			.toFiles(Arrays.asList(fileThatDoesntExist, fileThatExists));
 		
 		// then
 		assertTrue(fileThatDoesntExist.exists());
@@ -5864,7 +5874,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile, originalFile)
 			.size(100, 100)
-			.toFiles(Arrays.asList(fileThatExists1, fileThatExists2), true);
+			.allowOverwrite(true)
+			.toFiles(Arrays.asList(fileThatExists1, fileThatExists2));
 		
 		// then
 		assertTrue(fileThatExists1.exists());
@@ -5910,7 +5921,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile, originalFile)
 			.size(100, 100)
-			.toFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), false);
+			.allowOverwrite(false)
+			.toFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2));
 		
 		// then
 		assertTrue(fileThatDoesntExist1.exists());
@@ -5955,7 +5967,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile, originalFile)
 			.size(100, 100)
-			.toFiles(Arrays.asList(fileThatDoesntExist, fileThatExists), false);
+			.allowOverwrite(false)
+			.toFiles(Arrays.asList(fileThatDoesntExist, fileThatExists));
 		
 		// then
 		assertTrue(fileThatDoesntExist.exists());
@@ -6002,7 +6015,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile, originalFile)
 			.size(100, 100)
-			.toFiles(Arrays.asList(fileThatExists1, fileThatExists2), false);
+			.allowOverwrite(false)
+			.toFiles(Arrays.asList(fileThatExists1, fileThatExists2));
 		
 		// then
 		assertTrue(fileThatExists1.exists());
@@ -6048,7 +6062,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
 			.size(100, 100)
-			.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), true);
+			.allowOverwrite(true)
+			.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2));
 		
 		// then
 		assertTrue(fileThatDoesntExist1.exists());
@@ -6095,7 +6110,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
 			.size(100, 100)
-			.asFiles(Arrays.asList(fileThatExists1, fileThatExists2), true);
+			.allowOverwrite(true)
+			.asFiles(Arrays.asList(fileThatExists1, fileThatExists2));
 		
 		// then
 		assertTrue(fileThatExists1.exists());
@@ -6142,7 +6158,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
 			.size(100, 100)
-			.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), false);
+			.allowOverwrite(false)
+			.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2));
 		
 		// then
 		assertTrue(fileThatDoesntExist1.exists());
@@ -6189,7 +6206,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
 			.size(100, 100)
-			.asFiles(Arrays.asList(fileThatExists1, fileThatExists2), false);
+			.allowOverwrite(false)
+			.asFiles(Arrays.asList(fileThatExists1, fileThatExists2));
 		
 		// then
 		assertTrue(fileThatExists1.exists());
@@ -6237,7 +6255,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
 			.size(100, 100)
-			.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), true);
+			.allowOverwrite(true)
+			.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2));
 		
 		// then
 		assertTrue(fileThatDoesntExist1.exists());
@@ -6284,7 +6303,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
 			.size(100, 100)
-			.asFiles(Arrays.asList(fileThatDoesntExist, fileThatExists), true);
+			.allowOverwrite(true)
+			.asFiles(Arrays.asList(fileThatDoesntExist, fileThatExists));
 		
 		// then
 		assertTrue(fileThatDoesntExist.exists());
@@ -6333,7 +6353,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
 			.size(100, 100)
-			.asFiles(Arrays.asList(fileThatExists1, fileThatExists2), true);
+			.allowOverwrite(true)
+			.asFiles(Arrays.asList(fileThatExists1, fileThatExists2));
 		
 		// then
 		assertTrue(fileThatExists1.exists());
@@ -6381,7 +6402,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
 			.size(100, 100)
-			.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), false);
+			.allowOverwrite(false)
+			.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2));
 		
 		// then
 		assertTrue(fileThatDoesntExist1.exists());
@@ -6428,7 +6450,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
 			.size(100, 100)
-			.asFiles(Arrays.asList(fileThatDoesntExist, fileThatExists), false);
+			.allowOverwrite(false)
+			.asFiles(Arrays.asList(fileThatDoesntExist, fileThatExists));
 		
 		// then
 		assertTrue(fileThatDoesntExist.exists());
@@ -6477,7 +6500,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
 			.size(100, 100)
-			.asFiles(Arrays.asList(fileThatExists1, fileThatExists2), false);
+			.allowOverwrite(false)
+			.asFiles(Arrays.asList(fileThatExists1, fileThatExists2));
 		
 		// then
 		assertTrue(fileThatExists1.exists());
@@ -6523,7 +6547,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile)
 			.size(100, 100)
-			.toFiles(rename, true);
+			.allowOverwrite(true)
+			.toFiles(rename);
 		
 		// then
 		assertTrue(fileThatDoesntExist.exists());
@@ -6565,7 +6590,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile)
 			.size(100, 100)
-			.toFiles(rename, true);
+			.allowOverwrite(true)
+			.toFiles(rename);
 		
 		// then
 		assertTrue(fileThatExists.exists());
@@ -6607,7 +6633,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile)
 			.size(100, 100)
-			.toFiles(rename, false);
+			.allowOverwrite(false)
+			.toFiles(rename);
 		
 		// then
 		assertTrue(fileThatDoesntExist.exists());
@@ -6649,7 +6676,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile)
 			.size(100, 100)
-			.toFiles(rename, false);
+			.allowOverwrite(false)
+			.toFiles(rename);
 		
 		// then
 		assertTrue(fileThatExists.exists());
@@ -6695,7 +6723,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile1, originalFile2)
 			.size(100, 100)
-			.toFiles(rename, true);
+			.allowOverwrite(true)
+			.toFiles(rename);
 		
 		// then
 		assertTrue(fileThatDoesntExist1.exists());
@@ -6744,7 +6773,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile1, originalFile2)
 			.size(100, 100)
-			.toFiles(rename, true);
+			.allowOverwrite(true)
+			.toFiles(rename);
 		
 		// then
 		assertTrue(fileThatDoesntExist.exists());
@@ -6795,7 +6825,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile1, originalFile2)
 			.size(100, 100)
-			.toFiles(rename, true);
+			.allowOverwrite(true)
+			.toFiles(rename);
 		
 		// then
 		assertTrue(fileThatExists1.exists());
@@ -6845,7 +6876,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile1, originalFile2)
 			.size(100, 100)
-			.toFiles(rename, false);
+			.allowOverwrite(false)
+			.toFiles(rename);
 		
 		// then
 		assertTrue(fileThatDoesntExist1.exists());
@@ -6894,7 +6926,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile1, originalFile2)
 			.size(100, 100)
-			.toFiles(rename, false);
+			.allowOverwrite(false)
+			.toFiles(rename);
 		
 		// then
 		assertTrue(fileThatDoesntExist.exists());
@@ -6945,7 +6978,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(originalFile1, originalFile2)
 			.size(100, 100)
-			.toFiles(rename, false);
+			.allowOverwrite(false)
+			.toFiles(rename);
 		
 		// then
 		assertTrue(fileThatExists1.exists());
@@ -6991,7 +7025,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile)
 			.size(100, 100)
-			.asFiles(rename, true);
+			.allowOverwrite(true)
+			.asFiles(rename);
 		
 		// then
 		assertTrue(fileThatDoesntExist.exists());
@@ -7034,7 +7069,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile)
 			.size(100, 100)
-			.asFiles(rename, true);
+			.allowOverwrite(true)
+			.asFiles(rename);
 		
 		// then
 		assertTrue(fileThatExists.exists());
@@ -7077,7 +7113,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile)
 			.size(100, 100)
-			.asFiles(rename, false);
+			.allowOverwrite(false)
+			.asFiles(rename);
 		
 		// then
 		assertTrue(fileThatDoesntExist.exists());
@@ -7120,7 +7157,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile)
 			.size(100, 100)
-			.asFiles(rename, false);
+			.allowOverwrite(false)
+			.asFiles(rename);
 		
 		// then
 		assertTrue(fileThatExists.exists());
@@ -7167,7 +7205,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile1, originalFile2)
 			.size(100, 100)
-			.asFiles(rename, true);
+			.allowOverwrite(true)
+			.asFiles(rename);
 		
 		// then
 		assertTrue(fileThatDoesntExist1.exists());
@@ -7217,7 +7256,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile1, originalFile2)
 			.size(100, 100)
-			.asFiles(rename, true);
+			.allowOverwrite(true)
+			.asFiles(rename);
 		
 		// then
 		assertTrue(fileThatDoesntExist.exists());
@@ -7269,7 +7309,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile1, originalFile2)
 			.size(100, 100)
-			.asFiles(rename, true);
+			.allowOverwrite(true)
+			.asFiles(rename);
 		
 		// then
 		assertTrue(fileThatExists1.exists());
@@ -7320,7 +7361,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile1, originalFile2)
 			.size(100, 100)
-			.asFiles(rename, false);
+			.allowOverwrite(true)
+			.asFiles(rename);
 		
 		// then
 		assertTrue(fileThatDoesntExist1.exists());
@@ -7370,7 +7412,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile1, originalFile2)
 			.size(100, 100)
-			.asFiles(rename, false);
+			.allowOverwrite(false)
+			.asFiles(rename);
 		
 		// then
 		assertTrue(fileThatDoesntExist.exists());
@@ -7422,7 +7465,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> list = Thumbnails.of(originalFile1, originalFile2)
 			.size(100, 100)
-			.asFiles(rename, false);
+			.allowOverwrite(false)
+			.asFiles(rename);
 		
 		// then
 		assertTrue(fileThatExists1.exists());
