@@ -337,9 +337,10 @@ public class FileImageSink extends AbstractImageSink<File>
 		 * creating a new file. 
 		 */
 		ImageOutputStream ios;
+		FileOutputStream fos;
 		try
 		{
-			FileOutputStream fos = new FileOutputStream(destinationFile);
+			fos = new FileOutputStream(destinationFile);
 			ios = ImageIO.createImageOutputStream(fos);
 		}
 		catch (IOException e)
@@ -347,7 +348,7 @@ public class FileImageSink extends AbstractImageSink<File>
 			throw new IOException("Could not open output file.");
 		}
 		
-		if (ios == null)
+		if (ios == null || fos == null)
 		{
 			throw new IOException("Could not open output file.");
 		}
@@ -378,6 +379,7 @@ public class FileImageSink extends AbstractImageSink<File>
 		writer.write(null, new IIOImage(img, null, null), writeParam);
 		
 		ios.close();
+		fos.close();
 	}
 
 	/**
