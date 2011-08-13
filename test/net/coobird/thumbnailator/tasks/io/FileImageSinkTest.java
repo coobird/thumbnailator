@@ -1552,7 +1552,7 @@ public class FileImageSinkTest
 		
 		// given
 		FileImageSink sink = new FileImageSink(f);
-		sink.setOutputFormatName("jpg");
+		sink.setOutputFormatName("jpeg");
 		
 		// when
 		sink.write(new BufferedImageBuilder(100, 100).build());
