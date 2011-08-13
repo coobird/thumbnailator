@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
@@ -13,6 +12,7 @@ import javax.imageio.ImageWriter;
 import javax.imageio.spi.IIORegistry;
 import javax.imageio.spi.ImageWriterSpi;
 
+import net.coobird.thumbnailator.TestUtils;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
@@ -135,7 +135,7 @@ public class FileImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(outputFile);
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new FileInputStream(outputFile));
+		String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
 		assertEquals("png", formatName);
 	}
 	
@@ -161,7 +161,7 @@ public class FileImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(outputFile);
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new FileInputStream(outputFile));
+		String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
 		assertEquals("png", formatName);
 	}
 	
@@ -189,7 +189,7 @@ public class FileImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(outputFile);
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new FileInputStream(outputFile));
+		String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
 		assertEquals("JPEG", formatName);
 	}
 	
@@ -217,7 +217,7 @@ public class FileImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(outputFile);
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new FileInputStream(outputFile));
+		String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
 		assertEquals("JPEG", formatName);
 	}
 	
@@ -268,7 +268,7 @@ public class FileImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(actualOutputFile);
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new FileInputStream(actualOutputFile));
+		String formatName = TestUtils.getFormatName(new FileInputStream(actualOutputFile));
 		assertEquals("png", formatName);
 	}
 	
@@ -451,7 +451,7 @@ public class FileImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(outputFile);
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new FileInputStream(outputFile));
+		String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
 		assertEquals("bmp", formatName);
 		
 		verify(param, atLeastOnce()).getOutputQuality();
@@ -484,7 +484,7 @@ public class FileImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(outputFile);
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new FileInputStream(outputFile));
+		String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
 		assertEquals("bmp", formatName);
 		
 		verify(param, atLeastOnce()).getOutputQuality();
@@ -517,7 +517,7 @@ public class FileImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(outputFile);
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new FileInputStream(outputFile));
+		String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
 		assertEquals("bmp", formatName);
 		
 		verify(param, atLeastOnce()).getOutputFormatType();
@@ -545,7 +545,7 @@ public class FileImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(outputFile);
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new FileInputStream(outputFile));
+		String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
 		assertEquals("png", formatName);
 	}
 	
@@ -571,7 +571,7 @@ public class FileImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(outputFile);
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new FileInputStream(outputFile));
+		String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
 		assertEquals("bmp", formatName);
 	}
 	
@@ -597,7 +597,7 @@ public class FileImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(outputFile);
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new FileInputStream(outputFile));
+		String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
 		assertEquals("JPEG", formatName);
 	}
 	
@@ -623,7 +623,7 @@ public class FileImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(outputFile);
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new FileInputStream(outputFile));
+		String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
 		assertEquals("JPEG", formatName);
 	}
 	
@@ -649,7 +649,7 @@ public class FileImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(outputFile);
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new FileInputStream(outputFile));
+		String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
 		assertEquals("JPEG", formatName);
 	}
 	
@@ -795,19 +795,5 @@ public class FileImageSinkTest
 		
 		// clean ups
 		f.delete();
-	}
-	
-	/**
-	 * Returns the format of an image which is read through the {@link InputStream}.
-	 * 
-	 * @param is			The {@link InputStream} to an image.
-	 * @return				File format of the image.
-	 * @throws IOException
-	 */
-	private static String getFormatName(InputStream is) throws IOException
-	{
-		return ImageIO.getImageReaders(
-				ImageIO.createImageInputStream(is)
-		).next().getFormatName();
 	}
 }

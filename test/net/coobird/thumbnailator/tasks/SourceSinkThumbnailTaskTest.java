@@ -10,6 +10,7 @@ import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
 
+import net.coobird.thumbnailator.TestUtils;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.Thumbnailator;
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
@@ -76,7 +77,7 @@ public class SourceSinkThumbnailTaskTest
 		assertEquals(50, thumbnail.getHeight());
 		
 		destIs = new ByteArrayInputStream(os.toByteArray());
-		String formatName = getFormatName(destIs);
+		String formatName = TestUtils.getFormatName(destIs);
 		
 		assertEquals("png", formatName);
 	}
@@ -107,7 +108,7 @@ public class SourceSinkThumbnailTaskTest
 		assertEquals(50, thumbnail.getHeight());
 		
 		destIs = new ByteArrayInputStream(os.toByteArray());
-		String formatName = getFormatName(destIs);
+		String formatName = TestUtils.getFormatName(destIs);
 		assertEquals("JPEG", formatName);
 	}
 	
@@ -135,25 +136,9 @@ public class SourceSinkThumbnailTaskTest
 		assertEquals(50, thumbnail.getHeight());
 		
 		destIs = new ByteArrayInputStream(os.toByteArray());
-		String formatName = getFormatName(destIs);
+		String formatName = TestUtils.getFormatName(destIs);
 		assertEquals("JPEG", formatName);
 	}
-
-	
-	/**
-	 * Returns the format of an image which is read through the {@link InputStream}.
-	 * 
-	 * @param is			The {@link InputStream} to an image.
-	 * @return				File format of the image.
-	 * @throws IOException
-	 */
-	private static String getFormatName(InputStream is) throws IOException
-	{
-		return ImageIO.getImageReaders(
-				ImageIO.createImageInputStream(is)
-		).next().getFormatName();
-	}
-
 
 	/**
 	 * Returns test image data as an array of {@code byte}s.
