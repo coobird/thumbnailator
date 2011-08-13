@@ -16,7 +16,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -7497,6 +7496,978 @@ public class ThumbnailsBuilderInputOutputTest
 		originalFile2.delete();
 		fileThatExists1.delete();
 		fileThatExists2.delete();
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpeg_DestExtensionIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpeg_DestExtensionIsJPG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpeg_DestExtensionIsJpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpeg_DestExtensionIsjpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpeg_DestExtensionIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpeg_DestExtensionIsJpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPG_DestExtensionIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPG_DestExtensionIsJPG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPG_DestExtensionIsJpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPG_DestExtensionIsjpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPG_DestExtensionIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPG_DestExtensionIsJpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPEG_DestExtensionIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPEG_DestExtensionIsJPG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPEG_DestExtensionIsJpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPEG_DestExtensionIsjpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPEG_DestExtensionIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPEG_DestExtensionIsJpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpg_DestExtensionIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpg_DestExtensionIsJPG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpg_DestExtensionIsJpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpg_DestExtensionIsjpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpg_DestExtensionIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpg_DestExtensionIsJpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpeg_DestExtensionIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpeg_DestExtensionIsJPG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpeg_DestExtensionIsJpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpeg_DestExtensionIsjpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpeg_DestExtensionIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpeg_DestExtensionIsJpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpg_OutputFormatIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("jpg")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPG_OutputFormatIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("jpg")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpg_OutputFormatIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("jpg")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpeg_OutputFormatIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("jpg")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPEG_OutputFormatIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("jpg")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpeg_OutputFormatIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("jpg")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpg_OutputFormatIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("JPEG")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPG_OutputFormatIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("JPEG")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpg_OutputFormatIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("JPEG")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpeg_OutputFormatIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("JPEG")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPEG_OutputFormatIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("JPEG")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpeg_OutputFormatIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("JPEG")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
 	}
 
 	private File makeRenamedFile(File f, Rename rename)
