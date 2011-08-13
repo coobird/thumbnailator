@@ -31,6 +31,24 @@ import org.junit.Test;
 public class ThumbnailsBuilderInputOutputTest
 {
 	/**
+	 * The temporary directory to use when creating files to use for this test.
+	 */
+	private static final String TMPDIR = 
+			"test-resources/tmp/ThumbnailsBuilderInputOutputTest";
+	
+	@BeforeClass
+	public static void makeTemporaryDirectory()
+	{
+		TestUtils.makeTemporaryDirectory(TMPDIR);
+	}
+	
+	@AfterClass
+	public static void deleteTemporaryDirectory()
+	{
+		TestUtils.deleteTemporaryDirectory(TMPDIR);
+	}
+
+	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
 	 * <li>Thumbnails.of(BufferedImage)</li>
@@ -7481,27 +7499,10 @@ public class ThumbnailsBuilderInputOutputTest
 		fileThatExists2.delete();
 	}
 	
-	@BeforeClass
-	public static void makeTemporaryDirectory()
-	{
-		new File("test-resources/Thumbnailator/tmp").mkdir();
-	}
-
-	@AfterClass
-	public static void deleteTemporaryDirectory()
-	{
-		File tmpDir = new File("test-resources/Thumbnailator/tmp");
-		for (File f : tmpDir.listFiles())
-		{
-			f.delete();
-		}
-		tmpDir.delete();
-	}
-
 	private File createTempPng() throws IOException
 	{
 		return new File(
-				"test-resources/Thumbnailator/tmp",
+				TMPDIR,
 				"tmp-" + Math.abs(new Random().nextLong()) + ".png"
 		);
 	}
