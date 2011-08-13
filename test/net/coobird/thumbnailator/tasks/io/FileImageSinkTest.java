@@ -13,6 +13,7 @@ import javax.imageio.spi.ImageWriterSpi;
 
 import net.coobird.thumbnailator.TestUtils;
 import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 
@@ -696,6 +697,1383 @@ public class FileImageSinkTest
 			assertEquals("Could not determine output format.", e.getMessage());
 			throw e;
 		}
+	}
+
+	@Test
+	public void write_SpecifiedExtensionIsPNG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "PNG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIspng() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "png");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPng() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Png");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIspng() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "PNG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("png");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIspng() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "png");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("png");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIspng() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Png");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("png");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsPNG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "PNG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("PNG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsPNG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "png");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("PNG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsPNG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Png");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("PNG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsPng() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "PNG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Png");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsPng() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "png");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Png");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsPng() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Png");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Png");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsjpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "PNG");
+		File expectedFile = new File(f.getAbsolutePath() + ".jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsjpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "png");
+		File expectedFile = new File(f.getAbsolutePath() + ".jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsjpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Png");
+		File expectedFile = new File(f.getAbsolutePath() + ".jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsjpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "PNG");
+		File expectedFile = new File(f.getAbsolutePath() + ".jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpeg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsjpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "png");
+		File expectedFile = new File(f.getAbsolutePath() + ".jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpeg");
+
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsjpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Png");
+		File expectedFile = new File(f.getAbsolutePath() + ".jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpeg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsJPG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "PNG");
+		File expectedFile = new File(f.getAbsolutePath() + ".JPG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsJPG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "png");
+		File expectedFile = new File(f.getAbsolutePath() + ".JPG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsJPG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Png");
+		File expectedFile = new File(f.getAbsolutePath() + ".JPG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsJPEG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "PNG");
+		File expectedFile = new File(f.getAbsolutePath() + ".JPEG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPEG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsJPEG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "png");
+		File expectedFile = new File(f.getAbsolutePath() + ".JPEG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPEG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsJPEG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Png");
+		File expectedFile = new File(f.getAbsolutePath() + ".JPEG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPEG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsJpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "PNG");
+		File expectedFile = new File(f.getAbsolutePath() + ".Jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsJpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "png");
+		File expectedFile = new File(f.getAbsolutePath() + ".Jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsJpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Png");
+		File expectedFile = new File(f.getAbsolutePath() + ".Jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsJpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "PNG");
+		File expectedFile = new File(f.getAbsolutePath() + ".Jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpeg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsJpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "png");
+		File expectedFile = new File(f.getAbsolutePath() + ".Jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpeg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsJpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Png");
+		File expectedFile = new File(f.getAbsolutePath() + ".Jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpeg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(expectedFile, sink.getSink());
+		assertTrue(expectedFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(expectedFile)));
+	}
+
+	@Test
+	public void write_SpecifiedExtensionIsJPG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJPEG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsjpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsjpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+
+	@Test
+	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsjpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsjpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsjpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsjpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsjpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsjpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsjpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpeg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsjpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpeg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsjpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsjpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpeg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsjpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpeg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsjpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("jpeg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsJPG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsJPG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsJPG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsJPG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsJPG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsJPG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsJPEG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPEG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsJPEG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPEG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsJPEG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPEG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsJPEG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPEG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsJPEG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPEG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsJPEG() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("JPEG");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsJpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsJpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsJpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsJpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsJpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsJpg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsJpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpeg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsJpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpeg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsJpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpeg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsJpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpeg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsJpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpeg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
+	}
+	
+	@Test
+	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsJpeg() throws IOException
+	{
+		// set up
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		sink.setOutputFormatName("Jpeg");
+		
+		// when
+		sink.write(new BufferedImageBuilder(100, 100).build());
+		
+		// then
+		assertEquals(f, sink.getSink());
+		assertTrue(f.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(f)));
 	}
 	
 	@Test
