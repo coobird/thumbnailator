@@ -39,4 +39,19 @@ public class TestUtils
 				ImageIO.createImageInputStream(is)
 		).next().getFormatName();
 	}
+
+	public static void makeTemporaryDirectory(String dir)
+	{
+		new File(dir).mkdirs();
+	}
+
+	public static void deleteTemporaryDirectory(String dir)
+	{
+		File tmpDir = new File(dir);
+		for (File f : tmpDir.listFiles())
+		{
+			f.delete();
+		}
+		tmpDir.delete();
+	}
 }
