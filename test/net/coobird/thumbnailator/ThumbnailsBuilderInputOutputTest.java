@@ -5457,7 +5457,7 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
-		File f = createTempPng();
+		File f = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, f);
@@ -5494,7 +5494,7 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
-		File f = createTempPng();
+		File f = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, f);
@@ -5535,7 +5535,7 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
-		File f = createTempPng();
+		File f = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, f);
@@ -5572,7 +5572,7 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
-		File f = createTempPng();
+		File f = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, f);
@@ -5615,9 +5615,9 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist = createTempPng();
+		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -5656,9 +5656,9 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatExists = createTempPng();
+		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -5699,9 +5699,9 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist = createTempPng();
+		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -5740,9 +5740,9 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatExists = createTempPng();
+		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -5784,10 +5784,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist1 = createTempPng();
-		File fileThatDoesntExist2 = createTempPng();
+		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -5829,10 +5829,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist = createTempPng();
-		File fileThatExists = createTempPng();
+		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -5876,10 +5876,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatExists1 = createTempPng();
-		File fileThatExists2 = createTempPng();
+		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -5925,10 +5925,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist1 = createTempPng();
-		File fileThatDoesntExist2 = createTempPng();
+		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -5970,10 +5970,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist = createTempPng();
-		File fileThatExists = createTempPng();
+		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -6017,10 +6017,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatExists1 = createTempPng();
-		File fileThatExists2 = createTempPng();
+		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -6066,10 +6066,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist1 = createTempPng();
-		File fileThatDoesntExist2 = createTempPng();
+		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -6112,10 +6112,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatExists1 = createTempPng();
-		File fileThatExists2 = createTempPng();
+		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -6162,10 +6162,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist1 = createTempPng();
-		File fileThatDoesntExist2 = createTempPng();
+		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -6208,10 +6208,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatExists1 = createTempPng();
-		File fileThatExists2 = createTempPng();
+		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -6259,10 +6259,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist1 = createTempPng();
-		File fileThatDoesntExist2 = createTempPng();
+		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -6306,10 +6306,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist = createTempPng();
-		File fileThatExists = createTempPng();
+		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -6355,10 +6355,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatExists1 = createTempPng();
-		File fileThatExists2 = createTempPng();
+		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -6406,10 +6406,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist1 = createTempPng();
-		File fileThatDoesntExist2 = createTempPng();
+		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -6453,10 +6453,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist = createTempPng();
-		File fileThatExists = createTempPng();
+		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -6502,10 +6502,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatExists1 = createTempPng();
-		File fileThatExists2 = createTempPng();
+		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, originalFile);
@@ -6552,7 +6552,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
 		
@@ -6594,7 +6594,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatExists = makeRenamedFile(originalFile, rename);
 		
@@ -6638,7 +6638,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
 		
@@ -6680,7 +6680,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatExists = makeRenamedFile(originalFile, rename);
 		
@@ -6725,8 +6725,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist1 = makeRenamedFile(originalFile1, rename);
 		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
@@ -6774,8 +6774,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile1, rename);
 		File fileThatExists = makeRenamedFile(originalFile2, rename);
@@ -6825,8 +6825,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatExists1 = makeRenamedFile(originalFile1, rename);
 		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
@@ -6878,8 +6878,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist1 = makeRenamedFile(originalFile1, rename);
 		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
@@ -6927,8 +6927,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile1, rename);
 		File fileThatExists = makeRenamedFile(originalFile2, rename);
@@ -6978,8 +6978,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatExists1 = makeRenamedFile(originalFile1, rename);
 		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
@@ -7030,7 +7030,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
 		
@@ -7073,7 +7073,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatExists = makeRenamedFile(originalFile, rename);
 		
@@ -7118,7 +7118,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
 		
@@ -7161,7 +7161,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatExists = makeRenamedFile(originalFile, rename);
 		
@@ -7207,8 +7207,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist1 = makeRenamedFile(originalFile1, rename);
 		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
@@ -7257,8 +7257,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile1, rename);
 		File fileThatExists = makeRenamedFile(originalFile2, rename);
@@ -7309,8 +7309,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatExists1 = makeRenamedFile(originalFile1, rename);
 		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
@@ -7363,8 +7363,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist1 = makeRenamedFile(originalFile1, rename);
 		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
@@ -7413,8 +7413,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile1, rename);
 		File fileThatExists = makeRenamedFile(originalFile2, rename);
@@ -7465,8 +7465,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatExists1 = makeRenamedFile(originalFile1, rename);
 		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
@@ -7497,14 +7497,6 @@ public class ThumbnailsBuilderInputOutputTest
 		originalFile2.delete();
 		fileThatExists1.delete();
 		fileThatExists2.delete();
-	}
-	
-	private File createTempPng() throws IOException
-	{
-		return new File(
-				TMPDIR,
-				"tmp-" + Math.abs(new Random().nextLong()) + ".png"
-		);
 	}
 
 	private File makeRenamedFile(File f, Rename rename)
