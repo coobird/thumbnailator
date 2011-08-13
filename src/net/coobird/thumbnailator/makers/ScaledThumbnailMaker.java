@@ -13,7 +13,9 @@ import java.awt.image.BufferedImage;
  * the size of the source image:
  * <pre>
 BufferedImage img = ImageIO.read(new File("sourceImage.jpg"));
-BufferedImage thumbnail = new ScaledThumbnailMaker().scale(0.25).make(img);
+BufferedImage thumbnail = new ScaledThumbnailMaker()
+        .scale(0.25)
+        .make(img);
  * </pre>
  * </DD>
  * </DL>
@@ -23,7 +25,6 @@ BufferedImage thumbnail = new ScaledThumbnailMaker().scale(0.25).make(img);
  */
 public final class ScaledThumbnailMaker extends ThumbnailMaker
 {
-	
 	private static final String PARAM_SCALE = "scale";
 	
 	/**
