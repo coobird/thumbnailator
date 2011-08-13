@@ -3,7 +3,6 @@ package net.coobird.thumbnailator.tasks.io;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -17,6 +16,8 @@ import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 
@@ -25,11 +26,29 @@ import static org.junit.Assert.*;
 
 public class FileImageSinkTest
 {
+	/**
+	 * The temporary directory to use when creating files to use for this test.
+	 */
+	private static final String TMPDIR = 
+			"test-resources/tmp/FileImageSinkTest";
+	
+	@BeforeClass
+	public static void makeTemporaryDirectory()
+	{
+		TestUtils.makeTemporaryDirectory(TMPDIR);
+	}
+	
+	@AfterClass
+	public static void deleteTemporaryDirectory()
+	{
+		TestUtils.deleteTemporaryDirectory(TMPDIR);
+	}
+
 	@Test
 	public void validFilename_File()
 	{
 		// given
-		File f = new File("test-resources/Thumbnailator/test.png");
+		File f = new File(TMPDIR, "test.png");
 		
 		// when
 		FileImageSink sink = new FileImageSink(f);
@@ -42,7 +61,7 @@ public class FileImageSinkTest
 	public void validFilename_String()
 	{
 		// given
-		String f = "test-resources/Thumbnailator/test.png";
+		String f = TMPDIR + "/test.png";
 		
 		// when
 		FileImageSink sink = new FileImageSink(f);
@@ -93,7 +112,7 @@ public class FileImageSinkTest
 	public void write_NullImage() throws IOException
 	{
 		// given
-		File f = new File("test-resources/Thumbnailator/test.png");
+		File f = new File(TMPDIR, "test.png");
 		f.deleteOnExit();
 
 		BufferedImage img = null;
@@ -118,7 +137,7 @@ public class FileImageSinkTest
 	public void write_ValidImage() throws IOException
 	{
 		// given
-		File outputFile = new File("test-resources/Thumbnailator/test.png");
+		File outputFile = new File(TMPDIR, "test.png");
 		outputFile.deleteOnExit();
 		
 		BufferedImage imgToWrite = 
@@ -143,7 +162,7 @@ public class FileImageSinkTest
 	public void write_ValidImage_SetOutputFormatWithSameAsExtension() throws IOException
 	{
 		// given
-		File outputFile = new File("test-resources/Thumbnailator/test.png");
+		File outputFile = new File(TMPDIR, "test.png");
 		outputFile.deleteOnExit();
 		
 		BufferedImage imgToWrite = 
@@ -169,7 +188,7 @@ public class FileImageSinkTest
 	public void write_ValidImage_SetOutputFormatWithDifferentExtension() throws IOException
 	{
 		// given
-		File outputFile = new File("test-resources/Thumbnailator/test.png");
+		File outputFile = new File(TMPDIR, "test.png");
 		
 		BufferedImage imgToWrite = 
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
@@ -181,7 +200,7 @@ public class FileImageSinkTest
 		sink.write(imgToWrite);
 		
 		// then
-		outputFile = new File("test-resources/Thumbnailator/test.png.JPEG");
+		outputFile = new File(TMPDIR, "test.png.JPEG");
 		outputFile.deleteOnExit();
 		
 		assertEquals(outputFile.getAbsoluteFile(), sink.getSink().getAbsoluteFile());
@@ -197,7 +216,7 @@ public class FileImageSinkTest
 	public void write_ValidImage_SetOutputFormat_OutputFileHasNoExtension() throws IOException
 	{
 		// given
-		File outputFile = new File("test-resources/Thumbnailator/test");
+		File outputFile = new File(TMPDIR, "test");
 		
 		BufferedImage imgToWrite = 
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
@@ -209,7 +228,7 @@ public class FileImageSinkTest
 		sink.write(imgToWrite);
 		
 		// then
-		outputFile = new File("test-resources/Thumbnailator/test.JPEG");
+		outputFile = new File(TMPDIR, "test.JPEG");
 		outputFile.deleteOnExit();
 		
 		assertEquals(outputFile.getAbsoluteFile(), sink.getSink().getAbsoluteFile());
@@ -225,7 +244,7 @@ public class FileImageSinkTest
 	public void write_ValidImage_InvalidFileExtension() throws IOException
 	{
 		// given
-		File outputFile = new File("test-resources/Thumbnailator/test.foo");
+		File outputFile = new File(TMPDIR, "test.foo");
 		outputFile.deleteOnExit();
 		
 		BufferedImage imgToWrite = 
@@ -249,8 +268,8 @@ public class FileImageSinkTest
 	public void write_ValidImage_InvalidFileExtension_OutputFormatSetToValidFormat() throws IOException
 	{
 		// given
-		File outputFile = new File("test-resources/Thumbnailator/test.foo");
-		File actualOutputFile = new File("test-resources/Thumbnailator/test.foo.png");
+		File outputFile = new File(TMPDIR, "test.foo");
+		File actualOutputFile = new File(TMPDIR, "test.foo.png");
 		actualOutputFile.deleteOnExit();
 		
 		BufferedImage imgToWrite = 
@@ -291,7 +310,7 @@ public class FileImageSinkTest
 		when(spi.createWriterInstance(anyObject())).thenReturn(writer);
 		IIORegistry.getDefaultInstance().registerServiceProvider(spi);
 		
-		File outputFile = new File("test-resources/Thumbnailator/test.foo");
+		File outputFile = new File(TMPDIR, "test.foo");
 		outputFile.deleteOnExit();
 		
 		BufferedImage imgToWrite = 
@@ -343,7 +362,7 @@ public class FileImageSinkTest
 		when(spi.createWriterInstance(anyObject())).thenReturn(writer);
 		IIORegistry.getDefaultInstance().registerServiceProvider(spi);
 		
-		File outputFile = new File("test-resources/Thumbnailator/test.foo");
+		File outputFile = new File(TMPDIR, "test.foo");
 		outputFile.deleteOnExit();
 		
 		BufferedImage imgToWrite = 
@@ -394,7 +413,7 @@ public class FileImageSinkTest
 		when(spi.createWriterInstance(anyObject())).thenReturn(writer);
 		IIORegistry.getDefaultInstance().registerServiceProvider(spi);
 		
-		File outputFile = new File("test-resources/Thumbnailator/test.foo");
+		File outputFile = new File(TMPDIR, "test.foo");
 		outputFile.deleteOnExit();
 		
 		BufferedImage imgToWrite = 
@@ -429,7 +448,7 @@ public class FileImageSinkTest
 	public void write_ValidImage_SetThumbnailParameter_BMP_QualityAndOutputFormatType_BothDefault() throws IOException
 	{
 		// given
-		File outputFile = new File("test-resources/Thumbnailator/test.bmp");
+		File outputFile = new File(TMPDIR, "test.bmp");
 		outputFile.deleteOnExit();
 		
 		BufferedImage imgToWrite = 
@@ -462,7 +481,7 @@ public class FileImageSinkTest
 	public void write_ValidImage_SetThumbnailParameter_BMP_QualityAndOutputFormatType_BothNonDefault() throws IOException
 	{
 		// given
-		File outputFile = new File("test-resources/Thumbnailator/test.bmp");
+		File outputFile = new File(TMPDIR, "test.bmp");
 		outputFile.deleteOnExit();
 		
 		BufferedImage imgToWrite = 
@@ -495,7 +514,7 @@ public class FileImageSinkTest
 	public void write_ValidImage_SetThumbnailParameter_BMP_OutputFormatType() throws IOException
 	{
 		// given
-		File outputFile = new File("test-resources/Thumbnailator/test.bmp");
+		File outputFile = new File(TMPDIR, "test.bmp");
 		outputFile.deleteOnExit();
 		
 		BufferedImage imgToWrite = 
@@ -527,7 +546,7 @@ public class FileImageSinkTest
 	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_png() throws IOException
 	{
 		// given
-		File outputFile = new File("test-resources/Thumbnailator/test.png");
+		File outputFile = new File(TMPDIR, "test.png");
 		outputFile.deleteOnExit();
 		
 		BufferedImage imgToWrite = 
@@ -553,7 +572,7 @@ public class FileImageSinkTest
 	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_bmp() throws IOException
 	{
 		// given
-		File outputFile = new File("test-resources/Thumbnailator/test.bmp");
+		File outputFile = new File(TMPDIR, "test.bmp");
 		outputFile.deleteOnExit();
 		
 		BufferedImage imgToWrite = 
@@ -579,7 +598,7 @@ public class FileImageSinkTest
 	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_jpg() throws IOException
 	{
 		// given
-		File outputFile = new File("test-resources/Thumbnailator/test.jpg");
+		File outputFile = new File(TMPDIR, "test.jpg");
 		outputFile.deleteOnExit();
 		
 		BufferedImage imgToWrite = 
@@ -605,7 +624,7 @@ public class FileImageSinkTest
 	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_jpeg() throws IOException
 	{
 		// given
-		File outputFile = new File("test-resources/Thumbnailator/test.jpeg");
+		File outputFile = new File(TMPDIR, "test.jpeg");
 		outputFile.deleteOnExit();
 		
 		BufferedImage imgToWrite = 
@@ -631,7 +650,7 @@ public class FileImageSinkTest
 	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_Jpeg() throws IOException
 	{
 		// given
-		File outputFile = new File("test-resources/Thumbnailator/test.Jpeg");
+		File outputFile = new File(TMPDIR, "test.Jpeg");
 		outputFile.deleteOnExit();
 		
 		BufferedImage imgToWrite = 
@@ -657,7 +676,7 @@ public class FileImageSinkTest
 	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_NoFileExtension() throws IOException
 	{
 		// given
-		File outputFile = new File("test-resources/Thumbnailator/test");
+		File outputFile = new File(TMPDIR, "test");
 		outputFile.deleteOnExit();
 		
 		BufferedImage imgToWrite = 
@@ -684,14 +703,10 @@ public class FileImageSinkTest
 	{
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
-		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
+		File f = new File(TMPDIR, "tmp-grid.png");
 		
 		// copy the image to a temporary file.
-		FileInputStream fis = new FileInputStream(sourceFile);
-		FileOutputStream fos = new FileOutputStream(f);
-		fis.getChannel().transferTo(0, sourceFile.length(), fos.getChannel());
-		fis.close();
-		fos.close();
+		TestUtils.copyFile(sourceFile, f);
 		
 		// given
 		FileImageSink sink = new FileImageSink(f, true);
@@ -711,14 +726,10 @@ public class FileImageSinkTest
 	{
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
-		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
+		File f = new File(TMPDIR, "tmp-grid.png");
 		
 		// copy the image to a temporary file.
-		FileInputStream fis = new FileInputStream(sourceFile);
-		FileOutputStream fos = new FileOutputStream(f);
-		fis.getChannel().transferTo(0, sourceFile.length(), fos.getChannel());
-		fis.close();
-		fos.close();
+		TestUtils.copyFile(sourceFile, f);
 		
 		// given
 		FileImageSink sink = new FileImageSink(f, false);
@@ -743,14 +754,10 @@ public class FileImageSinkTest
 	{
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
-		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
+		File f = new File(TMPDIR, "tmp-grid.png");
 		
 		// copy the image to a temporary file.
-		FileInputStream fis = new FileInputStream(sourceFile);
-		FileOutputStream fos = new FileOutputStream(f);
-		fis.getChannel().transferTo(0, sourceFile.length(), fos.getChannel());
-		fis.close();
-		fos.close();
+		TestUtils.copyFile(sourceFile, f);
 		
 		// given
 		FileImageSink sink = new FileImageSink(f.getAbsolutePath(), true);
@@ -770,14 +777,10 @@ public class FileImageSinkTest
 	{
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
-		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
+		File f = new File(TMPDIR, "tmp-grid.png");
 		
 		// copy the image to a temporary file.
-		FileInputStream fis = new FileInputStream(sourceFile);
-		FileOutputStream fos = new FileOutputStream(f);
-		fis.getChannel().transferTo(0, sourceFile.length(), fos.getChannel());
-		fis.close();
-		fos.close();
+		TestUtils.copyFile(sourceFile, f);
 		
 		// given
 		FileImageSink sink = new FileImageSink(f.getAbsolutePath(), false);
