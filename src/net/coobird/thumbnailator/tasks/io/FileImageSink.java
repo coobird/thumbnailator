@@ -177,7 +177,7 @@ public class FileImageSink extends AbstractImageSink<File>
 		
 		for (String suffix : suffixes)
 		{
-			if (fileExtension.equals(suffix))
+			if (fileExtension.equalsIgnoreCase(suffix))
 			{
 				return true;
 			}
