@@ -8,7 +8,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -57,7 +56,7 @@ public class ThumbnailsBuilderInputOutputTest
 			.toFile(destFile);
 		
 		// then
-		assertEquals("png", getFormatName(new FileInputStream(destFile)));
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(destFile)));
 		
 		BufferedImage thumbnail = ImageIO.read(destFile);
 		assertEquals(100, thumbnail.getWidth());
@@ -92,7 +91,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File destFile = new File(destFilePath);
 		destFile.deleteOnExit();
 		
-		assertEquals("png", getFormatName(new FileInputStream(destFile)));
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(destFile)));
 		
 		BufferedImage thumbnail = ImageIO.read(destFile);
 		assertEquals(100, thumbnail.getWidth());
@@ -127,7 +126,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File outFile = new File("test-resources/Thumbnailator/temp-0.png");
 		outFile.deleteOnExit();
 		
-		assertEquals("png", getFormatName(new FileInputStream(outFile)));
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(outFile)));
 		
 		BufferedImage fromFileImage1 = ImageIO.read(outFile);
 		assertEquals(50, fromFileImage1.getWidth());
@@ -162,7 +161,7 @@ public class ThumbnailsBuilderInputOutputTest
 		assertEquals(1, thumbnails.size());
 		
 		BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-		assertEquals("png", getFormatName(new FileInputStream(thumbnails.get(0))));
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(thumbnails.get(0))));
 		assertEquals(50, fromFileImage1.getWidth());
 		assertEquals(50, fromFileImage1.getHeight());
 		
@@ -723,7 +722,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File outFile = new File("test-resources/Thumbnailator/temp-0.png");
 		outFile.deleteOnExit();
 		
-		assertEquals("png", getFormatName(new FileInputStream(outFile)));
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(outFile)));
 		
 		BufferedImage fromFileImage1 = ImageIO.read(outFile);
 		assertEquals(50, fromFileImage1.getWidth());
@@ -758,12 +757,12 @@ public class ThumbnailsBuilderInputOutputTest
 		assertEquals(2, thumbnails.size());
 		
 		BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-		assertEquals("png", getFormatName(new FileInputStream(thumbnails.get(0))));
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(thumbnails.get(0))));
 		assertEquals(50, fromFileImage1.getWidth());
 		assertEquals(50, fromFileImage1.getHeight());
 		
 		BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
-		assertEquals("png", getFormatName(new FileInputStream(thumbnails.get(1))));
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(thumbnails.get(1))));
 		assertEquals(50, fromFileImage2.getWidth());
 		assertEquals(50, fromFileImage2.getHeight());
 		
@@ -1775,7 +1774,7 @@ public class ThumbnailsBuilderInputOutputTest
 			
 		// then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -1806,7 +1805,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -2173,12 +2172,12 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		//then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os1.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os1.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os1.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 		
 		thumbnail = ImageIO.read(new ByteArrayInputStream(os2.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os2.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os2.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -3516,7 +3515,7 @@ public class ThumbnailsBuilderInputOutputTest
 			
 		// then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -3547,7 +3546,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -3900,12 +3899,12 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		//then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os1.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os1.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os1.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 		
 		thumbnail = ImageIO.read(new ByteArrayInputStream(os2.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os2.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os2.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -4441,7 +4440,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -4472,7 +4471,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -4826,12 +4825,12 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		//then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os1.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os1.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os1.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 		
 		thumbnail = ImageIO.read(new ByteArrayInputStream(os2.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os2.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os2.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -5407,7 +5406,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, f);
+		TestUtils.copyFile(sourceFile, f);
 		
 		// given
 		long fileSizeBefore = f.length();
@@ -5443,7 +5442,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File f = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, f);
+		TestUtils.copyFile(sourceFile, f);
 		
 		// given
 		long fileSizeBefore = f.length();
@@ -5480,7 +5479,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File f = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, f);
+		TestUtils.copyFile(sourceFile, f);
 		
 		// given
 		// when
@@ -5521,7 +5520,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File f = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, f);
+		TestUtils.copyFile(sourceFile, f);
 		
 		// given
 		long fileSizeBefore = f.length();
@@ -5558,7 +5557,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File f = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, f);
+		TestUtils.copyFile(sourceFile, f);
 		
 		// given
 		// when
@@ -5603,7 +5602,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatDoesntExist = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -5644,8 +5643,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -5687,7 +5686,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatDoesntExist = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -5728,8 +5727,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -5773,7 +5772,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatDoesntExist2 = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -5818,8 +5817,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -5865,9 +5864,9 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists2 = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -5914,7 +5913,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatDoesntExist2 = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -5959,8 +5958,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -6006,9 +6005,9 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists2 = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -6055,7 +6054,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatDoesntExist2 = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -6101,9 +6100,9 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists2 = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -6151,7 +6150,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatDoesntExist2 = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -6197,9 +6196,9 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists2 = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -6248,7 +6247,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatDoesntExist2 = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -6295,8 +6294,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -6344,9 +6343,9 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists2 = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -6395,7 +6394,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatDoesntExist2 = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -6442,8 +6441,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -6491,9 +6490,9 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists2 = createTempPng();
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -6540,7 +6539,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -6582,8 +6581,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists = makeRenamedFile(originalFile, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -6626,7 +6625,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -6668,8 +6667,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists = makeRenamedFile(originalFile, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -6715,8 +6714,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
 		
 		// given
 		
@@ -6764,9 +6763,9 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -6815,10 +6814,10 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -6868,8 +6867,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
 		
 		// given
 		
@@ -6917,9 +6916,9 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -6968,10 +6967,10 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -7018,7 +7017,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -7061,8 +7060,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists = makeRenamedFile(originalFile, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -7106,7 +7105,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -7149,8 +7148,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists = makeRenamedFile(originalFile, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -7197,8 +7196,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
 		
 		// given
 		
@@ -7247,9 +7246,9 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -7299,10 +7298,10 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -7353,8 +7352,8 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
 		
 		// given
 		
@@ -7403,9 +7402,9 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -7455,10 +7454,10 @@ public class ThumbnailsBuilderInputOutputTest
 		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -7510,35 +7509,5 @@ public class ThumbnailsBuilderInputOutputTest
 	private File makeRenamedFile(File f, Rename rename)
 	{
 		return new File(f.getParent(), Rename.PREFIX_DOT_THUMBNAIL.apply(f.getName()));
-	}
-
-	/**
-	 * Copies a file.
-	 * 
-	 * @param sourceFile		The source file.
-	 * @param destFile			The destination file.
-	 * @throws IOException		If an IOException is thrown.
-	 */
-	private static void copyFile(File sourceFile, File destFile) throws IOException
-	{
-		FileInputStream fis = new FileInputStream(sourceFile);
-		FileOutputStream fos = new FileOutputStream(destFile);
-		fis.getChannel().transferTo(0, sourceFile.length(), fos.getChannel());
-		fis.close();
-		fos.close();
-	}
-	
-	/**
-	 * Returns the format of an image which is read through the {@link InputStream}.
-	 * 
-	 * @param is			The {@link InputStream} to an image.
-	 * @return				File format of the image.
-	 * @throws IOException
-	 */
-	private static String getFormatName(InputStream is) throws IOException
-	{
-		return ImageIO.getImageReaders(
-				ImageIO.createImageInputStream(is)
-		).next().getFormatName();
 	}
 }

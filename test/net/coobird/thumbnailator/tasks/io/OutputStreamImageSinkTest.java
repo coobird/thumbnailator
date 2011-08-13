@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
@@ -13,6 +12,7 @@ import javax.imageio.ImageWriter;
 import javax.imageio.spi.IIORegistry;
 import javax.imageio.spi.ImageWriterSpi;
 
+import net.coobird.thumbnailator.TestUtils;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 
@@ -155,7 +155,7 @@ public class OutputStreamImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(new ByteArrayInputStream(imageData));
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new ByteArrayInputStream(imageData));
+		String formatName = TestUtils.getFormatName(new ByteArrayInputStream(imageData));
 		assertEquals("png", formatName);
 	}
 	
@@ -186,7 +186,7 @@ public class OutputStreamImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(new ByteArrayInputStream(imageData));
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new ByteArrayInputStream(imageData));
+		String formatName = TestUtils.getFormatName(new ByteArrayInputStream(imageData));
 		assertEquals("bmp", formatName);
 		
 		verify(param, atLeastOnce()).getOutputQuality();
@@ -220,7 +220,7 @@ public class OutputStreamImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(new ByteArrayInputStream(imageData));
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new ByteArrayInputStream(imageData));
+		String formatName = TestUtils.getFormatName(new ByteArrayInputStream(imageData));
 		assertEquals("bmp", formatName);
 		
 		verify(param, atLeastOnce()).getOutputQuality();
@@ -254,7 +254,7 @@ public class OutputStreamImageSinkTest
 		BufferedImage writtenImg = ImageIO.read(new ByteArrayInputStream(imageData));
 		assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
 		
-		String formatName = getFormatName(new ByteArrayInputStream(imageData));
+		String formatName = TestUtils.getFormatName(new ByteArrayInputStream(imageData));
 		assertEquals("bmp", formatName);
 		
 		verify(param, atLeastOnce()).getOutputQuality();
@@ -405,19 +405,5 @@ public class OutputStreamImageSinkTest
 		
 		// clean up
 		IIORegistry.getDefaultInstance().deregisterServiceProvider(spi);
-	}
-	
-	/**
-	 * Returns the format of an image which is read through the {@link InputStream}.
-	 * 
-	 * @param is			The {@link InputStream} to an image.
-	 * @return				File format of the image.
-	 * @throws IOException
-	 */
-	private static String getFormatName(InputStream is) throws IOException
-	{
-		return ImageIO.getImageReaders(
-				ImageIO.createImageInputStream(is)
-		).next().getFormatName();
 	}
 }
