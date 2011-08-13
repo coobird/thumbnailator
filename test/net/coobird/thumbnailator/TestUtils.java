@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -53,5 +54,19 @@ public class TestUtils
 			f.delete();
 		}
 		tmpDir.delete();
+		
+		File tmpParentDir = tmpDir.getParentFile(); 
+		if (tmpParentDir.isDirectory() && tmpParentDir.getName().equals("tmp"))
+		{
+			tmpParentDir.delete();
+		}
+	}
+	
+	public static File createTempFile(String dir, String ext) throws IOException
+	{
+		return new File(
+				dir,
+				"tmp-" + Math.abs(new Random().nextLong()) + "." + ext
+		);
 	}
 }
