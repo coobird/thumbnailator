@@ -1,11 +1,14 @@
 package net.coobird.thumbnailator.makers;
 
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
+import net.coobird.thumbnailator.resizers.FixedResizerFactory;
 import net.coobird.thumbnailator.resizers.Resizer;
+import net.coobird.thumbnailator.resizers.DefaultResizerFactory;
 import net.coobird.thumbnailator.resizers.ResizerFactory;
 
 /**
@@ -34,7 +37,13 @@ public abstract class ThumbnailMaker
 	 * Used when determining whether the "resizer" parameter has been set
 	 * already or not. 
 	 */
-	private static final String PARAM_RESIZER = "resizer"; 
+	private static final String PARAM_RESIZER = "resizer";
+	
+	/**
+	 * Used when determining whether the "resizerFactory" parameter has been set
+	 * already or not. 
+	 */
+	private static final String PARAM_RESIZERFACTORY = "resizerFactory"; 
 	
 	/**
 	 * Class which keeps track of the parameters being set for the
@@ -123,17 +132,15 @@ public abstract class ThumbnailMaker
 	protected int imageType;
 	
 	/**
-	 * The {@link Resizer} to use when performing resizing operations.
-	 * <p>
-	 * If this field is kept {@code null}, the {@link Resizer} to use will be
-	 * determined when the thumbnail is to be created.
+	 * The {@link ResizerFactory} which is used to obtain a {@link Resizer}
+	 * for the resizing operation.
 	 * <p>
 	 * By delaying the decision of picking the {@link Resizer} to use until
 	 * when the thumbnail is to be created could lead to a more suitable 
 	 * {@link Resizer} being picked, as the dimensions for the source and
 	 * destination images are known at that time.
 	 */
-	protected Resizer resizer;
+	protected ResizerFactory resizerFactory;
 
 	/**
 	 * Creates and initializes an instance of {@link ThumbnailMaker}.
@@ -143,8 +150,9 @@ public abstract class ThumbnailMaker
 		ready = new ReadinessTracker();
 		ready.unset(PARAM_IMAGE_TYPE);
 		ready.unset(PARAM_RESIZER);
+		ready.unset(PARAM_RESIZERFACTORY);
 		defaultImageType();
-		defaultResizer();
+		defaultResizerFactory();
 	}
 	
 	/**
@@ -176,12 +184,17 @@ public abstract class ThumbnailMaker
 			throw new IllegalStateException(ThumbnailMaker.NOT_READY_FOR_MAKE);
 		}
 
-		BufferedImage resultImage = 
+		BufferedImage thumbnailImage = 
 			new BufferedImageBuilder(width, height, imageType).build();
 		
-		resizer.resize(img, resultImage);
+		Dimension imgSize = new Dimension(img.getWidth(), img.getHeight());
+		Dimension thumbnailSize = new Dimension(width, height);
 		
-		return resultImage;
+		Resizer resizer = resizerFactory.getResizer(imgSize, thumbnailSize);
+		
+		resizer.resize(img, thumbnailImage);
+		
+		return thumbnailImage;
 	}
 
 	/**
@@ -216,8 +229,9 @@ public abstract class ThumbnailMaker
 	 */
 	public ThumbnailMaker resizer(Resizer resizer)
 	{
-		this.resizer = resizer;
+		this.resizerFactory = new FixedResizerFactory(resizer);
 		ready.set(PARAM_RESIZER);
+		ready.set(PARAM_RESIZERFACTORY);
 		return this;
 	}
 	
@@ -228,6 +242,38 @@ public abstract class ThumbnailMaker
 	 */
 	public ThumbnailMaker defaultResizer()
 	{
-		return resizer(ResizerFactory.getResizer());
+		return defaultResizerFactory();
+	}
+	
+	/**
+	 * Sets the {@link ResizerFactory} which is used to obtain a {@link Resizer}
+	 * for the resizing operation.
+	 * 
+	 * @param resizerFactory		The {@link ResizerFactory} to obtain the 
+	 * 						{@link Resizer} used when resizing the image
+	 * 						to create the thumbnail.
+	 * @return				A reference to this object.
+	 * @since	0.4.0
+	 */
+	public ThumbnailMaker resizerFactory(ResizerFactory resizerFactory)
+	{
+		this.resizerFactory = resizerFactory;
+		ready.set(PARAM_RESIZER);
+		ready.set(PARAM_RESIZERFACTORY);
+		return this;
+	}
+	
+	/**
+	 * Sets the {@link ResizerFactory} to use {@link DefaultResizerFactory}.
+	 * 
+	 * @return				A reference to this object.
+	 * @since	0.4.0
+	 */
+	public ThumbnailMaker defaultResizerFactory()
+	{
+		this.resizerFactory = DefaultResizerFactory.getInstance();
+		ready.set(PARAM_RESIZER);
+		ready.set(PARAM_RESIZERFACTORY);
+		return this;
 	}
 }

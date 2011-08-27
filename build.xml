@@ -17,6 +17,26 @@
 	<target name="init">
 	</target>
 
+	<target 
+		name="javadoc"
+		description="generate the javadocs">
+		<!-- Generate the javadocs, place into /javadoc directory -->
+
+		<javadoc 
+			destdir="${javadoc_dir}"
+			sourcepath="${src}"
+			author="true"
+			version="true"
+			Public="true"
+			source="1.5"
+			doctitle="Thumbnailator API Documenatation (Version ${version})"
+			windowtitle="Thumbnailator API Documenatation (Version ${version})"
+			locale="en_US" >
+			
+			<link href="http://download.oracle.com/javase/1.5.0/docs/api/" />
+		</javadoc>
+	</target>
+	
 	<target
 		name="compile"
 		depends="init"
@@ -54,22 +74,6 @@
 		name="dist"
 		depends="compile,test"
 		description="generate the distribution">
-		<tstamp/>
-		
-		<!-- Generate the javadocs, place into /javadoc directory -->
-		<javadoc 
-			destdir="${javadoc_dir}"
-			sourcepath="${src}"
-			author="true"
-			version="true"
-			Public="true"
-			source="1.5"
-			doctitle="Thumbnailator API Documenatation (Version ${version})"
-			windowtitle="Thumbnailator API Documenatation (Version ${version})"
-			locale="en_US" >
-			
-			<link href="http://download.oracle.com/javase/1.5.0/docs/api/" />
-		</javadoc>
 		
 		<!-- Create the distribution directory -->
 		<mkdir dir="${dist}/${version}" />
