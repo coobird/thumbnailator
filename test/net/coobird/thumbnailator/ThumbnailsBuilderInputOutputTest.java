@@ -8,7 +8,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,7 +16,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -32,6 +30,24 @@ import org.junit.Test;
 
 public class ThumbnailsBuilderInputOutputTest
 {
+	/**
+	 * The temporary directory to use when creating files to use for this test.
+	 */
+	private static final String TMPDIR = 
+			"test-resources/tmp/ThumbnailsBuilderInputOutputTest";
+	
+	@BeforeClass
+	public static void makeTemporaryDirectory()
+	{
+		TestUtils.makeTemporaryDirectory(TMPDIR);
+	}
+	
+	@AfterClass
+	public static void deleteTemporaryDirectory()
+	{
+		TestUtils.deleteTemporaryDirectory(TMPDIR);
+	}
+
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
@@ -58,7 +74,7 @@ public class ThumbnailsBuilderInputOutputTest
 			.toFile(destFile);
 		
 		// then
-		assertEquals("png", getFormatName(new FileInputStream(destFile)));
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(destFile)));
 		
 		BufferedImage thumbnail = ImageIO.read(destFile);
 		assertEquals(100, thumbnail.getWidth());
@@ -93,7 +109,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File destFile = new File(destFilePath);
 		destFile.deleteOnExit();
 		
-		assertEquals("png", getFormatName(new FileInputStream(destFile)));
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(destFile)));
 		
 		BufferedImage thumbnail = ImageIO.read(destFile);
 		assertEquals(100, thumbnail.getWidth());
@@ -128,7 +144,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File outFile = new File("test-resources/Thumbnailator/temp-0.png");
 		outFile.deleteOnExit();
 		
-		assertEquals("png", getFormatName(new FileInputStream(outFile)));
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(outFile)));
 		
 		BufferedImage fromFileImage1 = ImageIO.read(outFile);
 		assertEquals(50, fromFileImage1.getWidth());
@@ -163,7 +179,7 @@ public class ThumbnailsBuilderInputOutputTest
 		assertEquals(1, thumbnails.size());
 		
 		BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-		assertEquals("png", getFormatName(new FileInputStream(thumbnails.get(0))));
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(thumbnails.get(0))));
 		assertEquals(50, fromFileImage1.getWidth());
 		assertEquals(50, fromFileImage1.getHeight());
 		
@@ -724,7 +740,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File outFile = new File("test-resources/Thumbnailator/temp-0.png");
 		outFile.deleteOnExit();
 		
-		assertEquals("png", getFormatName(new FileInputStream(outFile)));
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(outFile)));
 		
 		BufferedImage fromFileImage1 = ImageIO.read(outFile);
 		assertEquals(50, fromFileImage1.getWidth());
@@ -759,12 +775,12 @@ public class ThumbnailsBuilderInputOutputTest
 		assertEquals(2, thumbnails.size());
 		
 		BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-		assertEquals("png", getFormatName(new FileInputStream(thumbnails.get(0))));
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(thumbnails.get(0))));
 		assertEquals(50, fromFileImage1.getWidth());
 		assertEquals(50, fromFileImage1.getHeight());
 		
 		BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
-		assertEquals("png", getFormatName(new FileInputStream(thumbnails.get(1))));
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(thumbnails.get(1))));
 		assertEquals(50, fromFileImage2.getWidth());
 		assertEquals(50, fromFileImage2.getHeight());
 		
@@ -1776,7 +1792,7 @@ public class ThumbnailsBuilderInputOutputTest
 			
 		// then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -1807,7 +1823,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -2174,12 +2190,12 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		//then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os1.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os1.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os1.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 		
 		thumbnail = ImageIO.read(new ByteArrayInputStream(os2.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os2.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os2.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -3517,7 +3533,7 @@ public class ThumbnailsBuilderInputOutputTest
 			
 		// then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -3548,7 +3564,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -3901,12 +3917,12 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		//then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os1.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os1.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os1.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 		
 		thumbnail = ImageIO.read(new ByteArrayInputStream(os2.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os2.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os2.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -4442,7 +4458,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -4473,7 +4489,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -4827,12 +4843,12 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		//then
 		BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os1.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os1.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os1.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 		
 		thumbnail = ImageIO.read(new ByteArrayInputStream(os2.toByteArray()));
-		assertEquals("png", getFormatName(new ByteArrayInputStream(os2.toByteArray())));
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os2.toByteArray())));
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
@@ -5408,7 +5424,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, f);
+		TestUtils.copyFile(sourceFile, f);
 		
 		// given
 		long fileSizeBefore = f.length();
@@ -5441,10 +5457,10 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
-		File f = createTempPng();
+		File f = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, f);
+		TestUtils.copyFile(sourceFile, f);
 		
 		// given
 		long fileSizeBefore = f.length();
@@ -5478,10 +5494,10 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
-		File f = createTempPng();
+		File f = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, f);
+		TestUtils.copyFile(sourceFile, f);
 		
 		// given
 		// when
@@ -5519,10 +5535,10 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
-		File f = createTempPng();
+		File f = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, f);
+		TestUtils.copyFile(sourceFile, f);
 		
 		// given
 		long fileSizeBefore = f.length();
@@ -5556,10 +5572,10 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
-		File f = createTempPng();
+		File f = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, f);
+		TestUtils.copyFile(sourceFile, f);
 		
 		// given
 		// when
@@ -5599,12 +5615,12 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist = createTempPng();
+		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -5640,13 +5656,13 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatExists = createTempPng();
+		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -5683,12 +5699,12 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist = createTempPng();
+		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -5724,13 +5740,13 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatExists = createTempPng();
+		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -5768,13 +5784,13 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist1 = createTempPng();
-		File fileThatDoesntExist2 = createTempPng();
+		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -5813,14 +5829,14 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist = createTempPng();
-		File fileThatExists = createTempPng();
+		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -5860,15 +5876,15 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatExists1 = createTempPng();
-		File fileThatExists2 = createTempPng();
+		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -5909,13 +5925,13 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist1 = createTempPng();
-		File fileThatDoesntExist2 = createTempPng();
+		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -5954,14 +5970,14 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist = createTempPng();
-		File fileThatExists = createTempPng();
+		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -6001,15 +6017,15 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatExists1 = createTempPng();
-		File fileThatExists2 = createTempPng();
+		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -6050,13 +6066,13 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist1 = createTempPng();
-		File fileThatDoesntExist2 = createTempPng();
+		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -6096,15 +6112,15 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatExists1 = createTempPng();
-		File fileThatExists2 = createTempPng();
+		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -6146,13 +6162,13 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist1 = createTempPng();
-		File fileThatDoesntExist2 = createTempPng();
+		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -6192,15 +6208,15 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatExists1 = createTempPng();
-		File fileThatExists2 = createTempPng();
+		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -6243,13 +6259,13 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist1 = createTempPng();
-		File fileThatDoesntExist2 = createTempPng();
+		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -6290,14 +6306,14 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist = createTempPng();
-		File fileThatExists = createTempPng();
+		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -6339,15 +6355,15 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatExists1 = createTempPng();
-		File fileThatExists2 = createTempPng();
+		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -6390,13 +6406,13 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist1 = createTempPng();
-		File fileThatDoesntExist2 = createTempPng();
+		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -6437,14 +6453,14 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatDoesntExist = createTempPng();
-		File fileThatExists = createTempPng();
+		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -6486,15 +6502,15 @@ public class ThumbnailsBuilderInputOutputTest
 		// set up
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
-		File fileThatExists1 = createTempPng();
-		File fileThatExists2 = createTempPng();
+		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
+		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -6536,12 +6552,12 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -6578,13 +6594,13 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatExists = makeRenamedFile(originalFile, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -6622,12 +6638,12 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -6664,13 +6680,13 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatExists = makeRenamedFile(originalFile, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -6709,15 +6725,15 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist1 = makeRenamedFile(originalFile1, rename);
 		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
 		
 		// given
 		
@@ -6758,16 +6774,16 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile1, rename);
 		File fileThatExists = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -6809,17 +6825,17 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatExists1 = makeRenamedFile(originalFile1, rename);
 		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -6862,15 +6878,15 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist1 = makeRenamedFile(originalFile1, rename);
 		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
 		
 		// given
 		
@@ -6911,16 +6927,16 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile1, rename);
 		File fileThatExists = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -6962,17 +6978,17 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatExists1 = makeRenamedFile(originalFile1, rename);
 		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -7014,12 +7030,12 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -7057,13 +7073,13 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatExists = makeRenamedFile(originalFile, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -7102,12 +7118,12 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, originalFile);
 		
 		// given
 		
@@ -7145,13 +7161,13 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = createTempPng();
+		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatExists = makeRenamedFile(originalFile, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -7191,15 +7207,15 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist1 = makeRenamedFile(originalFile1, rename);
 		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
 		
 		// given
 		
@@ -7241,16 +7257,16 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile1, rename);
 		File fileThatExists = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -7293,17 +7309,17 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatExists1 = makeRenamedFile(originalFile1, rename);
 		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -7347,15 +7363,15 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist1 = makeRenamedFile(originalFile1, rename);
 		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
 		
 		// given
 		
@@ -7397,16 +7413,16 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile1, rename);
 		File fileThatExists = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
-		copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, fileThatExists);
 		
 		// given
 		
@@ -7449,17 +7465,17 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = createTempPng();
-		File originalFile2 = createTempPng();
+		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
 		
 		File fileThatExists1 = makeRenamedFile(originalFile1, rename);
 		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
 		
 		// copy the image to a temporary file.
-		copyFile(sourceFile, originalFile1);
-		copyFile(sourceFile, originalFile2);
-		copyFile(sourceFile, fileThatExists1);
-		copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(sourceFile, originalFile1);
+		TestUtils.copyFile(sourceFile, originalFile2);
+		TestUtils.copyFile(sourceFile, fileThatExists1);
+		TestUtils.copyFile(sourceFile, fileThatExists2);
 		
 		// given
 		
@@ -7483,29 +7499,976 @@ public class ThumbnailsBuilderInputOutputTest
 		fileThatExists2.delete();
 	}
 	
-	@BeforeClass
-	public static void makeTemporaryDirectory()
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpg() throws IOException
 	{
-		new File("test-resources/Thumbnailator/tmp").mkdir();
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpeg_DestExtensionIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpeg_DestExtensionIsJPG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpeg_DestExtensionIsJpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpeg_DestExtensionIsjpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpeg_DestExtensionIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpeg_DestExtensionIsJpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPG_DestExtensionIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPG_DestExtensionIsJPG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPG_DestExtensionIsJpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPG_DestExtensionIsjpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPG_DestExtensionIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPG_DestExtensionIsJpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPEG_DestExtensionIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPEG_DestExtensionIsJPG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPEG_DestExtensionIsJpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPEG_DestExtensionIsjpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPEG_DestExtensionIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJPEG_DestExtensionIsJpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpg_DestExtensionIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpg_DestExtensionIsJPG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpg_DestExtensionIsJpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpg_DestExtensionIsjpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpg_DestExtensionIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpg_DestExtensionIsJpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpeg_DestExtensionIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpeg_DestExtensionIsJPG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpeg_DestExtensionIsJpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpeg_DestExtensionIsjpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpeg_DestExtensionIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsJpeg_DestExtensionIsJpeg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpg_OutputFormatIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("jpg")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPG_OutputFormatIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("jpg")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpg_OutputFormatIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("jpg")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpeg_OutputFormatIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("jpg")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPEG_OutputFormatIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("jpg")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpeg_OutputFormatIsjpg() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("jpg")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
 	}
 
-	@AfterClass
-	public static void deleteTemporaryDirectory()
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpg_OutputFormatIsJPEG() throws IOException
 	{
-		File tmpDir = new File("test-resources/Thumbnailator/tmp");
-		for (File f : tmpDir.listFiles())
-		{
-			f.delete();
-		}
-		tmpDir.delete();
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("JPEG")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
 	}
-
-	private File createTempPng() throws IOException
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPG_OutputFormatIsJPEG() throws IOException
 	{
-		return new File(
-				"test-resources/Thumbnailator/tmp",
-				"tmp-" + Math.abs(new Random().nextLong()) + ".png"
-		);
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("JPEG")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpg_OutputFormatIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("JPEG")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpeg_OutputFormatIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("JPEG")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPEG_OutputFormatIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "JPEG");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("JPEG")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
+	
+	@Test
+	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpeg_OutputFormatIsJPEG() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File f = TestUtils.createTempFile(TMPDIR, "jpg");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "Jpeg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.outputFormat("JPEG")
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
 	}
 
 	private File makeRenamedFile(File f, Rename rename)
@@ -7516,35 +8479,5 @@ public class ThumbnailsBuilderInputOutputTest
 				.build();
 		
 		return new File(f.getParent(), Rename.PREFIX_DOT_THUMBNAIL.apply(f.getName(), param));
-	}
-
-	/**
-	 * Copies a file.
-	 * 
-	 * @param sourceFile		The source file.
-	 * @param destFile			The destination file.
-	 * @throws IOException		If an IOException is thrown.
-	 */
-	private static void copyFile(File sourceFile, File destFile) throws IOException
-	{
-		FileInputStream fis = new FileInputStream(sourceFile);
-		FileOutputStream fos = new FileOutputStream(destFile);
-		fis.getChannel().transferTo(0, sourceFile.length(), fos.getChannel());
-		fis.close();
-		fos.close();
-	}
-	
-	/**
-	 * Returns the format of an image which is read through the {@link InputStream}.
-	 * 
-	 * @param is			The {@link InputStream} to an image.
-	 * @return				File format of the image.
-	 * @throws IOException
-	 */
-	private static String getFormatName(InputStream is) throws IOException
-	{
-		return ImageIO.getImageReaders(
-				ImageIO.createImageInputStream(is)
-		).next().getFormatName();
 	}
 }
