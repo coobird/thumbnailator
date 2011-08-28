@@ -19,6 +19,23 @@ BufferedImage thumbnail = new ScaledThumbnailMaker()
  * </pre>
  * </DD>
  * </DL>
+ * It is also possible to independently specify the scaling factor for the
+ * width and height. (If the two scaling factors are not equal then the aspect 
+ * ratio of the original image will not be preserved.)
+ * <p>
+ * <DL>
+ * <DT><B>Usage:</B></DT>
+ * <DD>
+ * The following example demonstrates how to create a thumbnail which is scaled
+ * 50% in the width and 75% in the height:
+ * <pre>
+BufferedImage img = ImageIO.read(new File("sourceImage.jpg"));
+BufferedImage thumbnail = new ScaledThumbnailMaker()
+        .scale(0.50, 0.75)
+        .make(img);
+ * </pre>
+ * </DD>
+ * </DL>
  * 
  * @author coobird
  *
@@ -28,9 +45,16 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	private static final String PARAM_SCALE = "scale";
 	
 	/**
-	 * The scaling factor to apply when resizing an image to create a thumbnail.
+	 * The scaling factor to apply to the width when resizing an image to 
+	 * create a thumbnail.
 	 */
-	private double factor;
+	private double widthFactor;
+	
+	/**
+	 * The scaling factor to apply to the height when resizing an image to 
+	 * create a thumbnail.
+	 */
+	private double heightFactor;
 	
 	/**
 	 * <p>
@@ -63,6 +87,21 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	}
 	
 	/**
+	 * Creates an instance of {@code ScaledThumbnailMaker} with the specified 
+	 * scaling factors for the width and height.
+	 * 
+	 * @param widthFactor		The scaling factor to apply to the width when 
+	 * 							resizing an image to create a thumbnail.
+	 * @param heightFactor		The scaling factor to apply to the height when 
+	 * 							resizing an image to create a thumbnail.
+	 */
+	public ScaledThumbnailMaker(double widthFactor, double heightFactor)
+	{
+		this();
+		scale(widthFactor, heightFactor);
+	}
+	
+	/**
 	 * <p>
 	 * Sets the scaling factor for the thumbnail.
 	 * </p>
@@ -85,7 +124,36 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 			);
 		}
 		
-		this.factor = factor;
+		this.widthFactor = factor;
+		this.heightFactor = factor;
+		ready.set(PARAM_SCALE);
+		return this;
+	}
+	
+	/**
+	 * <p>
+	 * Sets the scaling factors for the thumbnail.
+	 * </p>
+	 * 
+	 * @param widthFactor		The scaling factor to apply to the width when 
+	 * 							resizing an image to create a thumbnail.
+	 * @param heightFactor		The scaling factor to apply to the height when 
+	 * 							resizing an image to create a thumbnail.
+	 * @return					A reference to this object.
+	 * @throws IllegalStateException	If the scaling factor has already
+	 * 									been previously set.
+	 */
+	public ScaledThumbnailMaker scale(double widthFactor, double heightFactor)
+	{
+		if (ready.isSet(PARAM_SCALE))
+		{
+			throw new IllegalStateException(
+					"The scaling factor has already been set."
+			);
+		}
+		
+		this.widthFactor = widthFactor;
+		this.heightFactor = heightFactor;
 		ready.set(PARAM_SCALE);
 		return this;
 	}
@@ -93,8 +161,19 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	@Override
 	public BufferedImage make(BufferedImage img)
 	{
-		int width = (int)(img.getWidth() * factor);
-		int height = (int)(img.getHeight() * factor);
+		int width = (int)(img.getWidth() * widthFactor);
+		int height = (int)(img.getHeight() * heightFactor);
+		
+		if (width == 0) {
+			throw new IllegalArgumentException(
+					"The resulting image has a width of zero."
+			);
+		}
+		if (height == 0) {
+			throw new IllegalArgumentException(
+					"The resulting image has a height of zero."
+			);
+		}
 		
 		return super.makeThumbnail(img, width, height);
 	}
