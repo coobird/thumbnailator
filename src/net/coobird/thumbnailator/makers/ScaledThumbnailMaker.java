@@ -94,6 +94,7 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	 * 							resizing an image to create a thumbnail.
 	 * @param heightFactor		The scaling factor to apply to the height when 
 	 * 							resizing an image to create a thumbnail.
+	 * @since	0.3.10
 	 */
 	public ScaledThumbnailMaker(double widthFactor, double heightFactor)
 	{
@@ -142,6 +143,7 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	 * @return					A reference to this object.
 	 * @throws IllegalStateException	If the scaling factor has already
 	 * 									been previously set.
+	 * @since	0.3.10
 	 */
 	public ScaledThumbnailMaker scale(double widthFactor, double heightFactor)
 	{
