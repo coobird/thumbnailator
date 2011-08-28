@@ -23,7 +23,8 @@ import net.coobird.thumbnailator.resizers.Resizers;
  * <dt>height</dt>
  * <dd>Unassigned. Must be set by the {@link #size(int, int)} method.</dd>
  * <dt>scaling factor</dt>
- * <dd>Unassigned. Must be set by the {@link #scale(double)} method.</dd>
+ * <dd>Unassigned. Must be set by the {@link #scale(double)} method or 
+ * {@link #scale(double, double)} method.</dd>
  * <dt>source region</dt>
  * <dd>Uses the entire source image.</dd>
  * <dt>image type</dt>
@@ -54,7 +55,8 @@ public final class ThumbnailParameterBuilder
 	
 	private int width = UNINITIALIZED;
 	private int height = UNINITIALIZED;
-	private double scalingFactor = Double.NaN;
+	private double widthScalingFactor = Double.NaN;
+	private double heightScalingFactor = Double.NaN;
 	private int imageType = ThumbnailParameter.DEFAULT_IMAGE_TYPE;
 	private boolean keepAspectRatio = true;
 	private float thumbnailQuality = ThumbnailParameter.DEFAULT_QUALITY;
@@ -139,7 +141,40 @@ public final class ThumbnailParameterBuilder
 			throw new IllegalArgumentException("Scaling factor must be a rational number.");
 		} 
 		
-		this.scalingFactor = scalingFactor;
+		this.widthScalingFactor = scalingFactor;
+		this.heightScalingFactor = scalingFactor;
+		return this;
+	}
+	
+	/**
+	 * Sets the scaling factor of the thumbnail.
+	 * 
+	 * @param widthScalingFactor		The scaling factor to use for the width
+	 * 									when creating the thumbnail.
+	 * @param heightScalingFactor		The scaling factor to use for the height
+	 * 									when creating the thumbnail.
+	 * @return							A reference to this object.
+	 * @throws IllegalArgumentException		If the scaling factor is not a 
+	 * 										rational number, or if it is less
+	 * 										than {@code 0.0}.
+	 */
+	public ThumbnailParameterBuilder scale(double widthScalingFactor, double heightScalingFactor)
+	{
+		if (widthScalingFactor <= 0.0 || heightScalingFactor <= 0.0)
+		{
+			throw new IllegalArgumentException("Scaling factor is less than or equal to 0.");
+		} 
+		else if (Double.isNaN(widthScalingFactor) || Double.isInfinite(widthScalingFactor))
+		{
+			throw new IllegalArgumentException("Scaling factor must be a rational number.");
+		} 
+		else if (Double.isNaN(heightScalingFactor) || Double.isInfinite(heightScalingFactor))
+		{
+			throw new IllegalArgumentException("Scaling factor must be a rational number.");
+		} 
+		
+		this.widthScalingFactor = widthScalingFactor;
+		this.heightScalingFactor = heightScalingFactor;
 		return this;
 	}
 	
@@ -266,11 +301,12 @@ public final class ThumbnailParameterBuilder
 	 */
 	public ThumbnailParameter build()
 	{
-		if (!Double.isNaN(scalingFactor))
+		if (!Double.isNaN(widthScalingFactor))
 		{
 			// If scaling factor has been set.
 			return new ThumbnailParameter(
-					scalingFactor,
+					widthScalingFactor,
+					heightScalingFactor,
 					sourceRegion,
 					keepAspectRatio,
 					thumbnailFormat,

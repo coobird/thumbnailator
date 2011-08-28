@@ -56,13 +56,22 @@ public class ThumbnailParameter
 	private final Dimension thumbnailSize;
 	
 	/**
-	 * The scaling factor to use when creating a thumbnail from the original
-	 * image.
+	 * The scaling factor to apply to the width when creating a thumbnail from 
+	 * the original image.
 	 * <p>
 	 * If this field is set, then the {@link #thumbnailSize} field will be set
 	 * as {@code null} to indicate that it is not set.
 	 */
-	private final double scalingFactor;
+	private final double widthScalingFactor;
+	
+	/**
+	 * The scaling factor to apply to the height when creating a thumbnail from 
+	 * the original image.
+	 * <p>
+	 * If this field is set, then the {@link #thumbnailSize} field will be set
+	 * as {@code null} to indicate that it is not set.
+	 */
+	private final double heightScalingFactor;
 	
 	/**
 	 * Indicated whether or not the thumbnail should retain the aspect ratio
@@ -206,7 +215,8 @@ public class ThumbnailParameter
 
 		this.thumbnailSize = thumbnailSize;
 		this.sourceRegion = sourceRegion;
-		this.scalingFactor = Double.NaN;
+		this.widthScalingFactor = Double.NaN;
+		this.heightScalingFactor = Double.NaN;
 		
 		this.keepAspectRatio = keepAspectRatio;
 		
@@ -244,8 +254,12 @@ public class ThumbnailParameter
 	 * Creates an object holding the parameters needed in order to make a
 	 * thumbnail.
 	 * 
-	 * @param scalingFactor		The scaling factor to use when creating a
-	 * 							thumbnail from the original image.
+	 * @param widthScalingFactor	The scaling factor to apply to the width
+	 * 								when creating a	thumbnail from the original
+	 * 								image.
+	 * @param heightScalingFactor	The scaling factor to apply to the height
+	 * 								when creating a	thumbnail from the original
+	 * 								image.
 	 * @param sourceRegion		The region of the source image to use when 
 	 * 							creating a thumbnail.
 	 * 							A value of {@code null} indicates that the 
@@ -295,7 +309,8 @@ public class ThumbnailParameter
 	 * 										equal to 0. 
 	 */
 	public ThumbnailParameter(
-			double scalingFactor,
+			double widthScalingFactor,
+			double heightScalingFactor,
 			Region sourceRegion,
 			boolean keepAspectRatio,
 			String outputFormat,
@@ -306,16 +321,21 @@ public class ThumbnailParameter
 			Resizer resizer
 	)
 	{
-		if (scalingFactor <= 0.0)
+		if (widthScalingFactor <= 0.0 || heightScalingFactor <= 0.0)
 		{
 			throw new IllegalArgumentException("Scaling factor is less than or equal to 0.");
 		} 
-		else if (Double.isNaN(scalingFactor) || Double.isInfinite(scalingFactor))
+		else if (Double.isNaN(widthScalingFactor) || Double.isInfinite(widthScalingFactor))
+		{
+			throw new IllegalArgumentException("Scaling factor must be a rational number.");
+		} 
+		else if (Double.isNaN(heightScalingFactor) || Double.isInfinite(heightScalingFactor))
 		{
 			throw new IllegalArgumentException("Scaling factor must be a rational number.");
 		} 
 
-		this.scalingFactor = scalingFactor;
+		this.widthScalingFactor = widthScalingFactor;
+		this.heightScalingFactor = heightScalingFactor;
 		this.sourceRegion = sourceRegion;
 		this.thumbnailSize = null;
 		
@@ -373,16 +393,31 @@ public class ThumbnailParameter
 	}
 	
 	/**
-	 * Returns the scaling factor for the thumbnail.
+	 * Returns the scaling factor to apply to the width when creating the 
+	 * thumbnail.
 	 * <p>
 	 * Returns {@link Double#NaN} if the thumbnail size is set rather than the 
 	 * scaling factor.
 	 * 
-	 * @return		The scaling factor for the thumbnail.
+	 * @return		The width scaling factor for the thumbnail.
 	 */
-	public double getScalingFactor()
+	public double getWidthScalingFactor()
 	{
-		return scalingFactor;
+		return widthScalingFactor;
+	}
+	
+	/**
+	 * Returns the scaling factor to apply to the height when creating the 
+	 * thumbnail.
+	 * <p>
+	 * Returns {@link Double#NaN} if the thumbnail size is set rather than the 
+	 * scaling factor.
+	 * 
+	 * @return		The height scaling factor for the thumbnail.
+	 */
+	public double getHeightScalingFactor()
+	{
+		return heightScalingFactor;
 	}
 
 	/**
