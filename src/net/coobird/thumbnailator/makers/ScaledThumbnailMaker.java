@@ -163,18 +163,7 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	{
 		int width = (int)(img.getWidth() * widthFactor);
 		int height = (int)(img.getHeight() * heightFactor);
-		
-		if (width == 0) {
-			throw new IllegalArgumentException(
-					"The resulting image has a width of zero."
-			);
-		}
-		if (height == 0) {
-			throw new IllegalArgumentException(
-					"The resulting image has a height of zero."
-			);
-		}
-		
+
 		return super.makeThumbnail(img, width, height);
 	}
 }
