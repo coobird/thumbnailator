@@ -132,18 +132,7 @@ public final class ThumbnailParameterBuilder
 	 */
 	public ThumbnailParameterBuilder scale(double scalingFactor)
 	{
-		if (scalingFactor <= 0.0)
-		{
-			throw new IllegalArgumentException("Scaling factor is less than or equal to 0.");
-		} 
-		else if (Double.isNaN(scalingFactor) || Double.isInfinite(scalingFactor))
-		{
-			throw new IllegalArgumentException("Scaling factor must be a rational number.");
-		} 
-		
-		this.widthScalingFactor = scalingFactor;
-		this.heightScalingFactor = scalingFactor;
-		return this;
+		return scale(scalingFactor, scalingFactor);
 	}
 	
 	/**
