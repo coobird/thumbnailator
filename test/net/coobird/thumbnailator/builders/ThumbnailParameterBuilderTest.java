@@ -229,14 +229,14 @@ public class ThumbnailParameterBuilderTest
 	@Test(expected=IllegalArgumentException.class)
 	public void build_OnlyScaleTwoArg_NegativeInfinity_Valid()
 	{
-		new ThumbnailParameterBuilder().scale(Double.POSITIVE_INFINITY, 0.4).build();
+		new ThumbnailParameterBuilder().scale(Double.NEGATIVE_INFINITY, 0.4).build();
 		fail();
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void build_OnlyScaleTwoArg_Valid_NegativeInfinity()
 	{
-		new ThumbnailParameterBuilder().scale(0.6, Double.POSITIVE_INFINITY).build();
+		new ThumbnailParameterBuilder().scale(0.6, Double.NEGATIVE_INFINITY).build();
 		fail();
 	}
 	
