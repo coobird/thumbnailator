@@ -400,6 +400,7 @@ public class ThumbnailParameter
 	 * scaling factor.
 	 * 
 	 * @return		The width scaling factor for the thumbnail.
+	 * @since	0.3.10
 	 */
 	public double getWidthScalingFactor()
 	{
@@ -414,6 +415,7 @@ public class ThumbnailParameter
 	 * scaling factor.
 	 * 
 	 * @return		The height scaling factor for the thumbnail.
+	 * @since	0.3.10
 	 */
 	public double getHeightScalingFactor()
 	{

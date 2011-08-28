@@ -146,6 +146,7 @@ public final class ThumbnailParameterBuilder
 	 * @throws IllegalArgumentException		If the scaling factor is not a 
 	 * 										rational number, or if it is less
 	 * 										than {@code 0.0}.
+	 * @since	0.3.10
 	 */
 	public ThumbnailParameterBuilder scale(double widthScalingFactor, double heightScalingFactor)
 	{
