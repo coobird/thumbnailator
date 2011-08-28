@@ -39,10 +39,13 @@ public class ScaledThumbnailMakerTest
 	@Test(expected=IllegalStateException.class)
 	public void uninitializedWithNoArgConstructor()
 	{
+		// given
 		BufferedImage img = makeTestImage200x200();
 		
+		// when
 		new ScaledThumbnailMaker().make(img);
 		
+		// then
 		fail();
 	}
 	
@@ -85,13 +88,67 @@ public class ScaledThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void makeWithOneArgConstructorWithScale()
+	public void makeWithOneArgConstructorWithScaleOneArg()
 	{
 		BufferedImage img = makeTestImage200x200();
 		
 		new ScaledThumbnailMaker(0.5)
 			.scale(0.5)
 			.make(img);
+	}
+	
+	@Test(expected=IllegalStateException.class)
+	public void makeWithOneArgConstructorWithScaleTwoArg()
+	{
+		BufferedImage img = makeTestImage200x200();
+		
+		new ScaledThumbnailMaker(0.5)
+			.scale(0.5, 0.5)
+			.make(img);
+	}
+	
+	@Test
+	public void makeWithTwoArgConstructor()
+	{
+		// given
+		BufferedImage img = makeTestImage200x200();
+		
+		// when
+		BufferedImage thumbnail = new ScaledThumbnailMaker(0.6, 0.4).make(img);
+		
+		// then
+		assertEquals(120, thumbnail.getWidth());
+		assertEquals(80, thumbnail.getHeight());
+	}
+	
+	@Test(expected=IllegalStateException.class)
+	public void makeWithTwoArgConstructorWithScaleOneArg()
+	{
+		// given
+		BufferedImage img = makeTestImage200x200();
+		
+		// when
+		new ScaledThumbnailMaker(0.6, 0.4)
+			.scale(0.5)
+			.make(img);
+		
+		// then
+		fail();
+	}
+	
+	@Test(expected=IllegalStateException.class)
+	public void makeWithTwoArgConstructorWithScaleTwoArg()
+	{
+		// given
+		BufferedImage img = makeTestImage200x200();
+		
+		// when
+		new ScaledThumbnailMaker(0.6, 0.4)
+			.scale(0.5, 0.5)
+			.make(img);
+		
+		// then
+		fail();
 	}
 
 	/**
@@ -109,7 +166,7 @@ public class ScaledThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test
-	public void makeWithNoArgConstructorAndScaledMethodCall()
+	public void makeWithNoArgConstructorAndScaleOneArg()
 	{
 		BufferedImage img = makeTestImage200x200();
 		
@@ -119,6 +176,23 @@ public class ScaledThumbnailMakerTest
 		
 		assertEquals(100, thumbnail.getWidth());
 		assertEquals(100, thumbnail.getHeight());
+		assertEquals(BufferedImage.TYPE_INT_ARGB, thumbnail.getType());
+	}
+	
+	@Test
+	public void makeWithNoArgConstructorAndScaleTwoArg()
+	{
+		// given
+		BufferedImage img = makeTestImage200x200();
+		
+		// when
+		BufferedImage thumbnail = new ScaledThumbnailMaker()
+			.scale(0.6, 0.4)
+			.make(img);
+		
+		// then
+		assertEquals(120, thumbnail.getWidth());
+		assertEquals(80, thumbnail.getHeight());
 		assertEquals(BufferedImage.TYPE_INT_ARGB, thumbnail.getType());
 	}
 }
