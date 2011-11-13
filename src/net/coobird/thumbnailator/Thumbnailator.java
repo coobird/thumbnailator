@@ -103,12 +103,12 @@ public final class Thumbnailator
 					.resizerFactory(param.getResizerFactory())
 					.make(sourceImage);
 		}
-		else if (!Double.isNaN(param.getScalingFactor()))
+		else if (!Double.isNaN(param.getWidthScalingFactor()))
 		{
 			// Create the thumbnail.
 			destinationImage =
 				new ScaledThumbnailMaker()
-					.scale(param.getScalingFactor())
+					.scale(param.getWidthScalingFactor(), param.getHeightScalingFactor())
 					.imageType(imageType)
 					.resizerFactory(param.getResizerFactory())
 					.make(sourceImage);

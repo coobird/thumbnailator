@@ -50,7 +50,8 @@ public class ThumbnailParameterBuilderTest
 				.build();
 
 		assertEquals(new Dimension(100, 100), param.getSize());
-		assertTrue(Double.isNaN(param.getScalingFactor()));
+		assertTrue(Double.isNaN(param.getHeightScalingFactor()));
+		assertTrue(Double.isNaN(param.getWidthScalingFactor()));
 		assertEquals(ThumbnailParameter.ORIGINAL_FORMAT, param.getOutputFormat());
 		assertEquals(ThumbnailParameter.DEFAULT_FORMAT_TYPE, param.getOutputFormatType());
 		assertTrue(Float.isNaN(param.getOutputQuality()));
@@ -77,7 +78,8 @@ public class ThumbnailParameterBuilderTest
 				.build();
 		
 		assertEquals(new Dimension(100, 100), param.getSize());
-		assertTrue(Double.isNaN(param.getScalingFactor()));
+		assertTrue(Double.isNaN(param.getWidthScalingFactor()));
+		assertTrue(Double.isNaN(param.getHeightScalingFactor()));
 		assertEquals(ThumbnailParameter.ORIGINAL_FORMAT, param.getOutputFormat());
 		assertEquals(ThumbnailParameter.DEFAULT_FORMAT_TYPE, param.getOutputFormatType());
 		assertTrue(Float.isNaN(param.getOutputQuality()));
@@ -104,7 +106,8 @@ public class ThumbnailParameterBuilderTest
 				.build();
 		
 		assertEquals(null, param.getSize());
-		assertTrue(Double.compare(0.5, param.getScalingFactor()) == 0);
+		assertTrue(Double.compare(0.5, param.getWidthScalingFactor()) == 0);
+		assertTrue(Double.compare(0.5, param.getHeightScalingFactor()) == 0);
 		assertEquals(ThumbnailParameter.ORIGINAL_FORMAT, param.getOutputFormat());
 		assertEquals(ThumbnailParameter.DEFAULT_FORMAT_TYPE, param.getOutputFormatType());
 		assertTrue(Float.isNaN(param.getOutputQuality()));
@@ -161,6 +164,88 @@ public class ThumbnailParameterBuilderTest
 	public void build_OnlyScale_NegativeInfinity()
 	{
 		new ThumbnailParameterBuilder().scale(Double.NEGATIVE_INFINITY).build();
+		fail();
+	}
+
+	@Test
+	public void build_OnlyScaleTwoArg()
+	{
+		// given, when
+		ThumbnailParameter param = 
+			new ThumbnailParameterBuilder().scale(0.6, 0.4).build();
+		
+		// then
+		assertEquals(null, param.getSize());
+		assertTrue(Double.compare(0.6, param.getWidthScalingFactor()) == 0);
+		assertTrue(Double.compare(0.4, param.getHeightScalingFactor()) == 0);
+		assertEquals(ThumbnailParameter.ORIGINAL_FORMAT, param.getOutputFormat());
+		assertEquals(ThumbnailParameter.DEFAULT_FORMAT_TYPE, param.getOutputFormatType());
+		assertTrue(Float.isNaN(param.getOutputQuality()));
+		assertEquals(Resizers.PROGRESSIVE, param.getResizer());
+		assertEquals(ThumbnailParameter.DEFAULT_IMAGE_TYPE, param.getType());
+		assertEquals(Collections.emptyList(), param.getImageFilters());
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void build_OnlyScaleTwoArg_NaN_Valid()
+	{
+		new ThumbnailParameterBuilder().scale(Double.NaN, 0.4).build();
+		fail();
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void build_OnlyScaleTwoArg_Valid_NaN()
+	{
+		new ThumbnailParameterBuilder().scale(0.6, Double.NaN).build();
+		fail();
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void build_OnlyScaleTwoArg_NaN_NaN()
+	{
+		new ThumbnailParameterBuilder().scale(Double.NaN, Double.NaN).build();
+		fail();
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void build_OnlyScaleTwoArg_PositiveInfinity_Valid()
+	{
+		new ThumbnailParameterBuilder().scale(Double.POSITIVE_INFINITY, 0.4).build();
+		fail();
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void build_OnlyScaleTwoArg_Valid_PositiveInfinity()
+	{
+		new ThumbnailParameterBuilder().scale(0.6, Double.POSITIVE_INFINITY).build();
+		fail();
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void build_OnlyScaleTwoArg_PositiveInfinity_PositiveInfinity()
+	{
+		new ThumbnailParameterBuilder().scale(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY).build();
+		fail();
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void build_OnlyScaleTwoArg_NegativeInfinity_Valid()
+	{
+		new ThumbnailParameterBuilder().scale(Double.NEGATIVE_INFINITY, 0.4).build();
+		fail();
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void build_OnlyScaleTwoArg_Valid_NegativeInfinity()
+	{
+		new ThumbnailParameterBuilder().scale(0.6, Double.NEGATIVE_INFINITY).build();
+		fail();
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void build_OnlyScaleTwoArg_NegativeInfinity_NegativeInfinity()
+	{
+		new ThumbnailParameterBuilder().scale(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY).build();
 		fail();
 	}
 	

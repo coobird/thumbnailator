@@ -819,7 +819,8 @@ public final class Thumbnails
 		 */
 		private int width = DIMENSION_NOT_SPECIFIED;
 		private int height = DIMENSION_NOT_SPECIFIED;
-		private double scale = Double.NaN;
+		private double scaleWidth = Double.NaN;
+		private double scaleHeight = Double.NaN;
 		
 		private Region sourceRegion;
 		
@@ -980,8 +981,9 @@ public final class Thumbnails
 		/**
 		 * Sets the scaling factor of the thumbnail.
 		 * <p>
-		 * Once this method is called, caling the {@link #size(int, int)} method
-		 * and the {@link #keepAspectRatio(boolean)} will result in an
+		 * Once this method is called, calling the {@link #size(int, int)} 
+		 * method, or the {@link #scale(double, double)} method, or the 
+		 * {@link #keepAspectRatio(boolean)} method will result in an
 		 * {@link IllegalStateException}.
 		 * <p>
 		 * Calling this method multiple times will result in an
@@ -991,23 +993,72 @@ public final class Thumbnails
 		 * 						thumbnail.
 		 * 						<p>
 		 * 						The value must be a {@code double} which is
-		 * 						greater than {@code 0.0}.
+		 * 						greater than {@code 0.0}, and not 
+		 * 						{@link Double#POSITIVE_INFINITY}.
 		 * @return				Reference to this object.
 		 */
 		public Builder<T> scale(double scale)
+		{
+			return scale(scale, scale);
+		}
+		
+		/**
+		 * Sets the scaling factor for the width and height of the thumbnail.
+		 * <p>
+		 * If the scaling factor for the width and height are not equal, then
+		 * the thumbnail will not preserve the aspect ratio of the original 
+		 * image.
+		 * <p>
+		 * Once this method is called, calling the {@link #size(int, int)} 
+		 * method, or the {@link #scale(double)} method, or the 
+		 * {@link #keepAspectRatio(boolean)} method will result in an
+		 * {@link IllegalStateException}.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @param scaleWidth	The scaling factor to use for the width when 
+		 * 						creating a thumbnail.
+		 * 						<p>
+		 * 						The value must be a {@code double} which is
+		 * 						greater than {@code 0.0}, and not 
+		 * 						{@link Double#POSITIVE_INFINITY}.
+		 * @param scaleHeight	The scaling factor to use for the height when 
+		 * 						creating a thumbnail.
+		 * 						<p>
+		 * 						The value must be a {@code double} which is
+		 * 						greater than {@code 0.0}, and not 
+		 * 						{@link Double#POSITIVE_INFINITY}.
+		 * @return				Reference to this object.
+		 * @since 	0.3.10
+		 */
+		public Builder<T> scale(double scaleWidth, double scaleHeight)
 		{
 			updateStatus(Properties.SCALE, Status.ALREADY_SET);
 			updateStatus(Properties.SIZE, Status.CANNOT_SET);
 			updateStatus(Properties.KEEP_ASPECT_RATIO, Status.CANNOT_SET);
 			
-			if (scale <= 0)
+			if (scaleWidth <= 0.0 || scaleHeight <= 0.0)
 			{
 				throw new IllegalArgumentException(
 						"The scaling factor is equal to or less than 0."
 				);
 			}
+			if (Double.isNaN(scaleWidth) || Double.isNaN(scaleHeight))
+			{
+				throw new IllegalArgumentException(
+						"The scaling factor is not a number."
+				);
+			}
+			if (Double.isInfinite(scaleWidth) || Double.isInfinite(scaleHeight))
+			{
+				throw new IllegalArgumentException(
+						"The scaling factor cannot be infinity."
+				);
+			}
 			
-			this.scale = scale;
+			this.scaleWidth = scaleWidth;
+			this.scaleHeight = scaleHeight;
 			
 			return this;
 		}
@@ -1399,7 +1450,8 @@ public final class Thumbnails
 		 * the original image is preserved for the thumbnail.
 		 * <p>
 		 * Calling this method after calling the {@link #scale(double)} method
-		 * will result in a {@link IllegalStateException}. 
+		 * or the {@link #scale(double, double)} method will result in a 
+		 * {@link IllegalStateException}. 
 		 * 
 		 * @param keep			{@code true} if the thumbnail is to maintain
 		 * 						the aspect ratio of the original image,
@@ -1412,6 +1464,9 @@ public final class Thumbnails
 		 * 									not yet been called to specify the
 		 * 									size of the thumbnail, or</li>
 		 * 									<li>the {@link #scale(double)} 
+		 * 									method has been called, or</li>
+		 * 									<li>the 
+		 * 									{@link #scale(double, double)} 
 		 * 									method has been called, or</li>
 		 * 									<li>the {@link #width(int)} and/or 
 		 * 									{@link #height(int)} has been called
@@ -1900,7 +1955,7 @@ watermark(Positions.CENTER, image, opacity);
 				imageTypeToUse = ThumbnailParameter.ORIGINAL_IMAGE_TYPE;
 			}
 			
-			if (Double.isNaN(scale))
+			if (Double.isNaN(scaleWidth))
 			{
 				// If the dimensions were specified, do the following.
 				
@@ -1944,7 +1999,8 @@ watermark(Positions.CENTER, image, opacity);
 			{
 				// If the scaling factor was specified
 				return new ThumbnailParameter(
-						scale,
+						scaleWidth,
+						scaleHeight,
 						sourceRegion,
 						keepAspectRatio,
 						outputFormat,
