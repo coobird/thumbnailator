@@ -139,6 +139,158 @@ public class ThumbnailParameter
 	 */
 	private final Region sourceRegion;
 	
+	/**
+	 * Perform validations on the {@code thumbnailSize} field.
+	 */
+	private void validateThumbnailSize()
+	{
+		if (thumbnailSize == null)
+		{
+			throw new IllegalArgumentException("Thumbnail size cannot be null.");
+		} 
+		else if (thumbnailSize.width < 0 || thumbnailSize.height < 0)
+		{
+			throw new IllegalArgumentException("Thumbnail dimensions must be greater than 0.");
+		}
+	}
+	
+	/**
+	 * Perform validations on the {@code widthScalingFactor} and 
+	 * {@code heightScalingFactor} fields.
+	 */
+	private void validateScalingFactor()
+	{
+		if (widthScalingFactor <= 0.0 || heightScalingFactor <= 0.0)
+		{
+			throw new IllegalArgumentException("Scaling factor is less than or equal to 0.");
+		} 
+		else if (Double.isNaN(widthScalingFactor) || Double.isInfinite(widthScalingFactor))
+		{
+			throw new IllegalArgumentException("Scaling factor must be a rational number.");
+		} 
+		else if (Double.isNaN(heightScalingFactor) || Double.isInfinite(heightScalingFactor))
+		{
+			throw new IllegalArgumentException("Scaling factor must be a rational number.");
+		} 
+	}
+	
+	/**
+	 * A private constructor to be used to instantiate an object holding the 
+	 * parameters needed in order to make a thumbnail.
+	 * 
+	 * @param thumbnailSize		The size of the thumbnail to generate.
+	 * @param widthScalingFactor	The scaling factor to apply to the width
+	 * 								when creating a	thumbnail from the original
+	 * 								image.
+	 * @param heightScalingFactor	The scaling factor to apply to the height
+	 * 								when creating a	thumbnail from the original
+	 * 								image.
+	 * @param sourceRegion		The region of the source image to use when 
+	 * 							creating a thumbnail.
+	 * 							A value of {@code null} indicates that the 
+	 * 							entire source image should be used to create
+	 * 							the thumbnail.
+	 * @param keepAspectRatio	Indicates whether or not the thumbnail should
+	 * 							maintain the aspect ratio of the original image.
+	 * @param outputFormat		A string indicating the compression format
+	 * 							that should be applied on the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#ORIGINAL_FORMAT} 
+	 * 							should be provided if the same image format as
+	 * 							the original should	be used for the thumbnail.
+	 * @param outputFormatType	A string indicating the compression type that
+	 * 							should be used when writing the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DEFAULT_FORMAT_TYPE} 
+	 * 							should be provided if the thumbnail should be
+	 * 							written using the default compression type of
+	 * 							the codec specified in {@code outputFormat}.
+	 * @param outputQuality		A value from {@code 0.0f} to {@code 1.0f} which
+	 * 							indicates the quality setting to use for the
+	 * 							compression of the thumbnail. {@code 0.0f}
+	 * 							indicates the lowest quality, {@code 1.0f}
+	 * 							indicates the highest quality setting for the 
+	 * 							compression.
+	 * 							{@link ThumbnailParameter#DEFAULT_QUALITY}
+	 * 							should be specified when the codec's default
+	 * 							compression quality settings should be used.
+	 * @param imageType 		The {@link BufferedImage} image type of the 
+	 * 							thumbnail.
+	 * 							A value of
+	 * 							{@link ThumbnailParameter#DEFAULT_IMAGE_TYPE}
+	 *							should be specified when the default image
+	 *							type should be used when creating the thumbnail.
+	 * @param filters			The {@link ImageFilter}s to apply to the
+	 * 							thumbnail.
+	 * 							A value of {@code null} will be recognized as
+	 * 							no filters are to be applied.
+	 * 							The filters are applied after the original
+	 * 							image has been resized.
+	 * @param resizer			The {@link Resizer} to use when performing the
+	 * 							resizing operation to create a thumbnail.
+	 * 
+	 * @throws IllegalArgumentException 	If size is {@code null} or if the 
+	 * 										dimensions are negative. 
+	 */
+	private ThumbnailParameter(
+			Dimension thumbnailSize,
+			double widthScalingFactor,
+			double heightScalingFactor,
+			Region sourceRegion,
+			boolean keepAspectRatio,
+			String outputFormat,
+			String outputFormatType,
+			float outputQuality,
+			int imageType,
+			List<ImageFilter> filters,
+			Resizer resizer
+	)
+	{
+		if (thumbnailSize == null)
+		{
+			throw new IllegalArgumentException("Thumbnail size cannot be null.");
+		} 
+		else if (thumbnailSize.width < 0 || thumbnailSize.height < 0)
+		{
+			throw new IllegalArgumentException("Thumbnail dimensions must be greater than 0.");
+		}
+		
+		this.thumbnailSize = thumbnailSize;
+		this.sourceRegion = sourceRegion;
+		this.widthScalingFactor = widthScalingFactor;
+		this.heightScalingFactor = heightScalingFactor;
+		
+		this.keepAspectRatio = keepAspectRatio;
+		
+		this.outputFormat = outputFormat;
+		this.outputFormatType = outputFormatType;
+		
+		/*
+		 * Note:
+		 * The value of DEFAULT_QUALITY is Float.NaN which cannot be compared
+		 * by using the regular == operator. Therefore, to check that NaN is
+		 * being used, one must use the Float.NaN method.
+		 */
+		if ( (outputQuality < 0.0f || outputQuality > 1.0f) &&
+				!Float.isNaN(outputQuality) )
+		{
+			throw new IllegalArgumentException("The output quality must be " +
+					"between 0.0f and 1.0f, or Float.NaN to use the default " +
+			"compression quality of codec being used.");
+		}
+		
+		this.outputQuality = outputQuality;
+		this.imageType = imageType;
+		
+		this.filters = filters == null ? 
+				Collections.<ImageFilter>emptyList() : filters;
+				
+		if (resizer == null)
+		{
+			throw new IllegalArgumentException("Resizer cannot be null");
+		}
+		this.resizer = resizer;
+	}
 	
 	/**
 	 * Creates an object holding the parameters needed in order to make a
@@ -204,50 +356,20 @@ public class ThumbnailParameter
 			Resizer resizer
 	)
 	{
-		if (thumbnailSize == null)
-		{
-			throw new IllegalArgumentException("Thumbnail size cannot be null.");
-		} 
-		else if (thumbnailSize.width < 0 || thumbnailSize.height < 0)
-		{
-			throw new IllegalArgumentException("Thumbnail dimensions must be greater than 0.");
-		}
-
-		this.thumbnailSize = thumbnailSize;
-		this.sourceRegion = sourceRegion;
-		this.widthScalingFactor = Double.NaN;
-		this.heightScalingFactor = Double.NaN;
-		
-		this.keepAspectRatio = keepAspectRatio;
-		
-		this.outputFormat = outputFormat;
-		this.outputFormatType = outputFormatType;
-		
-		/*
-		 * Note:
-		 * The value of DEFAULT_QUALITY is Float.NaN which cannot be compared
-		 * by using the regular == operator. Therefore, to check that NaN is
-		 * being used, one must use the Float.NaN method.
-		 */
-		if ( (outputQuality < 0.0f || outputQuality > 1.0f) &&
-				!Float.isNaN(outputQuality) )
-		{
-			throw new IllegalArgumentException("The output quality must be " +
-					"between 0.0f and 1.0f, or Float.NaN to use the default " +
-			"compression quality of codec being used.");
-		}
-		
-		this.outputQuality = outputQuality;
-		this.imageType = imageType;
-		
-		this.filters = filters == null ? 
-				Collections.<ImageFilter>emptyList() : filters;
-				
-		if (resizer == null)
-		{
-			throw new IllegalArgumentException("Resizer cannot be null");
-		}
-		this.resizer = resizer;
+		this(
+				thumbnailSize,
+				Double.NaN,
+				Double.NaN,
+				sourceRegion,
+				keepAspectRatio,
+				outputFormat,
+				outputFormatType,
+				outputQuality,
+				imageType,
+				filters,
+				resizer
+		);
+		validateThumbnailSize();
 	}
 
 	/**
@@ -321,54 +443,21 @@ public class ThumbnailParameter
 			Resizer resizer
 	)
 	{
-		if (widthScalingFactor <= 0.0 || heightScalingFactor <= 0.0)
-		{
-			throw new IllegalArgumentException("Scaling factor is less than or equal to 0.");
-		} 
-		else if (Double.isNaN(widthScalingFactor) || Double.isInfinite(widthScalingFactor))
-		{
-			throw new IllegalArgumentException("Scaling factor must be a rational number.");
-		} 
-		else if (Double.isNaN(heightScalingFactor) || Double.isInfinite(heightScalingFactor))
-		{
-			throw new IllegalArgumentException("Scaling factor must be a rational number.");
-		} 
+		this(
+				null,
+				widthScalingFactor,
+				heightScalingFactor,
+				sourceRegion,
+				keepAspectRatio,
+				outputFormat,
+				outputFormatType,
+				outputQuality,
+				imageType,
+				filters,
+				resizer
+		);
 
-		this.widthScalingFactor = widthScalingFactor;
-		this.heightScalingFactor = heightScalingFactor;
-		this.sourceRegion = sourceRegion;
-		this.thumbnailSize = null;
-		
-		this.keepAspectRatio = keepAspectRatio;
-		
-		this.outputFormat = outputFormat;
-		this.outputFormatType = outputFormatType;
-		
-		/*
-		 * Note:
-		 * The value of DEFAULT_QUALITY is Float.NaN which cannot be compared
-		 * by using the regular == operator. Therefore, to check that NaN is
-		 * being used, one must use the Float.NaN method.
-		 */
-		if ( (outputQuality < 0.0f || outputQuality > 1.0f) &&
-				!Float.isNaN(outputQuality) )
-		{
-			throw new IllegalArgumentException("The output quality must be " +
-					"between 0.0f and 1.0f, or Float.NaN to use the default " +
-					"compression quality of codec being used.");
-		}
-		
-		this.outputQuality = outputQuality;
-		this.imageType = imageType;
-		
-		this.filters = filters == null ? 
-				Collections.<ImageFilter>emptyList() : filters;
-		
-		if (resizer == null)
-		{
-			throw new IllegalArgumentException("Resizer cannot be null");
-		}
-		this.resizer = resizer;
+		validateScalingFactor();
 	}
 	
 	
