@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
@@ -699,6 +700,27 @@ public class FileImageSinkTest
 		}
 	}
 
+	@Test
+	public void write_NoExtentionSpecified() throws IOException
+	{
+		// set up
+		File f = new File(TMPDIR, "tmp-" + Math.abs(new Random().nextLong()));
+		
+		// given
+		FileImageSink sink = new FileImageSink(f);
+		
+		// when
+		try
+		{
+			sink.write(new BufferedImageBuilder(100, 100).build());
+			fail();
+		}
+		catch (UnsupportedFormatException e)
+		{
+			// then
+		}
+	}
+	
 	@Test
 	public void write_SpecifiedExtensionIsPNG() throws IOException
 	{

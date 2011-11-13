@@ -425,6 +425,52 @@ public class ThumbnailsBuilderTest
 		assertEquals(120, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
 	}
+	
+	@Test
+	public void sizeWithScale() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.size(100, 100)
+				.scale(0.5)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scale cannot be set"));
+		}
+	}
+	
+	@Test
+	public void sizeWithScaleTwoArg() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+			.size(100, 100)
+			.scale(0.5, 0.5)
+			.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scale cannot be set"));
+		}
+	}
 
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
@@ -655,6 +701,535 @@ public class ThumbnailsBuilderTest
 		}
 	}
 	
+	@Test
+	public void scaleWithScaleTwoArg() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+			.scale(0.5f)
+			.scale(0.5, 0.5)
+			.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scale is already set"));
+		}
+	}
+	
+	@Test
+	public void scaleWithSize() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(0.5f)
+				.size(100, 100)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("size cannot be set"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgOnly() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.scale(0.6, 0.4)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(120, thumbnail.getWidth());
+		assertEquals(80, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void scaleTwoArgWithAspectRatioTrue() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(0.6, 0.4)
+				.keepAspectRatio(true)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor has already been specified"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgWithAspectRatioFalse() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(0.6, 0.4)
+				.keepAspectRatio(false)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor has already been specified"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgWithScaleOneArg() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(0.6, 0.4)
+				.scale(0.5)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scale is already set"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgWithScaleTwoArg() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(0.6, 0.4)
+				.scale(0.5, 0.5)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scale is already set"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgWithSize() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(0.6, 0.4)
+				.size(100, 100)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("size cannot be set"));
+		}
+	}
+	
+	@Test
+	public void scaleWithZeroFactor() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(0.0)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor is equal to or less than 0"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgWithValidAndZeroFactor() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(0.5, 0.0)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor is equal to or less than 0"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgWithZeroFactorAndValid() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(0.0, 0.5)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor is equal to or less than 0"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgWithZeroFactorAndZeroFactor() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(0.0, 0.0)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor is equal to or less than 0"));
+		}
+	}
+	
+	@Test
+	public void scaleWithNaN() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(Double.NaN)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor is not a number"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgWithValidAndNaN() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(0.5, Double.NaN)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor is not a number"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgWithNaNAndValid() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(Double.NaN, 0.5)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor is not a number"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgWithNaNAndNaN() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(Double.NaN, Double.NaN)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor is not a number"));
+		}
+	}
+	
+	@Test
+	public void scaleWithPositiveInfinity() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(Double.POSITIVE_INFINITY)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor cannot be infinity"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgWithValidAndPositiveInfinity() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(0.5, Double.POSITIVE_INFINITY)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor cannot be infinity"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgWithPositiveInfinityAndValid() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(Double.POSITIVE_INFINITY, 0.5)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor cannot be infinity"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgWithPositiveInfinityAndPositiveInfinity() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor cannot be infinity"));
+		}
+	}
+	
+	@Test
+	public void scaleWithNegativeInfinity() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(Double.NEGATIVE_INFINITY)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor is equal to or less than 0"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgWithValidAndNegativeInfinity() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(0.5, Double.NEGATIVE_INFINITY)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor is equal to or less than 0"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgWithNegativeInfinityAndValid() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(Double.NEGATIVE_INFINITY, 0.5)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor is equal to or less than 0"));
+		}
+	}
+	
+	@Test
+	public void scaleTwoArgWithNegativeInfinityAndNegativeInfinity() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		try
+		{
+			Thumbnails.of(img)
+				.scale(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+			assertTrue(e.getMessage().contains("scaling factor is equal to or less than 0"));
+		}
+	}
+	
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
@@ -703,6 +1278,26 @@ public class ThumbnailsBuilderTest
 			Thumbnails.of(img)
 				.scale(0.5f)
 				.keepAspectRatio(false)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			assertTrue(e.getMessage().contains("scaling factor has already been specified"));
+		}
+	}
+	
+	@Test
+	public void keepAspectRatioAfterScaleTwoArg() throws IOException
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		try
+		{
+			Thumbnails.of(img)
+				.scale(0.6, 0.4)
+				.keepAspectRatio(true)
 				.asBufferedImage();
 			
 			fail();
