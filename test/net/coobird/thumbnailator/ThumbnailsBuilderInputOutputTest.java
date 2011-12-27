@@ -9082,6 +9082,48 @@ public class ThumbnailsBuilderInputOutputTest
 		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
 	}
 
+	@Test
+	public void useOriginalFormat() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File f = TestUtils.createTempFile(TMPDIR, "png");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.useOriginalFormat()
+			.toFile(destFile);
+		
+		// then
+		File actualDestFile = new File(destFile.getParent(), destFile.getName() + ".png");
+		assertTrue(actualDestFile.exists());
+		assertEquals("png", TestUtils.getFormatName(new FileInputStream(actualDestFile)));
+	}
+	
+	@Test
+	public void determineOutputFormat() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File f = TestUtils.createTempFile(TMPDIR, "png");
+		TestUtils.copyFile(sourceFile, f);
+		
+		File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
+		
+		// when
+		Thumbnails.of(f)
+			.size(10, 10)
+			.determineOutputFormat()
+			.toFile(destFile);
+		
+		// then
+		assertTrue(destFile.exists());
+		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+	}
 	
 	private File makeRenamedFile(File f, Rename rename)
 	{
