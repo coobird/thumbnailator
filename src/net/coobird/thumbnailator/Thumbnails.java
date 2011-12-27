@@ -1548,6 +1548,42 @@ public final class Thumbnails
 			return this;
 		}
 		
+		/**
+		 * Sets the compression format to use the same format as the original
+		 * image.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @return				Reference to this object.
+		 */
+		public Builder<T> useOriginalFormat()
+		{
+			updateStatus(Properties.OUTPUT_FORMAT, Status.ALREADY_SET);
+			outputFormat = ThumbnailParameter.ORIGINAL_FORMAT;
+			return this;
+		}
+		
+		/**
+		 * Indicates that the output format should be determined from the
+		 * available information when writing the thumbnail image.
+		 * <p>
+		 * For example, calling this method will cause the output format to be
+		 * determined from the file extension if thumbnails are written to
+		 * files.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @return				Reference to this object.
+		 */
+		public Builder<T> determineOutputFormat()
+		{
+			updateStatus(Properties.OUTPUT_FORMAT, Status.ALREADY_SET);
+			outputFormat = ThumbnailParameter.DETERMINE_FORMAT;
+			return this;
+		}
+		
 		private boolean isOutputFormatNotSet()
 		{
 			return outputFormat == null || ThumbnailParameter.DETERMINE_FORMAT.equals(outputFormat);
