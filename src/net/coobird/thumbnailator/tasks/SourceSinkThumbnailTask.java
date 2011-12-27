@@ -11,6 +11,11 @@ import net.coobird.thumbnailator.tasks.io.ImageSource;
  * A {@link ThumbnailTask} which holds an {@link ImageSource} from which the
  * image is read or retrieved, and an {@link ImageSink} to which the thumbnail
  * is stored or written.
+ * <p>
+ * This class will take care of handing off information from the 
+ * {@link ImageSource} to the {@link ImageSink}. For example, the output format
+ * that should be used by the {@link ImageSink} will be handed off if the 
+ * {@link ThumbnailParameter#ORIGINAL_FORMAT} parameter is set.
  * 
  * @author coobird
  *
@@ -77,16 +82,23 @@ public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D>
 	@Override
 	public void write(BufferedImage img) throws IOException
 	{
-		String formatName;
-		if (param.getOutputFormat() == ThumbnailParameter.ORIGINAL_FORMAT)
+		String paramOutputFormat = param.getOutputFormat();
+		String formatName = null;
+		
+		if (ThumbnailParameter.DETERMINE_FORMAT.equals(paramOutputFormat))
+		{
+			paramOutputFormat = destination.preferredOutputFormatName();
+		}
+		
+		if (paramOutputFormat == ThumbnailParameter.ORIGINAL_FORMAT)
 		{
 			formatName = inputFormatName;
 		}
 		else
 		{
-			formatName = param.getOutputFormat();
+			formatName = paramOutputFormat;
 		}
-		
+
 		destination.setOutputFormatName(formatName);
 		destination.write(img);
 	}

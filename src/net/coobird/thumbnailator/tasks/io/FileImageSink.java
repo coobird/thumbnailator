@@ -205,7 +205,32 @@ public class FileImageSink extends AbstractImageSink<File>
 		
 		return null;
 	}
+	
+	@Override
+	public String preferredOutputFormatName()
+	{
+		String fileExtension = getExtension(destinationFile); 
 
+		if (fileExtension != null)
+		{
+			Iterator<ImageReader> rIter = ImageIO.getImageReadersBySuffix(fileExtension);
+			
+			if (rIter.hasNext())
+			{
+				try
+				{
+					return rIter.next().getFormatName();
+				}
+				catch (IOException e)
+				{
+					return ThumbnailParameter.ORIGINAL_FORMAT;
+				}
+			}
+		}
+		
+		return outputFormat;
+	}
+	
 	/**
 	 * Writes the resulting image to a file.
 	 * 
