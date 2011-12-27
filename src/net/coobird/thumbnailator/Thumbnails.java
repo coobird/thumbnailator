@@ -827,7 +827,7 @@ public final class Thumbnails
 		private int imageType = IMAGE_TYPE_UNSPECIFIED;
 		private boolean keepAspectRatio = true;
 		
-		private String outputFormat = ThumbnailParameter.ORIGINAL_FORMAT;
+		private String outputFormat = ThumbnailParameter.DETERMINE_FORMAT;
 		private String outputFormatType = ThumbnailParameter.DEFAULT_FORMAT_TYPE;
 		private float outputQuality = ThumbnailParameter.DEFAULT_QUALITY;
 		
@@ -1612,6 +1612,47 @@ public final class Thumbnails
 		}
 		
 		/**
+		 * Sets the compression format to use the same format as the original
+		 * image.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @return				Reference to this object.
+		 */
+		public Builder<T> useOriginalFormat()
+		{
+			updateStatus(Properties.OUTPUT_FORMAT, Status.ALREADY_SET);
+			outputFormat = ThumbnailParameter.ORIGINAL_FORMAT;
+			return this;
+		}
+		
+		/**
+		 * Indicates that the output format should be determined from the
+		 * available information when writing the thumbnail image.
+		 * <p>
+		 * For example, calling this method will cause the output format to be
+		 * determined from the file extension if thumbnails are written to
+		 * files.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @return				Reference to this object.
+		 */
+		public Builder<T> determineOutputFormat()
+		{
+			updateStatus(Properties.OUTPUT_FORMAT, Status.ALREADY_SET);
+			outputFormat = ThumbnailParameter.DETERMINE_FORMAT;
+			return this;
+		}
+		
+		private boolean isOutputFormatNotSet()
+		{
+			return outputFormat == null || ThumbnailParameter.DETERMINE_FORMAT.equals(outputFormat);
+		}
+		
+		/**
 		 * Sets the compression format type of the thumbnail to write.
 		 * <p>
 		 * If the default type for the compression codec should be used, a 
@@ -1646,7 +1687,7 @@ public final class Thumbnails
 			 * were JPEG and PNG, then we'd have a problem. 
 			 */
 			if (formatType != ThumbnailParameter.DEFAULT_FORMAT_TYPE 
-					&& outputFormat == ThumbnailParameter.ORIGINAL_FORMAT)
+					&& isOutputFormatNotSet())
 			{
 				throw new IllegalArgumentException(
 						"Cannot set the format type if a specific output " +
@@ -2430,7 +2471,7 @@ watermark(Positions.CENTER, image, opacity);
 			 */
 			if (source instanceof BufferedImageSource)
 			{
-				if (outputFormat == ThumbnailParameter.ORIGINAL_FORMAT)
+				if (isOutputFormatNotSet())
 				{
 					throw new IllegalStateException(
 							"Output format not specified."
@@ -2480,7 +2521,7 @@ watermark(Positions.CENTER, image, opacity);
 				 */
 				if (source instanceof BufferedImageSource)
 				{
-					if (outputFormat == ThumbnailParameter.ORIGINAL_FORMAT)
+					if (isOutputFormatNotSet())
 					{
 						throw new IllegalStateException(
 								"Output format not specified."

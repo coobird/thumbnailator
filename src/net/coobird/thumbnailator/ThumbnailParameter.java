@@ -24,6 +24,17 @@ public class ThumbnailParameter
 	 * be the same as the format of the original image.
 	 */
 	public static final String ORIGINAL_FORMAT = null;
+
+	// TODO add note about DETERMINE_FORMAT to methods and constructors.
+	/**
+	 * A constant used to denote that the output format of the thumbnail should
+	 * be the determined by information provided for the output format, such
+	 * as the file name of the thumbnail.
+	 * <p>
+	 * If a suitable output format cannot be determined, then the implementation
+	 * should behave as if {@link #ORIGINAL_FORMAT} was specified.
+	 */
+	public static final String DETERMINE_FORMAT = "\0";
 	
 	/**
 	 * A constant used to denote that the output format type of the thumbnail
