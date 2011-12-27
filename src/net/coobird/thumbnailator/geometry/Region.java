@@ -9,7 +9,7 @@ import java.awt.Rectangle;
  * {@link Dimension} object.
  * 
  * @author coobird
- * @since 0.3.4
+ * @since	0.3.4
  *
  */
 public final class Region
