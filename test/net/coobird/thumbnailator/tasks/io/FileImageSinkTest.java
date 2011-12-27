@@ -2199,4 +2199,121 @@ public class FileImageSinkTest
 		// clean ups
 		f.delete();
 	}
+	
+	@Test
+	public void preferredOutputFormatName_FileIsjpg()
+	{
+		// given
+		File f = new File(TMPDIR, "tmp.jpg");
+		
+		// when
+		FileImageSink sink = new FileImageSink(f);
+		
+		// then
+		assertEquals("JPEG", sink.preferredOutputFormatName());
+	}
+	
+	@Test
+	public void preferredOutputFormatName_FileIsjpeg()
+	{
+		// given
+		File f = new File(TMPDIR, "tmp.jpeg");
+		
+		// when
+		FileImageSink sink = new FileImageSink(f);
+		
+		// then
+		assertEquals("JPEG", sink.preferredOutputFormatName());
+	}
+	
+	@Test
+	public void preferredOutputFormatName_FileIsJpg()
+	{
+		// given
+		File f = new File(TMPDIR, "tmp.Jpg");
+		
+		// when
+		FileImageSink sink = new FileImageSink(f);
+		
+		// then
+		assertEquals("JPEG", sink.preferredOutputFormatName());
+	}
+	
+	@Test
+	public void preferredOutputFormatName_FileIsJpeg()
+	{
+		// given
+		File f = new File(TMPDIR, "tmp.Jpeg");
+		
+		// when
+		FileImageSink sink = new FileImageSink(f);
+		
+		// then
+		assertEquals("JPEG", sink.preferredOutputFormatName());
+	}
+	
+	@Test
+	public void preferredOutputFormatName_FileIsJPG()
+	{
+		// given
+		File f = new File(TMPDIR, "tmp.JPG");
+		
+		// when
+		FileImageSink sink = new FileImageSink(f);
+		
+		// then
+		assertEquals("JPEG", sink.preferredOutputFormatName());
+	}
+	
+	@Test
+	public void preferredOutputFormatName_FileIsJPEG()
+	{
+		// given
+		File f = new File(TMPDIR, "tmp.JPEG");
+		
+		// when
+		FileImageSink sink = new FileImageSink(f);
+		
+		// then
+		assertEquals("JPEG", sink.preferredOutputFormatName());
+	}
+	
+	@Test
+	public void preferredOutputFormatName_FileIspng()
+	{
+		// given
+		File f = new File(TMPDIR, "tmp.png");
+		
+		// when
+		FileImageSink sink = new FileImageSink(f);
+		
+		// then
+		assertEquals("png", sink.preferredOutputFormatName());
+	}
+	
+	@Test
+	public void preferredOutputFormatName_FileIsPng()
+	{
+		// given
+		File f = new File(TMPDIR, "tmp.Png");
+		
+		// when
+		FileImageSink sink = new FileImageSink(f);
+		
+		// then
+		assertEquals("png", sink.preferredOutputFormatName());
+	}
+	
+	@Test
+	public void preferredOutputFormatName_FileIsPNG()
+	{
+		// given
+		File f = new File(TMPDIR, "tmp.PNG");
+		
+		// when
+		FileImageSink sink = new FileImageSink(f);
+		
+		// then
+		assertEquals("png", sink.preferredOutputFormatName());
+	}
 }

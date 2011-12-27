@@ -818,7 +818,7 @@ public final class Thumbnails
 		private int imageType = IMAGE_TYPE_UNSPECIFIED;
 		private boolean keepAspectRatio = true;
 		
-		private String outputFormat = ThumbnailParameter.ORIGINAL_FORMAT;
+		private String outputFormat = ThumbnailParameter.DETERMINE_FORMAT;
 		private String outputFormatType = ThumbnailParameter.DEFAULT_FORMAT_TYPE;
 		private float outputQuality = ThumbnailParameter.DEFAULT_QUALITY;
 		
@@ -1548,6 +1548,11 @@ public final class Thumbnails
 			return this;
 		}
 		
+		private boolean isOutputFormatNotSet()
+		{
+			return outputFormat == null || ThumbnailParameter.DETERMINE_FORMAT.equals(outputFormat);
+		}
+		
 		/**
 		 * Sets the compression format type of the thumbnail to write.
 		 * <p>
@@ -1583,7 +1588,7 @@ public final class Thumbnails
 			 * were JPEG and PNG, then we'd have a problem. 
 			 */
 			if (formatType != ThumbnailParameter.DEFAULT_FORMAT_TYPE 
-					&& outputFormat == ThumbnailParameter.ORIGINAL_FORMAT)
+					&& isOutputFormatNotSet())
 			{
 				throw new IllegalArgumentException(
 						"Cannot set the format type if a specific output " +
@@ -2377,7 +2382,7 @@ watermark(Positions.CENTER, image, opacity);
 			 */
 			if (source instanceof BufferedImageSource)
 			{
-				if (outputFormat == ThumbnailParameter.ORIGINAL_FORMAT)
+				if (isOutputFormatNotSet())
 				{
 					throw new IllegalStateException(
 							"Output format not specified."
@@ -2427,7 +2432,7 @@ watermark(Positions.CENTER, image, opacity);
 				 */
 				if (source instanceof BufferedImageSource)
 				{
-					if (outputFormat == ThumbnailParameter.ORIGINAL_FORMAT)
+					if (isOutputFormatNotSet())
 					{
 						throw new IllegalStateException(
 								"Output format not specified."

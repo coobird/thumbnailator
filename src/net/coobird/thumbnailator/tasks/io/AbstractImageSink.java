@@ -44,5 +44,15 @@ public abstract class AbstractImageSink<T> implements ImageSink<T>
 		{
 			throw new NullPointerException("Cannot write a null image.");
 		}
+		
+		if (ThumbnailParameter.DETERMINE_FORMAT.equals(outputFormat))
+		{
+			outputFormat = preferredOutputFormatName();
+		}
+	}
+	
+	public String preferredOutputFormatName()
+	{
+		return ThumbnailParameter.ORIGINAL_FORMAT;
 	}
 }

@@ -17,15 +17,80 @@ import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 import net.coobird.thumbnailator.tasks.io.BufferedImageSink;
 import net.coobird.thumbnailator.tasks.io.FileImageSource;
+import net.coobird.thumbnailator.tasks.io.ImageSink;
+import net.coobird.thumbnailator.tasks.io.ImageSource;
 import net.coobird.thumbnailator.tasks.io.InputStreamImageSource;
 import net.coobird.thumbnailator.tasks.io.OutputStreamImageSink;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 
 public class SourceSinkThumbnailTaskTest
 {
+	@SuppressWarnings("unchecked")
+	@Test
+	public void task_UsesPreferredFromDestination() throws Exception
+	{
+		// given
+		ThumbnailParameter param = 
+			new ThumbnailParameterBuilder()
+				.size(50, 50)
+				.format(ThumbnailParameter.DETERMINE_FORMAT)
+				.build();
+		
+		ImageSource source = mock(ImageSource.class);
+		when(source.read()).thenReturn(new BufferedImageBuilder(100, 100).build());
+		when(source.getInputFormatName()).thenReturn("42a");
+		
+		ImageSink destination = mock(ImageSink.class);
+		when(destination.preferredOutputFormatName()).thenReturn("42");
+		
+		// when
+		Thumbnailator.createThumbnail(
+				new SourceSinkThumbnailTask(param, source, destination)
+		);
+		
+		// then
+		verify(source).read();
+
+		verify(destination).preferredOutputFormatName();
+		verify(destination).setOutputFormatName("42");
+		verify(destination).write(any(BufferedImage.class));
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void task_UsesOriginalFormat() throws Exception
+	{
+		// given
+		ThumbnailParameter param = 
+			new ThumbnailParameterBuilder()
+				.size(50, 50)
+				.format(ThumbnailParameter.ORIGINAL_FORMAT)
+				.build();
+		
+		ImageSource source = mock(ImageSource.class);
+		when(source.read()).thenReturn(new BufferedImageBuilder(100, 100).build());
+		when(source.getInputFormatName()).thenReturn("42");
+		
+		ImageSink destination = mock(ImageSink.class);
+		when(destination.preferredOutputFormatName()).thenReturn("42a");
+		
+		// when
+		Thumbnailator.createThumbnail(
+				new SourceSinkThumbnailTask(param, source, destination)
+		);
+		
+		// then
+		verify(source).read();
+		
+		verify(destination, never()).preferredOutputFormatName();
+		verify(destination).setOutputFormatName("42");
+		verify(destination).write(any(BufferedImage.class));
+	}
+	
 	@Test
 	public void task_SizeOnly_InputStream_BufferedImage() throws IOException
 	{

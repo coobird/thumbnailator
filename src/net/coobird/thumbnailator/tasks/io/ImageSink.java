@@ -47,6 +47,15 @@ public interface ImageSink<T>
 	public void setThumbnailParameter(ThumbnailParameter param);
 	
 	/**
+	 * Returns the output format to use from information provided for the
+	 * output image. 
+	 * <p>
+	 * If the output format cannot be determined, then 
+	 * {@link ThumbnailParameter#ORIGINAL_FORMAT} should be returned.
+	 */
+	public String preferredOutputFormatName();
+	
+	/**
 	 * Returns the destination to which the thumbnail will be stored or 
 	 * written.
 	 * 
