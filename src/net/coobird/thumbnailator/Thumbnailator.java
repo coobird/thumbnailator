@@ -22,7 +22,6 @@ import net.coobird.thumbnailator.makers.ScaledThumbnailMaker;
 import net.coobird.thumbnailator.name.Rename;
 import net.coobird.thumbnailator.resizers.DefaultResizerFactory;
 import net.coobird.thumbnailator.resizers.Resizer;
-import net.coobird.thumbnailator.resizers.Resizers;
 import net.coobird.thumbnailator.tasks.FileThumbnailTask;
 import net.coobird.thumbnailator.tasks.StreamThumbnailTask;
 import net.coobird.thumbnailator.tasks.ThumbnailTask;
@@ -183,7 +182,6 @@ public final class Thumbnailator
 	 * the same image format as the original image will be used when writing
 	 * the thumbnail. 
 	 * 
-	 * 
 	 * @param inFile		The {@link File} from which image data is read.
 	 * @param outFile		The {@link File} to which thumbnail is written.
 	 * @param width			The width of the thumbnail.
@@ -261,7 +259,7 @@ public final class Thumbnailator
 					ThumbnailParameter.DEFAULT_QUALITY,
 					ThumbnailParameter.DEFAULT_IMAGE_TYPE,
 					null,
-					Resizers.PROGRESSIVE
+					DefaultResizerFactory.getInstance()
 			);
 		
 		Thumbnailator.createThumbnail(
@@ -401,7 +399,7 @@ public final class Thumbnailator
 					ThumbnailParameter.DEFAULT_QUALITY,
 					ThumbnailParameter.DEFAULT_IMAGE_TYPE,
 					null,
-					Resizers.PROGRESSIVE
+					DefaultResizerFactory.getInstance()
 			);
 		
 		Thumbnailator.createThumbnail(new StreamThumbnailTask(param, is, os));
