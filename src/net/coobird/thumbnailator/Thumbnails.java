@@ -1619,6 +1619,7 @@ public final class Thumbnails
 		 * {@link IllegalStateException} to be thrown.
 		 * 
 		 * @return				Reference to this object.
+		 * @since	0.4.0
 		 */
 		public Builder<T> useOriginalFormat()
 		{
@@ -1639,6 +1640,7 @@ public final class Thumbnails
 		 * {@link IllegalStateException} to be thrown.
 		 * 
 		 * @return				Reference to this object.
+		 * @since	0.4.0
 		 */
 		public Builder<T> determineOutputFormat()
 		{
