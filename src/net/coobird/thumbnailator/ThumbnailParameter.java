@@ -25,11 +25,10 @@ public class ThumbnailParameter
 	 */
 	public static final String ORIGINAL_FORMAT = null;
 
-	// TODO add note about DETERMINE_FORMAT to methods and constructors.
 	/**
 	 * A constant used to denote that the output format of the thumbnail should
-	 * be the determined by information provided for the output format, such
-	 * as the file name of the thumbnail.
+	 * be the determined from available information such as the file name of
+	 * the thumbnail.
 	 * <p>
 	 * If a suitable output format cannot be determined, then the implementation
 	 * should behave as if {@link #ORIGINAL_FORMAT} was specified.
@@ -99,6 +98,10 @@ public class ThumbnailParameter
 	 * <p>
 	 * A value of {@link ThumbnailParameter#ORIGINAL_FORMAT} indicates that the
 	 * image format of the original image should be used as the output format.
+	 * <p>
+	 * A value of {@link ThumbnailParameter#DETERMINE_FORMAT} indicates that the
+	 * output format of the thumbnail should be the determined from the
+	 * information available, such as the output file name of the thumbnail.
 	 */
 	private final String outputFormat;
 	
@@ -177,6 +180,12 @@ public class ThumbnailParameter
 	 * 							{@link ThumbnailParameter#ORIGINAL_FORMAT} 
 	 * 							should be provided if the same image format as
 	 * 							the original should	be used for the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DETERMINE_FORMAT} 
+	 * 							should be provided if the output format of the 
+	 * 							thumbnail should be the determined from the 
+	 * 							information available, such as the output file 
+	 * 							name of the thumbnail.
 	 * @param outputFormatType	A string indicating the compression type that
 	 * 							should be used when writing the thumbnail.
 	 * 							A value of 
@@ -320,6 +329,12 @@ public class ThumbnailParameter
 	 * 							{@link ThumbnailParameter#ORIGINAL_FORMAT} 
 	 * 							should be provided if the same image format as
 	 * 							the original should	be used for the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DETERMINE_FORMAT} 
+	 * 							should be provided if the output format of the 
+	 * 							thumbnail should be the determined from the 
+	 * 							information available, such as the output file 
+	 * 							name of the thumbnail.
 	 * @param outputFormatType	A string indicating the compression type that
 	 * 							should be used when writing the thumbnail.
 	 * 							A value of 
@@ -408,6 +423,12 @@ public class ThumbnailParameter
 	 * 							{@link ThumbnailParameter#ORIGINAL_FORMAT} 
 	 * 							should be provided if the same image format as
 	 * 							the original should	be used for the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DETERMINE_FORMAT} 
+	 * 							should be provided if the output format of the 
+	 * 							thumbnail should be the determined from the 
+	 * 							information available, such as the output file 
+	 * 							name of the thumbnail.
 	 * @param outputFormatType	A string indicating the compression type that
 	 * 							should be used when writing the thumbnail.
 	 * 							A value of 
@@ -493,6 +514,12 @@ public class ThumbnailParameter
 	 * 							{@link ThumbnailParameter#ORIGINAL_FORMAT} 
 	 * 							should be provided if the same image format as
 	 * 							the original should	be used for the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DETERMINE_FORMAT} 
+	 * 							should be provided if the output format of the 
+	 * 							thumbnail should be the determined from the 
+	 * 							information available, such as the output file 
+	 * 							name of the thumbnail.
 	 * @param outputFormatType	A string indicating the compression type that
 	 * 							should be used when writing the thumbnail.
 	 * 							A value of 
@@ -582,6 +609,12 @@ public class ThumbnailParameter
 	 * 							{@link ThumbnailParameter#ORIGINAL_FORMAT} 
 	 * 							should be provided if the same image format as
 	 * 							the original should	be used for the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DETERMINE_FORMAT} 
+	 * 							should be provided if the output format of the 
+	 * 							thumbnail should be the determined from the 
+	 * 							information available, such as the output file 
+	 * 							name of the thumbnail.
 	 * @param outputFormatType	A string indicating the compression type that
 	 * 							should be used when writing the thumbnail.
 	 * 							A value of 
@@ -730,6 +763,10 @@ public class ThumbnailParameter
 	 * If the output format is to use the same compression format as the
 	 * original image, this method will return
 	 * {@link ThumbnailParameter#ORIGINAL_FORMAT}.
+	 * <p>
+	 * If the output format should be determined from the information available
+	 * such as the file name of the thumbnail, then this method will return
+	 * {@link ThumbnailParameter#DETERMINE_FORMAT}.
 	 * 
 	 * @return 		The output format for the thumbnail.
 	 */
