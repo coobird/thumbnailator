@@ -22,6 +22,7 @@ import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.name.Rename;
 import net.coobird.thumbnailator.resizers.DefaultResizerFactory;
 import net.coobird.thumbnailator.resizers.Resizer;
+import net.coobird.thumbnailator.resizers.ResizerFactory;
 import net.coobird.thumbnailator.resizers.Resizers;
 import net.coobird.thumbnailator.resizers.configurations.AlphaInterpolation;
 import net.coobird.thumbnailator.resizers.configurations.Antialiasing;
@@ -3967,4 +3968,34 @@ public class ThumbnailsBuilderTest
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(25, thumbnail.getHeight());
 	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The resizerFactory method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The specified {@link ResizerFactory} is called when resizing.</li>
+	 * </ol>
+	 */
+	@Test
+	public void resizerFactoryCalledOnResize() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		ResizerFactory resizerFactory = mock(ResizerFactory.class);
+		when(
+				resizerFactory.getResizer(any(Dimension.class), any(Dimension.class))
+			).thenReturn(Resizers.NULL);
+		
+		// when
+		Thumbnails.of(img)
+			.resizerFactory(resizerFactory)
+			.size(50, 50)
+			.asBufferedImage();
+		
+		// then
+		verify(resizerFactory).getResizer(new Dimension(200, 200), new Dimension(50, 50));
+	}	
 }
