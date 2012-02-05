@@ -98,6 +98,7 @@ public final class Thumbnailator
 				new FixedSizeThumbnailMaker()
 					.size(destinationWidth, destinationHeight)
 					.keepAspectRatio(param.isKeepAspectRatio())
+					.fitWithinDimensions(param.fitWithinDimenions())
 					.imageType(imageType)
 					.resizerFactory(param.getResizerFactory())
 					.make(sourceImage);
@@ -166,7 +167,7 @@ public final class Thumbnailator
 					.getResizer(imgSize, thumbnailSize);
 		
 		BufferedImage thumbnailImage = 
-			new FixedSizeThumbnailMaker(width, height, true)
+			new FixedSizeThumbnailMaker(width, height, true, true)
 					.resizer(resizer)
 					.make(img); 
 		
@@ -259,7 +260,8 @@ public final class Thumbnailator
 					ThumbnailParameter.DEFAULT_QUALITY,
 					ThumbnailParameter.DEFAULT_IMAGE_TYPE,
 					null,
-					DefaultResizerFactory.getInstance()
+					DefaultResizerFactory.getInstance(),
+					true
 			);
 		
 		Thumbnailator.createThumbnail(
@@ -399,7 +401,8 @@ public final class Thumbnailator
 					ThumbnailParameter.DEFAULT_QUALITY,
 					ThumbnailParameter.DEFAULT_IMAGE_TYPE,
 					null,
-					DefaultResizerFactory.getInstance()
+					DefaultResizerFactory.getInstance(),
+					true
 			);
 		
 		Thumbnailator.createThumbnail(new StreamThumbnailTask(param, is, os));

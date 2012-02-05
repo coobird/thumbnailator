@@ -155,6 +155,15 @@ public class ThumbnailParameter
 	private final Region sourceRegion;
 	
 	/**
+	 * Whether or not to fit the thumbnail within the specified dimensions.
+	 * <p>
+	 * If {@code true} is specified, then the thumbnail will be sized to fit
+	 * within the specified dimensions, if the thumbnail is going to exceed
+	 * those dimensions.
+	 */
+	private final boolean fitWithinDimensions;
+	
+	/**
 	 * Private constructor which sets all the required fields, and performs
 	 * validation of the given arguments.
 	 * <p>
@@ -217,7 +226,13 @@ public class ThumbnailParameter
 	 * @param resizerFactory	The {@link ResizerFactory} for obtaining a 
 	 * 							{@link Resizer} that is to be used when 
 	 * 							performing an image resizing operation.
-
+	 * @param fitWithinDimensions	Whether or not to fit the thumbnail within 
+	 * 								the specified dimensions.
+	 * 								<p>
+	 * 								If {@code true} is specified, then the 
+	 * 								thumbnail will be sized to fit within the 
+	 * 								specified dimensions, if the thumbnail is 
+	 * 								going to exceed those dimensions.
 	 * 
 	 * @throws IllegalArgumentException 	If the scaling factor is not a
 	 * 										rational number or is less than or
@@ -235,7 +250,8 @@ public class ThumbnailParameter
 			float outputQuality,
 			int imageType,
 			List<ImageFilter> filters,
-			ResizerFactory resizerFactory
+			ResizerFactory resizerFactory,
+			boolean fitWithinDimensions
 	)
 	{
 		// The following 2 fields are set by the public constructors.
@@ -275,6 +291,7 @@ public class ThumbnailParameter
 		}
 		
 		this.resizerFactory = resizerFactory;
+		this.fitWithinDimensions = fitWithinDimensions;
 	}
 	
 	/**
@@ -365,11 +382,18 @@ public class ThumbnailParameter
 	 * 							image has been resized.
 	 * @param resizer			The {@link Resizer} to use when performing the
 	 * 							resizing operation to create a thumbnail.
-	 * 
+	 * @param fitWithinDimensions	Whether or not to fit the thumbnail within 
+	 * 								the specified dimensions.
+	 * 								<p>
+	 * 								If {@code true} is specified, then the 
+	 * 								thumbnail will be sized to fit within the 
+	 * 								specified dimensions, if the thumbnail is 
+	 * 								going to exceed those dimensions.
+	 *  
 	 * @throws IllegalArgumentException 	If size is {@code null} or if the 
 	 * 										dimensions are negative, or if the 
 	 * 										{@link Resizer} is null.
-	 * @since	0.3.4
+	 * @since	0.4.0
 	 */
 	public ThumbnailParameter(
 			Dimension thumbnailSize,
@@ -380,7 +404,8 @@ public class ThumbnailParameter
 			float outputQuality,
 			int imageType,
 			List<ImageFilter> filters,
-			Resizer resizer
+			Resizer resizer,
+			boolean fitWithinDimensions
 	)
 	{
 		this(
@@ -394,7 +419,8 @@ public class ThumbnailParameter
 				outputQuality,
 				imageType,
 				filters,
-				new FixedResizerFactory(resizer)
+				new FixedResizerFactory(resizer),
+				fitWithinDimensions
 		);
 		
 		validateThumbnailSize();
@@ -459,12 +485,19 @@ public class ThumbnailParameter
 	 * 							image has been resized.
 	 * @param resizer			The {@link Resizer} to use when performing the
 	 * 							resizing operation to create a thumbnail.
+	 * @param fitWithinDimensions	Whether or not to fit the thumbnail within 
+	 * 								the specified dimensions.
+	 * 								<p>
+	 * 								If {@code true} is specified, then the 
+	 * 								thumbnail will be sized to fit within the 
+	 * 								specified dimensions, if the thumbnail is 
+	 * 								going to exceed those dimensions.
 	 * 
 	 * @throws IllegalArgumentException 	If the scaling factor is not a
 	 * 										rational number or is less than or
 	 * 										equal to 0, or if the 
 	 * 										{@link Resizer} is null. 
-	 * @since	0.3.10
+	 * @since	0.4.0
 	 */
 	public ThumbnailParameter(
 			double widthScalingFactor,
@@ -476,7 +509,8 @@ public class ThumbnailParameter
 			float outputQuality,
 			int imageType,
 			List<ImageFilter> filters,
-			Resizer resizer
+			Resizer resizer,
+			boolean fitWithinDimensions
 	)
 	{
 		this(
@@ -490,7 +524,8 @@ public class ThumbnailParameter
 				outputQuality,
 				imageType,
 				filters,
-				new FixedResizerFactory(resizer)
+				new FixedResizerFactory(resizer),
+				fitWithinDimensions
 		);
 		
 		validateScalingFactor();
@@ -551,6 +586,13 @@ public class ThumbnailParameter
 	 * @param resizerFactory	The {@link ResizerFactory} for obtaining a 
 	 * 							{@link Resizer} that is to be used when 
 	 * 							performing an image resizing operation.
+	 * @param fitWithinDimensions	Whether or not to fit the thumbnail within 
+	 * 								the specified dimensions.
+	 * 								<p>
+	 * 								If {@code true} is specified, then the 
+	 * 								thumbnail will be sized to fit within the 
+	 * 								specified dimensions, if the thumbnail is 
+	 * 								going to exceed those dimensions.
 	 * 
 	 * @throws IllegalArgumentException 	If size is {@code null} or if the 
 	 * 										dimensions are negative, or if the 
@@ -566,7 +608,8 @@ public class ThumbnailParameter
 			float outputQuality,
 			int imageType,
 			List<ImageFilter> filters,
-			ResizerFactory resizerFactory
+			ResizerFactory resizerFactory,
+			boolean fitWithinDimensions
 	)
 	{
 		this(
@@ -580,7 +623,8 @@ public class ThumbnailParameter
 				outputQuality,
 				imageType,
 				filters,
-				resizerFactory
+				resizerFactory,
+				fitWithinDimensions
 		);
 		
 		validateThumbnailSize();
@@ -646,7 +690,13 @@ public class ThumbnailParameter
 	 * @param resizerFactory	The {@link ResizerFactory} for obtaining a 
 	 * 							{@link Resizer} that is to be used when 
 	 * 							performing an image resizing operation.
-
+	 * @param fitWithinDimensions	Whether or not to fit the thumbnail within 
+	 * 								the specified dimensions.
+	 * 								<p>
+	 * 								If {@code true} is specified, then the 
+	 * 								thumbnail will be sized to fit within the 
+	 * 								specified dimensions, if the thumbnail is 
+	 * 								going to exceed those dimensions.
 	 * 
 	 * @throws IllegalArgumentException 	If the scaling factor is not a
 	 * 										rational number or is less than or
@@ -664,7 +714,8 @@ public class ThumbnailParameter
 			float outputQuality,
 			int imageType,
 			List<ImageFilter> filters,
-			ResizerFactory resizerFactory
+			ResizerFactory resizerFactory,
+			boolean fitWithinDimensions
 	)
 	{
 		this(
@@ -678,7 +729,8 @@ public class ThumbnailParameter
 				outputQuality,
 				imageType,
 				filters,
-				resizerFactory
+				resizerFactory,
+				fitWithinDimensions
 		);
 		
 		validateScalingFactor();
@@ -869,5 +921,19 @@ public class ThumbnailParameter
 	public Region getSourceRegion()
 	{
 		return sourceRegion;
+	}
+	
+	/**
+	 * Returns whether or not to fit the thumbnail within the specified 
+	 * dimensions.
+	 * 
+	 * @return		{@code true} is returned when the thumbnail should be sized
+	 * 				to fit within the specified dimensions, if the thumbnail 
+	 * 				is going to exceed those dimensions.
+	 * @since	0.4.0
+	 */
+	public boolean fitWithinDimenions()
+	{
+		return fitWithinDimensions;
 	}
 }

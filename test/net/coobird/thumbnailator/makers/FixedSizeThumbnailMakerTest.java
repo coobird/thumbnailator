@@ -33,6 +33,7 @@ public class FixedSizeThumbnailMakerTest
 	 * <ol>
 	 * <li>It is initialized with the no-args constructor</li>
 	 * <li>the keepAspectRatio method is not called</li>
+	 * <li>the fitWithinDimensions method is not called</li>
 	 * <li>And finally the make method is called</li>
 	 * </ol>
 	 * and the expected outcome is,
@@ -55,6 +56,7 @@ public class FixedSizeThumbnailMakerTest
 	 * <ol>
 	 * <li>It is initialized with the two argument constructor</li>
 	 * <li>the keepAspectRatio method is not called</li>
+	 * <li>the fitWithinDimensions method is not called</li>
 	 * <li>And finally the make method is called</li>
 	 * </ol>
 	 * and the expected outcome is,
@@ -77,6 +79,7 @@ public class FixedSizeThumbnailMakerTest
 	 * <ol>
 	 * <li>It is initialized with the no argument constructor</li>
 	 * <li>The keepAspectRatio method is called with true</li>
+	 * <li>the fitWithinDimensions method is not called</li>
 	 * <li>And finally the make method is called</li>
 	 * </ol>
 	 * and the expected outcome is,
@@ -93,8 +96,36 @@ public class FixedSizeThumbnailMakerTest
 		new FixedSizeThumbnailMaker()
 				.keepAspectRatio(true)
 				.make(img);
+		
+		fail();
 	}
 
+	/**
+	 * Test for the {@link FixedSizeThumbnailMaker} class where,
+	 * <ol>
+	 * <li>It is initialized with the two argument constructor</li>
+	 * <li>The keepAspectRatio method is called with true</li>
+	 * <li>the fitWithinDimensions method is not called</li>
+	 * <li>And finally the make method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException occurs, due to not specifying the
+	 * dimensions of the thumbnail.</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void uninitializedTwoArgConstructorAndAspectRatioSpecified()
+	{
+		BufferedImage img = makeTestImage200x200();
+		
+		new FixedSizeThumbnailMaker(100, 100)
+				.keepAspectRatio(true)
+				.make(img);
+		
+		fail();
+	}
+	
 	/**
 	 * Test for the {@link FixedSizeThumbnailMaker} class where,
 	 * <ol>
@@ -109,15 +140,85 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test
-	public void twoArgConstructorAndAspectRatioSpecified()
+	public void twoArgConstructorAndAspectRatioAndFitWithinDimensionsSpecified()
 	{
 		BufferedImage img = makeTestImage200x200();
 		
 		BufferedImage thumbnail = new FixedSizeThumbnailMaker(100, 100)
 				.keepAspectRatio(true)
+				.fitWithinDimensions(true)
 				.make(img);
 		
 		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(BufferedImage.TYPE_INT_ARGB, thumbnail.getType());
+	}
+	
+	@Test
+	public void threeArgumentConstructorThenFitWithinDimenions()
+	{
+		// given
+		BufferedImage img = makeTestImage200x200();
+		
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(100, 100, true)
+				.fitWithinDimensions(true)
+				.make(img);
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(BufferedImage.TYPE_INT_ARGB, thumbnail.getType());
+	}
+	
+	@Test
+	public void fourArgumentConstructor()
+	{
+		// given
+		BufferedImage img = makeTestImage200x200();
+		
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(100, 100, true, true)
+				.make(img);
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(BufferedImage.TYPE_INT_ARGB, thumbnail.getType());
+	}
+	
+	@Test
+	public void keepAspectRatioFalseAndFitWithinDimensionsTrueAllowed()
+	{
+		// given
+		BufferedImage img = makeTestImage200x200();
+		
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(50, 100)
+				.keepAspectRatio(false)
+				.fitWithinDimensions(true)
+				.make(img);
+		
+		// then
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(BufferedImage.TYPE_INT_ARGB, thumbnail.getType());
+	}
+	
+	@Test
+	public void keepAspectRatioFalseAndFitWithinDimensionsFalseAllowed()
+	{
+		// given
+		BufferedImage img = makeTestImage200x200();
+		
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(50, 100)
+				.keepAspectRatio(false)
+				.fitWithinDimensions(false)
+				.make(img);
+		
+		// then
+		assertEquals(50, thumbnail.getWidth());
 		assertEquals(100, thumbnail.getHeight());
 		assertEquals(BufferedImage.TYPE_INT_ARGB, thumbnail.getType());
 	}
@@ -144,6 +245,7 @@ public class FixedSizeThumbnailMakerTest
 		
 		BufferedImage thumbnail = new FixedSizeThumbnailMaker(100, 50)
 				.keepAspectRatio(true)
+				.fitWithinDimensions(true)
 				.make(img);
 		
 		assertEquals(50, thumbnail.getWidth());
@@ -172,8 +274,9 @@ public class FixedSizeThumbnailMakerTest
 		BufferedImage img = makeTestImage200x200();
 		
 		BufferedImage thumbnail = new FixedSizeThumbnailMaker(50, 100)
-			.keepAspectRatio(true)
-			.make(img);
+				.keepAspectRatio(true)
+				.fitWithinDimensions(true)
+				.make(img);
 		
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
@@ -200,8 +303,9 @@ public class FixedSizeThumbnailMakerTest
 		BufferedImage img = makeTestImage200x200();
 		
 		BufferedImage thumbnail = new FixedSizeThumbnailMaker(100, 50)
-			.keepAspectRatio(false)
-			.make(img);
+				.keepAspectRatio(false)
+				.fitWithinDimensions(true)
+				.make(img);
 		
 		assertEquals(100, thumbnail.getWidth());
 		assertEquals(50, thumbnail.getHeight());
@@ -228,9 +332,82 @@ public class FixedSizeThumbnailMakerTest
 		BufferedImage img = makeTestImage200x200();
 		
 		BufferedImage thumbnail = new FixedSizeThumbnailMaker(50, 100)
-			.keepAspectRatio(false)
-			.make(img);
+				.keepAspectRatio(false)
+				.fitWithinDimensions(true)
+				.make(img);
 		
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(BufferedImage.TYPE_INT_ARGB, thumbnail.getType());
+	}
+	
+	@Test
+	public void keepAspectRatioAndNoFitWithinWithOffRatioTargetSizeForVertical()
+	{
+		// given
+		BufferedImage img = makeTestImage200x200();
+		
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(100, 50)
+				.keepAspectRatio(true)
+				.fitWithinDimensions(false)
+				.make(img);
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(BufferedImage.TYPE_INT_ARGB, thumbnail.getType());
+	}
+	
+	@Test
+	public void keepAspectRatioAndNoFitWithinWithOffRatioTargetSizeForHorizontal()
+	{
+		// given
+		BufferedImage img = makeTestImage200x200();
+		
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(50, 100)
+				.keepAspectRatio(true)
+				.fitWithinDimensions(false)
+				.make(img);
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(BufferedImage.TYPE_INT_ARGB, thumbnail.getType());
+	}
+	
+	@Test
+	public void noKeepAspectRatioAndNoFitWithinWithOffRatioTargetSizeForVertical()
+	{
+		// given
+		BufferedImage img = makeTestImage200x200();
+		
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(100, 50)
+				.keepAspectRatio(false)
+				.fitWithinDimensions(false)
+				.make(img);
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+		assertEquals(BufferedImage.TYPE_INT_ARGB, thumbnail.getType());
+	}
+	
+	@Test
+	public void noKeepAspectRatioAndNoFitWithinWithOffRatioTargetSizeForHorizontal()
+	{
+		// given
+		BufferedImage img = makeTestImage200x200();
+		
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(50, 100)
+				.keepAspectRatio(false)
+				.fitWithinDimensions(false)
+				.make(img);
+		
+		// then
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(100, thumbnail.getHeight());
 		assertEquals(BufferedImage.TYPE_INT_ARGB, thumbnail.getType());
@@ -251,12 +428,12 @@ public class FixedSizeThumbnailMakerTest
 	@Test(expected=IllegalStateException.class)
 	public void twoArgConstructorThenSize()
 	{
-		BufferedImage img = makeTestImage200x200();
-		
 		new FixedSizeThumbnailMaker(50, 100)
-			.size(50, 100)
-			.make(img);
+				.size(50, 100);
+		
+		fail();
 	}
+	
 	/**
 	 * Test for the {@link FixedSizeThumbnailMaker} class where,
 	 * <ol>
@@ -270,13 +447,96 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
+	public void threeArgConstructorThenKeepAspectRatio()
+	{
+		new FixedSizeThumbnailMaker(50, 100, true)
+				.keepAspectRatio(true);
+		
+		fail();
+	}
+	
+	/**
+	 * Test for the {@link FixedSizeThumbnailMaker} class where,
+	 * <ol>
+	 * <li>It is initialized with the three argument constructor</li>
+	 * <li>The size method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown because the size has
+	 * already been set.</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
 	public void threeArgConstructorThenSize()
 	{
-		BufferedImage img = makeTestImage200x200();
-		
 		new FixedSizeThumbnailMaker(50, 100, true)
-			.keepAspectRatio(true)
-			.make(img);
+				.size(100,100);
+		
+		fail();
+	}
+	
+	/**
+	 * Test for the {@link FixedSizeThumbnailMaker} class where,
+	 * <ol>
+	 * <li>It is initialized with the four argument constructor</li>
+	 * <li>The size method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown because the size has
+	 * already been set.</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void fourArgConstructorThenSize()
+	{
+		new FixedSizeThumbnailMaker(50, 100, true, true)
+				.size(100, 100);
+		
+		fail();
+	}
+	
+	/**
+	 * Test for the {@link FixedSizeThumbnailMaker} class where,
+	 * <ol>
+	 * <li>It is initialized with the four argument constructor</li>
+	 * <li>The size method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown because the keepAspectRatio has
+	 * already been set.</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void fourArgConstructorThenKeepAspectRatio()
+	{
+		new FixedSizeThumbnailMaker(50, 100, true, true)
+				.keepAspectRatio(true);
+		
+		fail();
+	}
+	
+	/**
+	 * Test for the {@link FixedSizeThumbnailMaker} class where,
+	 * <ol>
+	 * <li>It is initialized with the four argument constructor</li>
+	 * <li>The size method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown because the fitWithinDimensions 
+	 * has already been set.</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void fourArgConstructorThenFitWithinDimensions()
+	{
+		new FixedSizeThumbnailMaker(50, 100, true, true)
+				.fitWithinDimensions(true);
+		
+		fail();
 	}
 	
 	/**
@@ -302,6 +562,7 @@ public class FixedSizeThumbnailMakerTest
 		// when
 		new FixedSizeThumbnailMaker(100, 100)
 				.keepAspectRatio(true)
+				.fitWithinDimensions(true)
 				.resizerFactory(resizerFactory)
 				.make(img);
 		

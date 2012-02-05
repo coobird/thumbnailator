@@ -69,6 +69,7 @@ public final class ThumbnailParameterBuilder
 	private List<ImageFilter> filters = Collections.emptyList();
 	private ResizerFactory resizerFactory = DefaultResizerFactory.getInstance();
 	private Region sourceRegion = null;
+	private boolean fitWithinDimensions = true;
 	
 	/**
 	 * Creates an instance of a {@link ThumbnailParameterBuilder}.
@@ -310,6 +311,22 @@ public final class ThumbnailParameterBuilder
 		this.resizerFactory = resizerFactory;
 		return this;
 	}
+	
+	/**
+	 * Sets whether or not the thumbnail should fit within the specified 
+	 * dimensions.
+	 * 
+	 * @param fit		{@code true} if the thumbnail should be sized to fit 
+	 *					within the specified dimensions, if the thumbnail 
+	 * 					is going to exceed those dimensions.
+	 * @return			A reference to this object.
+	 * @since	0.4.0
+	 */
+	public ThumbnailParameterBuilder fitWithinDimensions(boolean fit)
+	{
+		this.fitWithinDimensions = fit;
+		return this;
+	}
 
 	/**
 	 * Returns a {@link ThumbnailParameter} from the parameters which are
@@ -338,7 +355,8 @@ public final class ThumbnailParameterBuilder
 					thumbnailQuality,
 					imageType,
 					filters,
-					resizerFactory
+					resizerFactory,
+					fitWithinDimensions
 			);
 			
 		}
@@ -353,7 +371,8 @@ public final class ThumbnailParameterBuilder
 					thumbnailQuality,
 					imageType,
 					filters,
-					resizerFactory
+					resizerFactory,
+					fitWithinDimensions
 			);
 		}
 		else
