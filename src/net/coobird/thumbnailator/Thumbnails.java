@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.coobird.thumbnailator.filters.Canvas;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.filters.Pipeline;
 import net.coobird.thumbnailator.filters.Rotation;
@@ -732,6 +733,7 @@ public final class Thumbnails
 			SOURCE_REGION("sourceRegion"),
 			RESIZER_FACTORY("resizerFactory"),
 			ALLOW_OVERWRITE("allowOverwrite"),
+			CROP("crop"),
 			;
 			
 			private final String name;
@@ -774,6 +776,7 @@ public final class Thumbnails
 			statusMap.put(Properties.RESIZER, Status.OPTIONAL);
 			statusMap.put(Properties.RESIZER_FACTORY, Status.OPTIONAL);
 			statusMap.put(Properties.ALLOW_OVERWRITE, Status.OPTIONAL);
+			statusMap.put(Properties.CROP, Status.OPTIONAL);
 		}
 
 		/**
@@ -840,6 +843,15 @@ public final class Thumbnails
 		private ResizerFactory resizerFactory = DefaultResizerFactory.getInstance();
 		
 		private boolean allowOverwrite = true;
+		
+		private boolean fitWithinDimenions = true;
+		
+		/**
+		 * This field should be set to the {@link Position} to be used for
+		 * cropping if cropping is enabled. If cropping is disabled, then
+		 * this field should be left {@code null}. 
+		 */
+		private Position croppingPosition = null;
 		
 		/**
 		 * The {@link ImageFilter}s that should be applied when creating the
@@ -1209,6 +1221,28 @@ public final class Thumbnails
 					new Coordinate(region.x, region.y),
 					new AbsoluteSize(region.getSize())
 			);
+		}
+		
+		/**
+		 * Specifies the source region from which the thumbnail is to be
+		 * created from.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @param region		A rectangular region which specifies the source
+		 * 						region to use when creating the thumbnail.
+		 * @throws NullPointerException		If the region is {@code null}.
+		 * @since 	0.4.0
+		 */
+		public Builder<T> crop(Position position)
+		{
+			updateStatus(Properties.CROP, Status.ALREADY_SET);
+			updateStatus(Properties.SCALE, Status.CANNOT_SET);
+
+			croppingPosition = position;
+			fitWithinDimenions = false;
+			return this;
 		}
 		
 		/**
@@ -1997,6 +2031,15 @@ watermark(Positions.CENTER, image, opacity);
 			{
 				imageTypeToUse = ThumbnailParameter.ORIGINAL_IMAGE_TYPE;
 			}
+
+			/*
+			 * croppingPosition being non-null means that a crop should
+			 * take place.
+			 */
+			if (croppingPosition != null)
+			{
+				filterPipeline.add(new Canvas(width, height, croppingPosition));
+			}
 			
 			if (Double.isNaN(scaleWidth))
 			{
@@ -2035,7 +2078,8 @@ watermark(Positions.CENTER, image, opacity);
 						outputQuality,
 						imageTypeToUse,
 						filterPipeline.getFilters(),
-						resizerFactory
+						resizerFactory,
+						fitWithinDimenions
 				);
 			}
 			else
@@ -2051,7 +2095,8 @@ watermark(Positions.CENTER, image, opacity);
 						outputQuality,
 						imageTypeToUse,
 						filterPipeline.getFilters(),
-						resizerFactory
+						resizerFactory,
+						fitWithinDimenions
 				);
 			}
 		}

@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.geometry.AbsoluteSize;
 import net.coobird.thumbnailator.geometry.Coordinate;
+import net.coobird.thumbnailator.geometry.Positions;
 import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.name.Rename;
 import net.coobird.thumbnailator.resizers.DefaultResizerFactory;
@@ -3997,5 +3998,176 @@ public class ThumbnailsBuilderTest
 		
 		// then
 		verify(resizerFactory).getResizer(new Dimension(200, 200), new Dimension(50, 50));
-	}	
+	}
+	
+	@Test
+	public void cropWithSizeBefore() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(100, 50)
+			.crop(Positions.CENTER)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void cropWithSizeAfter() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.crop(Positions.CENTER)
+			.size(100, 50)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void cropWithAspectRatioTrueBefore() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(100, 50)
+			.keepAspectRatio(true)
+			.crop(Positions.CENTER)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void cropWithAspectRatioTrueAfter() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.crop(Positions.CENTER)
+			.size(100, 50)
+			.keepAspectRatio(true)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void cropWithAspectRatioFalseBefore() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(100, 50)
+			.keepAspectRatio(false)
+			.crop(Positions.CENTER)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void cropWithAspectRatioFalseAfter() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.crop(Positions.CENTER)
+			.size(100, 50)
+			.keepAspectRatio(false)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void cropWithScaleBeforeShouldFail() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.scale(0.5)
+				.crop(Positions.CENTER)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void cropWithScaleAfterShouldFail() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.crop(Positions.CENTER)
+				.scale(0.5)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void cropTwice() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.crop(Positions.CENTER)
+				.crop(Positions.CENTER);
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+		}
+	}
 }
