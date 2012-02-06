@@ -233,4 +233,72 @@ public class CanvasTest
 		assertEquals(100, result2.getWidth());
 		assertEquals(100, result2.getHeight());
 	}
+	
+	@Test
+	public void usesBlackFillcolorForNonAlphaImages()
+	{
+		// given
+		BufferedImage originalImage = new BufferedImage(90, 100, BufferedImage.TYPE_INT_RGB);
+		ImageFilter filter = new Canvas(100, 100, Positions.CENTER);
+
+		// when
+		BufferedImage resultImage = filter.apply(originalImage);
+		
+		// then
+		assertEquals(100, resultImage.getWidth());
+		assertEquals(100, resultImage.getHeight());
+		assertEquals(Color.black.getRGB(), resultImage.getRGB(1, 50));
+		assertEquals(Color.black.getRGB(), resultImage.getRGB(99, 50));
+	}
+	
+	@Test
+	public void usesSpecifiedFillcolorForNonAlphaImages()
+	{
+		// given
+		BufferedImage originalImage = new BufferedImage(90, 100, BufferedImage.TYPE_INT_RGB);
+		ImageFilter filter = new Canvas(100, 100, Positions.CENTER, Color.blue);
+		
+		// when
+		BufferedImage resultImage = filter.apply(originalImage);
+		
+		// then
+		assertEquals(100, resultImage.getWidth());
+		assertEquals(100, resultImage.getHeight());
+		assertEquals(Color.blue.getRGB(), resultImage.getRGB(1, 50));
+		assertEquals(Color.blue.getRGB(), resultImage.getRGB(99, 50));
+	}
+	
+	@Test
+	public void noFillColorForAlphaImages()
+	{
+		// given
+		BufferedImage originalImage = new BufferedImage(90, 100, BufferedImage.TYPE_INT_ARGB);
+		ImageFilter filter = new Canvas(100, 100, Positions.CENTER);
+		
+		// when
+		BufferedImage resultImage = filter.apply(originalImage);
+		
+		// then
+		assertEquals(100, resultImage.getWidth());
+		assertEquals(100, resultImage.getHeight());
+		assertEquals(0, resultImage.getRGB(1, 50));
+		assertEquals(0, resultImage.getRGB(99, 50));
+	}
+	
+	@Test
+	public void usesSpecifiedFillColorForAlphaImages()
+	{
+		// given
+		BufferedImage originalImage = new BufferedImage(90, 100, BufferedImage.TYPE_INT_ARGB);
+		ImageFilter filter = new Canvas(100, 100, Positions.CENTER, Color.blue);
+		
+		// when
+		BufferedImage resultImage = filter.apply(originalImage);
+		
+		// then
+		assertEquals(100, resultImage.getWidth());
+		assertEquals(100, resultImage.getHeight());
+		assertEquals(Color.blue.getRGB(), resultImage.getRGB(1, 50));
+		assertEquals(Color.blue.getRGB(), resultImage.getRGB(99, 50));
+	}
 }
