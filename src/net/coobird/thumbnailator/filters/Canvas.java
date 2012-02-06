@@ -27,12 +27,12 @@ public class Canvas implements ImageFilter
 	/**
 	 * The width of the enclosing image.
 	 */
-	private int width;
+	private final int width;
 	
 	/**
 	 * The width of the enclosing image.
 	 */
-	private int height;
+	private final int height;
 	
 	/**
 	 * The positioning of the enclosed image. 
@@ -42,7 +42,7 @@ public class Canvas implements ImageFilter
 	/**
 	 * The fill color for the background.
 	 */
-	private Color fillColor;
+	private final Color fillColor;
 	
 	/**
 	 * Whether or not to crop the enclosed image if the enclosing image is
@@ -127,6 +127,9 @@ public class Canvas implements ImageFilter
 
 	public BufferedImage apply(BufferedImage img)
 	{
+		int widthToUse = width;
+		int heightToUse = height;
+		
 		/*
 		 * To prevent cropping when cropping is disabled, if the dimension of 
 		 * the enclosed image exceeds the dimension of the enclosing image, 
@@ -135,20 +138,20 @@ public class Canvas implements ImageFilter
 		 */
 		if (!crop && img.getWidth() > width)
 		{
-			width = img.getWidth();
+			widthToUse = img.getWidth();
 		}
 		if (!crop && img.getHeight() > height)
 		{
-			height = img.getHeight();
+			heightToUse = img.getHeight();
 		}
 		
 		Point p = position.calculate(
-				width, height, img.getWidth(), img.getHeight(),
+				widthToUse, heightToUse, img.getWidth(), img.getHeight(),
 				0, 0, 0, 0
 		);
 		
 		BufferedImage finalImage = 
-			new BufferedImage(width, height, img.getType());
+			new BufferedImage(widthToUse, heightToUse, img.getType());
 		
 		Graphics g = finalImage.getGraphics();
 		
@@ -158,7 +161,7 @@ public class Canvas implements ImageFilter
 		}
 		else if (fillColor != null) {
 			g.setColor(fillColor);
-			g.fillRect(0, 0, width, height);
+			g.fillRect(0, 0, widthToUse, heightToUse);
 		}
 		
 		g.drawImage(img, p.x, p.y, null);

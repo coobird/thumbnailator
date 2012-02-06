@@ -208,4 +208,29 @@ public class CanvasTest
 		assertEquals(100, resultImage.getWidth());
 		assertEquals(100, resultImage.getHeight());
 	}
+	
+	@Test
+	public void subsequentImagesCroppedCorrectly()
+	{
+		/*
+		 * Original code was changing the width/height settings when cropping
+		 * was disabled, and if the image was larger than the width/height
+		 * specified for the Canvas object.
+		 */
+		
+		// given
+		BufferedImage img1 = new BufferedImage(120, 120, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage img2 = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
+		ImageFilter filter = new Canvas(100, 100, Positions.CENTER, false);
+		
+		// when
+		BufferedImage result1 = filter.apply(img1);
+		BufferedImage result2 = filter.apply(img2);
+		
+		// then
+		assertEquals(120, result1.getWidth());
+		assertEquals(120, result1.getHeight());
+		assertEquals(100, result2.getWidth());
+		assertEquals(100, result2.getHeight());
+	}
 }
