@@ -11,7 +11,6 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -226,97 +225,6 @@ public final class Thumbnails
 		return Builder.ofBufferedImages(Arrays.asList(images));
 	}
 	
-	/**
-	 * Indicate to make thumbnails for images with the specified filenames.  
-	 * 
-	 * @param files		File names of image files for which thumbnails
-	 * 					are to be produced for.
-	 * @return			Reference to a builder object which is used to
-	 * 					specify the parameters for creating the thumbnail.
-	 * @throws NullPointerException		If the argument is {@code null}.
-	 * @throws IllegalArgumentException	If the argument is an empty collection.
-	 * @deprecated		use {@link #fromFilenames(Iterable)}. <b> This method
-	 * 					will be removed in Thumbnailator 0.4.0.</b>
-	 */
-	@Deprecated
-	public static Builder<File> fromFilenames(Collection<String> files)
-	{
-		return fromFilenames((Iterable<String>)files);
-	}
-	
-	/**
-	 * Indicate to make thumbnails from the specified {@link File}s.  
-	 * 
-	 * @param files		{@link File} objects of image files for which thumbnails
-	 * 					are to be produced for.
-	 * @return			Reference to a builder object which is used to
-	 * 					specify the parameters for creating the thumbnail.
-	 * @throws NullPointerException		If the argument is {@code null}.
-	 * @throws IllegalArgumentException	If the argument is an empty collection.
-	 * @deprecated		use {@link #fromFiles(Iterable)}. <b> This method
-	 * 					will be removed in Thumbnailator 0.4.0.</b>
-	 */
-	@Deprecated
-	public static Builder<File> fromFiles(Collection<File> files)
-	{
-		return fromFiles((Iterable<File>)files);
-	}
-
-	/**
-	 * Indicate to make thumbnails for images with the specified {@link URL}s.  
-	 * 
-	 * @param urls		URLs of the images for which thumbnails
-	 * 					are to be produced.
-	 * @return			Reference to a builder object which is used to
-	 * 					specify the parameters for creating the thumbnail.
-	 * @throws NullPointerException		If the argument is {@code null}.
-	 * @throws IllegalArgumentException	If the argument is an empty collection.
-	 * @deprecated		use {@link #fromURLs(Iterable)}. <b> This method
-	 * 					will be removed in Thumbnailator 0.4.0.</b>
-	 */
-	@Deprecated
-	public static Builder<URL> fromURLs(Collection<URL> urls)
-	{
-		return fromURLs((Iterable<URL>)urls);
-	}
-	
-	/**
-	 * Indicate to make thumbnails for images obtained from the specified 
-	 * {@link InputStream}s.
-	 * 
-	 * @param inputStreams		{@link InputStream}s which provide images for
-	 * 							which thumbnails are to be produced.
-	 * @return			Reference to a builder object which is used to
-	 * 					specify the parameters for creating the thumbnail.
-	 * @throws NullPointerException		If the argument is {@code null}.
-	 * @throws IllegalArgumentException	If the argument is an empty collection.
-	 * @deprecated		use {@link #fromInputStreams(Iterable)}. <b> This method
-	 * 					will be removed in Thumbnailator 0.4.0.</b>
-	 */
-	@Deprecated
-	public static Builder<InputStream> fromInputStreams(Collection<? extends InputStream> inputStreams)
-	{
-		return fromInputStreams((Iterable<? extends InputStream>)inputStreams);
-	}
-	
-	/**
-	 * Indicate to make thumbnails from the specified {@link BufferedImage}s.
-	 * 
-	 * @param images	{@link BufferedImage}s for which thumbnails
-	 * 					are to be produced for.
-	 * @return			Reference to a builder object which is used to
-	 * 					specify the parameters for creating the thumbnail.
-	 * @throws NullPointerException		If the argument is {@code null}.
-	 * @throws IllegalArgumentException	If the argument is an empty collection.
-	 * @deprecated		use {@link #fromImages(Iterable)}. <b> This method
-	 * 					will be removed in Thumbnailator 0.4.0.</b>
-	 */
-	@Deprecated
-	public static Builder<BufferedImage> fromImages(Collection<BufferedImage> images)
-	{
-		return fromImages((Iterable<BufferedImage>)images);
-	}
-
 	/**
 	 * Indicate to make thumbnails for images with the specified filenames.  
 	 * 
