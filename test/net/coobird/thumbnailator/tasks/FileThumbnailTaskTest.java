@@ -53,7 +53,8 @@ public class FileThumbnailTaskTest
 				ThumbnailParameter.DEFAULT_QUALITY,
 				BufferedImage.TYPE_INT_ARGB,
 				null,
-				Resizers.PROGRESSIVE
+				Resizers.PROGRESSIVE,
+				true
 		);
 		
 		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
@@ -90,7 +91,8 @@ public class FileThumbnailTaskTest
 				ThumbnailParameter.DEFAULT_QUALITY,
 				BufferedImage.TYPE_INT_ARGB,
 				null,
-				Resizers.PROGRESSIVE
+				Resizers.PROGRESSIVE,
+				true
 		); 
 		
 		InputStream is = mock(InputStream.class);

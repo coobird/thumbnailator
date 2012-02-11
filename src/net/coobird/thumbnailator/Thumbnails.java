@@ -11,12 +11,12 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.coobird.thumbnailator.filters.Canvas;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.filters.Pipeline;
 import net.coobird.thumbnailator.filters.Rotation;
@@ -30,9 +30,11 @@ import net.coobird.thumbnailator.geometry.Size;
 import net.coobird.thumbnailator.name.Rename;
 import net.coobird.thumbnailator.resizers.BicubicResizer;
 import net.coobird.thumbnailator.resizers.BilinearResizer;
+import net.coobird.thumbnailator.resizers.DefaultResizerFactory;
+import net.coobird.thumbnailator.resizers.FixedResizerFactory;
 import net.coobird.thumbnailator.resizers.ProgressiveBilinearResizer;
 import net.coobird.thumbnailator.resizers.Resizer;
-import net.coobird.thumbnailator.resizers.Resizers;
+import net.coobird.thumbnailator.resizers.ResizerFactory;
 import net.coobird.thumbnailator.resizers.configurations.AlphaInterpolation;
 import net.coobird.thumbnailator.resizers.configurations.Antialiasing;
 import net.coobird.thumbnailator.resizers.configurations.Dithering;
@@ -223,97 +225,6 @@ public final class Thumbnails
 		return Builder.ofBufferedImages(Arrays.asList(images));
 	}
 	
-	/**
-	 * Indicate to make thumbnails for images with the specified filenames.  
-	 * 
-	 * @param files		File names of image files for which thumbnails
-	 * 					are to be produced for.
-	 * @return			Reference to a builder object which is used to
-	 * 					specify the parameters for creating the thumbnail.
-	 * @throws NullPointerException		If the argument is {@code null}.
-	 * @throws IllegalArgumentException	If the argument is an empty collection.
-	 * @deprecated		use {@link #fromFilenames(Iterable)}. <b> This method
-	 * 					will be removed in Thumbnailator 0.4.0.</b>
-	 */
-	@Deprecated
-	public static Builder<File> fromFilenames(Collection<String> files)
-	{
-		return fromFilenames((Iterable<String>)files);
-	}
-	
-	/**
-	 * Indicate to make thumbnails from the specified {@link File}s.  
-	 * 
-	 * @param files		{@link File} objects of image files for which thumbnails
-	 * 					are to be produced for.
-	 * @return			Reference to a builder object which is used to
-	 * 					specify the parameters for creating the thumbnail.
-	 * @throws NullPointerException		If the argument is {@code null}.
-	 * @throws IllegalArgumentException	If the argument is an empty collection.
-	 * @deprecated		use {@link #fromFiles(Iterable)}. <b> This method
-	 * 					will be removed in Thumbnailator 0.4.0.</b>
-	 */
-	@Deprecated
-	public static Builder<File> fromFiles(Collection<File> files)
-	{
-		return fromFiles((Iterable<File>)files);
-	}
-
-	/**
-	 * Indicate to make thumbnails for images with the specified {@link URL}s.  
-	 * 
-	 * @param urls		URLs of the images for which thumbnails
-	 * 					are to be produced.
-	 * @return			Reference to a builder object which is used to
-	 * 					specify the parameters for creating the thumbnail.
-	 * @throws NullPointerException		If the argument is {@code null}.
-	 * @throws IllegalArgumentException	If the argument is an empty collection.
-	 * @deprecated		use {@link #fromURLs(Iterable)}. <b> This method
-	 * 					will be removed in Thumbnailator 0.4.0.</b>
-	 */
-	@Deprecated
-	public static Builder<URL> fromURLs(Collection<URL> urls)
-	{
-		return fromURLs((Iterable<URL>)urls);
-	}
-	
-	/**
-	 * Indicate to make thumbnails for images obtained from the specified 
-	 * {@link InputStream}s.
-	 * 
-	 * @param inputStreams		{@link InputStream}s which provide images for
-	 * 							which thumbnails are to be produced.
-	 * @return			Reference to a builder object which is used to
-	 * 					specify the parameters for creating the thumbnail.
-	 * @throws NullPointerException		If the argument is {@code null}.
-	 * @throws IllegalArgumentException	If the argument is an empty collection.
-	 * @deprecated		use {@link #fromInputStreams(Iterable)}. <b> This method
-	 * 					will be removed in Thumbnailator 0.4.0.</b>
-	 */
-	@Deprecated
-	public static Builder<InputStream> fromInputStreams(Collection<? extends InputStream> inputStreams)
-	{
-		return fromInputStreams((Iterable<? extends InputStream>)inputStreams);
-	}
-	
-	/**
-	 * Indicate to make thumbnails from the specified {@link BufferedImage}s.
-	 * 
-	 * @param images	{@link BufferedImage}s for which thumbnails
-	 * 					are to be produced for.
-	 * @return			Reference to a builder object which is used to
-	 * 					specify the parameters for creating the thumbnail.
-	 * @throws NullPointerException		If the argument is {@code null}.
-	 * @throws IllegalArgumentException	If the argument is an empty collection.
-	 * @deprecated		use {@link #fromImages(Iterable)}. <b> This method
-	 * 					will be removed in Thumbnailator 0.4.0.</b>
-	 */
-	@Deprecated
-	public static Builder<BufferedImage> fromImages(Collection<BufferedImage> images)
-	{
-		return fromImages((Iterable<BufferedImage>)images);
-	}
-
 	/**
 	 * Indicate to make thumbnails for images with the specified filenames.  
 	 * 
@@ -728,7 +639,9 @@ public final class Thumbnails
 			OUTPUT_QUALITY("outputQuality"),
 			RESIZER("resizer"), 
 			SOURCE_REGION("sourceRegion"),
+			RESIZER_FACTORY("resizerFactory"),
 			ALLOW_OVERWRITE("allowOverwrite"),
+			CROP("crop"),
 			;
 			
 			private final String name;
@@ -769,7 +682,9 @@ public final class Thumbnails
 			statusMap.put(Properties.OUTPUT_FORMAT_TYPE, Status.OPTIONAL);
 			statusMap.put(Properties.OUTPUT_QUALITY, Status.OPTIONAL);
 			statusMap.put(Properties.RESIZER, Status.OPTIONAL);
+			statusMap.put(Properties.RESIZER_FACTORY, Status.OPTIONAL);
 			statusMap.put(Properties.ALLOW_OVERWRITE, Status.OPTIONAL);
+			statusMap.put(Properties.CROP, Status.OPTIONAL);
 		}
 
 		/**
@@ -785,7 +700,12 @@ public final class Thumbnails
 				throw new IllegalStateException(
 						property.getName() + " is already set.");
 			}
-			if (statusMap.get(property) == Status.CANNOT_SET)
+			
+			/*
+			 * The `newStatus != Status.CANNOT_SET` condition will allow the
+			 * status to be set to CANNOT_SET to be set multiple times.
+			 */
+			if (newStatus != Status.CANNOT_SET && statusMap.get(property) == Status.CANNOT_SET)
 			{
 				throw new IllegalStateException(
 						property.getName() + " cannot be set.");
@@ -828,9 +748,18 @@ public final class Thumbnails
 		private Antialiasing antialiasing = Antialiasing.DEFAULT;
 		private Rendering rendering = Rendering.DEFAULT;
 		
-		private Resizer resizer = Resizers.PROGRESSIVE;
+		private ResizerFactory resizerFactory = DefaultResizerFactory.getInstance();
 		
 		private boolean allowOverwrite = true;
+		
+		private boolean fitWithinDimenions = true;
+		
+		/**
+		 * This field should be set to the {@link Position} to be used for
+		 * cropping if cropping is enabled. If cropping is disabled, then
+		 * this field should be left {@code null}. 
+		 */
+		private Position croppingPosition = null;
 		
 		/**
 		 * The {@link ImageFilter}s that should be applied when creating the
@@ -1203,6 +1132,28 @@ public final class Thumbnails
 		}
 		
 		/**
+		 * Specifies the source region from which the thumbnail is to be
+		 * created from.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @param region		A rectangular region which specifies the source
+		 * 						region to use when creating the thumbnail.
+		 * @throws NullPointerException		If the region is {@code null}.
+		 * @since 	0.4.0
+		 */
+		public Builder<T> crop(Position position)
+		{
+			updateStatus(Properties.CROP, Status.ALREADY_SET);
+			updateStatus(Properties.SCALE, Status.CANNOT_SET);
+
+			croppingPosition = position;
+			fitWithinDimenions = false;
+			return this;
+		}
+		
+		/**
 		 * Specifies whether or not to overwrite files which already exist if
 		 * they have been specified as destination files.
 		 * <p>
@@ -1272,6 +1223,7 @@ public final class Thumbnails
 			checkForNull(config, "Scaling mode is null.");
 			updateStatus(Properties.SCALING_MODE, Status.ALREADY_SET);
 			updateStatus(Properties.RESIZER, Status.CANNOT_SET);
+			updateStatus(Properties.RESIZER_FACTORY, Status.CANNOT_SET);
 			scalingMode = config;
 			return this;
 		}
@@ -1283,6 +1235,9 @@ public final class Thumbnails
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
+		 * <p>
+		 * This method cannot be called in conjunction with the 
+		 * {@link #resizerFactory(ResizerFactory)} method.
 		 * 
 		 * @param resizer		The scaling operation to use.
 		 * @return				Reference to this object.
@@ -1291,8 +1246,42 @@ public final class Thumbnails
 		{
 			checkForNull(resizer, "Resizer is null.");
 			updateStatus(Properties.RESIZER, Status.ALREADY_SET);
+			updateStatus(Properties.RESIZER_FACTORY, Status.CANNOT_SET);
 			updateStatus(Properties.SCALING_MODE, Status.CANNOT_SET);
-			this.resizer = resizer;
+			this.resizerFactory = new FixedResizerFactory(resizer);
+			return this;
+		}
+		
+		/**
+		 * Sets the {@link ResizerFactory} object to use to decide what kind of
+		 * resizing operation is to be used when creating the thumbnail.
+		 * <p>
+		 * Calling this method to set this parameter is optional.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * <p>
+		 * This method cannot be called in conjunction with the 
+		 * {@link #resizer(Resizer)} method.
+		 * 
+		 * @param resizer		The scaling operation to use.
+		 * @return				Reference to this object.
+		 * @since	0.4.0
+		 */
+		public Builder<T> resizerFactory(ResizerFactory resizerFactory)
+		{
+			checkForNull(resizerFactory, "ResizerFactory is null.");
+			updateStatus(Properties.RESIZER_FACTORY, Status.ALREADY_SET);
+			updateStatus(Properties.RESIZER, Status.CANNOT_SET);
+			
+			// disable the methods which set parameters for the Resizer
+			updateStatus(Properties.SCALING_MODE, Status.CANNOT_SET);
+			updateStatus(Properties.ALPHA_INTERPOLATION, Status.CANNOT_SET);
+			updateStatus(Properties.DITHERING, Status.CANNOT_SET);
+			updateStatus(Properties.ANTIALIASING, Status.CANNOT_SET);
+			updateStatus(Properties.RENDERING, Status.CANNOT_SET);
+			
+			this.resizerFactory = resizerFactory;
 			return this;
 		}
 		
@@ -1304,6 +1293,9 @@ public final class Thumbnails
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
+		 * <p>
+		 * This method cannot be called in conjunction with the 
+		 * {@link #resizerFactory(ResizerFactory)} method.
 		 * 
 		 * @param config		The alpha interpolation mode.
 		 * @return				Reference to this object.
@@ -1311,6 +1303,7 @@ public final class Thumbnails
 		public Builder<T> alphaInterpolation(AlphaInterpolation config)
 		{
 			checkForNull(config, "Alpha interpolation is null.");
+			updateStatus(Properties.RESIZER_FACTORY, Status.CANNOT_SET);
 			updateStatus(Properties.ALPHA_INTERPOLATION, Status.ALREADY_SET);
 			alphaInterpolation = config;
 			return this;
@@ -1324,6 +1317,9 @@ public final class Thumbnails
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
+		 * <p>
+		 * This method cannot be called in conjunction with the 
+		 * {@link #resizerFactory(ResizerFactory)} method.
 		 * 
 		 * @param config		The dithering mode.
 		 * @return				Reference to this object.
@@ -1331,6 +1327,7 @@ public final class Thumbnails
 		public Builder<T> dithering(Dithering config)
 		{
 			checkForNull(config, "Dithering is null.");
+			updateStatus(Properties.RESIZER_FACTORY, Status.CANNOT_SET);
 			updateStatus(Properties.DITHERING, Status.ALREADY_SET);
 			dithering = config;
 			return this;
@@ -1344,6 +1341,9 @@ public final class Thumbnails
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException}.
+		 * <p>
+		 * This method cannot be called in conjunction with the 
+		 * {@link #resizerFactory(ResizerFactory)} method.
 		 * 
 		 * @param config		The antialiasing mode.
 		 * @return				Reference to this object.
@@ -1351,6 +1351,7 @@ public final class Thumbnails
 		public Builder<T> antialiasing(Antialiasing config)
 		{
 			checkForNull(config, "Antialiasing is null.");
+			updateStatus(Properties.RESIZER_FACTORY, Status.CANNOT_SET);
 			updateStatus(Properties.ANTIALIASING, Status.ALREADY_SET);
 			antialiasing = config;
 			return this;
@@ -1364,6 +1365,9 @@ public final class Thumbnails
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
+		 * <p>
+		 * This method cannot be called in conjunction with the 
+		 * {@link #resizerFactory(ResizerFactory)} method.
 		 * 
 		 * @param config		The rendering mode.
 		 * @return				Reference to this object.
@@ -1371,6 +1375,7 @@ public final class Thumbnails
 		public Builder<T> rendering(Rendering config)
 		{
 			checkForNull(config, "Rendering is null.");
+			updateStatus(Properties.RESIZER_FACTORY, Status.CANNOT_SET);
 			updateStatus(Properties.RENDERING, Status.ALREADY_SET);
 			rendering = config;
 			return this;
@@ -1556,6 +1561,7 @@ public final class Thumbnails
 		 * {@link IllegalStateException} to be thrown.
 		 * 
 		 * @return				Reference to this object.
+		 * @since	0.4.0
 		 */
 		public Builder<T> useOriginalFormat()
 		{
@@ -1576,6 +1582,7 @@ public final class Thumbnails
 		 * {@link IllegalStateException} to be thrown.
 		 * 
 		 * @return				Reference to this object.
+		 * @since	0.4.0
 		 */
 		public Builder<T> determineOutputFormat()
 		{
@@ -1872,29 +1879,6 @@ watermark(Positions.CENTER, image, opacity);
 		 * Returns a {@link Resizer} which is suitable for the current
 		 * builder state.
 		 * 
-		 * @return			The {@link Resizer} which is suitable for the
-		 * 					current builder state.
-		 */
-		private Resizer makeResizer()
-		{
-			/*
-			 * If the scalingMode has been set, then use scalingMode to obtain
-			 * a resizer, else, use the resizer field.
-			 */
-			if (statusMap.get(Properties.SCALING_MODE) == Status.ALREADY_SET)
-			{
-				return makeResizer(scalingMode);
-			}
-			else
-			{
-				return this.resizer;
-			}
-		}
-
-		/**
-		 * Returns a {@link Resizer} which is suitable for the current
-		 * builder state.
-		 * 
 		 * @param mode		The scaling mode to use to create thumbnails.
 		 * @return			The {@link Resizer} which is suitable for the
 		 * 					specified scaling mode and builder state.
@@ -1927,6 +1911,19 @@ watermark(Positions.CENTER, image, opacity);
 			}
 		}
 
+		private void prepareResizerFactory()
+		{
+			/*
+			 * If the scalingMode has been set, then use scalingMode to obtain
+			 * a resizer, else, use the resizer field.
+			 */
+			if (statusMap.get(Properties.SCALING_MODE) == Status.ALREADY_SET)
+			{
+				this.resizerFactory =
+					new FixedResizerFactory(makeResizer(scalingMode));
+			}
+		}
+
 		/**
 		 * Returns a {@link ThumbnailParameter} from the current builder state.
 		 * 
@@ -1935,12 +1932,21 @@ watermark(Positions.CENTER, image, opacity);
 		 */
 		private ThumbnailParameter makeParam()
 		{
-			Resizer resizer = makeResizer();
+			prepareResizerFactory();
 			
 			int imageTypeToUse = imageType;
 			if (imageType == IMAGE_TYPE_UNSPECIFIED)
 			{
 				imageTypeToUse = ThumbnailParameter.ORIGINAL_IMAGE_TYPE;
+			}
+
+			/*
+			 * croppingPosition being non-null means that a crop should
+			 * take place.
+			 */
+			if (croppingPosition != null)
+			{
+				filterPipeline.add(new Canvas(width, height, croppingPosition));
 			}
 			
 			if (Double.isNaN(scaleWidth))
@@ -1980,7 +1986,8 @@ watermark(Positions.CENTER, image, opacity);
 						outputQuality,
 						imageTypeToUse,
 						filterPipeline.getFilters(),
-						resizer
+						resizerFactory,
+						fitWithinDimenions
 				);
 			}
 			else
@@ -1996,7 +2003,8 @@ watermark(Positions.CENTER, image, opacity);
 						outputQuality,
 						imageTypeToUse,
 						filterPipeline.getFilters(),
-						resizer
+						resizerFactory,
+						fitWithinDimenions
 				);
 			}
 		}
@@ -2248,7 +2256,7 @@ watermark(Positions.CENTER, image, opacity);
 				File f = ((FileImageSource)source).getSource();
 				
 				File destinationFile = 
-					new File(f.getParent(), rename.apply(f.getName()));
+					new File(f.getParent(), rename.apply(f.getName(), param));
 				
 				
 				FileImageSink destination = new FileImageSink(destinationFile, allowOverwrite);

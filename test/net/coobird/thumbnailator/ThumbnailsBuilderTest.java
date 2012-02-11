@@ -3,10 +3,11 @@ package net.coobird.thumbnailator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
+import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -17,14 +18,22 @@ import javax.imageio.ImageIO;
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.geometry.AbsoluteSize;
 import net.coobird.thumbnailator.geometry.Coordinate;
+import net.coobird.thumbnailator.geometry.Positions;
 import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.name.Rename;
+import net.coobird.thumbnailator.resizers.DefaultResizerFactory;
 import net.coobird.thumbnailator.resizers.Resizer;
+import net.coobird.thumbnailator.resizers.ResizerFactory;
 import net.coobird.thumbnailator.resizers.Resizers;
+import net.coobird.thumbnailator.resizers.configurations.AlphaInterpolation;
+import net.coobird.thumbnailator.resizers.configurations.Antialiasing;
+import net.coobird.thumbnailator.resizers.configurations.Dithering;
+import net.coobird.thumbnailator.resizers.configurations.Rendering;
 import net.coobird.thumbnailator.resizers.configurations.ScalingMode;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 
 /**
@@ -1418,6 +1427,29 @@ public class ThumbnailsBuilderTest
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
+	 * <li>The resizerFactory method is called, then</li>
+	 * <li>The scalingMode method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An {@link IllegalStateException} is thrown</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalStateException.class)
+	public void resizerFactoryThenScalingMode() throws IOException
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		Thumbnails.of(img)
+			.size(200, 200)
+			.resizerFactory(DefaultResizerFactory.getInstance())
+			.scalingMode(ScalingMode.PROGRESSIVE_BILINEAR)
+			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
 	 * <li>The scalingMode method is called, then</li>
 	 * <li>The resizer method is called</li>
 	 * </ol>
@@ -1435,6 +1467,29 @@ public class ThumbnailsBuilderTest
 			.size(200, 200)
 			.scalingMode(ScalingMode.PROGRESSIVE_BILINEAR)
 			.resizer(Resizers.PROGRESSIVE)
+			.asBufferedImage();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The scalingMode method is called, then</li>
+	 * <li>The resizerFactory method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An {@link IllegalStateException} is thrown</li>
+	 * </ol>
+	 */	
+	@Test(expected=IllegalStateException.class)
+	public void scalingModeThenResizerFactory() throws IOException
+	{
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		Thumbnails.of(img)
+			.size(200, 200)
+			.scalingMode(ScalingMode.PROGRESSIVE_BILINEAR)
+			.resizerFactory(DefaultResizerFactory.getInstance())
 			.asBufferedImage();
 	}
 	
@@ -3107,6 +3162,317 @@ public class ThumbnailsBuilderTest
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
+	 * <li>The resizer method is called.</li>
+	 * <li>Then, the resizerFactory method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown.</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void resizerThenResizerFactory() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		Thumbnails.of(img)
+			.size(50, 50)
+			.resizer(Resizers.PROGRESSIVE)
+			.resizerFactory(DefaultResizerFactory.getInstance())
+			.asBufferedImage();
+
+		// then
+		fail();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The resizerFactory method is called.</li>
+	 * <li>Then, the resizer method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown.</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void resizerFactoryThenResizer() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		Thumbnails.of(img)
+			.size(50, 50)
+			.resizerFactory(DefaultResizerFactory.getInstance())
+			.resizer(Resizers.PROGRESSIVE)
+			.asBufferedImage();
+		
+		// then
+		fail();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The resizer method is called.</li>
+	 * <li>Then, the alphaInterpolation method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A thumbnail is created successfully.</li>
+	 * </ol>
+	 */
+	@Test
+	public void resizerThenAlphainterpolation() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(50, 50)
+			.resizer(Resizers.PROGRESSIVE)
+			.alphaInterpolation(AlphaInterpolation.SPEED)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The resizer method is called.</li>
+	 * <li>Then, the dithering method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A thumbnail is created successfully.</li>
+	 * </ol>
+	 */
+	@Test
+	public void resizerThenDithering() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(50, 50)
+			.resizer(Resizers.PROGRESSIVE)
+			.dithering(Dithering.DEFAULT)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The resizer method is called.</li>
+	 * <li>Then, the antialiasing method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A thumbnail is created successfully.</li>
+	 * </ol>
+	 */
+	@Test
+	public void resizerThenAntialiasing() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(50, 50)
+			.resizer(Resizers.PROGRESSIVE)
+			.antialiasing(Antialiasing.DEFAULT)
+			.asBufferedImage();
+
+		// then
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The resizer method is called.</li>
+	 * <li>Then, the rendering method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A thumbnail is created successfully.</li>
+	 * </ol>
+	 */
+	@Test
+	public void resizerThenRendering() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(50, 50)
+			.resizer(Resizers.PROGRESSIVE)
+			.rendering(Rendering.DEFAULT)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(50, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The resizer method is called.</li>
+	 * <li>Then, the alphaInterpolation method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A thumbnail is created successfully.</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void resizerFactoryThenAlphainterpolation() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		Thumbnails.of(img)
+			.size(50, 50)
+			.resizerFactory(DefaultResizerFactory.getInstance())
+			.alphaInterpolation(AlphaInterpolation.SPEED)
+			.asBufferedImage();
+		
+		// then
+		fail();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The resizer method is called.</li>
+	 * <li>Then, the dithering method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A thumbnail is created successfully.</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void resizerFactoryThenDithering() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		Thumbnails.of(img)
+			.size(50, 50)
+			.resizerFactory(DefaultResizerFactory.getInstance())
+			.dithering(Dithering.DEFAULT)
+			.asBufferedImage();
+		
+		// then
+		fail();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The resizer method is called.</li>
+	 * <li>Then, the antialiasing method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A thumbnail is created successfully.</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void resizerFactoryThenAntialiasing() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		Thumbnails.of(img)
+			.size(50, 50)
+			.resizerFactory(DefaultResizerFactory.getInstance())
+			.antialiasing(Antialiasing.DEFAULT)
+			.asBufferedImage();
+		
+		// then
+		fail();
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The resizer method is called.</li>
+	 * <li>Then, the rendering method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>A thumbnail is created successfully.</li>
+	 * </ol>
+	 */
+	@Test(expected=IllegalStateException.class)
+	public void resizerFactoryThenRendering() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		Thumbnails.of(img)
+			.size(50, 50)
+			.resizerFactory(DefaultResizerFactory.getInstance())
+			.rendering(Rendering.DEFAULT)
+			.asBufferedImage();
+		
+		// then
+		fail();
+	}
+	
+	@Test
+	public void renameGivenThumbnailParameter() throws IOException
+	{
+		// given
+		Rename rename = mock(Rename.class);
+		when(rename.apply(anyString(), any(ThumbnailParameter.class)))
+			.thenReturn("thumbnail.grid.png");
+		
+		File f = new File("test-resources/Thumbnailator/grid.png");
+		
+		// when
+		Thumbnails.of(f)
+			.size(50, 50)
+			.asFiles(rename);
+		
+		// then
+		ArgumentCaptor<ThumbnailParameter> ac = 
+			ArgumentCaptor.forClass(ThumbnailParameter.class);
+		
+		verify(rename).apply(eq(f.getName()), ac.capture());
+		assertEquals(new Dimension(50, 50), ac.getValue().getSize());
+		
+		// clean up
+		new File("test-resources/Thumbnailator/thumbnail.grid.png").deleteOnExit();
+	}
+
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
 	 * <li>The width method is called</li>
 	 * </ol>
 	 * and the expected outcome is,
@@ -3602,5 +3968,206 @@ public class ThumbnailsBuilderTest
 		// then
 		assertEquals(50, thumbnail.getWidth());
 		assertEquals(25, thumbnail.getHeight());
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The resizerFactory method is called.</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>The specified {@link ResizerFactory} is called when resizing.</li>
+	 * </ol>
+	 */
+	@Test
+	public void resizerFactoryCalledOnResize() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		ResizerFactory resizerFactory = mock(ResizerFactory.class);
+		when(
+				resizerFactory.getResizer(any(Dimension.class), any(Dimension.class))
+			).thenReturn(Resizers.NULL);
+		
+		// when
+		Thumbnails.of(img)
+			.resizerFactory(resizerFactory)
+			.size(50, 50)
+			.asBufferedImage();
+		
+		// then
+		verify(resizerFactory).getResizer(new Dimension(200, 200), new Dimension(50, 50));
+	}
+	
+	@Test
+	public void cropWithSizeBefore() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(100, 50)
+			.crop(Positions.CENTER)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void cropWithSizeAfter() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.crop(Positions.CENTER)
+			.size(100, 50)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void cropWithAspectRatioTrueBefore() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(100, 50)
+			.keepAspectRatio(true)
+			.crop(Positions.CENTER)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void cropWithAspectRatioTrueAfter() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.crop(Positions.CENTER)
+			.size(100, 50)
+			.keepAspectRatio(true)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void cropWithAspectRatioFalseBefore() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(100, 50)
+			.keepAspectRatio(false)
+			.crop(Positions.CENTER)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void cropWithAspectRatioFalseAfter() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.crop(Positions.CENTER)
+			.size(100, 50)
+			.keepAspectRatio(false)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(50, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void cropWithScaleBeforeShouldFail() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.scale(0.5)
+				.crop(Positions.CENTER)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void cropWithScaleAfterShouldFail() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.crop(Positions.CENTER)
+				.scale(0.5)
+				.asBufferedImage();
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void cropTwice() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.crop(Positions.CENTER)
+				.crop(Positions.CENTER);
+			
+			fail();
+		}
+		catch (IllegalStateException e)
+		{
+			// then
+		}
 	}
 }

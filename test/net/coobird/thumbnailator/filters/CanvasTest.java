@@ -208,4 +208,97 @@ public class CanvasTest
 		assertEquals(100, resultImage.getWidth());
 		assertEquals(100, resultImage.getHeight());
 	}
+	
+	@Test
+	public void subsequentImagesCroppedCorrectly()
+	{
+		/*
+		 * Original code was changing the width/height settings when cropping
+		 * was disabled, and if the image was larger than the width/height
+		 * specified for the Canvas object.
+		 */
+		
+		// given
+		BufferedImage img1 = new BufferedImage(120, 120, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage img2 = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
+		ImageFilter filter = new Canvas(100, 100, Positions.CENTER, false);
+		
+		// when
+		BufferedImage result1 = filter.apply(img1);
+		BufferedImage result2 = filter.apply(img2);
+		
+		// then
+		assertEquals(120, result1.getWidth());
+		assertEquals(120, result1.getHeight());
+		assertEquals(100, result2.getWidth());
+		assertEquals(100, result2.getHeight());
+	}
+	
+	@Test
+	public void usesBlackFillcolorForNonAlphaImages()
+	{
+		// given
+		BufferedImage originalImage = new BufferedImage(90, 100, BufferedImage.TYPE_INT_RGB);
+		ImageFilter filter = new Canvas(100, 100, Positions.CENTER);
+
+		// when
+		BufferedImage resultImage = filter.apply(originalImage);
+		
+		// then
+		assertEquals(100, resultImage.getWidth());
+		assertEquals(100, resultImage.getHeight());
+		assertEquals(Color.black.getRGB(), resultImage.getRGB(1, 50));
+		assertEquals(Color.black.getRGB(), resultImage.getRGB(99, 50));
+	}
+	
+	@Test
+	public void usesSpecifiedFillcolorForNonAlphaImages()
+	{
+		// given
+		BufferedImage originalImage = new BufferedImage(90, 100, BufferedImage.TYPE_INT_RGB);
+		ImageFilter filter = new Canvas(100, 100, Positions.CENTER, Color.blue);
+		
+		// when
+		BufferedImage resultImage = filter.apply(originalImage);
+		
+		// then
+		assertEquals(100, resultImage.getWidth());
+		assertEquals(100, resultImage.getHeight());
+		assertEquals(Color.blue.getRGB(), resultImage.getRGB(1, 50));
+		assertEquals(Color.blue.getRGB(), resultImage.getRGB(99, 50));
+	}
+	
+	@Test
+	public void noFillColorForAlphaImages()
+	{
+		// given
+		BufferedImage originalImage = new BufferedImage(90, 100, BufferedImage.TYPE_INT_ARGB);
+		ImageFilter filter = new Canvas(100, 100, Positions.CENTER);
+		
+		// when
+		BufferedImage resultImage = filter.apply(originalImage);
+		
+		// then
+		assertEquals(100, resultImage.getWidth());
+		assertEquals(100, resultImage.getHeight());
+		assertEquals(0, resultImage.getRGB(1, 50));
+		assertEquals(0, resultImage.getRGB(99, 50));
+	}
+	
+	@Test
+	public void usesSpecifiedFillColorForAlphaImages()
+	{
+		// given
+		BufferedImage originalImage = new BufferedImage(90, 100, BufferedImage.TYPE_INT_ARGB);
+		ImageFilter filter = new Canvas(100, 100, Positions.CENTER, Color.blue);
+		
+		// when
+		BufferedImage resultImage = filter.apply(originalImage);
+		
+		// then
+		assertEquals(100, resultImage.getWidth());
+		assertEquals(100, resultImage.getHeight());
+		assertEquals(Color.blue.getRGB(), resultImage.getRGB(1, 50));
+		assertEquals(Color.blue.getRGB(), resultImage.getRGB(99, 50));
+	}
 }

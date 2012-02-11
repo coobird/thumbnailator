@@ -7,9 +7,11 @@ import java.util.List;
 
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.filters.ImageFilter;
+import net.coobird.thumbnailator.resizers.DefaultResizerFactory;
+import net.coobird.thumbnailator.resizers.FixedResizerFactory;
 import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.resizers.Resizer;
-import net.coobird.thumbnailator.resizers.Resizers;
+import net.coobird.thumbnailator.resizers.ResizerFactory;
 
 /**
  * A builder for generating {@link ThumbnailParameter}.
@@ -42,8 +44,10 @@ import net.coobird.thumbnailator.resizers.Resizers;
  * format type of the codec used to create the thumbnail image.</dd>
  * <dt>image filters</dt>
  * <dd>None.</dd>
+ * <dt>resizer factory</dt>
+ * <dd>{@link DefaultResizerFactory} is used.</dd>
  * <dt>resizer</dt>
- * <dd>{@link Resizers#PROGRESSIVE} is used.</dd>
+ * <dd>The default {@link Resizer} returned by the {@link ResizerFactory}.</dd>
  * </dl>
  * 
  * @author coobird
@@ -63,8 +67,9 @@ public final class ThumbnailParameterBuilder
 	private String thumbnailFormat = ThumbnailParameter.ORIGINAL_FORMAT;
 	private String thumbnailFormatType = ThumbnailParameter.DEFAULT_FORMAT_TYPE;
 	private List<ImageFilter> filters = Collections.emptyList();
-	private Resizer resizer = Resizers.PROGRESSIVE;
+	private ResizerFactory resizerFactory = DefaultResizerFactory.getInstance();
 	private Region sourceRegion = null;
+	private boolean fitWithinDimensions = true;
 	
 	/**
 	 * Creates an instance of a {@link ThumbnailParameterBuilder}.
@@ -174,6 +179,7 @@ public final class ThumbnailParameterBuilder
 	 * @param sourceRegion		The region of the source image to use when
 	 * 							creating a thumbnail.
 	 * @return			A reference to this object.
+	 * @since	0.3.4
 	 */
 	public ThumbnailParameterBuilder region(Region sourceRegion)
 	{
@@ -261,7 +267,11 @@ public final class ThumbnailParameterBuilder
 	/**
 	 * Sets the {@link Resizer} to use when performing the resizing operation
 	 * to create the thumbnail.
-	 * 
+	 * <p>
+	 * Calling this method after {@link #resizerFactory(ResizerFactory)} will 
+	 * cause the {@link ResizerFactory} used by the resulting 
+	 * {@link ThumbnailParameter} to only return the specified {@link Resizer}.
+	 *  
 	 * @param resizer		The {@link Resizer} to use when creating the
 	 * 						thumbnail.
 	 * @return				A reference to this object.
@@ -273,7 +283,48 @@ public final class ThumbnailParameterBuilder
 			throw new NullPointerException("Resizer is null.");
 		}
 		
-		this.resizer = resizer;
+		this.resizerFactory = new FixedResizerFactory(resizer);
+		return this;
+	}
+	
+	/**
+	 * Sets the {@link ResizerFactory} to use to obtain a {@link Resizer} when 
+	 * performing the resizing operation to create the thumbnail.
+	 * <p>
+	 * Calling this method after {@link #resizer(Resizer)} could result in
+	 * {@link Resizer}s not specified in the {@code resizer} method to be used
+	 * when creating thumbnails.
+	 * 
+	 * 
+	 * @param resizerFactory	The {@link ResizerFactory} to use when obtaining
+	 * 							a {@link Resizer} to create the thumbnail.
+	 * @return					A reference to this object.
+	 * @since	0.4.0
+	 */
+	public ThumbnailParameterBuilder resizerFactory(ResizerFactory resizerFactory)
+	{
+		if (resizerFactory == null)
+		{
+			throw new NullPointerException("Resizer is null.");
+		}
+		
+		this.resizerFactory = resizerFactory;
+		return this;
+	}
+	
+	/**
+	 * Sets whether or not the thumbnail should fit within the specified 
+	 * dimensions.
+	 * 
+	 * @param fit		{@code true} if the thumbnail should be sized to fit 
+	 *					within the specified dimensions, if the thumbnail 
+	 * 					is going to exceed those dimensions.
+	 * @return			A reference to this object.
+	 * @since	0.4.0
+	 */
+	public ThumbnailParameterBuilder fitWithinDimensions(boolean fit)
+	{
+		this.fitWithinDimensions = fit;
 		return this;
 	}
 
@@ -304,7 +355,8 @@ public final class ThumbnailParameterBuilder
 					thumbnailQuality,
 					imageType,
 					filters,
-					resizer
+					resizerFactory,
+					fitWithinDimensions
 			);
 			
 		}
@@ -319,7 +371,8 @@ public final class ThumbnailParameterBuilder
 					thumbnailQuality,
 					imageType,
 					filters,
-					resizer
+					resizerFactory,
+					fitWithinDimensions
 			);
 		}
 		else

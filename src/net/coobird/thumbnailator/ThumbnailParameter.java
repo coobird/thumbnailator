@@ -6,8 +6,10 @@ import java.util.Collections;
 import java.util.List;
 
 import net.coobird.thumbnailator.filters.ImageFilter;
+import net.coobird.thumbnailator.resizers.FixedResizerFactory;
 import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.resizers.Resizer;
+import net.coobird.thumbnailator.resizers.ResizerFactory;
 
 /**
  * This class is used to specify the parameters to use when creating a thumbnail.
@@ -23,11 +25,10 @@ public class ThumbnailParameter
 	 */
 	public static final String ORIGINAL_FORMAT = null;
 
-	// TODO add note about DETERMINE_FORMAT to methods and constructors.
 	/**
 	 * A constant used to denote that the output format of the thumbnail should
-	 * be the determined by information provided for the output format, such
-	 * as the file name of the thumbnail.
+	 * be the determined from available information such as the file name of
+	 * the thumbnail.
 	 * <p>
 	 * If a suitable output format cannot be determined, then the implementation
 	 * should behave as if {@link #ORIGINAL_FORMAT} was specified.
@@ -97,6 +98,10 @@ public class ThumbnailParameter
 	 * <p>
 	 * A value of {@link ThumbnailParameter#ORIGINAL_FORMAT} indicates that the
 	 * image format of the original image should be used as the output format.
+	 * <p>
+	 * A value of {@link ThumbnailParameter#DETERMINE_FORMAT} indicates that the
+	 * output format of the thumbnail should be the determined from the
+	 * information available, such as the output file name of the thumbnail.
 	 */
 	private final String outputFormat;
 	
@@ -136,12 +141,11 @@ public class ThumbnailParameter
 	
 	
 	/**
-	 * The {@link Resizer} to use when performing the resizing operation to
-	 * create a thumbnail.
+	 * The {@link ResizerFactory} for obtaining a {@link Resizer} that is
+	 * to be used when performing an image resizing operation.
 	 */
-	private final Resizer resizer;
-	
-	
+	private final ResizerFactory resizerFactory;
+
 	/**
 	 * The region of the source image to use when creating a thumbnail.
 	 * <p>
@@ -151,43 +155,19 @@ public class ThumbnailParameter
 	private final Region sourceRegion;
 	
 	/**
-	 * Perform validations on the {@code thumbnailSize} field.
+	 * Whether or not to fit the thumbnail within the specified dimensions.
+	 * <p>
+	 * If {@code true} is specified, then the thumbnail will be sized to fit
+	 * within the specified dimensions, if the thumbnail is going to exceed
+	 * those dimensions.
 	 */
-	private void validateThumbnailSize()
-	{
-		if (thumbnailSize == null)
-		{
-			throw new IllegalArgumentException("Thumbnail size cannot be null.");
-		} 
-		else if (thumbnailSize.width < 0 || thumbnailSize.height < 0)
-		{
-			throw new IllegalArgumentException("Thumbnail dimensions must be greater than 0.");
-		}
-	}
+	private final boolean fitWithinDimensions;
 	
 	/**
-	 * Perform validations on the {@code widthScalingFactor} and 
-	 * {@code heightScalingFactor} fields.
-	 */
-	private void validateScalingFactor()
-	{
-		if (widthScalingFactor <= 0.0 || heightScalingFactor <= 0.0)
-		{
-			throw new IllegalArgumentException("Scaling factor is less than or equal to 0.");
-		} 
-		else if (Double.isNaN(widthScalingFactor) || Double.isInfinite(widthScalingFactor))
-		{
-			throw new IllegalArgumentException("Scaling factor must be a rational number.");
-		} 
-		else if (Double.isNaN(heightScalingFactor) || Double.isInfinite(heightScalingFactor))
-		{
-			throw new IllegalArgumentException("Scaling factor must be a rational number.");
-		} 
-	}
-	
-	/**
-	 * A private constructor to be used to instantiate an object holding the 
-	 * parameters needed in order to make a thumbnail.
+	 * Private constructor which sets all the required fields, and performs
+	 * validation of the given arguments.
+	 * <p>
+	 * This constructor is to be called from all the public constructors.
 	 * 
 	 * @param thumbnailSize		The size of the thumbnail to generate.
 	 * @param widthScalingFactor	The scaling factor to apply to the width
@@ -209,6 +189,12 @@ public class ThumbnailParameter
 	 * 							{@link ThumbnailParameter#ORIGINAL_FORMAT} 
 	 * 							should be provided if the same image format as
 	 * 							the original should	be used for the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DETERMINE_FORMAT} 
+	 * 							should be provided if the output format of the 
+	 * 							thumbnail should be the determined from the 
+	 * 							information available, such as the output file 
+	 * 							name of the thumbnail.
 	 * @param outputFormatType	A string indicating the compression type that
 	 * 							should be used when writing the thumbnail.
 	 * 							A value of 
@@ -237,11 +223,21 @@ public class ThumbnailParameter
 	 * 							no filters are to be applied.
 	 * 							The filters are applied after the original
 	 * 							image has been resized.
-	 * @param resizer			The {@link Resizer} to use when performing the
-	 * 							resizing operation to create a thumbnail.
+	 * @param resizerFactory	The {@link ResizerFactory} for obtaining a 
+	 * 							{@link Resizer} that is to be used when 
+	 * 							performing an image resizing operation.
+	 * @param fitWithinDimensions	Whether or not to fit the thumbnail within 
+	 * 								the specified dimensions.
+	 * 								<p>
+	 * 								If {@code true} is specified, then the 
+	 * 								thumbnail will be sized to fit within the 
+	 * 								specified dimensions, if the thumbnail is 
+	 * 								going to exceed those dimensions.
 	 * 
-	 * @throws IllegalArgumentException 	If size is {@code null} or if the 
-	 * 										dimensions are negative. 
+	 * @throws IllegalArgumentException 	If the scaling factor is not a
+	 * 										rational number or is less than or
+	 * 										equal to 0, or if the 
+	 * 										{@link ResizerFactory} is null.
 	 */
 	private ThumbnailParameter(
 			Dimension thumbnailSize,
@@ -254,16 +250,18 @@ public class ThumbnailParameter
 			float outputQuality,
 			int imageType,
 			List<ImageFilter> filters,
-			Resizer resizer
+			ResizerFactory resizerFactory,
+			boolean fitWithinDimensions
 	)
 	{
+		// The following 2 fields are set by the public constructors.
 		this.thumbnailSize = thumbnailSize;
-		this.sourceRegion = sourceRegion;
 		this.widthScalingFactor = widthScalingFactor;
 		this.heightScalingFactor = heightScalingFactor;
 		
 		this.keepAspectRatio = keepAspectRatio;
 		
+		this.sourceRegion = sourceRegion;
 		this.outputFormat = outputFormat;
 		this.outputFormatType = outputFormatType;
 		
@@ -287,11 +285,47 @@ public class ThumbnailParameter
 		this.filters = filters == null ? 
 				Collections.<ImageFilter>emptyList() : filters;
 				
-		if (resizer == null)
+		if (resizerFactory == null)
 		{
 			throw new IllegalArgumentException("Resizer cannot be null");
 		}
-		this.resizer = resizer;
+		
+		this.resizerFactory = resizerFactory;
+		this.fitWithinDimensions = fitWithinDimensions;
+	}
+	
+	/**
+	 * Perform validations on the {@code thumbnailSize} field.
+	 */
+	private void validateThumbnailSize()
+	{
+		if (thumbnailSize == null)
+		{
+			throw new IllegalArgumentException("Thumbnail size cannot be null.");
+		} 
+		else if (thumbnailSize.width < 0 || thumbnailSize.height < 0)
+		{
+			throw new IllegalArgumentException("Thumbnail dimensions must be greater than 0.");
+		}
+	}
+	
+	/**
+	 * Perform validations on the {@code scalingFactor} field.
+	 */
+	private void validateScalingFactor()
+	{
+		if (widthScalingFactor <= 0.0 || heightScalingFactor <= 0.0)
+		{
+			throw new IllegalArgumentException("Scaling factor is less than or equal to 0.");
+		} 
+		else if (Double.isNaN(widthScalingFactor) || Double.isInfinite(widthScalingFactor))
+		{
+			throw new IllegalArgumentException("Scaling factor must be a rational number.");
+		} 
+		else if (Double.isNaN(heightScalingFactor) || Double.isInfinite(heightScalingFactor))
+		{
+			throw new IllegalArgumentException("Scaling factor must be a rational number.");
+		}
 	}
 	
 	/**
@@ -312,6 +346,12 @@ public class ThumbnailParameter
 	 * 							{@link ThumbnailParameter#ORIGINAL_FORMAT} 
 	 * 							should be provided if the same image format as
 	 * 							the original should	be used for the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DETERMINE_FORMAT} 
+	 * 							should be provided if the output format of the 
+	 * 							thumbnail should be the determined from the 
+	 * 							information available, such as the output file 
+	 * 							name of the thumbnail.
 	 * @param outputFormatType	A string indicating the compression type that
 	 * 							should be used when writing the thumbnail.
 	 * 							A value of 
@@ -342,9 +382,18 @@ public class ThumbnailParameter
 	 * 							image has been resized.
 	 * @param resizer			The {@link Resizer} to use when performing the
 	 * 							resizing operation to create a thumbnail.
-	 * 
+	 * @param fitWithinDimensions	Whether or not to fit the thumbnail within 
+	 * 								the specified dimensions.
+	 * 								<p>
+	 * 								If {@code true} is specified, then the 
+	 * 								thumbnail will be sized to fit within the 
+	 * 								specified dimensions, if the thumbnail is 
+	 * 								going to exceed those dimensions.
+	 *  
 	 * @throws IllegalArgumentException 	If size is {@code null} or if the 
-	 * 										dimensions are negative. 
+	 * 										dimensions are negative, or if the 
+	 * 										{@link Resizer} is null.
+	 * @since	0.4.0
 	 */
 	public ThumbnailParameter(
 			Dimension thumbnailSize,
@@ -355,7 +404,8 @@ public class ThumbnailParameter
 			float outputQuality,
 			int imageType,
 			List<ImageFilter> filters,
-			Resizer resizer
+			Resizer resizer,
+			boolean fitWithinDimensions
 	)
 	{
 		this(
@@ -369,11 +419,13 @@ public class ThumbnailParameter
 				outputQuality,
 				imageType,
 				filters,
-				resizer
+				new FixedResizerFactory(resizer),
+				fitWithinDimensions
 		);
+		
 		validateThumbnailSize();
 	}
-
+	
 	/**
 	 * Creates an object holding the parameters needed in order to make a
 	 * thumbnail.
@@ -397,6 +449,12 @@ public class ThumbnailParameter
 	 * 							{@link ThumbnailParameter#ORIGINAL_FORMAT} 
 	 * 							should be provided if the same image format as
 	 * 							the original should	be used for the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DETERMINE_FORMAT} 
+	 * 							should be provided if the output format of the 
+	 * 							thumbnail should be the determined from the 
+	 * 							information available, such as the output file 
+	 * 							name of the thumbnail.
 	 * @param outputFormatType	A string indicating the compression type that
 	 * 							should be used when writing the thumbnail.
 	 * 							A value of 
@@ -427,10 +485,19 @@ public class ThumbnailParameter
 	 * 							image has been resized.
 	 * @param resizer			The {@link Resizer} to use when performing the
 	 * 							resizing operation to create a thumbnail.
+	 * @param fitWithinDimensions	Whether or not to fit the thumbnail within 
+	 * 								the specified dimensions.
+	 * 								<p>
+	 * 								If {@code true} is specified, then the 
+	 * 								thumbnail will be sized to fit within the 
+	 * 								specified dimensions, if the thumbnail is 
+	 * 								going to exceed those dimensions.
 	 * 
 	 * @throws IllegalArgumentException 	If the scaling factor is not a
 	 * 										rational number or is less than or
-	 * 										equal to 0. 
+	 * 										equal to 0, or if the 
+	 * 										{@link Resizer} is null. 
+	 * @since	0.4.0
 	 */
 	public ThumbnailParameter(
 			double widthScalingFactor,
@@ -442,7 +509,8 @@ public class ThumbnailParameter
 			float outputQuality,
 			int imageType,
 			List<ImageFilter> filters,
-			Resizer resizer
+			Resizer resizer,
+			boolean fitWithinDimensions
 	)
 	{
 		this(
@@ -456,12 +524,217 @@ public class ThumbnailParameter
 				outputQuality,
 				imageType,
 				filters,
-				resizer
+				new FixedResizerFactory(resizer),
+				fitWithinDimensions
 		);
-
+		
 		validateScalingFactor();
 	}
 	
+	/**
+	 * Creates an object holding the parameters needed in order to make a
+	 * thumbnail.
+	 * 
+	 * @param thumbnailSize		The size of the thumbnail to generate.
+	 * @param sourceRegion		The region of the source image to use when 
+	 * 							creating a thumbnail.
+	 * 							A value of {@code null} indicates that the 
+	 * 							entire source image should be used to create
+	 * 							the thumbnail.
+	 * @param keepAspectRatio	Indicates whether or not the thumbnail should
+	 * 							maintain the aspect ratio of the original image.
+	 * @param outputFormat		A string indicating the compression format
+	 * 							that should be applied on the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#ORIGINAL_FORMAT} 
+	 * 							should be provided if the same image format as
+	 * 							the original should	be used for the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DETERMINE_FORMAT} 
+	 * 							should be provided if the output format of the 
+	 * 							thumbnail should be the determined from the 
+	 * 							information available, such as the output file 
+	 * 							name of the thumbnail.
+	 * @param outputFormatType	A string indicating the compression type that
+	 * 							should be used when writing the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DEFAULT_FORMAT_TYPE} 
+	 * 							should be provided if the thumbnail should be
+	 * 							written using the default compression type of
+	 * 							the codec specified in {@code outputFormat}.
+	 * @param outputQuality		A value from {@code 0.0f} to {@code 1.0f} which
+	 * 							indicates the quality setting to use for the
+	 * 							compression of the thumbnail. {@code 0.0f}
+	 * 							indicates the lowest quality, {@code 1.0f}
+	 * 							indicates the highest quality setting for the 
+	 * 							compression.
+	 * 							{@link ThumbnailParameter#DEFAULT_QUALITY}
+	 * 							should be specified when the codec's default
+	 * 							compression quality settings should be used.
+	 * @param imageType 		The {@link BufferedImage} image type of the 
+	 * 							thumbnail.
+	 * 							A value of
+	 * 							{@link ThumbnailParameter#DEFAULT_IMAGE_TYPE}
+	 *							should be specified when the default image
+	 *							type should be used when creating the thumbnail.
+	 * @param filters			The {@link ImageFilter}s to apply to the
+	 * 							thumbnail.
+	 * 							A value of {@code null} will be recognized as
+	 * 							no filters are to be applied.
+	 * 							The filters are applied after the original
+	 * 							image has been resized.
+	 * @param resizerFactory	The {@link ResizerFactory} for obtaining a 
+	 * 							{@link Resizer} that is to be used when 
+	 * 							performing an image resizing operation.
+	 * @param fitWithinDimensions	Whether or not to fit the thumbnail within 
+	 * 								the specified dimensions.
+	 * 								<p>
+	 * 								If {@code true} is specified, then the 
+	 * 								thumbnail will be sized to fit within the 
+	 * 								specified dimensions, if the thumbnail is 
+	 * 								going to exceed those dimensions.
+	 * 
+	 * @throws IllegalArgumentException 	If size is {@code null} or if the 
+	 * 										dimensions are negative, or if the 
+	 * 										{@link ResizerFactory} is null.
+	 * @since	0.4.0 
+	 */
+	public ThumbnailParameter(
+			Dimension thumbnailSize,
+			Region sourceRegion,
+			boolean keepAspectRatio,
+			String outputFormat,
+			String outputFormatType,
+			float outputQuality,
+			int imageType,
+			List<ImageFilter> filters,
+			ResizerFactory resizerFactory,
+			boolean fitWithinDimensions
+	)
+	{
+		this(
+				thumbnailSize,
+				Double.NaN,
+				Double.NaN,
+				sourceRegion,
+				keepAspectRatio,
+				outputFormat,
+				outputFormatType,
+				outputQuality,
+				imageType,
+				filters,
+				resizerFactory,
+				fitWithinDimensions
+		);
+		
+		validateThumbnailSize();
+	}
+	
+	/**
+	 * Creates an object holding the parameters needed in order to make a
+	 * thumbnail.
+	 * 
+	 * @param widthScalingFactor	The scaling factor to apply to the width
+	 * 								when creating a	thumbnail from the original
+	 * 								image.
+	 * @param heightScalingFactor	The scaling factor to apply to the height
+	 * 								when creating a	thumbnail from the original
+	 * 								image.
+	 * @param sourceRegion		The region of the source image to use when 
+	 * 							creating a thumbnail.
+	 * 							A value of {@code null} indicates that the 
+	 * 							entire source image should be used to create
+	 * 							the thumbnail.
+	 * @param keepAspectRatio	Indicates whether or not the thumbnail should
+	 * 							maintain the aspect ratio of the original image.
+	 * @param outputFormat		A string indicating the compression format
+	 * 							that should be applied on the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#ORIGINAL_FORMAT} 
+	 * 							should be provided if the same image format as
+	 * 							the original should	be used for the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DETERMINE_FORMAT} 
+	 * 							should be provided if the output format of the 
+	 * 							thumbnail should be the determined from the 
+	 * 							information available, such as the output file 
+	 * 							name of the thumbnail.
+	 * @param outputFormatType	A string indicating the compression type that
+	 * 							should be used when writing the thumbnail.
+	 * 							A value of 
+	 * 							{@link ThumbnailParameter#DEFAULT_FORMAT_TYPE} 
+	 * 							should be provided if the thumbnail should be
+	 * 							written using the default compression type of
+	 * 							the codec specified in {@code outputFormat}.
+	 * @param outputQuality		A value from {@code 0.0f} to {@code 1.0f} which
+	 * 							indicates the quality setting to use for the
+	 * 							compression of the thumbnail. {@code 0.0f}
+	 * 							indicates the lowest quality, {@code 1.0f}
+	 * 							indicates the highest quality setting for the 
+	 * 							compression.
+	 * 							{@link ThumbnailParameter#DEFAULT_QUALITY}
+	 * 							should be specified when the codec's default
+	 * 							compression quality settings should be used.
+	 * @param imageType 		The {@link BufferedImage} image type of the 
+	 * 							thumbnail.
+	 * 							A value of
+	 * 							{@link ThumbnailParameter#DEFAULT_IMAGE_TYPE}
+	 *							should be specified when the default image
+	 *							type should be used when creating the thumbnail.
+	 * @param filters			The {@link ImageFilter}s to apply to the
+	 * 							thumbnail.
+	 * 							A value of {@code null} will be recognized as
+	 * 							no filters are to be applied.
+	 * 							The filters are applied after the original
+	 * 							image has been resized.
+	 * @param resizerFactory	The {@link ResizerFactory} for obtaining a 
+	 * 							{@link Resizer} that is to be used when 
+	 * 							performing an image resizing operation.
+	 * @param fitWithinDimensions	Whether or not to fit the thumbnail within 
+	 * 								the specified dimensions.
+	 * 								<p>
+	 * 								If {@code true} is specified, then the 
+	 * 								thumbnail will be sized to fit within the 
+	 * 								specified dimensions, if the thumbnail is 
+	 * 								going to exceed those dimensions.
+	 * 
+	 * @throws IllegalArgumentException 	If the scaling factor is not a
+	 * 										rational number or is less than or
+	 * 										equal to 0, or if the 
+	 * 										{@link ResizerFactory} is null.
+	 * @since	0.4.0 
+	 */
+	public ThumbnailParameter(
+			double widthScalingFactor,
+			double heightScalingFactor,
+			Region sourceRegion,
+			boolean keepAspectRatio,
+			String outputFormat,
+			String outputFormatType,
+			float outputQuality,
+			int imageType,
+			List<ImageFilter> filters,
+			ResizerFactory resizerFactory,
+			boolean fitWithinDimensions
+	)
+	{
+		this(
+				null,
+				widthScalingFactor,
+				heightScalingFactor,
+				sourceRegion,
+				keepAspectRatio,
+				outputFormat,
+				outputFormatType,
+				outputQuality,
+				imageType,
+				filters,
+				resizerFactory,
+				fitWithinDimensions
+		);
+		
+		validateScalingFactor();
+	}
 	
 	/**
 	 * Returns the size of the thumbnail.
@@ -542,6 +815,10 @@ public class ThumbnailParameter
 	 * If the output format is to use the same compression format as the
 	 * original image, this method will return
 	 * {@link ThumbnailParameter#ORIGINAL_FORMAT}.
+	 * <p>
+	 * If the output format should be determined from the information available
+	 * such as the file name of the thumbnail, then this method will return
+	 * {@link ThumbnailParameter#DETERMINE_FORMAT}.
 	 * 
 	 * @return 		The output format for the thumbnail.
 	 */
@@ -595,14 +872,28 @@ public class ThumbnailParameter
 	}
 	
 	/**
-	 * Returns the {@link Resizer} to use when performing the resizing
-	 * operation to create the thumbnail.
+	 * Returns the default {@link Resizer} that will be used when performing the
+	 * resizing operation to create a thumbnail.
 	 * 
-	 * @return		The {@link Resizer} to use when creating a thumbnail.
+	 * @return		The default {@link Resizer} to use when performing a resize
+	 * 				operation.
 	 */
 	public Resizer getResizer()
 	{
-		return resizer;
+		return resizerFactory.getResizer();
+	}
+	
+	/**
+	 * Returns the {@link ResizerFactory} for obtaining a {@link Resizer} which
+	 * is to be used when performing the resizing operation to create a 
+	 * thumbnail.
+	 * 
+	 * @return		The {@link ResizerFactory} to use to obtain the 
+	 * 				{@link Resizer}.
+	 */
+	public ResizerFactory getResizerFactory()
+	{
+		return resizerFactory;
 	}
 	
 	/**
@@ -617,7 +908,6 @@ public class ThumbnailParameter
 		return imageType == ORIGINAL_IMAGE_TYPE;
 	}
 	
-	
 	/**
 	 * Returns the region of the source image to use when creating a thumbnail,
 	 * represented by a {@link Region} object.
@@ -631,5 +921,19 @@ public class ThumbnailParameter
 	public Region getSourceRegion()
 	{
 		return sourceRegion;
+	}
+	
+	/**
+	 * Returns whether or not to fit the thumbnail within the specified 
+	 * dimensions.
+	 * 
+	 * @return		{@code true} is returned when the thumbnail should be sized
+	 * 				to fit within the specified dimensions, if the thumbnail 
+	 * 				is going to exceed those dimensions.
+	 * @since	0.4.0
+	 */
+	public boolean fitWithinDimenions()
+	{
+		return fitWithinDimensions;
 	}
 }
