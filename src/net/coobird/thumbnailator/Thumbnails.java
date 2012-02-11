@@ -1132,19 +1132,36 @@ public final class Thumbnails
 		}
 		
 		/**
-		 * Specifies the source region from which the thumbnail is to be
-		 * created from.
+		 * Crops the thumbnail to the size specified when calling the 
+		 * {@link #size(int, int)} method, positioned by the given 
+		 * {@link Position} object.
+		 * <p>
+		 * Internally, the resizing is performed in two steps.
+		 * First, the thumbnail will be sized so that one of the dimensions will
+		 * be sized exactly to the dimension specified in the {@code size} 
+		 * method, while allowing the other dimension to overhang the specified
+		 * dimension. Then, the thumbnail will be cropped to the dimensions
+		 * specified in the {@code size} method, positioned using the speficied 
+		 * {@link Position} object.
+		 * <p>
+		 * Once this method is called, calling the {@link #scale(double)} method
+		 * will result in an {@link IllegalStateException}.
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
-		 * 
-		 * @param region		A rectangular region which specifies the source
-		 * 						region to use when creating the thumbnail.
-		 * @throws NullPointerException		If the region is {@code null}.
+		 *  
+		 * @param position		The position to which the thumbnail should be
+		 * 						cropped to. For example, if 
+		 * 						{@link Positions#CENTER} is specified, the
+		 * 						resulting thumbnail will be made by cropping to
+		 * 						the center of the image.
+		 * @throws NullPointerException		If the position is {@code null}.
 		 * @since 	0.4.0
 		 */
 		public Builder<T> crop(Position position)
 		{
+			checkForNull(position, "Position cannot be null.");
+			
 			updateStatus(Properties.CROP, Status.ALREADY_SET);
 			updateStatus(Properties.SCALE, Status.CANNOT_SET);
 
@@ -1264,8 +1281,8 @@ public final class Thumbnails
 		 * This method cannot be called in conjunction with the 
 		 * {@link #resizer(Resizer)} method.
 		 * 
-		 * @param resizer		The scaling operation to use.
-		 * @return				Reference to this object.
+		 * @param resizerFactory		The scaling operation to use.
+		 * @return						Reference to this object.
 		 * @since	0.4.0
 		 */
 		public Builder<T> resizerFactory(ResizerFactory resizerFactory)
