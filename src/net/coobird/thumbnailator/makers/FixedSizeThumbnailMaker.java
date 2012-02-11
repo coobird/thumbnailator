@@ -199,7 +199,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * this method with {@code true} or {@code false} makes no difference, as
 	 * the thumbnail dimensions will be exactly the given dimensions.
 	 * 
-	 * @param keep			Whether or not to maintain the aspect ratio in the
+	 * @param fit			Whether or not to maintain the aspect ratio in the
 	 * 						thumbnail the same as the original image.
 	 * 						<p>
 	 * 						If {@code true} is specified, then the 
