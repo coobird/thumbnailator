@@ -174,7 +174,8 @@ public abstract class ThumbnailMaker
 	 * @return			The thumbnail image.
 	 * @throws IllegalStateException		If the {@code ThumbnailMaker} is
 	 * 										not ready to create thumbnails.
-	 * @throws IllegalArgumentException		If the width and/or height is zero.
+	 * @throws IllegalArgumentException		If the width and/or height is less
+	 * 										than or equal to zero.
 	 */
 	protected BufferedImage makeThumbnail(
 			BufferedImage img,
@@ -187,11 +188,17 @@ public abstract class ThumbnailMaker
 			throw new IllegalStateException(ThumbnailMaker.NOT_READY_FOR_MAKE);
 		}
 		
-		if (width == 0) {
-			throw new IllegalArgumentException("Width cannot be zero.");
+		if (width <= 0)
+		{
+			throw new IllegalArgumentException(
+					"Width must be greater than zero."
+			);
 		}
-		if (height == 0) {
-			throw new IllegalArgumentException("Height cannot be zero.");
+		if (height <= 0)
+		{
+			throw new IllegalArgumentException(
+					"Height must be greater than zero."
+			);
 		}
 
 		BufferedImage thumbnailImage = 
