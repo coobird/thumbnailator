@@ -571,4 +571,346 @@ public class FixedSizeThumbnailMakerTest
 				.getResizer(new Dimension(200, 200), new Dimension(100, 100));
 		verify(spyResizer).resize(eq(img), any(BufferedImage.class));
 	}
+	
+	@Test
+	public void widthZeroIfTruncatedButOneIfRounded_FitWithinTrue()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(100, 6).build();
+		
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(10, 10)
+				.keepAspectRatio(true)
+				.fitWithinDimensions(true)
+				.make(img);
+		
+		// then
+		assertEquals(10, thumbnail.getWidth());
+		assertEquals(1, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void widthZeroIfTruncated_FitWithinTrue()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(100, 4).build();
+		
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(10, 10)
+				.keepAspectRatio(true)
+				.fitWithinDimensions(true)
+				.make(img);
+		
+		// then
+		assertEquals(10, thumbnail.getWidth());
+		assertEquals(1, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void heightZeroIfTruncatedButOneIfRounded_FitWithinTrue()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(6, 100).build();
+		
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(10, 10)
+				.keepAspectRatio(true)
+				.fitWithinDimensions(true)
+				.make(img);
+		
+		// then
+		assertEquals(1, thumbnail.getWidth());
+		assertEquals(10, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void heightZeroIfTruncated_FitWithinTrue()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(4, 100).build();
+		
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(10, 10)
+				.keepAspectRatio(true)
+				.fitWithinDimensions(true)
+				.make(img);
+		
+		// then
+		assertEquals(1, thumbnail.getWidth());
+		assertEquals(10, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void sizeGivenZeroForWidthViaConstructor()
+	{
+		// given
+		
+		try
+		{
+			// when
+			new FixedSizeThumbnailMaker(0, 10);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void sizeGivenZeroForWidthViaMethod()
+	{
+		// given
+		
+		try
+		{
+			// when
+			new FixedSizeThumbnailMaker().size(0, 10);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void sizeGivenZeroForHeightViaConstructor()
+	{
+		// given
+		
+		try
+		{
+			// when
+			new FixedSizeThumbnailMaker(10, 0);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void sizeGivenZeroForHeightViaMethod()
+	{
+		// given
+		
+		try
+		{
+			// when
+			new FixedSizeThumbnailMaker().size(10, 0);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void sizeGivenZeroForWidthAndHeightViaConstructor()
+	{
+		// given
+		
+		try
+		{
+			// when
+			new FixedSizeThumbnailMaker(0, 0);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void sizeGivenZeroForWidthAndHeightViaMethod()
+	{
+		// given
+		
+		try
+		{
+			// when
+			new FixedSizeThumbnailMaker().size(0, 0);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void sizeGivenNegativeForWidthViaConstructor()
+	{
+		// given
+		
+		try
+		{
+			// when
+			new FixedSizeThumbnailMaker(-1, 10);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void sizeGivenNegativeForWidthViaMethod()
+	{
+		// given
+		
+		try
+		{
+			// when
+			new FixedSizeThumbnailMaker().size(-1, 10);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void sizeGivenNegativeForHeightViaConstructor()
+	{
+		// given
+		
+		try
+		{
+			// when
+			new FixedSizeThumbnailMaker(10, -1);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void sizeGivenNegativeForHeightViaMethod()
+	{
+		// given
+		
+		try
+		{
+			// when
+			new FixedSizeThumbnailMaker().size(10, -1);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void sizeGivenNegativeForWidthAndHeightViaConstructor()
+	{
+		// given
+		
+		try
+		{
+			// when
+			new FixedSizeThumbnailMaker(-1, -1);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void sizeGivenNegativeForWidthAndHeightViaMethod()
+	{
+		// given
+		
+		try
+		{
+			// when
+			new FixedSizeThumbnailMaker().size(-1, -1);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+
+
+	@Test
+	public void widthBeingRounded_FitWithinTrue()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(99, 100).build();
+		
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(10, 10)
+				.keepAspectRatio(true)
+				.fitWithinDimensions(true)
+				.make(img);
+		
+		// then
+		assertEquals(10, thumbnail.getWidth());
+		assertEquals(10, thumbnail.getHeight());
+	}	
+	
+	@Test
+	public void widthBeingRounded_FitWithinFalse()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(99, 100).build();
+		
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(10, 10)
+				.keepAspectRatio(true)
+				.fitWithinDimensions(false)
+				.make(img);
+		
+		// then
+		assertEquals(10, thumbnail.getWidth());
+		assertEquals(10, thumbnail.getHeight());
+	}	
+	
+	@Test
+	public void heightBeingRounded_FitWithinTrue()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(100, 99).build();
+		
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(10, 10)
+		.keepAspectRatio(true)
+		.fitWithinDimensions(true)
+		.make(img);
+		
+		// then
+		assertEquals(10, thumbnail.getWidth());
+		assertEquals(10, thumbnail.getHeight());
+	}	
+	
+	@Test
+	public void heightBeingRounded_FitWithinFalse()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(100, 99).build();
+		
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(10, 10)
+		.keepAspectRatio(true)
+		.fitWithinDimensions(false)
+		.make(img);
+		
+		// then
+		assertEquals(10, thumbnail.getWidth());
+		assertEquals(10, thumbnail.getHeight());
+	}	
+	
 }

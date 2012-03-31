@@ -140,7 +140,9 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * @param height			The height of the thumbnails to produce.
 	 * @return					A reference to this object.
 	 * @throws IllegalStateException	If the size has already
-	 * 									been previously set.
+	 * 									been previously set, or if the 
+	 * 									{@code width} or {@code height} is less 
+	 * 									than or equal to zero.
 	 */
 	public FixedSizeThumbnailMaker size(int width, int height)
 	{
@@ -150,6 +152,20 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 					"The size has already been set."
 			);
 		}
+		
+		if (width <= 0)
+		{
+			throw new IllegalArgumentException(
+					"Width must be greater than zero."
+			);
+		}
+		if (height <= 0)
+		{
+			throw new IllegalArgumentException(
+					"Height must be greater than zero."
+			);
+		}
+		
 		this.width = width;
 		this.height = height;
 
@@ -249,11 +265,11 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 					if (sourceRatio > targetRatio)
 					{
 						targetWidth = width;
-						targetHeight = (int)(targetWidth / sourceRatio);
+						targetHeight = (int)Math.round(targetWidth / sourceRatio);
 					}
 					else 
 					{
-						targetWidth = (int)(targetHeight * sourceRatio);
+						targetWidth = (int)Math.round(targetHeight * sourceRatio);
 						targetHeight = height;
 					}
 				}
@@ -261,13 +277,13 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 				{
 					if (sourceRatio > targetRatio)
 					{
-						targetWidth = (int)(targetHeight * sourceRatio);
+						targetWidth = (int)Math.round(targetHeight * sourceRatio);
 						targetHeight = height;
 					}
 					else 
 					{
 						targetWidth = width;
-						targetHeight = (int)(targetWidth / sourceRatio);
+						targetHeight = (int)Math.round(targetWidth / sourceRatio);
 					}
 				}
 			}
