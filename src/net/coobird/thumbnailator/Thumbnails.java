@@ -1136,6 +1136,10 @@ public final class Thumbnails
 		 * {@link #size(int, int)} method, positioned by the given 
 		 * {@link Position} object.
 		 * <p>
+		 * Calling this method will guarantee that the size of the thumbnail 
+		 * will be exactly the dimensions specified in the 
+		 * {@link #size(int, int)} method. 
+		 * <p>
 		 * Internally, the resizing is performed in two steps.
 		 * First, the thumbnail will be sized so that one of the dimensions will
 		 * be sized exactly to the dimension specified in the {@code size} 
