@@ -17,6 +17,12 @@ import java.awt.image.BufferedImage;
  * thumbnails which are created will be sized to fit inside the dimensions
  * specified by the size parameter. 
  * <p>
+ * Upon calculating the size of the thumbnail, if any of the dimensions are
+ * {@code 0}, then that dimension will be promoted to {@code 1}, regardless of
+ * whether the aspect ratio of the original image is to be maintained. This will
+ * lead to some thumbnails not preserving the aspect ratio of the original
+ * image, even if {@link #keepAspectRatio(boolean)} has been {@code true}.
+ * <p>
  * <DL>
  * <DT><B>Usage:</B></DT>
  * <DD>
@@ -288,6 +294,9 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 				}
 			}
 		}
+		
+		targetWidth = (targetWidth == 0) ? 1 : targetWidth;
+		targetHeight = (targetHeight == 0) ? 1 : targetHeight;
 		
 		return super.makeThumbnail(img, targetWidth, targetHeight);
 	}

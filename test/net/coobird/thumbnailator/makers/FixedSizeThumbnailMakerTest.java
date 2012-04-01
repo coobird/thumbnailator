@@ -573,7 +573,7 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void widthZeroIfTruncatedButOneIfRounded_FitWithinTrue()
+	public void heightZeroIfTruncatedButOneIfRounded_FitWithinTrue()
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(100, 6).build();
@@ -590,7 +590,7 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void widthZeroIfTruncated_FitWithinTrue()
+	public void heightZeroIfTruncated_FitWithinTrue()
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(100, 4).build();
@@ -607,7 +607,7 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void heightZeroIfTruncatedButOneIfRounded_FitWithinTrue()
+	public void widthZeroIfTruncatedButOneIfRounded_FitWithinTrue()
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(6, 100).build();
@@ -624,7 +624,7 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void heightZeroIfTruncated_FitWithinTrue()
+	public void widthZeroIfTruncated_FitWithinTrue()
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(4, 100).build();
