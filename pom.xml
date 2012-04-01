@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>net.coobird</groupId>
+  <artifactId>thumbnailator</artifactId>
+  <version>0.4.1</version>
+  <packaging>jar</packaging>
+  <name>thumbnailator</name>
+  <description>Thumbnailator - a thumbnail generation library for Java</description>
+  <url>http://code.google.com/p/thumbnailator</url>
+  <licenses>
+    <license>
+      <name>The MIT License (MIT)</name>
+      <url>http://www.opensource.org/licenses/mit-license.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <url>http://code.google.com/p/thumbnailator</url>
+    <connection>scm:hg:https://code.google.com/p/thumbnailator</connection>
+  </scm>
+  <developers>
+    <developer>
+      <name>Chris Kroells</name>
+      <email>coobirdnet@gmail.com</email>
+      <url>http://coobird.net</url>
+    </developer>
+  </developers>
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
+</project>

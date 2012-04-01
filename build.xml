@@ -1,4 +1,4 @@
-<project name="Thumbnailator" default="dist" basedir=".">
+<project name="Thumbnailator" default="dist" basedir="." xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 	<description>
 		Thumbnailator Build
 	</description>
@@ -11,8 +11,21 @@
 	<property name="classes" location="bin" />
 	<property name="tests" location="test" />
 
-	<!-- Set version number -->
-	<property name="version" value="0.4.0" />
+	<!-- Maven properties -->
+	<property name="groupId" value="net.coobird" />
+	<property name="artifactId" value="thumbnailator" />
+	<property name="version" value="0.4.1" />
+
+	<!-- Maven file names -->
+	<property name="maven-jar" value="${dist}/lib/${artifactId}-${version}.jar" />
+	<property name="maven-javadoc-jar" value="${dist}/lib/${artifactId}-${version}-javadoc.jar" />
+	<property name="maven-sources-jar" value="${dist}/lib/${artifactId}-${version}-sources.jar" />
+	
+	<!-- Defined maven snapshots and staging repository id and url -->
+	<property name="maven-snapshots-repository-id" value="sonatype-nexus-snapshots" />
+	<property name="maven-snapshots-repository-url" value="https://oss.sonatype.org/content/repositories/snapshots/" />
+	<property name="maven-staging-repository-id" value="sonatype-nexus-staging" />
+	<property name="maven-staging-repository-url" value="https://oss.sonatype.org/service/local/staging/deploy/maven2/" />
 	
 	<target name="init">
 	</target>
@@ -76,26 +89,27 @@
 		description="generate the distribution">
 		
 		<!-- Create the distribution directory -->
-		<mkdir dir="${dist}/${version}" />
+		<mkdir dir="${dist}/lib" />
 	
-		<!-- Put everything in ${build} into the Thumbnailator-${version}.jar file -->
-	    <jar jarfile="${dist}/${version}/Thumbnailator-${version}.jar">
+		<!-- JAR file for the Maven Central Repo and Google Project Hosting -->
+	    <jar jarfile="${maven-jar}">
 	    	<fileset dir="${build}" />
 			<fileset dir="${resources}" />
-	    	<manifest>
-	          <attribute name="Built-By" value="coobird"/>
-	          <section name="Thumbnailator">
-	            <attribute name="Specification-Title" value="Thumbnailator"/>
-	            <attribute name="Specification-Version" value="${version}"/>
-	            <attribute name="Specification-Vendor" value="coobird.net"/>
-	            <attribute name="Implementation-Title" value="Thumbnailator"/>
-	            <attribute name="Implementation-Version" value="${version}"/> 
-	            <attribute name="Implementation-Vendor" value="coobird.net"/>
-	          </section>
-	        </manifest>
+			<manifest>
+				<attribute name="Built-By" value="coobird"/>
+				<section name="Thumbnailator">
+					<attribute name="Specification-Title" value="Thumbnailator"/>
+					<attribute name="Specification-Version" value="${version}"/>
+					<attribute name="Specification-Vendor" value="coobird.net"/>
+					<attribute name="Implementation-Title" value="Thumbnailator"/>
+					<attribute name="Implementation-Version" value="${version}"/> 
+					<attribute name="Implementation-Vendor" value="coobird.net"/>
+				</section>
+			</manifest>
 	    </jar>
 		
-	    <jar jarfile="${dist}/${version}/Thumbnailator-${version}-all.jar">
+		<!-- JAR containing source for Google Project Hosting -->
+	    <jar jarfile="${dist}/lib/${artifactId}-${version}-all.jar">
 	    	<fileset dir="${build}" />
 	    	<fileset dir="${src}" excludes="**/package.info" />
 			<fileset dir="${resources}" />
@@ -112,10 +126,69 @@
 	        </manifest>
 	    </jar>
 		
-		<zip destfile="${dist}/${version}/Thumbnailator-${version}-javadoc.zip">
+		<!-- Javadoc ZIP file for Google Project Hosting -->
+		<zip destfile="${dist}/lib/${artifactId}-${version}-javadoc.zip">
 			<fileset dir="${javadoc_dir}" />
 		</zip>
+		
+		<!-- Javadoc JAR for the Maven Central Repo -->
+		<jar jarfile="${maven-javadoc-jar}">
+			<fileset dir="${javadoc_dir}" />
+		</jar>
+
+		<!-- Sources JAR for the Maven Central Repo -->
+		<jar jarfile="${maven-sources-jar}">
+			<fileset dir="${src}" />
+		</jar>
 	</target>
+	
+	<target
+		name="deploy" 
+		description="deploy snapshot version to Maven snapshot repository">
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-Durl=${maven-snapshots-repository-url}" />
+			<arg value="-DrepositoryId=${maven-snapshots-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${maven-jar}" />
+		</artifact:mvn>
+	</target>
+
+	<!-- before this, update project version (both build.xml and pom.xml) from SNAPSHOT to RELEASE -->
+	<target name="stage"
+		description="deploy release version to Maven staging repository">
+		<!-- sign and deploy the main artifact -->
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+			<arg value="-Durl=${maven-staging-repository-url}" />
+			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${maven-jar}" />
+			<arg value="-Pgpg" />
+		</artifact:mvn>
+		
+		<!-- sign and deploy the sources artifact -->
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+			<arg value="-Durl=${maven-staging-repository-url}" />
+			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${maven-sources-jar}" />
+			<arg value="-Dclassifier=sources" />
+			<arg value="-Pgpg" />
+		</artifact:mvn>
+		
+		<!-- sign and deploy the javadoc artifact -->
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+			<arg value="-Durl=${maven-staging-repository-url}" />
+			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${maven-javadoc-jar}" />
+			<arg value="-Dclassifier=javadoc" />
+			<arg value="-Pgpg" />
+		</artifact:mvn>
+	</target>	
 	
 	<target
 		name="release"
@@ -151,7 +224,6 @@
 			targetfilename="Thumbnailator-${version}.jar"
 			summary="Thumbnailator JAR file"
 			labels="Featured" />
-	
 	</target>
 
 	<target
