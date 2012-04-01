@@ -231,4 +231,272 @@ public class ScaledThumbnailMakerTest
 				.getResizer(new Dimension(200, 200), new Dimension(100, 100));
 		verify(spyResizer).resize(eq(img), any(BufferedImage.class));
 	}
+	
+	@Test
+	public void scaleIsZeroThroughOneArgConstructor()
+	{
+		// given
+		try
+		{
+			// when
+			new ScaledThumbnailMaker(0);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void scaleIsZeroThroughOneArgScaleMethod()
+	{
+		// given
+		try
+		{
+			// when
+			new ScaledThumbnailMaker().scale(0);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void scaleIsZeroThroughTwoArgConstructor()
+	{
+		// given
+		try
+		{
+			// when
+			new ScaledThumbnailMaker(0, 0);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void scaleIsZeroThroughTwoArgScaleMethod()
+	{
+		// given
+		try
+		{
+			// when
+			new ScaledThumbnailMaker().scale(0, 0);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void scaleIsNegativeThroughOneArgConstructor()
+	{
+		// given
+		try
+		{
+			// when
+			new ScaledThumbnailMaker(-1);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void scaleIsNegativeThroughOneArgScaleMethod()
+	{
+		// given
+		try
+		{
+			// when
+			new ScaledThumbnailMaker().scale(-1);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void scaleIsNegativeThroughTwoArgConstructor()
+	{
+		// given
+		try
+		{
+			// when
+			new ScaledThumbnailMaker(1, -1);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void scaleIsNegativeThroughTwoArgScaleMethod()
+	{
+		// given
+		try
+		{
+			// when
+			new ScaledThumbnailMaker().scale(1, -1);
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void isRoundingWidthRatherThanTruncate_scaleOneArg()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(99, 100).build();
+		
+		// when
+		BufferedImage thumbnail = new ScaledThumbnailMaker(0.1).make(img);
+		
+		// then
+		assertEquals(10, thumbnail.getWidth());
+		assertEquals(10, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void isRoundingHeightRatherThanTruncate_scaleOneArg()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(100, 99).build();
+		
+		// when
+		BufferedImage thumbnail = new ScaledThumbnailMaker(0.1).make(img);
+		
+		// then
+		assertEquals(10, thumbnail.getWidth());
+		assertEquals(10, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void isRoundingWidthRatherThanTruncate_scaleTwoArg()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(99, 100).build();
+		
+		// when
+		BufferedImage thumbnail = new ScaledThumbnailMaker(0.1, 0.1).make(img);
+		
+		// then
+		assertEquals(10, thumbnail.getWidth());
+		assertEquals(10, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void isRoundingHeightRatherThanTruncate_scaleTwoArg()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(100, 99).build();
+		
+		// when
+		BufferedImage thumbnail = new ScaledThumbnailMaker(0.1, 0.1).make(img);
+		
+		// then
+		assertEquals(10, thumbnail.getWidth());
+		assertEquals(10, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void widthBecomesZeroIfTruncated()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(9, 100).build();
+		
+		// when
+		BufferedImage thumbnail = new ScaledThumbnailMaker(0.1).make(img);
+		
+		// then
+		assertEquals(1, thumbnail.getWidth());
+		assertEquals(10, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void widthBecomesZeroIfTruncatedButIsOneIfRounded()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(10, 100).build();
+		
+		// when
+		BufferedImage thumbnail = new ScaledThumbnailMaker(0.1).make(img);
+		
+		// then
+		assertEquals(1, thumbnail.getWidth());
+		assertEquals(10, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void widthBecomesZeroIfTruncatedAndIsZeroIfRounded()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(1, 100).build();
+		
+		// when
+		BufferedImage thumbnail = new ScaledThumbnailMaker(0.1).make(img);
+		
+		// then
+		assertEquals(1, thumbnail.getWidth());
+		assertEquals(10, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void heightBecomesZeroIfTruncated()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(100, 9).build();
+		
+		// when
+		BufferedImage thumbnail = new ScaledThumbnailMaker(0.1).make(img);
+		
+		// then
+		assertEquals(10, thumbnail.getWidth());
+		assertEquals(1, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void heightBecomesZeroIfTruncatedButIsOneIfRounded()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(100, 10).build();
+		
+		// when
+		BufferedImage thumbnail = new ScaledThumbnailMaker(0.1).make(img);
+		
+		// then
+		assertEquals(10, thumbnail.getWidth());
+		assertEquals(1, thumbnail.getHeight());
+	}
+	
+	@Test
+	public void heightBecomesZeroIfTruncatedAndIsZeroIfRounded()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(100, 1).build();
+		
+		// when
+		BufferedImage thumbnail = new ScaledThumbnailMaker(0.1).make(img);
+		
+		// then
+		assertEquals(10, thumbnail.getWidth());
+		assertEquals(1, thumbnail.getHeight());
+	}
 }

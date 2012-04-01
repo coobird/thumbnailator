@@ -6,6 +6,11 @@ import java.awt.image.BufferedImage;
  * A {@link ThumbnailMaker} which scales an image by a specified scaling factor
  * when producing a thumbnail.
  * <p>
+ * Upon calculating the size of the thumbnail, if any of the dimensions are
+ * {@code 0}, then that dimension will be promoted to {@code 1}. This will
+ * cause some resizing operations to not preserve the aspect ratio of the 
+ * original image.
+ * <p>
  * <DL>
  * <DT><B>Usage:</B></DT>
  * <DD>
@@ -36,6 +41,7 @@ BufferedImage thumbnail = new ScaledThumbnailMaker()
  * </pre>
  * </DD>
  * </DL>
+ * <DL>
  * 
  * @author coobird
  *
@@ -118,17 +124,7 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	 */
 	public ScaledThumbnailMaker scale(double factor)
 	{
-		if (ready.isSet(PARAM_SCALE))
-		{
-			throw new IllegalStateException(
-					"The scaling factor has already been set."
-			);
-		}
-		
-		this.widthFactor = factor;
-		this.heightFactor = factor;
-		ready.set(PARAM_SCALE);
-		return this;
+		return scale(factor, factor);
 	}
 	
 	/**
@@ -154,6 +150,13 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 			);
 		}
 		
+		if (widthFactor <= 0 || heightFactor <= 0)
+		{
+			throw new IllegalArgumentException(
+					"The scaling factor must be greater than zero."	
+			);
+		}
+		
 		this.widthFactor = widthFactor;
 		this.heightFactor = heightFactor;
 		ready.set(PARAM_SCALE);
@@ -163,8 +166,11 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	@Override
 	public BufferedImage make(BufferedImage img)
 	{
-		int width = (int)(img.getWidth() * widthFactor);
-		int height = (int)(img.getHeight() * heightFactor);
+		int width = (int)Math.round(img.getWidth() * widthFactor);
+		int height = (int)Math.round(img.getHeight() * heightFactor);
+		
+		width = (width == 0) ? 1 : width;
+		height = (height == 0) ? 1 : height;
 
 		return super.makeThumbnail(img, width, height);
 	}
