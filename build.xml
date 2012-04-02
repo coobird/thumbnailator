@@ -202,8 +202,8 @@
 			username="${gc.username}" 
 			password="${gc.password}" 
 			projectname="thumbnailator" 
-			filename="${dist}/${version}/Thumbnailator-${version}-javadoc.zip" 
-			targetfilename="Thumbnailator-${version}-javadoc.zip"
+			filename="${dist}/lib/${artifactId}-${version}-javadoc.zip" 
+			targetfilename="${artifactId}-${version}-javadoc.zip"
 			summary="Javadocs for Thumbnailator"
 			labels="Featured" />
 		
@@ -211,8 +211,8 @@
 			username="${gc.username}" 
 			password="${gc.password}" 
 			projectname="thumbnailator" 
-			filename="${dist}/${version}/Thumbnailator-${version}-all.jar" 
-			targetfilename="Thumbnailator-${version}-all.jar"
+			filename="${dist}/lib/${artifactId}-${version}-all.jar" 
+			targetfilename="${artifactId}-${version}-all.jar"
 			summary="Thumbnailator JAR file with sources included - Recommended for development"
 			labels="Featured" />
 		
@@ -220,8 +220,8 @@
 			username="${gc.username}" 
 			password="${gc.password}" 
 			projectname="thumbnailator" 
-			filename="${dist}/${version}/Thumbnailator-${version}.jar" 
-			targetfilename="Thumbnailator-${version}.jar"
+			filename="${maven-jar}" 
+			targetfilename="thumbnailator-${version}.jar"
 			summary="Thumbnailator JAR file"
 			labels="Featured" />
 	</target>
