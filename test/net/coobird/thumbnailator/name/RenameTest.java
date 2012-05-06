@@ -287,4 +287,144 @@ public class RenameTest
 		// then
 		assertEquals("filename-thumbnail.jpg", filename);
 	}
+	
+	@Test
+	public void renameNoChange_NameGiven_ParamNull_WithMultipleDots()
+	{
+		// given
+		String name = "filename.middle.jpg";
+		ThumbnailParameter param = null;
+		
+		// when
+		String filename = Rename.NO_CHANGE.apply(name, param);
+		
+		// then
+		assertEquals("filename.middle.jpg", filename);
+	}
+	
+	@Test
+	public void renameNoChange_NameGiven_ParamGiven_WithMultipleDots()
+	{
+		// given
+		String name = "filename.middle.jpg";
+		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
+		
+		// when
+		String filename = Rename.NO_CHANGE.apply(name, param);
+		
+		// then
+		assertEquals("filename.middle.jpg", filename);
+	}
+	
+	@Test
+	public void renamePrefixDotThumbnail_NameGiven_ParamNull_WithMultipleDots()
+	{
+		// given
+		String name = "filename.middle.jpg";
+		ThumbnailParameter param = null;
+		
+		// when
+		String filename = Rename.PREFIX_DOT_THUMBNAIL.apply(name, param);
+		
+		// then
+		assertEquals("thumbnail.filename.middle.jpg", filename);
+	}
+	
+	@Test
+	public void renamePrefixDotThumbnail_NameGiven_ParamGiven_WithMultipleDots()
+	{
+		// given
+		String name = "filename.middle.jpg";
+		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
+		
+		// when
+		String filename = Rename.PREFIX_DOT_THUMBNAIL.apply(name, param);
+		
+		// then
+		assertEquals("thumbnail.filename.middle.jpg", filename);
+	}
+	
+	@Test
+	public void renamePrefixHyphenThumbnail_NameGiven_ParamNull_WithMultipleDots()
+	{
+		// given
+		String name = "filename.middle.jpg";
+		ThumbnailParameter param = null;
+		
+		// when
+		String filename = Rename.PREFIX_HYPHEN_THUMBNAIL.apply(name, param);
+		
+		// then
+		assertEquals("thumbnail-filename.middle.jpg", filename);
+	}
+	
+	@Test
+	public void renamePrefixHyphenThumbnail_NameGiven_ParamGiven_WithMultipleDots()
+	{
+		// given
+		String name = "filename.middle.jpg";
+		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
+		
+		// when
+		String filename = Rename.PREFIX_HYPHEN_THUMBNAIL.apply(name, param);
+		
+		// then
+		assertEquals("thumbnail-filename.middle.jpg", filename);
+	}
+	
+	@Test
+	public void renameSuffixDotThumbnail_NameGiven_ParamNull_WithMultipleDots()
+	{
+		// given
+		String name = "filename.middle.jpg";
+		ThumbnailParameter param = null;
+		
+		// when
+		String filename = Rename.SUFFIX_DOT_THUMBNAIL.apply(name, param);
+		
+		// then
+		assertEquals("filename.middle.thumbnail.jpg", filename);
+	}
+	
+	@Test
+	public void renameSuffixDotThumbnail_NameGiven_ParamGiven_WithMultipleDots()
+	{
+		// given
+		String name = "filename.middle.jpg";
+		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
+		
+		// when
+		String filename = Rename.SUFFIX_DOT_THUMBNAIL.apply(name, param);
+		
+		// then
+		assertEquals("filename.middle.thumbnail.jpg", filename);
+	}
+	
+	@Test
+	public void renameSuffixHyphenThumbnail_NameGiven_ParamNull_WithMultipleDots()
+	{
+		// given
+		String name = "filename.middle.jpg";
+		ThumbnailParameter param = null;
+		
+		// when
+		String filename = Rename.SUFFIX_HYPHEN_THUMBNAIL.apply(name, param);
+		
+		// then
+		assertEquals("filename.middle-thumbnail.jpg", filename);
+	}
+	
+	@Test
+	public void renameSuffixHyphenThumbnail_NameGiven_ParamGiven_WithMultipleDots()
+	{
+		// given
+		String name = "filename.middle.jpg";
+		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
+		
+		// when
+		String filename = Rename.SUFFIX_HYPHEN_THUMBNAIL.apply(name, param);
+		
+		// then
+		assertEquals("filename.middle-thumbnail.jpg", filename);
+	}
 }
