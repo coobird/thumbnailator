@@ -188,7 +188,7 @@ public abstract class Rename
 	{
 		String newFileName = "";
 		
-		int indexOfDot = fileName.indexOf('.');
+		int indexOfDot = fileName.lastIndexOf('.');
 		
 		if (indexOfDot != -1)
 		{
