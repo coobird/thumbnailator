@@ -8595,7 +8595,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPNG_DestExtensionIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.PNG");
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8615,7 +8615,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPNG_DestExtensionIsJPG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.PNG");
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8635,7 +8635,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPNG_DestExtensionIsJpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.PNG");
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8655,7 +8655,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPNG_DestExtensionIsjpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.PNG");
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8675,7 +8675,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPNG_DestExtensionIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.PNG");
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8695,7 +8695,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPNG_DestExtensionIsJpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.PNG");
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8715,7 +8715,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPng_DestExtensionIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.Png");
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8735,7 +8735,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPng_DestExtensionIsJPG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.Png");
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8755,7 +8755,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPng_DestExtensionIsJpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.Png");
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8775,7 +8775,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPng_DestExtensionIsjpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.Png");
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8795,7 +8795,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPng_DestExtensionIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.Png");
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8815,7 +8815,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPng_DestExtensionIsJpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.Png");
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		TestUtils.copyFile(sourceFile, f);
 		
