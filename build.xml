@@ -73,6 +73,8 @@
 	
 		<junit haltonfailure="yes" printsummary="yes" reloading="no">
 			<classpath path="${classes}" />
+			<classpath path="lib/junit-4.10.jar" />
+			<classpath path="lib/mockito-all-1.8.5.jar" />
 			<batchtest>
 				<fileset dir="${tests}">
 					<include name="**/*.java" />
