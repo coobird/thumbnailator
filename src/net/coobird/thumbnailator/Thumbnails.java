@@ -52,7 +52,9 @@ import net.coobird.thumbnailator.tasks.io.URLImageSource;
 import net.coobird.thumbnailator.util.ThumbnailatorUtils;
 
 /**
- * This class provides a fluent interface to create thumbnails.
+ * Provides a fluent interface to create thumbnails.
+ * <p>
+ * This is the main entry point for creating thumbnails with Thumbnailator.
  * <DL>
  * <DT><B>Usage:</B></DT>
  * <DD>
@@ -770,6 +772,19 @@ public final class Thumbnails
 		/**
 		 * Sets the size of the thumbnail.
 		 * <p>
+		 * For example, to create thumbnails which should fit within a
+		 * bounding rectangle of 640 x 480, the following code can be used:
+		 * <pre><code>
+Thumbnails.of(image)
+    .size(640, 480)
+    .toFile(thumbnail);
+		 * </code></pre>
+		 * <p>
+		 * In the above code, the thumbnail will preserve the aspect ratio
+		 * of the original image. If the thumbnail should be forced to the
+		 * specified size, the {@link #forceSize(int, int)} method can
+		 * be used instead of this method.
+		 * <p>
 		 * Once this method is called, calling the {@link #scale(double)} method
 		 * will result in an {@link IllegalStateException}.
 		 * <p>
@@ -901,6 +916,14 @@ public final class Thumbnails
 		/**
 		 * Sets the scaling factor of the thumbnail.
 		 * <p>
+		 * For example, to create thumbnails which are 50% the size of the
+		 * original, the following code can be used:
+		 * <pre><code>
+Thumbnails.of(image)
+    .scale(0.5)
+    .toFile(thumbnail);
+		 * </code></pre>
+		 * <p>
 		 * Once this method is called, calling the {@link #size(int, int)} 
 		 * method, or the {@link #scale(double, double)} method, or the 
 		 * {@link #keepAspectRatio(boolean)} method will result in an
@@ -928,6 +951,15 @@ public final class Thumbnails
 		 * If the scaling factor for the width and height are not equal, then
 		 * the thumbnail will not preserve the aspect ratio of the original 
 		 * image.
+		 * <p>
+		 * For example, to create thumbnails which are 50% the width of the
+		 * original, while 75% the height of the original, the following code
+		 * can be used:
+		 * <pre><code>
+Thumbnails.of(image)
+    .scale(0.5, 0.75)
+    .toFile(thumbnail);
+		 * </code></pre>
 		 * <p>
 		 * Once this method is called, calling the {@link #size(int, int)} 
 		 * method, or the {@link #scale(double)} method, or the 
