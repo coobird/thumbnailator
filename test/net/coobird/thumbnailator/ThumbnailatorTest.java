@@ -2714,7 +2714,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
-		File outputFile = new File("/@\\*&!!#"); 
+		File outputFile = new File("@\\#?/^%*&/|!!$:#"); 
 		
 		try
 		{
@@ -2723,7 +2723,7 @@ public class ThumbnailatorTest
 		}
 		catch (IOException e)
 		{
-			assertEquals("Could not open output file.", e.getMessage());
+			// An IOException is expected. Likely a FileNotFoundException.
 		}
 	}
 	
