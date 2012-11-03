@@ -1,5 +1,6 @@
 package net.coobird.thumbnailator.util.exif;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -22,7 +23,7 @@ public class ExifUtils {
 	 * @return				
 	 * @throws Exception
 	 */
-	public static Orientation getExifOrientation(ImageReader reader, int imageIndex) throws Exception {
+	public static Orientation getExifOrientation(ImageReader reader, int imageIndex) throws IOException {
 		
 		IIOMetadata metadata = reader.getImageMetadata(imageIndex);
 		Node rootNode = metadata.getAsTree("javax_imageio_jpeg_image_1.0");
