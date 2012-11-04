@@ -1,22 +1,19 @@
 package net.coobird.thumbnailator.filters;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import net.coobird.thumbnailator.test.BufferedImageAssert;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 import net.coobird.thumbnailator.util.BufferedImages;
 
 import org.junit.Test;
 
 public class FlipTest {
-	
-	private static int SIZE = 160;
 	
 	@Test
 	public void flipHorizontal() throws Exception {
@@ -27,12 +24,14 @@ public class FlipTest {
 		BufferedImage result = Flip.HORIZONTAL.apply(img);
 		
 		// then
-		assertEquals(Color.black.getRGB(), result.getRGB(0, 0));
-		assertEquals(Color.black.getRGB(), result.getRGB(0, SIZE / 2 - 1));
-		assertEquals(Color.white.getRGB(), result.getRGB(0, SIZE - 1));
-		assertEquals(Color.black.getRGB(), result.getRGB(SIZE - 1, 0));
-		assertEquals(Color.black.getRGB(), result.getRGB(SIZE - 1, SIZE / 2 - 1));
-		assertEquals(Color.black.getRGB(), result.getRGB(SIZE - 1, SIZE - 1));
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						0, 0, 1,
+				}
+		);
 	}
 	
 	@Test
@@ -44,12 +43,14 @@ public class FlipTest {
 		BufferedImage result = Flip.VERTICAL.apply(img);
 		
 		// then
-		assertEquals(Color.black.getRGB(), result.getRGB(0, 0));
-		assertEquals(Color.black.getRGB(), result.getRGB(0, SIZE / 2 - 1));
-		assertEquals(Color.black.getRGB(), result.getRGB(0, SIZE - 1));
-		assertEquals(Color.white.getRGB(), result.getRGB(SIZE - 1, 0));
-		assertEquals(Color.black.getRGB(), result.getRGB(SIZE - 1, SIZE / 2 - 1));
-		assertEquals(Color.black.getRGB(), result.getRGB(SIZE - 1, SIZE - 1));
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 0, 0,
+						1, 1, 1,
+						1, 1, 1,
+				}
+		);
 	}
 	
 	/**
