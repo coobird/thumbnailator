@@ -3,9 +3,13 @@ package net.coobird.thumbnailator.filters;
 import static org.junit.Assert.*;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.filters.Rotation;
+import net.coobird.thumbnailator.test.BufferedImageAssert;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 import net.coobird.thumbnailator.util.BufferedImages;
 
@@ -57,5 +61,62 @@ public class RotationTest
 		
 		// then
 		assertTrue(BufferedImageComparer.isSame(originalImage, copyImage));
+	}
+	
+	@Test
+	public void imageRotatedLeft90Degrees() throws Exception {
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Exif/original.png"));
+		
+		// when
+		BufferedImage result = Rotation.LEFT_90_DEGREES.apply(img);
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 0,
+						1, 1, 0,
+						1, 1, 1,
+				}
+		);
+	}
+	
+	@Test
+	public void imageRotatedRight90Degrees() throws Exception {
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Exif/original.png"));
+		
+		// when
+		BufferedImage result = Rotation.RIGHT_90_DEGREES.apply(img);
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						0, 1, 1,
+						0, 1, 1,
+				}
+		);
+	}
+	
+	@Test
+	public void imageRotated180Degrees() throws Exception {
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Exif/original.png"));
+		
+		// when
+		BufferedImage result = Rotation.ROTATE_180_DEGREES.apply(img);
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						0, 0, 1,
+						1, 1, 1,
+						1, 1, 1,
+				}
+		);
 	}
 }
