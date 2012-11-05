@@ -119,4 +119,63 @@ public class RotationTest
 				}
 		);
 	}
+	
+	@Test
+	public void stretchedImageRotatedLeft90Degrees() throws Exception {
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Exif/stretch.png"));
+		
+		// when
+		BufferedImage result = Rotation.LEFT_90_DEGREES.apply(img);
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 0,
+						1, 1, 0,
+						1, 1, 1,
+				}
+		);
+		
+	}
+	
+	@Test
+	public void stretchedImageRotatedRight90Degrees() throws Exception {
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Exif/stretch.png"));
+		
+		// when
+		BufferedImage result = Rotation.RIGHT_90_DEGREES.apply(img);
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						0, 1, 1,
+						0, 1, 1,
+				}
+		);
+		
+	}
+	
+	@Test
+	public void stretchedImageRotated180Degrees() throws Exception {
+		// given
+		BufferedImage img = ImageIO.read(new File("test-resources/Exif/stretch.png"));
+		
+		// when
+		BufferedImage result = Rotation.ROTATE_180_DEGREES.apply(img);
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						0, 0, 1,
+						1, 1, 1,
+						1, 1, 1,
+				}
+		);
+	}
 }
