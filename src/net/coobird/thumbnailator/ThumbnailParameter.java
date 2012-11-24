@@ -2,7 +2,7 @@ package net.coobird.thumbnailator;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.coobird.thumbnailator.filters.ImageFilter;
@@ -13,6 +13,10 @@ import net.coobird.thumbnailator.resizers.ResizerFactory;
 
 /**
  * This class is used to specify the parameters to use when creating a thumbnail.
+ * <p>
+ * An instance of {@link ThumbnailParameter} is mutable -- it should not be
+ * reused for multiple resizes, as the parameters can change behind the scenes
+ * as the resizing process progresses.
  * 
  * @author coobird
  *
@@ -282,8 +286,15 @@ public class ThumbnailParameter
 		this.outputQuality = outputQuality;
 		this.imageType = imageType;
 		
-		this.filters = filters == null ? 
-				Collections.<ImageFilter>emptyList() : filters;
+		// Creating a new ArrayList, as `filters` should be mutable as of 0.4.3.
+		if (filters == null)
+		{
+			this.filters = new ArrayList<ImageFilter>();
+		}
+		else
+		{
+			this.filters = new ArrayList<ImageFilter>(filters);
+		}
 				
 		if (resizerFactory == null)
 		{
@@ -868,7 +879,7 @@ public class ThumbnailParameter
 	 */
 	public List<ImageFilter> getImageFilters()
 	{
-		return Collections.unmodifiableList(filters);
+		return filters;
 	}
 	
 	/**

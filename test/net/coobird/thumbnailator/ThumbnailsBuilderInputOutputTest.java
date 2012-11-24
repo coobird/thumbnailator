@@ -1,7 +1,11 @@
 package net.coobird.thumbnailator;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -23,6 +27,7 @@ import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 import net.coobird.thumbnailator.name.ConsecutivelyNumberedFilenames;
 import net.coobird.thumbnailator.name.Rename;
+import net.coobird.thumbnailator.test.BufferedImageAssert;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -9126,6 +9131,191 @@ public class ThumbnailsBuilderInputOutputTest
 		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
 	}
 	
+	@Test
+	public void correctOrientation1() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_1.jpg");
+		
+		// when
+		BufferedImage result = 
+			Thumbnails.of(sourceFile)
+				.size(100, 100)
+				.asBufferedImage();
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	
+	@Test
+	public void correctOrientation2() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_2.jpg");
+		
+		// when
+		BufferedImage result = 
+			Thumbnails.of(sourceFile)
+				.size(100, 100)
+				.asBufferedImage();
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void correctOrientation3() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_3.jpg");
+		
+		// when
+		BufferedImage result = 
+			Thumbnails.of(sourceFile)
+				.size(100, 100)
+				.asBufferedImage();
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void correctOrientation4() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_4.jpg");
+		
+		// when
+		BufferedImage result = 
+			Thumbnails.of(sourceFile)
+				.size(100, 100)
+				.asBufferedImage();
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void correctOrientation5() throws Exception 
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_5.jpg");
+		
+		// when
+		BufferedImage result = 
+			Thumbnails.of(sourceFile)
+				.size(100, 100)
+				.asBufferedImage();
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void correctOrientation6() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_6.jpg");
+		
+		// when
+		BufferedImage result = 
+			Thumbnails.of(sourceFile)
+				.size(100, 100)
+				.asBufferedImage();
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void correctOrientation7() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_7.jpg");
+		
+		// when
+		BufferedImage result = 
+			Thumbnails.of(sourceFile)
+				.size(100, 100)
+				.asBufferedImage();
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void correctOrientation8() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_8.jpg");
+		
+		// when
+		BufferedImage result = 
+			Thumbnails.of(sourceFile)
+				.size(100, 100)
+				.asBufferedImage();
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+
 	private File makeRenamedFile(File f, Rename rename)
 	{
 		ThumbnailParameter param = 
