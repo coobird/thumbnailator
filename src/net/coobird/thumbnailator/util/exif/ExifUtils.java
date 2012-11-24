@@ -11,17 +11,27 @@ import javax.imageio.metadata.IIOMetadataNode;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class ExifUtils {
+public final class ExifUtils {
 	
-	private static final String EXIF_MAGIC_STRING = "Exif"; 
+	private static final String EXIF_MAGIC_STRING = "Exif";
+	
+	/**
+	 * This class should not be instantiated.
+	 */
+	private ExifUtils() {};
 	
 	/**
 	 * Returns the orientation obtained from the EXIF metadata.
 	 * 
-	 * @param reader		 
-	 * @param imageIndex
-	 * @return				
-	 * @throws Exception
+	 * @param reader		An {@link ImageReader} which is reading the
+	 * 						target image.
+	 * @param imageIndex	The index of the image to read the EXIF data from.
+	 * @return				The orientation information obtained from the
+	 * 						EXIF metadata.
+	 * @throws IOException				When an error occurs during reading.
+	 * @throws IllegalArgumentException	If the {@link ImageReader} does not
+	 * 									have the target image set, or if the
+	 * 									reader does not have a JPEG open.
 	 */
 	public static Orientation getExifOrientation(ImageReader reader, int imageIndex) throws IOException {
 		

@@ -16,6 +16,15 @@ public final class ExifFilterUtils {
 	 */
 	private ExifFilterUtils() {};
 	
+	/**
+	 * Returns a {@link ImageFilter} which will perform the transformations
+	 * required to properly orient the thumbnail according to the EXIF
+	 * orienation.
+	 * 
+	 * @param orientation	The EXIF orientation
+	 * @return				{@link ImageFilter}s required to properly
+	 * 						orient the image.
+	 */
 	public static ImageFilter getFilterForOrientation(Orientation orientation) {
 		Pipeline filters = new Pipeline();
 		
