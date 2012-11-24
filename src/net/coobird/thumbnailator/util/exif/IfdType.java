@@ -1,6 +1,7 @@
 package net.coobird.thumbnailator.util.exif;
 
-public enum IfdType {
+public enum IfdType 
+{
 	BYTE(1, 1),
 	ASCII(2, 1),
 	SHORT(3, 2),
@@ -14,7 +15,8 @@ public enum IfdType {
 	private int value;
 	private int size;
 	
-	private IfdType(int value, int size) {
+	private IfdType(int value, int size) 
+	{
 		this.value = value;
 		this.size = size;
 	}
@@ -22,17 +24,22 @@ public enum IfdType {
 	/*
 	 * Returns the byte size of this type
 	 */
-	public int size() {
+	public int size() 
+	{
 		return size;
 	}
 	
-	public int value() {
+	public int value() 
+	{
 		return value;
 	}
 	
-	public static IfdType typeOf(int value) {
-		for (IfdType type : IfdType.values()) {
-			if (type.value == value) {
+	public static IfdType typeOf(int value) 
+	{
+		for (IfdType type : IfdType.values()) 
+		{
+			if (type.value == value) 
+			{
 				return type;
 			}
 		}
@@ -41,7 +48,8 @@ public enum IfdType {
 	}
 	
 	@Override
-	public String toString() {
+	public String toString() 
+	{
 		return "IfdType [type=" + this.name() + ", value=" + value + ", size=" + size + "]";
 	}
 }

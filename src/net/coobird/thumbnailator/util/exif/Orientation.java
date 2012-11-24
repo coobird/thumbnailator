@@ -1,6 +1,7 @@
 package net.coobird.thumbnailator.util.exif;
 
-public enum Orientation {
+public enum Orientation 
+{
 	TOP_LEFT(1),
 	TOP_RIGHT(2),
 	BOTTOM_RIGHT(3),
@@ -12,13 +13,17 @@ public enum Orientation {
 	;
 	
 	private int value;
-	private Orientation(int value) {
+	private Orientation(int value) 
+	{
 		this.value = value;
 	}
 	
-	public static Orientation typeOf(int value) {
-		for (Orientation orientation : Orientation.values()) {
-			if (orientation.value == value) {
+	public static Orientation typeOf(int value) 
+	{
+		for (Orientation orientation : Orientation.values()) 
+		{
+			if (orientation.value == value) 
+			{
 				return orientation;
 			}
 		}
@@ -27,7 +32,8 @@ public enum Orientation {
 	}
 	
 	@Override
-	public String toString() {
+	public String toString() 
+	{
 		return "Orientation [type=" + value + "]";
 	}
 }
