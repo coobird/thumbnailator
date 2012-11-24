@@ -6,14 +6,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
+import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
+import net.coobird.thumbnailator.util.exif.ExifFilterUtils;
+import net.coobird.thumbnailator.util.exif.ExifUtils;
+import net.coobird.thumbnailator.util.exif.Orientation;
 
 /**
  * An {@link ImageSource} which reads the source image from a file.
@@ -105,6 +110,26 @@ public class FileImageSource extends AbstractImageSource<File>
 		ImageReader reader = readers.next();
 		reader.setInput(iis);
 		inputFormatName = reader.getFormatName();
+		
+		try
+		{
+			Orientation orientation;
+			orientation = 
+					ExifUtils.getExifOrientation(reader, FIRST_IMAGE_INDEX);
+
+			// Skip this code block if there's no rotation needed.
+			if (orientation != null && orientation != Orientation.TOP_LEFT)
+			{
+				List<ImageFilter> filters = param.getImageFilters();
+				filters.add(ExifFilterUtils.getFilterForOrientation(orientation));
+			}
+		}
+		catch (Exception e)
+		{
+			// If something goes wrong, then skip the orientation-related
+			// processing.
+			// TODO Ought to have some way to track errors.
+		}
 		
 		BufferedImage img;
 		if (param != null && param.getSourceRegion() != null)
