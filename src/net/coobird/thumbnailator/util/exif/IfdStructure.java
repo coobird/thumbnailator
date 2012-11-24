@@ -1,12 +1,14 @@
 package net.coobird.thumbnailator.util.exif;
 
-public class IfdStructure {
+public class IfdStructure 
+{
 	private final int tag;
 	private final IfdType type;
 	private final int count;
 	private final int offsetValue;
 	
-	public IfdStructure(int tag, int type, int count, int offsetValue) {
+	public IfdStructure(int tag, int type, int count, int offsetValue)
+	{
 		super();
 		this.tag = tag;
 		this.type = IfdType.typeOf(type);
@@ -14,34 +16,41 @@ public class IfdStructure {
 		this.offsetValue = offsetValue;
 	}
 
-	public int getTag() {
+	public int getTag()
+	{
 		return tag;
 	}
 
-	public IfdType getType() {
+	public IfdType getType() 
+	{
 		return type;
 	}
 
-	public int getCount() {
+	public int getCount() 
+	{
 		return count;
 	}
 
-	public int getOffsetValue() {
+	public int getOffsetValue() 
+	{
 		return offsetValue;
 	}
 	
-	public boolean isValue() {
+	public boolean isValue() 
+	{
 		// The offsetValue field contains a value if the size of the value is less than or equal to 4 bytes
 		// see "Value Offset" in 4.6.3 of Exif 2.3 specification
 		return type.size() * count <= 4;
 	}
 	
-	public boolean isOffset() {
+	public boolean isOffset() 
+	{
 		return !isValue();
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + count;
@@ -52,7 +61,8 @@ public class IfdStructure {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -72,7 +82,8 @@ public class IfdStructure {
 	}
 
 	@Override
-	public String toString() {
+	public String toString() 
+	{
 		return "IfdStructure [tag=" + Integer.toHexString(tag) + ", type=" + type + ", count="
 				+ count + ", offsetValue=" + offsetValue + "]";
 	}
