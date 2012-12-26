@@ -6,6 +6,10 @@ import net.coobird.thumbnailator.filters.Pipeline;
 import net.coobird.thumbnailator.filters.Rotation;
 
 /**
+ * An utility class which returns a suitable {@link ImageFilter} to perform
+ * the transformations necessary to properly orient an image according to the
+ * EXIF metadata.
+ * 
  * @author coobird
  *
  */

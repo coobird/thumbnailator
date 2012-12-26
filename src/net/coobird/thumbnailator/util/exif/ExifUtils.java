@@ -11,6 +11,13 @@ import javax.imageio.metadata.IIOMetadataNode;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * An utility class used to obtain the orientation information from a given
+ * EXIF metadata.
+ * 
+ * @author coobird
+ *
+ */
 public final class ExifUtils
 {
 	
