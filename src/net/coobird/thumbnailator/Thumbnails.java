@@ -2167,8 +2167,6 @@ watermark(Positions.CENTER, image, opacity);
 			
 			List<File> destinationFiles = new ArrayList<File>();
 			
-			ThumbnailParameter param = makeParam();
-			
 			Iterator<File> filenameIter = iterable.iterator();
 			
 			for (ImageSource<T> source : sources)
@@ -2179,6 +2177,8 @@ watermark(Positions.CENTER, image, opacity);
 							"Not enough file names provided by iterator."
 					);
 				}
+				
+				ThumbnailParameter param = makeParam();
 				
 				FileImageSink destination = new FileImageSink(filenameIter.next(), allowOverwrite);
 				
@@ -2265,7 +2265,6 @@ watermark(Positions.CENTER, image, opacity);
 
 			List<File> destinationFiles = new ArrayList<File>();
 			
-			ThumbnailParameter param = makeParam();
 			
 			for (ImageSource<T> source : sources)
 			{
@@ -2274,11 +2273,12 @@ watermark(Positions.CENTER, image, opacity);
 					throw new IllegalStateException("Cannot create thumbnails to files if original images are not from files.");
 				}
 				
+				ThumbnailParameter param = makeParam();
+				
 				File f = ((FileImageSource)source).getSource();
 				
 				File destinationFile = 
 					new File(f.getParent(), rename.apply(f.getName(), param));
-				
 				
 				FileImageSink destination = new FileImageSink(destinationFile, allowOverwrite);
 				
