@@ -9374,6 +9374,69 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 	}
+
+	@Test
+	public void multipleCallsCorrectOrientation_SameOrientation_iterableBufferedImages() throws IOException
+	{
+		// given
+		// when
+		Iterable<BufferedImage> results = 
+			Thumbnails.of("test-resources/Exif/source_1.jpg", "test-resources/Exif/source_1.jpg")
+				.size(100, 100)
+				.iterableBufferedImages();
+		
+		// then
+		Iterator<BufferedImage> iter = results.iterator();
+		BufferedImageAssert.assertMatches(
+				iter.next(), 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+		BufferedImageAssert.assertMatches(
+				iter.next(), 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+		assertFalse(iter.hasNext());
+	}
+
+	@Test
+	public void multipleCallsCorrectOrientation_DifferentOrientation_iterableBufferedImages() throws IOException
+	{
+		// given
+		// when
+		Iterable<BufferedImage> results = 
+				Thumbnails.of("test-resources/Exif/source_2.jpg", "test-resources/Exif/source_1.jpg")
+					.size(100, 100)
+					.iterableBufferedImages();
+
+		
+		// then
+		Iterator<BufferedImage> iter = results.iterator();
+		BufferedImageAssert.assertMatches(
+				iter.next(), 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+		BufferedImageAssert.assertMatches(
+				iter.next(), 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+		assertFalse(iter.hasNext());
+	}
 	
 	@Test
 	public void multipleCallsCorrectOrientation_SameOrientation_asFiles() throws IOException
