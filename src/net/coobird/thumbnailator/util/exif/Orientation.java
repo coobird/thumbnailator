@@ -1,5 +1,13 @@
 package net.coobird.thumbnailator.util.exif;
 
+/**
+ * Orientation of the EXIF metadata.
+ * <p>
+ * As defined in Section 4.6.4 of the Exif Specification version 2.3.
+ * 
+ * @author coobird
+ *
+ */
 public enum Orientation 
 {
 	TOP_LEFT(1),
@@ -17,7 +25,16 @@ public enum Orientation
 	{
 		this.value = value;
 	}
-	
+
+	/**
+	 * Returns the {@link Orientation} corresponding to the given orientation
+	 * value.
+	 * 
+	 * @param value		The orientation value.
+	 * @return			{@link Orientation} corresponding to the orientation
+	 * 					value. Return {@code null} if the given value does not
+	 * 					correspond to a	valid {@link Orientation}.
+	 */
 	public static Orientation typeOf(int value) 
 	{
 		for (Orientation orientation : Orientation.values()) 
