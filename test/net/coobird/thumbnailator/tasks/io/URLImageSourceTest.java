@@ -11,11 +11,13 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 import net.coobird.thumbnailator.geometry.AbsoluteSize;
 import net.coobird.thumbnailator.geometry.Coordinate;
 import net.coobird.thumbnailator.geometry.Positions;
 import net.coobird.thumbnailator.geometry.Region;
+import net.coobird.thumbnailator.test.BufferedImageAssert;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 
 import org.junit.Test;
@@ -325,5 +327,379 @@ public class URLImageSourceTest
 		
 		// then
 		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
+	}
+	
+	
+	@Test
+	public void readImageUnaffectedForOrientation1() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_1.jpg");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_1.jpg"));
+
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder().size(20, 20).build();
+		source.setThumbnailParameter(param);
+		
+		// when
+		BufferedImage img = source.read();
+		
+		// then
+		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
+	}
+
+	@Test
+	public void readImageUnaffectedForOrientation2() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_2.jpg");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_2.jpg"));
+
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder().size(20, 20).build();
+		source.setThumbnailParameter(param);
+		
+		// when
+		BufferedImage img = source.read();
+		
+		// then
+		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
+	}
+	
+	@Test
+	public void readImageUnaffectedForOrientation3() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_3.jpg");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_3.jpg"));
+
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder().size(20, 20).build();
+		source.setThumbnailParameter(param);
+		
+		// when
+		BufferedImage img = source.read();
+		
+		// then
+		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
+	}
+	
+	@Test
+	public void readImageUnaffectedForOrientation4() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_4.jpg");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_4.jpg"));
+
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder().size(20, 20).build();
+		source.setThumbnailParameter(param);
+		
+		// when
+		BufferedImage img = source.read();
+		
+		// then
+		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
+	}
+	
+	@Test
+	public void readImageUnaffectedForOrientation5() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_5.jpg");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_5.jpg"));
+
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder().size(20, 20).build();
+		source.setThumbnailParameter(param);
+		
+		// when
+		BufferedImage img = source.read();
+		
+		// then
+		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
+	}
+	
+	@Test
+	public void readImageUnaffectedForOrientation6() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_6.jpg");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_6.jpg"));
+
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder().size(20, 20).build();
+		source.setThumbnailParameter(param);
+		
+		// when
+		BufferedImage img = source.read();
+		
+		// then
+		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
+	}
+	
+	@Test
+	public void readImageUnaffectedForOrientation7() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_7.jpg");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_7.jpg"));
+
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder().size(20, 20).build();
+		source.setThumbnailParameter(param);
+		
+		// when
+		BufferedImage img = source.read();
+		
+		// then
+		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
+	}
+	
+	@Test
+	public void readImageUnaffectedForOrientation8() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_8.jpg");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_8.jpg"));
+
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder().size(20, 20).build();
+		source.setThumbnailParameter(param);
+		
+		// when
+		BufferedImage img = source.read();
+		
+		// then
+		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
+	}
+	
+	@Test
+	public void containsCorrectFilterForOrientation1() throws Exception
+	{
+		// given
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_1.jpg"));
+		
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder().size(20, 20).build();
+		source.setThumbnailParameter(param);
+		
+		// when
+		source.read();
+		
+		// then
+		assertTrue(param.getImageFilters().isEmpty());
+	}	
+	
+	@Test
+	public void containsCorrectFilterForOrientation2() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_2.jpg");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_2.jpg"));
+		
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder().size(20, 20).build();
+		source.setThumbnailParameter(param);
+		
+		// when
+		source.read();
+		
+		// then
+		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void containsCorrectFilterForOrientation3() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_3.jpg");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_3.jpg"));
+		
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder().size(20, 20).build();
+		source.setThumbnailParameter(param);
+		
+		// when
+		source.read();
+		
+		// then
+		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void containsCorrectFilterForOrientation4() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_4.jpg");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_4.jpg"));
+		
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder().size(20, 20).build();
+		source.setThumbnailParameter(param);
+		
+		// when
+		source.read();
+		
+		// then
+		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void containsCorrectFilterForOrientation5() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_5.jpg");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_5.jpg"));
+		
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder().size(20, 20).build();
+		source.setThumbnailParameter(param);
+		
+		// when
+		source.read();
+		
+		// then
+		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void containsCorrectFilterForOrientation6() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_6.jpg");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_6.jpg"));
+		
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder().size(20, 20).build();
+		source.setThumbnailParameter(param);
+		
+		// when
+		source.read();
+		
+		// then
+		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void containsCorrectFilterForOrientation7() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_7.jpg");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_7.jpg"));
+		
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder().size(20, 20).build();
+		source.setThumbnailParameter(param);
+		
+		// when
+		source.read();
+		
+		// then
+		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void containsCorrectFilterForOrientation8() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_8.jpg");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		
+		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_8.jpg"));
+		
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder().size(20, 20).build();
+		source.setThumbnailParameter(param);
+		
+		// when
+		source.read();
+		
+		// then
+		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
 	}
 }
