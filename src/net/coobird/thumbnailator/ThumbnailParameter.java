@@ -135,14 +135,12 @@ public class ThumbnailParameter
 	 */
 	private final int imageType;
 	
-	
 	/**
 	 * {@link ImageFilter}s to apply to the thumbnail.
 	 * <p>
 	 * The filters will be applied after the original image has been resized.
 	 */
 	private final List<ImageFilter> filters;
-	
 	
 	/**
 	 * The {@link ResizerFactory} for obtaining a {@link Resizer} that is
@@ -166,6 +164,12 @@ public class ThumbnailParameter
 	 * those dimensions.
 	 */
 	private final boolean fitWithinDimensions;
+	
+	/**
+	 * Whether or not to use the EXIF orientation metadata to orient the
+	 * thumbnails. 
+	 */
+	private final boolean useExifOrientation;
 	
 	/**
 	 * Private constructor which sets all the required fields, and performs
@@ -237,6 +241,12 @@ public class ThumbnailParameter
 	 * 								thumbnail will be sized to fit within the 
 	 * 								specified dimensions, if the thumbnail is 
 	 * 								going to exceed those dimensions.
+	 * @param useExifOrientation	Whether or not to use the EXIF metadata to
+	 * 								determine the orientation of the thumbnail. 
+	 * 								<p>
+	 * 								If {@code true} is specified, then the 
+	 * 								EXIF metadata will be used to determine
+	 * 								the orientation of the thumbnail.
 	 * 
 	 * @throws IllegalArgumentException 	If the scaling factor is not a
 	 * 										rational number or is less than or
@@ -255,7 +265,8 @@ public class ThumbnailParameter
 			int imageType,
 			List<ImageFilter> filters,
 			ResizerFactory resizerFactory,
-			boolean fitWithinDimensions
+			boolean fitWithinDimensions,
+			boolean useExifOrientation
 	)
 	{
 		// The following 2 fields are set by the public constructors.
@@ -303,6 +314,7 @@ public class ThumbnailParameter
 		
 		this.resizerFactory = resizerFactory;
 		this.fitWithinDimensions = fitWithinDimensions;
+		this.useExifOrientation = useExifOrientation;
 	}
 	
 	/**
@@ -400,11 +412,17 @@ public class ThumbnailParameter
 	 * 								thumbnail will be sized to fit within the 
 	 * 								specified dimensions, if the thumbnail is 
 	 * 								going to exceed those dimensions.
+	 * @param useExifOrientation	Whether or not to use the EXIF metadata to
+	 * 								determine the orientation of the thumbnail. 
+	 * 								<p>
+	 * 								If {@code true} is specified, then the 
+	 * 								EXIF metadata will be used to determine
+	 * 								the orientation of the thumbnail.
 	 *  
 	 * @throws IllegalArgumentException 	If size is {@code null} or if the 
 	 * 										dimensions are negative, or if the 
 	 * 										{@link Resizer} is null.
-	 * @since	0.4.0
+	 * @since	0.4.3
 	 */
 	public ThumbnailParameter(
 			Dimension thumbnailSize,
@@ -416,7 +434,8 @@ public class ThumbnailParameter
 			int imageType,
 			List<ImageFilter> filters,
 			Resizer resizer,
-			boolean fitWithinDimensions
+			boolean fitWithinDimensions,
+			boolean useExifOrientation
 	)
 	{
 		this(
@@ -431,7 +450,8 @@ public class ThumbnailParameter
 				imageType,
 				filters,
 				new FixedResizerFactory(resizer),
-				fitWithinDimensions
+				fitWithinDimensions,
+				useExifOrientation
 		);
 		
 		validateThumbnailSize();
@@ -503,12 +523,18 @@ public class ThumbnailParameter
 	 * 								thumbnail will be sized to fit within the 
 	 * 								specified dimensions, if the thumbnail is 
 	 * 								going to exceed those dimensions.
+	 * @param useExifOrientation	Whether or not to use the EXIF metadata to
+	 * 								determine the orientation of the thumbnail. 
+	 * 								<p>
+	 * 								If {@code true} is specified, then the 
+	 * 								EXIF metadata will be used to determine
+	 * 								the orientation of the thumbnail.
 	 * 
 	 * @throws IllegalArgumentException 	If the scaling factor is not a
 	 * 										rational number or is less than or
 	 * 										equal to 0, or if the 
 	 * 										{@link Resizer} is null. 
-	 * @since	0.4.0
+	 * @since	0.4.3
 	 */
 	public ThumbnailParameter(
 			double widthScalingFactor,
@@ -521,7 +547,8 @@ public class ThumbnailParameter
 			int imageType,
 			List<ImageFilter> filters,
 			Resizer resizer,
-			boolean fitWithinDimensions
+			boolean fitWithinDimensions,
+			boolean useExifOrientation
 	)
 	{
 		this(
@@ -536,7 +563,8 @@ public class ThumbnailParameter
 				imageType,
 				filters,
 				new FixedResizerFactory(resizer),
-				fitWithinDimensions
+				fitWithinDimensions,
+				useExifOrientation
 		);
 		
 		validateScalingFactor();
@@ -604,11 +632,17 @@ public class ThumbnailParameter
 	 * 								thumbnail will be sized to fit within the 
 	 * 								specified dimensions, if the thumbnail is 
 	 * 								going to exceed those dimensions.
+	 * @param useExifOrientation	Whether or not to use the EXIF metadata to
+	 * 								determine the orientation of the thumbnail. 
+	 * 								<p>
+	 * 								If {@code true} is specified, then the 
+	 * 								EXIF metadata will be used to determine
+	 * 								the orientation of the thumbnail.
 	 * 
 	 * @throws IllegalArgumentException 	If size is {@code null} or if the 
 	 * 										dimensions are negative, or if the 
 	 * 										{@link ResizerFactory} is null.
-	 * @since	0.4.0 
+	 * @since	0.4.3 
 	 */
 	public ThumbnailParameter(
 			Dimension thumbnailSize,
@@ -620,7 +654,8 @@ public class ThumbnailParameter
 			int imageType,
 			List<ImageFilter> filters,
 			ResizerFactory resizerFactory,
-			boolean fitWithinDimensions
+			boolean fitWithinDimensions,
+			boolean useExifOrientation
 	)
 	{
 		this(
@@ -635,7 +670,8 @@ public class ThumbnailParameter
 				imageType,
 				filters,
 				resizerFactory,
-				fitWithinDimensions
+				fitWithinDimensions,
+				useExifOrientation
 		);
 		
 		validateThumbnailSize();
@@ -708,12 +744,18 @@ public class ThumbnailParameter
 	 * 								thumbnail will be sized to fit within the 
 	 * 								specified dimensions, if the thumbnail is 
 	 * 								going to exceed those dimensions.
+	 * @param useExifOrientation	Whether or not to use the EXIF metadata to
+	 * 								determine the orientation of the thumbnail. 
+	 * 								<p>
+	 * 								If {@code true} is specified, then the 
+	 * 								EXIF metadata will be used to determine
+	 * 								the orientation of the thumbnail.
 	 * 
 	 * @throws IllegalArgumentException 	If the scaling factor is not a
 	 * 										rational number or is less than or
 	 * 										equal to 0, or if the 
 	 * 										{@link ResizerFactory} is null.
-	 * @since	0.4.0 
+	 * @since	0.4.3 
 	 */
 	public ThumbnailParameter(
 			double widthScalingFactor,
@@ -726,7 +768,8 @@ public class ThumbnailParameter
 			int imageType,
 			List<ImageFilter> filters,
 			ResizerFactory resizerFactory,
-			boolean fitWithinDimensions
+			boolean fitWithinDimensions,
+			boolean useExifOrientation
 	)
 	{
 		this(
@@ -741,7 +784,8 @@ public class ThumbnailParameter
 				imageType,
 				filters,
 				resizerFactory,
-				fitWithinDimensions
+				fitWithinDimensions,
+				useExifOrientation
 		);
 		
 		validateScalingFactor();
@@ -946,5 +990,19 @@ public class ThumbnailParameter
 	public boolean fitWithinDimenions()
 	{
 		return fitWithinDimensions;
+	}
+	
+	/**
+	 * Returns whether or not the EXIF metadata should be used to determine
+	 * the orientation of the thumbnail.
+	 *
+	 * @return		{@code true} is returned when the EXIF metadata should be
+	 * 				used to decide the orientation of the thumbnail,
+	 * 				{@code false} otherwise.
+	 * @since	0.4.3
+	 */
+	public boolean useExifOrientation()
+	{
+		return useExifOrientation;
 	}
 }

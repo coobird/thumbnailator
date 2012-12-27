@@ -54,6 +54,7 @@ public class FileThumbnailTaskTest
 				BufferedImage.TYPE_INT_ARGB,
 				null,
 				Resizers.PROGRESSIVE,
+				true,
 				true
 		);
 		
@@ -92,6 +93,7 @@ public class FileThumbnailTaskTest
 				BufferedImage.TYPE_INT_ARGB,
 				null,
 				Resizers.PROGRESSIVE,
+				true,
 				true
 		); 
 		

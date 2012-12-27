@@ -113,15 +113,18 @@ public class FileImageSource extends AbstractImageSource<File>
 		
 		try
 		{
-			Orientation orientation;
-			orientation = 
-					ExifUtils.getExifOrientation(reader, FIRST_IMAGE_INDEX);
-
-			// Skip this code block if there's no rotation needed.
-			if (orientation != null && orientation != Orientation.TOP_LEFT)
+			if (param.useExifOrientation())
 			{
-				List<ImageFilter> filters = param.getImageFilters();
-				filters.add(ExifFilterUtils.getFilterForOrientation(orientation));
+				Orientation orientation;
+				orientation = 
+						ExifUtils.getExifOrientation(reader, FIRST_IMAGE_INDEX);
+				
+				// Skip this code block if there's no rotation needed.
+				if (orientation != null && orientation != Orientation.TOP_LEFT)
+				{
+					List<ImageFilter> filters = param.getImageFilters();
+					filters.add(ExifFilterUtils.getFilterForOrientation(orientation));
+				}
 			}
 		}
 		catch (Exception e)
