@@ -48,6 +48,8 @@ import net.coobird.thumbnailator.resizers.ResizerFactory;
  * <dd>{@link DefaultResizerFactory} is used.</dd>
  * <dt>resizer</dt>
  * <dd>The default {@link Resizer} returned by the {@link ResizerFactory}.</dd>
+ * <dt>use of EXIF metadata for orientation</dt>
+ * <dd>Use the EXIF metadata to determine the orientation of the thumbnail.</dd>
  * </dl>
  * 
  * @author coobird
@@ -70,6 +72,7 @@ public final class ThumbnailParameterBuilder
 	private ResizerFactory resizerFactory = DefaultResizerFactory.getInstance();
 	private Region sourceRegion = null;
 	private boolean fitWithinDimensions = true;
+	private boolean useExifOrientation = true;
 	
 	/**
 	 * Creates an instance of a {@link ThumbnailParameterBuilder}.
@@ -327,6 +330,22 @@ public final class ThumbnailParameterBuilder
 		this.fitWithinDimensions = fit;
 		return this;
 	}
+	
+	/**
+	 * Sets whether or not the EXIF metadata should be used to determine the
+	 * orientation of the thumbnail.
+	 * 
+	 * @param use		{@code true} if the EXIF metadata should be used
+	 * 					to determine the orientation of the thumbnail,
+	 * 					{@code false} otherwise. 
+	 * @return			A reference to this object.
+	 * @since	0.4.3
+	 */
+	public ThumbnailParameterBuilder useExifOrientation(boolean use)
+	{
+		this.useExifOrientation = use;
+		return this;
+	}
 
 	/**
 	 * Returns a {@link ThumbnailParameter} from the parameters which are
@@ -356,7 +375,8 @@ public final class ThumbnailParameterBuilder
 					imageType,
 					filters,
 					resizerFactory,
-					fitWithinDimensions
+					fitWithinDimensions,
+					useExifOrientation
 			);
 			
 		}
@@ -372,7 +392,8 @@ public final class ThumbnailParameterBuilder
 					imageType,
 					filters,
 					resizerFactory,
-					fitWithinDimensions
+					fitWithinDimensions,
+					useExifOrientation
 			);
 		}
 		else

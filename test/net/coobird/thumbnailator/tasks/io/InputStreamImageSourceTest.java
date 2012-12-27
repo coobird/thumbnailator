@@ -664,4 +664,66 @@ public class InputStreamImageSourceTest
 				}
 		);
 	}
+	
+	@Test
+	public void useExifOrientationIsTrue_OrientationHonored() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_2.jpg");
+		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		
+		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder()
+						.size(20, 20)
+						.useExifOrientation(true)
+						.build();
+		
+		source.setThumbnailParameter(param);
+		
+		// when
+		source.read();
+		
+		// then
+		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void useExifOrientationIsFalse_OrientationIgnored() throws Exception
+	{
+		// given
+		File sourceFile = new File("test-resources/Exif/source_2.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		
+		ThumbnailParameter param = 
+				new ThumbnailParameterBuilder()
+						.size(20, 20)
+						.useExifOrientation(false)
+						.build();
+		
+		source.setThumbnailParameter(param);
+		
+		// when
+		BufferedImage result = source.read();
+		
+		// then
+		assertTrue(param.getImageFilters().isEmpty());
+		BufferedImageAssert.assertMatches(
+				result, 
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						0, 0, 1,
+				}
+		);
+	}
 }

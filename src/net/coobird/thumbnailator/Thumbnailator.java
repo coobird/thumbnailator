@@ -261,6 +261,7 @@ public final class Thumbnailator
 					ThumbnailParameter.DEFAULT_IMAGE_TYPE,
 					null,
 					DefaultResizerFactory.getInstance(),
+					true,
 					true
 			);
 		
@@ -402,6 +403,7 @@ public final class Thumbnailator
 					ThumbnailParameter.DEFAULT_IMAGE_TYPE,
 					null,
 					DefaultResizerFactory.getInstance(),
+					true,
 					true
 			);
 		

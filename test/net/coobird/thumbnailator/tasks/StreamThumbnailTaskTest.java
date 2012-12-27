@@ -61,6 +61,7 @@ public class StreamThumbnailTaskTest
 				BufferedImage.TYPE_INT_ARGB,
 				null,
 				Resizers.PROGRESSIVE,
+				true,
 				true
 		);
 		
@@ -93,6 +94,7 @@ public class StreamThumbnailTaskTest
 				BufferedImage.TYPE_INT_ARGB,
 				null,
 				Resizers.PROGRESSIVE,
+				true,
 				true
 		);
 		
@@ -134,6 +136,7 @@ public class StreamThumbnailTaskTest
 				BufferedImage.TYPE_INT_ARGB,
 				null,
 				Resizers.PROGRESSIVE,
+				true,
 				true
 		);
 		

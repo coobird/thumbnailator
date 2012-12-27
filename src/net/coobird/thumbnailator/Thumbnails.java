@@ -642,6 +642,7 @@ public final class Thumbnails
 			RESIZER_FACTORY("resizerFactory"),
 			ALLOW_OVERWRITE("allowOverwrite"),
 			CROP("crop"),
+			USE_EXIF_ORIENTATION("useExifOrientation"),
 			;
 			
 			private final String name;
@@ -685,6 +686,7 @@ public final class Thumbnails
 			statusMap.put(Properties.RESIZER_FACTORY, Status.OPTIONAL);
 			statusMap.put(Properties.ALLOW_OVERWRITE, Status.OPTIONAL);
 			statusMap.put(Properties.CROP, Status.OPTIONAL);
+			statusMap.put(Properties.USE_EXIF_ORIENTATION, Status.OPTIONAL);
 		}
 
 		/**
@@ -753,6 +755,8 @@ public final class Thumbnails
 		private boolean allowOverwrite = true;
 		
 		private boolean fitWithinDimenions = true;
+		
+		private boolean useExifOrientation = true;
 		
 		/**
 		 * This field should be set to the {@link Position} to be used for
@@ -1592,6 +1596,27 @@ public final class Thumbnails
 		}
 		
 		/**
+		 * Sets whether or not to use the EXIF metadata when orienting the
+		 * thumbnail.
+		 * <p>
+		 * Calling this method multiple times will result in an
+		 * {@link IllegalStateException} to be thrown.
+		 * 
+		 * @param useExifOrientation	{@code true} if the EXIF metadata
+		 * 								should be used to determine the
+		 * 								orientation of the thumbnail,
+		 * 								{@code false} otherwise.
+		 * @return						Reference to this object.
+		 * @since	0.4.3
+		 */
+		public Builder<T> useExifOrientation(boolean useExifOrientation)
+		{
+			updateStatus(Properties.USE_EXIF_ORIENTATION, Status.ALREADY_SET);
+			this.useExifOrientation = useExifOrientation;
+			return this;
+		}
+		
+		/**
 		 * Indicates that the output format should be determined from the
 		 * available information when writing the thumbnail image.
 		 * <p>
@@ -2008,7 +2033,8 @@ watermark(Positions.CENTER, image, opacity);
 						imageTypeToUse,
 						filterPipeline.getFilters(),
 						resizerFactory,
-						fitWithinDimenions
+						fitWithinDimenions,
+						useExifOrientation
 				);
 			}
 			else
@@ -2025,7 +2051,8 @@ watermark(Positions.CENTER, image, opacity);
 						imageTypeToUse,
 						filterPipeline.getFilters(),
 						resizerFactory,
-						fitWithinDimenions
+						fitWithinDimenions,
+						useExifOrientation
 				);
 			}
 		}
