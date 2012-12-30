@@ -41,45 +41,6 @@ public class Rotation
 	}
 	
 	/**
-	 * Performs a rotation of a specified image.
-	 * <p>
-	 * This method will only rotate images at a multiple of 90 degrees.
-	 * 
-	 * @param img			Image to rotate.
-	 * @param angle			The angle to rotate the image by.
-	 * @return				The rotated image.
-	 */
-	private static BufferedImage rotate(BufferedImage img, int angle)
-	{
-		if (angle % 90 != 0)
-		{
-			throw new IllegalArgumentException("The specified angle is not in" +
-					" a multiple of 90.");
-		}
-		
-		int width = img.getWidth();
-		int height = img.getHeight();
-		
-		BufferedImage newImage;
-		
-		if (angle % 180 == 90)
-		{
-			newImage = new BufferedImageBuilder(height, width).build();
-		}
-		else 
-		{
-			newImage = new BufferedImageBuilder(width, height).build();
-		}
-		
-		Graphics2D g = newImage.createGraphics();
-		g.rotate(Math.toRadians(angle), width / 2.0, height / 2.0);
-		g.drawImage(img, 0, 0, null);
-		g.dispose();
-		
-		return newImage;
-	}
-	
-	/**
 	 * Creates a new instance of {@code Rotator} which rotates an image at
 	 * the specified angle.
 	 * <p>
@@ -176,31 +137,16 @@ public class Rotation
 	 * A {@code Rotator} which will rotate a specified image to the left 90
 	 * degrees.
 	 */
-	public static final Rotator LEFT_90_DEGREES = new Rotator() {
-		public BufferedImage apply(BufferedImage img)
-		{
-			return rotate(img, -90);
-		}
-	};
+	public static final Rotator LEFT_90_DEGREES = newRotator(-90);
 	
 	/**
 	 * A {@code Rotator} which will rotate a specified image to the right 90
 	 * degrees.
 	 */
-	public static final Rotator RIGHT_90_DEGREES = new Rotator() {
-		public BufferedImage apply(BufferedImage img)
-		{
-			return rotate(img, 90);
-		}
-	};
+	public static final Rotator RIGHT_90_DEGREES = newRotator(90);
 	
 	/**
 	 * A {@code Rotator} which will rotate a specified image to the 180 degrees.
 	 */
-	public static final Rotator ROTATE_180_DEGREES = new Rotator() {
-		public BufferedImage apply(BufferedImage img)
-		{
-			return rotate(img, 180);
-		}
-	};
+	public static final Rotator ROTATE_180_DEGREES = newRotator(180);
 }
