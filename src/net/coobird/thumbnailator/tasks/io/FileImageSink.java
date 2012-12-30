@@ -363,15 +363,34 @@ public class FileImageSink extends AbstractImageSink<File>
 		 */
 		ImageOutputStream ios;
 		FileOutputStream fos;
-		try
-		{
-			fos = new FileOutputStream(destinationFile);
-			ios = ImageIO.createImageOutputStream(fos);
-		}
-		catch (IOException e)
-		{
-			throw new IOException("Could not open output file.");
-		}
+
+		/*
+		 * The following two lines used to be surrounded by a try-catch,
+		 * but it has been removed, as the IOException which it was 
+		 * throwing in the catch block was not giving good feedback as to
+		 * what was causing the original IOException.
+		 * 
+		 * It would have been informative to have the IOException which
+		 * caused this problem, but the IOException in Java 5 does not
+		 * have a "cause" parameter.
+		 * 
+		 * The "cause" parameter has been introduced in Java 6:
+		 * http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html#IOException%28java.lang.String,%20java.lang.Throwable%29
+		 *
+		 * TODO Whether to surround this portion of code in a try-catch
+		 *      again is debatable, as it wouldn't really add more utility.
+		 *      
+		 *      Furthermore, there are other calls in this method which will
+		 *      throw IOExceptions, but they are not surrounded by try-catch
+		 *      blocks. (A similar example exists in the OutputStreamImageSink
+		 *      where the ImageIO.createImageOutputStream is not surrounded
+		 *      in a try-catch.)
+		 *   
+		 * Related issue:
+		 * http://code.google.com/p/thumbnailator/issues/detail?id=37
+		 */
+		fos = new FileOutputStream(destinationFile);
+		ios = ImageIO.createImageOutputStream(fos);
 		
 		if (ios == null || fos == null)
 		{
