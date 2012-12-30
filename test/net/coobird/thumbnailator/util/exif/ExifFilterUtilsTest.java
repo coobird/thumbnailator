@@ -5,11 +5,24 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.test.BufferedImageAssert;
 import net.coobird.thumbnailator.util.BufferedImages;
 
 import org.junit.Test;
 
+/**
+ * Tests that the {@link ImageFilter}s returned by the 
+ * {@link ExifFilterUtils#getFilterForOrientation(Orientation)} method can
+ * correctly oriente an image according to the EXIF orientation metadata.
+ * <p>
+ * The source images were created from the examples of how the letter "F"
+ * would appear when the various Exif Orientations are applied, as seen in
+ * <a href="http://sylvana.net/jpegcrop/exif_orientation.html">this page</a>.
+ * 
+ * @author coobird
+ *
+ */
 public class ExifFilterUtilsTest {
 	
 	@Test
