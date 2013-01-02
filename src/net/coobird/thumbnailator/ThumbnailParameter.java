@@ -166,7 +166,7 @@ public class ThumbnailParameter
 	private final boolean fitWithinDimensions;
 	
 	/**
-	 * Whether or not to use the EXIF orientation metadata to orient the
+	 * Whether or not to use the Exif orientation metadata to orient the
 	 * thumbnails. 
 	 */
 	private final boolean useExifOrientation;
@@ -241,11 +241,11 @@ public class ThumbnailParameter
 	 * 								thumbnail will be sized to fit within the 
 	 * 								specified dimensions, if the thumbnail is 
 	 * 								going to exceed those dimensions.
-	 * @param useExifOrientation	Whether or not to use the EXIF metadata to
+	 * @param useExifOrientation	Whether or not to use the Exif metadata to
 	 * 								determine the orientation of the thumbnail. 
 	 * 								<p>
 	 * 								If {@code true} is specified, then the 
-	 * 								EXIF metadata will be used to determine
+	 * 								Exif metadata will be used to determine
 	 * 								the orientation of the thumbnail.
 	 * 
 	 * @throws IllegalArgumentException 	If the scaling factor is not a
@@ -412,11 +412,11 @@ public class ThumbnailParameter
 	 * 								thumbnail will be sized to fit within the 
 	 * 								specified dimensions, if the thumbnail is 
 	 * 								going to exceed those dimensions.
-	 * @param useExifOrientation	Whether or not to use the EXIF metadata to
+	 * @param useExifOrientation	Whether or not to use the Exif metadata to
 	 * 								determine the orientation of the thumbnail. 
 	 * 								<p>
 	 * 								If {@code true} is specified, then the 
-	 * 								EXIF metadata will be used to determine
+	 * 								Exif metadata will be used to determine
 	 * 								the orientation of the thumbnail.
 	 *  
 	 * @throws IllegalArgumentException 	If size is {@code null} or if the 
@@ -523,11 +523,11 @@ public class ThumbnailParameter
 	 * 								thumbnail will be sized to fit within the 
 	 * 								specified dimensions, if the thumbnail is 
 	 * 								going to exceed those dimensions.
-	 * @param useExifOrientation	Whether or not to use the EXIF metadata to
+	 * @param useExifOrientation	Whether or not to use the Exif metadata to
 	 * 								determine the orientation of the thumbnail. 
 	 * 								<p>
 	 * 								If {@code true} is specified, then the 
-	 * 								EXIF metadata will be used to determine
+	 * 								Exif metadata will be used to determine
 	 * 								the orientation of the thumbnail.
 	 * 
 	 * @throws IllegalArgumentException 	If the scaling factor is not a
@@ -632,11 +632,11 @@ public class ThumbnailParameter
 	 * 								thumbnail will be sized to fit within the 
 	 * 								specified dimensions, if the thumbnail is 
 	 * 								going to exceed those dimensions.
-	 * @param useExifOrientation	Whether or not to use the EXIF metadata to
+	 * @param useExifOrientation	Whether or not to use the Exif metadata to
 	 * 								determine the orientation of the thumbnail. 
 	 * 								<p>
 	 * 								If {@code true} is specified, then the 
-	 * 								EXIF metadata will be used to determine
+	 * 								Exif metadata will be used to determine
 	 * 								the orientation of the thumbnail.
 	 * 
 	 * @throws IllegalArgumentException 	If size is {@code null} or if the 
@@ -744,11 +744,11 @@ public class ThumbnailParameter
 	 * 								thumbnail will be sized to fit within the 
 	 * 								specified dimensions, if the thumbnail is 
 	 * 								going to exceed those dimensions.
-	 * @param useExifOrientation	Whether or not to use the EXIF metadata to
+	 * @param useExifOrientation	Whether or not to use the Exif metadata to
 	 * 								determine the orientation of the thumbnail. 
 	 * 								<p>
 	 * 								If {@code true} is specified, then the 
-	 * 								EXIF metadata will be used to determine
+	 * 								Exif metadata will be used to determine
 	 * 								the orientation of the thumbnail.
 	 * 
 	 * @throws IllegalArgumentException 	If the scaling factor is not a
@@ -993,10 +993,10 @@ public class ThumbnailParameter
 	}
 	
 	/**
-	 * Returns whether or not the EXIF metadata should be used to determine
+	 * Returns whether or not the Exif metadata should be used to determine
 	 * the orientation of the thumbnail.
 	 *
-	 * @return		{@code true} is returned when the EXIF metadata should be
+	 * @return		{@code true} is returned when the Exif metadata should be
 	 * 				used to decide the orientation of the thumbnail,
 	 * 				{@code false} otherwise.
 	 * @since	0.4.3

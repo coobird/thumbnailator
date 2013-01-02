@@ -22,7 +22,7 @@ public final class ExifFilterUtils
 	
 	/**
 	 * Returns a {@link ImageFilter} which will perform the transformations
-	 * required to properly orient the thumbnail according to the EXIF
+	 * required to properly orient the thumbnail according to the Exif
 	 * orientation.
 	 * 
 	 * @param orientation	The Exif orientation

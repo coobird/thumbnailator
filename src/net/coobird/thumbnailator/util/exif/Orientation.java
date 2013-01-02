@@ -73,7 +73,7 @@ public enum Orientation
 	RIGHT_BOTTOM(7),
 	
 	/**
-	 * Orientation 6.
+	 * Orientation 8.
 	 * <ul>
 	 * <li>First row: visual left-hand side of the image</li>
 	 * <li>First column: visual bottom of the image</li>
