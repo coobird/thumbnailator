@@ -1596,13 +1596,13 @@ public final class Thumbnails
 		}
 		
 		/**
-		 * Sets whether or not to use the EXIF metadata when orienting the
+		 * Sets whether or not to use the Exif metadata when orienting the
 		 * thumbnail.
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
 		 * 
-		 * @param useExifOrientation	{@code true} if the EXIF metadata
+		 * @param useExifOrientation	{@code true} if the Exif metadata
 		 * 								should be used to determine the
 		 * 								orientation of the thumbnail,
 		 * 								{@code false} otherwise.
