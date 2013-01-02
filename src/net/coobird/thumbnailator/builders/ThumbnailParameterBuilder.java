@@ -48,8 +48,8 @@ import net.coobird.thumbnailator.resizers.ResizerFactory;
  * <dd>{@link DefaultResizerFactory} is used.</dd>
  * <dt>resizer</dt>
  * <dd>The default {@link Resizer} returned by the {@link ResizerFactory}.</dd>
- * <dt>use of EXIF metadata for orientation</dt>
- * <dd>Use the EXIF metadata to determine the orientation of the thumbnail.</dd>
+ * <dt>use of Exif metadata for orientation</dt>
+ * <dd>Use the Exif metadata to determine the orientation of the thumbnail.</dd>
  * </dl>
  * 
  * @author coobird
@@ -332,10 +332,10 @@ public final class ThumbnailParameterBuilder
 	}
 	
 	/**
-	 * Sets whether or not the EXIF metadata should be used to determine the
+	 * Sets whether or not the Exif metadata should be used to determine the
 	 * orientation of the thumbnail.
 	 * 
-	 * @param use		{@code true} if the EXIF metadata should be used
+	 * @param use		{@code true} if the Exif metadata should be used
 	 * 					to determine the orientation of the thumbnail,
 	 * 					{@code false} otherwise. 
 	 * @return			A reference to this object.

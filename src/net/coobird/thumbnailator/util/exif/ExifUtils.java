@@ -49,7 +49,7 @@ public final class ExifUtils
 		
 		NodeList childNodes = rootNode.getChildNodes();
 		
-		// Look for the APP1 containing EXIF data, and retrieve it. 
+		// Look for the APP1 containing Exif data, and retrieve it. 
 		for (int i = 0; i < childNodes.getLength(); i++)
 		{
 			if ("markerSequence".equals(childNodes.item(i).getNodeName()))

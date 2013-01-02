@@ -14,7 +14,7 @@ import org.junit.Test;
 /**
  * Tests that the {@link ImageFilter}s returned by the 
  * {@link ExifFilterUtils#getFilterForOrientation(Orientation)} method can
- * correctly oriente an image according to the EXIF orientation metadata.
+ * correctly orient an image according to the Exif orientation metadata.
  * <p>
  * The source images were created from the examples of how the letter "F"
  * would appear when the various Exif Orientations are applied, as seen in
