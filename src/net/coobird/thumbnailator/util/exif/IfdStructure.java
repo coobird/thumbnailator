@@ -100,6 +100,10 @@ public class IfdStructure
 		return !isValue();
 	}
 
+	/**
+	 * Returns the calculated hash code for this object.
+	 * @return		Hash code for this object.
+	 */
 	@Override
 	public int hashCode()
 	{
@@ -112,6 +116,11 @@ public class IfdStructure
 		return result;
 	}
 
+	/**
+	 * Returns whether this object is equal to the given object.
+	 * @return		{@code true} if the given object and this object is
+	 * 				equivalent, {@code false} otherwise.
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -133,6 +142,10 @@ public class IfdStructure
 		return true;
 	}
 
+	/**
+	 * Returns a textual {@link String} reprensentation of this object.
+	 * @return			A textual representation of this object.
+	 */
 	@Override
 	public String toString() 
 	{
