@@ -8,7 +8,7 @@ import net.coobird.thumbnailator.filters.Rotation;
 /**
  * An utility class which returns a suitable {@link ImageFilter} to perform
  * the transformations necessary to properly orient an image according to the
- * EXIF metadata.
+ * Exif metadata.
  * 
  * @author coobird
  *
@@ -23,9 +23,9 @@ public final class ExifFilterUtils
 	/**
 	 * Returns a {@link ImageFilter} which will perform the transformations
 	 * required to properly orient the thumbnail according to the EXIF
-	 * orienation.
+	 * orientation.
 	 * 
-	 * @param orientation	The EXIF orientation
+	 * @param orientation	The Exif orientation
 	 * @return				{@link ImageFilter}s required to properly
 	 * 						orient the image.
 	 */
