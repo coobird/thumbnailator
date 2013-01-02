@@ -13,7 +13,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * An utility class used to obtain the orientation information from a given
- * EXIF metadata.
+ * Exif metadata.
  * 
  * @author coobird
  *
@@ -29,13 +29,14 @@ public final class ExifUtils
 	private ExifUtils() {};
 	
 	/**
-	 * Returns the orientation obtained from the EXIF metadata.
+	 * Returns the orientation obtained from the Exif metadata.
 	 * 
 	 * @param reader		An {@link ImageReader} which is reading the
 	 * 						target image.
-	 * @param imageIndex	The index of the image to read the EXIF data from.
+	 * @param imageIndex	The index of the image from which the Exif 
+	 * 						metadata should be read from.
 	 * @return				The orientation information obtained from the
-	 * 						EXIF metadata.
+	 * 						Exif metadata, as a {@link Orientation} enum.
 	 * @throws IOException				When an error occurs during reading.
 	 * @throws IllegalArgumentException	If the {@link ImageReader} does not
 	 * 									have the target image set, or if the
@@ -149,7 +150,7 @@ public final class ExifUtils
 		int offsetValue = 0;
 		
 		/*
-		 * Per section 4.6.2 of the EXIF Spec, if value is smaller than
+		 * Per section 4.6.2 of the Exif Spec, if value is smaller than
 		 * 4 bytes, it will exist in the earlier byte.
 		 */
 		int byteSize = count * ifdType.size();
