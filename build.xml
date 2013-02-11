@@ -42,8 +42,8 @@
 			version="true"
 			Public="true"
 			source="1.5"
-			doctitle="Thumbnailator API Documenatation (Version ${version})"
-			windowtitle="Thumbnailator API Documenatation (Version ${version})"
+			doctitle="Thumbnailator API Documentation (Version ${version})"
+			windowtitle="Thumbnailator API Documentation (Version ${version})"
 			locale="en_US" >
 			
 			<link href="http://download.oracle.com/javase/1.5.0/docs/api/" />
