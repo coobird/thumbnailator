@@ -127,6 +127,9 @@ public final class Thumbnailator
 		
 		// Write the thumbnail image to the destination.
 		task.write(destinationImage);
+		
+		sourceImage.flush();
+		destinationImage.flush();
 	}
 
 	/**
