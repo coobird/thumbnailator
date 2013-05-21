@@ -164,6 +164,17 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 		writer.setOutput(ios);
 		writer.write(null, new IIOImage(img, null, null), writeParam);
 		
+		/*
+		 * Dispose the writer to free resources.
+		 * 
+		 * This seems to be the main culprit of `OutOfMemoryError`s which
+		 * started to frequently appear with Java 7 Update 21.
+		 * 
+		 * Issue:
+		 * http://code.google.com/p/thumbnailator/issues/detail?id=42
+		 */
+		writer.dispose();
+		
 		ios.close();
 	}
 
