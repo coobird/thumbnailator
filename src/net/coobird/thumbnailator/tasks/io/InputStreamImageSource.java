@@ -122,7 +122,18 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream>
 		{
 			img = reader.read(FIRST_IMAGE_INDEX); 
 		}
-		
+
+		/*
+		 * Dispose the reader to free resources.
+		 * 
+		 * This seems to be one of the culprits which was causing
+		 * `OutOfMemoryError`s which began appearing frequently with
+		 * Java 7 Update 21.
+		 * 
+		 * Issue:
+		 * http://code.google.com/p/thumbnailator/issues/detail?id=42
+		 */
+		reader.dispose();
 		iis.close();
 		
 		return finishedReading(img);
