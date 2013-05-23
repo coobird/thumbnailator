@@ -14,7 +14,7 @@
 	<!-- Maven properties -->
 	<property name="groupId" value="net.coobird" />
 	<property name="artifactId" value="thumbnailator" />
-	<property name="version" value="0.4.3" />
+	<property name="version" value="0.4.4" />
 
 	<!-- Maven file names -->
 	<property name="maven-jar" value="${dist}/lib/${artifactId}-${version}.jar" />
@@ -42,8 +42,8 @@
 			version="true"
 			Public="true"
 			source="1.5"
-			doctitle="Thumbnailator API Documenatation (Version ${version})"
-			windowtitle="Thumbnailator API Documenatation (Version ${version})"
+			doctitle="Thumbnailator API Documentation (Version ${version})"
+			windowtitle="Thumbnailator API Documentation (Version ${version})"
 			locale="en_US" >
 			
 			<link href="http://download.oracle.com/javase/1.5.0/docs/api/" />

@@ -16,6 +16,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
+
 import net.coobird.thumbnailator.filters.Canvas;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.filters.Pipeline;
@@ -1516,7 +1518,8 @@ Thumbnails.of(image)
 		 * {@link #outputQuality(double)} in conjunction with this method will
 		 * result in an {@link IllegalStateException} to be thrown.
 		 * 
-		 * @param quality		The quality of the 
+		 * @param quality		The compression quality to use when writing
+		 * 						the thumbnail.
 		 * @return				Reference to this object.
 		 * @throws IllegalArgumentException	If the argument is less than
 		 * 									{@code 0.0f} or is greater than
@@ -1554,7 +1557,8 @@ Thumbnails.of(image)
 		 * {@link #outputQuality(float)} in conjunction with this method will
 		 * result in an {@link IllegalStateException} to be thrown.
 		 * 
-		 * @param quality		The quality of the 
+		 * @param quality		The compression quality to use when writing
+		 * 						the thumbnail.
 		 * @return				Reference to this object.
 		 * @throws IllegalArgumentException	If the argument is less than
 		 * 									{@code 0.0d} or is greater than
@@ -1586,12 +1590,35 @@ Thumbnails.of(image)
 		/**
 		 * Sets the compression format to use when writing the thumbnail.
 		 * <p>
+		 * For example, to set the output format to JPEG, the following code
+		 * can be used:
+		 * <pre><code>
+Thumbnails.of(image)
+    .size(640, 480)
+    .outputFormat("JPEG")
+    .toFile(thumbnail);
+		 * </code></pre>
+		 * or, alternatively:
+		 * <pre><code>
+Thumbnails.of(image)
+    .size(640, 480)
+    .outputFormat("jpg")
+    .toFile(thumbnail);
+		 * </code></pre>
+		 * <p>
+		 * Currently, whether or not the compression format string is valid
+		 * dependents on whether the Java Image I/O API recognizes the string
+		 * as a format that it supports for output. (Valid format names can
+		 * be obtained by calling the {@link ImageIO#getWriterFormatNames()}
+		 * method.) 
+		 * <p>
 		 * Calling this method to set this parameter is optional.
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
 		 * 
-		 * @param format		The compression format.
+		 * @param format		The compression format to use when writing
+		 * 						the thumbnail.
 		 * @return				Reference to this object.
 		 * @throws IllegalArgumentException	If an unsupported format is
 		 * 									specified.
