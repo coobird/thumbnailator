@@ -427,7 +427,12 @@ public final class Thumbnailator
 	 * @param width			The width of the thumbnail.
 	 * @param height		The height of the thumbnail.
 	 * @throws IOException	Thrown when a problem occurs when reading from 
-	 * 						{@code File} representing an image file. 						
+	 * 						{@code File} representing an image file.
+	 * 
+	 * @deprecated		This method has been deprecated in favor of using the
+	 * 					{@link Thumbnails#fromFiles(Iterable)} interface.
+	 * 					This method will be removed in 0.5.0, and will not be
+	 * 					further maintained.
 	 */
 	public static Collection<File> createThumbnailsAsCollection(
 			Collection<? extends File> files,
@@ -471,7 +476,7 @@ public final class Thumbnailator
 	/**
 	 * Creates thumbnails from a specified {@code Collection} of {@code File}s.
 	 * The filenames of the resulting thumbnails are determined by applying  
-	 * the specified {@code Rename} function. 
+	 * the specified {@code Rename} function.
 	 * 
 	 * @param files			A {@code Collection} containing {@code File} objects
 	 * 						of image files. 
@@ -480,6 +485,11 @@ public final class Thumbnailator
 	 * @param height		The height of the thumbnail.
 	 * @throws IOException	Thrown when a problem occurs when reading from 
 	 * 						{@code File} representing an image file.
+	 * 
+	 * @deprecated		This method has been deprecated in favor of using the
+	 * 					{@link Thumbnails#fromFiles(Iterable)} interface.
+	 * 					This method will be removed in 0.5.0, and will not be
+	 * 					further maintained.
 	 */
 	public static void createThumbnails(
 			Collection<? extends File> files,
