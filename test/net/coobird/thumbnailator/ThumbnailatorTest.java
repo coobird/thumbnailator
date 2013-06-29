@@ -44,6 +44,7 @@ import static org.mockito.Mockito.*;
  * @author coobird
  *
  */
+@SuppressWarnings("deprecation")
 public class ThumbnailatorTest
 {
 	/**
@@ -1397,11 +1398,12 @@ public class ThumbnailatorTest
 	 * 
 	 * Expected outcome is,
 	 * 
-	 * 1) Processing will complete successfully.
+	 * 1) Processing will fail with an IllegalArgumentException due to not
+	 *    being able to write to a GIF.
 	 * 
 	 * @throws IOException
 	 */
-	@Test(expected=UnsupportedFormatException.class)
+	@Test(expected=IllegalArgumentException.class)
 	public void testCreateThumbnail_IOSII_Transcoding_Jpeg_Gif() throws IOException
 	{
 		/*
@@ -1416,10 +1418,9 @@ public class ThumbnailatorTest
 			Thumbnailator.createThumbnail(is, os, "gif", 50, 50);
 			fail();
 		}
-		catch (UnsupportedFormatException e)
+		catch (IllegalArgumentException e)
 		{
-			assertEquals("No suitable ImageWriter found for gif.", e.getMessage());
-			assertEquals("gif", e.getFormatName());
+			assertTrue(e.getMessage().contains("gif"));
 			throw e;
 		}		
 	}
@@ -1527,11 +1528,12 @@ public class ThumbnailatorTest
 	 * 
 	 * Expected outcome is,
 	 * 
-	 * 1) Processing will stop with an IOException.
+	 * 1) Processing will fail with an IllegalArgumentException due to not
+	 *    being able to write to a GIF.
 	 * 
 	 * @throws IOException
 	 */
-	@Test(expected=UnsupportedFormatException.class)
+	@Test(expected=IllegalArgumentException.class)
 	public void testCreateThumbnail_IOSII_Transcoding_Png_Gif() throws IOException
 	{
 		/*
@@ -1547,10 +1549,9 @@ public class ThumbnailatorTest
 			Thumbnailator.createThumbnail(is, os, "gif", 50, 50);
 			fail();
 		}
-		catch (UnsupportedFormatException e)
+		catch (IllegalArgumentException e)
 		{
-			assertEquals("No suitable ImageWriter found for gif.", e.getMessage());
-			assertEquals("gif", e.getFormatName());
+			assertTrue(e.getMessage().contains("gif"));
 			throw e;
 		}
 	}
@@ -1661,11 +1662,12 @@ public class ThumbnailatorTest
 	 * 
 	 * Expected outcome is,
 	 * 
-	 * 1) Processing will stop with an IOException.
+	 * 1) Processing will fail with an IllegalArgumentException due to not
+	 *    being able to write to a GIF.
 	 * 
 	 * @throws IOException
 	 */
-	@Test(expected=UnsupportedFormatException.class)
+	@Test(expected=IllegalArgumentException.class)
 	public void testCreateThumbnail_IOSII_Transcoding_Bmp_Gif() throws IOException
 	{
 		/*
@@ -1682,10 +1684,9 @@ public class ThumbnailatorTest
 			Thumbnailator.createThumbnail(is, os, "gif", 50, 50);
 			fail();
 		}
-		catch (UnsupportedFormatException e)
+		catch (IllegalArgumentException e)
 		{
-			assertEquals("No suitable ImageWriter found for gif.", e.getMessage());
-			assertEquals("gif", e.getFormatName());
+			assertTrue(e.getMessage().contains("gif"));
 			throw e;
 		}
 	}
