@@ -31,7 +31,7 @@ public final class BufferedImageComparer
 			throw new AssertionError(message);
 		}
 		
-		if (img0.getType() != img1.getType()) 
+		if (img0.getType() != img1.getType())
 		{
 			String message = "Image types do not match. [%d, %d]";
 			message = String.format(message, img0.getType(), img1.getType());
@@ -115,12 +115,12 @@ public final class BufferedImageComparer
 				int v0 = img0.getRGB(i, j);
 				int v1 = img1.getRGB(i, j);
 				
-				int r0 = (v0 << 8) >>> 24; 
+				int r0 = (v0 << 8) >>> 24;
 				int r1 = (v1 << 8) >>> 24;
-				int g0 = (v0 << 16) >>> 24; 
-				int g1 = (v1 << 16) >>> 24; 
-				int b0 = (v0 << 24) >>> 24; 
-				int b1 = (v1 << 24) >>> 24; 
+				int g0 = (v0 << 16) >>> 24;
+				int g1 = (v1 << 16) >>> 24;
+				int b0 = (v0 << 24) >>> 24;
+				int b1 = (v1 << 24) >>> 24;
 				
 				if (r0 != r1 || g0 != g1 || b0 != b1)
 				{

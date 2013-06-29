@@ -62,7 +62,7 @@ public class ThumbnailatorUtilsTest
 		String type = "JPEG";
 		
 		// when
-		boolean isSupported = 
+		boolean isSupported =
 			ThumbnailatorUtils.isSupportedOutputFormatType(format, type);
 		
 		// then, it is supported.
@@ -77,7 +77,7 @@ public class ThumbnailatorUtilsTest
 		String type = "foobar";
 		
 		// when
-		boolean isSupported = 
+		boolean isSupported =
 			ThumbnailatorUtils.isSupportedOutputFormatType(format, type);
 		
 		// then, it is unsupported.
@@ -92,7 +92,7 @@ public class ThumbnailatorUtilsTest
 		String type = ThumbnailParameter.DEFAULT_FORMAT_TYPE;
 		
 		// when
-		boolean isSupported = 
+		boolean isSupported =
 			ThumbnailatorUtils.isSupportedOutputFormatType(format, type);
 		
 		// then, it is supported.
@@ -107,7 +107,7 @@ public class ThumbnailatorUtilsTest
 		String type = "foobar";
 		
 		// when
-		boolean isSupported = 
+		boolean isSupported =
 			ThumbnailatorUtils.isSupportedOutputFormatType(format, type);
 		
 		// then, it is unsupported.
@@ -122,7 +122,7 @@ public class ThumbnailatorUtilsTest
 		String type = ThumbnailParameter.DEFAULT_FORMAT_TYPE;
 		
 		// when
-		boolean isSupported = 
+		boolean isSupported =
 			ThumbnailatorUtils.isSupportedOutputFormatType(format, type);
 		
 		// then, it is unsupported.
@@ -137,7 +137,7 @@ public class ThumbnailatorUtilsTest
 		String type = "foobar";
 		
 		// when
-		boolean isSupported = 
+		boolean isSupported =
 			ThumbnailatorUtils.isSupportedOutputFormatType(format, type);
 		
 		// then, it is unsupported.
@@ -152,7 +152,7 @@ public class ThumbnailatorUtilsTest
 		String type = ThumbnailParameter.DEFAULT_FORMAT_TYPE;
 		
 		// when
-		boolean isSupported = 
+		boolean isSupported =
 			ThumbnailatorUtils.isSupportedOutputFormatType(format, type);
 		
 		// then, it is supported.

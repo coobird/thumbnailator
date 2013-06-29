@@ -31,8 +31,8 @@ public interface ImageSource<T>
 	 * @return							The image format name. If there is no
 	 * 									image format information, then
 	 * 									{@code null} will be returned.
-	 * @throws IllegalStateException	If the source image has not been 
-	 * 									read yet. 
+	 * @throws IllegalStateException	If the source image has not been
+	 * 									read yet.
 	 */
 	public String getInputFormatName();
 	

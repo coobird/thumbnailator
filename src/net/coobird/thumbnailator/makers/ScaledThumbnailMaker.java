@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
  * <p>
  * Upon calculating the size of the thumbnail, if any of the dimensions are
  * {@code 0}, then that dimension will be promoted to {@code 1}. This will
- * cause some resizing operations to not preserve the aspect ratio of the 
+ * cause some resizing operations to not preserve the aspect ratio of the
  * original image.
  * <p>
  * <DL>
@@ -25,7 +25,7 @@ BufferedImage thumbnail = new ScaledThumbnailMaker()
  * </DD>
  * </DL>
  * It is also possible to independently specify the scaling factor for the
- * width and height. (If the two scaling factors are not equal then the aspect 
+ * width and height. (If the two scaling factors are not equal then the aspect
  * ratio of the original image will not be preserved.)
  * <p>
  * <DL>
@@ -51,24 +51,24 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	private static final String PARAM_SCALE = "scale";
 	
 	/**
-	 * The scaling factor to apply to the width when resizing an image to 
+	 * The scaling factor to apply to the width when resizing an image to
 	 * create a thumbnail.
 	 */
 	private double widthFactor;
 	
 	/**
-	 * The scaling factor to apply to the height when resizing an image to 
+	 * The scaling factor to apply to the height when resizing an image to
 	 * create a thumbnail.
 	 */
 	private double heightFactor;
 	
 	/**
 	 * <p>
-	 * Creates an instance of {@code ScaledThumbnailMaker} without the 
+	 * Creates an instance of {@code ScaledThumbnailMaker} without the
 	 * scaling factor specified.
 	 * </p>
 	 * <p>
-	 * To use this {@code ScaledThumbnailMaker}, one must specify the 
+	 * To use this {@code ScaledThumbnailMaker}, one must specify the
 	 * scaling factor to use by calling the {@link #scale(double)} method
 	 * before generating a thumbnail.
 	 * </p>
@@ -80,7 +80,7 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	}
 	
 	/**
-	 * Creates an instance of {@code ScaledThumbnailMaker} with the specified 
+	 * Creates an instance of {@code ScaledThumbnailMaker} with the specified
 	 * scaling factor.
 	 * 
 	 * @param factor			The scaling factor to apply when resizing an
@@ -93,12 +93,12 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	}
 	
 	/**
-	 * Creates an instance of {@code ScaledThumbnailMaker} with the specified 
+	 * Creates an instance of {@code ScaledThumbnailMaker} with the specified
 	 * scaling factors for the width and height.
 	 * 
-	 * @param widthFactor		The scaling factor to apply to the width when 
+	 * @param widthFactor		The scaling factor to apply to the width when
 	 * 							resizing an image to create a thumbnail.
-	 * @param heightFactor		The scaling factor to apply to the height when 
+	 * @param heightFactor		The scaling factor to apply to the height when
 	 * 							resizing an image to create a thumbnail.
 	 * @since	0.3.10
 	 */
@@ -132,9 +132,9 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	 * Sets the scaling factors for the thumbnail.
 	 * </p>
 	 * 
-	 * @param widthFactor		The scaling factor to apply to the width when 
+	 * @param widthFactor		The scaling factor to apply to the width when
 	 * 							resizing an image to create a thumbnail.
-	 * @param heightFactor		The scaling factor to apply to the height when 
+	 * @param heightFactor		The scaling factor to apply to the height when
 	 * 							resizing an image to create a thumbnail.
 	 * @return					A reference to this object.
 	 * @throws IllegalStateException	If the scaling factor has already

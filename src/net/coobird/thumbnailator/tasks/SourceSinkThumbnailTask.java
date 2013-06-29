@@ -12,9 +12,9 @@ import net.coobird.thumbnailator.tasks.io.ImageSource;
  * image is read or retrieved, and an {@link ImageSink} to which the thumbnail
  * is stored or written.
  * <p>
- * This class will take care of handing off information from the 
+ * This class will take care of handing off information from the
  * {@link ImageSource} to the {@link ImageSink}. For example, the output format
- * that should be used by the {@link ImageSink} will be handed off if the 
+ * that should be used by the {@link ImageSink} will be handed off if the
  * {@link ThumbnailParameter#ORIGINAL_FORMAT} parameter is set.
  * 
  * @author coobird
@@ -38,7 +38,7 @@ public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D>
 
 	/**
 	 * Creates a {@link ThumbnailTask} in which an image is retrived from the
-	 * specified {@link ImageSource} and written to the specified 
+	 * specified {@link ImageSource} and written to the specified
 	 * {@link ImageSink}, using the parameters provided in the specified
 	 * {@link ThumbnailParameter}.
 	 * 
@@ -47,7 +47,7 @@ public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D>
 	 * 							or read from.
 	 * @param destination		The destination to which the thumbnail is
 	 * 							stored or written to.
-	 * @throws NullPointerException		If either the parameter,  
+	 * @throws NullPointerException		If either the parameter,
 	 * 									{@link ImageSource} or {@link ImageSink}
 	 * 									is {@code null}.
 	 */

@@ -24,13 +24,13 @@ import net.coobird.thumbnailator.util.ThumbnailatorUtils;
  * An {@link ImageSink} which writes the resulting thumbnail to a file.
  * <p>
  * Under certain circumstances, the destination file can change in the course
- * of processing. 
+ * of processing.
  * <p>
  * This can occur in cases where the file extension does not
  * match the output format set by the {@link #setOutputFormatName(String)}
  * method. In this case, the file name will have a file extension corresponding
  * to the output format set in the above method to be appended to the file
- * name originally provided when instantiating the {@link FileImageSink} object. 
+ * name originally provided when instantiating the {@link FileImageSink} object.
  * 
  * @author coobird
  *
@@ -54,7 +54,7 @@ public class FileImageSink extends AbstractImageSink<File>
 	 * should be written to.
 	 * <p>
 	 * The output format to use will be determined from the file extension.
-	 * If another format should be used, then the 
+	 * If another format should be used, then the
 	 * {@link #setOutputFormatName(String)} should be called with the desired
 	 * output format name.
 	 * <p>
@@ -74,7 +74,7 @@ public class FileImageSink extends AbstractImageSink<File>
 	 * should be written to.
 	 * <p>
 	 * The output format to use will be determined from the file extension.
-	 * If another format should be used, then the 
+	 * If another format should be used, then the
 	 * {@link #setOutputFormatName(String)} should be called with the desired
 	 * output format name.
 	 * 
@@ -103,7 +103,7 @@ public class FileImageSink extends AbstractImageSink<File>
 	 * should be written to.
 	 * <p>
 	 * The output format to use will be determined from the file extension.
-	 * If another format should be used, then the 
+	 * If another format should be used, then the
 	 * {@link #setOutputFormatName(String)} should be called with the desired
 	 * output format name.
 	 * <p>
@@ -123,7 +123,7 @@ public class FileImageSink extends AbstractImageSink<File>
 	 * should be written to.
 	 * <p>
 	 * The output format to use will be determined from the file extension.
-	 * If another format should be used, then the 
+	 * If another format should be used, then the
 	 * {@link #setOutputFormatName(String)} should be called with the desired
 	 * output format name.
 	 * 
@@ -195,12 +195,12 @@ public class FileImageSink extends AbstractImageSink<File>
 	{
 		String fileName = f.getName();
 		if (
-				fileName.indexOf('.') != -1 
+				fileName.indexOf('.') != -1
 				&& fileName.lastIndexOf('.') != fileName.length() - 1
 		)
 		{
 			int lastIndex = fileName.lastIndexOf('.');
-			return fileName.substring(lastIndex + 1); 
+			return fileName.substring(lastIndex + 1);
 		}
 		
 		return null;
@@ -209,7 +209,7 @@ public class FileImageSink extends AbstractImageSink<File>
 	@Override
 	public String preferredOutputFormatName()
 	{
-		String fileExtension = getExtension(destinationFile); 
+		String fileExtension = getExtension(destinationFile);
 
 		if (fileExtension != null)
 		{
@@ -236,7 +236,7 @@ public class FileImageSink extends AbstractImageSink<File>
 	 * 
 	 * @param img							The image to write.
 	 * @throws UnsupportedFormatException	When an unsupported format has been
-	 * 										specified by the 
+	 * 										specified by the
 	 * 										{@link #setOutputFormatName(String)}
 	 * 										method, or if the output format
 	 * 										has not been set and cannot be
@@ -254,7 +254,7 @@ public class FileImageSink extends AbstractImageSink<File>
 		super.write(img);
 		
 		/* TODO refactor.
-		 * The following code has been adapted from the 
+		 * The following code has been adapted from the
 		 * StreamThumbnailTask.write method.
 		 */
 		
@@ -264,12 +264,12 @@ public class FileImageSink extends AbstractImageSink<File>
 		 * If the file extension matches the output format's extension,
 		 * then leave as is.
 		 * 
-		 * Else, append the extension for the output format to the filename. 
+		 * Else, append the extension for the output format to the filename.
 		 */
-		String fileExtension = getExtension(destinationFile); 
+		String fileExtension = getExtension(destinationFile);
 		
 		String formatName = outputFormat;
-		if (formatName != null && (fileExtension == null || !isMatchingFormat(formatName, fileExtension))) 
+		if (formatName != null && (fileExtension == null || !isMatchingFormat(formatName, fileExtension)))
 		{
 			destinationFile = new File(destinationFile.getAbsolutePath() + "." + formatName);
 		}
@@ -295,19 +295,19 @@ public class FileImageSink extends AbstractImageSink<File>
 		if (formatName == null)
 		{
 			throw new UnsupportedFormatException(
-					formatName, 
+					formatName,
 					"Could not determine output format."
 			);
 		}
 		
 		// Checks for available writers for the format.
-		Iterator<ImageWriter> writers = 
+		Iterator<ImageWriter> writers =
 			ImageIO.getImageWritersByFormatName(formatName);
 		
 		if (!writers.hasNext())
 		{
 			throw new UnsupportedFormatException(
-					formatName, 
+					formatName,
 					"No suitable ImageWriter found for " + formatName + "."
 			);
 		}
@@ -324,7 +324,7 @@ public class FileImageSink extends AbstractImageSink<File>
 			 * 
 			 * Note:
 			 * The value to denote that the codec's default compression type
-			 * should be used is null. 
+			 * should be used is null.
 			 */
 			if (param.getOutputFormatType() != ThumbnailParameter.DEFAULT_FORMAT_TYPE)
 			{
@@ -332,7 +332,7 @@ public class FileImageSink extends AbstractImageSink<File>
 			}
 			else
 			{
-				List<String> supportedFormats = 
+				List<String> supportedFormats =
 					ThumbnailatorUtils.getSupportedOutputFormatTypes(formatName);
 				
 				if (!supportedFormats.isEmpty())
@@ -346,7 +346,7 @@ public class FileImageSink extends AbstractImageSink<File>
 			 * 
 			 * Note:
 			 * The value to denote that the codec's default compression quality
-			 * should be used is Float.NaN. 
+			 * should be used is Float.NaN.
 			 */
 			if (!Float.isNaN(param.getOutputQuality()))
 			{
@@ -359,14 +359,14 @@ public class FileImageSink extends AbstractImageSink<File>
 		 * File object directly to obtain an ImageOutputStream was causing
 		 * a problem where if the destination file already exists, then the
 		 * image data was being written to the beginning of the file rather than
-		 * creating a new file. 
+		 * creating a new file.
 		 */
 		ImageOutputStream ios;
 		FileOutputStream fos;
 
 		/*
 		 * The following two lines used to be surrounded by a try-catch,
-		 * but it has been removed, as the IOException which it was 
+		 * but it has been removed, as the IOException which it was
 		 * throwing in the catch block was not giving good feedback as to
 		 * what was causing the original IOException.
 		 * 
@@ -379,13 +379,13 @@ public class FileImageSink extends AbstractImageSink<File>
 		 *
 		 * TODO Whether to surround this portion of code in a try-catch
 		 *      again is debatable, as it wouldn't really add more utility.
-		 *      
+		 *
 		 *      Furthermore, there are other calls in this method which will
 		 *      throw IOExceptions, but they are not surrounded by try-catch
 		 *      blocks. (A similar example exists in the OutputStreamImageSink
 		 *      where the ImageIO.createImageOutputStream is not surrounded
 		 *      in a try-catch.)
-		 *   
+		 *
 		 * Related issue:
 		 * http://code.google.com/p/thumbnailator/issues/detail?id=37
 		 */

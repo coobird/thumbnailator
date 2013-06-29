@@ -34,7 +34,7 @@ public class SourceSinkThumbnailTaskTest
 	public void task_UsesPreferredFromDestination() throws Exception
 	{
 		// given
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 			new ThumbnailParameterBuilder()
 				.size(50, 50)
 				.format(ThumbnailParameter.DETERMINE_FORMAT)
@@ -65,7 +65,7 @@ public class SourceSinkThumbnailTaskTest
 	public void task_UsesOriginalFormat() throws Exception
 	{
 		// given
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 			new ThumbnailParameterBuilder()
 				.size(50, 50)
 				.format(ThumbnailParameter.ORIGINAL_FORMAT)
@@ -95,10 +95,10 @@ public class SourceSinkThumbnailTaskTest
 	public void task_SizeOnly_InputStream_BufferedImage() throws IOException
 	{
 		// given
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 			new ThumbnailParameterBuilder().size(50, 50).build();
 		
-		ByteArrayInputStream is = 
+		ByteArrayInputStream is =
 			new ByteArrayInputStream(makeImageData("png", 200, 200));
 		
 		InputStreamImageSource source = new InputStreamImageSource(is);
@@ -120,7 +120,7 @@ public class SourceSinkThumbnailTaskTest
 	public void task_SizeOnly_InputStream_OutputStream() throws IOException
 	{
 		// given
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 			new ThumbnailParameterBuilder().size(50, 50).build();
 		
 		byte[] imageData = makeImageData("png", 200, 200);
@@ -151,7 +151,7 @@ public class SourceSinkThumbnailTaskTest
 	public void task_ChangeOutputFormat_InputStream_OutputStream() throws IOException
 	{
 		// given
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 			new ThumbnailParameterBuilder().size(50, 50).format("jpg").build();
 		
 		byte[] imageData = makeImageData("png", 200, 200);
@@ -181,7 +181,7 @@ public class SourceSinkThumbnailTaskTest
 	public void task_ChangeOutputFormat_File_OutputStream() throws IOException
 	{
 		// given
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 			new ThumbnailParameterBuilder().size(50, 50).format("jpg").build();
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream();

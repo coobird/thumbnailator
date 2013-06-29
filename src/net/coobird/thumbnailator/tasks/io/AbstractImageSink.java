@@ -6,7 +6,7 @@ import java.io.IOException;
 import net.coobird.thumbnailator.ThumbnailParameter;
 
 /**
- * An abstract class for {@link ImageSink}s. 
+ * An abstract class for {@link ImageSink}s.
  * 
  * @author coobird
  *
@@ -19,7 +19,7 @@ public abstract class AbstractImageSink<T> implements ImageSink<T>
 	protected String outputFormat;
 	
 	/**
-	 * The parameters that should be used when storing the image. 
+	 * The parameters that should be used when storing the image.
 	 */
 	protected ThumbnailParameter param;
 	

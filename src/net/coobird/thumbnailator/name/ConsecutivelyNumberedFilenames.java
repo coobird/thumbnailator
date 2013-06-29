@@ -31,7 +31,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * <li><code>1</code></li>
 	 * <li><code>2</code></li>
 	 * <li><code>3</code></li>
-	 * </ol> 
+	 * </ol>
 	 * and so on.
 	 */
 	public ConsecutivelyNumberedFilenames()
@@ -45,13 +45,13 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * beginning from the given value.
 	 * <p>
 	 * <h3>File name sequence</h3>
-	 * For a case where the given value is {@code 5}: 
+	 * For a case where the given value is {@code 5}:
 	 * <ol>
 	 * <li><code>5</code></li>
 	 * <li><code>6</code></li>
 	 * <li><code>7</code></li>
 	 * <li><code>8</code></li>
-	 * </ol> 
+	 * </ol>
 	 * and so on.
 	 * 
 	 * @param start		The value from which to start counting.
@@ -67,7 +67,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * beginning from {@code 0}, with the directory specified.
 	 * <p>
 	 * <h3>File name sequence</h3>
-	 * For a case where the parent directory is {@code /foo/bar/}: 
+	 * For a case where the parent directory is {@code /foo/bar/}:
 	 * <ol>
 	 * <li><code>/foo/bar/0</code></li>
 	 * <li><code>/foo/bar/1</code></li>
@@ -93,12 +93,12 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * <p>
 	 * The format string should contain the string {@code %d} which will be
 	 * replaced with a consecutively counted number. Additional formatting
-	 * can be applied. For more details, please refer to the section on 
-	 * <em>Numeric</em> formatting in the Java API specification for the 
+	 * can be applied. For more details, please refer to the section on
+	 * <em>Numeric</em> formatting in the Java API specification for the
 	 * {@link Formatter} class.
 	 * <p>
 	 * <h3>File name sequence</h3>
-	 * For a case where the format string is {@code image-%d}: 
+	 * For a case where the format string is {@code image-%d}:
 	 * <ol>
 	 * <li><code>image-0</code></li>
 	 * <li><code>image-1</code></li>
@@ -121,7 +121,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * <p>
 	 * <h3>File name sequence</h3>
 	 * For a case where the parent directory is {@code /foo/bar/}, and the
-	 * specified value is {@code 5}: 
+	 * specified value is {@code 5}:
 	 * <ol>
 	 * <li><code>/foo/bar/5</code></li>
 	 * <li><code>/foo/bar/6</code></li>
@@ -130,7 +130,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * </ol>
 	 * and so on.
 	 * 
-	 * @param dir			The directory in which the files are to be located. 
+	 * @param dir			The directory in which the files are to be located.
 	 * @param start			The value from which to start counting.
  	 * @throws IOException	If the specified directory path is not a directory,
  	 * 						or if does not exist.
@@ -149,13 +149,13 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * <p>
 	 * The format string should contain the string {@code %d} which will be
 	 * replaced with a consecutively counted number. Additional formatting
-	 * can be applied. For more details, please refer to the section on 
-	 * <em>Numeric</em> formatting in the Java API specification for the 
+	 * can be applied. For more details, please refer to the section on
+	 * <em>Numeric</em> formatting in the Java API specification for the
 	 * {@link Formatter} class.
 	 * <p>
 	 * <h3>File name sequence</h3>
-	 * For a case where the parent directory is {@code /foo/bar/}, 
-	 * with the format string {@code image-%d}: 
+	 * For a case where the parent directory is {@code /foo/bar/},
+	 * with the format string {@code image-%d}:
 	 * <ol>
 	 * <li><code>/foo/bar/image-0</code></li>
 	 * <li><code>/foo/bar/image-1</code></li>
@@ -182,13 +182,13 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * <p>
 	 * The format string should contain the string {@code %d} which will be
 	 * replaced with a consecutively counted number. Additional formatting
-	 * can be applied. For more details, please refer to the section on 
-	 * <em>Numeric</em> formatting in the Java API specification for the 
+	 * can be applied. For more details, please refer to the section on
+	 * <em>Numeric</em> formatting in the Java API specification for the
 	 * {@link Formatter} class.
 	 * <p>
 	 * <h3>File name sequence</h3>
 	 * For a case where the parent directory is {@code /foo/bar/}, and the
-	 * specified value is {@code 5}, with the format string {@code image-%d}: 
+	 * specified value is {@code 5}, with the format string {@code image-%d}:
 	 * <ol>
 	 * <li><code>image-5</code></li>
 	 * <li><code>image-6</code></li>
@@ -213,13 +213,13 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * <p>
 	 * The format string should contain the string {@code %d} which will be
 	 * replaced with a consecutively counted number. Additional formatting
-	 * can be applied. For more details, please refer to the section on 
-	 * <em>Numeric</em> formatting in the Java API specification for the 
+	 * can be applied. For more details, please refer to the section on
+	 * <em>Numeric</em> formatting in the Java API specification for the
 	 * {@link Formatter} class.
 	 * <p>
 	 * <h3>File name sequence</h3>
 	 * For a case where the parent directory is {@code /foo/bar/}, and the
-	 * specified value is {@code 5}, with format string {@code image-%d}: 
+	 * specified value is {@code 5}, with format string {@code image-%d}:
 	 * <ol>
 	 * <li><code>/foo/bar/image-5</code></li>
 	 * <li><code>/foo/bar/image-6</code></li>

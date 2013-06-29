@@ -17,7 +17,7 @@ import net.coobird.thumbnailator.geometry.Position;
  * same dimensions, and the original images are of differing dimensions.
  * <p>
  * The fill color used for the enclosing image can be specified, along with
- * whether or not to crop an image if it is larger than the enclosing image. 
+ * whether or not to crop an image if it is larger than the enclosing image.
  * 
  * @author coobird
  * @since 0.3.2
@@ -36,7 +36,7 @@ public class Canvas implements ImageFilter
 	private final int height;
 	
 	/**
-	 * The positioning of the enclosed image. 
+	 * The positioning of the enclosed image.
 	 */
 	private final Position position;
 	
@@ -136,8 +136,8 @@ public class Canvas implements ImageFilter
 		int heightToUse = height;
 		
 		/*
-		 * To prevent cropping when cropping is disabled, if the dimension of 
-		 * the enclosed image exceeds the dimension of the enclosing image, 
+		 * To prevent cropping when cropping is disabled, if the dimension of
+		 * the enclosed image exceeds the dimension of the enclosing image,
 		 * then the enclosing image will have its dimension enlarged.
 		 * 
 		 */
@@ -155,7 +155,7 @@ public class Canvas implements ImageFilter
 				0, 0, 0, 0
 		);
 		
-		BufferedImage finalImage = 
+		BufferedImage finalImage =
 			new BufferedImage(widthToUse, heightToUse, img.getType());
 		
 		Graphics g = finalImage.getGraphics();

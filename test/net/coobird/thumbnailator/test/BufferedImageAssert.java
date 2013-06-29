@@ -11,7 +11,7 @@ import java.util.List;
 public class BufferedImageAssert {
 	
 	/**
-	 * Checks if the 3x3 pattern matches the given image.  
+	 * Checks if the 3x3 pattern matches the given image.
 	 * 
 	 * @param img		The image to check.
 	 * @param pattern	The pattern that should be present.
@@ -44,4 +44,4 @@ public class BufferedImageAssert {
 		}
 	}
 }
- 
+

@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 public class PipelineTest
 {
 	@Test
-	public void singleFilter_ArrayConstructor() 
+	public void singleFilter_ArrayConstructor()
 	{
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -36,7 +36,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void singleFilter_ListConstructor() 
+	public void singleFilter_ListConstructor()
 	{
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -53,7 +53,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void singleFilter_EmptyConstructor_Add() 
+	public void singleFilter_EmptyConstructor_Add()
 	{
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -71,7 +71,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void singleFilter_EmptyConstructor_AddAll() 
+	public void singleFilter_EmptyConstructor_AddAll()
 	{
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -89,7 +89,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void multipleFilter_ArrayConstructor() 
+	public void multipleFilter_ArrayConstructor()
 	{
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -108,7 +108,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void multipleFilter_ListConstructor() 
+	public void multipleFilter_ListConstructor()
 	{
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -127,7 +127,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void multipleFilter_EmptyConstructor_Add() 
+	public void multipleFilter_EmptyConstructor_Add()
 	{
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -148,7 +148,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void multipleFilter_EmptyConstructor_AddAll() 
+	public void multipleFilter_EmptyConstructor_AddAll()
 	{
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);

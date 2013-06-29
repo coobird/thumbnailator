@@ -25,7 +25,7 @@ public class FlipTest {
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -44,7 +44,7 @@ public class FlipTest {
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 0, 0,
 						1, 1, 1,
@@ -58,7 +58,7 @@ public class FlipTest {
 	 * {@link Flip#HORIZONTAL}.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_UsingFlipHorizontal() 
+	public void inputContentsAreNotAltered_UsingFlipHorizontal()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -78,7 +78,7 @@ public class FlipTest {
 	 * {@link Flip#VERTICAL}.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_UsingFlipVertical() 
+	public void inputContentsAreNotAltered_UsingFlipVertical()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);

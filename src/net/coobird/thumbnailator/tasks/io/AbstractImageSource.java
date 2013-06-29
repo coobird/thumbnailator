@@ -16,7 +16,7 @@ public abstract class AbstractImageSource<T> implements ImageSource<T>
 	protected String inputFormatName;
 	
 	/**
-	 * The parameters that should be used when retrieving the image. 
+	 * The parameters that should be used when retrieving the image.
 	 */
 	protected ThumbnailParameter param;
 	
@@ -32,7 +32,7 @@ public abstract class AbstractImageSource<T> implements ImageSource<T>
 	
 	/**
 	 * Indicates that the {@link ImageSource} has completed reading the input
-	 * file, and returns the value given in the argument. 
+	 * file, and returns the value given in the argument.
 	 * <p>
 	 * This method should be used by implementation classes when returning
 	 * the result of the {@link #read()} method, as shown in the following

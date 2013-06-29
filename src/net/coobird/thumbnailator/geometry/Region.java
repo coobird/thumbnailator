@@ -26,7 +26,7 @@ public final class Region
 	
 	/**
 	 * Instantiates a representation of a region from a {@link Position} and
-	 * {@link Size}. 
+	 * {@link Size}.
 	 * 
 	 * @param position		Position of the region.
 	 * @param size			Size of the region.

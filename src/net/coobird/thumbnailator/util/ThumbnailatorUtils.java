@@ -45,7 +45,7 @@ public final class ThumbnailatorUtils
 	
 	/**
 	 * Returns whether a specified format is supported for output.
-	 *  
+	 *
 	 * @param format	The format to check whether it is supported or not.
 	 * @return			{@code true} if the format is supported, {@code false}
 	 * 					otherwise.
@@ -72,9 +72,9 @@ public final class ThumbnailatorUtils
 	 * Returns a {@link List} of supported output formats types for a specified
 	 * output format.
 	 * 
-	 * @return		A {@link List} of supported output formats types. If no 
+	 * @return		A {@link List} of supported output formats types. If no
 	 * 				formats types are supported, or if compression is not
-	 * 				supported for the specified format, then an empty list 
+	 * 				supported for the specified format, then an empty list
 	 * 				is returned.
 	 */
 	public static List<String> getSupportedOutputFormatTypes(String format)
@@ -84,7 +84,7 @@ public final class ThumbnailatorUtils
 			return Collections.emptyList();
 		}
 		
-		Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(format); 
+		Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(format);
 		if (!writers.hasNext())
 		{
 			return Collections.emptyList();
@@ -113,7 +113,7 @@ public final class ThumbnailatorUtils
 	/**
 	 * Returns whether a specified format type is supported for a specified
 	 * output format.
-	 *  
+	 *
 	 * @param format	The format to check whether it is supported or not.
 	 * @param type		The format type to check whether it is supported or not.
 	 * @return			{@code true} if the format type is supported by the

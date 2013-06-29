@@ -38,7 +38,7 @@ public class OutputStreamImageSinkTest
 		OutputStreamImageSink sink = new OutputStreamImageSink(os);
 		
 		// then
-		assertEquals(os, sink.getSink()); 
+		assertEquals(os, sink.getSink());
 	}
 	
 	@Test(expected=NullPointerException.class)
@@ -90,7 +90,7 @@ public class OutputStreamImageSinkTest
 		// given
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		OutputStreamImageSink sink = new OutputStreamImageSink(os);
@@ -114,7 +114,7 @@ public class OutputStreamImageSinkTest
 		// given
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		OutputStreamImageSink sink = new OutputStreamImageSink(os);
@@ -139,7 +139,7 @@ public class OutputStreamImageSinkTest
 		// given
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		OutputStreamImageSink sink = new OutputStreamImageSink(os);
@@ -165,7 +165,7 @@ public class OutputStreamImageSinkTest
 		// given
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		ThumbnailParameter param = mock(ThumbnailParameter.class);
@@ -199,7 +199,7 @@ public class OutputStreamImageSinkTest
 		// given
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		ThumbnailParameter param = mock(ThumbnailParameter.class);
@@ -233,7 +233,7 @@ public class OutputStreamImageSinkTest
 		// given
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		ThumbnailParameter param = mock(ThumbnailParameter.class);
@@ -281,7 +281,7 @@ public class OutputStreamImageSinkTest
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
 		
 		ThumbnailParameter param = mock(ThumbnailParameter.class);
@@ -331,7 +331,7 @@ public class OutputStreamImageSinkTest
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
 		
 		ThumbnailParameter param = mock(ThumbnailParameter.class);
@@ -380,7 +380,7 @@ public class OutputStreamImageSinkTest
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
 		
 		ThumbnailParameter param = mock(ThumbnailParameter.class);

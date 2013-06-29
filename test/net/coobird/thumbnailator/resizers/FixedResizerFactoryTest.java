@@ -13,7 +13,7 @@ public class FixedResizerFactoryTest
 	{
 		// given
 		Resizer resizer = Resizers.BICUBIC;
-		ResizerFactory factory = new FixedResizerFactory(resizer); 
+		ResizerFactory factory = new FixedResizerFactory(resizer);
 		
 		// when
 		Resizer receivedResizer = factory.getResizer();

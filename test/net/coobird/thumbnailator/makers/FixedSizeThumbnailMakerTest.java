@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
- * A class which tests the behavior of the 
+ * A class which tests the behavior of the
  * {@link FixedSizeThumbnailMaker} class.
  * 
  * @author coobird
@@ -526,7 +526,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 * and the expected outcome is,
 	 * <ol>
-	 * <li>An IllegalStateException is thrown because the fitWithinDimensions 
+	 * <li>An IllegalStateException is thrown because the fitWithinDimensions
 	 * has already been set.</li>
 	 * </ol>
 	 */

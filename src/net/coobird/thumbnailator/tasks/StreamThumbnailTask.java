@@ -30,8 +30,8 @@ public class StreamThumbnailTask extends ThumbnailTask<InputStream, OutputStream
 	private final SourceSinkThumbnailTask<InputStream, OutputStream> task;
 	
 	/**
-	 * Creates a {@link ThumbnailTask} in which streamed image data from the 
-	 * specified {@link InputStream} is output to a specified 
+	 * Creates a {@link ThumbnailTask} in which streamed image data from the
+	 * specified {@link InputStream} is output to a specified
 	 * {@link OutputStream}, using the parameters provided in the specified
 	 * {@link ThumbnailParameter}.
 	 * 

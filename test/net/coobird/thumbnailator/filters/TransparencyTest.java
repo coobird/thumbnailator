@@ -24,7 +24,7 @@ public class TransparencyTest
 	 * {@link Transparency#Transparency(double)} constructor.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_DoubleConstructor() 
+	public void inputContentsAreNotAltered_DoubleConstructor()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -44,7 +44,7 @@ public class TransparencyTest
 	 * {@link Transparency#Transparency(float)} constructor.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_FloatConstructor() 
+	public void inputContentsAreNotAltered_FloatConstructor()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);

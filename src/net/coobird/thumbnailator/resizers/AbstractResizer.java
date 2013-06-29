@@ -26,7 +26,7 @@ public abstract class AbstractResizer implements Resizer
 	 */
 	protected final Map<RenderingHints.Key, Object> UNMODIFIABLE_RENDERING_HINTS;
 	
-	protected static final RenderingHints.Key KEY_INTERPOLATION = 
+	protected static final RenderingHints.Key KEY_INTERPOLATION =
 		RenderingHints.KEY_INTERPOLATION;
 
 	/**
@@ -64,17 +64,17 @@ public abstract class AbstractResizer implements Resizer
 	 * destination image.
 	 * </p>
 	 * <p>
-	 * If the source or destination image is {@code null}, then a 
+	 * If the source or destination image is {@code null}, then a
 	 * {@link NullPointerException} will be thrown.
 	 * </p>
 	 * 
 	 * @param srcImage		The source image.
 	 * @param destImage		The destination image.
 	 * 
-	 * @throws NullPointerException		When the source and/or the destination 
+	 * @throws NullPointerException		When the source and/or the destination
 	 * 									image is {@code null}.
 	 */
-	public void resize(BufferedImage srcImage, BufferedImage destImage) 
+	public void resize(BufferedImage srcImage, BufferedImage destImage)
 	{
 		performChecks(srcImage, destImage);
 		
@@ -112,8 +112,8 @@ public abstract class AbstractResizer implements Resizer
 	 * The keys and values used for the rendering hints are those defined in
 	 * the {@link RenderingHints} class.
 	 * 
-	 * @see RenderingHints 
-	 * @return		Rendering hints used when resizing the image. 
+	 * @see RenderingHints
+	 * @return		Rendering hints used when resizing the image.
 	 */
 	public Map<RenderingHints.Key, Object> getRenderingHints()
 	{

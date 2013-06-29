@@ -5,7 +5,7 @@ import java.awt.RenderingHints;
 import net.coobird.thumbnailator.resizers.Resizer;
 
 /**
- * An interface which are implemented by classes and enums which provide 
+ * An interface which are implemented by classes and enums which provide
  * configuration information for {@link Resizer}s.
  * 
  * @author coobird

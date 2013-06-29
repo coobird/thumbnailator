@@ -11,7 +11,7 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * 
  * @param <T> 		The destination class to which the thumbnail is stored
  * 					or written.
- *  
+ *
  * @author coobird
  *
  */
@@ -48,15 +48,15 @@ public interface ImageSink<T>
 	
 	/**
 	 * Returns the output format to use from information provided for the
-	 * output image. 
+	 * output image.
 	 * <p>
-	 * If the output format cannot be determined, then 
+	 * If the output format cannot be determined, then
 	 * {@link ThumbnailParameter#ORIGINAL_FORMAT} should be returned.
 	 */
 	public String preferredOutputFormatName();
 	
 	/**
-	 * Returns the destination to which the thumbnail will be stored or 
+	 * Returns the destination to which the thumbnail will be stored or
 	 * written.
 	 * 
 	 * @return					The destination for the thumbnail image.

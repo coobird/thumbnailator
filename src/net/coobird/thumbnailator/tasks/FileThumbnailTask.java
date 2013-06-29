@@ -9,7 +9,7 @@ import net.coobird.thumbnailator.tasks.io.FileImageSink;
 import net.coobird.thumbnailator.tasks.io.FileImageSource;
 
 /**
- * A thumbnail generation task which reads and writes data from and to a 
+ * A thumbnail generation task which reads and writes data from and to a
  * {@link File}.
  * <p>
  * Only the first image included in the image file will be read. Subsequent
@@ -26,7 +26,7 @@ public class FileThumbnailTask extends ThumbnailTask<File, File>
 	private final SourceSinkThumbnailTask<File, File> task;
 	
 	/**
-	 * Creates a {@link ThumbnailTask} in which image data is read from the 
+	 * Creates a {@link ThumbnailTask} in which image data is read from the
 	 * specified {@link File} and is output to a specified {@link File}, using
 	 * the parameters provided in the specified {@link ThumbnailParameter}.
 	 * 

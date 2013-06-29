@@ -7,7 +7,7 @@ package net.coobird.thumbnailator.util.exif;
  * @author coobird
  *
  */
-public enum Orientation 
+public enum Orientation
 {
 	/**
 	 * Orientation 1.
@@ -83,7 +83,7 @@ public enum Orientation
 	;
 	
 	private int value;
-	private Orientation(int value) 
+	private Orientation(int value)
 	{
 		this.value = value;
 	}
@@ -97,11 +97,11 @@ public enum Orientation
 	 * 					value. Return {@code null} if the given value does not
 	 * 					correspond to a	valid {@link Orientation}.
 	 */
-	public static Orientation typeOf(int value) 
+	public static Orientation typeOf(int value)
 	{
-		for (Orientation orientation : Orientation.values()) 
+		for (Orientation orientation : Orientation.values())
 		{
-			if (orientation.value == value) 
+			if (orientation.value == value)
 			{
 				return orientation;
 			}
@@ -115,7 +115,7 @@ public enum Orientation
 	 * @return			A textual representation of this enum.
 	 */
 	@Override
-	public String toString() 
+	public String toString()
 	{
 		return "Orientation [type=" + value + "]";
 	}

@@ -38,7 +38,7 @@ public class ThumbnailsBuilderInputOutputTest
 	/**
 	 * The temporary directory to use when creating files to use for this test.
 	 */
-	private static final String TMPDIR = 
+	private static final String TMPDIR =
 			"test-resources/tmp/ThumbnailsBuilderInputOutputTest";
 	
 	@BeforeClass
@@ -132,7 +132,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Processing completes successfully. Image format is determined
 	 * by the extension of the file.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_BufferedImage_toFiles_Iterable_NoOutputFormatSpecified() throws IOException
@@ -167,7 +167,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Processing completes successfully. Image format is determined
 	 * by the extension of the file.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_BufferedImage_asFiles_Iterable_NoOutputFormatSpecified() throws IOException
@@ -258,7 +258,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalStateException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalStateException.class)
 	public void of_BufferedImage_toOutputStream_NoOutputFormatSpecified() throws IOException
@@ -294,7 +294,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalStateException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalStateException.class)
 	public void of_BufferedImage_toOutputStreams_NoOutputFormatSpecified() throws IOException
@@ -330,7 +330,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_BufferedImage_iterableBufferedImages_NoOutputFormatSpecified() throws IOException
@@ -431,7 +431,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Iterable<File> object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_BufferedImage_toFiles_Iterable_OutputFormatSpecified() throws IOException
@@ -466,7 +466,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Iterable<File> object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_BufferedImage_asFiles_Iterable_OutputFormatSpecified() throws IOException
@@ -561,7 +561,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_BufferedImage_toOutputStream_OutputFormatSpecified() throws IOException
@@ -593,7 +593,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_BufferedImage_toOutputStreams_OutputFormatSpecified() throws IOException
@@ -625,7 +625,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_BufferedImage_iterableBufferedImages_OutputFormatSpecified() throws IOException
@@ -728,7 +728,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Processing completes successfully. Image format is determined
 	 * by the extension of the file.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_BufferedImages_toFiles_Iterable_NoOutputFormatSpecified() throws IOException
@@ -763,7 +763,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Processing completes successfully. Image format is determined
 	 * by the extension of the file.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_BufferedImages_asFiles_Iterable_NoOutputFormatSpecified() throws IOException
@@ -867,7 +867,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void of_BufferedImages_toOutputStream_NoOutputFormatSpecified() throws IOException
@@ -903,7 +903,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalStateException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalStateException.class)
 	public void of_BufferedImages_toOutputStreams_NoOutputFormatSpecified() throws IOException
@@ -939,7 +939,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_BufferedImages_iterableBufferedImages_NoOutputFormatSpecified() throws IOException
@@ -1053,7 +1053,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Iterable<File> object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_BufferedImages_toFiles_Iterable_OutputFormatSpecified() throws IOException
@@ -1094,7 +1094,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Iterable<File> object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_BufferedImages_asFiles_Iterable_OutputFormatSpecified() throws IOException
@@ -1206,7 +1206,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void of_BufferedImages_toOutputStream_OutputFormatSpecified() throws IOException
@@ -1244,7 +1244,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_BufferedImages_toOutputStreams_OutputFormatSpecified() throws IOException
@@ -1281,7 +1281,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_BufferedImages_iterableBufferedImages_OutputFormatSpecified() throws IOException
@@ -1557,7 +1557,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An image is written to the specified file.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_File_toFile() throws IOException
@@ -1589,7 +1589,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_File_toFiles_Rename() throws IOException
@@ -1621,7 +1621,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_File_asFiles_Rename() throws IOException
@@ -1655,7 +1655,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Iterable<File> object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_File_toFiles_Iterable() throws IOException
@@ -1688,7 +1688,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Iterable<File> object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_File_asFiles_Iterable() throws IOException
@@ -1722,7 +1722,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_File_asBufferedImage() throws IOException
@@ -1750,7 +1750,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_File_asBufferedImages() throws IOException
@@ -1781,7 +1781,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_File_toOutputStream() throws IOException
@@ -1812,7 +1812,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_File_toOutputStreams() throws IOException
@@ -1843,7 +1843,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_File_iterableBufferedImages() throws IOException
@@ -1876,7 +1876,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void of_Files_toFile() throws IOException
@@ -1912,7 +1912,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_Files_toFiles_Rename() throws IOException
@@ -1952,7 +1952,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_Files_asFiles_Rename() throws IOException
@@ -1994,7 +1994,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Iterable<File> object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_Files_toFiles_Iterable() throws IOException
@@ -2034,7 +2034,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Iterable<File> object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_Files_asFiles_Iterable() throws IOException
@@ -2074,7 +2074,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void of_Files_asBufferedImage() throws IOException
@@ -2107,7 +2107,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Two images are generated and returned as BufferedImages in a List</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_Files_asBufferedImages() throws IOException
@@ -2143,7 +2143,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void of_Files_toOutputStream() throws IOException
@@ -2178,7 +2178,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing will be successful.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_Files_toOutputStreams() throws IOException
@@ -2216,7 +2216,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and an Iterable which can iterate over the
 	 * two BufferedImages is returned.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_Files_iterableBufferedImages() throws IOException
@@ -2254,7 +2254,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An image is written to the specified file.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFiles_Single_toFile() throws IOException
@@ -2286,7 +2286,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void fromFiles_Multiple_toFile() throws IOException
@@ -2313,7 +2313,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFiles_Single_toFiles() throws IOException
@@ -2346,7 +2346,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFiles_Multiple_toFiles() throws IOException
@@ -2386,7 +2386,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFiles_Single_asFiles() throws IOException
@@ -2421,7 +2421,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFiles_Multiple_asFiles() throws IOException
@@ -2462,7 +2462,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An image is written to the specified file.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFilesIterable_Single_toFile() throws IOException
@@ -2494,7 +2494,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void fromFilesIterable_Multiple_toFile() throws IOException
@@ -2521,7 +2521,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFilesIterable_Single_toFiles() throws IOException
@@ -2554,7 +2554,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFilesIterable_Multiple_toFiles() throws IOException
@@ -2594,7 +2594,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFilesIterable_Single_asFiles() throws IOException
@@ -2629,7 +2629,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFilesIterable_Multiple_asFiles() throws IOException
@@ -2670,7 +2670,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An image is written to the specified file.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_String_toFile() throws IOException
@@ -2702,7 +2702,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void of_Strings_toFile() throws IOException
@@ -2729,7 +2729,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_String_toFiles() throws IOException
@@ -2762,7 +2762,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_Strings_toFiles() throws IOException
@@ -2802,7 +2802,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_String_asFiles() throws IOException
@@ -2837,7 +2837,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_Strings_asFiles() throws IOException
@@ -2878,7 +2878,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An image is written to the specified file.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFilenames_Single_toFile() throws IOException
@@ -2910,7 +2910,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void fromFilenames_Multiple_toFile() throws IOException
@@ -2937,7 +2937,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFilenames_Single_toFiles() throws IOException
@@ -2970,7 +2970,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFilenames_Multiple_toFiles() throws IOException
@@ -3010,7 +3010,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFilenames_Single_asFiles() throws IOException
@@ -3045,7 +3045,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFilenames_Multiple_asFiles() throws IOException
@@ -3086,7 +3086,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An image is written to the specified file.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFilenamesIterable_Single_toFile() throws IOException
@@ -3118,7 +3118,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void fromFilenamesIterable_Multiple_toFile() throws IOException
@@ -3145,7 +3145,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFilenamesIterable_Single_toFiles() throws IOException
@@ -3178,7 +3178,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFilenamesIterable_Multiple_toFiles() throws IOException
@@ -3218,7 +3218,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFilenamesIterable_Single_asFiles() throws IOException
@@ -3253,7 +3253,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Rename object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void fromFilenamesIterable_Multiple_asFiles() throws IOException
@@ -3294,7 +3294,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An image is written to the specified file.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_URL_toFile() throws IOException
@@ -3325,7 +3325,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalStateException occurs.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalStateException.class)
 	public void of_URL_toFiles_Rename() throws IOException
@@ -3360,7 +3360,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalStateException occurs.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalStateException.class)
 	public void of_URL_asFiles_Rename() throws IOException
@@ -3396,7 +3396,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Iterable<File> object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_URL_toFiles_Iterable() throws IOException
@@ -3429,7 +3429,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Iterable<File> object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_URL_asFiles_Iterable() throws IOException
@@ -3463,7 +3463,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_URL_asBufferedImage() throws IOException
@@ -3491,7 +3491,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_URL_asBufferedImages() throws IOException
@@ -3522,7 +3522,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_URL_toOutputStream() throws IOException
@@ -3553,7 +3553,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_URL_toOutputStreams() throws IOException
@@ -3584,7 +3584,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_URL_iterableBufferedImages() throws IOException
@@ -3617,7 +3617,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void of_URLs_toFile() throws IOException
@@ -3652,7 +3652,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalStateException occurs.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalStateException.class)
 	public void of_URLs_toFiles_Rename() throws IOException
@@ -3686,7 +3686,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalStateException occurs.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalStateException.class)
 	public void of_URLs_asFiles_Rename() throws IOException
@@ -3721,7 +3721,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Iterable<File> object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_URLs_toFiles_Iterable() throws IOException
@@ -3761,7 +3761,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Iterable<File> object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_URLs_asFiles_Iterable() throws IOException
@@ -3801,7 +3801,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void of_URLs_asBufferedImage() throws IOException
@@ -3834,7 +3834,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Two images are generated and returned as BufferedImages in a List</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_URLs_asBufferedImages() throws IOException
@@ -3870,7 +3870,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void of_URLs_toOutputStream() throws IOException
@@ -3905,7 +3905,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing will be successful.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_URLs_toOutputStreams() throws IOException
@@ -3943,7 +3943,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and an Iterable which can iterate over the
 	 * two BufferedImages is returned.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_URLs_iterableBufferedImages() throws IOException
@@ -4219,7 +4219,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An image is written to the specified file.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_InputStream_toFile() throws IOException
@@ -4250,7 +4250,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalStateException occurs.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalStateException.class)
 	public void of_InputStream_toFiles_Rename() throws IOException
@@ -4285,7 +4285,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalStateException occurs.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalStateException.class)
 	public void of_InputStream_asFiles_Rename() throws IOException
@@ -4321,7 +4321,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Iterable<File> object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_InputStream_toFiles_Iterable() throws IOException
@@ -4354,7 +4354,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>An image is generated and written to a file whose name is generated
 	 * from the Iterable<File> object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_InputStream_asFiles_Iterable() throws IOException
@@ -4388,7 +4388,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_InputStream_asBufferedImage() throws IOException
@@ -4416,7 +4416,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_InputStream_asBufferedImages() throws IOException
@@ -4447,7 +4447,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_InputStream_toOutputStream() throws IOException
@@ -4478,7 +4478,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_InputStream_toOutputStreams() throws IOException
@@ -4509,7 +4509,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing completes successfully.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_InputStream_iterableBufferedImages() throws IOException
@@ -4542,7 +4542,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void of_InputStreams_toFile() throws IOException
@@ -4577,7 +4577,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalStateException occurs.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalStateException.class)
 	public void of_InputStreams_toFiles_Rename() throws IOException
@@ -4611,7 +4611,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalStateException occurs.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalStateException.class)
 	public void of_InputStreams_asFiles_Rename() throws IOException
@@ -4646,7 +4646,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Iterable<File> object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_InputStreams_toFiles_Iterable() throws IOException
@@ -4686,7 +4686,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and written to a file whose name is
 	 * generated from the Iterable<File> object.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_InputStreams_asFiles_Iterable() throws IOException
@@ -4726,7 +4726,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void of_InputStreams_asBufferedImage() throws IOException
@@ -4759,7 +4759,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Two images are generated and returned as BufferedImages in a List</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_InputStreams_asBufferedImages() throws IOException
@@ -4795,7 +4795,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void of_InputStreams_toOutputStream() throws IOException
@@ -4830,7 +4830,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>Processing will be successful.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_InputStreams_toOutputStreams() throws IOException
@@ -4869,7 +4869,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <li>Two images are generated and an Iterable which can iterate over the
 	 * two BufferedImages is returned.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_InputStreams_iterableBufferedImages() throws IOException
@@ -5148,7 +5148,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * <ol>
 	 * <li>An image is written to the specified file.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void of_InputStream_FileInputStream_toFile() throws IOException
@@ -9138,14 +9138,14 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Exif/source_1.jpg");
 		
 		// when
-		BufferedImage result = 
+		BufferedImage result =
 			Thumbnails.of(sourceFile)
 				.size(100, 100)
 				.asBufferedImage();
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9161,14 +9161,14 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Exif/source_2.jpg");
 		
 		// when
-		BufferedImage result = 
+		BufferedImage result =
 			Thumbnails.of(sourceFile)
 				.size(100, 100)
 				.asBufferedImage();
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9184,14 +9184,14 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Exif/source_3.jpg");
 		
 		// when
-		BufferedImage result = 
+		BufferedImage result =
 			Thumbnails.of(sourceFile)
 				.size(100, 100)
 				.asBufferedImage();
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9207,14 +9207,14 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Exif/source_4.jpg");
 		
 		// when
-		BufferedImage result = 
+		BufferedImage result =
 			Thumbnails.of(sourceFile)
 				.size(100, 100)
 				.asBufferedImage();
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9224,20 +9224,20 @@ public class ThumbnailsBuilderInputOutputTest
 	}
 	
 	@Test
-	public void correctOrientation5() throws Exception 
+	public void correctOrientation5() throws Exception
 	{
 		// given
 		File sourceFile = new File("test-resources/Exif/source_5.jpg");
 		
 		// when
-		BufferedImage result = 
+		BufferedImage result =
 			Thumbnails.of(sourceFile)
 				.size(100, 100)
 				.asBufferedImage();
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9253,14 +9253,14 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Exif/source_6.jpg");
 		
 		// when
-		BufferedImage result = 
+		BufferedImage result =
 			Thumbnails.of(sourceFile)
 				.size(100, 100)
 				.asBufferedImage();
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9276,14 +9276,14 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Exif/source_7.jpg");
 		
 		// when
-		BufferedImage result = 
+		BufferedImage result =
 			Thumbnails.of(sourceFile)
 				.size(100, 100)
 				.asBufferedImage();
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9299,14 +9299,14 @@ public class ThumbnailsBuilderInputOutputTest
 		File sourceFile = new File("test-resources/Exif/source_8.jpg");
 		
 		// when
-		BufferedImage result = 
+		BufferedImage result =
 			Thumbnails.of(sourceFile)
 				.size(100, 100)
 				.asBufferedImage();
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9320,7 +9320,7 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// given
 		// when
-		List<BufferedImage> results = 
+		List<BufferedImage> results =
 			Thumbnails.of("test-resources/Exif/source_1.jpg", "test-resources/Exif/source_1.jpg")
 				.size(100, 100)
 				.asBufferedImages();
@@ -9328,7 +9328,7 @@ public class ThumbnailsBuilderInputOutputTest
 		// then
 		assertEquals(results.size(), 2);
 		BufferedImageAssert.assertMatches(
-				results.get(0), 
+				results.get(0),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9336,7 +9336,7 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 		BufferedImageAssert.assertMatches(
-				results.get(1), 
+				results.get(1),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9350,7 +9350,7 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// given
 		// when
-		List<BufferedImage> results = 
+		List<BufferedImage> results =
 			Thumbnails.of("test-resources/Exif/source_2.jpg", "test-resources/Exif/source_1.jpg")
 				.size(100, 100)
 				.asBufferedImages();
@@ -9358,7 +9358,7 @@ public class ThumbnailsBuilderInputOutputTest
 		// then
 		assertEquals(results.size(), 2);
 		BufferedImageAssert.assertMatches(
-				results.get(0), 
+				results.get(0),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9366,7 +9366,7 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 		BufferedImageAssert.assertMatches(
-				results.get(1), 
+				results.get(1),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9380,7 +9380,7 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// given
 		// when
-		Iterable<BufferedImage> results = 
+		Iterable<BufferedImage> results =
 			Thumbnails.of("test-resources/Exif/source_1.jpg", "test-resources/Exif/source_1.jpg")
 				.size(100, 100)
 				.iterableBufferedImages();
@@ -9388,7 +9388,7 @@ public class ThumbnailsBuilderInputOutputTest
 		// then
 		Iterator<BufferedImage> iter = results.iterator();
 		BufferedImageAssert.assertMatches(
-				iter.next(), 
+				iter.next(),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9396,7 +9396,7 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 		BufferedImageAssert.assertMatches(
-				iter.next(), 
+				iter.next(),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9411,7 +9411,7 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// given
 		// when
-		Iterable<BufferedImage> results = 
+		Iterable<BufferedImage> results =
 				Thumbnails.of("test-resources/Exif/source_2.jpg", "test-resources/Exif/source_1.jpg")
 					.size(100, 100)
 					.iterableBufferedImages();
@@ -9420,7 +9420,7 @@ public class ThumbnailsBuilderInputOutputTest
 		// then
 		Iterator<BufferedImage> iter = results.iterator();
 		BufferedImageAssert.assertMatches(
-				iter.next(), 
+				iter.next(),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9428,7 +9428,7 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 		BufferedImageAssert.assertMatches(
-				iter.next(), 
+				iter.next(),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9446,7 +9446,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File outFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
 		
 		// when
-		List<File> results = 
+		List<File> results =
 			Thumbnails.of("test-resources/Exif/source_1.jpg", "test-resources/Exif/source_1.jpg")
 				.size(100, 100)
 				.asFiles(Arrays.asList(outFile1, outFile2));
@@ -9454,7 +9454,7 @@ public class ThumbnailsBuilderInputOutputTest
 		// then
 		assertEquals(results.size(), 2);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(results.get(0)), 
+				ImageIO.read(results.get(0)),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9462,7 +9462,7 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(results.get(1)), 
+				ImageIO.read(results.get(1)),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9479,7 +9479,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File outFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
 		
 		// when
-		List<File> results = 
+		List<File> results =
 			Thumbnails.of("test-resources/Exif/source_2.jpg", "test-resources/Exif/source_1.jpg")
 				.size(100, 100)
 				.asFiles(Arrays.asList(outFile1, outFile2));
@@ -9487,7 +9487,7 @@ public class ThumbnailsBuilderInputOutputTest
 		// then
 		assertEquals(results.size(), 2);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(results.get(0)), 
+				ImageIO.read(results.get(0)),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9495,7 +9495,7 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(results.get(1)), 
+				ImageIO.read(results.get(1)),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9514,7 +9514,7 @@ public class ThumbnailsBuilderInputOutputTest
 		TestUtils.copyFile(new File("test-resources/Exif/source_1.jpg"), sourceFile2);
 		
 		// when
-		List<File> results = 
+		List<File> results =
 			Thumbnails.of(sourceFile1, sourceFile2)
 				.size(100, 100)
 				.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
@@ -9522,7 +9522,7 @@ public class ThumbnailsBuilderInputOutputTest
 		// then
 		assertEquals(results.size(), 2);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(results.get(0)), 
+				ImageIO.read(results.get(0)),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9530,7 +9530,7 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(results.get(1)), 
+				ImageIO.read(results.get(1)),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9549,7 +9549,7 @@ public class ThumbnailsBuilderInputOutputTest
 		TestUtils.copyFile(new File("test-resources/Exif/source_1.jpg"), sourceFile2);
 		
 		// when
-		List<File> results = 
+		List<File> results =
 			Thumbnails.of(sourceFile1, sourceFile2)
 				.size(100, 100)
 				.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
@@ -9557,7 +9557,7 @@ public class ThumbnailsBuilderInputOutputTest
 		// then
 		assertEquals(results.size(), 2);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(results.get(0)), 
+				ImageIO.read(results.get(0)),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9565,7 +9565,7 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(results.get(1)), 
+				ImageIO.read(results.get(1)),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9588,7 +9588,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(outFile1), 
+				ImageIO.read(outFile1),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9596,7 +9596,7 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(outFile2), 
+				ImageIO.read(outFile2),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9619,7 +9619,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(outFile1), 
+				ImageIO.read(outFile1),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9627,7 +9627,7 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(outFile2), 
+				ImageIO.read(outFile2),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9652,7 +9652,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(new File(TMPDIR, "thumbnail." + sourceFile1.getName())), 
+				ImageIO.read(new File(TMPDIR, "thumbnail." + sourceFile1.getName())),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9660,7 +9660,7 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(new File(TMPDIR, "thumbnail." + sourceFile2.getName())), 
+				ImageIO.read(new File(TMPDIR, "thumbnail." + sourceFile2.getName())),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9685,7 +9685,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(new File(TMPDIR, "thumbnail." + sourceFile1.getName())), 
+				ImageIO.read(new File(TMPDIR, "thumbnail." + sourceFile1.getName())),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9693,7 +9693,7 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(new File(TMPDIR, "thumbnail." + sourceFile2.getName())), 
+				ImageIO.read(new File(TMPDIR, "thumbnail." + sourceFile2.getName())),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9716,7 +9716,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(new ByteArrayInputStream(os1.toByteArray())), 
+				ImageIO.read(new ByteArrayInputStream(os1.toByteArray())),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9724,7 +9724,7 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(new ByteArrayInputStream(os2.toByteArray())), 
+				ImageIO.read(new ByteArrayInputStream(os2.toByteArray())),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9747,7 +9747,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(new ByteArrayInputStream(os1.toByteArray())), 
+				ImageIO.read(new ByteArrayInputStream(os1.toByteArray())),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9755,7 +9755,7 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(new ByteArrayInputStream(os2.toByteArray())), 
+				ImageIO.read(new ByteArrayInputStream(os2.toByteArray())),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9772,7 +9772,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File outFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
 		
 		// when
-		List<File> results = 
+		List<File> results =
 			Thumbnails.of("test-resources/Exif/source_2.jpg", "test-resources/Exif/source_1.jpg")
 				.size(100, 100)
 				.useExifOrientation(true)
@@ -9781,7 +9781,7 @@ public class ThumbnailsBuilderInputOutputTest
 		// then
 		assertEquals(results.size(), 2);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(results.get(0)), 
+				ImageIO.read(results.get(0)),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9789,7 +9789,7 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(results.get(1)), 
+				ImageIO.read(results.get(1)),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9806,7 +9806,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File outFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
 		
 		// when
-		List<File> results = 
+		List<File> results =
 			Thumbnails.of("test-resources/Exif/source_2.jpg", "test-resources/Exif/source_1.jpg")
 				.size(100, 100)
 				.useExifOrientation(false)
@@ -9815,7 +9815,7 @@ public class ThumbnailsBuilderInputOutputTest
 		// then
 		assertEquals(results.size(), 2);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(results.get(0)), 
+				ImageIO.read(results.get(0)),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9823,7 +9823,7 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 		BufferedImageAssert.assertMatches(
-				ImageIO.read(results.get(1)), 
+				ImageIO.read(results.get(1)),
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -9834,7 +9834,7 @@ public class ThumbnailsBuilderInputOutputTest
 	
 	private File makeRenamedFile(File f, Rename rename)
 	{
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 			new ThumbnailParameterBuilder()
 				.size(100, 100)
 				.build();

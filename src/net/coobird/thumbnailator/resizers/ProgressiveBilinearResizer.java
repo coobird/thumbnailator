@@ -8,15 +8,15 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * A {@link Resizer} which performs resizing operations by using 
+ * A {@link Resizer} which performs resizing operations by using
  * progressive bilinear scaling.
  * <p>
  * The resizing technique used in this class is based on the technique
- * discussed in <em>Chapter 4: Images</em> of 
+ * discussed in <em>Chapter 4: Images</em> of
  * <a href="http://filthyrichclients.org">Filthy Rich Clients</a>
  * by Chet Haase and Romain Guy.
  * <p>
- * The actual implemenation of the technique is independent of the code which 
+ * The actual implemenation of the technique is independent of the code which
  * is provided in the book.
  * 
  * @author coobird
@@ -47,7 +47,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer
 	/**
 	 * Resizes an image using the progressive bilinear scaling technique.
 	 * <p>
-	 * If the source and/or destination image is {@code null}, then a 
+	 * If the source and/or destination image is {@code null}, then a
 	 * {@link NullPointerException} will be thrown.
 	 * 
 	 * @param srcImage		The source image.

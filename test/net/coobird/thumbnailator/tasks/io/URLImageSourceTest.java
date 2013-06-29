@@ -235,7 +235,7 @@ public class URLImageSourceTest
 	/*
 	 *
 	 *     +------------------+ source
-	 *     |  +------------------+       
+	 *     |  +------------------+
 	 *     |  |XXXXXXXXXXXXXXX|  |
 	 *     |  |XXXXXXXXXXXXXXX|  |
 	 *     |  |XX  final  XXXX|  |
@@ -339,7 +339,7 @@ public class URLImageSourceTest
 
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_1.jpg"));
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -359,7 +359,7 @@ public class URLImageSourceTest
 
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_2.jpg"));
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -379,7 +379,7 @@ public class URLImageSourceTest
 
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_3.jpg"));
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -399,7 +399,7 @@ public class URLImageSourceTest
 
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_4.jpg"));
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -419,7 +419,7 @@ public class URLImageSourceTest
 
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_5.jpg"));
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -439,7 +439,7 @@ public class URLImageSourceTest
 
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_6.jpg"));
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -459,7 +459,7 @@ public class URLImageSourceTest
 
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_7.jpg"));
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -479,7 +479,7 @@ public class URLImageSourceTest
 
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_8.jpg"));
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -496,7 +496,7 @@ public class URLImageSourceTest
 		// given
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_1.jpg"));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -516,7 +516,7 @@ public class URLImageSourceTest
 		
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_2.jpg"));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -526,7 +526,7 @@ public class URLImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -544,7 +544,7 @@ public class URLImageSourceTest
 		
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_3.jpg"));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -554,7 +554,7 @@ public class URLImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -572,7 +572,7 @@ public class URLImageSourceTest
 		
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_4.jpg"));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -582,7 +582,7 @@ public class URLImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -600,7 +600,7 @@ public class URLImageSourceTest
 		
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_5.jpg"));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -610,7 +610,7 @@ public class URLImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -628,7 +628,7 @@ public class URLImageSourceTest
 		
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_6.jpg"));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -638,7 +638,7 @@ public class URLImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -656,7 +656,7 @@ public class URLImageSourceTest
 		
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_7.jpg"));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -666,7 +666,7 @@ public class URLImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -684,7 +684,7 @@ public class URLImageSourceTest
 		
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_8.jpg"));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -694,7 +694,7 @@ public class URLImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -712,7 +712,7 @@ public class URLImageSourceTest
 		
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_2.jpg"));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder()
 						.size(20, 20)
 						.useExifOrientation(true)
@@ -741,7 +741,7 @@ public class URLImageSourceTest
 		// given
 		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_2.jpg"));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder()
 						.size(20, 20)
 						.useExifOrientation(false)

@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 /**
- * An {@link ImageSink} which stores the resulting thumbnail to a 
+ * An {@link ImageSink} which stores the resulting thumbnail to a
  * {@link BufferedImage}.
  * 
  * @author coobird
@@ -18,7 +18,7 @@ public class BufferedImageSink extends AbstractImageSink<BufferedImage>
 	private BufferedImage img;
 	
 	/**
-	 * Indicates whether the thumbnail has been written to this object. 
+	 * Indicates whether the thumbnail has been written to this object.
 	 */
 	private boolean written = false;
 	
@@ -35,7 +35,7 @@ public class BufferedImageSink extends AbstractImageSink<BufferedImage>
 	 * 
 	 * @return							The thumbnail.
 	 * @throws IllegalStateException	If a thumbnail has not been stored to
-	 * 									this {@link BufferedImageSink} yet. 
+	 * 									this {@link BufferedImageSink} yet.
 	 */
 	public BufferedImage getSink()
 	{

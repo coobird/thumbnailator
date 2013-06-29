@@ -205,7 +205,7 @@ public class ThumbnailsBuilderTest
 	 * and the expected outcome is,
 	 * <ol>
 	 * <li>The thumbnail is successfully created.</li>
-	 * <li>The thumbnail dimensions are that which is specified by the 
+	 * <li>The thumbnail dimensions are that which is specified by the
 	 * size method.</li>
 	 * </ol>
 	 */
@@ -410,7 +410,7 @@ public class ThumbnailsBuilderTest
 	 * and the expected outcome is,
 	 * <ol>
 	 * <li>The thumbnail is successfully created.</li>
-	 * <li>The thumbnail dimensions are that which is specified by the 
+	 * <li>The thumbnail dimensions are that which is specified by the
 	 * size method.</li>
 	 * </ol>
 	 */
@@ -482,7 +482,7 @@ public class ThumbnailsBuilderTest
 	 * and the expected outcome is,
 	 * <ol>
 	 * <li>The thumbnail is successfully created.</li>
-	 * <li>The thumbnail dimensions are that which is specified by the 
+	 * <li>The thumbnail dimensions are that which is specified by the
 	 * size method.</li>
 	 * </ol>
 	 */
@@ -1598,7 +1598,7 @@ public class ThumbnailsBuilderTest
 	 * <li>The thumbnail is successfully produced</li>
 	 * <li>The specified range is used as the source</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void sourceRegion_Region() throws IOException
@@ -1630,7 +1630,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An NullPointerException is thrown</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void sourceRegion_Region_Null() throws IOException
@@ -1665,7 +1665,7 @@ public class ThumbnailsBuilderTest
 	 * <li>The thumbnail is successfully produced</li>
 	 * <li>The specified range is used as the source</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void sourceRegion_Rectangle() throws IOException
@@ -1697,7 +1697,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An NullPointerException is thrown</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void sourceRegion_Rectangle_Null() throws IOException
@@ -1732,7 +1732,7 @@ public class ThumbnailsBuilderTest
 	 * <li>The thumbnail is successfully produced</li>
 	 * <li>The specified range is used as the source</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void sourceRegion_PositionSize() throws IOException
@@ -1764,7 +1764,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An NullPointerException is thrown</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void sourceRegion_PositionSize_PositionNull() throws IOException
@@ -1798,7 +1798,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An NullPointerException is thrown</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void sourceRegion_PositionSize_SizeNull() throws IOException
@@ -1833,7 +1833,7 @@ public class ThumbnailsBuilderTest
 	 * <li>The thumbnail is successfully produced</li>
 	 * <li>The specified range is used as the source</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void sourceRegion_PositionIntInt() throws IOException
@@ -1865,7 +1865,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An NullPointerException is thrown</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void sourceRegion_PositionIntInt_PositionNull() throws IOException
@@ -1899,7 +1899,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void sourceRegion_PositionIntInt_WidthNonPositive() throws IOException
@@ -1933,7 +1933,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void sourceRegion_PositionIntInt_HeightNonPositive() throws IOException
@@ -1968,7 +1968,7 @@ public class ThumbnailsBuilderTest
 	 * <li>The thumbnail is successfully produced</li>
 	 * <li>The specified range is used as the source</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void sourceRegion_IntIntIntInt() throws IOException
@@ -2000,7 +2000,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void sourceRegion_IntIntIntInt_WidthNonPositive() throws IOException
@@ -2034,7 +2034,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void sourceRegion_IntIntIntInt_HeightNonPositive() throws IOException
@@ -2070,7 +2070,7 @@ public class ThumbnailsBuilderTest
 	 * <li>The outputQuality is allowed</li>
 	 * <li>The thumbnail is successfully produced</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputQuality_float_ValidArg_ZeroZero() throws IOException
@@ -2102,7 +2102,7 @@ public class ThumbnailsBuilderTest
 	 * <li>The outputQuality is allowed</li>
 	 * <li>The thumbnail is successfully produced</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputQuality_float_ValidArg_ZeroFive() throws IOException
@@ -2134,7 +2134,7 @@ public class ThumbnailsBuilderTest
 	 * <li>The outputQuality is allowed</li>
 	 * <li>The thumbnail is successfully produced</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputQuality_float_ValidArg_OneZero() throws IOException
@@ -2164,7 +2164,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void outputQuality_float_InvalidArg_Negative() throws IOException
@@ -2189,7 +2189,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void outputQuality_float_InvalidArg_OverOne() throws IOException
@@ -2215,7 +2215,7 @@ public class ThumbnailsBuilderTest
 	 * <li>The outputQuality is allowed</li>
 	 * <li>The thumbnail is successfully produced</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputQuality_double_ValidArg_ZeroZero() throws IOException
@@ -2247,7 +2247,7 @@ public class ThumbnailsBuilderTest
 	 * <li>The outputQuality is allowed</li>
 	 * <li>The thumbnail is successfully produced</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputQuality_double_ValidArg_ZeroFive() throws IOException
@@ -2279,7 +2279,7 @@ public class ThumbnailsBuilderTest
 	 * <li>The outputQuality is allowed</li>
 	 * <li>The thumbnail is successfully produced</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputQuality_double_ValidArg_OneZero() throws IOException
@@ -2309,7 +2309,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void outputQuality_double_InvalidArg_Negative() throws IOException
@@ -2333,7 +2333,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void outputQuality_double_InvalidArg_OverOne() throws IOException
@@ -2360,7 +2360,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>The output format of the image is one that is specified.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputFormat_SameAsOriginal_SameAsFileExtension() throws IOException
@@ -2395,7 +2395,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>The output format of the image is one that is specified.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputFormat_DiffersFromOriginal_SameAsFileExtension() throws IOException
@@ -2430,7 +2430,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>The output format of the image is one that is specified.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputFormat_DiffersFromOriginal_SameAsFileExtension_Jpeg() throws IOException
@@ -2466,7 +2466,7 @@ public class ThumbnailsBuilderTest
 	 * <li>The output format of the image is one that is specified.</li>
 	 * <li>The format extension is appended to the output filename.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputFormat_SameAsOriginal_DiffersFromFileExtension() throws IOException
@@ -2504,7 +2504,7 @@ public class ThumbnailsBuilderTest
 	 * <li>The output format of the image is one that is specified.</li>
 	 * <li>The format extension is appended to the output filename.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputFormat_DiffersFromOriginal_DiffersFromFileExtension() throws IOException
@@ -2542,7 +2542,7 @@ public class ThumbnailsBuilderTest
 	 * <li>The output format of the image is one that is specified.</li>
 	 * <li>The format extension is appended to the output filename.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputFormat_DiffersFromOriginal_DiffersFromFileExtension_Jpeg() throws IOException
@@ -2580,7 +2580,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>The output format of the image is one that is specified.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputFormat_Multiple_SameAsOriginal_SameAsExtension_Both() throws IOException
@@ -2631,7 +2631,7 @@ public class ThumbnailsBuilderTest
 	 * <li>For the file with the different format and extension, the extension
 	 * of the specified format will be added to the file name.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputFormat_Multiple_FirstExtensionSame_SecondExtensionDifferent() throws IOException
@@ -2681,7 +2681,7 @@ public class ThumbnailsBuilderTest
 	 * <li>For the file with the different format and extension, the extension
 	 * of the specified format will be added to the file name.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputFormat_Multiple_FirstExtensionDifferent_SecondExtensionSame() throws IOException
@@ -2731,7 +2731,7 @@ public class ThumbnailsBuilderTest
 	 * <li>For the file with the different format and extension, the extension
 	 * of the specified format will be added to the file name.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputFormat_Multiple_FirstExtensionDifferent_SecondExtensionDifferent() throws IOException
@@ -2775,7 +2775,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>No exception is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputFormat_SupportedFormat() throws IOException
@@ -2799,7 +2799,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void outputFormat_UnsupportedFormat() throws IOException
@@ -2826,7 +2826,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>No exception is thrown</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputFormat_Checks_FormatSpecified_TypeSupported() throws IOException
@@ -2855,7 +2855,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void outputFormat_Checks_FormatSpecified_FormatDoesNotSupportCompression() throws IOException
@@ -2883,7 +2883,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void outputFormat_Checks_FormatSpecified_TypeUnsupported() throws IOException
@@ -2911,7 +2911,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>No exception is thrown</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputFormat_Checks_FormatSpecified_TypeDefault() throws IOException
@@ -2939,7 +2939,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>An IllegalArgumentException is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
 	public void outputFormat_Checks_FormatSpecifiedAsOriginal_TypeSpecified() throws IOException
@@ -2967,7 +2967,7 @@ public class ThumbnailsBuilderTest
 	 * <ol>
 	 * <li>No exception is thrown.</li>
 	 * </ol>
-	 * @throws IOException 
+	 * @throws IOException
 	 */	
 	@Test
 	public void outputFormat_Checks_FormatSpecifiedAsOriginal_TypeIsDefaultForFormat() throws IOException
@@ -3459,7 +3459,7 @@ public class ThumbnailsBuilderTest
 			.asFiles(rename);
 		
 		// then
-		ArgumentCaptor<ThumbnailParameter> ac = 
+		ArgumentCaptor<ThumbnailParameter> ac =
 			ArgumentCaptor.forClass(ThumbnailParameter.class);
 		
 		verify(rename).apply(eq(f.getName()), ac.capture());

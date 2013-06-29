@@ -31,7 +31,7 @@ public class FileImageSinkTest
 	/**
 	 * The temporary directory to use when creating files to use for this test.
 	 */
-	private static final String TMPDIR = 
+	private static final String TMPDIR =
 			"test-resources/tmp/FileImageSinkTest";
 	
 	@BeforeClass
@@ -56,7 +56,7 @@ public class FileImageSinkTest
 		FileImageSink sink = new FileImageSink(f);
 		
 		// then
-		assertEquals(f, sink.getSink()); 
+		assertEquals(f, sink.getSink());
 	}
 	
 	@Test
@@ -69,7 +69,7 @@ public class FileImageSinkTest
 		FileImageSink sink = new FileImageSink(f);
 		
 		// then
-		assertEquals(new File(f), sink.getSink()); 
+		assertEquals(new File(f), sink.getSink());
 	}
 	
 	@Test(expected=NullPointerException.class)
@@ -142,7 +142,7 @@ public class FileImageSinkTest
 		File outputFile = new File(TMPDIR, "test.png");
 		outputFile.deleteOnExit();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		FileImageSink sink = new FileImageSink(outputFile);
@@ -167,7 +167,7 @@ public class FileImageSinkTest
 		File outputFile = new File(TMPDIR, "test.png");
 		outputFile.deleteOnExit();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		FileImageSink sink = new FileImageSink(outputFile);
@@ -192,7 +192,7 @@ public class FileImageSinkTest
 		// given
 		File outputFile = new File(TMPDIR, "test.png");
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		FileImageSink sink = new FileImageSink(outputFile);
@@ -220,7 +220,7 @@ public class FileImageSinkTest
 		// given
 		File outputFile = new File(TMPDIR, "test");
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		FileImageSink sink = new FileImageSink(outputFile);
@@ -249,7 +249,7 @@ public class FileImageSinkTest
 		File outputFile = new File(TMPDIR, "test.foo");
 		outputFile.deleteOnExit();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		FileImageSink sink = new FileImageSink(outputFile);
@@ -274,7 +274,7 @@ public class FileImageSinkTest
 		File actualOutputFile = new File(TMPDIR, "test.foo.png");
 		actualOutputFile.deleteOnExit();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		FileImageSink sink = new FileImageSink(outputFile);
@@ -315,7 +315,7 @@ public class FileImageSinkTest
 		File outputFile = new File(TMPDIR, "test.foo");
 		outputFile.deleteOnExit();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
 		
 		ThumbnailParameter param = mock(ThumbnailParameter.class);
@@ -367,7 +367,7 @@ public class FileImageSinkTest
 		File outputFile = new File(TMPDIR, "test.foo");
 		outputFile.deleteOnExit();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
 		
 		ThumbnailParameter param = mock(ThumbnailParameter.class);
@@ -418,7 +418,7 @@ public class FileImageSinkTest
 		File outputFile = new File(TMPDIR, "test.foo");
 		outputFile.deleteOnExit();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
 		
 		ThumbnailParameter param = mock(ThumbnailParameter.class);
@@ -453,7 +453,7 @@ public class FileImageSinkTest
 		File outputFile = new File(TMPDIR, "test.bmp");
 		outputFile.deleteOnExit();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		ThumbnailParameter param = mock(ThumbnailParameter.class);
@@ -486,7 +486,7 @@ public class FileImageSinkTest
 		File outputFile = new File(TMPDIR, "test.bmp");
 		outputFile.deleteOnExit();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		ThumbnailParameter param = mock(ThumbnailParameter.class);
@@ -519,7 +519,7 @@ public class FileImageSinkTest
 		File outputFile = new File(TMPDIR, "test.bmp");
 		outputFile.deleteOnExit();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		ThumbnailParameter param = mock(ThumbnailParameter.class);
@@ -551,7 +551,7 @@ public class FileImageSinkTest
 		File outputFile = new File(TMPDIR, "test.png");
 		outputFile.deleteOnExit();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		FileImageSink sink = new FileImageSink(outputFile);
@@ -577,7 +577,7 @@ public class FileImageSinkTest
 		File outputFile = new File(TMPDIR, "test.bmp");
 		outputFile.deleteOnExit();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		FileImageSink sink = new FileImageSink(outputFile);
@@ -603,7 +603,7 @@ public class FileImageSinkTest
 		File outputFile = new File(TMPDIR, "test.jpg");
 		outputFile.deleteOnExit();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		FileImageSink sink = new FileImageSink(outputFile);
@@ -629,7 +629,7 @@ public class FileImageSinkTest
 		File outputFile = new File(TMPDIR, "test.jpeg");
 		outputFile.deleteOnExit();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		FileImageSink sink = new FileImageSink(outputFile);
@@ -655,7 +655,7 @@ public class FileImageSinkTest
 		File outputFile = new File(TMPDIR, "test.Jpeg");
 		outputFile.deleteOnExit();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		FileImageSink sink = new FileImageSink(outputFile);
@@ -681,7 +681,7 @@ public class FileImageSinkTest
 		File outputFile = new File(TMPDIR, "test");
 		outputFile.deleteOnExit();
 		
-		BufferedImage imgToWrite = 
+		BufferedImage imgToWrite =
 			new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		FileImageSink sink = new FileImageSink(outputFile);
