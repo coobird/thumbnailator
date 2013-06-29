@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-import javax.imageio.ImageIO;
-
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 import net.coobird.thumbnailator.filters.ImageFilter;
@@ -22,10 +20,7 @@ import net.coobird.thumbnailator.makers.ScaledThumbnailMaker;
 import net.coobird.thumbnailator.name.Rename;
 import net.coobird.thumbnailator.resizers.DefaultResizerFactory;
 import net.coobird.thumbnailator.resizers.Resizer;
-import net.coobird.thumbnailator.tasks.FileThumbnailTask;
-import net.coobird.thumbnailator.tasks.StreamThumbnailTask;
 import net.coobird.thumbnailator.tasks.ThumbnailTask;
-import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
 
 /**
  * This class provides static utility methods which perform generation of
@@ -215,61 +210,10 @@ public final class Thumbnailator
 		{
 			throw new IOException("Input file does not exist.");
 		}
-	
-		/*
-		 * Determine the output file format.
-		 * 
-		 * Check to be sure the format is supported, and if not, then use
-		 * the original file format.
-		 */
-		String fileName = outFile.getName();
-		String fileExtension = null; 
-		if (
-				fileName.contains(".") 
-				&& fileName.lastIndexOf('.') != fileName.length() - 1
-		)
-		{
-			int lastIndex = fileName.lastIndexOf('.');
-			fileExtension = fileName.substring(lastIndex + 1); 
-		}
-			
-		String format = ThumbnailParameter.ORIGINAL_FORMAT;
-		if (fileExtension != null)
-		{
-			for (String supportedFormatName : ImageIO.getWriterFormatNames())
-			{
-				if (supportedFormatName.equals(fileExtension))
-				{
-					format = supportedFormatName;
-					break;
-				}
-			}
-			if (format == null)
-			{
-				throw new UnsupportedFormatException(
-						fileExtension, 
-						"No suitable ImageWriter found for " + fileExtension + "."
-				);
-			}
-		}
-		
-		ThumbnailParameter param = 
-			new ThumbnailParameter(
-					new Dimension(width, height),
-					null,
-					true,
-					format,
-					ThumbnailParameter.DEFAULT_FORMAT_TYPE,
-					ThumbnailParameter.DEFAULT_QUALITY,
-					ThumbnailParameter.DEFAULT_IMAGE_TYPE,
-					null,
-					DefaultResizerFactory.getInstance(),
-					true,
-					true
-			);
-		
-		Thumbnailator.createThumbnail(
-				new FileThumbnailTask(param, inFile, outFile));
+
+		Thumbnails.of(inFile)
+			.size(width, height)
+			.toFile(outFile);
 	}
 
 	/**
@@ -296,7 +240,7 @@ public final class Thumbnailator
 			throw new NullPointerException("Input file is null.");
 		}
 		
-		return createThumbnail(ImageIO.read(f), width, height);
+		return Thumbnails.of(f).size(width, height).asBufferedImage();
 	}
 
 	/**
@@ -375,6 +319,8 @@ public final class Thumbnailator
 	 * @param height		The height of the thumbnail.
 	 * @throws IOException	Thrown when a problem occurs when reading from 
 	 * 						{@code File} representing an image file.
+	 * @throws IllegalArgumentException		If the specified output format is
+	 * 										not supported.
 	 */
 	public static void createThumbnail(
 			InputStream is,
@@ -394,23 +340,11 @@ public final class Thumbnailator
 		{
 			throw new NullPointerException("OutputStream is null.");
 		}
-		
-		ThumbnailParameter param = 
-			new ThumbnailParameter(
-					new Dimension(width, height),
-					null,
-					true,
-					format,
-					ThumbnailParameter.DEFAULT_FORMAT_TYPE,
-					ThumbnailParameter.DEFAULT_QUALITY,
-					ThumbnailParameter.DEFAULT_IMAGE_TYPE,
-					null,
-					DefaultResizerFactory.getInstance(),
-					true,
-					true
-			);
-		
-		Thumbnailator.createThumbnail(new StreamThumbnailTask(param, is, os));
+
+		Thumbnails.of(is)
+			.size(width, height)
+			.outputFormat(format)
+			.toOutputStream(os);
 	}
 
 	/**
