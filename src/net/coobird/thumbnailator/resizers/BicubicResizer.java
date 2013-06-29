@@ -36,7 +36,7 @@ public class BicubicResizer extends AbstractResizer
 	 * Resizes an image using bicubic interpolation.
 	 * </p>
 	 * <p>
-	 * If the source and/or destination image is {@code null}, then a 
+	 * If the source and/or destination image is {@code null}, then a
 	 * {@link NullPointerException} will be thrown.
 	 * </p>
 	 * 
@@ -47,7 +47,7 @@ public class BicubicResizer extends AbstractResizer
 	 * 									image is {@code null}.
 	 */
 	@Override
-	public void resize(BufferedImage srcImage, BufferedImage destImage) 
+	public void resize(BufferedImage srcImage, BufferedImage destImage)
 			throws NullPointerException
 	{
 		super.resize(srcImage, destImage);

@@ -9,9 +9,9 @@ import net.coobird.thumbnailator.filters.Watermark;
 /**
  * An enum of predefined {@link Position}s.
  * <p>
- * Primary use of this enum is for selecting a position to place watermarks 
+ * Primary use of this enum is for selecting a position to place watermarks
  * (using the {@link Watermark} class), captions (using the {@link Caption}
- * class) and other {@link ImageFilter}s.  
+ * class) and other {@link ImageFilter}s.
  * 
  * @author coobird
  *

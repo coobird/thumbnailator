@@ -12,7 +12,7 @@ import net.coobird.thumbnailator.resizers.ProgressiveBilinearResizer;
  * @author coobird
  *
  */
-public enum ScalingMode 
+public enum ScalingMode
 {
 	/**
 	 * A hint to use bilinear interpolation when resizing images.

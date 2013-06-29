@@ -113,7 +113,7 @@ public class BufferedImageSourceTest
 	/*
 	 *
 	 *     +------------------+ source
-	 *     |  +------------------+       
+	 *     |  +------------------+
 	 *     |  |XXXXXXXXXXXXXXX|  |
 	 *     |  |XXXXXXXXXXXXXXX|  |
 	 *     |  |XX  final  XXXX|  |

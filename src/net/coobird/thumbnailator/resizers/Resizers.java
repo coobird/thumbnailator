@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
  * <p>
  * The instance held by a value of this enum is a single instance. When using
  * specific implementations of {@link Resizer}s, it is preferable to obtain
- * an instance of a {@link Resizer} through this enum or the 
+ * an instance of a {@link Resizer} through this enum or the
  * {@link DefaultResizerFactory} class in order to prevent many instances of the
  * {@link Resizer} class implementations from being instantiated.
  * <p>
@@ -41,19 +41,19 @@ public enum Resizers implements Resizer
 	NULL(new NullResizer()),
 	
 	/**
-	 * A {@link Resizer} which performs resizing operations using 
+	 * A {@link Resizer} which performs resizing operations using
 	 * bilinear interpolation.
 	 */
 	BILINEAR(new BilinearResizer()),
 	
 	/**
-	 * A {@link Resizer} which performs resizing operations using 
+	 * A {@link Resizer} which performs resizing operations using
 	 * bicubic interpolation.
 	 */
 	BICUBIC(new BicubicResizer()),
 
 	/**
-	 * A {@link Resizer} which performs resizing operations using 
+	 * A {@link Resizer} which performs resizing operations using
 	 * progressive bilinear scaling.
 	 * <p>
 	 * For details on this technique, refer to the documentation of the

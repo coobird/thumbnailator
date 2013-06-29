@@ -14,7 +14,7 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 /**
- * A class which tests the behavior of the 
+ * A class which tests the behavior of the
  * {@link ScaledThumbnailMaker} class.
  * 
  * @author coobird

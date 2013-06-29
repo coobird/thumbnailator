@@ -16,7 +16,7 @@ import net.coobird.thumbnailator.filters.Rotation;
 public final class ExifFilterUtils
 {
 	/**
-	 * This class should not be instantiated. 
+	 * This class should not be instantiated.
 	 */
 	private ExifFilterUtils() {};
 	

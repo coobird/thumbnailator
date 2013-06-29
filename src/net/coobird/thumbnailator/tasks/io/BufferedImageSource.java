@@ -16,12 +16,12 @@ import net.coobird.thumbnailator.geometry.Region;
 public class BufferedImageSource extends AbstractImageSource<BufferedImage>
 {
 	/**
-	 * The image that should be used as the source for making a thumbnail. 
+	 * The image that should be used as the source for making a thumbnail.
 	 */
 	private final BufferedImage img;
 	
 	/**
-	 * Instantiates a {@link BufferedImageSource} object with the 
+	 * Instantiates a {@link BufferedImageSource} object with the
 	 * {@link BufferedImage} that should be used as the source image for making
 	 * thumbnails.
 	 * 

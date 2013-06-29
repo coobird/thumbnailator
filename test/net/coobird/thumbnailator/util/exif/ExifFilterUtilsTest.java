@@ -12,7 +12,7 @@ import net.coobird.thumbnailator.util.BufferedImages;
 import org.junit.Test;
 
 /**
- * Tests that the {@link ImageFilter}s returned by the 
+ * Tests that the {@link ImageFilter}s returned by the
  * {@link ExifFilterUtils#getFilterForOrientation(Orientation)} method can
  * correctly orient an image according to the Exif orientation metadata.
  * <p>
@@ -33,12 +33,12 @@ public class ExifFilterUtilsTest {
 		img = BufferedImages.copy(img, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
-		BufferedImage result = 
+		BufferedImage result =
 				ExifFilterUtils.getFilterForOrientation(Orientation.TOP_LEFT).apply(img);
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -55,12 +55,12 @@ public class ExifFilterUtilsTest {
 		img = BufferedImages.copy(img, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
-		BufferedImage result = 
+		BufferedImage result =
 				ExifFilterUtils.getFilterForOrientation(Orientation.TOP_RIGHT).apply(img);
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -77,12 +77,12 @@ public class ExifFilterUtilsTest {
 		img = BufferedImages.copy(img, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
-		BufferedImage result = 
+		BufferedImage result =
 				ExifFilterUtils.getFilterForOrientation(Orientation.BOTTOM_RIGHT).apply(img);
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -99,12 +99,12 @@ public class ExifFilterUtilsTest {
 		img = BufferedImages.copy(img, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
-		BufferedImage result = 
+		BufferedImage result =
 				ExifFilterUtils.getFilterForOrientation(Orientation.BOTTOM_LEFT).apply(img);
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -114,19 +114,19 @@ public class ExifFilterUtilsTest {
 	}
 	
 	@Test
-	public void correctOrientation5() throws Exception 
+	public void correctOrientation5() throws Exception
 	{
 		// given
 		BufferedImage img = ImageIO.read(new File("test-resources/Exif/source_5.jpg"));
 		img = BufferedImages.copy(img, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
-		BufferedImage result = 
+		BufferedImage result =
 				ExifFilterUtils.getFilterForOrientation(Orientation.LEFT_TOP).apply(img);
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -143,12 +143,12 @@ public class ExifFilterUtilsTest {
 		img = BufferedImages.copy(img, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
-		BufferedImage result = 
+		BufferedImage result =
 				ExifFilterUtils.getFilterForOrientation(Orientation.RIGHT_TOP).apply(img);
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -165,12 +165,12 @@ public class ExifFilterUtilsTest {
 		img = BufferedImages.copy(img, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
-		BufferedImage result = 
+		BufferedImage result =
 				ExifFilterUtils.getFilterForOrientation(Orientation.RIGHT_BOTTOM).apply(img);
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -187,12 +187,12 @@ public class ExifFilterUtilsTest {
 		img = BufferedImages.copy(img, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
-		BufferedImage result = 
+		BufferedImage result =
 				ExifFilterUtils.getFilterForOrientation(Orientation.LEFT_BOTTOM).apply(img);
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,

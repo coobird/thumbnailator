@@ -65,7 +65,7 @@ public abstract class Rename
 	 * <li>After: {@code thumbnail-picture.jpg}</li>
 	 * </ul>
 	 * 
-	 * @deprecated 		Please use the correctly spelled 
+	 * @deprecated 		Please use the correctly spelled
 	 * 					{@link Rename#PREFIX_HYPHEN_THUMBNAIL}. This constant
 	 * 					will be removed in Thumbnailator 0.5.0.
 	 */
@@ -129,7 +129,7 @@ public abstract class Rename
 	 * <li>After: {@code picture-thumbnail.jpg}</li>
 	 * </ul>
 	 * 
-	 * @deprecated 		Please use the correctly spelled 
+	 * @deprecated 		Please use the correctly spelled
 	 * 					{@link Rename#SUFFIX_HYPHEN_THUMBNAIL}. This constant
 	 * 					will be removed in Thumbnailator 0.5.0.
 	 */
@@ -170,7 +170,7 @@ public abstract class Rename
 	 * specified name and thumbnail creation parameters.
 	 * 
 	 * @param name			Name to apply the function on.
-	 * 						<em>The file name should not include the directory 
+	 * 						<em>The file name should not include the directory
 	 * 						in which the file resides in.</em>
 	 * @param param			Parameters used to create the thumbnail.
 	 * @return				The name after the function has been applied.

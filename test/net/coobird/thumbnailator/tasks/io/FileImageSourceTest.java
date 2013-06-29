@@ -213,7 +213,7 @@ public class FileImageSourceTest
 	/*
 	 *
 	 *     +------------------+ source
-	 *     |  +------------------+       
+	 *     |  +------------------+
 	 *     |  |XXXXXXXXXXXXXXX|  |
 	 *     |  |XXXXXXXXXXXXXXX|  |
 	 *     |  |XX  final  XXXX|  |
@@ -316,7 +316,7 @@ public class FileImageSourceTest
 
 		FileImageSource source = new FileImageSource(sourceFile);
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -336,7 +336,7 @@ public class FileImageSourceTest
 
 		FileImageSource source = new FileImageSource(sourceFile);
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -356,7 +356,7 @@ public class FileImageSourceTest
 
 		FileImageSource source = new FileImageSource(sourceFile);
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -376,7 +376,7 @@ public class FileImageSourceTest
 
 		FileImageSource source = new FileImageSource(sourceFile);
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -396,7 +396,7 @@ public class FileImageSourceTest
 
 		FileImageSource source = new FileImageSource(sourceFile);
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -416,7 +416,7 @@ public class FileImageSourceTest
 
 		FileImageSource source = new FileImageSource(sourceFile);
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -436,7 +436,7 @@ public class FileImageSourceTest
 
 		FileImageSource source = new FileImageSource(sourceFile);
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -456,7 +456,7 @@ public class FileImageSourceTest
 
 		FileImageSource source = new FileImageSource(sourceFile);
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -474,7 +474,7 @@ public class FileImageSourceTest
 		File sourceFile = new File("test-resources/Exif/source_1.jpg");
 		FileImageSource source = new FileImageSource(sourceFile);
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -494,7 +494,7 @@ public class FileImageSourceTest
 		
 		FileImageSource source = new FileImageSource(sourceFile);
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -504,7 +504,7 @@ public class FileImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -522,7 +522,7 @@ public class FileImageSourceTest
 		
 		FileImageSource source = new FileImageSource(sourceFile);
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -532,7 +532,7 @@ public class FileImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -550,7 +550,7 @@ public class FileImageSourceTest
 		
 		FileImageSource source = new FileImageSource(sourceFile);
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -560,7 +560,7 @@ public class FileImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -578,7 +578,7 @@ public class FileImageSourceTest
 		
 		FileImageSource source = new FileImageSource(sourceFile);
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -588,7 +588,7 @@ public class FileImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -606,7 +606,7 @@ public class FileImageSourceTest
 		
 		FileImageSource source = new FileImageSource(sourceFile);
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -616,7 +616,7 @@ public class FileImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -634,7 +634,7 @@ public class FileImageSourceTest
 		
 		FileImageSource source = new FileImageSource(sourceFile);
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -644,7 +644,7 @@ public class FileImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -662,7 +662,7 @@ public class FileImageSourceTest
 		
 		FileImageSource source = new FileImageSource(sourceFile);
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -672,7 +672,7 @@ public class FileImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -690,7 +690,7 @@ public class FileImageSourceTest
 		
 		FileImageSource source = new FileImageSource(sourceFile);
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder()
 						.size(20, 20)
 						.useExifOrientation(true)
@@ -704,7 +704,7 @@ public class FileImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -721,7 +721,7 @@ public class FileImageSourceTest
 		
 		FileImageSource source = new FileImageSource(sourceFile);
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder()
 						.size(20, 20)
 						.useExifOrientation(false)
@@ -735,7 +735,7 @@ public class FileImageSourceTest
 		// then
 		assertTrue(param.getImageFilters().isEmpty());
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,

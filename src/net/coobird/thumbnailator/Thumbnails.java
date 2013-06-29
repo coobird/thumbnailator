@@ -64,7 +64,7 @@ import net.coobird.thumbnailator.util.ThumbnailatorUtils;
  * to create a thumbnail from multiple files from a directory, resizing them to
  * a maximum of 200 pixels by 200 pixels while preserving the aspect ratio of
  * the original, then saving the resulting thumbnails as JPEG images with file
- * names having {@code thumbnail.} appended to the beginning of the file name. 
+ * names having {@code thumbnail.} appended to the beginning of the file name.
  * <p>
  * <pre>
 Thumbnails.of(directory.listFiles())
@@ -90,7 +90,7 @@ public final class Thumbnails
 	/**
 	 * Performs validation on the specified dimensions.
 	 * <p>
-	 * If any of the dimensions are less than or equal to 0, an 
+	 * If any of the dimensions are less than or equal to 0, an
 	 * {@code IllegalArgumentException} is thrown with an message specifying the
 	 * reason for the exception.
 	 * <p>
@@ -145,7 +145,7 @@ public final class Thumbnails
 	}
 	
 	/**
-	 * Indicate to make thumbnails for images with the specified filenames.  
+	 * Indicate to make thumbnails for images with the specified filenames.
 	 * 
 	 * @param files		File names of image files for which thumbnails
 	 * 					are to be produced for.
@@ -162,7 +162,7 @@ public final class Thumbnails
 	}
 	
 	/**
-	 * Indicate to make thumbnails from the specified {@link File}s.  
+	 * Indicate to make thumbnails from the specified {@link File}s.
 	 * 
 	 * @param files		{@link File} objects of image files for which thumbnails
 	 * 					are to be produced for.
@@ -179,7 +179,7 @@ public final class Thumbnails
 	}
 	
 	/**
-	 * Indicate to make thumbnails from the specified {@link URL}s.  
+	 * Indicate to make thumbnails from the specified {@link URL}s.
 	 * 
 	 * @param urls		{@link URL} objects of image files for which thumbnails
 	 * 					are to be produced for.
@@ -196,7 +196,7 @@ public final class Thumbnails
 	}
 	
 	/**
-	 * Indicate to make thumbnails from the specified {@link InputStream}s.  
+	 * Indicate to make thumbnails from the specified {@link InputStream}s.
 	 * 
 	 * @param inputStreams		{@link InputStream}s which provide the images
 	 * 							for which thumbnails are to be produced for.
@@ -230,7 +230,7 @@ public final class Thumbnails
 	}
 	
 	/**
-	 * Indicate to make thumbnails for images with the specified filenames.  
+	 * Indicate to make thumbnails for images with the specified filenames.
 	 * 
 	 * @param files		File names of image files for which thumbnails
 	 * 					are to be produced for.
@@ -248,7 +248,7 @@ public final class Thumbnails
 	}
 	
 	/**
-	 * Indicate to make thumbnails from the specified {@link File}s.  
+	 * Indicate to make thumbnails from the specified {@link File}s.
 	 * 
 	 * @param files		{@link File} objects of image files for which thumbnails
 	 * 					are to be produced for.
@@ -266,7 +266,7 @@ public final class Thumbnails
 	}
 
 	/**
-	 * Indicate to make thumbnails for images with the specified {@link URL}s.  
+	 * Indicate to make thumbnails for images with the specified {@link URL}s.
 	 * 
 	 * @param urls		URLs of the images for which thumbnails
 	 * 					are to be produced.
@@ -284,7 +284,7 @@ public final class Thumbnails
 	}
 	
 	/**
-	 * Indicate to make thumbnails for images obtained from the specified 
+	 * Indicate to make thumbnails for images obtained from the specified
 	 * {@link InputStream}s.
 	 * 
 	 * @param inputStreams		{@link InputStream}s which provide images for
@@ -641,7 +641,7 @@ public final class Thumbnails
 			OUTPUT_FORMAT("outputFormat"),
 			OUTPUT_FORMAT_TYPE("outputFormatType"),
 			OUTPUT_QUALITY("outputQuality"),
-			RESIZER("resizer"), 
+			RESIZER("resizer"),
 			SOURCE_REGION("sourceRegion"),
 			RESIZER_FACTORY("resizerFactory"),
 			ALLOW_OVERWRITE("allowOverwrite"),
@@ -765,7 +765,7 @@ public final class Thumbnails
 		/**
 		 * This field should be set to the {@link Position} to be used for
 		 * cropping if cropping is enabled. If cropping is disabled, then
-		 * this field should be left {@code null}. 
+		 * this field should be left {@code null}.
 		 */
 		private Position croppingPosition = null;
 		
@@ -820,8 +820,8 @@ Thumbnails.of(image)
 		 * width, and the aspect ratio of the original image will be preserved
 		 * by the thumbnail.
 		 * <p>
-		 * Once this method is called, calling the {@link #size(int, int)} or 
-		 * the {@link #scale(double)} method will result in an 
+		 * Once this method is called, calling the {@link #size(int, int)} or
+		 * the {@link #scale(double)} method will result in an
 		 * {@link IllegalStateException}.
 		 * <p>
 		 * Calling this method multiple times will result in an
@@ -856,8 +856,8 @@ Thumbnails.of(image)
 		 * height, and the aspect ratio of the original image will be preserved
 		 * by the thumbnail.
 		 * <p>
-		 * Once this method is called, calling the {@link #size(int, int)} or 
-		 * the {@link #scale(double)} method will result in an 
+		 * Once this method is called, calling the {@link #size(int, int)} or
+		 * the {@link #scale(double)} method will result in an
 		 * {@link IllegalStateException}.
 		 * <p>
 		 * Calling this method multiple times will result in an
@@ -891,7 +891,7 @@ Thumbnails.of(image)
 		 * The thumbnails will be forced to the specified size, therefore,
 		 * the aspect ratio of the original image will not be preserved in
 		 * the thumbnails. Calling this method will be equivalent to calling
-		 * the {@link #size(int, int)} method in conjunction with the 
+		 * the {@link #size(int, int)} method in conjunction with the
 		 * {@link #keepAspectRatio(boolean)} method with the value {@code false}.
 		 * <p>
 		 * Once this method is called, calling the {@link #scale(double)} method
@@ -930,8 +930,8 @@ Thumbnails.of(image)
     .toFile(thumbnail);
 		 * </code></pre>
 		 * <p>
-		 * Once this method is called, calling the {@link #size(int, int)} 
-		 * method, or the {@link #scale(double, double)} method, or the 
+		 * Once this method is called, calling the {@link #size(int, int)}
+		 * method, or the {@link #scale(double, double)} method, or the
 		 * {@link #keepAspectRatio(boolean)} method will result in an
 		 * {@link IllegalStateException}.
 		 * <p>
@@ -942,7 +942,7 @@ Thumbnails.of(image)
 		 * 						thumbnail.
 		 * 						<p>
 		 * 						The value must be a {@code double} which is
-		 * 						greater than {@code 0.0}, and not 
+		 * 						greater than {@code 0.0}, and not
 		 * 						{@link Double#POSITIVE_INFINITY}.
 		 * @return				Reference to this object.
 		 */
@@ -955,7 +955,7 @@ Thumbnails.of(image)
 		 * Sets the scaling factor for the width and height of the thumbnail.
 		 * <p>
 		 * If the scaling factor for the width and height are not equal, then
-		 * the thumbnail will not preserve the aspect ratio of the original 
+		 * the thumbnail will not preserve the aspect ratio of the original
 		 * image.
 		 * <p>
 		 * For example, to create thumbnails which are 50% the width of the
@@ -967,25 +967,25 @@ Thumbnails.of(image)
     .toFile(thumbnail);
 		 * </code></pre>
 		 * <p>
-		 * Once this method is called, calling the {@link #size(int, int)} 
-		 * method, or the {@link #scale(double)} method, or the 
+		 * Once this method is called, calling the {@link #size(int, int)}
+		 * method, or the {@link #scale(double)} method, or the
 		 * {@link #keepAspectRatio(boolean)} method will result in an
 		 * {@link IllegalStateException}.
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
 		 * 
-		 * @param scaleWidth	The scaling factor to use for the width when 
+		 * @param scaleWidth	The scaling factor to use for the width when
 		 * 						creating a thumbnail.
 		 * 						<p>
 		 * 						The value must be a {@code double} which is
-		 * 						greater than {@code 0.0}, and not 
+		 * 						greater than {@code 0.0}, and not
 		 * 						{@link Double#POSITIVE_INFINITY}.
-		 * @param scaleHeight	The scaling factor to use for the height when 
+		 * @param scaleHeight	The scaling factor to use for the height when
 		 * 						creating a thumbnail.
 		 * 						<p>
 		 * 						The value must be a {@code double} which is
-		 * 						greater than {@code 0.0}, and not 
+		 * 						greater than {@code 0.0}, and not
 		 * 						{@link Double#POSITIVE_INFINITY}.
 		 * @return				Reference to this object.
 		 * @since 	0.3.10
@@ -1057,7 +1057,7 @@ Thumbnails.of(image)
 		 * @param position		Position of the source region.
 		 * @param size			Size of the source region.
 		 * @return				Reference to this object.
-		 * @throws NullPointerException	If the position and/or size is 
+		 * @throws NullPointerException	If the position and/or size is
 		 * 								{@code null}.
 		 * @since 	0.3.4
 		 */
@@ -1082,14 +1082,14 @@ Thumbnails.of(image)
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
 		 * 
-		 * @param x				The horizontal-compoennt of the top left-hand 
+		 * @param x				The horizontal-compoennt of the top left-hand
 		 * 						corner of the source region.
-		 * @param y				The vertical-compoennt of the top left-hand 
+		 * @param y				The vertical-compoennt of the top left-hand
 		 * 						corner of the source region.
 		 * @param width			Width of the source region.
 		 * @param height		Height of the source region.
 		 * @return				Reference to this object.
-		 * @throws IllegalArgumentException	If the width and/or height is 
+		 * @throws IllegalArgumentException	If the width and/or height is
 		 * 									less than or equal to {@code 0}.
 		 * @since 	0.3.4
 		 */
@@ -1119,9 +1119,9 @@ Thumbnails.of(image)
 		 * @param width			Width of the source region.
 		 * @param height		Height of the source region.
 		 * @return				Reference to this object.
-		 * @throws NullPointerException		If the position and/or size is 
+		 * @throws NullPointerException		If the position and/or size is
 		 * 									{@code null}.
-		 * @throws IllegalArgumentException	If the width and/or height is 
+		 * @throws IllegalArgumentException	If the width and/or height is
 		 * 									less than or equal to {@code 0}.
 		 * @since 	0.3.4
 		 */
@@ -1170,20 +1170,20 @@ Thumbnails.of(image)
 		}
 		
 		/**
-		 * Crops the thumbnail to the size specified when calling the 
-		 * {@link #size(int, int)} method, positioned by the given 
+		 * Crops the thumbnail to the size specified when calling the
+		 * {@link #size(int, int)} method, positioned by the given
 		 * {@link Position} object.
 		 * <p>
-		 * Calling this method will guarantee that the size of the thumbnail 
-		 * will be exactly the dimensions specified in the 
-		 * {@link #size(int, int)} method. 
+		 * Calling this method will guarantee that the size of the thumbnail
+		 * will be exactly the dimensions specified in the
+		 * {@link #size(int, int)} method.
 		 * <p>
 		 * Internally, the resizing is performed in two steps.
 		 * First, the thumbnail will be sized so that one of the dimensions will
-		 * be sized exactly to the dimension specified in the {@code size} 
+		 * be sized exactly to the dimension specified in the {@code size}
 		 * method, while allowing the other dimension to overhang the specified
 		 * dimension. Then, the thumbnail will be cropped to the dimensions
-		 * specified in the {@code size} method, positioned using the speficied 
+		 * specified in the {@code size} method, positioned using the speficied
 		 * {@link Position} object.
 		 * <p>
 		 * Once this method is called, calling the {@link #scale(double)} method
@@ -1191,9 +1191,9 @@ Thumbnails.of(image)
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
-		 *  
+		 *
 		 * @param position		The position to which the thumbnail should be
-		 * 						cropped to. For example, if 
+		 * 						cropped to. For example, if
 		 * 						{@link Positions#CENTER} is specified, the
 		 * 						resulting thumbnail will be made by cropping to
 		 * 						the center of the image.
@@ -1225,7 +1225,7 @@ Thumbnails.of(image)
 		 * <li>{@link #asFiles(Iterable)}</li>
 		 * <li>{@link #asFiles(Rename)}</li>
 		 * </ul>
-		 * The behavior of methods which are not listed above will not be 
+		 * The behavior of methods which are not listed above will not be
 		 * affected by calling this method.
 		 * <p>
 		 * Calling this method multiple times will result in an
@@ -1295,7 +1295,7 @@ Thumbnails.of(image)
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
 		 * <p>
-		 * This method cannot be called in conjunction with the 
+		 * This method cannot be called in conjunction with the
 		 * {@link #resizerFactory(ResizerFactory)} method.
 		 * 
 		 * @param resizer		The scaling operation to use.
@@ -1320,7 +1320,7 @@ Thumbnails.of(image)
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
 		 * <p>
-		 * This method cannot be called in conjunction with the 
+		 * This method cannot be called in conjunction with the
 		 * {@link #resizer(Resizer)} method.
 		 * 
 		 * @param resizerFactory		The scaling operation to use.
@@ -1353,7 +1353,7 @@ Thumbnails.of(image)
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
 		 * <p>
-		 * This method cannot be called in conjunction with the 
+		 * This method cannot be called in conjunction with the
 		 * {@link #resizerFactory(ResizerFactory)} method.
 		 * 
 		 * @param config		The alpha interpolation mode.
@@ -1377,7 +1377,7 @@ Thumbnails.of(image)
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
 		 * <p>
-		 * This method cannot be called in conjunction with the 
+		 * This method cannot be called in conjunction with the
 		 * {@link #resizerFactory(ResizerFactory)} method.
 		 * 
 		 * @param config		The dithering mode.
@@ -1401,7 +1401,7 @@ Thumbnails.of(image)
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException}.
 		 * <p>
-		 * This method cannot be called in conjunction with the 
+		 * This method cannot be called in conjunction with the
 		 * {@link #resizerFactory(ResizerFactory)} method.
 		 * 
 		 * @param config		The antialiasing mode.
@@ -1425,7 +1425,7 @@ Thumbnails.of(image)
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
 		 * <p>
-		 * This method cannot be called in conjunction with the 
+		 * This method cannot be called in conjunction with the
 		 * {@link #resizerFactory(ResizerFactory)} method.
 		 * 
 		 * @param config		The rendering mode.
@@ -1451,8 +1451,8 @@ Thumbnails.of(image)
 		 * the original image is preserved for the thumbnail.
 		 * <p>
 		 * Calling this method after calling the {@link #scale(double)} method
-		 * or the {@link #scale(double, double)} method will result in a 
-		 * {@link IllegalStateException}. 
+		 * or the {@link #scale(double, double)} method will result in a
+		 * {@link IllegalStateException}.
 		 * 
 		 * @param keep			{@code true} if the thumbnail is to maintain
 		 * 						the aspect ratio of the original image,
@@ -1460,16 +1460,16 @@ Thumbnails.of(image)
 		 * @return				Reference to this object.
 		 * 
 		 * @throws IllegalStateException	If
-		 * 									<ol> 
+		 * 									<ol>
 		 * 									<li>the {@link #size(int, int)} has
 		 * 									not yet been called to specify the
 		 * 									size of the thumbnail, or</li>
-		 * 									<li>the {@link #scale(double)} 
+		 * 									<li>the {@link #scale(double)}
 		 * 									method has been called, or</li>
-		 * 									<li>the 
-		 * 									{@link #scale(double, double)} 
+		 * 									<li>the
+		 * 									{@link #scale(double, double)}
 		 * 									method has been called, or</li>
-		 * 									<li>the {@link #width(int)} and/or 
+		 * 									<li>the {@link #width(int)} and/or
 		 * 									{@link #height(int)} has been called
 		 * 									and not preserving the aspect ratio
 		 * 									is desired.</li>
@@ -1506,15 +1506,15 @@ Thumbnails.of(image)
 		
 		/**
 		 * Sets the compression output quality of the thumbnail.
-		 * <p> 
+		 * <p>
 		 * The value is a {@code float} between {@code 0.0f} and {@code 1.0f}
 		 * where {@code 0.0f} indicates the minimum quality and {@code 1.0f}
 		 * indicates the maximum quality settings should be used for by the
-		 * compression codec. 
+		 * compression codec.
 		 * <p>
 		 * Calling this method to set this parameter is optional.
 		 * <p>
-		 * Calling this method multiple times, or the 
+		 * Calling this method multiple times, or the
 		 * {@link #outputQuality(double)} in conjunction with this method will
 		 * result in an {@link IllegalStateException} to be thrown.
 		 * 
@@ -1541,11 +1541,11 @@ Thumbnails.of(image)
 		
 		/**
 		 * Sets the compression output quality of the thumbnail.
-		 * <p> 
+		 * <p>
 		 * The value is a {@code double} between {@code 0.0d} and {@code 1.0d}
 		 * where {@code 0.0d} indicates the minimum quality and {@code 1.0d}
 		 * indicates the maximum quality settings should be used for by the
-		 * compression codec. 
+		 * compression codec.
 		 * <p>
 		 * This method is a convenience method for {@link #outputQuality(float)}
 		 * where the {@code double} argument type is accepted instead of a
@@ -1553,7 +1553,7 @@ Thumbnails.of(image)
 		 * <p>
 		 * Calling this method to set this parameter is optional.
 		 * <p>
-		 * Calling this method multiple times, or the 
+		 * Calling this method multiple times, or the
 		 * {@link #outputQuality(float)} in conjunction with this method will
 		 * result in an {@link IllegalStateException} to be thrown.
 		 * 
@@ -1610,7 +1610,7 @@ Thumbnails.of(image)
 		 * dependents on whether the Java Image I/O API recognizes the string
 		 * as a format that it supports for output. (Valid format names can
 		 * be obtained by calling the {@link ImageIO#getWriterFormatNames()}
-		 * method.) 
+		 * method.)
 		 * <p>
 		 * Calling this method to set this parameter is optional.
 		 * <p>
@@ -1704,21 +1704,21 @@ Thumbnails.of(image)
 		/**
 		 * Sets the compression format type of the thumbnail to write.
 		 * <p>
-		 * If the default type for the compression codec should be used, a 
+		 * If the default type for the compression codec should be used, a
 		 * value of {@link ThumbnailParameter#DEFAULT_FORMAT_TYPE} should be
-		 * used. 
+		 * used.
 		 * <p>
 		 * Calling this method to set this parameter is optional.
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
 		 * <p>
-		 * Furthermore, if this method is called, then calling the 
+		 * Furthermore, if this method is called, then calling the
 		 * {@link #outputFormat} method is disabled, in order to prevent
 		 * cases where the output format type does not exist in the format
 		 * specified for the {@code outputFormat} method.
-		 *  
-		 * @param formatType	The compression format type 
+		 *
+		 * @param formatType	The compression format type
 		 * @return				Reference to this object.
 		 * @throws IllegalArgumentException	If an unsupported format type is
 		 * 									specified for the current output
@@ -1733,9 +1733,9 @@ Thumbnails.of(image)
 			 * is being specified, it's going to be likely that the specified
 			 * type will not be present in all the formats, so we'll disallow
 			 * it. (e.g. setting type to "JPEG", and if the original formats
-			 * were JPEG and PNG, then we'd have a problem. 
+			 * were JPEG and PNG, then we'd have a problem.
 			 */
-			if (formatType != ThumbnailParameter.DEFAULT_FORMAT_TYPE 
+			if (formatType != ThumbnailParameter.DEFAULT_FORMAT_TYPE
 					&& isOutputFormatNotSet())
 			{
 				throw new IllegalArgumentException(
@@ -1796,7 +1796,7 @@ Thumbnails.of(image)
 		/**
 		 * Sets the image of the watermark to apply on the thumbnail.
 		 * <p>
-		 * This method is a convenience method for the 
+		 * This method is a convenience method for the
 		 * {@link #watermark(Position, BufferedImage, float)} method, where
 		 * the opacity is 50%, and the position is set to center of the
 		 * thumbnail:
@@ -1824,7 +1824,7 @@ watermark(Positions.CENTER, image, 0.5f);
 		 * Sets the image and opacity of the watermark to apply on
 		 * the thumbnail.
 		 * <p>
-		 * This method is a convenience method for the 
+		 * This method is a convenience method for the
 		 * {@link #watermark(Position, BufferedImage, float)} method, where
 		 * the opacity is 50%:
 		 * <p>
@@ -1842,8 +1842,8 @@ watermark(Positions.CENTER, image, opacity);
 		 * @param image			The image of the watermark.
 		 * @param opacity		The opacity of the watermark.
 		 * 						<p>
-		 * 						The value should be between {@code 0.0f} and 
-		 * 						{@code 1.0f}, where {@code 0.0f} is completely 
+		 * 						The value should be between {@code 0.0f} and
+		 * 						{@code 1.0f}, where {@code 0.0f} is completely
 		 * 						transparent, and {@code 1.0f} is completely
 		 * 						opaque.
 		 * @return				Reference to this object.
@@ -1869,8 +1869,8 @@ watermark(Positions.CENTER, image, opacity);
 		 * @param image			The image of the watermark.
 		 * @param opacity		The opacity of the watermark.
 		 * 						<p>
-		 * 						The value should be between {@code 0.0f} and 
-		 * 						{@code 1.0f}, where {@code 0.0f} is completely 
+		 * 						The value should be between {@code 0.0f} and
+		 * 						{@code 1.0f}, where {@code 0.0f} is completely
 		 * 						transparent, and {@code 1.0f} is completely
 		 * 						opaque.
 		 * @return				Reference to this object.
@@ -1897,7 +1897,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * applied in the order that this method is called.
 		 * <p>
 		 * Calling this method to set this parameter is optional.
-		 *  
+		 *
 		 * @param angle			Angle in degrees.
 		 * @return				Reference to this object.
 		 */
@@ -1990,7 +1990,7 @@ watermark(Positions.CENTER, image, opacity);
 		 */
 		private Resizer makeResizer(ScalingMode mode)
 		{
-			Map<RenderingHints.Key, Object> hints = 
+			Map<RenderingHints.Key, Object> hints =
 				new HashMap<RenderingHints.Key, Object>();
 			
 			hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION, alphaInterpolation.getValue());
@@ -2061,7 +2061,7 @@ watermark(Positions.CENTER, image, opacity);
 				// Check that at least one dimension is specified.
 				// If it's not, it's a bug.
 				if (
-						width == DIMENSION_NOT_SPECIFIED && 
+						width == DIMENSION_NOT_SPECIFIED &&
 						height == DIMENSION_NOT_SPECIFIED
 				)
 				{
@@ -2117,22 +2117,22 @@ watermark(Positions.CENTER, image, opacity);
 		}
 
 		/**
-		 * Create the thumbnails and return as a {@link Iterable} of 
+		 * Create the thumbnails and return as a {@link Iterable} of
 		 * {@link BufferedImage}s.
 		 * <p>
 		 * For situations where multiple thumbnails are being generated, this
 		 * method is preferred over the {@link #asBufferedImages()} method,
 		 * as (1) the processing does not have to complete before the method
 		 * returns and (2) the thumbnails can be retrieved one at a time,
-		 * potentially reducing the number of thumbnails which need to be 
-		 * retained in the heap memory, potentially reducing the chance of 
-		 * {@link OutOfMemoryError}s from occurring.  
+		 * potentially reducing the number of thumbnails which need to be
+		 * retained in the heap memory, potentially reducing the chance of
+		 * {@link OutOfMemoryError}s from occurring.
 		 * <p>
 		 * If an {@link IOException} occurs during the processing of the
 		 * thumbnail, the {@link Iterable} will return a {@code null} for that
 		 * element.
 		 * 
-		 * @return		An {@link Iterable} which will provide an 
+		 * @return		An {@link Iterable} which will provide an
 		 * 				{@link Iterator} which returns thumbnails as
 		 * 				{@link BufferedImage}s.
 		 */
@@ -2147,7 +2147,7 @@ watermark(Positions.CENTER, image, opacity);
 		}
 		
 		/**
-		 * Create the thumbnails and return as a {@link List} of 
+		 * Create the thumbnails and return as a {@link List} of
 		 * {@link BufferedImage}s.
 		 * <p>
 		 * <h3>Note about performance</h3>
@@ -2156,7 +2156,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * {@link OutOfMemoryError} could result.
 		 * <p>
 		 * If many thumbnails are being processed at once, then using the
-		 * {@link #iterableBufferedImages()} method would be preferable. 
+		 * {@link #iterableBufferedImages()} method would be preferable.
 		 * 
 		 * @return		A list of thumbnails.
 		 * @throws IOException					If an problem occurred during
@@ -2220,12 +2220,12 @@ watermark(Positions.CENTER, image, opacity);
 		
 		/**
 		 * Creates the thumbnails and stores them to the files, and returns
-		 * a {@link List} of {@link File}s to the thumbnails. 
+		 * a {@link List} of {@link File}s to the thumbnails.
 		 * <p>
 		 * When the destination file exists, and overwriting files has been
-		 * disabled by calling the {@link #allowOverwrite(boolean)} method 
-		 * with {@code false}, then the thumbnail with the destination file 
-		 * already existing will not be written and the corresponding 
+		 * disabled by calling the {@link #allowOverwrite(boolean)} method
+		 * with {@code false}, then the thumbnail with the destination file
+		 * already existing will not be written and the corresponding
 		 * {@code File} object will not be included in the {@code List} returned
 		 * by this method.
 		 * <p>
@@ -2238,7 +2238,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * @return					A list of {@link File}s of the thumbnails
 		 * 							which were created.
 		 * @throws IOException		If a problem occurs while reading the
-		 * 							original images or writing the thumbnails 
+		 * 							original images or writing the thumbnails
 		 * 							to files.
 		 * @since 	0.3.7
 		 */
@@ -2293,8 +2293,8 @@ watermark(Positions.CENTER, image, opacity);
 		 * Creates the thumbnails and stores them to the files.
 		 * <p>
 		 * When the destination file exists, and overwriting files has been
-		 * disabled by calling the {@link #allowOverwrite(boolean)} method 
-		 * with {@code false}, then the thumbnail with the destination file 
+		 * disabled by calling the {@link #allowOverwrite(boolean)} method
+		 * with {@code false}, then the thumbnail with the destination file
 		 * already existing will not be written.
 		 * <p>
 		 * The file names for the thumbnails are obtained from the given
@@ -2304,7 +2304,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * 							{@link Iterator} which returns file names
 		 * 							which should be assigned to each thumbnail.
 		 * @throws IOException		If a problem occurs while reading the
-		 * 							original images or writing the thumbnails 
+		 * 							original images or writing the thumbnails
 		 * 							to files.
 		 * @since 	0.3.7
 		 */
@@ -2314,14 +2314,14 @@ watermark(Positions.CENTER, image, opacity);
 		}
 		
 		/**
-		 * Creates the thumbnails and stores them to the files, using the 
+		 * Creates the thumbnails and stores them to the files, using the
 		 * {@code Rename} function to determine the filenames. The files
 		 * are returned as {@link List}.
 		 * <p>
 		 * When the destination file exists, and overwriting files has been
-		 * disabled by calling the {@link #allowOverwrite(boolean)} method 
-		 * with {@code false}, then the thumbnail with the destination file 
-		 * already existing will not be written and the corresponding 
+		 * disabled by calling the {@link #allowOverwrite(boolean)} method
+		 * with {@code false}, then the thumbnail with the destination file
+		 * already existing will not be written and the corresponding
 		 * {@code File} object will not be included in the {@code List} returned
 		 * by this method.
 		 * <p>
@@ -2334,8 +2334,8 @@ watermark(Positions.CENTER, image, opacity);
 		 * @return					A list of {@link File}s of the thumbnails
 		 * 							which were created.
 		 * @throws IOException		If a problem occurs while reading the
-		 * 							original images or writing the thumbnails 
-		 * 							to files. 
+		 * 							original images or writing the thumbnails
+		 * 							to files.
 		 * @throws IllegalStateException		If the original images are not
 		 * 										from files.
 		 * @since 	0.3.7
@@ -2363,7 +2363,7 @@ watermark(Positions.CENTER, image, opacity);
 				
 				File f = ((FileImageSource)source).getSource();
 				
-				File destinationFile = 
+				File destinationFile =
 					new File(f.getParent(), rename.apply(f.getName(), param));
 				
 				FileImageSink destination = new FileImageSink(destinationFile, allowOverwrite);
@@ -2390,12 +2390,12 @@ watermark(Positions.CENTER, image, opacity);
 		}
 
 		/**
-		 * Creates the thumbnails and stores them to the files, using the 
+		 * Creates the thumbnails and stores them to the files, using the
 		 * {@code Rename} function to determine the filenames.
 		 * <p>
 		 * When the destination file exists, and overwriting files has been
-		 * disabled by calling the {@link #allowOverwrite(boolean)} method 
-		 * with {@code false}, then the thumbnail with the destination file 
+		 * disabled by calling the {@link #allowOverwrite(boolean)} method
+		 * with {@code false}, then the thumbnail with the destination file
 		 * already existing will not be written.
 		 * <p>
 		 * To call this method, the thumbnails must have been creates from
@@ -2405,9 +2405,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * 							determine the filenames of the thumbnail
 		 * 							files to write.
 		 * @throws IOException		If a problem occurs while reading the
-		 * 							original images or writing the thumbnails 
-		 * 							to files. 
-		 * 							thumbnails to files. 
+		 * 							original images or writing the thumbnails
+		 * 							to files.
+		 * 							thumbnails to files.
 		 * @throws IllegalStateException		If the original images are not
 		 * 										from files.
 		 * @since 	0.3.7
@@ -2421,9 +2421,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * Create a thumbnail and writes it to a {@link File}.
 		 * <p>
 		 * When the destination file exists, and overwriting files has been
-		 * disabled by calling the {@link #allowOverwrite(boolean)} method 
+		 * disabled by calling the {@link #allowOverwrite(boolean)} method
 		 * with {@code false}, then an {@link IllegalArgumentException} will
-		 * be thrown. 
+		 * be thrown.
 		 * <p>
 		 * To call this method, the thumbnail must have been created from a
 		 * single source.
@@ -2431,10 +2431,10 @@ watermark(Positions.CENTER, image, opacity);
 		 * @param outFile			The file to which the thumbnail is to be
 		 * 							written to.
 		 * @throws IOException		If a problem occurs while reading the
-		 * 							original images or writing the thumbnails 
-		 * 							to files. 
+		 * 							original images or writing the thumbnails
+		 * 							to files.
 		 * @throws IllegalArgumentException		If multiple original image files
-		 * 										are	specified, or if the 
+		 * 										are	specified, or if the
 		 * 										destination file exists, and
 		 * 										overwriting files is disabled.
 		 */
@@ -2461,9 +2461,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * Create a thumbnail and writes it to a {@link File}.
 		 * <p>
 		 * When the destination file exists, and overwriting files has been
-		 * disabled by calling the {@link #allowOverwrite(boolean)} method 
+		 * disabled by calling the {@link #allowOverwrite(boolean)} method
 		 * with {@code false}, then an {@link IllegalArgumentException} will
-		 * be thrown. 
+		 * be thrown.
 		 * <p>
 		 * To call this method, the thumbnail must have been created from a
 		 * single source.
@@ -2471,10 +2471,10 @@ watermark(Positions.CENTER, image, opacity);
 		 * @param outFilepath		The file to which the thumbnail is to be
 		 * 							written to.
 		 * @throws IOException		If a problem occurs while reading the
-		 * 							original images or writing the thumbnails 
-		 * 							to files. 
+		 * 							original images or writing the thumbnails
+		 * 							to files.
 		 * @throws IllegalArgumentException		If multiple original image files
-		 * 										are	specified, or if the 
+		 * 										are	specified, or if the
 		 * 										destination file exists, and
 		 * 										overwriting files is disabled.
 		 */
@@ -2482,7 +2482,7 @@ watermark(Positions.CENTER, image, opacity);
 		{
 			checkReadiness();
 			
-			Iterator<ImageSource<T>> iter = sources.iterator(); 
+			Iterator<ImageSource<T>> iter = sources.iterator();
 			ImageSource<T> source = iter.next();
 			
 			if (iter.hasNext())
@@ -2506,7 +2506,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * @param os				The output stream to which the thumbnail
 		 * 							is to be written to.
 		 * @throws IOException		If a problem occurs while reading the
-		 * 							original images or writing the thumbnails. 
+		 * 							original images or writing the thumbnails.
 		 * @throws IllegalArgumentException		If multiple original image files
 		 * 										are	specified.
 		 * @throws IllegalStateException		If the output format has not
@@ -2518,7 +2518,7 @@ watermark(Positions.CENTER, image, opacity);
 		{
 			checkReadiness();
 			
-			Iterator<ImageSource<T>> iter = sources.iterator(); 
+			Iterator<ImageSource<T>> iter = sources.iterator();
 			ImageSource<T> source = iter.next();
 			
 			if (iter.hasNext())
@@ -2529,7 +2529,7 @@ watermark(Positions.CENTER, image, opacity);
 			/*
 			 * if the image is from a BufferedImage, then we require that the
 			 * output format be set. (or else, we can't tell what format to
-			 * output as!) 
+			 * output as!)
 			 */
 			if (source instanceof BufferedImageSource)
 			{
@@ -2550,14 +2550,14 @@ watermark(Positions.CENTER, image, opacity);
 		
 		/**
 		 * Creates the thumbnails and writes them to {@link OutputStream}s
-		 * provided by the {@link Iterable}. 
+		 * provided by the {@link Iterable}.
 		 * 
 		 * @param iterable			An {@link Iterable} which returns an
 		 * 							{@link Iterator} which returns the
 		 * 							output stream which should be assigned to
 		 * 							each thumbnail.
 		 * @throws IOException		If a problem occurs while reading the
-		 * 							original images or writing the thumbnails. 
+		 * 							original images or writing the thumbnails.
 		 * @throws IllegalStateException		If the output format has not
 		 * 										been specified through the
 		 * 										{@link #outputFormat(String)}
@@ -2579,7 +2579,7 @@ watermark(Positions.CENTER, image, opacity);
 				/*
 				 * if the image is from a BufferedImage, then we require that the
 				 * output format be set. (or else, we can't tell what format to
-				 * output as!) 
+				 * output as!)
 				 */
 				if (source instanceof BufferedImageSource)
 				{

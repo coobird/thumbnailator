@@ -12,14 +12,14 @@ import net.coobird.thumbnailator.builders.BufferedImageBuilder;
  * Aside from the three {@link Rotator}s provided as class constants, a
  * {@link Rotator} which performs a rotation by an arbituary angle can be
  * obtained through the {@link Rotation#newRotator(double)} method.
- *  
+ *
  * @author coobird
  *
  */
 public class Rotation
 {
 	/**
-	 * This class is not intended to be instantiated. 
+	 * This class is not intended to be instantiated.
 	 */
 	private Rotation() {}
 	
@@ -35,7 +35,7 @@ public class Rotation
 	public abstract static class Rotator implements ImageFilter
 	{
 		/**
-		 * This class is not intended to be instantiated. 
+		 * This class is not intended to be instantiated.
 		 */
 		private Rotator() {}
 	}
@@ -80,7 +80,7 @@ public class Rotation
 				newPositions[3] = calculatePosition(width, height, angle);
 				
 				double minX = Math.min(
-						Math.min(newPositions[0][0], newPositions[1][0]), 
+						Math.min(newPositions[0][0], newPositions[1][0]),
 						Math.min(newPositions[2][0], newPositions[3][0])
 				);
 				double maxX = Math.max(
@@ -92,7 +92,7 @@ public class Rotation
 						Math.min(newPositions[2][1], newPositions[3][1])
 				);
 				double maxY = Math.max(
-						Math.max(newPositions[0][1], newPositions[1][1]), 
+						Math.max(newPositions[0][1], newPositions[1][1]),
 						Math.max(newPositions[2][1], newPositions[3][1])
 				);
 				

@@ -28,22 +28,22 @@ public abstract class ThumbnailMaker
 	
 	/**
 	 * Used when determining whether the "imageType" parameter has been set
-	 * already or not. 
+	 * already or not.
 	 */
 	private static final String PARAM_IMAGE_TYPE = "imageType";
 	
 	
 	/**
 	 * Used when determining whether the "resizer" parameter has been set
-	 * already or not. 
+	 * already or not.
 	 */
 	private static final String PARAM_RESIZER = "resizer";
 	
 	/**
 	 * Used when determining whether the "resizerFactory" parameter has been set
-	 * already or not. 
+	 * already or not.
 	 */
-	private static final String PARAM_RESIZERFACTORY = "resizerFactory"; 
+	private static final String PARAM_RESIZERFACTORY = "resizerFactory";
 	
 	/**
 	 * Class which keeps track of the parameters being set for the
@@ -57,7 +57,7 @@ public abstract class ThumbnailMaker
 	 */
 	protected final static class ReadinessTracker
 	{
-		private final Map<String, Boolean> alreadySetMap = 
+		private final Map<String, Boolean> alreadySetMap =
 			new HashMap<String, Boolean>();
 		
 		/**
@@ -119,7 +119,7 @@ public abstract class ThumbnailMaker
 	 * Object used to keep track whether the required parameters for creating
 	 * a thumbnail has been set.
 	 */
-	protected final ReadinessTracker ready; 
+	protected final ReadinessTracker ready;
 	
 	/**
 	 * Default image type of the thumbnails created by {@link ThumbnailMaker}.
@@ -136,7 +136,7 @@ public abstract class ThumbnailMaker
 	 * for the resizing operation.
 	 * <p>
 	 * By delaying the decision of picking the {@link Resizer} to use until
-	 * when the thumbnail is to be created could lead to a more suitable 
+	 * when the thumbnail is to be created could lead to a more suitable
 	 * {@link Resizer} being picked, as the dimensions for the source and
 	 * destination images are known at that time.
 	 */
@@ -166,7 +166,7 @@ public abstract class ThumbnailMaker
 	
 	/**
 	 * Makes a thumbnail of the specified dimensions, from the specified
-	 * source image. 
+	 * source image.
 	 * 
 	 * @param img		The source image.
 	 * @param width		The target width of the thumbnail.
@@ -201,7 +201,7 @@ public abstract class ThumbnailMaker
 			);
 		}
 
-		BufferedImage thumbnailImage = 
+		BufferedImage thumbnailImage =
 			new BufferedImageBuilder(width, height, imageType).build();
 		
 		Dimension imgSize = new Dimension(img.getWidth(), img.getHeight());
@@ -266,7 +266,7 @@ public abstract class ThumbnailMaker
 	 * Sets the {@link ResizerFactory} which is used to obtain a {@link Resizer}
 	 * for the resizing operation.
 	 * 
-	 * @param resizerFactory		The {@link ResizerFactory} to obtain the 
+	 * @param resizerFactory		The {@link ResizerFactory} to obtain the
 	 * 						{@link Resizer} used when resizing the image
 	 * 						to create the thumbnail.
 	 * @return				A reference to this object.

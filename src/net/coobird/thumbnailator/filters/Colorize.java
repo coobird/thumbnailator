@@ -37,7 +37,7 @@ public final class Colorize implements ImageFilter
 	/**
 	 * Instantiates this filter with the color to use to tint the target image
 	 * with and the transparency level provided as a {@code float} ranging from
-	 * {@code 0.0f} to {@code 1.0f}, where {@code 0.0f} indicates completely 
+	 * {@code 0.0f} to {@code 1.0f}, where {@code 0.0f} indicates completely
 	 * transparent, and {@code 1.0f} indicates completely opaque.
 	 * 
 	 * @param c				Color to tint with.
@@ -51,7 +51,7 @@ public final class Colorize implements ImageFilter
 	/**
 	 * Instantiates this filter with the color to use to tint the target image
 	 * with and the transparency level provided as a {@code int} ranging from
-	 * {@code 0} to {@code 255}, where {@code 0} indicates completely 
+	 * {@code 0} to {@code 255}, where {@code 0} indicates completely
 	 * transparent, and {@code 255} indicates completely opaque.
 	 * 
 	 * @param c				Color to tint with.

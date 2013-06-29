@@ -25,7 +25,7 @@ import net.coobird.thumbnailator.resizers.ResizerFactory;
  * <dt>height</dt>
  * <dd>Unassigned. Must be set by the {@link #size(int, int)} method.</dd>
  * <dt>scaling factor</dt>
- * <dd>Unassigned. Must be set by the {@link #scale(double)} method or 
+ * <dd>Unassigned. Must be set by the {@link #scale(double)} method or
  * {@link #scale(double, double)} method.</dd>
  * <dt>source region</dt>
  * <dd>Uses the entire source image.</dd>
@@ -134,7 +134,7 @@ public final class ThumbnailParameterBuilder
 	 * 
 	 * @param scalingFactor		The scaling factor of the thumbnail.
 	 * @return					A reference to this object.
-	 * @throws IllegalArgumentException		If the scaling factor is not a 
+	 * @throws IllegalArgumentException		If the scaling factor is not a
 	 * 										rational number, or if it is less
 	 * 										than {@code 0.0}.
 	 */
@@ -151,7 +151,7 @@ public final class ThumbnailParameterBuilder
 	 * @param heightScalingFactor		The scaling factor to use for the height
 	 * 									when creating the thumbnail.
 	 * @return							A reference to this object.
-	 * @throws IllegalArgumentException		If the scaling factor is not a 
+	 * @throws IllegalArgumentException		If the scaling factor is not a
 	 * 										rational number, or if it is less
 	 * 										than {@code 0.0}.
 	 * @since	0.3.10
@@ -161,15 +161,15 @@ public final class ThumbnailParameterBuilder
 		if (widthScalingFactor <= 0.0 || heightScalingFactor <= 0.0)
 		{
 			throw new IllegalArgumentException("Scaling factor is less than or equal to 0.");
-		} 
+		}
 		else if (Double.isNaN(widthScalingFactor) || Double.isInfinite(widthScalingFactor))
 		{
 			throw new IllegalArgumentException("Scaling factor must be a rational number.");
-		} 
+		}
 		else if (Double.isNaN(heightScalingFactor) || Double.isInfinite(heightScalingFactor))
 		{
 			throw new IllegalArgumentException("Scaling factor must be a rational number.");
-		} 
+		}
 		
 		this.widthScalingFactor = widthScalingFactor;
 		this.heightScalingFactor = heightScalingFactor;
@@ -212,7 +212,7 @@ public final class ThumbnailParameterBuilder
 	 * where {@code 0.0f} is for the lowest quality setting and {@code 1.0f} for
 	 * the highest quality setting.
 	 * <p>
-	 * If the default compression quality is to be used, then the value 
+	 * If the default compression quality is to be used, then the value
 	 * {@link ThumbnailParameter#DEFAULT_QUALITY} should be used.
 	 * 
 	 * @param quality		The compression quality setting of the thumbnail.
@@ -271,10 +271,10 @@ public final class ThumbnailParameterBuilder
 	 * Sets the {@link Resizer} to use when performing the resizing operation
 	 * to create the thumbnail.
 	 * <p>
-	 * Calling this method after {@link #resizerFactory(ResizerFactory)} will 
-	 * cause the {@link ResizerFactory} used by the resulting 
+	 * Calling this method after {@link #resizerFactory(ResizerFactory)} will
+	 * cause the {@link ResizerFactory} used by the resulting
 	 * {@link ThumbnailParameter} to only return the specified {@link Resizer}.
-	 *  
+	 *
 	 * @param resizer		The {@link Resizer} to use when creating the
 	 * 						thumbnail.
 	 * @return				A reference to this object.
@@ -291,7 +291,7 @@ public final class ThumbnailParameterBuilder
 	}
 	
 	/**
-	 * Sets the {@link ResizerFactory} to use to obtain a {@link Resizer} when 
+	 * Sets the {@link ResizerFactory} to use to obtain a {@link Resizer} when
 	 * performing the resizing operation to create the thumbnail.
 	 * <p>
 	 * Calling this method after {@link #resizer(Resizer)} could result in
@@ -316,11 +316,11 @@ public final class ThumbnailParameterBuilder
 	}
 	
 	/**
-	 * Sets whether or not the thumbnail should fit within the specified 
+	 * Sets whether or not the thumbnail should fit within the specified
 	 * dimensions.
 	 * 
-	 * @param fit		{@code true} if the thumbnail should be sized to fit 
-	 *					within the specified dimensions, if the thumbnail 
+	 * @param fit		{@code true} if the thumbnail should be sized to fit
+	 *					within the specified dimensions, if the thumbnail
 	 * 					is going to exceed those dimensions.
 	 * @return			A reference to this object.
 	 * @since	0.4.0
@@ -337,7 +337,7 @@ public final class ThumbnailParameterBuilder
 	 * 
 	 * @param use		{@code true} if the Exif metadata should be used
 	 * 					to determine the orientation of the thumbnail,
-	 * 					{@code false} otherwise. 
+	 * 					{@code false} otherwise.
 	 * @return			A reference to this object.
 	 * @since	0.4.3
 	 */
@@ -351,7 +351,7 @@ public final class ThumbnailParameterBuilder
 	 * Returns a {@link ThumbnailParameter} from the parameters which are
 	 * currently set.
 	 * <p>
-	 * This method will throw a {@link IllegalArgumentException} required 
+	 * This method will throw a {@link IllegalArgumentException} required
 	 * parameters for the {@link ThumbnailParameter} have not been set.
 	 * 
 	 * @return		A {@link ThumbnailParameter} with parameters set through

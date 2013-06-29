@@ -3,7 +3,7 @@ package net.coobird.thumbnailator.resizers;
 import java.awt.Dimension;
 
 /**
- * A {@link ResizerFactory} that returns a specific {@link Resizer} 
+ * A {@link ResizerFactory} that returns a specific {@link Resizer}
  * unconditionally.
  * 
  * @author coobird

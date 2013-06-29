@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  * Tests the {@link ExifUtils} class to check that the Exif Orientation
- * tag is correctly acquired by the 
+ * tag is correctly acquired by the
  * {@link ExifUtils#getExifOrientation(ImageReader, int)} method.
  * <p>
  * The Exif Orientation tags has been added to the source images by using
@@ -23,7 +23,7 @@ import org.junit.Test;
 public class ExifUtilsTest {
 	
 	@Test
-	public void exifOrientation1() throws Exception 
+	public void exifOrientation1() throws Exception
 	{
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
@@ -79,7 +79,7 @@ public class ExifUtilsTest {
 	}
 	
 	@Test
-	public void exifOrientation5() throws Exception 
+	public void exifOrientation5() throws Exception
 	{
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
@@ -93,7 +93,7 @@ public class ExifUtilsTest {
 	}
 	
 	@Test
-	public void exifOrientation6() throws Exception 
+	public void exifOrientation6() throws Exception
 	{
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
@@ -107,7 +107,7 @@ public class ExifUtilsTest {
 	}
 	
 	@Test
-	public void exifOrientation7() throws Exception 
+	public void exifOrientation7() throws Exception
 	{
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();

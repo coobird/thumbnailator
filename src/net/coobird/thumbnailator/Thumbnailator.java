@@ -30,7 +30,7 @@ import net.coobird.thumbnailator.tasks.ThumbnailTask;
  * <p>
  * Note: This class does not provide good support for large images.
  * For very large images, it is possible for an {@link OutOfMemoryError} to
- * occur during processing. 
+ * occur during processing.
  * 
  * @author coobird
  *
@@ -84,7 +84,7 @@ public final class Thumbnailator
 		
 		if (param.getSize() != null)
 		{
-			// Get the dimensions of the original and thumbnail images. 
+			// Get the dimensions of the original and thumbnail images.
 			int destinationWidth = param.getSize().width;
 			int destinationHeight = param.getSize().height;
 			
@@ -138,11 +138,11 @@ public final class Thumbnailator
 	 * source image, the specified dimensions will be used as the absolute
 	 * boundary of the thumbnail.
 	 * <p>
-	 * For example, if the source image of 100 pixels by 100 pixels, and the 
-	 * desired thumbnail size is 50 pixels by 100 pixels, then the resulting 
+	 * For example, if the source image of 100 pixels by 100 pixels, and the
+	 * desired thumbnail size is 50 pixels by 100 pixels, then the resulting
 	 * thumbnail will be 50 pixels by 50 pixels, as the constraint will be
 	 * 50 pixels for the width, and therefore, by preserving the aspect ratio,
-	 * the height will be required to be 50 pixels.  
+	 * the height will be required to be 50 pixels.
 	 * </p>
 	 * 
 	 * @param img				The source image.
@@ -151,8 +151,8 @@ public final class Thumbnailator
 	 * @return					Resulting thumbnail.
 	 */
 	public static BufferedImage createThumbnail(
-			BufferedImage img, 
-			int width, 
+			BufferedImage img,
+			int width,
 			int height
 	)
 	{
@@ -160,14 +160,14 @@ public final class Thumbnailator
 		
 		Dimension imgSize = new Dimension(img.getWidth(), img.getHeight());
 		Dimension thumbnailSize = new Dimension(width, height);
-		Resizer resizer = 
+		Resizer resizer =
 			DefaultResizerFactory.getInstance()
 					.getResizer(imgSize, thumbnailSize);
 		
-		BufferedImage thumbnailImage = 
+		BufferedImage thumbnailImage =
 			new FixedSizeThumbnailMaker(width, height, true, true)
 					.resizer(resizer)
-					.make(img); 
+					.make(img);
 		
 		return thumbnailImage;
 	}
@@ -179,13 +179,13 @@ public final class Thumbnailator
 	 * The image format to use for the thumbnail will be determined from the
 	 * file extension. However, if the image format cannot be determined, then,
 	 * the same image format as the original image will be used when writing
-	 * the thumbnail. 
+	 * the thumbnail.
 	 * 
 	 * @param inFile		The {@link File} from which image data is read.
 	 * @param outFile		The {@link File} to which thumbnail is written.
 	 * @param width			The width of the thumbnail.
 	 * @param height		The height of the thumbnail.
-	 * @throws IOException	Thrown when a problem occurs when reading from 
+	 * @throws IOException	Thrown when a problem occurs when reading from
 	 * 						{@code File} representing an image file.
 	 */
 	public static void createThumbnail(
@@ -217,14 +217,14 @@ public final class Thumbnailator
 	}
 
 	/**
-	 * Creates a thumbnail from an image file, and returns as a 
+	 * Creates a thumbnail from an image file, and returns as a
 	 * {@link BufferedImage}.
 	 * 
 	 * @param f				The {@link File} from which image data is read.
 	 * @param width			The width of the thumbnail.
 	 * @param height		The height of the thumbnail.
 	 * @return				The thumbnail image as a {@link BufferedImage}.
-	 * @throws IOException	Thrown when a problem occurs when reading from 
+	 * @throws IOException	Thrown when a problem occurs when reading from
 	 * 						{@code File} representing an image file.
 	 */
 	public static BufferedImage createThumbnail(
@@ -260,8 +260,8 @@ public final class Thumbnailator
 	 * @return				The thumbnail image as an {@link Image}.
 	 */
 	public static Image createThumbnail(
-			Image img, 
-			int width, 
+			Image img,
+			int width,
 			int height
 	)
 	{
@@ -292,7 +292,7 @@ public final class Thumbnailator
 	 * @param os			The {@link OutputStream} to send thumbnail data to.
 	 * @param width			The width of the thumbnail.
 	 * @param height		The height of the thumbnail.
-	 * @throws IOException	Thrown when a problem occurs when reading from 
+	 * @throws IOException	Thrown when a problem occurs when reading from
 	 * 						{@code File} representing an image file.
 	 */
 	public static void createThumbnail(
@@ -309,7 +309,7 @@ public final class Thumbnailator
 	/**
 	 * Creates a thumbnail from image data streamed from an {@link InputStream}
 	 * and streams the data out to an {@link OutputStream}, with the specified
-	 * format for the output data. 
+	 * format for the output data.
 	 * 
 	 * @param is			The {@link InputStream} from which to obtain
 	 * 						image data.
@@ -317,7 +317,7 @@ public final class Thumbnailator
 	 * @param format		The image format to use to store the thumbnail data.
 	 * @param width			The width of the thumbnail.
 	 * @param height		The height of the thumbnail.
-	 * @throws IOException	Thrown when a problem occurs when reading from 
+	 * @throws IOException	Thrown when a problem occurs when reading from
 	 * 						{@code File} representing an image file.
 	 * @throws IllegalArgumentException		If the specified output format is
 	 * 										not supported.
@@ -335,7 +335,7 @@ public final class Thumbnailator
 		if (is == null)
 		{
 			throw new NullPointerException("InputStream is null.");
-		} 
+		}
 		else if (os == null)
 		{
 			throw new NullPointerException("OutputStream is null.");
@@ -349,18 +349,18 @@ public final class Thumbnailator
 
 	/**
 	 * Creates thumbnails from a specified {@link Collection} of {@link File}s.
-	 * The filenames of the resulting thumbnails are determined by applying  
+	 * The filenames of the resulting thumbnails are determined by applying
 	 * the specified {@link Rename}.
 	 * <p>
-	 * The order of the thumbnail {@code File}s in the returned 
+	 * The order of the thumbnail {@code File}s in the returned
 	 * {@code Collection} will be the same as the order as the source list.
 	 * 
 	 * @param files			A {@code Collection} containing {@code File} objects
-	 * 						of image files. 
+	 * 						of image files.
 	 * @param rename		The renaming function to use.
 	 * @param width			The width of the thumbnail.
 	 * @param height		The height of the thumbnail.
-	 * @throws IOException	Thrown when a problem occurs when reading from 
+	 * @throws IOException	Thrown when a problem occurs when reading from
 	 * 						{@code File} representing an image file.
 	 * 
 	 * @deprecated		This method has been deprecated in favor of using the
@@ -373,7 +373,7 @@ public final class Thumbnailator
 			Rename rename,
 			int width,
 			int height
-	) 
+	)
 	throws IOException
 	{
 		validateDimensions(width, height);
@@ -389,14 +389,14 @@ public final class Thumbnailator
 		
 		ArrayList<File> resultFiles = new ArrayList<File>();
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 			new ThumbnailParameterBuilder()
 				.size(width, height)
 				.build();
 		
 		for (File inFile : files)
 		{
-			File outFile = 
+			File outFile =
 				new File(inFile.getParent(), rename.apply(inFile.getName(), param));
 			
 			createThumbnail(inFile, outFile, width, height);
@@ -409,15 +409,15 @@ public final class Thumbnailator
 
 	/**
 	 * Creates thumbnails from a specified {@code Collection} of {@code File}s.
-	 * The filenames of the resulting thumbnails are determined by applying  
+	 * The filenames of the resulting thumbnails are determined by applying
 	 * the specified {@code Rename} function.
 	 * 
 	 * @param files			A {@code Collection} containing {@code File} objects
-	 * 						of image files. 
+	 * 						of image files.
 	 * @param rename		The renaming function to use.
 	 * @param width			The width of the thumbnail.
 	 * @param height		The height of the thumbnail.
-	 * @throws IOException	Thrown when a problem occurs when reading from 
+	 * @throws IOException	Thrown when a problem occurs when reading from
 	 * 						{@code File} representing an image file.
 	 * 
 	 * @deprecated		This method has been deprecated in favor of using the
@@ -430,7 +430,7 @@ public final class Thumbnailator
 			Rename rename,
 			int width,
 			int height
-	) 
+	)
 	throws IOException
 	{
 		validateDimensions(width, height);
@@ -444,14 +444,14 @@ public final class Thumbnailator
 			throw new NullPointerException("Rename is null.");
 		}
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 			new ThumbnailParameterBuilder()
 				.size(width, height)
 				.build();
 		
 		for (File inFile : files)
 		{
-			File outFile = 
+			File outFile =
 				new File(inFile.getParent(), rename.apply(inFile.getName(), param));
 			
 			createThumbnail(inFile, outFile, width, height);
@@ -461,7 +461,7 @@ public final class Thumbnailator
 	/**
 	 * Performs validation on the specified dimensions.
 	 * <p>
-	 * If any of the dimensions are less than or equal to 0, an 
+	 * If any of the dimensions are less than or equal to 0, an
 	 * {@code IllegalArgumentException} is thrown with an message specifying the
 	 * reason for the exception.
 	 * <p>

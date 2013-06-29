@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 /**
  * An image filter which will make an image transparent.
  * <p>
- * The resulting image will always have an image type of 
+ * The resulting image will always have an image type of
  * {@link BufferedImage#TYPE_INT_ARGB}.
  * 
  * @author coobird
@@ -24,10 +24,10 @@ public class Transparency implements ImageFilter
 	 * Instantiates a {@link Transparency} filter with the specified opacity.
 	 * 
 	 * @param alpha		The opacity of the resulting image. The value should be
-	 * 					between {@code 0.0f} (transparent) to {@code 1.0f} 
+	 * 					between {@code 0.0f} (transparent) to {@code 1.0f}
 	 * 					(opaque), inclusive.
 	 * @throws IllegalArgumentException	If the specified opacity is outside of
-	 * 									the range specified above.  
+	 * 									the range specified above.
 	 */
 	public Transparency(float alpha)
 	{
@@ -45,14 +45,14 @@ public class Transparency implements ImageFilter
 	/**
 	 * Instantiates a {@link Transparency} filter with the specified opacity.
 	 * <p>
-	 * This is a convenience constructor for the 
+	 * This is a convenience constructor for the
 	 * {@link Transparency#Transparency(float)} constructor.
 	 * 
 	 * @param alpha		The opacity of the resulting image. The value should be
-	 * 					between {@code 0.0f} (transparent) to {@code 1.0f} 
+	 * 					between {@code 0.0f} (transparent) to {@code 1.0f}
 	 * 					(opaque), inclusive.
 	 * @throws IllegalArgumentException	If the specified opacity is outside of
-	 * 									the range specified above.  
+	 * 									the range specified above.
 	 */
 	public Transparency(double alpha)
 	{
@@ -64,7 +64,7 @@ public class Transparency implements ImageFilter
 		int width = img.getWidth();
 		int height = img.getHeight();
 		
-		BufferedImage finalImage = 
+		BufferedImage finalImage =
 			new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		
 		Graphics2D g = finalImage.createGraphics();

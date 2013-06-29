@@ -7,7 +7,7 @@ package net.coobird.thumbnailator.util.exif;
  * @author coobird
  *
  */
-public enum IfdType 
+public enum IfdType
 {
 	/**
 	 * An 8-bit unsigned integer value.
@@ -21,12 +21,12 @@ public enum IfdType
 	ASCII(2, 1),
 	
 	/**
-	 * A 16-bit unsigned integer value.  
+	 * A 16-bit unsigned integer value.
 	 */
 	SHORT(3, 2),
 	
 	/**
-	 * A 32-bit unsigned integer value.  
+	 * A 32-bit unsigned integer value.
 	 */
 	LONG(4, 4),
 	
@@ -37,7 +37,7 @@ public enum IfdType
 	RATIONAL(5, LONG.size() * 2),
 	
 	/**
-	 * An 8-bit value which can be value as defined elsewhere. 
+	 * An 8-bit value which can be value as defined elsewhere.
 	 */
 	UNDEFINED(7, 1),
 	
@@ -48,7 +48,7 @@ public enum IfdType
 	
 	/**
 	 * Two {@link #SLONG} values, where the first {@code SLONG} is the
-	 * numerator, while the second {@code SLONG} is the denominator. 
+	 * numerator, while the second {@code SLONG} is the denominator.
 	 */
 	SRATIONAL(5, SLONG.size() * 2),
 	;
@@ -56,7 +56,7 @@ public enum IfdType
 	private int value;
 	private int size;
 	
-	private IfdType(int value, int size) 
+	private IfdType(int value, int size)
 	{
 		this.value = value;
 		this.size = size;
@@ -66,7 +66,7 @@ public enum IfdType
 	 * Returns the size in bytes for this IFD type.
 	 * @return	Size in bytes for this IFD type.
 	 */
-	public int size() 
+	public int size()
 	{
 		return size;
 	}
@@ -75,7 +75,7 @@ public enum IfdType
 	 * Returns the IFD type as a type value.
 	 * @return	IFD type as a type value.
 	 */
-	public int value() 
+	public int value()
 	{
 		return value;
 	}
@@ -88,11 +88,11 @@ public enum IfdType
 	 * 					Return {@code null} if the given value does not
 	 * 					correspond to a	valid {@link IfdType}.
 	 */
-	public static IfdType typeOf(int value) 
+	public static IfdType typeOf(int value)
 	{
-		for (IfdType type : IfdType.values()) 
+		for (IfdType type : IfdType.values())
 		{
-			if (type.value == value) 
+			if (type.value == value)
 			{
 				return type;
 			}
@@ -106,7 +106,7 @@ public enum IfdType
 	 * @return			A textual representation of this enum.
 	 */
 	@Override
-	public String toString() 
+	public String toString()
 	{
 		return "IfdType [type=" + this.name() + ", value=" + value + ", size=" + size + "]";
 	}

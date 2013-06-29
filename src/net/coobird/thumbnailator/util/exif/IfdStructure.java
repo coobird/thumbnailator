@@ -7,7 +7,7 @@ package net.coobird.thumbnailator.util.exif;
  * @author coobird
  *
  */
-public class IfdStructure 
+public class IfdStructure
 {
 	private final int tag;
 	private final IfdType type;
@@ -43,9 +43,9 @@ public class IfdStructure
 
 	/**
 	 * Returns the type element in the IFD structure.
-	 * @return		An {@link IfdType} enum indicating the type. 
+	 * @return		An {@link IfdType} enum indicating the type.
 	 */
-	public IfdType getType() 
+	public IfdType getType()
 	{
 		return type;
 	}
@@ -53,9 +53,9 @@ public class IfdStructure
 	/**
 	 * Returns the count element in the IFD structure, indicating the number
 	 * of values the value field..
-	 * @return		A count indicating the number of values. 
+	 * @return		A count indicating the number of values.
 	 */
-	public int getCount() 
+	public int getCount()
 	{
 		return count;
 	}
@@ -66,7 +66,7 @@ public class IfdStructure
 	 * 				can be determined by the return of the {@link #isOffset()}
 	 * 				or {@link #isValue()} method.
 	 */
-	public int getOffsetValue() 
+	public int getOffsetValue()
 	{
 		return offsetValue;
 	}
@@ -74,11 +74,11 @@ public class IfdStructure
 	/**
 	 * Returns whether the value returned by the {@link #getOffsetValue()}
 	 * method is an actual value.
-	 * @return		{@code true} if the value returned by the 
+	 * @return		{@code true} if the value returned by the
 	 * 				{@link #getOffsetValue()} method is a value, {@code false}
 	 * 				otherwise.
 	 */
-	public boolean isValue() 
+	public boolean isValue()
 	{
 		/*
 		 * The offsetValue field contains a value if the size of the value is
@@ -91,11 +91,11 @@ public class IfdStructure
 	/**
 	 * Returns whether the value returned by the {@link #getOffsetValue()}
 	 * method is an offset value.
-	 * @return		{@code true} if the value returned by the 
-	 * 				{@link #getOffsetValue()} method is a offset value, 
+	 * @return		{@code true} if the value returned by the
+	 * 				{@link #getOffsetValue()} method is a offset value,
 	 * 				{@code false} otherwise.
 	 */
-	public boolean isOffset() 
+	public boolean isOffset()
 	{
 		return !isValue();
 	}
@@ -147,7 +147,7 @@ public class IfdStructure
 	 * @return			A textual representation of this object.
 	 */
 	@Override
-	public String toString() 
+	public String toString()
 	{
 		return "IfdStructure [tag=" + Integer.toHexString(tag) +
 				", type=" + type + ", count=" + count +

@@ -33,7 +33,7 @@ public final class ExifUtils
 	 * 
 	 * @param reader		An {@link ImageReader} which is reading the
 	 * 						target image.
-	 * @param imageIndex	The index of the image from which the Exif 
+	 * @param imageIndex	The index of the image from which the Exif
 	 * 						metadata should be read from.
 	 * @return				The orientation information obtained from the
 	 * 						Exif metadata, as a {@link Orientation} enum.
@@ -49,7 +49,7 @@ public final class ExifUtils
 		
 		NodeList childNodes = rootNode.getChildNodes();
 		
-		// Look for the APP1 containing Exif data, and retrieve it. 
+		// Look for the APP1 containing Exif data, and retrieve it.
 		for (int i = 0; i < childNodes.getLength(); i++)
 		{
 			if ("markerSequence".equals(childNodes.item(i).getNodeName()))
@@ -105,7 +105,7 @@ public final class ExifUtils
 		/*
 		 * The first 2 bytes of the TIFF header contains either:
 		 *   "II" for Intel byte alignment (little endian), or
-		 *   "MM" for Motorola byte alignment (big endian) 
+		 *   "MM" for Motorola byte alignment (big endian)
 		 */
 		ByteOrder bo;
 		if (tiffHeader[0] == 'I' && tiffHeader[1] == 'I')
@@ -158,15 +158,15 @@ public final class ExifUtils
 		if (byteSize <= 4) {
 			if (ifdType == IfdType.SHORT)
 			{
-				for (int i = 0; i < count; i++) 
-				{ 
+				for (int i = 0; i < count; i++)
+				{
 					offsetValue = (int)buffer.getShort();
 				}
-			} 
+			}
 			else if (ifdType == IfdType.BYTE || ifdType == IfdType.ASCII || ifdType == IfdType.UNDEFINED)
 			{
 				for (int i = 0; i < count; i++)
-				{ 
+				{
 					offsetValue = (int)buffer.get();
 				}
 			}

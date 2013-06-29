@@ -30,12 +30,12 @@ public abstract class ThumbnailTask<S, D>
 	 * String indicating the image format of the input image.
 	 * <p>
 	 * To be used for situtions where the output image format should be the
-	 * same as the input image format. 
+	 * same as the input image format.
 	 */
 	protected String inputFormatName;
 	
 	/**
-	 * Constant used to obtain the first image when reading an image file. 
+	 * Constant used to obtain the first image when reading an image file.
 	 */
 	protected static final int FIRST_IMAGE_INDEX = 0;
 	
@@ -74,7 +74,7 @@ public abstract class ThumbnailTask<S, D>
 	 * 
 	 * @param img			The image to write.
 	 * @throws UnsupportedFormatException	When an image file which is to be
-	 * 										read or written is unsupported. 
+	 * 										read or written is unsupported.
 	 * @throws IOException	Thrown when an I/O problem occurs when writing the
 	 * 						image.
 	 */

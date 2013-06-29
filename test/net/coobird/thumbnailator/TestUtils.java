@@ -55,7 +55,7 @@ public class TestUtils
 		}
 		tmpDir.delete();
 		
-		File tmpParentDir = tmpDir.getParentFile(); 
+		File tmpParentDir = tmpDir.getParentFile();
 		if (tmpParentDir.isDirectory() && tmpParentDir.getName().equals("tmp"))
 		{
 			tmpParentDir.delete();

@@ -4,7 +4,7 @@ import java.awt.Point;
 
 /**
  * This interface is implemented by classes which calculate how to position an
- * object inside of an enclosing object. 
+ * object inside of an enclosing object.
  * 
  * @author coobird
  *
@@ -12,12 +12,12 @@ import java.awt.Point;
 public interface Position
 {
 	/**
-	 * Calculates the position of an object enclosed by an enclosing object. 
+	 * Calculates the position of an object enclosed by an enclosing object.
 	 * 
 	 * @param enclosingWidth		The width of the enclosing object that is
-	 * 								to contain the enclosed object.  
+	 * 								to contain the enclosed object.
 	 * @param enclosingHeight		The height of the enclosing object that is
-	 * 								to contain the enclosed object.  
+	 * 								to contain the enclosed object.
 	 * @param width					The width of the object that is to be
 	 * 								placed inside an enclosing object.
 	 * @param height				The height of the object that is to be

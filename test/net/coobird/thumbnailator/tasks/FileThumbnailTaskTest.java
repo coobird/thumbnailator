@@ -62,7 +62,7 @@ public class FileThumbnailTaskTest
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
 		outputFile.deleteOnExit();
 		
-		FileThumbnailTask task = 
+		FileThumbnailTask task =
 			new FileThumbnailTask(param, inputFile, outputFile);
 		
 		task.read();
@@ -95,7 +95,7 @@ public class FileThumbnailTaskTest
 				Resizers.PROGRESSIVE,
 				true,
 				true
-		); 
+		);
 		
 		InputStream is = mock(InputStream.class);
 		OutputStream os = mock(OutputStream.class);

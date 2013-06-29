@@ -18,7 +18,7 @@ import java.awt.Dimension;
  * <li>Default via {@link #getResizer()}
  * 	<ul><li>{@link ProgressiveBilinearResizer}</li></ul>
  * </li>
- * <li>Destination image has the same dimensions as the source image via 
+ * <li>Destination image has the same dimensions as the source image via
  * {@link #getResizer(Dimension, Dimension)}
  * 	<ul><li>{@link NullResizer}</li></ul>
  * </li>
@@ -26,17 +26,17 @@ import java.awt.Dimension;
  * source image via {@link #getResizer(Dimension, Dimension)}
  * 	<ul><li>{@link BicubicResizer}</li></ul>
  * </li>
- * <li>Both the width and height of the destination image is smaller in the 
- * source image by a factor larger than 2, 
+ * <li>Both the width and height of the destination image is smaller in the
+ * source image by a factor larger than 2,
  * via {@link #getResizer(Dimension, Dimension)}
  * 	<ul><li>{@link ProgressiveBilinearResizer}</li></ul>
  * </li>
- * <li>Both the width and height of the destination image is smaller in the 
- * source image not by a factor larger than 2, 
+ * <li>Both the width and height of the destination image is smaller in the
+ * source image not by a factor larger than 2,
  * via {@link #getResizer(Dimension, Dimension)}
  * 	<ul><li>{@link BilinearResizer}</li></ul>
  * </li>
- * <li>Other conditions not described via 
+ * <li>Other conditions not described via
  * {@link #getResizer(Dimension, Dimension)}
  * 	<ul><li>{@link ProgressiveBilinearResizer}</li></ul>
  * </li>
@@ -66,12 +66,12 @@ resizer.resize(sourceImage, destImage);
  * </pre>
  * </DD>
  * </DL>
- * When a specific {@link Resizer} is required, the {@link Resizers} 
+ * When a specific {@link Resizer} is required, the {@link Resizers}
  * {@code enum} is another way to obtain {@link Resizer}s.
  * <p>
  * 
  * @see Resizers
- *  
+ *
  * @author coobird
  * @since	0.4.0
  *
@@ -81,7 +81,7 @@ public class DefaultResizerFactory implements ResizerFactory
 	private static final DefaultResizerFactory INSTANCE = new DefaultResizerFactory();
 
 	/**
-	 * This class is not intended to be instantiated via the constructor. 
+	 * This class is not intended to be instantiated via the constructor.
 	 */
 	private DefaultResizerFactory() {}
 	

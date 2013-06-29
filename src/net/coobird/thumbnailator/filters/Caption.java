@@ -38,7 +38,7 @@ public class Caption implements ImageFilter
 	 * <p>
 	 * The value should be between {@code 0.0f} to {@code 1.0f}, where
 	 * {@code 0.0f} is completely transparent, and {@code 1.0f} is completely
-	 * opaque. 
+	 * opaque.
 	 */
 	private final float alpha;
 	
@@ -60,8 +60,8 @@ public class Caption implements ImageFilter
 	 * @param c			The color of the caption.
 	 * @param alpha		The opacity level of caption.
 	 * 					<p>
-	 * 					The value should be between {@code 0.0f} and 
-	 * 					{@code 1.0f}, where {@code 0.0f} is completely 
+	 * 					The value should be between {@code 0.0f} and
+	 * 					{@code 1.0f}, where {@code 0.0f} is completely
 	 * 					transparent, and {@code 1.0f} is completely opaque.
 	 * @param position	The position of the caption.
 	 * @param insets	The inset size around the caption.

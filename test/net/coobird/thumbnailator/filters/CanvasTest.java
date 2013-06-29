@@ -25,7 +25,7 @@ public class CanvasTest
 	 * Checks that the input image contents are not altered.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_WidthHeightPositionConstructor() 
+	public void inputContentsAreNotAltered_WidthHeightPositionConstructor()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -44,7 +44,7 @@ public class CanvasTest
 	 * Checks that the input image contents are not altered.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_WidthHeightPositionCropConstructor() 
+	public void inputContentsAreNotAltered_WidthHeightPositionCropConstructor()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -63,7 +63,7 @@ public class CanvasTest
 	 * Checks that the input image contents are not altered.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_WidthHeightPositionColorConstructor() 
+	public void inputContentsAreNotAltered_WidthHeightPositionColorConstructor()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -82,7 +82,7 @@ public class CanvasTest
 	 * Checks that the input image contents are not altered.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_WidthHeightPositionCropColorConstructor() 
+	public void inputContentsAreNotAltered_WidthHeightPositionCropColorConstructor()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -101,7 +101,7 @@ public class CanvasTest
 	 * Checks that the image is cropped
 	 */
 	@Test
-	public void croppingEnabled_WidthHeightPositionCropColorConstructor() 
+	public void croppingEnabled_WidthHeightPositionCropColorConstructor()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -119,7 +119,7 @@ public class CanvasTest
 	 * Checks that the image is not cropped
 	 */
 	@Test
-	public void croppingDisabled_WidthHeightExceeds_WidthHeightPositionCropColorConstructor() 
+	public void croppingDisabled_WidthHeightExceeds_WidthHeightPositionCropColorConstructor()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -139,7 +139,7 @@ public class CanvasTest
 	 * - the original height is within the specified height
 	 */
 	@Test
-	public void croppingDisabled_WidthExceeds_WidthHeightPositionCropColorConstructor() 
+	public void croppingDisabled_WidthExceeds_WidthHeightPositionCropColorConstructor()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 90, BufferedImage.TYPE_INT_ARGB);
@@ -159,7 +159,7 @@ public class CanvasTest
 	 * - the original height exceeds the specified width
 	 */
 	@Test
-	public void croppingDisabled_HeightExceeds_WidthHeightPositionCropColorConstructor() 
+	public void croppingDisabled_HeightExceeds_WidthHeightPositionCropColorConstructor()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(90, 200, BufferedImage.TYPE_INT_ARGB);
@@ -177,7 +177,7 @@ public class CanvasTest
 	 * Checks that the image is enclosed
 	 */
 	@Test
-	public void croppingEnabled_WidthHeightSmaller_WidthHeightPositionCropColorConstructor() 
+	public void croppingEnabled_WidthHeightSmaller_WidthHeightPositionCropColorConstructor()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(90, 90, BufferedImage.TYPE_INT_ARGB);
@@ -195,7 +195,7 @@ public class CanvasTest
 	 * Checks that the image is enclosed
 	 */
 	@Test
-	public void croppingDisabled_WidthHeightSmaller_WidthHeightPositionCropColorConstructor() 
+	public void croppingDisabled_WidthHeightSmaller_WidthHeightPositionCropColorConstructor()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(90, 90, BufferedImage.TYPE_INT_ARGB);

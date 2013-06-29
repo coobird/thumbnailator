@@ -9,7 +9,7 @@ import java.util.List;
 import net.coobird.thumbnailator.util.BufferedImages;
 
 /**
- * An {@link ImageFilter} which will apply multiple {@link ImageFilter}s in a 
+ * An {@link ImageFilter} which will apply multiple {@link ImageFilter}s in a
  * specific order.
  * 
  * @author coobird
@@ -23,7 +23,7 @@ public final class Pipeline implements ImageFilter
 	private final List<ImageFilter> filtersToApply;
 	
 	/**
-	 * An unmodifiable list of image filters to apply. Used by the 
+	 * An unmodifiable list of image filters to apply. Used by the
 	 * {@link #getFilters()} method.
 	 */
 	private final List<ImageFilter> unmodifiableFiltersToApply;
@@ -62,7 +62,7 @@ public final class Pipeline implements ImageFilter
 		}
 		
 		filtersToApply = new ArrayList<ImageFilter>(filters);
-		unmodifiableFiltersToApply = 
+		unmodifiableFiltersToApply =
 			Collections.unmodifiableList(filtersToApply);
 	}
 	
