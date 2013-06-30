@@ -34,7 +34,7 @@ public class FileImageSource extends AbstractImageSource<File>
 	private static final int FIRST_IMAGE_INDEX = 0;
 	
 	/**
-	 * The file from which the image should be obtained. 
+	 * The file from which the image should be obtained.
 	 */
 	private final File sourceFile;
 	
@@ -86,7 +86,7 @@ public class FileImageSource extends AbstractImageSource<File>
 		}
 		
 		/* TODO refactor.
-		 * The following code has been adapted from the 
+		 * The following code has been adapted from the
 		 * StreamThumbnailTask.read method.
 		 */
 		ImageInputStream iis = ImageIO.createImageInputStream(sourceFile);
@@ -116,7 +116,7 @@ public class FileImageSource extends AbstractImageSource<File>
 			if (param.useExifOrientation())
 			{
 				Orientation orientation;
-				orientation = 
+				orientation =
 						ExifUtils.getExifOrientation(reader, FIRST_IMAGE_INDEX);
 				
 				// Skip this code block if there's no rotation needed.
@@ -146,11 +146,11 @@ public class FileImageSource extends AbstractImageSource<File>
 			ImageReadParam irParam = reader.getDefaultReadParam();
 			irParam.setSourceRegion(sourceRegion);
 			
-			img = reader.read(FIRST_IMAGE_INDEX, irParam); 
+			img = reader.read(FIRST_IMAGE_INDEX, irParam);
 		}
 		else
 		{
-			img = reader.read(FIRST_IMAGE_INDEX); 
+			img = reader.read(FIRST_IMAGE_INDEX);
 		}
 		
 		/*

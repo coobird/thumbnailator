@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
  * when producing a thumbnail.
  * <p>
  * Optionally, if the aspect ratio of the thumbnail is to be maintained the same
- * as the original image (by calling the {@link #keepAspectRatio(boolean)} 
+ * as the original image (by calling the {@link #keepAspectRatio(boolean)}
  * method with the value {@code true}), then the dimensions specified by the
  * {@link #size(int, int)} method, {@link #FixedSizeThumbnailMaker(int, int)} or
  * {@link #FixedSizeThumbnailMaker(int, int, boolean)} constructor will be used
@@ -15,7 +15,7 @@ import java.awt.image.BufferedImage;
  * <p>
  * In other words, when the aspect ratio is to be kept constant, then
  * thumbnails which are created will be sized to fit inside the dimensions
- * specified by the size parameter. 
+ * specified by the size parameter.
  * <p>
  * Upon calculating the size of the thumbnail, if any of the dimensions are
  * {@code 0}, then that dimension will be promoted to {@code 1}, regardless of
@@ -98,7 +98,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * @param aspectRatio	Whether or not to maintain the aspect ratio in the
 	 * 						thumbnail the same as the original image.
 	 * 						<p>
-	 * 						If {@code true} is specified, then the 
+	 * 						If {@code true} is specified, then the
 	 * 						thumbnail image will have the same aspect ratio
 	 * 						as the original image.
 	 */
@@ -112,7 +112,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	/**
 	 * Creates a {@link FixedSizeThumbnailMaker} which creates thumbnails
 	 * with the specified size. Whether or not the aspect ratio of the original
-	 * image should be preserved by the thumbnail, and whether to fit the 
+	 * image should be preserved by the thumbnail, and whether to fit the
 	 * thumbnail within the given dimensions is also specified at
 	 * instantiation.
 	 * 
@@ -121,7 +121,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * @param aspectRatio	Whether or not to maintain the aspect ratio in the
 	 * 						thumbnail the same as the original image.
 	 * 						<p>
-	 * 						If {@code true} is specified, then the 
+	 * 						If {@code true} is specified, then the
 	 * 						thumbnail image will have the same aspect ratio
 	 * 						as the original image.
 	 * @param fit			Whether or not to fit the thumbnail within the
@@ -146,8 +146,8 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * @param height			The height of the thumbnails to produce.
 	 * @return					A reference to this object.
 	 * @throws IllegalStateException	If the size has already
-	 * 									been previously set, or if the 
-	 * 									{@code width} or {@code height} is less 
+	 * 									been previously set, or if the
+	 * 									{@code width} or {@code height} is less
 	 * 									than or equal to zero.
 	 */
 	public FixedSizeThumbnailMaker size(int width, int height)
@@ -186,7 +186,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * @param keep			Whether or not to maintain the aspect ratio in the
 	 * 						thumbnail the same as the original image.
 	 * 						<p>
-	 * 						If {@code true} is specified, then the 
+	 * 						If {@code true} is specified, then the
 	 * 						thumbnail image will have the same aspect ratio
 	 * 						as the original image.
  	 * @return				A reference to this object.
@@ -224,7 +224,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * @param fit			Whether or not to maintain the aspect ratio in the
 	 * 						thumbnail the same as the original image.
 	 * 						<p>
-	 * 						If {@code true} is specified, then the 
+	 * 						If {@code true} is specified, then the
 	 * 						thumbnail image will have the same aspect ratio
 	 * 						as the original image.
 	 * @return				A reference to this object.
@@ -273,7 +273,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 						targetWidth = width;
 						targetHeight = (int)Math.round(targetWidth / sourceRatio);
 					}
-					else 
+					else
 					{
 						targetWidth = (int)Math.round(targetHeight * sourceRatio);
 						targetHeight = height;
@@ -286,7 +286,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 						targetWidth = (int)Math.round(targetHeight * sourceRatio);
 						targetHeight = height;
 					}
-					else 
+					else
 					{
 						targetWidth = width;
 						targetHeight = (int)Math.round(targetWidth / sourceRatio);

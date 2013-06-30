@@ -10,7 +10,7 @@ import org.junit.Test;
 public class ProgressiveBilinearResizerTest
 {
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link ProgressiveBilinearResizer#resize(BufferedImage, BufferedImage)}
 	 * where,
 	 * 
@@ -35,7 +35,7 @@ public class ProgressiveBilinearResizerTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link ProgressiveBilinearResizer#resize(BufferedImage, BufferedImage)}
 	 * where,
 	 * 
@@ -60,7 +60,7 @@ public class ProgressiveBilinearResizerTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link ProgressiveBilinearResizer#resize(BufferedImage, BufferedImage)}
 	 * where,
 	 * 

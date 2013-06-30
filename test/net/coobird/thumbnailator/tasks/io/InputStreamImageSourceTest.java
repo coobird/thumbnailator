@@ -120,7 +120,7 @@ public class InputStreamImageSourceTest
 		try
 		{
 			// given
-			byte[] bytes = new byte[100]; 
+			byte[] bytes = new byte[100];
 			new FileInputStream("test-resources/Thumbnailator/grid.png").read(bytes);
 			
 			ByteArrayInputStream is = new ByteArrayInputStream(bytes);
@@ -197,7 +197,7 @@ public class InputStreamImageSourceTest
 	/*
 	 *
 	 *     +------------------+ source
-	 *     |  +------------------+       
+	 *     |  +------------------+
 	 *     |  |XXXXXXXXXXXXXXX|  |
 	 *     |  |XXXXXXXXXXXXXXX|  |
 	 *     |  |XX  final  XXXX|  |
@@ -300,7 +300,7 @@ public class InputStreamImageSourceTest
 
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -320,7 +320,7 @@ public class InputStreamImageSourceTest
 
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -340,7 +340,7 @@ public class InputStreamImageSourceTest
 
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -360,7 +360,7 @@ public class InputStreamImageSourceTest
 
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -380,7 +380,7 @@ public class InputStreamImageSourceTest
 
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -400,7 +400,7 @@ public class InputStreamImageSourceTest
 
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -420,7 +420,7 @@ public class InputStreamImageSourceTest
 
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -440,7 +440,7 @@ public class InputStreamImageSourceTest
 
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -458,7 +458,7 @@ public class InputStreamImageSourceTest
 		File sourceFile = new File("test-resources/Exif/source_1.jpg");
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -478,7 +478,7 @@ public class InputStreamImageSourceTest
 		
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -488,7 +488,7 @@ public class InputStreamImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -506,7 +506,7 @@ public class InputStreamImageSourceTest
 		
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -516,7 +516,7 @@ public class InputStreamImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -534,7 +534,7 @@ public class InputStreamImageSourceTest
 		
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -544,7 +544,7 @@ public class InputStreamImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -562,7 +562,7 @@ public class InputStreamImageSourceTest
 		
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -572,7 +572,7 @@ public class InputStreamImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -590,7 +590,7 @@ public class InputStreamImageSourceTest
 		
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -600,7 +600,7 @@ public class InputStreamImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -618,7 +618,7 @@ public class InputStreamImageSourceTest
 		
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -628,7 +628,7 @@ public class InputStreamImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -646,7 +646,7 @@ public class InputStreamImageSourceTest
 		
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
 		source.setThumbnailParameter(param);
 		
@@ -656,7 +656,7 @@ public class InputStreamImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -674,7 +674,7 @@ public class InputStreamImageSourceTest
 		
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder()
 						.size(20, 20)
 						.useExifOrientation(true)
@@ -688,7 +688,7 @@ public class InputStreamImageSourceTest
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,
@@ -704,7 +704,7 @@ public class InputStreamImageSourceTest
 		File sourceFile = new File("test-resources/Exif/source_2.jpg");
 		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 				new ThumbnailParameterBuilder()
 						.size(20, 20)
 						.useExifOrientation(false)
@@ -718,7 +718,7 @@ public class InputStreamImageSourceTest
 		// then
 		assertTrue(param.getImageFilters().isEmpty());
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						1, 1, 1,

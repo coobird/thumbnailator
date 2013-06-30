@@ -44,10 +44,11 @@ import static org.mockito.Mockito.*;
  * @author coobird
  *
  */
+@SuppressWarnings("deprecation")
 public class ThumbnailatorTest
 {
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnailCollection(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -81,7 +82,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnailsAsCollection(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -115,7 +116,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnailsAsCollection(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -150,7 +151,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnailsAsCollection(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -185,7 +186,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnailsAsCollection(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -229,7 +230,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnailsAsCollection(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -250,7 +251,7 @@ public class ThumbnailatorTest
 		 */
 		List<File> files = Collections.emptyList();
 		
-		Collection<File> resultingFiles = 
+		Collection<File> resultingFiles =
 			Thumbnailator.createThumbnailsAsCollection(
 					files,
 					Rename.PREFIX_DOT_THUMBNAIL,
@@ -262,7 +263,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnailsAsCollection(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -292,7 +293,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnailsAsCollection(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -322,13 +323,13 @@ public class ThumbnailatorTest
 		for (File f : files)
 		{
 			String fileName = f.getName();
-			String newFileName = 
+			String newFileName =
 				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
 			
 			new File(f.getParent(), newFileName).deleteOnExit();
 		}
 		
-		Collection<File> resultingFiles = 
+		Collection<File> resultingFiles =
 			Thumbnailator.createThumbnailsAsCollection(
 				files,
 				Rename.PREFIX_DOT_THUMBNAIL,
@@ -353,7 +354,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnailsAsCollection(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -385,7 +386,7 @@ public class ThumbnailatorTest
 		for (File f : files)
 		{
 			String fileName = f.getName();
-			String newFileName = 
+			String newFileName =
 				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
 			
 			new File(f.getParent(), newFileName).deleteOnExit();
@@ -402,7 +403,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnailsAsCollection(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -434,7 +435,7 @@ public class ThumbnailatorTest
 		for (File f : files)
 		{
 			String fileName = f.getName();
-			String newFileName = 
+			String newFileName =
 				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
 			
 			new File(f.getParent(), newFileName).deleteOnExit();
@@ -451,7 +452,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnailsAsCollection(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -491,13 +492,13 @@ public class ThumbnailatorTest
 		for (File f : files)
 		{
 			String fileName = f.getName();
-			String newFileName = 
+			String newFileName =
 				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
 			
 			new File(f.getParent(), newFileName).deleteOnExit();
 		}
 		
-		Collection<File> resultingFiles = 
+		Collection<File> resultingFiles =
 			Thumbnailator.createThumbnailsAsCollection(
 					files,
 					Rename.PREFIX_DOT_THUMBNAIL,
@@ -522,7 +523,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnails(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -556,7 +557,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnails(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -590,7 +591,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnails(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -625,7 +626,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnails(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -660,7 +661,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnails(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -704,7 +705,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnails(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -734,7 +735,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnails(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -764,7 +765,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnails(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -794,7 +795,7 @@ public class ThumbnailatorTest
 		for (File f : files)
 		{
 			String fileName = f.getName();
-			String newFileName = 
+			String newFileName =
 				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
 			
 			new File(f.getParent(), newFileName).deleteOnExit();
@@ -810,13 +811,13 @@ public class ThumbnailatorTest
 		/*
 		 * Perform post-execution checks.
 		 */
-		BufferedImage img0 = 
+		BufferedImage img0 =
 			ImageIO.read(new File("test-resources/Thumbnailator/thumbnail.grid.jpg"));
 		
 		assertEquals(50, img0.getWidth());
 		assertEquals(50, img0.getHeight());
 		
-		BufferedImage img1 = 
+		BufferedImage img1 =
 			ImageIO.read(new File("test-resources/Thumbnailator/thumbnail.grid.png"));
 		
 		assertEquals(50, img1.getWidth());
@@ -824,7 +825,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnails(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -856,7 +857,7 @@ public class ThumbnailatorTest
 		for (File f : files)
 		{
 			String fileName = f.getName();
-			String newFileName = 
+			String newFileName =
 				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
 			
 			new File(f.getParent(), newFileName).deleteOnExit();
@@ -873,7 +874,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnails(Collection, Rename, int, int)}
 	 * where,
 	 * 
@@ -905,7 +906,7 @@ public class ThumbnailatorTest
 		for (File f : files)
 		{
 			String fileName = f.getName();
-			String newFileName = 
+			String newFileName =
 				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
 			
 			new File(f.getParent(), newFileName).deleteOnExit();
@@ -922,7 +923,7 @@ public class ThumbnailatorTest
 	}
 
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, int, int)}
 	 * where,
 	 * 
@@ -949,7 +950,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, int, int)}
 	 * where,
 	 * 
@@ -977,7 +978,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, int, int)}
 	 * where,
 	 * 
@@ -998,7 +999,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, int, int)}
 	 * where,
 	 * 
@@ -1026,7 +1027,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, int, int)}
 	 * where,
 	 * 
@@ -1054,7 +1055,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, int, int)}
 	 * where,
 	 * 
@@ -1083,7 +1084,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, int, int)}
 	 * where,
 	 * 
@@ -1119,7 +1120,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, int, int)}
 	 * where,
 	 * 
@@ -1155,12 +1156,12 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, int, int)}
 	 * where,
 	 * 
 	 * 1) Method arguments are correct
-	 * 2) Input data is a BMP image 
+	 * 2) Input data is a BMP image
 	 * 
 	 * Expected outcome is,
 	 * 
@@ -1193,12 +1194,12 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, int, int)}
 	 * where,
 	 * 
 	 * 1) Method arguments are correct
-	 * 2) Input data is a BMP image 
+	 * 2) Input data is a BMP image
 	 *    -> writing to a BMP is not supported by default.
 	 * 
 	 * Expected outcome is,
@@ -1233,7 +1234,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, int, int)}
 	 * where,
 	 * 
@@ -1264,7 +1265,7 @@ public class ThumbnailatorTest
 	}
 
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, int, int)}
 	 * where,
 	 * 
@@ -1296,7 +1297,7 @@ public class ThumbnailatorTest
 	}
 
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, String, int, int)}
 	 * where,
 	 * 
@@ -1341,7 +1342,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, String, int, int)}
 	 * where,
 	 * 
@@ -1386,7 +1387,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, String, int, int)}
 	 * where,
 	 * 
@@ -1397,11 +1398,12 @@ public class ThumbnailatorTest
 	 * 
 	 * Expected outcome is,
 	 * 
-	 * 1) Processing will complete successfully.
+	 * 1) Processing will fail with an IllegalArgumentException due to not
+	 *    being able to write to a GIF.
 	 * 
 	 * @throws IOException
 	 */
-	@Test(expected=UnsupportedFormatException.class)
+	@Test(expected=IllegalArgumentException.class)
 	public void testCreateThumbnail_IOSII_Transcoding_Jpeg_Gif() throws IOException
 	{
 		/*
@@ -1416,17 +1418,16 @@ public class ThumbnailatorTest
 			Thumbnailator.createThumbnail(is, os, "gif", 50, 50);
 			fail();
 		}
-		catch (UnsupportedFormatException e)
+		catch (IllegalArgumentException e)
 		{
-			assertEquals("No suitable ImageWriter found for gif.", e.getMessage());
-			assertEquals("gif", e.getFormatName());
+			assertTrue(e.getMessage().contains("gif"));
 			throw e;
 		}		
 	}
 	
 
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, String, int, int)}
 	 * where,
 	 * 
@@ -1471,7 +1472,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, String, int, int)}
 	 * where,
 	 * 
@@ -1516,7 +1517,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, String, int, int)}
 	 * where,
 	 * 
@@ -1527,11 +1528,12 @@ public class ThumbnailatorTest
 	 * 
 	 * Expected outcome is,
 	 * 
-	 * 1) Processing will stop with an IOException.
+	 * 1) Processing will fail with an IllegalArgumentException due to not
+	 *    being able to write to a GIF.
 	 * 
 	 * @throws IOException
 	 */
-	@Test(expected=UnsupportedFormatException.class)
+	@Test(expected=IllegalArgumentException.class)
 	public void testCreateThumbnail_IOSII_Transcoding_Png_Gif() throws IOException
 	{
 		/*
@@ -1547,16 +1549,15 @@ public class ThumbnailatorTest
 			Thumbnailator.createThumbnail(is, os, "gif", 50, 50);
 			fail();
 		}
-		catch (UnsupportedFormatException e)
+		catch (IllegalArgumentException e)
 		{
-			assertEquals("No suitable ImageWriter found for gif.", e.getMessage());
-			assertEquals("gif", e.getFormatName());
+			assertTrue(e.getMessage().contains("gif"));
 			throw e;
 		}
 	}
 
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, String, int, int)}
 	 * where,
 	 * 
@@ -1603,7 +1604,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, String, int, int)}
 	 * where,
 	 * 
@@ -1650,7 +1651,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, String, int, int)}
 	 * where,
 	 * 
@@ -1661,11 +1662,12 @@ public class ThumbnailatorTest
 	 * 
 	 * Expected outcome is,
 	 * 
-	 * 1) Processing will stop with an IOException.
+	 * 1) Processing will fail with an IllegalArgumentException due to not
+	 *    being able to write to a GIF.
 	 * 
 	 * @throws IOException
 	 */
-	@Test(expected=UnsupportedFormatException.class)
+	@Test(expected=IllegalArgumentException.class)
 	public void testCreateThumbnail_IOSII_Transcoding_Bmp_Gif() throws IOException
 	{
 		/*
@@ -1682,16 +1684,15 @@ public class ThumbnailatorTest
 			Thumbnailator.createThumbnail(is, os, "gif", 50, 50);
 			fail();
 		}
-		catch (UnsupportedFormatException e)
+		catch (IllegalArgumentException e)
 		{
-			assertEquals("No suitable ImageWriter found for gif.", e.getMessage());
-			assertEquals("gif", e.getFormatName());
+			assertTrue(e.getMessage().contains("gif"));
 			throw e;
 		}
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, String, int, int)}
 	 * where,
 	 * 
@@ -1738,7 +1739,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, String, int, int)}
 	 * where,
 	 * 
@@ -1785,7 +1786,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, String, int, int)}
 	 * where,
 	 * 
@@ -1832,7 +1833,7 @@ public class ThumbnailatorTest
 	}
 
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, String, int, int)}
 	 * where,
 	 * 
@@ -1863,7 +1864,7 @@ public class ThumbnailatorTest
 	}
 
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, String, int, int)}
 	 * where,
 	 * 
@@ -1895,7 +1896,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -1922,7 +1923,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -1949,7 +1950,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -1970,7 +1971,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -1997,7 +1998,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2024,7 +2025,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2052,7 +2053,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2084,7 +2085,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2116,12 +2117,12 @@ public class ThumbnailatorTest
 	}
 
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
 	 * 1) Method arguments are correct
-	 * 2) Input data is a BMP image 
+	 * 2) Input data is a BMP image
 	 * 
 	 * Expected outcome is,
 	 * 
@@ -2148,12 +2149,12 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
 	 * 1) Method arguments are correct
-	 * 2) Input data is a GIF image 
+	 * 2) Input data is a GIF image
 	 * 
 	 * Expected outcome is,
 	 * 
@@ -2185,7 +2186,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2225,7 +2226,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2265,7 +2266,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2304,7 +2305,7 @@ public class ThumbnailatorTest
 	}
 
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2344,7 +2345,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2384,7 +2385,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2423,7 +2424,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2463,7 +2464,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2503,7 +2504,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2542,7 +2543,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2582,7 +2583,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2622,7 +2623,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2662,7 +2663,7 @@ public class ThumbnailatorTest
 	}	
 
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2695,7 +2696,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
@@ -2714,7 +2715,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
-		File outputFile = new File("@\\#?/^%*&/|!!$:#"); 
+		File outputFile = new File("@\\#?/^%*&/|!!$:#");
 		
 		try
 		{
@@ -2728,12 +2729,12 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 	 * where,
 	 * 
 	 * 1) A problem occurs while writing to the file.
-	 *   
+	 *
 	 * Expected outcome is,
 	 * 
 	 * 1) Processing will stop with an IOException.
@@ -2748,7 +2749,7 @@ public class ThumbnailatorTest
 	}
 
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, int, int)}
 	 * where,
 	 * 
@@ -2768,7 +2769,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, int, int)}
 	 * where,
 	 * 
@@ -2794,7 +2795,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, int, int)}
 	 * where,
 	 * 
@@ -2820,7 +2821,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, int, int)}
 	 * where,
 	 * 
@@ -2847,7 +2848,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, int, int)}
 	 * where,
 	 * 
@@ -2875,7 +2876,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, int, int)}
 	 * where,
 	 * 
@@ -2903,7 +2904,7 @@ public class ThumbnailatorTest
 	}
 
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, int, int)}
 	 * where,
 	 * 
@@ -2931,7 +2932,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(File, int, int)}
 	 * where,
 	 * 
@@ -2959,7 +2960,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(BufferedImage, int, int)}
 	 * where,
 	 * 
@@ -2984,7 +2985,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(BufferedImage, int, int)}
 	 * where,
 	 * 
@@ -3009,7 +3010,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(BufferedImage, int, int)}
 	 * where,
 	 * 
@@ -3035,7 +3036,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(BufferedImage, int, int)}
 	 * where,
 	 * 
@@ -3052,7 +3053,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		BufferedImage img = 
+		BufferedImage img =
 			new BufferedImageBuilder(200, 200, BufferedImage.TYPE_INT_ARGB).build();
 		
 		BufferedImage thumbnail = Thumbnailator.createThumbnail(img, 50, 50);
@@ -3063,7 +3064,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(Image, int, int)}
 	 * where,
 	 * 
@@ -3088,7 +3089,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(Image, int, int)}
 	 * where,
 	 * 
@@ -3113,7 +3114,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(Image, int, int)}
 	 * where,
 	 * 
@@ -3139,7 +3140,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(Image, int, int)}
 	 * where,
 	 * 
@@ -3156,7 +3157,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		BufferedImage img = 
+		BufferedImage img =
 			new BufferedImageBuilder(200, 200, BufferedImage.TYPE_INT_ARGB).build();
 		
 		Image thumbnail = Thumbnailator.createThumbnail((Image)img, 50, 50);
@@ -3166,7 +3167,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(net.coobird.thumbnailator.tasks.ThumbnailTask)}
 	 * where,
 	 * 
@@ -3189,7 +3190,7 @@ public class ThumbnailatorTest
 		BufferedImageSink sink = new BufferedImageSink();
 		ResizerFactory resizerFactory = spy(DefaultResizerFactory.getInstance());
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 			new ThumbnailParameterBuilder()
 				.size(100, 100)
 				.resizerFactory(resizerFactory)
@@ -3209,7 +3210,7 @@ public class ThumbnailatorTest
 	}
 	
 	/**
-	 * Test for 
+	 * Test for
 	 * {@link Thumbnailator#createThumbnail(net.coobird.thumbnailator.tasks.ThumbnailTask)}
 	 * where,
 	 * 
@@ -3232,7 +3233,7 @@ public class ThumbnailatorTest
 		BufferedImageSink sink = new BufferedImageSink();
 		ResizerFactory resizerFactory = spy(DefaultResizerFactory.getInstance());
 		
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 			new ThumbnailParameterBuilder()
 				.scale(0.5)
 				.resizerFactory(resizerFactory)
@@ -3265,7 +3266,7 @@ public class ThumbnailatorTest
 		Thumbnailator.createThumbnails(Arrays.asList(f), rename, 50, 50);
 		
 		// then
-		ArgumentCaptor<ThumbnailParameter> ac = 
+		ArgumentCaptor<ThumbnailParameter> ac =
 			ArgumentCaptor.forClass(ThumbnailParameter.class);
 		
 		verify(rename).apply(eq(f.getName()), ac.capture());
@@ -3289,7 +3290,7 @@ public class ThumbnailatorTest
 		Thumbnailator.createThumbnailsAsCollection(Arrays.asList(f), rename, 50, 50);
 		
 		// then
-		ArgumentCaptor<ThumbnailParameter> ac = 
+		ArgumentCaptor<ThumbnailParameter> ac =
 			ArgumentCaptor.forClass(ThumbnailParameter.class);
 		
 		verify(rename).apply(eq(f.getName()), ac.capture());

@@ -27,17 +27,17 @@ import net.coobird.thumbnailator.util.ThumbnailatorUtils;
 public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 {
 	/**
-	 * The {@link OutputStream} to which the thumbnail image is to be 
+	 * The {@link OutputStream} to which the thumbnail image is to be
 	 * written to.
 	 */
 	private final OutputStream os;
 	
 	/**
-	 * Instantiates an {@link OutputStreamImageSink} with the 
+	 * Instantiates an {@link OutputStreamImageSink} with the
 	 * {@link OutputStream} to which the thumbnail should be written to.
 	 * 
 	 * @param os		The {@link OutputStream} to write the thumbnail to.
-	 * @throws NullPointerException		If the {@link OutputStream} is 
+	 * @throws NullPointerException		If the {@link OutputStream} is
 	 * 									{@code null}.
 	 */
 	public OutputStreamImageSink(OutputStream os)
@@ -57,7 +57,7 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 	 * 
 	 * @param img							The image to write.
 	 * @throws UnsupportedFormatException	When an unsupported format has been
-	 * 										specified by the 
+	 * 										specified by the
 	 * 										{@link #setOutputFormatName(String)}
 	 * 										method.
 	 * @throws IOException					When a problem occurs while writing
@@ -79,7 +79,7 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 		
 		String formatName = outputFormat;
 			
-		Iterator<ImageWriter> writers = 
+		Iterator<ImageWriter> writers =
 			ImageIO.getImageWritersByFormatName(formatName);
 		
 		if (!writers.hasNext())
@@ -102,7 +102,7 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 			 * 
 			 * Note:
 			 * The value to denote that the codec's default compression type
-			 * should be used is null. 
+			 * should be used is null.
 			 */
 			if (param.getOutputFormatType() != ThumbnailParameter.DEFAULT_FORMAT_TYPE)
 			{
@@ -110,7 +110,7 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 			}
 			else
 			{
-				List<String> supportedFormats = 
+				List<String> supportedFormats =
 					ThumbnailatorUtils.getSupportedOutputFormatTypes(formatName);
 				
 				if (!supportedFormats.isEmpty())
@@ -124,7 +124,7 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 			 * 
 			 * Note:
 			 * The value to denote that the codec's default compression quality
-			 * should be used is Float.NaN. 
+			 * should be used is Float.NaN.
 			 */
 			if (!Float.isNaN(param.getOutputQuality()))
 			{

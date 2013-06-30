@@ -21,12 +21,12 @@ public enum Dithering implements ResizerConfiguration
 	ENABLE(RenderingHints.VALUE_DITHER_ENABLE),
 	
 	/**
-	 * A hint used to disable dithering. 
+	 * A hint used to disable dithering.
 	 */
 	DISABLE(RenderingHints.VALUE_DITHER_DISABLE),
 	
 	/**
-	 * A hint to use the default dithering settings.  
+	 * A hint to use the default dithering settings.
 	 */
 	DEFAULT(RenderingHints.VALUE_DITHER_DEFAULT),
 	;

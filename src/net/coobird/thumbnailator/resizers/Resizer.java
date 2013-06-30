@@ -13,7 +13,7 @@ public interface Resizer
 	/**
 	 * Resizes an image.
 	 * <p>
-	 * The source image is resized to fit the dimensions of the destination 
+	 * The source image is resized to fit the dimensions of the destination
 	 * image and drawn.
 	 * 
 	 * @param srcImage		The source image.

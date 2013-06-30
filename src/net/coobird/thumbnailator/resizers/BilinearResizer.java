@@ -37,7 +37,7 @@ public class BilinearResizer extends AbstractResizer
 	 * Resizes an image using bilinear interpolation.
 	 * </p>
 	 * <p>
-	 * If the source and/or destination image is {@code null}, then a 
+	 * If the source and/or destination image is {@code null}, then a
 	 * {@link NullPointerException} will be thrown.
 	 * </p>
 	 * 
@@ -48,7 +48,7 @@ public class BilinearResizer extends AbstractResizer
 	 * 									image is {@code null}.
 	 */
 	@Override
-	public void resize(BufferedImage srcImage, BufferedImage destImage) 
+	public void resize(BufferedImage srcImage, BufferedImage destImage)
 			throws NullPointerException
 	{
 		super.resize(srcImage, destImage);

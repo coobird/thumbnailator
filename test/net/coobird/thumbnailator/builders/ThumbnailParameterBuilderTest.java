@@ -171,7 +171,7 @@ public class ThumbnailParameterBuilderTest
 	public void build_OnlyScaleTwoArg()
 	{
 		// given, when
-		ThumbnailParameter param = 
+		ThumbnailParameter param =
 			new ThumbnailParameterBuilder().scale(0.6, 0.4).build();
 		
 		// then

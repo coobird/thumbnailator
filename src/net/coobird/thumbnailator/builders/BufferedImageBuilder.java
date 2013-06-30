@@ -13,18 +13,18 @@ public final class BufferedImageBuilder
 {
 	/**
 	 * The default image type of the {@link BufferedImage}s to be created
-	 * by this builder. 
+	 * by this builder.
 	 */
 	private static final int DEFAULT_TYPE = BufferedImage.TYPE_INT_ARGB;
 	
 	/**
-	 * The image type to use for the {@link BufferedImage} that is to be 
-	 * created. 
+	 * The image type to use for the {@link BufferedImage} that is to be
+	 * created.
 	 */
 	private int imageType;
 	
 	/**
-	 * The width to use for the {@link BufferedImage} that is to be created. 
+	 * The width to use for the {@link BufferedImage} that is to be created.
 	 */
 	private int width;
 	
@@ -97,7 +97,7 @@ public final class BufferedImageBuilder
 	 * Sets the type of the image of the {@link BufferedImage}.
 	 * 
 	 * @param imageType		The image type to use.
-	 * @return				This {@link BufferedImageBuilder} instance. 
+	 * @return				This {@link BufferedImageBuilder} instance.
 	 */
 	public BufferedImageBuilder imageType(int imageType)
 	{
@@ -111,7 +111,7 @@ public final class BufferedImageBuilder
 	 * 
 	 * @param width			The width of the image to create.
 	 * @param height		The height of the image to create.
-	 * @return				This {@link BufferedImageBuilder} instance. 
+	 * @return				This {@link BufferedImageBuilder} instance.
 	 */
 	public BufferedImageBuilder size(int width, int height)
 	{
@@ -125,7 +125,7 @@ public final class BufferedImageBuilder
 	 * Sets the width for the {@link BufferedImage}.
 	 * 
 	 * @param width			The width of the image to create.
-	 * @return				This {@link BufferedImageBuilder} instance. 
+	 * @return				This {@link BufferedImageBuilder} instance.
 	 */
 	public BufferedImageBuilder width(int width)
 	{
@@ -145,7 +145,7 @@ public final class BufferedImageBuilder
 	 * Sets the height for the {@link BufferedImage}.
 	 * 
 	 * @param height		The height of the image to create.
-	 * @return				This {@link BufferedImageBuilder} instance. 
+	 * @return				This {@link BufferedImageBuilder} instance.
 	 */
 	public BufferedImageBuilder height(int height)
 	{

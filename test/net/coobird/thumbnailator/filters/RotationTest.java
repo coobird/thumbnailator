@@ -28,7 +28,7 @@ public class RotationTest
 	 * {@link Rotation#newRotator(double)} method.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_SpecifiedRotator() 
+	public void inputContentsAreNotAltered_SpecifiedRotator()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -48,7 +48,7 @@ public class RotationTest
 	 * the constants defined in the {@link Rotation} class.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_UsingConstantField() 
+	public void inputContentsAreNotAltered_UsingConstantField()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -73,7 +73,7 @@ public class RotationTest
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 0,
 						1, 1, 0,
@@ -92,7 +92,7 @@ public class RotationTest
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						0, 1, 1,
@@ -111,7 +111,7 @@ public class RotationTest
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						0, 0, 1,
 						1, 1, 1,
@@ -130,7 +130,7 @@ public class RotationTest
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 0,
 						1, 1, 0,
@@ -150,7 +150,7 @@ public class RotationTest
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						1, 1, 1,
 						0, 1, 1,
@@ -170,7 +170,7 @@ public class RotationTest
 		
 		// then
 		BufferedImageAssert.assertMatches(
-				result, 
+				result,
 				new float[] {
 						0, 0, 1,
 						1, 1, 1,

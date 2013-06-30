@@ -26,16 +26,16 @@ public class CaptionTest
 	 * Checks that the input image contents are not altered.
 	 */
 	@Test
-	public void inputContentsAreNotAltered() 
+	public void inputContentsAreNotAltered()
 	{
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		BufferedImage copyImage = BufferedImages.copy(originalImage);
 		
 		ImageFilter filter = new Caption(
-				"hello", 
-				new Font("Monospaced", Font.PLAIN, 14), 
-				Color.black, 
+				"hello",
+				new Font("Monospaced", Font.PLAIN, 14),
+				Color.black,
 				Positions.BOTTOM_CENTER, 0
 		);
 		

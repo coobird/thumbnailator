@@ -12,7 +12,7 @@ public class BufferedImageSinkTest
 	public void writeImage() throws IOException
 	{
 		// given
-		BufferedImage img = 
+		BufferedImage img =
 			new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
@@ -69,7 +69,7 @@ public class BufferedImageSinkTest
 		BufferedImageSink sink0 = new BufferedImageSink();
 		BufferedImageSink sink1 = new BufferedImageSink();
 		
-		BufferedImage img = 
+		BufferedImage img =
 			new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 		
 		// when

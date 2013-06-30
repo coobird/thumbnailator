@@ -22,7 +22,7 @@ public class URLImageSource extends AbstractImageSource<URL>
 	/**
 	 * The proxy to use to connect to the image URL.
 	 * <p>
-	 * If a proxy is not required, then this field will be {@code null}. 
+	 * If a proxy is not required, then this field will be {@code null}.
 	 */
 	private final Proxy proxy;
 

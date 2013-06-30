@@ -34,17 +34,17 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream>
 	private static final int FIRST_IMAGE_INDEX = 0;
 	
 	/**
-	 * The {@link InputStream} from which the source image is to be read. 
+	 * The {@link InputStream} from which the source image is to be read.
 	 */
 	private final InputStream is;
 	
 	/**
-	 * Instantiates an {@link InputStreamImageSource} with the 
+	 * Instantiates an {@link InputStreamImageSource} with the
 	 * {@link InputStream} which will be used to read the source image.
 	 * 
 	 * @param is		The {@link InputStream} which is to be used to obtain
 	 * 					the source image.
-	 * @throws NullPointerException		If the {@link InputStream} is 
+	 * @throws NullPointerException		If the {@link InputStream} is
 	 * 									{@code null}.
 	 */
 	public InputStreamImageSource(InputStream is)
@@ -86,7 +86,7 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream>
 			if (param.useExifOrientation())
 			{
 				Orientation orientation;
-				orientation = 
+				orientation =
 						ExifUtils.getExifOrientation(reader, FIRST_IMAGE_INDEX);
 				
 				// Skip this code block if there's no rotation needed.
@@ -116,11 +116,11 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream>
 			ImageReadParam irParam = reader.getDefaultReadParam();
 			irParam.setSourceRegion(sourceRegion);
 			
-			img = reader.read(FIRST_IMAGE_INDEX, irParam); 
+			img = reader.read(FIRST_IMAGE_INDEX, irParam);
 		}
 		else
 		{
-			img = reader.read(FIRST_IMAGE_INDEX); 
+			img = reader.read(FIRST_IMAGE_INDEX);
 		}
 
 		/*
