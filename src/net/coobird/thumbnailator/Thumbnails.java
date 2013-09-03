@@ -1505,7 +1505,9 @@ Thumbnails.of(image)
 		}
 		
 		/**
-		 * Sets the compression output quality of the thumbnail.
+		 * Sets the output quality of the compression algorithm used to
+		 * compress the thumbnail when it is written to an external destination
+		 * such as a file or output stream.
 		 * <p>
 		 * The value is a {@code float} between {@code 0.0f} and {@code 1.0f}
 		 * where {@code 0.0f} indicates the minimum quality and {@code 1.0f}
@@ -1513,6 +1515,10 @@ Thumbnails.of(image)
 		 * compression codec.
 		 * <p>
 		 * Calling this method to set this parameter is optional.
+		 * <p>
+		 * Calling this method in conjunction with {@link #asBufferedImage()}
+		 * or {@link #asBufferedImages()} will not result in any changes to the
+		 * final result.
 		 * <p>
 		 * Calling this method multiple times, or the
 		 * {@link #outputQuality(double)} in conjunction with this method will
@@ -1540,7 +1546,9 @@ Thumbnails.of(image)
 		}
 		
 		/**
-		 * Sets the compression output quality of the thumbnail.
+		 * Sets the output quality of the compression algorithm used to
+		 * compress the thumbnail when it is written to an external destination
+		 * such as a file or output stream.
 		 * <p>
 		 * The value is a {@code double} between {@code 0.0d} and {@code 1.0d}
 		 * where {@code 0.0d} indicates the minimum quality and {@code 1.0d}
@@ -1552,6 +1560,10 @@ Thumbnails.of(image)
 		 * {@code float}.
 		 * <p>
 		 * Calling this method to set this parameter is optional.
+		 * <p>
+		 * Calling this method in conjunction with {@link #asBufferedImage()}
+		 * or {@link #asBufferedImages()} will not result in any changes to the
+		 * final result.
 		 * <p>
 		 * Calling this method multiple times, or the
 		 * {@link #outputQuality(float)} in conjunction with this method will
@@ -1613,6 +1625,10 @@ Thumbnails.of(image)
 		 * method.)
 		 * <p>
 		 * Calling this method to set this parameter is optional.
+		 * <p>
+		 * Calling this method in conjunction with {@link #asBufferedImage()}
+		 * or {@link #asBufferedImages()} will not result in any changes to the
+		 * final result.
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
