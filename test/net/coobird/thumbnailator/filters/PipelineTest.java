@@ -1,14 +1,15 @@
 package net.coobird.thumbnailator.filters;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 
-import net.coobird.thumbnailator.filters.ImageFilter;
-import net.coobird.thumbnailator.filters.Pipeline;
-
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
 
 /**
  * Unit tests for the {@link Pipeline} class.
@@ -165,5 +166,261 @@ public class PipelineTest
 		// then
 		verify(filter1).apply(any(BufferedImage.class));
 		verify(filter2).apply(any(BufferedImage.class));
+	}
+	
+	@Test
+	public void filterOrderForTwo()
+	{
+		// given
+		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
+		final List<Integer> order = new ArrayList<Integer>();
+		
+		ImageFilter one = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(1);
+				return img;
+			}
+		};
+		
+		ImageFilter two = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(2);
+				return img;
+			}
+		};
+		
+		Pipeline pipeline = new Pipeline();
+		pipeline.add(one);
+		pipeline.add(two);
+		
+		// when
+		pipeline.apply(img);
+		
+		// then
+		assertEquals(Arrays.asList(1, 2), order);
+	}
+	
+	@Test
+	public void filterOrderForTwoWithAddFirstForFirst()
+	{
+		// given
+		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
+		final List<Integer> order = new ArrayList<Integer>();
+		
+		ImageFilter one = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(1);
+				return img;
+			}
+		};
+		
+		ImageFilter two = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(2);
+				return img;
+			}
+		};
+		
+		Pipeline pipeline = new Pipeline();
+		pipeline.addFirst(one);
+		pipeline.add(two);
+		
+		// when
+		pipeline.apply(img);
+		
+		// then
+		assertEquals(Arrays.asList(1, 2), order);
+	}
+	
+	@Test
+	public void filterOrderForTwoWithAddFirstForSecond()
+	{
+		// given
+		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
+		final List<Integer> order = new ArrayList<Integer>();
+		
+		ImageFilter one = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(1);
+				return img;
+			}
+		};
+		
+		ImageFilter two = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(2);
+				return img;
+			}
+		};
+		
+		Pipeline pipeline = new Pipeline();
+		pipeline.add(one);
+		pipeline.addFirst(two);
+		
+		// when
+		pipeline.apply(img);
+		
+		// then
+		assertEquals(Arrays.asList(2, 1), order);
+	}
+	
+	@Test
+	public void filterOrderForThree()
+	{
+		// given
+		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
+		final List<Integer> order = new ArrayList<Integer>();
+		
+		ImageFilter one = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(1);
+				return img;
+			}
+		};
+		
+		ImageFilter two = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(2);
+				return img;
+			}
+		};
+		
+		ImageFilter three = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(3);
+				return img;
+			}
+		};
+		
+		Pipeline pipeline = new Pipeline();
+		pipeline.add(one);
+		pipeline.add(two);
+		pipeline.add(three);
+		
+		// when
+		pipeline.apply(img);
+		
+		// then
+		assertEquals(Arrays.asList(1, 2, 3), order);
+	}
+	
+	@Test
+	public void filterOrderForThreeWithAddFirstForFirst()
+	{
+		// given
+		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
+		final List<Integer> order = new ArrayList<Integer>();
+		
+		ImageFilter one = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(1);
+				return img;
+			}
+		};
+		
+		ImageFilter two = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(2);
+				return img;
+			}
+		};
+		
+		ImageFilter three = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(3);
+				return img;
+			}
+		};
+		
+		Pipeline pipeline = new Pipeline();
+		pipeline.addFirst(one);
+		pipeline.add(two);
+		pipeline.add(three);
+		
+		// when
+		pipeline.apply(img);
+		
+		// then
+		assertEquals(Arrays.asList(1, 2, 3), order);
+	}
+	
+	@Test
+	public void filterOrderForThreeWithAddFirstForSecond()
+	{
+		// given
+		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
+		final List<Integer> order = new ArrayList<Integer>();
+		
+		ImageFilter one = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(1);
+				return img;
+			}
+		};
+		
+		ImageFilter two = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(2);
+				return img;
+			}
+		};
+		
+		ImageFilter three = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(3);
+				return img;
+			}
+		};
+		
+		Pipeline pipeline = new Pipeline();
+		pipeline.add(one);
+		pipeline.addFirst(two);
+		pipeline.add(three);
+		
+		// when
+		pipeline.apply(img);
+		
+		// then
+		assertEquals(Arrays.asList(2, 1, 3), order);
+	}
+	
+	@Test
+	public void filterOrderForThreeWithAddFirstForThird()
+	{
+		// given
+		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
+		final List<Integer> order = new ArrayList<Integer>();
+		
+		ImageFilter one = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(1);
+				return img;
+			}
+		};
+		
+		ImageFilter two = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(2);
+				return img;
+			}
+		};
+		
+		ImageFilter three = new ImageFilter() {
+			public BufferedImage apply(BufferedImage img) {
+				order.add(3);
+				return img;
+			}
+		};
+		
+		Pipeline pipeline = new Pipeline();
+		pipeline.add(one);
+		pipeline.add(two);
+		pipeline.addFirst(three);
+		
+		// when
+		pipeline.apply(img);
+		
+		// then
+		assertEquals(Arrays.asList(3, 1, 2), order);
 	}
 }
