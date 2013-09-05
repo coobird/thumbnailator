@@ -80,6 +80,19 @@ public final class Pipeline implements ImageFilter
 	}
 	
 	/**
+	 * Adds an {@code ImageFilter} to the beginning of the pipeline.
+	 */
+	public void addFirst(ImageFilter filter)
+	{
+		if (filter == null)
+		{
+			throw new NullPointerException("An image filter must not be null.");
+		}
+		
+		filtersToApply.add(0, filter);
+	}
+	
+	/**
 	 * Adds a {@code List} of {@code ImageFilter}s to the pipeline.
 	 * 
 	 * @param filters			A list of filters to add to the pipeline.
