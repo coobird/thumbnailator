@@ -423,4 +423,106 @@ public class PipelineTest
 		// then
 		assertEquals(Arrays.asList(3, 1, 2), order);
 	}
+	
+	@Test
+	public void getFiltersWhereFiltersGivenByListConstructor()
+	{
+		// given
+		ImageFilter filter1 = mock(ImageFilter.class);
+		ImageFilter filter2 = mock(ImageFilter.class);
+
+		List<ImageFilter> filters = new ArrayList<ImageFilter>();
+		filters.add(filter1);
+		filters.add(filter2);
+		
+		Pipeline pipeline = new Pipeline(filters);
+		
+		// when
+		List<ImageFilter> returned = pipeline.getFilters();
+		
+		// then
+		assertEquals(filters, returned);
+	}
+	
+	@Test
+	public void getFiltersWhereFiltersGivenByVarargsConstructor()
+	{
+		// given
+		ImageFilter filter1 = mock(ImageFilter.class);
+		ImageFilter filter2 = mock(ImageFilter.class);
+		
+		Pipeline pipeline = new Pipeline(filter1, filter2);
+		
+		// when
+		List<ImageFilter> returned = pipeline.getFilters();
+		
+		// then
+		assertEquals(Arrays.asList(filter1, filter2), returned);
+	}
+	
+	@Test
+	public void getFiltersWhereFiltersGivenByNoArgsConstructor()
+	{
+		// given
+		Pipeline pipeline = new Pipeline();
+		
+		// when
+		List<ImageFilter> returned = pipeline.getFilters();
+		
+		// then
+		assertEquals(Arrays.asList(), returned);
+	}
+	
+	@Test
+	public void getFiltersWhereFiltersAddedByAdd()
+	{
+		// given
+		ImageFilter filter1 = mock(ImageFilter.class);
+		ImageFilter filter2 = mock(ImageFilter.class);
+		
+		Pipeline pipeline = new Pipeline();
+		pipeline.add(filter1);
+		pipeline.add(filter2);
+		
+		// when
+		List<ImageFilter> returned = pipeline.getFilters();
+		
+		// then
+		assertEquals(Arrays.asList(filter1, filter2), returned);
+	}
+	
+	@Test
+	public void getFiltersWhereFiltersAddedByAddAll()
+	{
+		// given
+		ImageFilter filter1 = mock(ImageFilter.class);
+		ImageFilter filter2 = mock(ImageFilter.class);
+		
+		Pipeline pipeline = new Pipeline();
+		pipeline.addAll(Arrays.asList(filter1, filter2));
+		
+		// when
+		List<ImageFilter> returned = pipeline.getFilters();
+		
+		// then
+		assertEquals(Arrays.asList(filter1, filter2), returned);
+	}
+	
+	@Test
+	public void getFiltersWhereFiltersAddedByAddFirst()
+	{
+		// given
+		ImageFilter filter1 = mock(ImageFilter.class);
+		ImageFilter filter2 = mock(ImageFilter.class);
+		
+		Pipeline pipeline = new Pipeline();
+		pipeline.add(filter1);
+		pipeline.addFirst(filter2);
+		
+		// when
+		List<ImageFilter> returned = pipeline.getFilters();
+		
+		// then
+		assertEquals(Arrays.asList(filter2, filter1), returned);
+	}
 }

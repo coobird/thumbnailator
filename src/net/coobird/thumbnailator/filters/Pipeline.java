@@ -23,8 +23,14 @@ public final class Pipeline implements ImageFilter
 	private final List<ImageFilter> filtersToApply;
 	
 	/**
-	 * An unmodifiable list of image filters to apply. Used by the
-	 * {@link #getFilters()} method.
+	 * An unmodifiable list of image filters to apply.
+	 * Used by the {@link #getFilters()} method.
+	 * 
+	 * This object is created by Collections.unmodifiableList which provides
+	 * an unmodifiable view of the original list.
+	 * 
+	 * Therefore, any changes to the original list will also be "visible" from
+	 * this list as well.
 	 */
 	private final List<ImageFilter> unmodifiableFiltersToApply;
 	
