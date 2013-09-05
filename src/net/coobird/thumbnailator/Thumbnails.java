@@ -2067,7 +2067,7 @@ watermark(Positions.CENTER, image, opacity);
 			 */
 			if (croppingPosition != null)
 			{
-				filterPipeline.add(new Canvas(width, height, croppingPosition));
+				filterPipeline.addFirst(new Canvas(width, height, croppingPosition));
 			}
 			
 			if (Double.isNaN(scaleWidth))
