@@ -123,7 +123,11 @@ public class FileImageSource extends AbstractImageSource<File>
 				if (orientation != null && orientation != Orientation.TOP_LEFT)
 				{
 					List<ImageFilter> filters = param.getImageFilters();
-					filters.add(ExifFilterUtils.getFilterForOrientation(orientation));
+
+					// EXIF orientation filter is added to the beginning, as
+					// it should be performed early to prevent mis-orientation
+					// in later filters.
+					filters.add(0, ExifFilterUtils.getFilterForOrientation(orientation));
 				}
 			}
 		}
