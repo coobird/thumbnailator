@@ -10,7 +10,9 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -4171,7 +4173,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation1() throws IOException
+	public void watermarkExifOrientation1File() throws IOException
 	{
 		// given
 		String imgPath = "test-resources/Exif/source_1.jpg";
@@ -4193,7 +4195,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation2() throws IOException
+	public void watermarkExifOrientation2File() throws IOException
 	{
 		// given
 		String imgPath = "test-resources/Exif/source_2.jpg";
@@ -4215,7 +4217,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation3() throws IOException
+	public void watermarkExifOrientation3File() throws IOException
 	{
 		// given
 		String imgPath = "test-resources/Exif/source_3.jpg";
@@ -4237,7 +4239,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation4() throws IOException
+	public void watermarkExifOrientation4File() throws IOException
 	{
 		// given
 		String imgPath = "test-resources/Exif/source_4.jpg";
@@ -4259,7 +4261,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation5() throws IOException
+	public void watermarkExifOrientation5File() throws IOException
 	{
 		// given
 		String imgPath = "test-resources/Exif/source_5.jpg";
@@ -4281,7 +4283,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation6() throws IOException
+	public void watermarkExifOrientation6File() throws IOException
 	{
 		// given
 		String imgPath = "test-resources/Exif/source_6.jpg";
@@ -4303,7 +4305,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation7() throws IOException
+	public void watermarkExifOrientation7File() throws IOException
 	{
 		// given
 		String imgPath = "test-resources/Exif/source_7.jpg";
@@ -4325,7 +4327,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation8() throws IOException
+	public void watermarkExifOrientation8File() throws IOException
 	{
 		// given
 		String imgPath = "test-resources/Exif/source_8.jpg";
@@ -4338,6 +4340,182 @@ public class ThumbnailsBuilderTest
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation1InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_1.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation2InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_2.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation3InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_3.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation4InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_4.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation5InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_5.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation6InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_6.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation7InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_7.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation8InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_8.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
 				.size(100, 100)
 				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
 				.asBufferedImage();
