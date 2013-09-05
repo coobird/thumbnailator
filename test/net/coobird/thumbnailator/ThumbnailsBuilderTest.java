@@ -1,13 +1,12 @@
 package net.coobird.thumbnailator;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -4169,5 +4168,181 @@ public class ThumbnailsBuilderTest
 		{
 			// then
 		}
+	}
+	
+	@Test
+	public void watermarkExifOrientation1() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_1.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation2() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_2.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation3() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_3.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation4() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_4.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation5() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_5.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation6() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_6.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation7() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_7.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation8() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_8.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
 	}
 }
