@@ -429,6 +429,18 @@ public class ThumbnailatorTest
 				new File("test-resources/Thumbnailator/grid.gif")
 		);
 		
+		// This will force a UnsupportedFormatException when trying to output
+		// a thumbnail whose source was a gif file.
+		Rename brokenRenamer = new Rename() {
+			@Override
+			public String apply(String name, ThumbnailParameter param) {
+				if (name.endsWith(".gif")) {
+					return "thumbnail." + name + ".foobar";
+				}
+				return "thumbnail." + name;
+			}
+		};
+		
 		/*
 		 * Used to perform clean up.
 		 */
@@ -436,14 +448,14 @@ public class ThumbnailatorTest
 		{
 			String fileName = f.getName();
 			String newFileName =
-				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
+				brokenRenamer.apply(fileName, null);
 			
 			new File(f.getParent(), newFileName).deleteOnExit();
 		}
 		
 		Thumbnailator.createThumbnailsAsCollection(
 				files,
-				Rename.PREFIX_DOT_THUMBNAIL,
+				brokenRenamer,
 				50,
 				50
 		);
@@ -900,6 +912,18 @@ public class ThumbnailatorTest
 				new File("test-resources/Thumbnailator/grid.gif")
 		);
 		
+		// This will force a UnsupportedFormatException when trying to output
+		// a thumbnail whose source was a gif file.
+		Rename brokenRenamer = new Rename() {
+			@Override
+			public String apply(String name, ThumbnailParameter param) {
+				if (name.endsWith(".gif")) {
+					return "thumbnail." + name + ".foobar";
+				}
+				return "thumbnail." + name;
+			}
+		};
+		
 		/*
 		 * Used to perform clean up.
 		 */
@@ -907,14 +931,14 @@ public class ThumbnailatorTest
 		{
 			String fileName = f.getName();
 			String newFileName =
-				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
+				brokenRenamer.apply(fileName, null);
 			
 			new File(f.getParent(), newFileName).deleteOnExit();
 		}
 		
 		Thumbnailator.createThumbnails(
 				files,
-				Rename.PREFIX_DOT_THUMBNAIL,
+				brokenRenamer,
 				50,
 				50
 		);
