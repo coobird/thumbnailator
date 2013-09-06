@@ -1206,7 +1206,9 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[40054];
-		new FileInputStream("test-resources/Thumbnailator/grid.bmp").read(bytes);
+		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.bmp");
+		fis.read(bytes);
+		fis.close();
 		
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -1246,7 +1248,9 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[492];
-		new FileInputStream("test-resources/Thumbnailator/grid.gif").read(bytes);
+		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.gif");
+		fis.read(bytes);
+		fis.close();
 		
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -1360,7 +1364,9 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[4602];
-		new FileInputStream("test-resources/Thumbnailator/grid.jpg").read(bytes);
+		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.jpg");
+		fis.read(bytes);
+		fis.close();
 		
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -1407,7 +1413,9 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[4602];
-		new FileInputStream("test-resources/Thumbnailator/grid.jpg").read(bytes);
+		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.jpg");
+		fis.read(bytes);
+		fis.close();
 		
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -1456,7 +1464,9 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[4602];
-		new FileInputStream("test-resources/Thumbnailator/grid.jpg").read(bytes);
+		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.jpg");
+		fis.read(bytes);
+		fis.close();
 		
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -1507,7 +1517,9 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[287];
-		new FileInputStream("test-resources/Thumbnailator/grid.png").read(bytes);
+		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		fis.read(bytes);
+		fis.close();
 
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -1554,7 +1566,9 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[287];
-		new FileInputStream("test-resources/Thumbnailator/grid.png").read(bytes);
+		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		fis.read(bytes);
+		fis.close();
 
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -1603,7 +1617,9 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[287];
-		new FileInputStream("test-resources/Thumbnailator/grid.png").read(bytes);
+		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		fis.read(bytes);
+		fis.close();
 		
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -1654,7 +1670,9 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[40054];
-		new FileInputStream("test-resources/Thumbnailator/grid.bmp").read(bytes);
+		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.bmp");
+		fis.read(bytes);
+		fis.close();
 		
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -1701,7 +1719,9 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[40054];
-		new FileInputStream("test-resources/Thumbnailator/grid.bmp").read(bytes);
+		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.bmp");
+		fis.read(bytes);
+		fis.close();
 		
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -1750,7 +1770,9 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[40054];
-		new FileInputStream("test-resources/Thumbnailator/grid.bmp").read(bytes);
+		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.bmp");
+		fis.read(bytes);
+		fis.close();
 		
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -1801,7 +1823,9 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[492];
-		new FileInputStream("test-resources/Thumbnailator/grid.gif").read(bytes);
+		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.gif");
+		fis.read(bytes);
+		fis.close();
 		
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -1848,7 +1872,9 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[492];
-		new FileInputStream("test-resources/Thumbnailator/grid.gif").read(bytes);
+		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.gif");
+		fis.read(bytes);
+		fis.close();
 		
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -1895,7 +1921,9 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[492];
-		new FileInputStream("test-resources/Thumbnailator/grid.gif").read(bytes);
+		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.gif");
+		fis.read(bytes);
+		fis.close();
 		
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
