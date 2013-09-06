@@ -1258,12 +1258,31 @@ public class ThumbnailatorTest
 		try
 		{
 			Thumbnailator.createThumbnail(is, os, 50, 50);
+			
 			// This case should pass on Java 6 and later, as those JREs have a
 			// GIF writer.
 			if (System.getProperty("java.version").startsWith("1.5"))
 			{
 				fail();
 			}
+			
+			/*
+			 * Post-test checks
+			 */
+			InputStream thumbIs = new ByteArrayInputStream(os.toByteArray());
+			BufferedImage img = ImageIO.read(thumbIs);
+			thumbIs.close();
+			
+			assertEquals(
+					"gif",
+					ImageIO.getImageReaders(
+							ImageIO.createImageInputStream(
+									new ByteArrayInputStream(os.toByteArray()))
+					).next().getFormatName()
+			);
+			assertEquals(50, img.getWidth());
+			assertEquals(50, img.getHeight());
+			
 		}
 		catch (UnsupportedFormatException e)
 		{
@@ -1481,6 +1500,24 @@ public class ThumbnailatorTest
 			{
 				fail();
 			}
+			
+			/*
+			 * Post-test checks
+			 */
+			InputStream thumbIs = new ByteArrayInputStream(os.toByteArray());
+			BufferedImage img = ImageIO.read(thumbIs);
+			thumbIs.close();
+			
+			assertEquals(
+					"gif",
+					ImageIO.getImageReaders(
+							ImageIO.createImageInputStream(
+									new ByteArrayInputStream(os.toByteArray()))
+					).next().getFormatName()
+			);
+			assertEquals(50, img.getWidth());
+			assertEquals(50, img.getHeight());
+			
 		}
 		catch (IllegalArgumentException e)
 		{
@@ -1634,6 +1671,24 @@ public class ThumbnailatorTest
 			{
 				fail();
 			}
+			
+			/*
+			 * Post-test checks
+			 */
+			InputStream thumbIs = new ByteArrayInputStream(os.toByteArray());
+			BufferedImage img = ImageIO.read(thumbIs);
+			thumbIs.close();
+			
+			assertEquals(
+					"gif",
+					ImageIO.getImageReaders(
+							ImageIO.createImageInputStream(
+									new ByteArrayInputStream(os.toByteArray()))
+					).next().getFormatName()
+			);
+			assertEquals(50, img.getWidth());
+			assertEquals(50, img.getHeight());
+			
 		}
 		catch (IllegalArgumentException e)
 		{
@@ -1787,6 +1842,24 @@ public class ThumbnailatorTest
 			{
 				fail();
 			}
+			
+			/*
+			 * Post-test checks
+			 */
+			InputStream thumbIs = new ByteArrayInputStream(os.toByteArray());
+			BufferedImage img = ImageIO.read(thumbIs);
+			thumbIs.close();
+			
+			assertEquals(
+					"gif",
+					ImageIO.getImageReaders(
+							ImageIO.createImageInputStream(
+									new ByteArrayInputStream(os.toByteArray()))
+					).next().getFormatName()
+			);
+			assertEquals(50, img.getWidth());
+			assertEquals(50, img.getHeight());
+			
 		}
 		catch (IllegalArgumentException e)
 		{
@@ -2298,6 +2371,21 @@ public class ThumbnailatorTest
 			{
 				fail();
 			}
+			
+			/*
+			 * Post-test checks
+			 */
+			BufferedImage img = ImageIO.read(outputFile);
+			
+			assertEquals(
+					"gif",
+					ImageIO.getImageReaders(
+							ImageIO.createImageInputStream(outputFile)
+					).next().getFormatName()
+			);
+			assertEquals(50, img.getWidth());
+			assertEquals(50, img.getHeight());
+			
 		}
 		catch (UnsupportedFormatException e)
 		{
@@ -2429,6 +2517,21 @@ public class ThumbnailatorTest
 			{
 				fail();
 			}
+			
+			/*
+			 * Post-test checks
+			 */
+			BufferedImage img = ImageIO.read(outputFile);
+			
+			assertEquals(
+					"gif",
+					ImageIO.getImageReaders(
+							ImageIO.createImageInputStream(outputFile)
+					).next().getFormatName()
+			);
+			assertEquals(50, img.getWidth());
+			assertEquals(50, img.getHeight());
+			
 		}
 		catch (UnsupportedFormatException e)
 		{
@@ -2560,6 +2663,21 @@ public class ThumbnailatorTest
 			{
 				fail();
 			}
+			
+			/*
+			 * Post-test checks
+			 */
+			BufferedImage img = ImageIO.read(outputFile);
+			
+			assertEquals(
+					"gif",
+					ImageIO.getImageReaders(
+							ImageIO.createImageInputStream(outputFile)
+					).next().getFormatName()
+			);
+			assertEquals(50, img.getWidth());
+			assertEquals(50, img.getHeight());
+			
 		}
 		catch (UnsupportedFormatException e)
 		{
@@ -2691,6 +2809,21 @@ public class ThumbnailatorTest
 			{
 				fail();
 			}
+			
+			/*
+			 * Post-test checks
+			 */
+			BufferedImage img = ImageIO.read(outputFile);
+			
+			assertEquals(
+					"gif",
+					ImageIO.getImageReaders(
+							ImageIO.createImageInputStream(outputFile)
+					).next().getFormatName()
+			);
+			assertEquals(50, img.getWidth());
+			assertEquals(50, img.getHeight());
+			
 		}
 		catch (UnsupportedFormatException e)
 		{
