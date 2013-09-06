@@ -433,10 +433,13 @@ public class ThumbnailatorTest
 		// a thumbnail whose source was a gif file.
 		Rename brokenRenamer = new Rename() {
 			@Override
-			public String apply(String name, ThumbnailParameter param) {
-				if (name.endsWith(".gif")) {
+			public String apply(String name, ThumbnailParameter param)
+			{
+				if (name.endsWith(".gif"))
+				{
 					return "thumbnail." + name + ".foobar";
 				}
+				
 				return "thumbnail." + name;
 			}
 		};
@@ -916,10 +919,13 @@ public class ThumbnailatorTest
 		// a thumbnail whose source was a gif file.
 		Rename brokenRenamer = new Rename() {
 			@Override
-			public String apply(String name, ThumbnailParameter param) {
-				if (name.endsWith(".gif")) {
+			public String apply(String name, ThumbnailParameter param)
+			{
+				if (name.endsWith(".gif"))
+				{
 					return "thumbnail." + name + ".foobar";
 				}
+				
 				return "thumbnail." + name;
 			}
 		};
