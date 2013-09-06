@@ -7,9 +7,9 @@
 	<property name="build" location="build-tmp" />
 	<property name="dist"  location="distribution" />
 	<property name="resources" location="resources" />
-	<property name="javadoc_dir" value="javadoc" />
-	<property name="classes" location="bin" />
-	<property name="tests" location="test" />
+	<property name="javadoc-dir" value="javadoc" />
+	<property name="test-src" location="test" />
+	<property name="test-build" location="test-tmp" />
 
 	<!-- Maven properties -->
 	<property name="groupId" value="net.coobird" />
@@ -36,7 +36,7 @@
 		<!-- Generate the javadocs, place into /javadoc directory -->
 
 		<javadoc 
-			destdir="${javadoc_dir}"
+			destdir="${javadoc-dir}"
 			sourcepath="${src}"
 			author="true"
 			version="true"
@@ -58,25 +58,43 @@
 		<!-- Create the build directory structure used by compile -->
 		<mkdir dir="${build}"/>
 		
-		<!-- Compile the java code from ${src} into ${build} -->
+		<!-- Compile the source code into the build directory -->
 		<javac
 			srcdir="${src}"
 			destdir="${build}"
 			source="1.5"
-			target="1.5" />
-		
+			target="1.5" >
+			<exclude name="**/package-info.java" />
+		</javac>
 	</target>
 	
 	<target
 		name="test"
+		depends="compile"
 		description="Runs unit tests">
+
+		<!-- Create the build directory structure used by test -->
+		<mkdir dir="${test-build}"/>
+
+		<!-- Compile the test code into the test build directory -->
+		<javac
+			srcdir="${test-src}"
+			destdir="${test-build}"
+			source="1.5"
+			target="1.5" 
+			nowarn="true" >
+			<classpath path="${build}" />
+			<classpath path="lib/junit-4.10.jar" />
+			<classpath path="lib/mockito-all-1.8.5.jar" />
+		</javac>
 	
 		<junit haltonfailure="yes" printsummary="yes" reloading="no">
-			<classpath path="${classes}" />
+			<classpath path="${build}" />
+			<classpath path="${test-build}" />
 			<classpath path="lib/junit-4.10.jar" />
 			<classpath path="lib/mockito-all-1.8.5.jar" />
 			<batchtest>
-				<fileset dir="${tests}">
+				<fileset dir="${test-src}">
 					<include name="**/*.java" />
 					<exclude name="**/test/**/*.java" />
 					<exclude name="**/TestUtils.java" />
@@ -130,12 +148,12 @@
 		
 		<!-- Javadoc ZIP file for Google Project Hosting -->
 		<zip destfile="${dist}/lib/${artifactId}-${version}-javadoc.zip">
-			<fileset dir="${javadoc_dir}" />
+			<fileset dir="${javadoc-dir}" />
 		</zip>
 		
 		<!-- Javadoc JAR for the Maven Central Repo -->
 		<jar jarfile="${maven-javadoc-jar}">
-			<fileset dir="${javadoc_dir}" />
+			<fileset dir="${javadoc-dir}" />
 		</jar>
 
 		<!-- Sources JAR for the Maven Central Repo -->
@@ -234,6 +252,7 @@
 		
 		<!-- Delete the ${build} directory tree -->
 		<delete dir="${build}"/>
+		<delete dir="${test-build}"/>
 		<delete dir="${dist}"/>
 	</target>
 </project>
