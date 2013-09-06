@@ -1229,10 +1229,11 @@ public class ThumbnailatorTest
 	 * Expected outcome is,
 	 * 
 	 * 1) Processing will stop with an IOException.
+	 *    On Java 6 and later, this should pass, as it contains a GIF writer.
 	 * 
-	 * @throws UnsupportedFormatException
+	 * @throws IOException
 	 */	
-	@Test(expected=UnsupportedFormatException.class)
+	@Test
 	public void testCreateThumbnail_IOII_Gif() throws IOException
 	{
 		/*
@@ -1247,13 +1248,23 @@ public class ThumbnailatorTest
 		try
 		{
 			Thumbnailator.createThumbnail(is, os, 50, 50);
-			fail();
+			// This case should pass on Java 6 and later, as those JREs have a
+			// GIF writer.
+			if (System.getProperty("java.version").startsWith("1.5"))
+			{
+				fail();
+			}
 		}
 		catch (UnsupportedFormatException e)
 		{
+			// This case should pass on Java 6 and later.
+			if (!System.getProperty("java.version").startsWith("1.5"))
+			{
+				fail();
+			}
+			
 			assertEquals("No suitable ImageWriter found for gif.", e.getMessage());
 			assertEquals("gif", e.getFormatName());
-			throw e;
 		}
 	}
 	
@@ -1342,7 +1353,9 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		byte[] bytes = makeImageData("jpg", 200, 200);
+		byte[] bytes = new byte[4602];
+		new FileInputStream("test-resources/Thumbnailator/grid.jpg").read(bytes);
+		
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
@@ -1387,7 +1400,9 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		byte[] bytes = makeImageData("jpg", 200, 200);
+		byte[] bytes = new byte[4602];
+		new FileInputStream("test-resources/Thumbnailator/grid.jpg").read(bytes);
+		
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
@@ -1424,31 +1439,44 @@ public class ThumbnailatorTest
 	 * 
 	 * 1) Processing will fail with an IllegalArgumentException due to not
 	 *    being able to write to a GIF.
+	 *    On Java 6 and later, this should pass, as it contains a GIF writer.
 	 * 
 	 * @throws IOException
 	 */
-	@Test(expected=IllegalArgumentException.class)
+	@Test
 	public void testCreateThumbnail_IOSII_Transcoding_Jpeg_Gif() throws IOException
 	{
 		/*
 		 * Actual test
 		 */
-		byte[] bytes = makeImageData("jpg", 200, 200);
+		byte[] bytes = new byte[4602];
+		new FileInputStream("test-resources/Thumbnailator/grid.jpg").read(bytes);
+		
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
 		try
 		{
 			Thumbnailator.createThumbnail(is, os, "gif", 50, 50);
-			fail();
+			
+			// This case should pass on Java 6 and later, as those JREs have a
+			// GIF writer.
+			if (System.getProperty("java.version").startsWith("1.5"))
+			{
+				fail();
+			}
 		}
 		catch (IllegalArgumentException e)
 		{
+			// This case should pass on Java 6 and later.
+			if (!System.getProperty("java.version").startsWith("1.5"))
+			{
+				fail();
+			}
+			
 			assertTrue(e.getMessage().contains("gif"));
-			throw e;
 		}		
 	}
-	
 
 	/**
 	 * Test for
@@ -1472,7 +1500,9 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		byte[] bytes = makeImageData("png", 200, 200);
+		byte[] bytes = new byte[287];
+		new FileInputStream("test-resources/Thumbnailator/grid.png").read(bytes);
+
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
@@ -1517,7 +1547,9 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		byte[] bytes = makeImageData("png", 200, 200);
+		byte[] bytes = new byte[287];
+		new FileInputStream("test-resources/Thumbnailator/grid.png").read(bytes);
+
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
@@ -1554,29 +1586,42 @@ public class ThumbnailatorTest
 	 * 
 	 * 1) Processing will fail with an IllegalArgumentException due to not
 	 *    being able to write to a GIF.
+	 *    On Java 6 and later, this should pass, as it contains a GIF writer.
 	 * 
 	 * @throws IOException
 	 */
-	@Test(expected=IllegalArgumentException.class)
+	@Test
 	public void testCreateThumbnail_IOSII_Transcoding_Png_Gif() throws IOException
 	{
 		/*
 		 * Actual test
 		 */
-		byte[] bytes = makeImageData("png", 200, 200);
+		byte[] bytes = new byte[287];
+		new FileInputStream("test-resources/Thumbnailator/grid.png").read(bytes);
+		
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		
 		
 		try
 		{
 			Thumbnailator.createThumbnail(is, os, "gif", 50, 50);
-			fail();
+			
+			// This case should pass on Java 6 and later, as those JREs have a
+			// GIF writer.
+			if (System.getProperty("java.version").startsWith("1.5"))
+			{
+				fail();
+			}
 		}
 		catch (IllegalArgumentException e)
 		{
+			// This case should pass on Java 6 and later.
+			if (!System.getProperty("java.version").startsWith("1.5"))
+			{
+				fail();
+			}
+			
 			assertTrue(e.getMessage().contains("gif"));
-			throw e;
 		}
 	}
 
@@ -1688,10 +1733,11 @@ public class ThumbnailatorTest
 	 * 
 	 * 1) Processing will fail with an IllegalArgumentException due to not
 	 *    being able to write to a GIF.
+	 *    On Java 6 and later, this should pass, as it contains a GIF writer.
 	 * 
 	 * @throws IOException
 	 */
-	@Test(expected=IllegalArgumentException.class)
+	@Test
 	public void testCreateThumbnail_IOSII_Transcoding_Bmp_Gif() throws IOException
 	{
 		/*
@@ -1706,12 +1752,23 @@ public class ThumbnailatorTest
 		try
 		{
 			Thumbnailator.createThumbnail(is, os, "gif", 50, 50);
-			fail();
+			
+			// This case should pass on Java 6 and later, as those JREs have a
+			// GIF writer.
+			if (System.getProperty("java.version").startsWith("1.5"))
+			{
+				fail();
+			}
 		}
 		catch (IllegalArgumentException e)
 		{
+			// This case should pass on Java 6 and later.
+			if (!System.getProperty("java.version").startsWith("1.5"))
+			{
+				fail();
+			}
+			
 			assertTrue(e.getMessage().contains("gif"));
-			throw e;
 		}
 	}
 	
@@ -2183,10 +2240,11 @@ public class ThumbnailatorTest
 	 * Expected outcome is,
 	 * 
 	 * 1) Processing will stop with an IOException.
+	 *    On Java 6 and later, this should pass, as it contains a GIF writer.
 	 * 
 	 * @throws IOException
 	 */	
-	@Test(expected=UnsupportedFormatException.class)
+	@Test
 	public void testCreateThumbnail_FFII_Gif() throws IOException
 	{
 		/*
@@ -2199,13 +2257,24 @@ public class ThumbnailatorTest
 		try
 		{
 			Thumbnailator.createThumbnail(inputFile, outputFile, 50, 50);
-			fail();
+			
+			// This case should pass on Java 6 and later, as those JREs have a
+			// GIF writer.
+			if (System.getProperty("java.version").startsWith("1.5"))
+			{
+				fail();
+			}
 		}
 		catch (UnsupportedFormatException e)
 		{
+			// This case should pass on Java 6 and later.
+			if (!System.getProperty("java.version").startsWith("1.5"))
+			{
+				fail();
+			}
+			
 			assertEquals("No suitable ImageWriter found for gif.", e.getMessage());
 			assertEquals("gif", e.getFormatName());
-			throw e;
 		}
 	}
 	
@@ -2302,10 +2371,11 @@ public class ThumbnailatorTest
 	 * Expected outcome is,
 	 * 
 	 * 1) Processing will stop with an IOException.
+	 *    On Java 6 and later, this should pass, as it contains a GIF writer.
 	 * 
 	 * @throws IOException
 	 */
-	@Test(expected=UnsupportedFormatException.class)
+	@Test
 	public void testCreateThumbnail_FFII_Transcoding_Jpeg_Gif() throws IOException
 	{
 		/*
@@ -2318,13 +2388,24 @@ public class ThumbnailatorTest
 		try
 		{
 			Thumbnailator.createThumbnail(inputFile, outputFile, 50, 50);
-			fail();
+			
+			// This case should pass on Java 6 and later, as those JREs have a
+			// GIF writer.
+			if (System.getProperty("java.version").startsWith("1.5"))
+			{
+				fail();
+			}
 		}
 		catch (UnsupportedFormatException e)
 		{
+			// This case should pass on Java 6 and later.
+			if (!System.getProperty("java.version").startsWith("1.5"))
+			{
+				fail();
+			}
+			
 			assertEquals("No suitable ImageWriter found for gif.", e.getMessage());
 			assertEquals("gif", e.getFormatName());
-			throw e;
 		}
 	}
 
@@ -2421,10 +2502,11 @@ public class ThumbnailatorTest
 	 * Expected outcome is,
 	 * 
 	 * 1) Processing will stop with an IOException.
+	 *    On Java 6 and later, this should pass, as it contains a GIF writer.
 	 * 
 	 * @throws IOException
 	 */
-	@Test(expected=UnsupportedFormatException.class)
+	@Test
 	public void testCreateThumbnail_FFII_Transcoding_Png_Gif() throws IOException
 	{
 		/*
@@ -2437,13 +2519,24 @@ public class ThumbnailatorTest
 		try
 		{
 			Thumbnailator.createThumbnail(inputFile, outputFile, 50, 50);
-			fail();
+			
+			// This case should pass on Java 6 and later, as those JREs have a
+			// GIF writer.
+			if (System.getProperty("java.version").startsWith("1.5"))
+			{
+				fail();
+			}
 		}
 		catch (UnsupportedFormatException e)
 		{
+			// This case should pass on Java 6 and later.
+			if (!System.getProperty("java.version").startsWith("1.5"))
+			{
+				fail();
+			}
+			
 			assertEquals("No suitable ImageWriter found for gif.", e.getMessage());
 			assertEquals("gif", e.getFormatName());
-			throw e;
 		}
 	}
 	
@@ -2540,10 +2633,11 @@ public class ThumbnailatorTest
 	 * Expected outcome is,
 	 * 
 	 * 1) Processing will stop with an IOException.
+	 *    On Java 6 and later, this should pass, as it contains a GIF writer.
 	 * 
 	 * @throws IOException
 	 */
-	@Test(expected=UnsupportedFormatException.class)
+	@Test
 	public void testCreateThumbnail_FFII_Transcoding_Bmp_Gif() throws IOException
 	{
 		/*
@@ -2556,13 +2650,24 @@ public class ThumbnailatorTest
 		try
 		{
 			Thumbnailator.createThumbnail(inputFile, outputFile, 50, 50);
-			fail();
+			
+			// This case should pass on Java 6 and later, as those JREs have a
+			// GIF writer.
+			if (System.getProperty("java.version").startsWith("1.5"))
+			{
+				fail();
+			}
 		}
 		catch (UnsupportedFormatException e)
 		{
+			// This case should pass on Java 6 and later.
+			if (!System.getProperty("java.version").startsWith("1.5"))
+			{
+				fail();
+			}
+			
 			assertEquals("No suitable ImageWriter found for gif.", e.getMessage());
 			assertEquals("gif", e.getFormatName());
-			throw e;
 		}
 	}
 	
