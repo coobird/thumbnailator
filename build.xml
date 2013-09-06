@@ -111,9 +111,9 @@
 		<mkdir dir="${dist}/lib" />
 	
 		<!-- JAR file for the Maven Central Repo and Google Project Hosting -->
-	    <jar jarfile="${maven-jar}">
-	    	<fileset dir="${build}" />
-	    	<metainf dir="." includes="LICENSE" />
+		<jar jarfile="${maven-jar}">
+			<fileset dir="${build}" />
+			<metainf dir="." includes="LICENSE" />
 			<manifest>
 				<attribute name="Built-By" value="coobird"/>
 				<section name="Thumbnailator">
@@ -125,64 +125,64 @@
 					<attribute name="Implementation-Vendor" value="coobird.net"/>
 				</section>
 			</manifest>
-	    </jar>
+		</jar>
 		
 		<!-- JAR containing source for Google Project Hosting -->
-	    <jar jarfile="${dist}/lib/${artifactId}-${version}-all.jar">
-	    	<fileset dir="${build}" />
-	    	<fileset dir="${src}" excludes="**/package.info" />
-	    	<metainf dir="." includes="LICENSE" />
-	    	<manifest>
-	          <attribute name="Built-By" value="coobird"/>
-	          <section name="Thumbnailator">
-	            <attribute name="Specification-Title" value="Thumbnailator with sources"/>
-	            <attribute name="Specification-Version" value="${version}"/>
-	            <attribute name="Specification-Vendor" value="coobird.net"/>
-	            <attribute name="Implementation-Title" value="Thumbnailator with sources"/>
-	            <attribute name="Implementation-Version" value="${version}"/> 
-	            <attribute name="Implementation-Vendor" value="coobird.net"/>
-	          </section>
-	        </manifest>
-	    </jar>
+		<jar jarfile="${dist}/lib/${artifactId}-${version}-all.jar">
+			<fileset dir="${build}" />
+			<fileset dir="${src}" excludes="**/package.info" />
+			<metainf dir="." includes="LICENSE" />
+			<manifest>
+			  <attribute name="Built-By" value="coobird"/>
+			  <section name="Thumbnailator">
+				<attribute name="Specification-Title" value="Thumbnailator with sources"/>
+				<attribute name="Specification-Version" value="${version}"/>
+				<attribute name="Specification-Vendor" value="coobird.net"/>
+				<attribute name="Implementation-Title" value="Thumbnailator with sources"/>
+				<attribute name="Implementation-Version" value="${version}"/> 
+				<attribute name="Implementation-Vendor" value="coobird.net"/>
+			  </section>
+			</manifest>
+		</jar>
 		
 		<!-- Javadoc ZIP file for Google Project Hosting -->
 		<zip destfile="${dist}/lib/${artifactId}-${version}-javadoc.zip">
 			<fileset dir="${javadoc-dir}" />
-	    	<fileset dir="." includes="LICENSE" />
+			<fileset dir="." includes="LICENSE" />
 		</zip>
 		
 		<!-- Javadoc JAR for the Maven Central Repo -->
 		<jar jarfile="${maven-javadoc-jar}">
 			<fileset dir="${javadoc-dir}" />
-	    	<metainf dir="." includes="LICENSE" />
-	    	<manifest>
-	          <attribute name="Built-By" value="coobird"/>
-	          <section name="Thumbnailator">
-	            <attribute name="Specification-Title" value="Thumbnailator API Documentation"/>
-	            <attribute name="Specification-Version" value="${version}"/>
-	            <attribute name="Specification-Vendor" value="coobird.net"/>
-	            <attribute name="Implementation-Title" value="Thumbnailator API Documentation"/>
-	            <attribute name="Implementation-Version" value="${version}"/> 
-	            <attribute name="Implementation-Vendor" value="coobird.net"/>
-	          </section>
-	        </manifest>
+			<metainf dir="." includes="LICENSE" />
+			<manifest>
+			  <attribute name="Built-By" value="coobird"/>
+			  <section name="Thumbnailator">
+				<attribute name="Specification-Title" value="Thumbnailator API Documentation"/>
+				<attribute name="Specification-Version" value="${version}"/>
+				<attribute name="Specification-Vendor" value="coobird.net"/>
+				<attribute name="Implementation-Title" value="Thumbnailator API Documentation"/>
+				<attribute name="Implementation-Version" value="${version}"/> 
+				<attribute name="Implementation-Vendor" value="coobird.net"/>
+			  </section>
+			</manifest>
 		</jar>
 
 		<!-- Sources JAR for the Maven Central Repo -->
 		<jar jarfile="${maven-sources-jar}">
 			<fileset dir="${src}" />
-	    	<metainf dir="." includes="LICENSE" />
-	    	<manifest>
-	          <attribute name="Built-By" value="coobird"/>
-	          <section name="Thumbnailator">
-	            <attribute name="Specification-Title" value="Thumbnailator sources"/>
-	            <attribute name="Specification-Version" value="${version}"/>
-	            <attribute name="Specification-Vendor" value="coobird.net"/>
-	            <attribute name="Implementation-Title" value="Thumbnailator sources"/>
-	            <attribute name="Implementation-Version" value="${version}"/> 
-	            <attribute name="Implementation-Vendor" value="coobird.net"/>
-	          </section>
-	        </manifest>
+			<metainf dir="." includes="LICENSE" />
+			<manifest>
+			  <attribute name="Built-By" value="coobird"/>
+			  <section name="Thumbnailator">
+				<attribute name="Specification-Title" value="Thumbnailator sources"/>
+				<attribute name="Specification-Version" value="${version}"/>
+				<attribute name="Specification-Vendor" value="coobird.net"/>
+				<attribute name="Implementation-Title" value="Thumbnailator sources"/>
+				<attribute name="Implementation-Version" value="${version}"/> 
+				<attribute name="Implementation-Vendor" value="coobird.net"/>
+			  </section>
+			</manifest>
 		</jar>
 	</target>
 	
@@ -240,9 +240,9 @@
 	
 		<taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask" name="gcupload" />
 
-	    <property file="build.credentials.properties" />
+		<property file="build.credentials.properties" />
 		
-	    <gcupload 
+		<gcupload 
 			username="${gc.username}" 
 			password="${gc.password}" 
 			projectname="thumbnailator" 
@@ -251,7 +251,7 @@
 			summary="Javadocs for Thumbnailator"
 			labels="Featured" />
 		
-	    <gcupload 
+		<gcupload 
 			username="${gc.username}" 
 			password="${gc.password}" 
 			projectname="thumbnailator" 
@@ -260,7 +260,7 @@
 			summary="Thumbnailator JAR file with sources included - Recommended for development"
 			labels="Featured" />
 		
-	    <gcupload 
+		<gcupload 
 			username="${gc.username}" 
 			password="${gc.password}" 
 			projectname="thumbnailator" 
