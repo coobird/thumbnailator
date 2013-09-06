@@ -14,7 +14,7 @@
 	<!-- Maven properties -->
 	<property name="groupId" value="net.coobird" />
 	<property name="artifactId" value="thumbnailator" />
-	<property name="version" value="0.4.5" />
+	<property name="version" value="0.4.6" />
 
 	<!-- Maven file names -->
 	<property name="maven-jar" value="${dist}/lib/${artifactId}-${version}.jar" />
