@@ -6,15 +6,14 @@
 	<property name="src" location="src" />
 	<property name="build" location="build-tmp" />
 	<property name="dist"  location="distribution" />
-	<property name="resources" location="resources" />
-	<property name="javadoc_dir" value="javadoc" />
-	<property name="classes" location="bin" />
-	<property name="tests" location="test" />
+	<property name="javadoc-dir" value="javadoc" />
+	<property name="test-src" location="test" />
+	<property name="test-build" location="test-tmp" />
 
 	<!-- Maven properties -->
 	<property name="groupId" value="net.coobird" />
 	<property name="artifactId" value="thumbnailator" />
-	<property name="version" value="0.4.5" />
+	<property name="version" value="0.4.6" />
 
 	<!-- Maven file names -->
 	<property name="maven-jar" value="${dist}/lib/${artifactId}-${version}.jar" />
@@ -36,7 +35,7 @@
 		<!-- Generate the javadocs, place into /javadoc directory -->
 
 		<javadoc 
-			destdir="${javadoc_dir}"
+			destdir="${javadoc-dir}"
 			sourcepath="${src}"
 			author="true"
 			version="true"
@@ -58,25 +57,43 @@
 		<!-- Create the build directory structure used by compile -->
 		<mkdir dir="${build}"/>
 		
-		<!-- Compile the java code from ${src} into ${build} -->
+		<!-- Compile the source code into the build directory -->
 		<javac
 			srcdir="${src}"
 			destdir="${build}"
 			source="1.5"
-			target="1.5" />
-		
+			target="1.5" >
+			<exclude name="**/package-info.java" />
+		</javac>
 	</target>
 	
 	<target
 		name="test"
+		depends="compile"
 		description="Runs unit tests">
+
+		<!-- Create the build directory structure used by test -->
+		<mkdir dir="${test-build}"/>
+
+		<!-- Compile the test code into the test build directory -->
+		<javac
+			srcdir="${test-src}"
+			destdir="${test-build}"
+			source="1.5"
+			target="1.5" 
+			nowarn="true" >
+			<classpath path="${build}" />
+			<classpath path="lib/junit-4.10.jar" />
+			<classpath path="lib/mockito-all-1.8.5.jar" />
+		</javac>
 	
 		<junit haltonfailure="yes" printsummary="yes" reloading="no">
-			<classpath path="${classes}" />
+			<classpath path="${build}" />
+			<classpath path="${test-build}" />
 			<classpath path="lib/junit-4.10.jar" />
 			<classpath path="lib/mockito-all-1.8.5.jar" />
 			<batchtest>
-				<fileset dir="${tests}">
+				<fileset dir="${test-src}">
 					<include name="**/*.java" />
 					<exclude name="**/test/**/*.java" />
 					<exclude name="**/TestUtils.java" />
@@ -94,9 +111,9 @@
 		<mkdir dir="${dist}/lib" />
 	
 		<!-- JAR file for the Maven Central Repo and Google Project Hosting -->
-	    <jar jarfile="${maven-jar}">
-	    	<fileset dir="${build}" />
-			<fileset dir="${resources}" />
+		<jar jarfile="${maven-jar}">
+			<fileset dir="${build}" />
+			<metainf dir="." includes="LICENSE" />
 			<manifest>
 				<attribute name="Built-By" value="coobird"/>
 				<section name="Thumbnailator">
@@ -108,39 +125,64 @@
 					<attribute name="Implementation-Vendor" value="coobird.net"/>
 				</section>
 			</manifest>
-	    </jar>
+		</jar>
 		
 		<!-- JAR containing source for Google Project Hosting -->
-	    <jar jarfile="${dist}/lib/${artifactId}-${version}-all.jar">
-	    	<fileset dir="${build}" />
-	    	<fileset dir="${src}" excludes="**/package.info" />
-			<fileset dir="${resources}" />
-	    	<manifest>
-	          <attribute name="Built-By" value="coobird"/>
-	          <section name="Thumbnailator">
-	            <attribute name="Specification-Title" value="Thumbnailator with sources"/>
-	            <attribute name="Specification-Version" value="${version}"/>
-	            <attribute name="Specification-Vendor" value="coobird.net"/>
-	            <attribute name="Implementation-Title" value="Thumbnailator with sources"/>
-	            <attribute name="Implementation-Version" value="${version}"/> 
-	            <attribute name="Implementation-Vendor" value="coobird.net"/>
-	          </section>
-	        </manifest>
-	    </jar>
+		<jar jarfile="${dist}/lib/${artifactId}-${version}-all.jar">
+			<fileset dir="${build}" />
+			<fileset dir="${src}" excludes="**/package.info" />
+			<metainf dir="." includes="LICENSE" />
+			<manifest>
+			  <attribute name="Built-By" value="coobird"/>
+			  <section name="Thumbnailator">
+				<attribute name="Specification-Title" value="Thumbnailator with sources"/>
+				<attribute name="Specification-Version" value="${version}"/>
+				<attribute name="Specification-Vendor" value="coobird.net"/>
+				<attribute name="Implementation-Title" value="Thumbnailator with sources"/>
+				<attribute name="Implementation-Version" value="${version}"/> 
+				<attribute name="Implementation-Vendor" value="coobird.net"/>
+			  </section>
+			</manifest>
+		</jar>
 		
 		<!-- Javadoc ZIP file for Google Project Hosting -->
 		<zip destfile="${dist}/lib/${artifactId}-${version}-javadoc.zip">
-			<fileset dir="${javadoc_dir}" />
+			<fileset dir="${javadoc-dir}" />
+			<fileset dir="." includes="LICENSE" />
 		</zip>
 		
 		<!-- Javadoc JAR for the Maven Central Repo -->
 		<jar jarfile="${maven-javadoc-jar}">
-			<fileset dir="${javadoc_dir}" />
+			<fileset dir="${javadoc-dir}" />
+			<metainf dir="." includes="LICENSE" />
+			<manifest>
+			  <attribute name="Built-By" value="coobird"/>
+			  <section name="Thumbnailator">
+				<attribute name="Specification-Title" value="Thumbnailator API Documentation"/>
+				<attribute name="Specification-Version" value="${version}"/>
+				<attribute name="Specification-Vendor" value="coobird.net"/>
+				<attribute name="Implementation-Title" value="Thumbnailator API Documentation"/>
+				<attribute name="Implementation-Version" value="${version}"/> 
+				<attribute name="Implementation-Vendor" value="coobird.net"/>
+			  </section>
+			</manifest>
 		</jar>
 
 		<!-- Sources JAR for the Maven Central Repo -->
 		<jar jarfile="${maven-sources-jar}">
 			<fileset dir="${src}" />
+			<metainf dir="." includes="LICENSE" />
+			<manifest>
+			  <attribute name="Built-By" value="coobird"/>
+			  <section name="Thumbnailator">
+				<attribute name="Specification-Title" value="Thumbnailator sources"/>
+				<attribute name="Specification-Version" value="${version}"/>
+				<attribute name="Specification-Vendor" value="coobird.net"/>
+				<attribute name="Implementation-Title" value="Thumbnailator sources"/>
+				<attribute name="Implementation-Version" value="${version}"/> 
+				<attribute name="Implementation-Vendor" value="coobird.net"/>
+			  </section>
+			</manifest>
 		</jar>
 	</target>
 	
@@ -198,9 +240,9 @@
 	
 		<taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask" name="gcupload" />
 
-	    <property file="build.credentials.properties" />
+		<property file="build.credentials.properties" />
 		
-	    <gcupload 
+		<gcupload 
 			username="${gc.username}" 
 			password="${gc.password}" 
 			projectname="thumbnailator" 
@@ -209,7 +251,7 @@
 			summary="Javadocs for Thumbnailator"
 			labels="Featured" />
 		
-	    <gcupload 
+		<gcupload 
 			username="${gc.username}" 
 			password="${gc.password}" 
 			projectname="thumbnailator" 
@@ -218,7 +260,7 @@
 			summary="Thumbnailator JAR file with sources included - Recommended for development"
 			labels="Featured" />
 		
-	    <gcupload 
+		<gcupload 
 			username="${gc.username}" 
 			password="${gc.password}" 
 			projectname="thumbnailator" 
@@ -234,6 +276,7 @@
 		
 		<!-- Delete the ${build} directory tree -->
 		<delete dir="${build}"/>
+		<delete dir="${test-build}"/>
 		<delete dir="${dist}"/>
 	</target>
 </project>

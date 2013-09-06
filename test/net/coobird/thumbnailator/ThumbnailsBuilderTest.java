@@ -1,17 +1,18 @@
 package net.coobird.thumbnailator;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -4169,5 +4170,1678 @@ public class ThumbnailsBuilderTest
 		{
 			// then
 		}
+	}
+	
+	@Test
+	public void cropCenterThenWatermarkCenter() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 200);
+		g.dispose();
+		
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 25, 25);
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+			.size(100, 100)
+			.crop(Positions.CENTER)
+			.watermark(Positions.CENTER, watermark, 1.0f)
+			.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,   0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
+		assertEquals(Color.white.getRGB(), thumbnail.getRGB(50, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void cropCenterThenWatermarkTopLeft() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 200);
+		g.dispose();
+		
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 25, 25);
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+				.size(100, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.TOP_LEFT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(Color.white.getRGB(), thumbnail.getRGB(0,   0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void cropCenterThenWatermarkTopRight() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 200);
+		g.dispose();
+		
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 25, 25);
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+				.size(100, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.TOP_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,   0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
+		assertEquals(Color.white.getRGB(), thumbnail.getRGB(99,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void cropCenterThenWatermarkBottomLeft() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 200);
+		g.dispose();
+		
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 25, 25);
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+				.size(100, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_LEFT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,   0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
+		assertEquals(Color.white.getRGB(), thumbnail.getRGB(0,  99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void cropCenterThenWatermarkBottomRight() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 200);
+		g.dispose();
+		
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 25, 25);
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+				.size(100, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,   0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
+		assertEquals(Color.white.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void cropCenterThenWatermarkCenterNonSquareOriginalWide() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(300, 200).build();
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 300, 200);
+		g.dispose();
+		
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 25, 25);
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+				.size(100, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.CENTER, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,   0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
+		assertEquals(Color.white.getRGB(), thumbnail.getRGB(50, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void cropCenterThenWatermarkTopLeftNonSquareOriginalWide() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(300, 200).build();
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 300, 200);
+		g.dispose();
+		
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 25, 25);
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+				.size(100, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.TOP_LEFT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(Color.white.getRGB(), thumbnail.getRGB(0,   0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void cropCenterThenWatermarkTopRightNonSquareOriginalWide() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(300, 200).build();
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 300, 200);
+		g.dispose();
+		
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 25, 25);
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+				.size(100, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.TOP_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,   0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
+		assertEquals(Color.white.getRGB(), thumbnail.getRGB(99,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void cropCenterThenWatermarkBottomLeftNonSquareOriginalWide() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(300, 200).build();
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 300, 200);
+		g.dispose();
+		
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 25, 25);
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+				.size(100, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_LEFT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,   0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
+		assertEquals(Color.white.getRGB(), thumbnail.getRGB(0,  99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void cropCenterThenWatermarkBottomRightNonSquareOriginalWide() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(300, 200).build();
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 300, 200);
+		g.dispose();
+		
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 25, 25);
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+				.size(100, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,   0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
+		assertEquals(Color.white.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void cropCenterThenWatermarkCenterNonSquareOriginalTall() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 300).build();
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 300);
+		g.dispose();
+		
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 25, 25);
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+				.size(100, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.CENTER, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,   0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
+		assertEquals(Color.white.getRGB(), thumbnail.getRGB(50, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void cropCenterThenWatermarkTopLeftNonSquareOriginalTall() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 300).build();
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 300);
+		g.dispose();
+		
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 25, 25);
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+				.size(100, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.TOP_LEFT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(Color.white.getRGB(), thumbnail.getRGB(0,   0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void cropCenterThenWatermarkTopRightNonSquareOriginalTall() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 300).build();
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 300);
+		g.dispose();
+		
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 25, 25);
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+				.size(100, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.TOP_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,   0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
+		assertEquals(Color.white.getRGB(), thumbnail.getRGB(99,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void cropCenterThenWatermarkBottomLeftNonSquareOriginalTall() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 300).build();
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 300);
+		g.dispose();
+		
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 25, 25);
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+				.size(100, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_LEFT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,   0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
+		assertEquals(Color.white.getRGB(), thumbnail.getRGB(0,  99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void cropCenterThenWatermarkBottomRightNonSquareOriginalTall() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 300).build();
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 300);
+		g.dispose();
+		
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 25, 25);
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(img)
+				.size(100, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(100, thumbnail.getHeight());
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,   0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99,  0));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  99));
+		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
+		assertEquals(Color.white.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation1File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_1.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation2File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_2.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation3File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_3.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation4File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_4.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation5File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_5.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation6File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_6.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation7File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_7.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation8File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_8.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation1InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_1.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation2InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_2.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation3InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_3.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation4InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_4.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation5InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_5.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation6InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_6.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation7InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_7.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkExifOrientation8InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_8.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(99, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropExifOrientation1File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_1.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropExifOrientation2File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_2.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropExifOrientation3File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_3.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropExifOrientation4File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_4.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropExifOrientation5File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_5.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropExifOrientation6File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_6.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropExifOrientation7File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_7.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropExifOrientation8File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_8.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropExifOrientation1InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_1.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(50, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropExifOrientation2InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_2.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(50, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropExifOrientation3InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_3.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(50, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropExifOrientation4InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_4.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(50, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropExifOrientation5InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_5.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(50, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropExifOrientation6InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_6.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(50, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropExifOrientation7InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_7.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(50, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropExifOrientation8InputStream() throws IOException
+	{
+		// given
+		InputStream imgIS = new FileInputStream("test-resources/Exif/source_8.jpg");
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgIS)
+				.size(50, 100)
+				.crop(Positions.CENTER)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+
+	@Test
+	public void watermarkAndCropNonCenterExifOrientation1File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_1.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.TOP_LEFT)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropNonCenterExifOrientation2File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_2.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.TOP_LEFT)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropNonCenterExifOrientation3File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_3.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.TOP_LEFT)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropNonCenterExifOrientation4File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_4.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.TOP_LEFT)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropNonCenterExifOrientation5File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_5.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.TOP_LEFT)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropNonCenterExifOrientation6File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_6.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.TOP_LEFT)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropNonCenterExifOrientation7File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_7.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.TOP_LEFT)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkAndCropNonCenterExifOrientation8File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_8.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.TOP_LEFT)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(49, 99));
+	}
+	
+	@Test
+	public void watermarkCenterAndCropNonCenterExifOrientation1File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_1.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.TOP_LEFT)
+				.watermark(Positions.CENTER, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(25, 50));
+	}
+	
+	@Test
+	public void watermarkCenterAndCropNonCenterExifOrientation2File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_2.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.TOP_LEFT)
+				.watermark(Positions.CENTER, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(25, 50));
+	}
+	
+	@Test
+	public void watermarkCenterAndCropNonCenterExifOrientation3File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_3.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.TOP_LEFT)
+				.watermark(Positions.CENTER, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(25, 50));
+	}
+	
+	@Test
+	public void watermarkCenterAndCropNonCenterExifOrientation4File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_4.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.TOP_LEFT)
+				.watermark(Positions.CENTER, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(25, 50));
+	}
+	
+	@Test
+	public void watermarkCenterAndCropNonCenterExifOrientation5File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_5.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.TOP_LEFT)
+				.watermark(Positions.CENTER, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(25, 50));
+	}
+	
+	@Test
+	public void watermarkCenterAndCropNonCenterExifOrientation6File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_6.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.TOP_LEFT)
+				.watermark(Positions.CENTER, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(25, 50));
+	}
+	
+	@Test
+	public void watermarkCenterAndCropNonCenterExifOrientation7File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_7.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.TOP_LEFT)
+				.watermark(Positions.CENTER, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(25, 50));
+	}
+	
+	@Test
+	public void watermarkCenterAndCropNonCenterExifOrientation8File() throws IOException
+	{
+		// given
+		String imgPath = "test-resources/Exif/source_8.jpg";
+		
+		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
+		Graphics g = watermark.getGraphics();
+		g.setColor(Color.blue);
+		g.fillRect(0, 0, watermark.getWidth(), watermark.getHeight());
+		g.dispose();
+		
+		// when
+		BufferedImage thumbnail = Thumbnails.of(imgPath)
+				.size(50, 100)
+				.crop(Positions.TOP_LEFT)
+				.watermark(Positions.CENTER, watermark, 1.0f)
+				.asBufferedImage();
+		
+		// then
+		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(25, 50));
 	}
 }
