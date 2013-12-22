@@ -9087,6 +9087,128 @@ public class ThumbnailsBuilderInputOutputTest
 		assertTrue(destFile.exists());
 		assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
 	}
+	
+	@Test
+	public void toFiles_Rename_WritesToSameDir_AllInputFromSameDir() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		String tmpDir = TMPDIR + "/rename";
+		TestUtils.makeTemporaryDirectory(tmpDir);
+		
+		File f1 = new File(tmpDir, "grid1.png");
+		File f2 = new File(tmpDir, "grid2.png");
+		TestUtils.copyFile(sourceFile, f1);
+		TestUtils.copyFile(sourceFile, f2);
+		
+		// when
+		Thumbnails.of(f1, f2)
+			.size(100, 100)
+			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+		
+		// then
+		assertTrue(new File(tmpDir, "thumbnail.grid1.png").exists());
+		assertTrue(new File(tmpDir, "thumbnail.grid2.png").exists());
+		
+		// cleanup
+		TestUtils.deleteTemporaryDirectory(tmpDir);
+	}
+	
+	@Test
+	public void toFiles_Rename_WritesToSameDir_InputsFromDifferentDir() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		String tmpDir1 = TMPDIR + "/rename/1";
+		String tmpDir2 = TMPDIR + "/rename/2";
+		TestUtils.makeTemporaryDirectory(tmpDir1);
+		TestUtils.makeTemporaryDirectory(tmpDir2);
+		
+		File f1 = new File(tmpDir1, "grid1.png");
+		File f2 = new File(tmpDir2, "grid2.png");
+		TestUtils.copyFile(sourceFile, f1);
+		TestUtils.copyFile(sourceFile, f2);
+		
+		// when
+		Thumbnails.of(f1, f2)
+			.size(100, 100)
+			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+		
+		// then
+		assertTrue(new File(tmpDir1, "thumbnail.grid1.png").exists());
+		assertTrue(new File(tmpDir2, "thumbnail.grid2.png").exists());
+		
+		// cleanup
+		TestUtils.deleteTemporaryDirectory(TMPDIR + "/rename");
+	}
+	
+	@Test
+	public void asFiles_Rename_WritesToSameDir_AllInputFromSameDir() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		String tmpDir = TMPDIR + "/rename";
+		TestUtils.makeTemporaryDirectory(tmpDir);
+		
+		File f1 = new File(tmpDir, "grid1.png");
+		File f2 = new File(tmpDir, "grid2.png");
+		TestUtils.copyFile(sourceFile, f1);
+		TestUtils.copyFile(sourceFile, f2);
+		
+		// when
+		List<File> result = Thumbnails.of(f1, f2)
+			.size(100, 100)
+			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+		
+		// then
+		File out1 = new File(tmpDir, "thumbnail.grid1.png");
+		File out2 = new File(tmpDir, "thumbnail.grid2.png");
+		
+		assertTrue(out1.exists());
+		assertTrue(out2.exists());
+		assertTrue(result.get(0).equals(out1));
+		assertTrue(result.get(1).equals(out2));
+		
+		// cleanup
+		TestUtils.deleteTemporaryDirectory(tmpDir);
+	}
+	
+	@Test
+	public void asFiles_Rename_WritesToSameDir_InputsFromDifferentDir() throws IOException
+	{
+		// given
+		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		
+		String tmpDir1 = TMPDIR + "/rename/1";
+		String tmpDir2 = TMPDIR + "/rename/2";
+		TestUtils.makeTemporaryDirectory(tmpDir1);
+		TestUtils.makeTemporaryDirectory(tmpDir2);
+		
+		File f1 = new File(tmpDir1, "grid1.png");
+		File f2 = new File(tmpDir2, "grid2.png");
+		TestUtils.copyFile(sourceFile, f1);
+		TestUtils.copyFile(sourceFile, f2);
+		
+		// when
+		List<File> result = Thumbnails.of(f1, f2)
+			.size(100, 100)
+			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+		
+		// then
+		File out1 = new File(tmpDir1, "thumbnail.grid1.png");
+		File out2 = new File(tmpDir2, "thumbnail.grid2.png");
+		
+		assertTrue(out1.exists());
+		assertTrue(out2.exists());
+		assertTrue(result.get(0).equals(out1));
+		assertTrue(result.get(1).equals(out2));
+		
+		// cleanup
+		TestUtils.deleteTemporaryDirectory(TMPDIR + "/rename");
+	}
 
 	@Test
 	public void useOriginalFormat() throws IOException
