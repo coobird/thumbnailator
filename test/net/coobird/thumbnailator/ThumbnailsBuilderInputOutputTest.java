@@ -9655,9 +9655,9 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// when
 		List<File> result = Thumbnails.of(f1, f2)
-				.size(100, 100)
-				.allowOverwrite(true)
-				.asFiles(new File(targetDir), Rename.PREFIX_DOT_THUMBNAIL);
+			.size(100, 100)
+			.allowOverwrite(true)
+			.asFiles(new File(targetDir), Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
 		File out = new File(targetDir, "thumbnail.grid.png");
