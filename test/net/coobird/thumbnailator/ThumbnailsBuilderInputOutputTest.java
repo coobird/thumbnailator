@@ -9339,6 +9339,71 @@ public class ThumbnailsBuilderInputOutputTest
 		TestUtils.deleteTemporaryDirectory(targetDir);
 	}
 	
+	
+	@Test
+	public void toFiles_Rename_WritesToSpecifiedDir_OutputDirDoesntExist() throws IOException
+	{
+		// given
+		File sourceFile1 = new File("test-resources/Thumbnailator/grid.png");
+		String tmpDir1 = TMPDIR + "/rename/1";
+		String targetDir = TMPDIR + "/target";
+		TestUtils.makeTemporaryDirectory(tmpDir1);
+		
+		File f1 = new File(tmpDir1, "grid.png");
+		TestUtils.copyFile(sourceFile1, f1);
+		
+		try
+		{
+			// when
+			Thumbnails.of(f1)
+				.size(100, 100)
+				.toFiles(new File(targetDir), Rename.PREFIX_DOT_THUMBNAIL);
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+		
+		// cleanup
+		TestUtils.deleteTemporaryDirectory(tmpDir1);
+		TestUtils.deleteTemporaryDirectory(TMPDIR + "/rename");
+	}
+	
+	@Test
+	public void toFiles_Rename_WritesToSpecifiedDir_OutputDirIsntADir() throws IOException
+	{
+		// given
+		File sourceFile1 = new File("test-resources/Thumbnailator/grid.png");
+		String tmpDir1 = TMPDIR + "/rename/1";
+		String targetDir = TMPDIR + "/target";
+		TestUtils.makeTemporaryDirectory(tmpDir1);
+		new File(targetDir).createNewFile();
+		
+		File f1 = new File(tmpDir1, "grid.png");
+		TestUtils.copyFile(sourceFile1, f1);
+		
+		try
+		{
+			// when
+			Thumbnails.of(f1)
+				.size(100, 100)
+				.toFiles(new File(targetDir), Rename.PREFIX_DOT_THUMBNAIL);
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+		
+		// cleanup
+		TestUtils.deleteTemporaryDirectory(tmpDir1);
+		TestUtils.deleteTemporaryDirectory(TMPDIR + "/rename");
+		new File(targetDir).delete();
+	}	
+	
 	@Test
 	public void asFiles_Rename_WritesToSameDir_AllInputFromSameDir() throws IOException
 	{
@@ -9609,6 +9674,70 @@ public class ThumbnailsBuilderInputOutputTest
 		TestUtils.deleteTemporaryDirectory(tmpDir2);
 		TestUtils.deleteTemporaryDirectory(TMPDIR + "/rename");
 		TestUtils.deleteTemporaryDirectory(targetDir);
+	}
+	
+	@Test
+	public void asFiles_Rename_WritesToSpecifiedDir_OutputDirDoesntExist() throws IOException
+	{
+		// given
+		File sourceFile1 = new File("test-resources/Thumbnailator/grid.png");
+		String tmpDir1 = TMPDIR + "/rename/1";
+		String targetDir = TMPDIR + "/target";
+		TestUtils.makeTemporaryDirectory(tmpDir1);
+		
+		File f1 = new File(tmpDir1, "grid.png");
+		TestUtils.copyFile(sourceFile1, f1);
+		
+		try
+		{
+			// when
+			Thumbnails.of(f1)
+				.size(100, 100)
+				.asFiles(new File(targetDir), Rename.PREFIX_DOT_THUMBNAIL);
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+		
+		// cleanup
+		TestUtils.deleteTemporaryDirectory(tmpDir1);
+		TestUtils.deleteTemporaryDirectory(TMPDIR + "/rename");
+	}
+	
+	@Test
+	public void asFiles_Rename_WritesToSpecifiedDir_OutputDirIsntADir() throws IOException
+	{
+		// given
+		File sourceFile1 = new File("test-resources/Thumbnailator/grid.png");
+		String tmpDir1 = TMPDIR + "/rename/1";
+		String targetDir = TMPDIR + "/target";
+		TestUtils.makeTemporaryDirectory(tmpDir1);
+		new File(targetDir).createNewFile();
+		
+		File f1 = new File(tmpDir1, "grid.png");
+		TestUtils.copyFile(sourceFile1, f1);
+		
+		try
+		{
+			// when
+			Thumbnails.of(f1)
+				.size(100, 100)
+				.asFiles(new File(targetDir), Rename.PREFIX_DOT_THUMBNAIL);
+			
+			fail();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// then
+		}
+		
+		// cleanup
+		TestUtils.deleteTemporaryDirectory(tmpDir1);
+		TestUtils.deleteTemporaryDirectory(TMPDIR + "/rename");
+		new File(targetDir).delete();
 	}
 	
 	@Test
