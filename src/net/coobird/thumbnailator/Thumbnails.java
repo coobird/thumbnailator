@@ -2358,15 +2358,56 @@ watermark(Positions.CENTER, image, opacity);
 		 */
 		public List<File> asFiles(Rename rename) throws IOException
 		{
+			return asFiles(null, rename);
+		}
+		
+		/**
+		 * Creates thumbnails and stores them to files in the directory
+		 * specified by the given {@link File} object, and using the
+		 * {@link Rename} function to determine the filenames. The thubnail
+		 * files are returned as a {@link List}.
+		 * <p>
+		 * When the destination file exists, and overwriting files has been
+		 * disabled by calling the {@link #allowOverwrite(boolean)} method
+		 * with {@code false}, then the thumbnail with the destination file
+		 * already existing will not be written and the corresponding
+		 * {@code File} object will not be included in the {@code List} returned
+		 * by this method.
+		 * <p>
+		 * To call this method, the thumbnails must have been creates from
+		 * files by calling the {@link Thumbnails#of(File...)} method.
+		 *
+		 * @param destinationDir	The destination directory to which the
+		 * 							thumbnails should be written to.
+		 * @param rename			The rename function which is used to
+		 * 							determine the filenames of the thumbnail
+		 * 							files to write.
+		 * @return					A list of {@link File}s of the thumbnails
+		 * 							which were created.
+		 * @throws IOException		If a problem occurs while reading the
+		 * 							original images or writing the thumbnails
+		 * 							to files.
+		 * @throws IllegalStateException		If the original images are not
+		 * 										from files.
+		 * @throws IllegalArgumentException		If the destination directory
+		 * 										is not a directory.
+		 * @since 	0.4.7
+		 */
+		public List<File> asFiles(File destinationDir, Rename rename) throws IOException
+		{
 			checkReadiness();
 			
 			if (rename == null)
 			{
 				throw new NullPointerException("Rename is null.");
 			}
+			
+			if (destinationDir != null && !destinationDir.isDirectory())
+			{
+				throw new IllegalArgumentException("Given destination is not a directory.");
+			}
 
 			List<File> destinationFiles = new ArrayList<File>();
-			
 			
 			for (ImageSource<T> source : sources)
 			{
@@ -2379,8 +2420,9 @@ watermark(Positions.CENTER, image, opacity);
 				
 				File f = ((FileImageSource)source).getSource();
 				
+				File actualDestDir = destinationDir == null ? f.getParentFile() : destinationDir;
 				File destinationFile =
-					new File(f.getParent(), rename.apply(f.getName(), param));
+					new File(actualDestDir, rename.apply(f.getName(), param));
 				
 				FileImageSink destination = new FileImageSink(destinationFile, allowOverwrite);
 				
@@ -2430,7 +2472,40 @@ watermark(Positions.CENTER, image, opacity);
 		 */
 		public void toFiles(Rename rename) throws IOException
 		{
-			asFiles(rename);
+			toFiles(null, rename);
+		}
+		
+		/**
+		 * Creates thumbnails and stores them to files in the directory
+		 * specified by the given {@link File} object, and using the
+		 * {@link Rename} function to determine the filenames.
+		 * <p>
+		 * When the destination file exists, and overwriting files has been
+		 * disabled by calling the {@link #allowOverwrite(boolean)} method
+		 * with {@code false}, then the thumbnail with the destination file
+		 * already existing will not be written.
+		 * <p>
+		 * To call this method, the thumbnails must have been creates from
+		 * files by calling the {@link Thumbnails#of(File...)} method.
+		 * 
+		 * @param destinationDir	The destination directory to which the
+		 * 							thumbnails should be written to.
+		 * @param rename			The rename function which is used to
+		 * 							determine the filenames of the thumbnail
+		 * 							files to write.
+		 * @throws IOException		If a problem occurs while reading the
+		 * 							original images or writing the thumbnails
+		 * 							to files.
+		 * 							thumbnails to files.
+		 * @throws IllegalStateException		If the original images are not
+		 * 										from files.
+		 * @throws IllegalArgumentException		If the destination directory
+		 * 										is not a directory.
+		 * @since 	0.4.7
+		 */
+		public void toFiles(File destinationDir, Rename rename) throws IOException
+		{
+			asFiles(destinationDir, rename);
 		}
 
 		/**
