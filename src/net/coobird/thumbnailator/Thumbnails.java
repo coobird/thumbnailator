@@ -2374,6 +2374,13 @@ watermark(Positions.CENTER, image, opacity);
 		 * {@code File} object will not be included in the {@code List} returned
 		 * by this method.
 		 * <p>
+		 * Extra caution should be taken when using this method, as there are
+		 * no protections in place to prevent file name collisions resulting
+		 * from creating thumbnails from files in separate directories but
+		 * having the same name. In such a case, the behavior will be depend
+		 * on the behavior of the {@link #allowOverwrite(boolean)} as
+		 * described in the previous paragraph.
+		 * <p>
 		 * To call this method, the thumbnails must have been creates from
 		 * files by calling the {@link Thumbnails#of(File...)} method.
 		 *
@@ -2484,6 +2491,13 @@ watermark(Positions.CENTER, image, opacity);
 		 * disabled by calling the {@link #allowOverwrite(boolean)} method
 		 * with {@code false}, then the thumbnail with the destination file
 		 * already existing will not be written.
+		 * <p>
+		 * Extra caution should be taken when using this method, as there are
+		 * no protections in place to prevent file name collisions resulting
+		 * from creating thumbnails from files in separate directories but
+		 * having the same name. In such a case, the behavior will be depend
+		 * on the behavior of the {@link #allowOverwrite(boolean)} as
+		 * described in the previous paragraph.
 		 * <p>
 		 * To call this method, the thumbnails must have been creates from
 		 * files by calling the {@link Thumbnails#of(File...)} method.
