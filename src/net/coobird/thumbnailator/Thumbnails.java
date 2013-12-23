@@ -57,6 +57,9 @@ import net.coobird.thumbnailator.util.ThumbnailatorUtils;
  * Provides a fluent interface to create thumbnails.
  * <p>
  * This is the main entry point for creating thumbnails with Thumbnailator.
+ * <p>
+ * By using the Thumbnailator's fluent interface, it is possible to write
+ * thumbnail generation code which resembles written English.
  * <DL>
  * <DT><B>Usage:</B></DT>
  * <DD>
@@ -71,11 +74,39 @@ Thumbnails.of(directory.listFiles())
     .size(200, 200)
     .outputFormat("jpeg")
     .asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+// English: "Make thumbnails of files in the directory, with a size of 200x200,
+             with output format of JPEG, and save them as files while renaming
+             the files to be prefixed with a 'thumbnail.'."
  * </pre>
  * </DD>
  * </DL>
  * For more examples, please visit the <a href="http://code.google.com/p/thumbnailator/">
  * Thumbnailator</a> project page.
+ * <p> 
+ * <h2>Important Implementation Notes</h2>
+ * Upon calling one of the {@code Thumbnails.of} method, <em>in the current
+ * implementation</em>, an instance of an inner class of this class is
+ * returned. In most cases, the returned instance should not be used by
+ * storing it in a local variable, as changes in the internal implementation
+ * could break code in the future.
+ * <p>
+ * As a rule of thumb, <em>always method chain from the {@code Thumbnails.of}
+ * all the way until the output method (e.g. {@code toFile}, {@code asBufferedImage},
+ * etc.) is called without breaking them down into single statements.</em>
+ * See the "Usage" section above for the intended use of the Thumbnailator's
+ * fluent interface. 
+ * <DL>
+ * <DT><B>Unintended Use:</B></DT>
+ * <DD>
+ * <pre>
+// Unintended use - not recommended!
+Builder&lt;File&gt; instance = Thumbnails.of("path/to/image");
+instance.size(200, 200);
+instance.asFiles("path/to/thumbnail");
+ * </pre>
+ * </DD>
+ * </DL>
  * 
  * @author coobird
  *
@@ -321,7 +352,52 @@ public final class Thumbnails
 	}
 
 	/**
-	 * A builder interface for Thumbnailator.
+	 * The builder interface for Thumbnailator to set up the thumbnail
+	 * generation task.
+	 * <p>
+	 * Thumbnailator is intended to be used by calling one of the
+	 * {@link Thumbnails#of()} methods, then chaining methods such as
+	 * {@link #size(int, int)} and {@link #outputQuality(double)} to set up
+	 * the thumbnail generation parameters. (See "Intended Use" below.)
+	 * The end result should be code that resembles English.
+	 * <p>
+	 * In most cases, holding an instance of this class in a local variable,
+	 * such as seen in the "Unintended Use" example below, is more verbose
+	 * and less future-proof, as changes to this class (which is just an
+	 * inner class of the {@link Thumbnails} class) can lead to broken code  
+	 * when attempting to use future releases of Thumbnailator.
+	 * <p>
+	 * <DL>
+	 * <DT><B>Intended Use:</B></DT>
+	 * <DD>
+	 * <pre>
+// Intended use - recommended!
+Thumbnails.of("path/to/image")
+    .size(200, 200)
+    .asFile("path/to/thumbnail");
+
+// English: "Make a thumbnail of 'path/to/image' with a size of 200x200,
+             and save it as a file to 'path/to/thumbnail'."
+	 * </pre>
+	 * </DD>
+	 * <DT><B>Unintended Use:</B></DT>
+	 * <DD>
+	 * <pre>
+// Unintended use - not recommended!
+Builder&lt;File&gt; instance = Thumbnails.of("path/to/image");
+instance.size(200, 200);
+instance.asFiles("path/to/thumbnail");
+	 * </pre>
+	 * </DD>
+	 * </DL>
+	 * <p>
+	 * An instance of this class provides the fluent interface in the form of
+	 * method chaining. Through the fluent interface, the parameters used for
+	 * the thumbnail creation, such as {@link #size(int, int)} and 
+	 * {@link #outputQuality(double)} can be set up. Finally, to execute the
+	 * thumbnail creation, one of the output methods whose names start with
+	 * {@code to} (e.g. {@link #toFiles(Rename)}) or {@code as} 
+	 * (e.g. {@link #asBufferedImages()}) is called.
 	 * <p>
 	 * An instance of this class is obtained by calling one of:
 	 * <ul>
