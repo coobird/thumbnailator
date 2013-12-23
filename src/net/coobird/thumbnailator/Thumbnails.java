@@ -2330,9 +2330,9 @@ watermark(Positions.CENTER, image, opacity);
 		}
 		
 		/**
-		 * Creates the thumbnails and stores them to the files, using the
-		 * {@code Rename} function to determine the filenames. The files
-		 * are returned as {@link List}.
+		 * Creates thumbnails and stores them to files using the
+		 * {@link Rename} function to determine the filenames. The thubnail
+		 * files are returned as a {@link List}.
 		 * <p>
 		 * When the destination file exists, and overwriting files has been
 		 * disabled by calling the {@link #allowOverwrite(boolean)} method
@@ -2455,8 +2455,8 @@ watermark(Positions.CENTER, image, opacity);
 		}
 
 		/**
-		 * Creates the thumbnails and stores them to the files, using the
-		 * {@code Rename} function to determine the filenames.
+		 * Creates thumbnails and stores them to files using the
+		 * {@link Rename} function to determine the filenames.
 		 * <p>
 		 * When the destination file exists, and overwriting files has been
 		 * disabled by calling the {@link #allowOverwrite(boolean)} method
