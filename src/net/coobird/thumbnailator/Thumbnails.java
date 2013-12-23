@@ -85,8 +85,8 @@ Thumbnails.of(directory.listFiles())
  * Thumbnailator</a> project page.
  * <p> 
  * <h2>Important Implementation Notes</h2>
- * Upon calling one of the {@code Thumbnails.of} method, <em>in the current
- * implementation</em>, an instance of an inner class of this class is
+ * Upon calling one of the {@code Thumbnails.of(...)} methods, <em>in the
+ * current implementation</em>, an instance of an inner class of this class is
  * returned. In most cases, the returned instance should not be used by
  * storing it in a local variable, as changes in the internal implementation
  * could break code in the future.
@@ -356,7 +356,7 @@ public final class Thumbnails
 	 * generation task.
 	 * <p>
 	 * Thumbnailator is intended to be used by calling one of the
-	 * {@link Thumbnails#of()} methods, then chaining methods such as
+	 * {@code Thumbnails.of(...)} methods, then chaining methods such as
 	 * {@link #size(int, int)} and {@link #outputQuality(double)} to set up
 	 * the thumbnail generation parameters. (See "Intended Use" below.)
 	 * The end result should be code that resembles English.
