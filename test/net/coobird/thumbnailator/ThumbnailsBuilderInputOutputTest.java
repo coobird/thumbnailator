@@ -10483,6 +10483,156 @@ public class ThumbnailsBuilderInputOutputTest
 				}
 		);
 	}
+
+	@Test
+	public void toOutputStreamFailsWithoutOutputFormatSpecifiedForBufferedImage() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		
+		try
+		{
+			// when
+			Thumbnails.of(img)
+				.size(100, 100)
+				.toOutputStream(baos);
+			
+			fail();
+		}
+		catch (Exception e)
+		{
+			// then
+		}
+	}
+	
+	@Test
+	public void toOutputStreamImageFormatMatchesInputForPngStream() throws IOException
+	{
+		// given
+		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		
+		// when
+		Thumbnails.of(is)
+			.size(100, 100)
+			.toOutputStream(baos);
+		
+		// then
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
+	}
+	
+	@Test
+	public void toOutputStreamImageFormatMatchesInputForJpegStream() throws IOException
+	{
+		// given
+		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.jpg");
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		
+		// when
+		Thumbnails.of(is)
+			.size(100, 100)
+			.toOutputStream(baos);
+		
+		// then
+		assertEquals("JPEG", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
+	}
+	
+	@Test
+	public void toOutputStreamImageFormatMatchesInputForPngFile() throws IOException
+	{
+		// given
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		
+		// when
+		Thumbnails.of("test-resources/Thumbnailator/grid.png")
+			.size(100, 100)
+			.toOutputStream(baos);
+		
+		// then
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
+	}
+	
+	@Test
+	public void toOutputStreamImageFormatMatchesInputForJpegFile() throws IOException
+	{
+		// given
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		
+		// when
+		Thumbnails.of("test-resources/Thumbnailator/grid.jpg")
+			.size(100, 100)
+			.toOutputStream(baos);
+		
+		// then
+		assertEquals("JPEG", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
+	}
+	
+	@Test
+	public void toOutputStreamImageFormatMatchesOutputFormatForPng() throws IOException
+	{
+		// given
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		
+		// when
+		Thumbnails.of("test-resources/Thumbnailator/grid.jpg")
+			.size(100, 100)
+			.outputFormat("png")
+			.toOutputStream(baos);
+		
+		// then
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
+	}
+	
+	@Test
+	public void toOutputStreamImageFormatMatchesOutputFormatForJpeg() throws IOException
+	{
+		// given
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		
+		// when
+		Thumbnails.of("test-resources/Thumbnailator/grid.jpg")
+			.size(100, 100)
+			.outputFormat("JPEG")
+			.toOutputStream(baos);
+		
+		// then
+		assertEquals("JPEG", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
+	}
+	
+	@Test
+	public void toOutputStreamImageFormatMatchesOutputFormatForPngWithBufferedImageInput() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		
+		// when
+		Thumbnails.of(img)
+			.size(100, 100)
+			.outputFormat("png")
+			.toOutputStream(baos);
+		
+		// then
+		assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
+	}
+	
+	@Test
+	public void toOutputStreamImageFormatMatchesOutputFormatForJpegWithBufferedImageInput() throws IOException
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		
+		// when
+		Thumbnails.of(img)
+			.size(100, 100)
+			.outputFormat("JPEG")
+			.toOutputStream(baos);
+		
+		// then
+		assertEquals("JPEG", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
+	}
 	
 	private File makeRenamedFile(File f, Rename rename)
 	{
