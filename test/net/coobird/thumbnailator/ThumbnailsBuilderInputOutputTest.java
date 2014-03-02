@@ -9968,6 +9968,190 @@ public class ThumbnailsBuilderInputOutputTest
 	}
 	
 	@Test
+	public void correctOrientation1FromInputStream() throws IOException
+	{
+		// given
+		FileInputStream is = new FileInputStream("test-resources/Exif/source_1.jpg");
+		
+		// when
+		BufferedImage result =
+			Thumbnails.of(is)
+				.size(100, 100)
+				.asBufferedImage();
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result,
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void correctOrientation2FromInputStream() throws Exception
+	{
+		// given
+		FileInputStream is = new FileInputStream("test-resources/Exif/source_2.jpg");
+		
+		// when
+		BufferedImage result =
+			Thumbnails.of(is)
+				.size(100, 100)
+				.asBufferedImage();
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result,
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void correctOrientation3FromInputStream() throws Exception
+	{
+		// given
+		FileInputStream is = new FileInputStream("test-resources/Exif/source_3.jpg");
+		
+		// when
+		BufferedImage result =
+			Thumbnails.of(is)
+				.size(100, 100)
+				.asBufferedImage();
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result,
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void correctOrientation4FromInputStream() throws Exception
+	{
+		// given
+		FileInputStream is = new FileInputStream("test-resources/Exif/source_4.jpg");
+		
+		// when
+		BufferedImage result =
+			Thumbnails.of(is)
+				.size(100, 100)
+				.asBufferedImage();
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result,
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void correctOrientation5FromInputStream() throws Exception
+	{
+		// given
+		FileInputStream is = new FileInputStream("test-resources/Exif/source_5.jpg");
+		
+		// when
+		BufferedImage result =
+			Thumbnails.of(is)
+				.size(100, 100)
+				.asBufferedImage();
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result,
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void correctOrientation6FromInputStream() throws Exception
+	{
+		// given
+		FileInputStream is = new FileInputStream("test-resources/Exif/source_6.jpg");
+		
+		// when
+		BufferedImage result =
+			Thumbnails.of(is)
+				.size(100, 100)
+				.asBufferedImage();
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result,
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void correctOrientation7FromInputStream() throws Exception
+	{
+		// given
+		FileInputStream is = new FileInputStream("test-resources/Exif/source_7.jpg");
+		
+		// when
+		BufferedImage result =
+			Thumbnails.of(is)
+				.size(100, 100)
+				.asBufferedImage();
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result,
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
+	public void correctOrientation8FromInputStream() throws Exception
+	{
+		// given
+		FileInputStream is = new FileInputStream("test-resources/Exif/source_8.jpg");
+		
+		// when
+		BufferedImage result =
+			Thumbnails.of(is)
+				.size(100, 100)
+				.asBufferedImage();
+		
+		// then
+		BufferedImageAssert.assertMatches(
+				result,
+				new float[] {
+						1, 1, 1,
+						1, 1, 1,
+						1, 0, 0,
+				}
+		);
+	}
+	
+	@Test
 	public void multipleCallsCorrectOrientation_SameOrientation_asBufferedImages() throws IOException
 	{
 		// given
