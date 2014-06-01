@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.Iterator;
 import java.util.List;
 
@@ -109,23 +110,68 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream>
 		}
 		
 		BufferedImage img;
+		
+		ImageReadParam irParam = reader.getDefaultReadParam();
+		int width = reader.getWidth(FIRST_IMAGE_INDEX);
+		int height = reader.getHeight(FIRST_IMAGE_INDEX);
+		
 		if (param != null && param.getSourceRegion() != null)
 		{
 			Region region = param.getSourceRegion();
-			int width = reader.getWidth(FIRST_IMAGE_INDEX);
-			int height = reader.getHeight(FIRST_IMAGE_INDEX);
-			
 			Rectangle sourceRegion = region.calculate(width, height);
 			
-			ImageReadParam irParam = reader.getDefaultReadParam();
 			irParam.setSourceRegion(sourceRegion);
-			
-			img = reader.read(FIRST_IMAGE_INDEX, irParam);
 		}
-		else
+		
+		// FIXME Workaround to enable subsampling for large source images
+		if (param != null && 
+				"true".equals(System.getProperty("thumbnailator.conserveMemoryWorkaround")) &&
+				width > 1800 && height > 1800 &&
+				(width * height * 4 > Runtime.getRuntime().freeMemory() / 4)
+		)
 		{
-			img = reader.read(FIRST_IMAGE_INDEX);
+			int subsampling = 1;
+			
+			// Calculate the maximum subsampling that can be used.
+			if (param.getSize() != null && (param.getSize().width * 2 < width && param.getSize().height * 2 < height))
+			{
+				double widthScaling = (double)width / (double)param.getSize().width;
+				double heightScaling = (double)height / (double)param.getSize().height;
+				subsampling = (int)Math.floor(Math.min(widthScaling, heightScaling));
+			}
+			else if (param.getSize() == null)
+			{
+				subsampling = (int)Math.max(1, Math.floor(1 / Math.max(param.getHeightScalingFactor(), param.getWidthScalingFactor())));
+			}
+			
+			// Prevent excessive subsampling that can ruin image quality.
+			// This will ensure that at least a 600 x 600 image will be used as source.
+			for (; (width / subsampling) < 600 || (height / subsampling) < 600; subsampling--);
+			
+			// If scaling factor based resize is used, need to change the scaling factor.
+			if (param.getSize() == null)
+			{
+				try
+				{
+					Class<?> c = param.getClass();
+					Field heightField = c.getDeclaredField("heightScalingFactor");
+					Field widthField = c.getDeclaredField("widthScalingFactor");
+					heightField.setAccessible(true);
+					widthField.setAccessible(true);
+					heightField.set(param, param.getHeightScalingFactor() * (double)subsampling);
+					widthField.set(param, param.getWidthScalingFactor() * (double)subsampling);
+				}
+				catch (Exception e)
+				{
+					// If we can't update the parameter, then disable subsampling.
+					subsampling = 1;
+				}
+			}
+			
+			irParam.setSourceSubsampling(subsampling, subsampling, 0, 0);
 		}
+		
+		img = reader.read(FIRST_IMAGE_INDEX, irParam);
 
 		/*
 		 * Dispose the reader to free resources.
