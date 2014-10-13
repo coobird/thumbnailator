@@ -29,7 +29,7 @@ public class ExifFilterUtilsTest {
 	public void correctOrientation1() throws Exception
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Exif/source_1.jpg"));
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/source_1.jpg"));
 		img = BufferedImages.copy(img, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
@@ -51,7 +51,7 @@ public class ExifFilterUtilsTest {
 	public void correctOrientation2() throws Exception
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Exif/source_2.jpg"));
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/source_2.jpg"));
 		img = BufferedImages.copy(img, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
@@ -73,7 +73,7 @@ public class ExifFilterUtilsTest {
 	public void correctOrientation3() throws Exception
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Exif/source_3.jpg"));
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/source_3.jpg"));
 		img = BufferedImages.copy(img, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
@@ -95,7 +95,7 @@ public class ExifFilterUtilsTest {
 	public void correctOrientation4() throws Exception
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Exif/source_4.jpg"));
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/source_4.jpg"));
 		img = BufferedImages.copy(img, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
@@ -117,7 +117,7 @@ public class ExifFilterUtilsTest {
 	public void correctOrientation5() throws Exception
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Exif/source_5.jpg"));
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/source_5.jpg"));
 		img = BufferedImages.copy(img, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
@@ -139,7 +139,7 @@ public class ExifFilterUtilsTest {
 	public void correctOrientation6() throws Exception
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Exif/source_6.jpg"));
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/source_6.jpg"));
 		img = BufferedImages.copy(img, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
@@ -161,7 +161,7 @@ public class ExifFilterUtilsTest {
 	public void correctOrientation7() throws Exception
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Exif/source_7.jpg"));
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/source_7.jpg"));
 		img = BufferedImages.copy(img, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
@@ -183,7 +183,7 @@ public class ExifFilterUtilsTest {
 	public void correctOrientation8() throws Exception
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Exif/source_8.jpg"));
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/source_8.jpg"));
 		img = BufferedImages.copy(img, BufferedImage.TYPE_INT_ARGB);
 		
 		// when

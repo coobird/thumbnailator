@@ -40,7 +40,7 @@ public class ThumbnailsBuilderInputOutputTest
 	 * The temporary directory to use when creating files to use for this test.
 	 */
 	private static final String TMPDIR =
-			"test-resources/tmp/ThumbnailsBuilderInputOutputTest";
+			"src/test/resources/tmp/ThumbnailsBuilderInputOutputTest";
 	
 	@BeforeClass
 	public static void makeTemporaryDirectory()
@@ -71,7 +71,7 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		File destFile = new File("test-resources/Thumbnailator/tmp.png");
+		File destFile = new File("src/test/resources/Thumbnailator/tmp.png");
 		destFile.deleteOnExit();
 		
 		// when
@@ -104,7 +104,7 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		String destFilePath = "test-resources/Thumbnailator/tmp.png";
+		String destFilePath = "src/test/resources/Thumbnailator/tmp.png";
 		
 		// when
 		Thumbnails.of(img)
@@ -144,10 +144,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(img)
 			.size(50, 50)
-			.toFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
-		File outFile = new File("test-resources/Thumbnailator/temp-0.png");
+		File outFile = new File("src/test/resources/Thumbnailator/temp-0.png");
 		outFile.deleteOnExit();
 		
 		assertEquals("png", TestUtils.getFormatName(new FileInputStream(outFile)));
@@ -179,7 +179,7 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> thumbnails = Thumbnails.of(img)
 			.size(50, 50)
-			.asFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
 		assertEquals(1, thumbnails.size());
@@ -371,7 +371,7 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		File destFile = new File("test-resources/Thumbnailator/tmp.png");
+		File destFile = new File("src/test/resources/Thumbnailator/tmp.png");
 		destFile.deleteOnExit();
 		
 		// when
@@ -403,7 +403,7 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		String destFilePath = "test-resources/Thumbnailator/tmp.png";
+		String destFilePath = "src/test/resources/Thumbnailator/tmp.png";
 		
 		// when
 		Thumbnails.of(img)
@@ -444,10 +444,10 @@ public class ThumbnailsBuilderInputOutputTest
 		Thumbnails.of(img1)
 			.size(50, 50)
 			.outputFormat("png")
-			.toFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
-		File outFile = new File("test-resources/Thumbnailator/temp-0.png");
+		File outFile = new File("src/test/resources/Thumbnailator/temp-0.png");
 		outFile.deleteOnExit();
 		
 		BufferedImage fromFileImage1 = ImageIO.read(outFile);
@@ -479,10 +479,10 @@ public class ThumbnailsBuilderInputOutputTest
 		List<File> thumbnails = Thumbnails.of(img1)
 			.size(50, 50)
 			.outputFormat("png")
-			.asFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
-		File outFile = new File("test-resources/Thumbnailator/temp-0.png");
+		File outFile = new File("src/test/resources/Thumbnailator/temp-0.png");
 		outFile.deleteOnExit();
 		
 		assertEquals(1, thumbnails.size());
@@ -666,7 +666,7 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		File destFile = new File("test-resources/Thumbnailator/tmp.png");
+		File destFile = new File("src/test/resources/Thumbnailator/tmp.png");
 		destFile.deleteOnExit();
 		
 		try
@@ -701,7 +701,7 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		String destFilePath = "test-resources/Thumbnailator/tmp.png";
+		String destFilePath = "src/test/resources/Thumbnailator/tmp.png";
 		
 		try
 		{
@@ -740,10 +740,10 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		Thumbnails.of(img, img)
 			.size(50, 50)
-			.toFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
-		File outFile = new File("test-resources/Thumbnailator/temp-0.png");
+		File outFile = new File("src/test/resources/Thumbnailator/temp-0.png");
 		outFile.deleteOnExit();
 		
 		assertEquals("png", TestUtils.getFormatName(new FileInputStream(outFile)));
@@ -775,7 +775,7 @@ public class ThumbnailsBuilderInputOutputTest
 		// when
 		List<File> thumbnails = Thumbnails.of(img, img)
 			.size(50, 50)
-			.asFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
 		assertEquals(2, thumbnails.size());
@@ -983,7 +983,7 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		File destFile = new File("test-resources/Thumbnailator/tmp.png");
+		File destFile = new File("src/test/resources/Thumbnailator/tmp.png");
 		destFile.deleteOnExit();
 		
 		try
@@ -1019,7 +1019,7 @@ public class ThumbnailsBuilderInputOutputTest
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		String destFilePath = "test-resources/Thumbnailator/tmp.png";
+		String destFilePath = "src/test/resources/Thumbnailator/tmp.png";
 		
 		try
 		{
@@ -1066,12 +1066,12 @@ public class ThumbnailsBuilderInputOutputTest
 		Thumbnails.of(img, img)
 			.size(50, 50)
 			.outputFormat("png")
-			.toFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/temp-0.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/temp-0.png");
 		outFile1.deleteOnExit();
-		File outFile2 = new File("test-resources/Thumbnailator/temp-1.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/temp-1.png");
 		outFile2.deleteOnExit();
 		
 		BufferedImage fromFileImage1 = ImageIO.read(outFile1);
@@ -1107,10 +1107,10 @@ public class ThumbnailsBuilderInputOutputTest
 		List<File> thumbnails = Thumbnails.of(img, img)
 			.size(50, 50)
 			.outputFormat("png")
-			.asFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
-		File outFile = new File("test-resources/Thumbnailator/temp-0.png");
+		File outFile = new File("src/test/resources/Thumbnailator/temp-0.png");
 		outFile.deleteOnExit();
 		
 		assertEquals(2, thumbnails.size());
@@ -1564,8 +1564,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_File_toFile() throws IOException
 	{
 		// given
-		File f = new File("test-resources/Thumbnailator/grid.png");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -1596,8 +1596,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_File_toFiles_Rename() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
 		// when
@@ -1628,8 +1628,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_File_asFiles_Rename() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
 		// when
@@ -1662,15 +1662,15 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_File_toFiles_Iterable() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		Thumbnails.of(f1)
 			.size(50, 50)
-			.toFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
-		File outFile = new File("test-resources/Thumbnailator/temp-0.png");
+		File outFile = new File("src/test/resources/Thumbnailator/temp-0.png");
 		outFile.deleteOnExit();
 		
 		BufferedImage fromFileImage1 = ImageIO.read(outFile);
@@ -1695,15 +1695,15 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_File_asFiles_Iterable() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		List<File> thumbnails = Thumbnails.of(f1)
 			.size(50, 50)
-			.asFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/temp-0.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/temp-0.png");
 		outFile1.deleteOnExit();
 		
 		assertEquals(1, thumbnails.size());
@@ -1729,7 +1729,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_File_asBufferedImage() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.of(f1)
@@ -1757,7 +1757,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_File_asBufferedImages() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.of(f1)
@@ -1788,7 +1788,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_File_toOutputStream() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
 		// when
@@ -1819,7 +1819,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_File_toOutputStreams() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
 		// when
@@ -1850,7 +1850,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_File_iterableBufferedImages() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		Iterable<BufferedImage> thumbnails = Thumbnails.of(f1)
@@ -1883,8 +1883,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_Files_toFile() throws IOException
 	{
 		// given
-		File f = new File("test-resources/Thumbnailator/grid.png");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		try
@@ -1919,8 +1919,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_Files_toFiles_Rename() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		Thumbnails.of(f1, f2)
@@ -1928,8 +1928,8 @@ public class ThumbnailsBuilderInputOutputTest
 			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
-		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -1959,8 +1959,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_Files_asFiles_Rename() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		List<File> thumbnails = Thumbnails.of(f1, f2)
@@ -1968,8 +1968,8 @@ public class ThumbnailsBuilderInputOutputTest
 			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
-		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -2001,17 +2001,17 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_Files_toFiles_Iterable() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
 
 		// when
 		Thumbnails.of(f1, f2)
 			.size(50, 50)
-			.toFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/temp-0.png");
-		File outFile2 = new File("test-resources/Thumbnailator/temp-1.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/temp-0.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/temp-1.png");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -2041,13 +2041,13 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_Files_asFiles_Iterable() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
 
 		// when
 		List<File> thumbnails = Thumbnails.of(f1, f2)
 			.size(50, 50)
-			.asFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
 		assertEquals(2, thumbnails.size());
@@ -2081,7 +2081,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_Files_asBufferedImage() throws IOException
 	{
 		// given
-		File f = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		try
 		{
@@ -2114,8 +2114,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_Files_asBufferedImages() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.of(f1, f2)
@@ -2150,7 +2150,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_Files_toOutputStream() throws IOException
 	{
 		// given
-		File f = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
 		OutputStream os = mock(OutputStream.class);
 		
 		try
@@ -2185,7 +2185,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_Files_toOutputStreams() throws IOException
 	{
 		// given
-		File f = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
 		ByteArrayOutputStream os1 = new ByteArrayOutputStream();
 		ByteArrayOutputStream os2 = new ByteArrayOutputStream();
 		
@@ -2223,8 +2223,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_Files_iterableBufferedImages() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		Iterable<BufferedImage> thumbnails = Thumbnails.of(f1, f2)
@@ -2261,8 +2261,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFiles_Single_toFile() throws IOException
 	{
 		// given
-		File f = new File("test-resources/Thumbnailator/grid.png");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -2293,8 +2293,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFiles_Multiple_toFile() throws IOException
 	{
 		// given
-		File f = new File("test-resources/Thumbnailator/grid.png");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -2320,8 +2320,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFiles_Single_toFiles() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
 		// when
@@ -2353,8 +2353,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFiles_Multiple_toFiles() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		Thumbnails.fromFiles(Arrays.asList(f1, f2))
@@ -2362,8 +2362,8 @@ public class ThumbnailsBuilderInputOutputTest
 			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
-		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -2393,8 +2393,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFiles_Single_asFiles() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
 		// when
@@ -2428,8 +2428,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFiles_Multiple_asFiles() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		List<File> thumbnails = Thumbnails.fromFiles(Arrays.asList(f1, f2))
@@ -2437,8 +2437,8 @@ public class ThumbnailsBuilderInputOutputTest
 			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
-		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -2469,8 +2469,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilesIterable_Single_toFile() throws IOException
 	{
 		// given
-		File f = new File("test-resources/Thumbnailator/grid.png");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -2501,8 +2501,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilesIterable_Multiple_toFile() throws IOException
 	{
 		// given
-		File f = new File("test-resources/Thumbnailator/grid.png");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -2528,8 +2528,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilesIterable_Single_toFiles() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
 		// when
@@ -2561,8 +2561,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilesIterable_Multiple_toFiles() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		Thumbnails.fromFiles((Iterable<File>)Arrays.asList(f1, f2))
@@ -2570,8 +2570,8 @@ public class ThumbnailsBuilderInputOutputTest
 			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
-		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -2601,8 +2601,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilesIterable_Single_asFiles() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
 		// when
@@ -2636,8 +2636,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilesIterable_Multiple_asFiles() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		List<File> thumbnails = Thumbnails.fromFiles((Iterable<File>)Arrays.asList(f1, f2))
@@ -2645,8 +2645,8 @@ public class ThumbnailsBuilderInputOutputTest
 			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
-		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -2677,8 +2677,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_String_toFile() throws IOException
 	{
 		// given
-		String f = "test-resources/Thumbnailator/grid.png";
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		String f = "src/test/resources/Thumbnailator/grid.png";
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -2709,8 +2709,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_Strings_toFile() throws IOException
 	{
 		// given
-		String f = "test-resources/Thumbnailator/grid.png";
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		String f = "src/test/resources/Thumbnailator/grid.png";
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -2736,8 +2736,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_String_toFiles() throws IOException
 	{
 		// given
-		String f1 = "test-resources/Thumbnailator/grid.png";
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		String f1 = "src/test/resources/Thumbnailator/grid.png";
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
 		// when
@@ -2769,8 +2769,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_Strings_toFiles() throws IOException
 	{
 		// given
-		String f1 = "test-resources/Thumbnailator/grid.png";
-		String f2 = "test-resources/Thumbnailator/grid.jpg";
+		String f1 = "src/test/resources/Thumbnailator/grid.png";
+		String f2 = "src/test/resources/Thumbnailator/grid.jpg";
 		
 		// when
 		Thumbnails.of(f1, f2)
@@ -2778,8 +2778,8 @@ public class ThumbnailsBuilderInputOutputTest
 			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
-		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -2809,8 +2809,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_String_asFiles() throws IOException
 	{
 		// given
-		String f1 = "test-resources/Thumbnailator/grid.png";
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		String f1 = "src/test/resources/Thumbnailator/grid.png";
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
 		// when
@@ -2844,8 +2844,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_Strings_asFiles() throws IOException
 	{
 		// given
-		String f1 = "test-resources/Thumbnailator/grid.png";
-		String f2 = "test-resources/Thumbnailator/grid.jpg";
+		String f1 = "src/test/resources/Thumbnailator/grid.png";
+		String f2 = "src/test/resources/Thumbnailator/grid.jpg";
 		
 		// when
 		List<File> thumbnails = Thumbnails.of(f1, f2)
@@ -2853,8 +2853,8 @@ public class ThumbnailsBuilderInputOutputTest
 			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
-		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -2885,8 +2885,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilenames_Single_toFile() throws IOException
 	{
 		// given
-		String f = "test-resources/Thumbnailator/grid.png";
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		String f = "src/test/resources/Thumbnailator/grid.png";
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -2917,8 +2917,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilenames_Multiple_toFile() throws IOException
 	{
 		// given
-		String f = "test-resources/Thumbnailator/grid.png";
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		String f = "src/test/resources/Thumbnailator/grid.png";
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -2944,8 +2944,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilenames_Single_toFiles() throws IOException
 	{
 		// given
-		String f1 = "test-resources/Thumbnailator/grid.png";
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		String f1 = "src/test/resources/Thumbnailator/grid.png";
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
 		// when
@@ -2977,8 +2977,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilenames_Multiple_toFiles() throws IOException
 	{
 		// given
-		String f1 = "test-resources/Thumbnailator/grid.png";
-		String f2 = "test-resources/Thumbnailator/grid.jpg";
+		String f1 = "src/test/resources/Thumbnailator/grid.png";
+		String f2 = "src/test/resources/Thumbnailator/grid.jpg";
 		
 		// when
 		Thumbnails.fromFilenames(Arrays.asList(f1, f2))
@@ -2986,8 +2986,8 @@ public class ThumbnailsBuilderInputOutputTest
 			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
-		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -3017,8 +3017,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilenames_Single_asFiles() throws IOException
 	{
 		// given
-		String f1 = "test-resources/Thumbnailator/grid.png";
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		String f1 = "src/test/resources/Thumbnailator/grid.png";
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
 		// when
@@ -3052,8 +3052,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilenames_Multiple_asFiles() throws IOException
 	{
 		// given
-		String f1 = "test-resources/Thumbnailator/grid.png";
-		String f2 = "test-resources/Thumbnailator/grid.jpg";
+		String f1 = "src/test/resources/Thumbnailator/grid.png";
+		String f2 = "src/test/resources/Thumbnailator/grid.jpg";
 		
 		// when
 		List<File> thumbnails = Thumbnails.fromFilenames(Arrays.asList(f1, f2))
@@ -3061,8 +3061,8 @@ public class ThumbnailsBuilderInputOutputTest
 			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
-		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -3093,8 +3093,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilenamesIterable_Single_toFile() throws IOException
 	{
 		// given
-		String f = "test-resources/Thumbnailator/grid.png";
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		String f = "src/test/resources/Thumbnailator/grid.png";
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -3125,8 +3125,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilenamesIterable_Multiple_toFile() throws IOException
 	{
 		// given
-		String f = "test-resources/Thumbnailator/grid.png";
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		String f = "src/test/resources/Thumbnailator/grid.png";
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -3152,8 +3152,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilenamesIterable_Single_toFiles() throws IOException
 	{
 		// given
-		String f1 = "test-resources/Thumbnailator/grid.png";
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		String f1 = "src/test/resources/Thumbnailator/grid.png";
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
 		// when
@@ -3185,8 +3185,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilenamesIterable_Multiple_toFiles() throws IOException
 	{
 		// given
-		String f1 = "test-resources/Thumbnailator/grid.png";
-		String f2 = "test-resources/Thumbnailator/grid.jpg";
+		String f1 = "src/test/resources/Thumbnailator/grid.png";
+		String f2 = "src/test/resources/Thumbnailator/grid.jpg";
 		
 		// when
 		Thumbnails.fromFilenames((Iterable<String>)Arrays.asList(f1, f2))
@@ -3194,8 +3194,8 @@ public class ThumbnailsBuilderInputOutputTest
 			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
-		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -3225,8 +3225,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilenamesIterable_Single_asFiles() throws IOException
 	{
 		// given
-		String f1 = "test-resources/Thumbnailator/grid.png";
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		String f1 = "src/test/resources/Thumbnailator/grid.png";
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
 		// when
@@ -3260,8 +3260,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromFilenamesIterable_Multiple_asFiles() throws IOException
 	{
 		// given
-		String f1 = "test-resources/Thumbnailator/grid.png";
-		String f2 = "test-resources/Thumbnailator/grid.jpg";
+		String f1 = "src/test/resources/Thumbnailator/grid.png";
+		String f2 = "src/test/resources/Thumbnailator/grid.jpg";
 		
 		// when
 		List<File> thumbnails = Thumbnails.fromFilenames((Iterable<String>)Arrays.asList(f1, f2))
@@ -3269,8 +3269,8 @@ public class ThumbnailsBuilderInputOutputTest
 			.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
-		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -3301,8 +3301,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URL_toFile() throws IOException
 	{
 		// given
-		URL f = new File("test-resources/Thumbnailator/grid.png").toURL();
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		URL f = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -3332,8 +3332,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URL_toFiles_Rename() throws IOException
 	{
 		// given
-		URL f1 = new File("test-resources/Thumbnailator/grid.png").toURL();
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
 		try
@@ -3367,8 +3367,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URL_asFiles_Rename() throws IOException
 	{
 		// given
-		URL f1 = new File("test-resources/Thumbnailator/grid.png").toURL();
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
 		try
@@ -3403,15 +3403,15 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URL_toFiles_Iterable() throws IOException
 	{
 		// given
-		URL f1 = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		
 		// when
 		Thumbnails.of(f1)
 			.size(50, 50)
-			.toFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
-		File outFile = new File("test-resources/Thumbnailator/temp-0.png");
+		File outFile = new File("src/test/resources/Thumbnailator/temp-0.png");
 		outFile.deleteOnExit();
 		
 		BufferedImage fromFileImage1 = ImageIO.read(outFile);
@@ -3436,15 +3436,15 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URL_asFiles_Iterable() throws IOException
 	{
 		// given
-		URL f1 = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		
 		// when
 		List<File> thumbnails = Thumbnails.of(f1)
 			.size(50, 50)
-			.asFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/temp-0.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/temp-0.png");
 		outFile1.deleteOnExit();
 		
 		assertEquals(1, thumbnails.size());
@@ -3470,7 +3470,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URL_asBufferedImage() throws IOException
 	{
 		// given
-		URL f1 = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.of(f1)
@@ -3498,7 +3498,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URL_asBufferedImages() throws IOException
 	{
 		// given
-		URL f1 = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.of(f1)
@@ -3529,7 +3529,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URL_toOutputStream() throws IOException
 	{
 		// given
-		URL f1 = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
 		// when
@@ -3560,7 +3560,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URL_toOutputStreams() throws IOException
 	{
 		// given
-		URL f1 = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
 		// when
@@ -3591,7 +3591,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URL_iterableBufferedImages() throws IOException
 	{
 		// given
-		URL f1 = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		
 		// when
 		Iterable<BufferedImage> thumbnails = Thumbnails.of(f1)
@@ -3624,8 +3624,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URLs_toFile() throws IOException
 	{
 		// given
-		URL f = new File("test-resources/Thumbnailator/grid.png").toURL();
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		URL f = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		try
@@ -3659,8 +3659,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URLs_toFiles_Rename() throws IOException
 	{
 		// given
-		URL f1 = new File("test-resources/Thumbnailator/grid.png").toURL();
-		URL f2 = new File("test-resources/Thumbnailator/grid.jpg").toURL();
+		URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+		URL f2 = new File("src/test/resources/Thumbnailator/grid.jpg").toURL();
 	
 		try
 		{
@@ -3693,8 +3693,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URLs_asFiles_Rename() throws IOException
 	{
 		// given
-		URL f1 = new File("test-resources/Thumbnailator/grid.png").toURL();
-		URL f2 = new File("test-resources/Thumbnailator/grid.jpg").toURL();
+		URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+		URL f2 = new File("src/test/resources/Thumbnailator/grid.jpg").toURL();
 		
 		try
 		{
@@ -3728,17 +3728,17 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URLs_toFiles_Iterable() throws IOException
 	{
 		// given
-		URL f1 = new File("test-resources/Thumbnailator/grid.png").toURL();
-		URL f2 = new File("test-resources/Thumbnailator/grid.jpg").toURL();
+		URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+		URL f2 = new File("src/test/resources/Thumbnailator/grid.jpg").toURL();
 	
 		// when
 		Thumbnails.of(f1, f2)
 			.size(50, 50)
-			.toFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/temp-0.png");
-		File outFile2 = new File("test-resources/Thumbnailator/temp-1.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/temp-0.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/temp-1.png");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -3768,13 +3768,13 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URLs_asFiles_Iterable() throws IOException
 	{
 		// given
-		URL f1 = new File("test-resources/Thumbnailator/grid.png").toURL();
-		URL f2 = new File("test-resources/Thumbnailator/grid.jpg").toURL();
+		URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+		URL f2 = new File("src/test/resources/Thumbnailator/grid.jpg").toURL();
 	
 		// when
 		List<File> thumbnails = Thumbnails.of(f1, f2)
 			.size(50, 50)
-			.asFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
 		assertEquals(2, thumbnails.size());
@@ -3808,7 +3808,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URLs_asBufferedImage() throws IOException
 	{
 		// given
-		URL f = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL f = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		
 		try
 		{
@@ -3841,8 +3841,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URLs_asBufferedImages() throws IOException
 	{
 		// given
-		URL f1 = new File("test-resources/Thumbnailator/grid.png").toURL();
-		URL f2 = new File("test-resources/Thumbnailator/grid.jpg").toURL();
+		URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+		URL f2 = new File("src/test/resources/Thumbnailator/grid.jpg").toURL();
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.of(f1, f2)
@@ -3877,7 +3877,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URLs_toOutputStream() throws IOException
 	{
 		// given
-		URL f = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL f = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		OutputStream os = mock(OutputStream.class);
 		
 		try
@@ -3912,7 +3912,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URLs_toOutputStreams() throws IOException
 	{
 		// given
-		URL f = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL f = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		ByteArrayOutputStream os1 = new ByteArrayOutputStream();
 		ByteArrayOutputStream os2 = new ByteArrayOutputStream();
 		
@@ -3950,8 +3950,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_URLs_iterableBufferedImages() throws IOException
 	{
 		// given
-		URL f1 = new File("test-resources/Thumbnailator/grid.png").toURL();
-		URL f2 = new File("test-resources/Thumbnailator/grid.jpg").toURL();
+		URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+		URL f2 = new File("src/test/resources/Thumbnailator/grid.jpg").toURL();
 		
 		// when
 		Iterable<BufferedImage> thumbnails = Thumbnails.of(f1, f2)
@@ -3987,7 +3987,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromURLs_Single_asBufferedImage() throws IOException
 	{
 		// given
-		URL url = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL url = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.fromURLs(Arrays.asList(url))
@@ -4014,7 +4014,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromURLs_Multiple_asBufferedImage() throws IOException
 	{
 		// given
-		URL url = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL url = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		
 		try
 		{
@@ -4046,7 +4046,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromURLs_Single_asBufferedImages() throws IOException
 	{
 		// given
-		URL url = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL url = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.fromURLs(Arrays.asList(url))
@@ -4075,7 +4075,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromURLs_Multiple_asBufferedImages() throws IOException
 	{
 		// given
-		URL url = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL url = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.fromURLs(Arrays.asList(url, url))
@@ -4106,7 +4106,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromURLsIterable_Single_asBufferedImage() throws IOException
 	{
 		// given
-		URL url = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL url = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.fromURLs((Iterable<URL>)Arrays.asList(url))
@@ -4133,7 +4133,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromURLsIterable_Multiple_asBufferedImage() throws IOException
 	{
 		// given
-		URL url = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL url = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		
 		try
 		{
@@ -4165,7 +4165,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromURLsIterable_Single_asBufferedImages() throws IOException
 	{
 		// given
-		URL url = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL url = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.fromURLs((Iterable<URL>)Arrays.asList(url))
@@ -4194,7 +4194,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromURLsIterable_Multiple_asBufferedImages() throws IOException
 	{
 		// given
-		URL url = new File("test-resources/Thumbnailator/grid.png").toURL();
+		URL url = new File("src/test/resources/Thumbnailator/grid.png").toURL();
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.fromURLs((Iterable<URL>)Arrays.asList(url, url))
@@ -4226,8 +4226,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStream_toFile() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -4257,8 +4257,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStream_toFiles_Rename() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
 		try
@@ -4292,8 +4292,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStream_asFiles_Rename() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		
 		try
@@ -4328,15 +4328,15 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStream_toFiles_Iterable() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		Thumbnails.of(is)
 			.size(50, 50)
-			.toFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
-		File outFile = new File("test-resources/Thumbnailator/temp-0.png");
+		File outFile = new File("src/test/resources/Thumbnailator/temp-0.png");
 		outFile.deleteOnExit();
 		
 		BufferedImage fromFileImage1 = ImageIO.read(outFile);
@@ -4361,15 +4361,15 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStream_asFiles_Iterable() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		List<File> thumbnails = Thumbnails.of(is)
 			.size(50, 50)
-			.asFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/temp-0.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/temp-0.png");
 		outFile1.deleteOnExit();
 		
 		assertEquals(1, thumbnails.size());
@@ -4395,7 +4395,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStream_asBufferedImage() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.of(is)
@@ -4423,7 +4423,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStream_asBufferedImages() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.of(is)
@@ -4454,7 +4454,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStream_toOutputStream() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
 		// when
@@ -4485,7 +4485,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStream_toOutputStreams() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
 		// when
@@ -4516,7 +4516,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStream_iterableBufferedImages() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		Iterable<BufferedImage> thumbnails = Thumbnails.of(is)
@@ -4549,8 +4549,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStreams_toFile() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		try
@@ -4584,8 +4584,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStreams_toFiles_Rename() throws IOException
 	{
 		// given
-		InputStream is1 = new FileInputStream("test-resources/Thumbnailator/grid.png");
-		InputStream is2 = new FileInputStream("test-resources/Thumbnailator/grid.jpg");
+		InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+		InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
 		
 		try
 		{
@@ -4618,8 +4618,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStreams_asFiles_Rename() throws IOException
 	{
 		// given
-		InputStream is1 = new FileInputStream("test-resources/Thumbnailator/grid.png");
-		InputStream is2 = new FileInputStream("test-resources/Thumbnailator/grid.jpg");
+		InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+		InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
 		
 		try
 		{
@@ -4653,17 +4653,17 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStreams_toFiles_Iterable() throws IOException
 	{
 		// given
-		InputStream is1 = new FileInputStream("test-resources/Thumbnailator/grid.png");
-		InputStream is2 = new FileInputStream("test-resources/Thumbnailator/grid.jpg");
+		InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+		InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		Thumbnails.of(is1, is2)
 			.size(50, 50)
-			.toFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/temp-0.png");
-		File outFile2 = new File("test-resources/Thumbnailator/temp-1.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/temp-0.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/temp-1.png");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -4693,13 +4693,13 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStreams_asFiles_Iterable() throws IOException
 	{
 		// given
-		InputStream is1 = new FileInputStream("test-resources/Thumbnailator/grid.png");
-		InputStream is2 = new FileInputStream("test-resources/Thumbnailator/grid.jpg");
+		InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+		InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		List<File> thumbnails = Thumbnails.of(is1, is2)
 			.size(50, 50)
-			.asFiles(new ConsecutivelyNumberedFilenames(new File("test-resources/Thumbnailator"), "temp-%d.png"));
+			.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
 		
 		// then
 		assertEquals(2, thumbnails.size());
@@ -4733,7 +4733,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStreams_asBufferedImage() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		try
 		{
@@ -4766,8 +4766,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStreams_asBufferedImages() throws IOException
 	{
 		// given
-		InputStream is1 = new FileInputStream("test-resources/Thumbnailator/grid.png");
-		InputStream is2 = new FileInputStream("test-resources/Thumbnailator/grid.jpg");
+		InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+		InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.of(is1, is2)
@@ -4802,7 +4802,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStreams_toOutputStream() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		OutputStream os = mock(OutputStream.class);
 		
 		try
@@ -4837,8 +4837,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStreams_toOutputStreams() throws IOException
 	{
 		// given
-		InputStream is1 = new FileInputStream("test-resources/Thumbnailator/grid.png");
-		InputStream is2 = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+		InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		ByteArrayOutputStream os1 = new ByteArrayOutputStream();
 		ByteArrayOutputStream os2 = new ByteArrayOutputStream();
 		
@@ -4876,8 +4876,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStreams_iterableBufferedImages() throws IOException
 	{
 		// given
-		InputStream is1 = new FileInputStream("test-resources/Thumbnailator/grid.png");
-		InputStream is2 = new FileInputStream("test-resources/Thumbnailator/grid.jpg");
+		InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+		InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		Iterable<BufferedImage> thumbnails = Thumbnails.of(is1, is2)
@@ -4913,7 +4913,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromInputStreams_Single_asBufferedImage() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.fromInputStreams(Arrays.asList(is))
@@ -4940,7 +4940,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromInputStreams_Multiple_asBufferedImage() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		try
 		{
@@ -4972,7 +4972,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromInputStreams_Single_asBufferedImages() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.fromInputStreams(Arrays.asList(is))
@@ -5001,8 +5001,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromInputStreams_Multiple_asBufferedImages() throws IOException
 	{
 		// given
-		InputStream is1 = new FileInputStream("test-resources/Thumbnailator/grid.png");
-		InputStream is2 = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+		InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.fromInputStreams(Arrays.asList(is1, is2))
@@ -5033,7 +5033,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromInputStreams_Single_FileInputStream_asBufferedImage() throws IOException
 	{
 		// given
-		FileInputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		FileInputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.fromInputStreams(Arrays.asList(is))
@@ -5060,7 +5060,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromInputStreams_Multiple_FileInputStream_asBufferedImage() throws IOException
 	{
 		// given
-		FileInputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		FileInputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		try
 		{
@@ -5092,7 +5092,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromInputStreams_Single_FileInputStream_asBufferedImages() throws IOException
 	{
 		// given
-		FileInputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		FileInputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.fromInputStreams(Arrays.asList(is))
@@ -5121,8 +5121,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromInputStream_Multiple_FileInputStream_asBufferedImages() throws IOException
 	{
 		// given
-		FileInputStream fis1 = new FileInputStream("test-resources/Thumbnailator/grid.png");
-		FileInputStream fis2 = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		FileInputStream fis1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+		FileInputStream fis2 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.fromInputStreams(Arrays.asList(fis1, fis2))
@@ -5155,8 +5155,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void of_InputStream_FileInputStream_toFile() throws IOException
 	{
 		// given
-		FileInputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		FileInputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -5185,7 +5185,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromInputStreamsIterable_Single_asBufferedImage() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.fromInputStreams((Iterable<InputStream>)Arrays.asList(is))
@@ -5212,7 +5212,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromInputStreamsIterable_Multiple_asBufferedImage() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		try
 		{
@@ -5244,7 +5244,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromInputStreamsIterable_Single_asBufferedImages() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.fromInputStreams((Iterable<InputStream>)Arrays.asList(is))
@@ -5273,8 +5273,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromInputStreamsIterable_Multiple_asBufferedImages() throws IOException
 	{
 		// given
-		InputStream is1 = new FileInputStream("test-resources/Thumbnailator/grid.png");
-		InputStream is2 = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+		InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.fromInputStreams((Iterable<InputStream>)Arrays.asList(is1, is2))
@@ -5305,7 +5305,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromInputStreamsIterable_Single_FileInputStream_asBufferedImage() throws IOException
 	{
 		// given
-		FileInputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		FileInputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.fromInputStreams((Iterable<FileInputStream>)Arrays.asList(is))
@@ -5332,7 +5332,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromInputStreamsIterable_Multiple_FileInputStream_asBufferedImage() throws IOException
 	{
 		// given
-		FileInputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		FileInputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		try
 		{
@@ -5364,7 +5364,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromInputStreamsIterable_Single_FileInputStream_asBufferedImages() throws IOException
 	{
 		// given
-		FileInputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		FileInputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.fromInputStreams((Iterable<FileInputStream>)Arrays.asList(is))
@@ -5393,8 +5393,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fromInputStreamIterable_Multiple_FileInputStream_asBufferedImages() throws IOException
 	{
 		// given
-		FileInputStream fis1 = new FileInputStream("test-resources/Thumbnailator/grid.png");
-		FileInputStream fis2 = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		FileInputStream fis1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+		FileInputStream fis2 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		List<BufferedImage> thumbnails = Thumbnails.fromInputStreams((Iterable<FileInputStream>)Arrays.asList(fis1, fis2))
@@ -5426,8 +5426,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void fileSizeDecreasesAfterResize() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
-		File f = new File("test-resources/Thumbnailator/tmp-grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
+		File f = new File("src/test/resources/Thumbnailator/tmp-grid.png");
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, f);
@@ -5462,7 +5462,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_File_AllowOverwrite() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
@@ -5499,7 +5499,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_File_DisallowOverwrite() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
@@ -5540,7 +5540,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_String_AllowOverwrite() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
@@ -5577,7 +5577,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_String_DisallowOverwrite() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		
 		// copy the image to a temporary file.
@@ -5619,7 +5619,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesIterable_AllowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -5660,7 +5660,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesIterable_AllowOverwrite_SingleFile_OutputFileExists() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -5703,7 +5703,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesIterable_DisallowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -5744,7 +5744,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesIterable_DisallowOverwrite_SingleFile_OutputFileExists() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -5788,7 +5788,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesIterable_AllowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -5833,7 +5833,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesIterable_AllowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -5880,7 +5880,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesIterable_AllowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -5929,7 +5929,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesIterable_DisallowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -5974,7 +5974,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesIterable_DisallowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -6021,7 +6021,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesIterable_DisallowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -6070,7 +6070,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesIterable_AllowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -6116,7 +6116,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesIterable_AllowOverwrite_SingleFile_OutputFileExists() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -6166,7 +6166,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesIterable_DisallowOverwrite_SingleFiles_OutputFileDoesNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -6212,7 +6212,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesIterable_DisallowOverwrite_SingleFile_OutputFileExists() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -6263,7 +6263,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesIterable_AllowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -6310,7 +6310,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesIterable_AllowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -6359,7 +6359,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesIterable_AllowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -6410,7 +6410,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesIterable_DisallowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -6457,7 +6457,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesIterable_DisallowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -6506,7 +6506,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesIterable_DisallowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -6555,7 +6555,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesRename_AllowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
@@ -6597,7 +6597,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesRename_AllowOverwrite_SingleFile_OutputFileExists() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
@@ -6641,7 +6641,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesRename_DisallowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
@@ -6683,7 +6683,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesRename_DisallowOverwrite_SingleFile_OutputFileExists() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
@@ -6728,7 +6728,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesRename_AllowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
@@ -6777,7 +6777,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesRename_AllowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
@@ -6828,7 +6828,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesRename_AllowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
@@ -6881,7 +6881,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesRename_DisallowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
@@ -6930,7 +6930,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesRename_DisallowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
@@ -6981,7 +6981,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFilesRename_DisallowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
@@ -7033,7 +7033,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesRename_AllowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
@@ -7076,7 +7076,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesRename_AllowOverwrite_SingleFile_OutputFileExists() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
@@ -7121,7 +7121,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesRename_DisallowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
@@ -7164,7 +7164,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesRename_DisallowOverwrite_SingleFile_OutputFileExists() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
@@ -7210,7 +7210,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesRename_AllowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
@@ -7260,7 +7260,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesRename_AllowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
@@ -7312,7 +7312,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesRename_AllowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
@@ -7366,7 +7366,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesRename_DisallowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
@@ -7416,7 +7416,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesRename_DisallowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
@@ -7468,7 +7468,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFilesRename_DisallowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
@@ -7509,7 +7509,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7529,7 +7529,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7549,7 +7549,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7569,7 +7569,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7589,7 +7589,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7609,7 +7609,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7629,7 +7629,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpeg_DestExtensionIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7649,7 +7649,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpeg_DestExtensionIsJPG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7669,7 +7669,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpeg_DestExtensionIsJpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7689,7 +7689,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpeg_DestExtensionIsjpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7709,7 +7709,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpeg_DestExtensionIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7729,7 +7729,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpeg_DestExtensionIsJpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7749,7 +7749,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJPG_DestExtensionIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "JPG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7769,7 +7769,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJPG_DestExtensionIsJPG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "JPG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7789,7 +7789,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJPG_DestExtensionIsJpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "JPG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7809,7 +7809,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJPG_DestExtensionIsjpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "JPG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7829,7 +7829,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJPG_DestExtensionIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "JPG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7849,7 +7849,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJPG_DestExtensionIsJpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "JPG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7869,7 +7869,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJPEG_DestExtensionIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7889,7 +7889,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJPEG_DestExtensionIsJPG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7909,7 +7909,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJPEG_DestExtensionIsJpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7929,7 +7929,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJPEG_DestExtensionIsjpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7949,7 +7949,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJPEG_DestExtensionIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7969,7 +7969,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJPEG_DestExtensionIsJpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -7989,7 +7989,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJpg_DestExtensionIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8009,7 +8009,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJpg_DestExtensionIsJPG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8029,7 +8029,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJpg_DestExtensionIsJpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8049,7 +8049,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJpg_DestExtensionIsjpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8069,7 +8069,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJpg_DestExtensionIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8089,7 +8089,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJpg_DestExtensionIsJpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8109,7 +8109,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJpeg_DestExtensionIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8129,7 +8129,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJpeg_DestExtensionIsJPG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8149,7 +8149,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJpeg_DestExtensionIsJpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8169,7 +8169,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJpeg_DestExtensionIsjpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8189,7 +8189,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJpeg_DestExtensionIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8209,7 +8209,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsJpeg_DestExtensionIsJpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8229,7 +8229,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpg_OutputFormatIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8250,7 +8250,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPG_OutputFormatIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8271,7 +8271,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpg_OutputFormatIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8292,7 +8292,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpeg_OutputFormatIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8313,7 +8313,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPEG_OutputFormatIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8334,7 +8334,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpeg_OutputFormatIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8355,7 +8355,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpg_OutputFormatIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8376,7 +8376,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPG_OutputFormatIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8397,7 +8397,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpg_OutputFormatIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8418,7 +8418,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsjpeg_OutputFormatIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8439,7 +8439,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsJPEG_OutputFormatIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8460,7 +8460,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsjpg_DestExtensionIsJpeg_OutputFormatIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8481,7 +8481,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8501,7 +8501,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsJPG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8521,7 +8521,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsJpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8541,7 +8541,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsjpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8561,7 +8561,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8581,7 +8581,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsJpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8601,7 +8601,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPNG_DestExtensionIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8621,7 +8621,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPNG_DestExtensionIsJPG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8641,7 +8641,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPNG_DestExtensionIsJpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8661,7 +8661,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPNG_DestExtensionIsjpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8681,7 +8681,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPNG_DestExtensionIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8701,7 +8701,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPNG_DestExtensionIsJpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8721,7 +8721,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPng_DestExtensionIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8741,7 +8741,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPng_DestExtensionIsJPG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8761,7 +8761,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPng_DestExtensionIsJpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8781,7 +8781,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPng_DestExtensionIsjpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8801,7 +8801,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPng_DestExtensionIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8821,7 +8821,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIsPng_DestExtensionIsJpeg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8841,7 +8841,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsjpg_OutputFormatIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8862,7 +8862,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsJPG_OutputFormatIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8883,7 +8883,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsJpg_OutputFormatIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8904,7 +8904,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsjpeg_OutputFormatIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8925,7 +8925,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsJPEG_OutputFormatIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8946,7 +8946,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsJpeg_OutputFormatIsjpg() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8967,7 +8967,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsjpg_OutputFormatIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -8988,7 +8988,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsJPG_OutputFormatIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -9009,7 +9009,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsJpg_OutputFormatIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -9030,7 +9030,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsjpeg_OutputFormatIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -9051,7 +9051,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsJPEG_OutputFormatIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -9072,7 +9072,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFile_SourceExtensionIspng_DestExtensionIsJpeg_OutputFormatIsJPEG() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -9093,7 +9093,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFiles_Rename_WritesToSameDir_AllInputFromSameDir() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		String tmpDir = TMPDIR + "/rename";
 		TestUtils.makeTemporaryDirectory(tmpDir);
@@ -9120,7 +9120,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFiles_Rename_WritesToSameDir_InputsFromDifferentDir() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		String tmpDir1 = TMPDIR + "/rename/1";
 		String tmpDir2 = TMPDIR + "/rename/2";
@@ -9151,7 +9151,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFiles_Rename_WritesToSpecifiedDir_AllInputFromSameDir() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		String tmpDir = TMPDIR + "/rename";
 		String targetDir = TMPDIR + "/target";
@@ -9183,7 +9183,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFiles_Rename_WritesToSpecifiedDir_InputsFromDifferentDir() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		String tmpDir1 = TMPDIR + "/rename/1";
 		String tmpDir2 = TMPDIR + "/rename/2";
@@ -9220,8 +9220,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFiles_Rename_WritesToSpecifiedDir_InputsFromDifferentDir_InputSameName() throws IOException
 	{
 		// given
-		File sourceFile1 = new File("test-resources/Thumbnailator/grid.png");
-		File sourceFile2 = new File("test-resources/Thumbnailator/igrid.png");
+		File sourceFile1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File sourceFile2 = new File("src/test/resources/Thumbnailator/igrid.png");
 		
 		String tmpDir1 = TMPDIR + "/rename/1";
 		String tmpDir2 = TMPDIR + "/rename/2";
@@ -9261,8 +9261,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFiles_Rename_WritesToSpecifiedDir_InputsFromDifferentDir_InputSameName_OverwriteFalse() throws IOException
 	{
 		// given
-		File sourceFile1 = new File("test-resources/Thumbnailator/grid.png");
-		File sourceFile2 = new File("test-resources/Thumbnailator/igrid.png");
+		File sourceFile1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File sourceFile2 = new File("src/test/resources/Thumbnailator/igrid.png");
 		
 		String tmpDir1 = TMPDIR + "/rename/1";
 		String tmpDir2 = TMPDIR + "/rename/2";
@@ -9302,8 +9302,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFiles_Rename_WritesToSpecifiedDir_InputsFromDifferentDir_InputSameName_OverwriteTrue() throws IOException
 	{
 		// given
-		File sourceFile1 = new File("test-resources/Thumbnailator/grid.png");
-		File sourceFile2 = new File("test-resources/Thumbnailator/igrid.png");
+		File sourceFile1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File sourceFile2 = new File("src/test/resources/Thumbnailator/igrid.png");
 		
 		String tmpDir1 = TMPDIR + "/rename/1";
 		String tmpDir2 = TMPDIR + "/rename/2";
@@ -9344,7 +9344,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFiles_Rename_WritesToSpecifiedDir_OutputDirDoesntExist() throws IOException
 	{
 		// given
-		File sourceFile1 = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile1 = new File("src/test/resources/Thumbnailator/grid.png");
 		String tmpDir1 = TMPDIR + "/rename/1";
 		String targetDir = TMPDIR + "/target";
 		TestUtils.makeTemporaryDirectory(tmpDir1);
@@ -9375,7 +9375,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toFiles_Rename_WritesToSpecifiedDir_OutputDirIsntADir() throws IOException
 	{
 		// given
-		File sourceFile1 = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile1 = new File("src/test/resources/Thumbnailator/grid.png");
 		String tmpDir1 = TMPDIR + "/rename/1";
 		String targetDir = TMPDIR + "/target";
 		TestUtils.makeTemporaryDirectory(tmpDir1);
@@ -9408,7 +9408,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFiles_Rename_WritesToSameDir_AllInputFromSameDir() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		String tmpDir = TMPDIR + "/rename";
 		TestUtils.makeTemporaryDirectory(tmpDir);
@@ -9440,7 +9440,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFiles_Rename_WritesToSameDir_InputsFromDifferentDir() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		String tmpDir1 = TMPDIR + "/rename/1";
 		String tmpDir2 = TMPDIR + "/rename/2";
@@ -9476,7 +9476,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFiles_Rename_WritesToSpecifiedDir_AllInputFromSameDir() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		String tmpDir = TMPDIR + "/rename";
 		String targetDir = TMPDIR + "/target";
@@ -9513,7 +9513,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFiles_Rename_WritesToSpecifiedDir_InputsFromDifferentDir() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		String tmpDir1 = TMPDIR + "/rename/1";
 		String tmpDir2 = TMPDIR + "/rename/2";
@@ -9554,8 +9554,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFiles_Rename_WritesToSpecifiedDir_InputsFromDifferentDir_InputSameName() throws IOException
 	{
 		// given
-		File sourceFile1 = new File("test-resources/Thumbnailator/grid.png");
-		File sourceFile2 = new File("test-resources/Thumbnailator/igrid.png");
+		File sourceFile1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File sourceFile2 = new File("src/test/resources/Thumbnailator/igrid.png");
 		
 		String tmpDir1 = TMPDIR + "/rename/1";
 		String tmpDir2 = TMPDIR + "/rename/2";
@@ -9596,8 +9596,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFiles_Rename_WritesToSpecifiedDir_InputsFromDifferentDir_InputSameName_OverwriteFalse() throws IOException
 	{
 		// given
-		File sourceFile1 = new File("test-resources/Thumbnailator/grid.png");
-		File sourceFile2 = new File("test-resources/Thumbnailator/igrid.png");
+		File sourceFile1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File sourceFile2 = new File("src/test/resources/Thumbnailator/igrid.png");
 		
 		String tmpDir1 = TMPDIR + "/rename/1";
 		String tmpDir2 = TMPDIR + "/rename/2";
@@ -9638,8 +9638,8 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFiles_Rename_WritesToSpecifiedDir_InputsFromDifferentDir_InputSameName_OverwriteTrue() throws IOException
 	{
 		// given
-		File sourceFile1 = new File("test-resources/Thumbnailator/grid.png");
-		File sourceFile2 = new File("test-resources/Thumbnailator/igrid.png");
+		File sourceFile1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File sourceFile2 = new File("src/test/resources/Thumbnailator/igrid.png");
 		
 		String tmpDir1 = TMPDIR + "/rename/1";
 		String tmpDir2 = TMPDIR + "/rename/2";
@@ -9680,7 +9680,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFiles_Rename_WritesToSpecifiedDir_OutputDirDoesntExist() throws IOException
 	{
 		// given
-		File sourceFile1 = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile1 = new File("src/test/resources/Thumbnailator/grid.png");
 		String tmpDir1 = TMPDIR + "/rename/1";
 		String targetDir = TMPDIR + "/target";
 		TestUtils.makeTemporaryDirectory(tmpDir1);
@@ -9711,7 +9711,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void asFiles_Rename_WritesToSpecifiedDir_OutputDirIsntADir() throws IOException
 	{
 		// given
-		File sourceFile1 = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile1 = new File("src/test/resources/Thumbnailator/grid.png");
 		String tmpDir1 = TMPDIR + "/rename/1";
 		String targetDir = TMPDIR + "/target";
 		TestUtils.makeTemporaryDirectory(tmpDir1);
@@ -9744,7 +9744,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void useOriginalFormat() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -9766,7 +9766,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void determineOutputFormat() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(sourceFile, f);
 		
@@ -9787,7 +9787,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void correctOrientation1() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_1.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_1.jpg");
 		
 		// when
 		BufferedImage result =
@@ -9810,7 +9810,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void correctOrientation2() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_2.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
 		
 		// when
 		BufferedImage result =
@@ -9833,7 +9833,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void correctOrientation3() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_3.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_3.jpg");
 		
 		// when
 		BufferedImage result =
@@ -9856,7 +9856,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void correctOrientation4() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_4.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_4.jpg");
 		
 		// when
 		BufferedImage result =
@@ -9879,7 +9879,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void correctOrientation5() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_5.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_5.jpg");
 		
 		// when
 		BufferedImage result =
@@ -9902,7 +9902,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void correctOrientation6() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_6.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_6.jpg");
 		
 		// when
 		BufferedImage result =
@@ -9925,7 +9925,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void correctOrientation7() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_7.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_7.jpg");
 		
 		// when
 		BufferedImage result =
@@ -9948,7 +9948,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void correctOrientation8() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_8.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_8.jpg");
 		
 		// when
 		BufferedImage result =
@@ -9971,7 +9971,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void correctOrientation1FromInputStream() throws IOException
 	{
 		// given
-		FileInputStream is = new FileInputStream("test-resources/Exif/source_1.jpg");
+		FileInputStream is = new FileInputStream("src/test/resources/Exif/source_1.jpg");
 		
 		// when
 		BufferedImage result =
@@ -9994,7 +9994,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void correctOrientation2FromInputStream() throws Exception
 	{
 		// given
-		FileInputStream is = new FileInputStream("test-resources/Exif/source_2.jpg");
+		FileInputStream is = new FileInputStream("src/test/resources/Exif/source_2.jpg");
 		
 		// when
 		BufferedImage result =
@@ -10017,7 +10017,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void correctOrientation3FromInputStream() throws Exception
 	{
 		// given
-		FileInputStream is = new FileInputStream("test-resources/Exif/source_3.jpg");
+		FileInputStream is = new FileInputStream("src/test/resources/Exif/source_3.jpg");
 		
 		// when
 		BufferedImage result =
@@ -10040,7 +10040,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void correctOrientation4FromInputStream() throws Exception
 	{
 		// given
-		FileInputStream is = new FileInputStream("test-resources/Exif/source_4.jpg");
+		FileInputStream is = new FileInputStream("src/test/resources/Exif/source_4.jpg");
 		
 		// when
 		BufferedImage result =
@@ -10063,7 +10063,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void correctOrientation5FromInputStream() throws Exception
 	{
 		// given
-		FileInputStream is = new FileInputStream("test-resources/Exif/source_5.jpg");
+		FileInputStream is = new FileInputStream("src/test/resources/Exif/source_5.jpg");
 		
 		// when
 		BufferedImage result =
@@ -10086,7 +10086,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void correctOrientation6FromInputStream() throws Exception
 	{
 		// given
-		FileInputStream is = new FileInputStream("test-resources/Exif/source_6.jpg");
+		FileInputStream is = new FileInputStream("src/test/resources/Exif/source_6.jpg");
 		
 		// when
 		BufferedImage result =
@@ -10109,7 +10109,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void correctOrientation7FromInputStream() throws Exception
 	{
 		// given
-		FileInputStream is = new FileInputStream("test-resources/Exif/source_7.jpg");
+		FileInputStream is = new FileInputStream("src/test/resources/Exif/source_7.jpg");
 		
 		// when
 		BufferedImage result =
@@ -10132,7 +10132,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void correctOrientation8FromInputStream() throws Exception
 	{
 		// given
-		FileInputStream is = new FileInputStream("test-resources/Exif/source_8.jpg");
+		FileInputStream is = new FileInputStream("src/test/resources/Exif/source_8.jpg");
 		
 		// when
 		BufferedImage result =
@@ -10157,7 +10157,7 @@ public class ThumbnailsBuilderInputOutputTest
 		// given
 		// when
 		List<BufferedImage> results =
-			Thumbnails.of("test-resources/Exif/source_1.jpg", "test-resources/Exif/source_1.jpg")
+			Thumbnails.of("src/test/resources/Exif/source_1.jpg", "src/test/resources/Exif/source_1.jpg")
 				.size(100, 100)
 				.asBufferedImages();
 		
@@ -10187,7 +10187,7 @@ public class ThumbnailsBuilderInputOutputTest
 		// given
 		// when
 		List<BufferedImage> results =
-			Thumbnails.of("test-resources/Exif/source_2.jpg", "test-resources/Exif/source_1.jpg")
+			Thumbnails.of("src/test/resources/Exif/source_2.jpg", "src/test/resources/Exif/source_1.jpg")
 				.size(100, 100)
 				.asBufferedImages();
 		
@@ -10217,7 +10217,7 @@ public class ThumbnailsBuilderInputOutputTest
 		// given
 		// when
 		Iterable<BufferedImage> results =
-			Thumbnails.of("test-resources/Exif/source_1.jpg", "test-resources/Exif/source_1.jpg")
+			Thumbnails.of("src/test/resources/Exif/source_1.jpg", "src/test/resources/Exif/source_1.jpg")
 				.size(100, 100)
 				.iterableBufferedImages();
 		
@@ -10248,7 +10248,7 @@ public class ThumbnailsBuilderInputOutputTest
 		// given
 		// when
 		Iterable<BufferedImage> results =
-				Thumbnails.of("test-resources/Exif/source_2.jpg", "test-resources/Exif/source_1.jpg")
+				Thumbnails.of("src/test/resources/Exif/source_2.jpg", "src/test/resources/Exif/source_1.jpg")
 					.size(100, 100)
 					.iterableBufferedImages();
 
@@ -10283,7 +10283,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// when
 		List<File> results =
-			Thumbnails.of("test-resources/Exif/source_1.jpg", "test-resources/Exif/source_1.jpg")
+			Thumbnails.of("src/test/resources/Exif/source_1.jpg", "src/test/resources/Exif/source_1.jpg")
 				.size(100, 100)
 				.asFiles(Arrays.asList(outFile1, outFile2));
 		
@@ -10316,7 +10316,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// when
 		List<File> results =
-			Thumbnails.of("test-resources/Exif/source_2.jpg", "test-resources/Exif/source_1.jpg")
+			Thumbnails.of("src/test/resources/Exif/source_2.jpg", "src/test/resources/Exif/source_1.jpg")
 				.size(100, 100)
 				.asFiles(Arrays.asList(outFile1, outFile2));
 		
@@ -10346,8 +10346,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// given
 		File sourceFile1 = TestUtils.createTempFile(TMPDIR, "jpg");
 		File sourceFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
-		TestUtils.copyFile(new File("test-resources/Exif/source_1.jpg"), sourceFile1);
-		TestUtils.copyFile(new File("test-resources/Exif/source_1.jpg"), sourceFile2);
+		TestUtils.copyFile(new File("src/test/resources/Exif/source_1.jpg"), sourceFile1);
+		TestUtils.copyFile(new File("src/test/resources/Exif/source_1.jpg"), sourceFile2);
 		
 		// when
 		List<File> results =
@@ -10381,8 +10381,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// given
 		File sourceFile1 = TestUtils.createTempFile(TMPDIR, "jpg");
 		File sourceFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
-		TestUtils.copyFile(new File("test-resources/Exif/source_2.jpg"), sourceFile1);
-		TestUtils.copyFile(new File("test-resources/Exif/source_1.jpg"), sourceFile2);
+		TestUtils.copyFile(new File("src/test/resources/Exif/source_2.jpg"), sourceFile1);
+		TestUtils.copyFile(new File("src/test/resources/Exif/source_1.jpg"), sourceFile2);
 		
 		// when
 		List<File> results =
@@ -10418,7 +10418,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File outFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
 		
 		// when
-		Thumbnails.of("test-resources/Exif/source_1.jpg", "test-resources/Exif/source_1.jpg")
+		Thumbnails.of("src/test/resources/Exif/source_1.jpg", "src/test/resources/Exif/source_1.jpg")
 			.size(100, 100)
 			.toFiles(Arrays.asList(outFile1, outFile2));
 		
@@ -10449,7 +10449,7 @@ public class ThumbnailsBuilderInputOutputTest
 		File outFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
 		
 		// when
-		Thumbnails.of("test-resources/Exif/source_2.jpg", "test-resources/Exif/source_1.jpg")
+		Thumbnails.of("src/test/resources/Exif/source_2.jpg", "src/test/resources/Exif/source_1.jpg")
 			.size(100, 100)
 			.toFiles(Arrays.asList(outFile1, outFile2));
 		
@@ -10478,8 +10478,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// given
 		File sourceFile1 = TestUtils.createTempFile(TMPDIR, "jpg");
 		File sourceFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
-		TestUtils.copyFile(new File("test-resources/Exif/source_1.jpg"), sourceFile1);
-		TestUtils.copyFile(new File("test-resources/Exif/source_1.jpg"), sourceFile2);
+		TestUtils.copyFile(new File("src/test/resources/Exif/source_1.jpg"), sourceFile1);
+		TestUtils.copyFile(new File("src/test/resources/Exif/source_1.jpg"), sourceFile2);
 		
 		// when
 		Thumbnails.of(sourceFile1, sourceFile2)
@@ -10511,8 +10511,8 @@ public class ThumbnailsBuilderInputOutputTest
 		// given
 		File sourceFile1 = TestUtils.createTempFile(TMPDIR, "jpg");
 		File sourceFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
-		TestUtils.copyFile(new File("test-resources/Exif/source_2.jpg"), sourceFile1);
-		TestUtils.copyFile(new File("test-resources/Exif/source_1.jpg"), sourceFile2);
+		TestUtils.copyFile(new File("src/test/resources/Exif/source_2.jpg"), sourceFile1);
+		TestUtils.copyFile(new File("src/test/resources/Exif/source_1.jpg"), sourceFile2);
 		
 		// when
 		Thumbnails.of(sourceFile1, sourceFile2)
@@ -10546,7 +10546,7 @@ public class ThumbnailsBuilderInputOutputTest
 		ByteArrayOutputStream os2 = new ByteArrayOutputStream();
 				
 		// when
-		Thumbnails.of("test-resources/Exif/source_1.jpg", "test-resources/Exif/source_1.jpg")
+		Thumbnails.of("src/test/resources/Exif/source_1.jpg", "src/test/resources/Exif/source_1.jpg")
 			.size(100, 100)
 			.toOutputStreams(Arrays.asList(os1, os2));
 		
@@ -10577,7 +10577,7 @@ public class ThumbnailsBuilderInputOutputTest
 		ByteArrayOutputStream os2 = new ByteArrayOutputStream();
 		
 		// when
-		Thumbnails.of("test-resources/Exif/source_2.jpg", "test-resources/Exif/source_1.jpg")
+		Thumbnails.of("src/test/resources/Exif/source_2.jpg", "src/test/resources/Exif/source_1.jpg")
 			.size(100, 100)
 			.toOutputStreams(Arrays.asList(os1, os2));
 		
@@ -10609,7 +10609,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// when
 		List<File> results =
-			Thumbnails.of("test-resources/Exif/source_2.jpg", "test-resources/Exif/source_1.jpg")
+			Thumbnails.of("src/test/resources/Exif/source_2.jpg", "src/test/resources/Exif/source_1.jpg")
 				.size(100, 100)
 				.useExifOrientation(true)
 				.asFiles(Arrays.asList(outFile1, outFile2));
@@ -10643,7 +10643,7 @@ public class ThumbnailsBuilderInputOutputTest
 		
 		// when
 		List<File> results =
-			Thumbnails.of("test-resources/Exif/source_2.jpg", "test-resources/Exif/source_1.jpg")
+			Thumbnails.of("src/test/resources/Exif/source_2.jpg", "src/test/resources/Exif/source_1.jpg")
 				.size(100, 100)
 				.useExifOrientation(false)
 				.asFiles(Arrays.asList(outFile1, outFile2));
@@ -10694,7 +10694,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toOutputStreamImageFormatMatchesInputForPngStream() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		
 		// when
@@ -10710,7 +10710,7 @@ public class ThumbnailsBuilderInputOutputTest
 	public void toOutputStreamImageFormatMatchesInputForJpegStream() throws IOException
 	{
 		// given
-		InputStream is = new FileInputStream("test-resources/Thumbnailator/grid.jpg");
+		InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		
 		// when
@@ -10729,7 +10729,7 @@ public class ThumbnailsBuilderInputOutputTest
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		
 		// when
-		Thumbnails.of("test-resources/Thumbnailator/grid.png")
+		Thumbnails.of("src/test/resources/Thumbnailator/grid.png")
 			.size(100, 100)
 			.toOutputStream(baos);
 		
@@ -10744,7 +10744,7 @@ public class ThumbnailsBuilderInputOutputTest
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		
 		// when
-		Thumbnails.of("test-resources/Thumbnailator/grid.jpg")
+		Thumbnails.of("src/test/resources/Thumbnailator/grid.jpg")
 			.size(100, 100)
 			.toOutputStream(baos);
 		
@@ -10759,7 +10759,7 @@ public class ThumbnailsBuilderInputOutputTest
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		
 		// when
-		Thumbnails.of("test-resources/Thumbnailator/grid.jpg")
+		Thumbnails.of("src/test/resources/Thumbnailator/grid.jpg")
 			.size(100, 100)
 			.outputFormat("png")
 			.toOutputStream(baos);
@@ -10775,7 +10775,7 @@ public class ThumbnailsBuilderInputOutputTest
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		
 		// when
-		Thumbnails.of("test-resources/Thumbnailator/grid.jpg")
+		Thumbnails.of("src/test/resources/Thumbnailator/grid.jpg")
 			.size(100, 100)
 			.outputFormat("JPEG")
 			.toOutputStream(baos);

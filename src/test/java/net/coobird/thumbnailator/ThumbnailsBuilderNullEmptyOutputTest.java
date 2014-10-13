@@ -64,7 +64,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		File outFile = new File("test-resources/Thumbnailator/ofFilesNotEnough.png");
+		File outFile = new File("src/test/resources/Thumbnailator/ofFilesNotEnough.png");
 		outFile.deleteOnExit();
 		
 		try
@@ -129,7 +129,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	{
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		File outFile = new File("test-resources/Thumbnailator/ofFilesNotEnough.png");
+		File outFile = new File("src/test/resources/Thumbnailator/ofFilesNotEnough.png");
 		outFile.deleteOnExit();
 		
 		try
@@ -151,7 +151,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	public void asFiles_Rename_Null() throws IOException
 	{
 		// given
-		File f = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		try
 		{
@@ -172,7 +172,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	public void toFiles_Rename_Null() throws IOException
 	{
 		// given
-		File f = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		try
 		{
@@ -193,7 +193,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	public void toFile_File_Null() throws IOException
 	{
 		// given
-		File f = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		try
 		{
@@ -214,7 +214,7 @@ public class ThumbnailsBuilderNullEmptyOutputTest
 	public void toFile_String_Null() throws IOException
 	{
 		// given
-		File f = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		try
 		{

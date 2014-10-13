@@ -28,7 +28,7 @@ public class FileImageSourceTest
 	public void fileExists_Png() throws IOException
 	{
 		// given
-		FileImageSource source = new FileImageSource(new File("test-resources/Thumbnailator/grid.png"));
+		FileImageSource source = new FileImageSource(new File("src/test/resources/Thumbnailator/grid.png"));
 		
 		// when
 		BufferedImage img = source.read();
@@ -43,7 +43,7 @@ public class FileImageSourceTest
 	public void fileExists_Jpeg() throws IOException
 	{
 		// given
-		FileImageSource source = new FileImageSource(new File("test-resources/Thumbnailator/grid.jpg"));
+		FileImageSource source = new FileImageSource(new File("src/test/resources/Thumbnailator/grid.jpg"));
 		
 		// when
 		BufferedImage img = source.read();
@@ -58,7 +58,7 @@ public class FileImageSourceTest
 	public void fileExists_Bmp() throws IOException
 	{
 		// given
-		FileImageSource source = new FileImageSource(new File("test-resources/Thumbnailator/grid.bmp"));
+		FileImageSource source = new FileImageSource(new File("src/test/resources/Thumbnailator/grid.bmp"));
 		
 		// when
 		BufferedImage img = source.read();
@@ -93,7 +93,7 @@ public class FileImageSourceTest
 	public void fileExists_Png_AsString() throws IOException
 	{
 		// given
-		FileImageSource source = new FileImageSource("test-resources/Thumbnailator/grid.png");
+		FileImageSource source = new FileImageSource("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		BufferedImage img = source.read();
@@ -108,7 +108,7 @@ public class FileImageSourceTest
 	public void fileExists_Jpeg_AsString() throws IOException
 	{
 		// given
-		FileImageSource source = new FileImageSource("test-resources/Thumbnailator/grid.jpg");
+		FileImageSource source = new FileImageSource("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		BufferedImage img = source.read();
@@ -123,7 +123,7 @@ public class FileImageSourceTest
 	public void fileExists_Bmp_AsString() throws IOException
 	{
 		// given
-		FileImageSource source = new FileImageSource("test-resources/Thumbnailator/grid.bmp");
+		FileImageSource source = new FileImageSource("src/test/resources/Thumbnailator/grid.bmp");
 		
 		// when
 		BufferedImage img = source.read();
@@ -158,7 +158,7 @@ public class FileImageSourceTest
 	public void fileExists_getInputFormatNameBeforeRead() throws IOException
 	{
 		// given
-		FileImageSource source = new FileImageSource(new File("test-resources/Thumbnailator/grid.png"));
+		FileImageSource source = new FileImageSource(new File("src/test/resources/Thumbnailator/grid.png"));
 		
 		try
 		{
@@ -191,7 +191,7 @@ public class FileImageSourceTest
 	public void appliesSourceRegion() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -229,7 +229,7 @@ public class FileImageSourceTest
 	public void appliesSourceRegionTooBig() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -267,7 +267,7 @@ public class FileImageSourceTest
 	public void appliesSourceRegionBeyondOrigin() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -290,7 +290,7 @@ public class FileImageSourceTest
 	public void appliesSourceRegionNotSpecified() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -311,7 +311,7 @@ public class FileImageSourceTest
 	public void readImageUnaffectedForOrientation1() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_1.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_1.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -331,7 +331,7 @@ public class FileImageSourceTest
 	public void readImageUnaffectedForOrientation2() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_2.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -351,7 +351,7 @@ public class FileImageSourceTest
 	public void readImageUnaffectedForOrientation3() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_3.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_3.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -371,7 +371,7 @@ public class FileImageSourceTest
 	public void readImageUnaffectedForOrientation4() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_4.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_4.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -391,7 +391,7 @@ public class FileImageSourceTest
 	public void readImageUnaffectedForOrientation5() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_5.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_5.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -411,7 +411,7 @@ public class FileImageSourceTest
 	public void readImageUnaffectedForOrientation6() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_6.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_6.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -431,7 +431,7 @@ public class FileImageSourceTest
 	public void readImageUnaffectedForOrientation7() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_7.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_7.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -451,7 +451,7 @@ public class FileImageSourceTest
 	public void readImageUnaffectedForOrientation8() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_8.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_8.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -471,7 +471,7 @@ public class FileImageSourceTest
 	public void containsCorrectFilterForOrientation1() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_1.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_1.jpg");
 		FileImageSource source = new FileImageSource(sourceFile);
 		
 		ThumbnailParameter param =
@@ -489,7 +489,7 @@ public class FileImageSourceTest
 	public void containsCorrectFilterForOrientation2() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_2.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -517,7 +517,7 @@ public class FileImageSourceTest
 	public void containsCorrectFilterForOrientation3() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_3.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_3.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -545,7 +545,7 @@ public class FileImageSourceTest
 	public void containsCorrectFilterForOrientation4() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_4.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_4.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -573,7 +573,7 @@ public class FileImageSourceTest
 	public void containsCorrectFilterForOrientation5() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_5.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_5.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -601,7 +601,7 @@ public class FileImageSourceTest
 	public void containsCorrectFilterForOrientation6() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_6.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_6.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -629,7 +629,7 @@ public class FileImageSourceTest
 	public void containsCorrectFilterForOrientation7() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_7.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_7.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -657,7 +657,7 @@ public class FileImageSourceTest
 	public void containsCorrectFilterForOrientation8() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_8.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_8.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -685,7 +685,7 @@ public class FileImageSourceTest
 	public void useExifOrientationIsTrue_OrientationHonored() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_2.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -717,7 +717,7 @@ public class FileImageSourceTest
 	public void useExifOrientationIsFalse_OrientationIgnored() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_2.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
 		
 		FileImageSource source = new FileImageSource(sourceFile);
 		
