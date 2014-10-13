@@ -43,32 +43,32 @@ public class ConsecutiveNumbersTest
 	public void givenParentDir() throws IOException
 	{
 		// given
-		File dir = new File("test-resources/Thumbnailator");
+		File dir = new File("src/test/resources/Thumbnailator");
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames(dir);
 		
 		// when+then
 		Iterator<File> iter = consecutiveNumbers.iterator();
 		
-		assertEquals(new File("test-resources/Thumbnailator/0"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/1"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/2"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/3"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/0"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/1"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/2"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/3"), iter.next());
 	}
 	
 	@Test
 	public void givenParentDir_WithTrailingSlash() throws IOException
 	{
 		// given
-		File dir = new File("test-resources/Thumbnailator/");
+		File dir = new File("src/test/resources/Thumbnailator/");
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames(dir);
 		
 		// when+then
 		Iterator<File> iter = consecutiveNumbers.iterator();
 		
-		assertEquals(new File("test-resources/Thumbnailator/0"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/1"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/2"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/3"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/0"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/1"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/2"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/3"), iter.next());
 	}
 	
 	@Test(expected=IOException.class)
@@ -77,7 +77,7 @@ public class ConsecutiveNumbersTest
 		try
 		{
 			// given
-			File dir = new File("test-resources/Thumbnailator/grid.png");
+			File dir = new File("src/test/resources/Thumbnailator/grid.png");
 
 			// when
 			new ConsecutivelyNumberedFilenames(dir);
@@ -96,7 +96,7 @@ public class ConsecutiveNumbersTest
 		try
 		{
 			// given
-			File dir = new File("test-resources/Thumbnailator/foobar");
+			File dir = new File("src/test/resources/Thumbnailator/foobar");
 			
 			// when
 			new ConsecutivelyNumberedFilenames(dir);
@@ -144,16 +144,16 @@ public class ConsecutiveNumbersTest
 	public void givenParentDir_StartNumberSpecified() throws IOException
 	{
 		// given
-		File dir = new File("test-resources/Thumbnailator");
+		File dir = new File("src/test/resources/Thumbnailator");
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames(dir, 5);
 		
 		// when+then
 		Iterator<File> iter = consecutiveNumbers.iterator();
 		
-		assertEquals(new File("test-resources/Thumbnailator/5"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/6"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/7"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/8"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/5"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/6"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/7"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/8"), iter.next());
 	}
 
 	@Test(expected=IOException.class)
@@ -162,7 +162,7 @@ public class ConsecutiveNumbersTest
 		try
 		{
 			// given
-			File dir = new File("test-resources/Thumbnailator/foobar");
+			File dir = new File("src/test/resources/Thumbnailator/foobar");
 			
 			// when
 			new ConsecutivelyNumberedFilenames(dir, 5);
@@ -180,32 +180,32 @@ public class ConsecutiveNumbersTest
 	public void givenParentDir_formatWithZeroPadding() throws IOException
 	{
 		// given
-		File dir = new File("test-resources/Thumbnailator");
+		File dir = new File("src/test/resources/Thumbnailator");
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames(dir, "hello-%04d.jpg");
 		
 		// when+then
 		Iterator<File> iter = consecutiveNumbers.iterator();
 		
-		assertEquals(new File("test-resources/Thumbnailator/hello-0000.jpg"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/hello-0001.jpg"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/hello-0002.jpg"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/hello-0003.jpg"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/hello-0000.jpg"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/hello-0001.jpg"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/hello-0002.jpg"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/hello-0003.jpg"), iter.next());
 	}
 	
 	@Test
 	public void givenParentDir_formatWithText() throws IOException
 	{
 		// given
-		File dir = new File("test-resources/Thumbnailator");
+		File dir = new File("src/test/resources/Thumbnailator");
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames(dir, "hello-%d.jpg");
 		
 		// when+then
 		Iterator<File> iter = consecutiveNumbers.iterator();
 		
-		assertEquals(new File("test-resources/Thumbnailator/hello-0.jpg"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/hello-1.jpg"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/hello-2.jpg"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/hello-3.jpg"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/hello-0.jpg"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/hello-1.jpg"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/hello-2.jpg"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/hello-3.jpg"), iter.next());
 	}
 	
 	@Test(expected=IOException.class)
@@ -214,7 +214,7 @@ public class ConsecutiveNumbersTest
 		try
 		{
 			// given
-			File dir = new File("test-resources/Thumbnailator/foobar");
+			File dir = new File("src/test/resources/Thumbnailator/foobar");
 			
 			// when
 			new ConsecutivelyNumberedFilenames(dir, "hello-%d.jpg");
@@ -261,32 +261,32 @@ public class ConsecutiveNumbersTest
 	public void givenParentDir_formatWithZeroPadding_StartNumberSpecified() throws IOException
 	{
 		// given
-		File dir = new File("test-resources/Thumbnailator");
+		File dir = new File("src/test/resources/Thumbnailator");
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames(dir, "hello-%04d.jpg", 5);
 		
 		// when+then
 		Iterator<File> iter = consecutiveNumbers.iterator();
 		
-		assertEquals(new File("test-resources/Thumbnailator/hello-0005.jpg"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/hello-0006.jpg"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/hello-0007.jpg"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/hello-0008.jpg"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/hello-0005.jpg"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/hello-0006.jpg"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/hello-0007.jpg"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/hello-0008.jpg"), iter.next());
 	}
 	
 	@Test
 	public void givenParentDir_formatWithText_StartNumberSpecified() throws IOException
 	{
 		// given
-		File dir = new File("test-resources/Thumbnailator");
+		File dir = new File("src/test/resources/Thumbnailator");
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames(dir, "hello-%d.jpg", 5);
 		
 		// when+then
 		Iterator<File> iter = consecutiveNumbers.iterator();
 		
-		assertEquals(new File("test-resources/Thumbnailator/hello-5.jpg"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/hello-6.jpg"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/hello-7.jpg"), iter.next());
-		assertEquals(new File("test-resources/Thumbnailator/hello-8.jpg"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/hello-5.jpg"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/hello-6.jpg"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/hello-7.jpg"), iter.next());
+		assertEquals(new File("src/test/resources/Thumbnailator/hello-8.jpg"), iter.next());
 	}
 	
 	@Test(expected=IOException.class)
@@ -295,7 +295,7 @@ public class ConsecutiveNumbersTest
 		try
 		{
 			// given
-			File dir = new File("test-resources/Thumbnailator/foobar");
+			File dir = new File("src/test/resources/Thumbnailator/foobar");
 			
 			// when
 			new ConsecutivelyNumberedFilenames(dir, "hello-%d.jpg", 5);

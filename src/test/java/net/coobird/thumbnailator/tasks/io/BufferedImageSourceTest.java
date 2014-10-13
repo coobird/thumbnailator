@@ -40,7 +40,7 @@ public class BufferedImageSourceTest
 	public void givenValidImage() throws IOException
 	{
 		// given
-		BufferedImage sourceImage = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		BufferedImageSource source = new BufferedImageSource(sourceImage);
 		
 		// when
@@ -57,7 +57,7 @@ public class BufferedImageSourceTest
 	public void givenValidImage_getInputFormatNameBeforeRead() throws IOException
 	{
 		// given
-		BufferedImage sourceImage = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		BufferedImageSource source = new BufferedImageSource(sourceImage);
 		
 		try
@@ -92,7 +92,7 @@ public class BufferedImageSourceTest
 	public void appliesSourceRegion() throws IOException
 	{
 		// given
-		BufferedImage sourceImage = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		
 		BufferedImageSource source = new BufferedImageSource(sourceImage);
 		source.setThumbnailParameter(
@@ -129,7 +129,7 @@ public class BufferedImageSourceTest
 	public void appliesSourceRegionTooBig() throws IOException
 	{
 		// given
-		BufferedImage sourceImage = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		
 		BufferedImageSource source = new BufferedImageSource(sourceImage);
 		source.setThumbnailParameter(
@@ -166,7 +166,7 @@ public class BufferedImageSourceTest
 	public void appliesSourceRegionBeyondOrigin() throws IOException
 	{
 		// given
-		BufferedImage sourceImage = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		
 		BufferedImageSource source = new BufferedImageSource(sourceImage);
 		source.setThumbnailParameter(
@@ -188,7 +188,7 @@ public class BufferedImageSourceTest
 	public void appliesSourceRegionNotSpecified() throws IOException
 	{
 		// given
-		BufferedImage sourceImage = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		
 		BufferedImageSource source = new BufferedImageSource(sourceImage);
 		source.setThumbnailParameter(

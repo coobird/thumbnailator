@@ -186,7 +186,7 @@ public class SourceSinkThumbnailTaskTest
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		FileImageSource source = new FileImageSource("test-resources/Thumbnailator/grid.bmp");
+		FileImageSource source = new FileImageSource("src/test/resources/Thumbnailator/grid.bmp");
 		OutputStreamImageSink destination = new OutputStreamImageSink(os);
 		
 		// when

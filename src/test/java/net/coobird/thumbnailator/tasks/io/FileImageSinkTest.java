@@ -32,7 +32,7 @@ public class FileImageSinkTest
 	 * The temporary directory to use when creating files to use for this test.
 	 */
 	private static final String TMPDIR =
-			"test-resources/tmp/FileImageSinkTest";
+			"src/test/resources/tmp/FileImageSinkTest";
 	
 	@BeforeClass
 	public static void makeTemporaryDirectory()
@@ -2102,7 +2102,7 @@ public class FileImageSinkTest
 	public void constructorFile_write_allowOverwriteTrue() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = new File(TMPDIR, "tmp-grid.png");
 		
 		// copy the image to a temporary file.
@@ -2125,7 +2125,7 @@ public class FileImageSinkTest
 	public void constructorFile_write_allowOverwriteFalse() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = new File(TMPDIR, "tmp-grid.png");
 		
 		// copy the image to a temporary file.
@@ -2153,7 +2153,7 @@ public class FileImageSinkTest
 	public void constructorString_write_allowOverwriteTrue() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = new File(TMPDIR, "tmp-grid.png");
 		
 		// copy the image to a temporary file.
@@ -2176,7 +2176,7 @@ public class FileImageSinkTest
 	public void constructorString_write_allowOverwriteFalse() throws IOException
 	{
 		// set up
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = new File(TMPDIR, "tmp-grid.png");
 		
 		// copy the image to a temporary file.

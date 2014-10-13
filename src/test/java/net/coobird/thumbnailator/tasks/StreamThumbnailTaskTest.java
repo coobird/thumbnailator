@@ -65,7 +65,7 @@ public class StreamThumbnailTaskTest
 				true
 		);
 		
-		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
 		outputFile.deleteOnExit();
 		
@@ -98,7 +98,7 @@ public class StreamThumbnailTaskTest
 				true
 		);
 		
-		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
 		outputFile.deleteOnExit();
 		

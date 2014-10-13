@@ -29,7 +29,7 @@ public class URLImageSourceTest
 	{
 		// given
 		Proxy proxy = Proxy.NO_PROXY;
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Thumbnailator/grid.png"), proxy);
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.png"), proxy);
 		
 		// when
 		BufferedImage img = source.read();
@@ -83,7 +83,7 @@ public class URLImageSourceTest
 		{
 			// given
 			// when
-			new URLImageSource(new URL("file:test-resources/Thumbnailator/grid.png"), null);
+			new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.png"), null);
 		}
 		catch (NullPointerException e)
 		{
@@ -100,7 +100,7 @@ public class URLImageSourceTest
 		{
 			// given
 			// when
-			new URLImageSource("file:test-resources/Thumbnailator/grid.png", null);
+			new URLImageSource("file:src/test/resources/Thumbnailator/grid.png", null);
 		}
 		catch (NullPointerException e)
 		{
@@ -114,7 +114,7 @@ public class URLImageSourceTest
 	public void fileExists_Png() throws IOException
 	{
 		// given
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Thumbnailator/grid.png"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.png"));
 		
 		// when
 		BufferedImage img = source.read();
@@ -129,7 +129,7 @@ public class URLImageSourceTest
 	public void fileExists_Jpeg() throws IOException
 	{
 		// given
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Thumbnailator/grid.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.jpg"));
 		
 		// when
 		BufferedImage img = source.read();
@@ -144,7 +144,7 @@ public class URLImageSourceTest
 	public void fileExists_Bmp() throws IOException
 	{
 		// given
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Thumbnailator/grid.bmp"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.bmp"));
 		
 		// when
 		BufferedImage img = source.read();
@@ -179,7 +179,7 @@ public class URLImageSourceTest
 	public void fileExists_getInputFormatNameBeforeRead() throws IOException
 	{
 		// given
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Thumbnailator/grid.png"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.png"));
 		
 		try
 		{
@@ -213,10 +213,10 @@ public class URLImageSourceTest
 	public void appliesSourceRegion() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Thumbnailator/grid.png"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.png"));
 		source.setThumbnailParameter(
 				new ThumbnailParameterBuilder()
 					.region(new Region(Positions.TOP_LEFT, new AbsoluteSize(40, 40)))
@@ -251,10 +251,10 @@ public class URLImageSourceTest
 	public void appliesSourceRegionTooBig() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Thumbnailator/grid.png"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.png"));
 		source.setThumbnailParameter(
 				new ThumbnailParameterBuilder()
 					.region(new Region(new Coordinate(20, 20), new AbsoluteSize(100, 100)))
@@ -289,10 +289,10 @@ public class URLImageSourceTest
 	public void appliesSourceRegionBeyondOrigin() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Thumbnailator/grid.png"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.png"));
 		source.setThumbnailParameter(
 				new ThumbnailParameterBuilder()
 					.region(new Region(new Coordinate(-20, -20), new AbsoluteSize(100, 100)))
@@ -312,10 +312,10 @@ public class URLImageSourceTest
 	public void appliesSourceRegionNotSpecified() throws IOException
 	{
 		// given
-		File sourceFile = new File("test-resources/Thumbnailator/grid.png");
+		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Thumbnailator/grid.png"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.png"));
 		source.setThumbnailParameter(
 				new ThumbnailParameterBuilder()
 					.size(20, 20)
@@ -334,10 +334,10 @@ public class URLImageSourceTest
 	public void readImageUnaffectedForOrientation1() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_1.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_1.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_1.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_1.jpg"));
 
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -354,10 +354,10 @@ public class URLImageSourceTest
 	public void readImageUnaffectedForOrientation2() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_2.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_2.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_2.jpg"));
 
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -374,10 +374,10 @@ public class URLImageSourceTest
 	public void readImageUnaffectedForOrientation3() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_3.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_3.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_3.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_3.jpg"));
 
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -394,10 +394,10 @@ public class URLImageSourceTest
 	public void readImageUnaffectedForOrientation4() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_4.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_4.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_4.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_4.jpg"));
 
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -414,10 +414,10 @@ public class URLImageSourceTest
 	public void readImageUnaffectedForOrientation5() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_5.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_5.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_5.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_5.jpg"));
 
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -434,10 +434,10 @@ public class URLImageSourceTest
 	public void readImageUnaffectedForOrientation6() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_6.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_6.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_6.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_6.jpg"));
 
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -454,10 +454,10 @@ public class URLImageSourceTest
 	public void readImageUnaffectedForOrientation7() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_7.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_7.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_7.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_7.jpg"));
 
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -474,10 +474,10 @@ public class URLImageSourceTest
 	public void readImageUnaffectedForOrientation8() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_8.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_8.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_8.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_8.jpg"));
 
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -494,7 +494,7 @@ public class URLImageSourceTest
 	public void containsCorrectFilterForOrientation1() throws Exception
 	{
 		// given
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_1.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_1.jpg"));
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -511,10 +511,10 @@ public class URLImageSourceTest
 	public void containsCorrectFilterForOrientation2() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_2.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_2.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_2.jpg"));
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -539,10 +539,10 @@ public class URLImageSourceTest
 	public void containsCorrectFilterForOrientation3() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_3.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_3.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_3.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_3.jpg"));
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -567,10 +567,10 @@ public class URLImageSourceTest
 	public void containsCorrectFilterForOrientation4() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_4.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_4.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_4.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_4.jpg"));
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -595,10 +595,10 @@ public class URLImageSourceTest
 	public void containsCorrectFilterForOrientation5() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_5.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_5.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_5.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_5.jpg"));
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -623,10 +623,10 @@ public class URLImageSourceTest
 	public void containsCorrectFilterForOrientation6() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_6.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_6.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_6.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_6.jpg"));
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -651,10 +651,10 @@ public class URLImageSourceTest
 	public void containsCorrectFilterForOrientation7() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_7.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_7.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_7.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_7.jpg"));
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -679,10 +679,10 @@ public class URLImageSourceTest
 	public void containsCorrectFilterForOrientation8() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_8.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_8.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_8.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_8.jpg"));
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -707,10 +707,10 @@ public class URLImageSourceTest
 	public void useExifOrientationIsTrue_OrientationHonored() throws Exception
 	{
 		// given
-		File sourceFile = new File("test-resources/Exif/source_2.jpg");
+		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
 		
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_2.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_2.jpg"));
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder()
@@ -739,7 +739,7 @@ public class URLImageSourceTest
 	public void useExifOrientationIsFalse_OrientationIgnored() throws Exception
 	{
 		// given
-		URLImageSource source = new URLImageSource(new URL("file:test-resources/Exif/source_2.jpg"));
+		URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_2.jpg"));
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder()

@@ -27,7 +27,7 @@ public class ExifUtilsTest {
 	{
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
-		reader.setInput(ImageIO.createImageInputStream(new File("test-resources/Exif/orientation_1.jpg")));
+		reader.setInput(ImageIO.createImageInputStream(new File("src/test/resources/Exif/orientation_1.jpg")));
 		
 		// when
 		Orientation orientation = ExifUtils.getExifOrientation(reader, 0);
@@ -41,7 +41,7 @@ public class ExifUtilsTest {
 	{
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
-		reader.setInput(ImageIO.createImageInputStream(new File("test-resources/Exif/orientation_2.jpg")));
+		reader.setInput(ImageIO.createImageInputStream(new File("src/test/resources/Exif/orientation_2.jpg")));
 		
 		// when
 		Orientation orientation = ExifUtils.getExifOrientation(reader, 0);
@@ -55,7 +55,7 @@ public class ExifUtilsTest {
 	{
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
-		reader.setInput(ImageIO.createImageInputStream(new File("test-resources/Exif/orientation_3.jpg")));
+		reader.setInput(ImageIO.createImageInputStream(new File("src/test/resources/Exif/orientation_3.jpg")));
 		
 		// when
 		Orientation orientation = ExifUtils.getExifOrientation(reader, 0);
@@ -69,7 +69,7 @@ public class ExifUtilsTest {
 	{
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
-		reader.setInput(ImageIO.createImageInputStream(new File("test-resources/Exif/orientation_4.jpg")));
+		reader.setInput(ImageIO.createImageInputStream(new File("src/test/resources/Exif/orientation_4.jpg")));
 		
 		// when
 		Orientation orientation = ExifUtils.getExifOrientation(reader, 0);
@@ -83,7 +83,7 @@ public class ExifUtilsTest {
 	{
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
-		reader.setInput(ImageIO.createImageInputStream(new File("test-resources/Exif/orientation_5.jpg")));
+		reader.setInput(ImageIO.createImageInputStream(new File("src/test/resources/Exif/orientation_5.jpg")));
 		
 		// when
 		Orientation orientation = ExifUtils.getExifOrientation(reader, 0);
@@ -97,7 +97,7 @@ public class ExifUtilsTest {
 	{
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
-		reader.setInput(ImageIO.createImageInputStream(new File("test-resources/Exif/orientation_6.jpg")));
+		reader.setInput(ImageIO.createImageInputStream(new File("src/test/resources/Exif/orientation_6.jpg")));
 		
 		// when
 		Orientation orientation = ExifUtils.getExifOrientation(reader, 0);
@@ -111,7 +111,7 @@ public class ExifUtilsTest {
 	{
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
-		reader.setInput(ImageIO.createImageInputStream(new File("test-resources/Exif/orientation_7.jpg")));
+		reader.setInput(ImageIO.createImageInputStream(new File("src/test/resources/Exif/orientation_7.jpg")));
 		
 		// when
 		Orientation orientation = ExifUtils.getExifOrientation(reader, 0);
@@ -125,7 +125,7 @@ public class ExifUtilsTest {
 	{
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
-		reader.setInput(ImageIO.createImageInputStream(new File("test-resources/Exif/orientation_8.jpg")));
+		reader.setInput(ImageIO.createImageInputStream(new File("src/test/resources/Exif/orientation_8.jpg")));
 		
 		// when
 		Orientation orientation = ExifUtils.getExifOrientation(reader, 0);

@@ -1605,8 +1605,8 @@ public class ThumbnailsBuilderTest
 	public void sourceRegion_Region() throws IOException
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -1637,8 +1637,8 @@ public class ThumbnailsBuilderTest
 	public void sourceRegion_Region_Null() throws IOException
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -1672,8 +1672,8 @@ public class ThumbnailsBuilderTest
 	public void sourceRegion_Rectangle() throws IOException
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -1704,8 +1704,8 @@ public class ThumbnailsBuilderTest
 	public void sourceRegion_Rectangle_Null() throws IOException
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -1739,8 +1739,8 @@ public class ThumbnailsBuilderTest
 	public void sourceRegion_PositionSize() throws IOException
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -1771,8 +1771,8 @@ public class ThumbnailsBuilderTest
 	public void sourceRegion_PositionSize_PositionNull() throws IOException
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -1805,8 +1805,8 @@ public class ThumbnailsBuilderTest
 	public void sourceRegion_PositionSize_SizeNull() throws IOException
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -1840,8 +1840,8 @@ public class ThumbnailsBuilderTest
 	public void sourceRegion_PositionIntInt() throws IOException
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -1872,8 +1872,8 @@ public class ThumbnailsBuilderTest
 	public void sourceRegion_PositionIntInt_PositionNull() throws IOException
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -1906,8 +1906,8 @@ public class ThumbnailsBuilderTest
 	public void sourceRegion_PositionIntInt_WidthNonPositive() throws IOException
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -1940,8 +1940,8 @@ public class ThumbnailsBuilderTest
 	public void sourceRegion_PositionIntInt_HeightNonPositive() throws IOException
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -1975,8 +1975,8 @@ public class ThumbnailsBuilderTest
 	public void sourceRegion_IntIntIntInt() throws IOException
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -2007,8 +2007,8 @@ public class ThumbnailsBuilderTest
 	public void sourceRegion_IntIntIntInt_WidthNonPositive() throws IOException
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -2041,8 +2041,8 @@ public class ThumbnailsBuilderTest
 	public void sourceRegion_IntIntIntInt_HeightNonPositive() throws IOException
 	{
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
@@ -2076,8 +2076,8 @@ public class ThumbnailsBuilderTest
 	@Test
 	public void outputQuality_float_ValidArg_ZeroZero() throws IOException
 	{
-		File f = new File("test-resources/Thumbnailator/grid.jpg");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
 		
 		Thumbnails.of(f)
@@ -2108,8 +2108,8 @@ public class ThumbnailsBuilderTest
 	@Test
 	public void outputQuality_float_ValidArg_ZeroFive() throws IOException
 	{
-		File f = new File("test-resources/Thumbnailator/grid.jpg");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
 		
 		Thumbnails.of(f)
@@ -2140,8 +2140,8 @@ public class ThumbnailsBuilderTest
 	@Test
 	public void outputQuality_float_ValidArg_OneZero() throws IOException
 	{
-		File f = new File("test-resources/Thumbnailator/grid.jpg");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
 		
 		Thumbnails.of(f)
@@ -2170,8 +2170,8 @@ public class ThumbnailsBuilderTest
 	@Test(expected=IllegalArgumentException.class)
 	public void outputQuality_float_InvalidArg_Negative() throws IOException
 	{
-		File f = new File("test-resources/Thumbnailator/grid.jpg");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
 		
 		Thumbnails.of(f)
@@ -2195,8 +2195,8 @@ public class ThumbnailsBuilderTest
 	@Test(expected=IllegalArgumentException.class)
 	public void outputQuality_float_InvalidArg_OverOne() throws IOException
 	{
-		File f = new File("test-resources/Thumbnailator/grid.jpg");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
 		
 		Thumbnails.of(f)
@@ -2221,8 +2221,8 @@ public class ThumbnailsBuilderTest
 	@Test
 	public void outputQuality_double_ValidArg_ZeroZero() throws IOException
 	{
-		File f = new File("test-resources/Thumbnailator/grid.jpg");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
 		
 		Thumbnails.of(f)
@@ -2253,8 +2253,8 @@ public class ThumbnailsBuilderTest
 	@Test
 	public void outputQuality_double_ValidArg_ZeroFive() throws IOException
 	{
-		File f = new File("test-resources/Thumbnailator/grid.jpg");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
 		
 		Thumbnails.of(f)
@@ -2285,8 +2285,8 @@ public class ThumbnailsBuilderTest
 	@Test
 	public void outputQuality_double_ValidArg_OneZero() throws IOException
 	{
-		File f = new File("test-resources/Thumbnailator/grid.jpg");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
 		
 		Thumbnails.of(f)
@@ -2315,8 +2315,8 @@ public class ThumbnailsBuilderTest
 	@Test(expected=IllegalArgumentException.class)
 	public void outputQuality_double_InvalidArg_Negative() throws IOException
 	{
-		File f = new File("test-resources/Thumbnailator/grid.jpg");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
 		
 		Thumbnails.of(f)
@@ -2339,8 +2339,8 @@ public class ThumbnailsBuilderTest
 	@Test(expected=IllegalArgumentException.class)
 	public void outputQuality_double_InvalidArg_OverOne() throws IOException
 	{
-		File f = new File("test-resources/Thumbnailator/grid.jpg");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
 		
 		Thumbnails.of(f)
@@ -2366,8 +2366,8 @@ public class ThumbnailsBuilderTest
 	@Test
 	public void outputFormat_SameAsOriginal_SameAsFileExtension() throws IOException
 	{
-		File f = new File("test-resources/Thumbnailator/grid.png");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		Thumbnails.of(f)
@@ -2401,8 +2401,8 @@ public class ThumbnailsBuilderTest
 	@Test
 	public void outputFormat_DiffersFromOriginal_SameAsFileExtension() throws IOException
 	{
-		File f = new File("test-resources/Thumbnailator/grid.png");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
 		
 		Thumbnails.of(f)
@@ -2436,8 +2436,8 @@ public class ThumbnailsBuilderTest
 	@Test
 	public void outputFormat_DiffersFromOriginal_SameAsFileExtension_Jpeg() throws IOException
 	{
-		File f = new File("test-resources/Thumbnailator/grid.png");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
 		
 		Thumbnails.of(f)
@@ -2472,10 +2472,10 @@ public class ThumbnailsBuilderTest
 	@Test
 	public void outputFormat_SameAsOriginal_DiffersFromFileExtension() throws IOException
 	{
-		File f = new File("test-resources/Thumbnailator/grid.png");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.jpg");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		
-		File actualOutFile = new File("test-resources/Thumbnailator/grid.tmp.jpg.png");
+		File actualOutFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg.png");
 		actualOutFile.deleteOnExit();
 		
 		Thumbnails.of(f)
@@ -2510,10 +2510,10 @@ public class ThumbnailsBuilderTest
 	@Test
 	public void outputFormat_DiffersFromOriginal_DiffersFromFileExtension() throws IOException
 	{
-		File f = new File("test-resources/Thumbnailator/grid.png");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 
-		File actualOutFile = new File("test-resources/Thumbnailator/grid.tmp.png.jpg");
+		File actualOutFile = new File("src/test/resources/Thumbnailator/grid.tmp.png.jpg");
 		actualOutFile.deleteOnExit();
 		
 		Thumbnails.of(f)
@@ -2548,10 +2548,10 @@ public class ThumbnailsBuilderTest
 	@Test
 	public void outputFormat_DiffersFromOriginal_DiffersFromFileExtension_Jpeg() throws IOException
 	{
-		File f = new File("test-resources/Thumbnailator/grid.png");
-		File outFile = new File("test-resources/Thumbnailator/grid.tmp.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
+		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		
-		File actualOutFile = new File("test-resources/Thumbnailator/grid.tmp.png.jpeg");
+		File actualOutFile = new File("src/test/resources/Thumbnailator/grid.tmp.png.jpeg");
 		actualOutFile.deleteOnExit();
 		
 		Thumbnails.of(f)
@@ -2587,8 +2587,8 @@ public class ThumbnailsBuilderTest
 	public void outputFormat_Multiple_SameAsOriginal_SameAsExtension_Both() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File f2 = new File("test-resources/Thumbnailator/igrid.png");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File f2 = new File("src/test/resources/Thumbnailator/igrid.png");
 		
 		// when
 		Thumbnails.of(f1, f2)
@@ -2597,8 +2597,8 @@ public class ThumbnailsBuilderTest
 			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
-		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.igrid.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.igrid.png");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -2638,8 +2638,8 @@ public class ThumbnailsBuilderTest
 	public void outputFormat_Multiple_FirstExtensionSame_SecondExtensionDifferent() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.png");
-		File f2 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
+		File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		Thumbnails.of(f1, f2)
@@ -2648,8 +2648,8 @@ public class ThumbnailsBuilderTest
 		.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
-		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg.png");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -2688,8 +2688,8 @@ public class ThumbnailsBuilderTest
 	public void outputFormat_Multiple_FirstExtensionDifferent_SecondExtensionSame() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
-		File f2 = new File("test-resources/Thumbnailator/grid.png");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
+		File f2 = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		Thumbnails.of(f1, f2)
@@ -2698,8 +2698,8 @@ public class ThumbnailsBuilderTest
 			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg.png");
-		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -2738,8 +2738,8 @@ public class ThumbnailsBuilderTest
 	public void outputFormat_Multiple_FirstExtensionDifferent_SecondExtensionDifferent() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
-		File f2 = new File("test-resources/Thumbnailator/grid.bmp");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
+		File f2 = new File("src/test/resources/Thumbnailator/grid.bmp");
 		
 		// when
 		Thumbnails.of(f1, f2)
@@ -2748,8 +2748,8 @@ public class ThumbnailsBuilderTest
 			.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
 		
 		// then
-		File outFile1 = new File("test-resources/Thumbnailator/thumbnail.grid.jpg.png");
-		File outFile2 = new File("test-resources/Thumbnailator/thumbnail.grid.bmp.png");
+		File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg.png");
+		File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.bmp.png");
 		outFile1.deleteOnExit();
 		outFile2.deleteOnExit();
 		
@@ -2782,7 +2782,7 @@ public class ThumbnailsBuilderTest
 	public void outputFormat_SupportedFormat() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		Thumbnails.of(f1)
@@ -2806,7 +2806,7 @@ public class ThumbnailsBuilderTest
 	public void outputFormat_UnsupportedFormat() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		Thumbnails.of(f1)
@@ -2833,7 +2833,7 @@ public class ThumbnailsBuilderTest
 	public void outputFormat_Checks_FormatSpecified_TypeSupported() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		Thumbnails.of(f1)
@@ -2862,7 +2862,7 @@ public class ThumbnailsBuilderTest
 	public void outputFormat_Checks_FormatSpecified_FormatDoesNotSupportCompression() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		Thumbnails.of(f1)
@@ -2890,7 +2890,7 @@ public class ThumbnailsBuilderTest
 	public void outputFormat_Checks_FormatSpecified_TypeUnsupported() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		Thumbnails.of(f1)
@@ -2918,7 +2918,7 @@ public class ThumbnailsBuilderTest
 	public void outputFormat_Checks_FormatSpecified_TypeDefault() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		Thumbnails.of(f1)
@@ -2946,7 +2946,7 @@ public class ThumbnailsBuilderTest
 	public void outputFormat_Checks_FormatSpecifiedAsOriginal_TypeSpecified() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		Thumbnails.of(f1)
@@ -2974,7 +2974,7 @@ public class ThumbnailsBuilderTest
 	public void outputFormat_Checks_FormatSpecifiedAsOriginal_TypeIsDefaultForFormat() throws IOException
 	{
 		// given
-		File f1 = new File("test-resources/Thumbnailator/grid.jpg");
+		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		// when
 		Thumbnails.of(f1)
@@ -3452,7 +3452,7 @@ public class ThumbnailsBuilderTest
 		when(rename.apply(anyString(), any(ThumbnailParameter.class)))
 			.thenReturn("thumbnail.grid.png");
 		
-		File f = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		Thumbnails.of(f)
@@ -3467,7 +3467,7 @@ public class ThumbnailsBuilderTest
 		assertEquals(new Dimension(50, 50), ac.getValue().getSize());
 		
 		// clean up
-		new File("test-resources/Thumbnailator/thumbnail.grid.png").deleteOnExit();
+		new File("src/test/resources/Thumbnailator/thumbnail.grid.png").deleteOnExit();
 	}
 
 	
@@ -4761,7 +4761,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkExifOrientation1File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_1.jpg";
+		String imgPath = "src/test/resources/Exif/source_1.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
 		Graphics g = watermark.getGraphics();
@@ -4783,7 +4783,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkExifOrientation2File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_2.jpg";
+		String imgPath = "src/test/resources/Exif/source_2.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
 		Graphics g = watermark.getGraphics();
@@ -4805,7 +4805,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkExifOrientation3File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_3.jpg";
+		String imgPath = "src/test/resources/Exif/source_3.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
 		Graphics g = watermark.getGraphics();
@@ -4827,7 +4827,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkExifOrientation4File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_4.jpg";
+		String imgPath = "src/test/resources/Exif/source_4.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
 		Graphics g = watermark.getGraphics();
@@ -4849,7 +4849,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkExifOrientation5File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_5.jpg";
+		String imgPath = "src/test/resources/Exif/source_5.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
 		Graphics g = watermark.getGraphics();
@@ -4871,7 +4871,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkExifOrientation6File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_6.jpg";
+		String imgPath = "src/test/resources/Exif/source_6.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
 		Graphics g = watermark.getGraphics();
@@ -4893,7 +4893,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkExifOrientation7File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_7.jpg";
+		String imgPath = "src/test/resources/Exif/source_7.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
 		Graphics g = watermark.getGraphics();
@@ -4915,7 +4915,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkExifOrientation8File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_8.jpg";
+		String imgPath = "src/test/resources/Exif/source_8.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
 		Graphics g = watermark.getGraphics();
@@ -4937,7 +4937,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkExifOrientation1InputStream() throws IOException
 	{
 		// given
-		InputStream imgIS = new FileInputStream("test-resources/Exif/source_1.jpg");
+		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_1.jpg");
 		
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
 		Graphics g = watermark.getGraphics();
@@ -4959,7 +4959,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkExifOrientation2InputStream() throws IOException
 	{
 		// given
-		InputStream imgIS = new FileInputStream("test-resources/Exif/source_2.jpg");
+		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_2.jpg");
 		
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
 		Graphics g = watermark.getGraphics();
@@ -4981,7 +4981,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkExifOrientation3InputStream() throws IOException
 	{
 		// given
-		InputStream imgIS = new FileInputStream("test-resources/Exif/source_3.jpg");
+		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_3.jpg");
 		
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
 		Graphics g = watermark.getGraphics();
@@ -5003,7 +5003,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkExifOrientation4InputStream() throws IOException
 	{
 		// given
-		InputStream imgIS = new FileInputStream("test-resources/Exif/source_4.jpg");
+		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_4.jpg");
 		
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
 		Graphics g = watermark.getGraphics();
@@ -5025,7 +5025,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkExifOrientation5InputStream() throws IOException
 	{
 		// given
-		InputStream imgIS = new FileInputStream("test-resources/Exif/source_5.jpg");
+		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_5.jpg");
 		
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
 		Graphics g = watermark.getGraphics();
@@ -5047,7 +5047,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkExifOrientation6InputStream() throws IOException
 	{
 		// given
-		InputStream imgIS = new FileInputStream("test-resources/Exif/source_6.jpg");
+		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_6.jpg");
 		
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
 		Graphics g = watermark.getGraphics();
@@ -5069,7 +5069,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkExifOrientation7InputStream() throws IOException
 	{
 		// given
-		InputStream imgIS = new FileInputStream("test-resources/Exif/source_7.jpg");
+		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_7.jpg");
 		
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
 		Graphics g = watermark.getGraphics();
@@ -5091,7 +5091,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkExifOrientation8InputStream() throws IOException
 	{
 		// given
-		InputStream imgIS = new FileInputStream("test-resources/Exif/source_8.jpg");
+		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_8.jpg");
 		
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
 		Graphics g = watermark.getGraphics();
@@ -5113,7 +5113,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropExifOrientation1File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_1.jpg";
+		String imgPath = "src/test/resources/Exif/source_1.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5136,7 +5136,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropExifOrientation2File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_2.jpg";
+		String imgPath = "src/test/resources/Exif/source_2.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5159,7 +5159,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropExifOrientation3File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_3.jpg";
+		String imgPath = "src/test/resources/Exif/source_3.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5182,7 +5182,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropExifOrientation4File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_4.jpg";
+		String imgPath = "src/test/resources/Exif/source_4.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5205,7 +5205,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropExifOrientation5File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_5.jpg";
+		String imgPath = "src/test/resources/Exif/source_5.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5228,7 +5228,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropExifOrientation6File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_6.jpg";
+		String imgPath = "src/test/resources/Exif/source_6.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5251,7 +5251,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropExifOrientation7File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_7.jpg";
+		String imgPath = "src/test/resources/Exif/source_7.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5274,7 +5274,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropExifOrientation8File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_8.jpg";
+		String imgPath = "src/test/resources/Exif/source_8.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5297,7 +5297,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropExifOrientation1InputStream() throws IOException
 	{
 		// given
-		InputStream imgIS = new FileInputStream("test-resources/Exif/source_1.jpg");
+		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_1.jpg");
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5320,7 +5320,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropExifOrientation2InputStream() throws IOException
 	{
 		// given
-		InputStream imgIS = new FileInputStream("test-resources/Exif/source_2.jpg");
+		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_2.jpg");
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5343,7 +5343,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropExifOrientation3InputStream() throws IOException
 	{
 		// given
-		InputStream imgIS = new FileInputStream("test-resources/Exif/source_3.jpg");
+		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_3.jpg");
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5366,7 +5366,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropExifOrientation4InputStream() throws IOException
 	{
 		// given
-		InputStream imgIS = new FileInputStream("test-resources/Exif/source_4.jpg");
+		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_4.jpg");
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5389,7 +5389,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropExifOrientation5InputStream() throws IOException
 	{
 		// given
-		InputStream imgIS = new FileInputStream("test-resources/Exif/source_5.jpg");
+		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_5.jpg");
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5412,7 +5412,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropExifOrientation6InputStream() throws IOException
 	{
 		// given
-		InputStream imgIS = new FileInputStream("test-resources/Exif/source_6.jpg");
+		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_6.jpg");
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5435,7 +5435,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropExifOrientation7InputStream() throws IOException
 	{
 		// given
-		InputStream imgIS = new FileInputStream("test-resources/Exif/source_7.jpg");
+		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_7.jpg");
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5458,7 +5458,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropExifOrientation8InputStream() throws IOException
 	{
 		// given
-		InputStream imgIS = new FileInputStream("test-resources/Exif/source_8.jpg");
+		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_8.jpg");
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5481,7 +5481,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropNonCenterExifOrientation1File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_1.jpg";
+		String imgPath = "src/test/resources/Exif/source_1.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5504,7 +5504,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropNonCenterExifOrientation2File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_2.jpg";
+		String imgPath = "src/test/resources/Exif/source_2.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5527,7 +5527,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropNonCenterExifOrientation3File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_3.jpg";
+		String imgPath = "src/test/resources/Exif/source_3.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5550,7 +5550,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropNonCenterExifOrientation4File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_4.jpg";
+		String imgPath = "src/test/resources/Exif/source_4.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5573,7 +5573,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropNonCenterExifOrientation5File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_5.jpg";
+		String imgPath = "src/test/resources/Exif/source_5.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5596,7 +5596,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropNonCenterExifOrientation6File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_6.jpg";
+		String imgPath = "src/test/resources/Exif/source_6.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5619,7 +5619,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropNonCenterExifOrientation7File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_7.jpg";
+		String imgPath = "src/test/resources/Exif/source_7.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5642,7 +5642,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkAndCropNonCenterExifOrientation8File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_8.jpg";
+		String imgPath = "src/test/resources/Exif/source_8.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5665,7 +5665,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkCenterAndCropNonCenterExifOrientation1File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_1.jpg";
+		String imgPath = "src/test/resources/Exif/source_1.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5688,7 +5688,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkCenterAndCropNonCenterExifOrientation2File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_2.jpg";
+		String imgPath = "src/test/resources/Exif/source_2.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5711,7 +5711,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkCenterAndCropNonCenterExifOrientation3File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_3.jpg";
+		String imgPath = "src/test/resources/Exif/source_3.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5734,7 +5734,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkCenterAndCropNonCenterExifOrientation4File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_4.jpg";
+		String imgPath = "src/test/resources/Exif/source_4.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5757,7 +5757,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkCenterAndCropNonCenterExifOrientation5File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_5.jpg";
+		String imgPath = "src/test/resources/Exif/source_5.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5780,7 +5780,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkCenterAndCropNonCenterExifOrientation6File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_6.jpg";
+		String imgPath = "src/test/resources/Exif/source_6.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5803,7 +5803,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkCenterAndCropNonCenterExifOrientation7File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_7.jpg";
+		String imgPath = "src/test/resources/Exif/source_7.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();
@@ -5826,7 +5826,7 @@ public class ThumbnailsBuilderTest
 	public void watermarkCenterAndCropNonCenterExifOrientation8File() throws IOException
 	{
 		// given
-		String imgPath = "test-resources/Exif/source_8.jpg";
+		String imgPath = "src/test/resources/Exif/source_8.jpg";
 		
 		BufferedImage watermark = new BufferedImageBuilder(10, 10).build();
 		Graphics g = watermark.getGraphics();

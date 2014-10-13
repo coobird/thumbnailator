@@ -18,7 +18,7 @@ public class FlipTest {
 	@Test
 	public void flipHorizontal() throws Exception {
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Exif/original.png"));
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/original.png"));
 		
 		// when
 		BufferedImage result = Flip.HORIZONTAL.apply(img);
@@ -37,7 +37,7 @@ public class FlipTest {
 	@Test
 	public void flipVertical() throws Exception {
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Exif/original.png"));
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/original.png"));
 		
 		// when
 		BufferedImage result = Flip.VERTICAL.apply(img);

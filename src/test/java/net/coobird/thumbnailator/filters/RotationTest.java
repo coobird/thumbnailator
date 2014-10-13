@@ -66,7 +66,7 @@ public class RotationTest
 	@Test
 	public void imageRotatedLeft90Degrees() throws Exception {
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Exif/original.png"));
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/original.png"));
 		
 		// when
 		BufferedImage result = Rotation.LEFT_90_DEGREES.apply(img);
@@ -85,7 +85,7 @@ public class RotationTest
 	@Test
 	public void imageRotatedRight90Degrees() throws Exception {
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Exif/original.png"));
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/original.png"));
 		
 		// when
 		BufferedImage result = Rotation.RIGHT_90_DEGREES.apply(img);
@@ -104,7 +104,7 @@ public class RotationTest
 	@Test
 	public void imageRotated180Degrees() throws Exception {
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Exif/original.png"));
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/original.png"));
 		
 		// when
 		BufferedImage result = Rotation.ROTATE_180_DEGREES.apply(img);
@@ -123,7 +123,7 @@ public class RotationTest
 	@Test
 	public void stretchedImageRotatedLeft90Degrees() throws Exception {
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Exif/stretch.png"));
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/stretch.png"));
 		
 		// when
 		BufferedImage result = Rotation.LEFT_90_DEGREES.apply(img);
@@ -143,7 +143,7 @@ public class RotationTest
 	@Test
 	public void stretchedImageRotatedRight90Degrees() throws Exception {
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Exif/stretch.png"));
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/stretch.png"));
 		
 		// when
 		BufferedImage result = Rotation.RIGHT_90_DEGREES.apply(img);
@@ -163,7 +163,7 @@ public class RotationTest
 	@Test
 	public void stretchedImageRotated180Degrees() throws Exception {
 		// given
-		BufferedImage img = ImageIO.read(new File("test-resources/Exif/stretch.png"));
+		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/stretch.png"));
 		
 		// when
 		BufferedImage result = Rotation.ROTATE_180_DEGREES.apply(img);

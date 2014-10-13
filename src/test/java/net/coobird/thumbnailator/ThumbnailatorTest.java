@@ -67,8 +67,8 @@ public class ThumbnailatorTest
 		 * The files to make thumbnails of.
 		 */
 		List<File> files = Arrays.asList(
-				new File("test-resources/Thumbnailator/grid.jpg"),
-				new File("test-resources/Thumbnailator/grid.png")
+				new File("src/test/resources/Thumbnailator/grid.jpg"),
+				new File("src/test/resources/Thumbnailator/grid.png")
 		);
 		
 		Thumbnailator.createThumbnailsAsCollection(
@@ -101,8 +101,8 @@ public class ThumbnailatorTest
 		 * The files to make thumbnails of.
 		 */
 		List<File> files = Arrays.asList(
-				new File("test-resources/Thumbnailator/grid.jpg"),
-				new File("test-resources/Thumbnailator/grid.png")
+				new File("src/test/resources/Thumbnailator/grid.jpg"),
+				new File("src/test/resources/Thumbnailator/grid.png")
 		);
 		
 		Thumbnailator.createThumbnailsAsCollection(
@@ -136,8 +136,8 @@ public class ThumbnailatorTest
 		 * The files to make thumbnails of.
 		 */
 		List<File> files = Arrays.asList(
-				new File("test-resources/Thumbnailator/grid.jpg"),
-				new File("test-resources/Thumbnailator/grid.png")
+				new File("src/test/resources/Thumbnailator/grid.jpg"),
+				new File("src/test/resources/Thumbnailator/grid.png")
 		);
 		
 		Thumbnailator.createThumbnailsAsCollection(
@@ -206,9 +206,9 @@ public class ThumbnailatorTest
 		 * The files to make thumbnails of.
 		 */
 		List<File> files = Arrays.asList(
-				new File("test-resources/Thumbnailator/grid.jpg"),
-				new File("test-resources/Thumbnailator/grid.png"),
-				new File("test-resources/Thumbnailator/grid.bmp")
+				new File("src/test/resources/Thumbnailator/grid.jpg"),
+				new File("src/test/resources/Thumbnailator/grid.png"),
+				new File("src/test/resources/Thumbnailator/grid.bmp")
 		);
 		
 		try
@@ -313,8 +313,8 @@ public class ThumbnailatorTest
 		 * The files to make thumbnails of.
 		 */
 		List<File> files = Arrays.asList(
-				new File("test-resources/Thumbnailator/grid.jpg"),
-				new File("test-resources/Thumbnailator/grid.png")
+				new File("src/test/resources/Thumbnailator/grid.jpg"),
+				new File("src/test/resources/Thumbnailator/grid.png")
 		);
 		
 		/*
@@ -374,10 +374,10 @@ public class ThumbnailatorTest
 		 * The files to make thumbnails of.
 		 */
 		List<File> files = Arrays.asList(
-				new File("test-resources/Thumbnailator/grid.jpg"),
-				new File("test-resources/Thumbnailator/grid.png"),
-				new File("test-resources/Thumbnailator/grid.bmp"),
-				new File("test-resources/Thumbnailator/filenotfound.gif")
+				new File("src/test/resources/Thumbnailator/grid.jpg"),
+				new File("src/test/resources/Thumbnailator/grid.png"),
+				new File("src/test/resources/Thumbnailator/grid.bmp"),
+				new File("src/test/resources/Thumbnailator/filenotfound.gif")
 		);
 		
 		/*
@@ -423,10 +423,10 @@ public class ThumbnailatorTest
 		 * The files to make thumbnails of.
 		 */
 		List<File> files = Arrays.asList(
-				new File("test-resources/Thumbnailator/grid.jpg"),
-				new File("test-resources/Thumbnailator/grid.png"),
-				new File("test-resources/Thumbnailator/grid.bmp"),
-				new File("test-resources/Thumbnailator/grid.gif")
+				new File("src/test/resources/Thumbnailator/grid.jpg"),
+				new File("src/test/resources/Thumbnailator/grid.png"),
+				new File("src/test/resources/Thumbnailator/grid.bmp"),
+				new File("src/test/resources/Thumbnailator/grid.gif")
 		);
 		
 		// This will force a UnsupportedFormatException when trying to output
@@ -497,8 +497,8 @@ public class ThumbnailatorTest
 		 * The files to make thumbnails of.
 		 */
 		List<File2> files = Arrays.asList(
-				new File2("test-resources/Thumbnailator/grid.jpg"),
-				new File2("test-resources/Thumbnailator/grid.png")
+				new File2("src/test/resources/Thumbnailator/grid.jpg"),
+				new File2("src/test/resources/Thumbnailator/grid.png")
 		);
 		
 		/*
@@ -557,8 +557,8 @@ public class ThumbnailatorTest
 		 * The files to make thumbnails of.
 		 */
 		List<File> files = Arrays.asList(
-				new File("test-resources/Thumbnailator/grid.jpg"),
-				new File("test-resources/Thumbnailator/grid.png")
+				new File("src/test/resources/Thumbnailator/grid.jpg"),
+				new File("src/test/resources/Thumbnailator/grid.png")
 		);
 		
 		Thumbnailator.createThumbnails(
@@ -591,8 +591,8 @@ public class ThumbnailatorTest
 		 * The files to make thumbnails of.
 		 */
 		List<File> files = Arrays.asList(
-				new File("test-resources/Thumbnailator/grid.jpg"),
-				new File("test-resources/Thumbnailator/grid.png")
+				new File("src/test/resources/Thumbnailator/grid.jpg"),
+				new File("src/test/resources/Thumbnailator/grid.png")
 		);
 		
 		Thumbnailator.createThumbnails(
@@ -626,8 +626,8 @@ public class ThumbnailatorTest
 		 * The files to make thumbnails of.
 		 */
 		List<File> files = Arrays.asList(
-				new File("test-resources/Thumbnailator/grid.jpg"),
-				new File("test-resources/Thumbnailator/grid.png")
+				new File("src/test/resources/Thumbnailator/grid.jpg"),
+				new File("src/test/resources/Thumbnailator/grid.png")
 		);
 		
 		Thumbnailator.createThumbnails(
@@ -696,9 +696,9 @@ public class ThumbnailatorTest
 		 * The files to make thumbnails of.
 		 */
 		List<File> files = Arrays.asList(
-				new File("test-resources/Thumbnailator/grid.jpg"),
-				new File("test-resources/Thumbnailator/grid.png"),
-				new File("test-resources/Thumbnailator/grid.bmp")
+				new File("src/test/resources/Thumbnailator/grid.jpg"),
+				new File("src/test/resources/Thumbnailator/grid.png"),
+				new File("src/test/resources/Thumbnailator/grid.bmp")
 		);
 		
 		try
@@ -800,8 +800,8 @@ public class ThumbnailatorTest
 		 * The files to make thumbnails of.
 		 */
 		List<File> files = Arrays.asList(
-				new File("test-resources/Thumbnailator/grid.jpg"),
-				new File("test-resources/Thumbnailator/grid.png")
+				new File("src/test/resources/Thumbnailator/grid.jpg"),
+				new File("src/test/resources/Thumbnailator/grid.png")
 		);
 		
 		/*
@@ -827,13 +827,13 @@ public class ThumbnailatorTest
 		 * Perform post-execution checks.
 		 */
 		BufferedImage img0 =
-			ImageIO.read(new File("test-resources/Thumbnailator/thumbnail.grid.jpg"));
+			ImageIO.read(new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg"));
 		
 		assertEquals(50, img0.getWidth());
 		assertEquals(50, img0.getHeight());
 		
 		BufferedImage img1 =
-			ImageIO.read(new File("test-resources/Thumbnailator/thumbnail.grid.png"));
+			ImageIO.read(new File("src/test/resources/Thumbnailator/thumbnail.grid.png"));
 		
 		assertEquals(50, img1.getWidth());
 		assertEquals(50, img1.getHeight());
@@ -860,10 +860,10 @@ public class ThumbnailatorTest
 		 * The files to make thumbnails of.
 		 */
 		List<File> files = Arrays.asList(
-				new File("test-resources/Thumbnailator/grid.jpg"),
-				new File("test-resources/Thumbnailator/grid.png"),
-				new File("test-resources/Thumbnailator/grid.bmp"),
-				new File("test-resources/Thumbnailator/filenotfound.gif")
+				new File("src/test/resources/Thumbnailator/grid.jpg"),
+				new File("src/test/resources/Thumbnailator/grid.png"),
+				new File("src/test/resources/Thumbnailator/grid.bmp"),
+				new File("src/test/resources/Thumbnailator/filenotfound.gif")
 		);
 		
 		/*
@@ -909,10 +909,10 @@ public class ThumbnailatorTest
 		 * The files to make thumbnails of.
 		 */
 		List<File> files = Arrays.asList(
-				new File("test-resources/Thumbnailator/grid.jpg"),
-				new File("test-resources/Thumbnailator/grid.png"),
-				new File("test-resources/Thumbnailator/grid.bmp"),
-				new File("test-resources/Thumbnailator/grid.gif")
+				new File("src/test/resources/Thumbnailator/grid.jpg"),
+				new File("src/test/resources/Thumbnailator/grid.png"),
+				new File("src/test/resources/Thumbnailator/grid.bmp"),
+				new File("src/test/resources/Thumbnailator/grid.gif")
 		);
 		
 		// This will force a UnsupportedFormatException when trying to output
@@ -1206,7 +1206,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[40054];
-		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.bmp");
+		FileInputStream fis = new FileInputStream("src/test/resources/Thumbnailator/grid.bmp");
 		fis.read(bytes);
 		fis.close();
 		
@@ -1248,7 +1248,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[492];
-		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.gif");
+		FileInputStream fis = new FileInputStream("src/test/resources/Thumbnailator/grid.gif");
 		fis.read(bytes);
 		fis.close();
 		
@@ -1383,7 +1383,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[4602];
-		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.jpg");
+		FileInputStream fis = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
 		fis.read(bytes);
 		fis.close();
 		
@@ -1432,7 +1432,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[4602];
-		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.jpg");
+		FileInputStream fis = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
 		fis.read(bytes);
 		fis.close();
 		
@@ -1483,7 +1483,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[4602];
-		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.jpg");
+		FileInputStream fis = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
 		fis.read(bytes);
 		fis.close();
 		
@@ -1554,7 +1554,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[287];
-		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		FileInputStream fis = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		fis.read(bytes);
 		fis.close();
 
@@ -1603,7 +1603,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[287];
-		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		FileInputStream fis = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		fis.read(bytes);
 		fis.close();
 
@@ -1654,7 +1654,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[287];
-		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.png");
+		FileInputStream fis = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
 		fis.read(bytes);
 		fis.close();
 		
@@ -1725,7 +1725,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[40054];
-		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.bmp");
+		FileInputStream fis = new FileInputStream("src/test/resources/Thumbnailator/grid.bmp");
 		fis.read(bytes);
 		fis.close();
 		
@@ -1774,7 +1774,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[40054];
-		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.bmp");
+		FileInputStream fis = new FileInputStream("src/test/resources/Thumbnailator/grid.bmp");
 		fis.read(bytes);
 		fis.close();
 		
@@ -1825,7 +1825,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[40054];
-		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.bmp");
+		FileInputStream fis = new FileInputStream("src/test/resources/Thumbnailator/grid.bmp");
 		fis.read(bytes);
 		fis.close();
 		
@@ -1896,7 +1896,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[492];
-		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.gif");
+		FileInputStream fis = new FileInputStream("src/test/resources/Thumbnailator/grid.gif");
 		fis.read(bytes);
 		fis.close();
 		
@@ -1945,7 +1945,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[492];
-		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.gif");
+		FileInputStream fis = new FileInputStream("src/test/resources/Thumbnailator/grid.gif");
 		fis.read(bytes);
 		fis.close();
 		
@@ -1994,7 +1994,7 @@ public class ThumbnailatorTest
 		 * Actual test
 		 */
 		byte[] bytes = new byte[492];
-		FileInputStream fis = new FileInputStream("test-resources/Thumbnailator/grid.gif");
+		FileInputStream fis = new FileInputStream("src/test/resources/Thumbnailator/grid.gif");
 		fis.read(bytes);
 		fis.close();
 		
@@ -2260,8 +2260,8 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
-		File outputFile = new File("test-resources/Thumbnailator/tmp.jpg");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.jpg");
+		File outputFile = new File("src/test/resources/Thumbnailator/tmp.jpg");
 		outputFile.deleteOnExit();
 		
 		Thumbnailator.createThumbnail(inputFile, outputFile, 50, 50);
@@ -2292,8 +2292,8 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.png");
-		File outputFile = new File("test-resources/Thumbnailator/tmp.png");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.png");
+		File outputFile = new File("src/test/resources/Thumbnailator/tmp.png");
 		outputFile.deleteOnExit();
 		
 		Thumbnailator.createThumbnail(inputFile, outputFile, 50, 50);
@@ -2324,8 +2324,8 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.bmp");
-		File outputFile = new File("test-resources/Thumbnailator/tmp.bmp");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.bmp");
+		File outputFile = new File("src/test/resources/Thumbnailator/tmp.bmp");
 		outputFile.deleteOnExit();
 		
 		Thumbnailator.createThumbnail(inputFile, outputFile, 50, 50);
@@ -2357,8 +2357,8 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.gif");
-		File outputFile = new File("test-resources/Thumbnailator/tmp.gif");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.gif");
+		File outputFile = new File("src/test/resources/Thumbnailator/tmp.gif");
 		outputFile.deleteOnExit();
 		
 		try
@@ -2422,7 +2422,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
 		outputFile.deleteOnExit();
 		
@@ -2462,7 +2462,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".bmp");
 		outputFile.deleteOnExit();
 		
@@ -2503,7 +2503,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".gif");
 		outputFile.deleteOnExit();
 		
@@ -2568,7 +2568,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.png");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".jpg");
 		outputFile.deleteOnExit();
 		
@@ -2608,7 +2608,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.png");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".bmp");
 		outputFile.deleteOnExit();
 		
@@ -2649,7 +2649,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.png");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".gif");
 		outputFile.deleteOnExit();
 		
@@ -2714,7 +2714,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.bmp");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.bmp");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
 		outputFile.deleteOnExit();
 		
@@ -2754,7 +2754,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.bmp");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.bmp");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".jpg");
 		outputFile.deleteOnExit();
 		
@@ -2795,7 +2795,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.bmp");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.bmp");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".gif");
 		outputFile.deleteOnExit();
 		
@@ -2860,7 +2860,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.gif");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.gif");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
 		outputFile.deleteOnExit();
 		
@@ -2900,7 +2900,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.gif");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.gif");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".jpg");
 		outputFile.deleteOnExit();
 		
@@ -2940,7 +2940,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.gif");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.gif");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".bmp");
 		outputFile.deleteOnExit();
 		
@@ -3010,7 +3010,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outputFile = new File("@\\#?/^%*&/|!!$:#");
 		
 		try
@@ -3163,7 +3163,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
 		BufferedImage img = Thumbnailator.createThumbnail(inputFile, 50, 50);
 		
@@ -3191,7 +3191,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.png");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		BufferedImage img = Thumbnailator.createThumbnail(inputFile, 50, 50);
 		
@@ -3219,7 +3219,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.bmp");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.bmp");
 		
 		BufferedImage img = Thumbnailator.createThumbnail(inputFile, 50, 50);
 		
@@ -3247,7 +3247,7 @@ public class ThumbnailatorTest
 		/*
 		 * Actual test
 		 */
-		File inputFile = new File("test-resources/Thumbnailator/grid.gif");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.gif");
 		
 		BufferedImage img = Thumbnailator.createThumbnail(inputFile, 50, 50);
 		
@@ -3556,7 +3556,7 @@ public class ThumbnailatorTest
 		when(rename.apply(anyString(), any(ThumbnailParameter.class)))
 			.thenReturn("thumbnail.grid.png");
 				
-		File f = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		Thumbnailator.createThumbnails(Arrays.asList(f), rename, 50, 50);
@@ -3569,7 +3569,7 @@ public class ThumbnailatorTest
 		assertEquals(new Dimension(50, 50), ac.getValue().getSize());
 		
 		// clean up
-		new File("test-resources/Thumbnailator/thumbnail.grid.png").deleteOnExit();
+		new File("src/test/resources/Thumbnailator/thumbnail.grid.png").deleteOnExit();
 	}
 	
 	@Test
@@ -3580,7 +3580,7 @@ public class ThumbnailatorTest
 		when(rename.apply(anyString(), any(ThumbnailParameter.class)))
 			.thenReturn("thumbnail.grid.png");
 		
-		File f = new File("test-resources/Thumbnailator/grid.png");
+		File f = new File("src/test/resources/Thumbnailator/grid.png");
 		
 		// when
 		Thumbnailator.createThumbnailsAsCollection(Arrays.asList(f), rename, 50, 50);
@@ -3593,7 +3593,7 @@ public class ThumbnailatorTest
 		assertEquals(new Dimension(50, 50), ac.getValue().getSize());
 		
 		// clean up
-		new File("test-resources/Thumbnailator/thumbnail.grid.png").deleteOnExit();
+		new File("src/test/resources/Thumbnailator/thumbnail.grid.png").deleteOnExit();
 	}
 	
 	/**

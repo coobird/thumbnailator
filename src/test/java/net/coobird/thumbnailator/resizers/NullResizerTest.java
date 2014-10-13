@@ -17,7 +17,7 @@ public class NullResizerTest
 	public void sourceAndDestSameDimension() throws IOException
 	{
 		// given
-		BufferedImage srcImage = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		BufferedImage srcImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		BufferedImage destImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
@@ -33,7 +33,7 @@ public class NullResizerTest
 	public void sourceSmallerThanDest() throws IOException
 	{
 		// given
-		BufferedImage srcImage = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		BufferedImage srcImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		BufferedImage destImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
@@ -47,7 +47,7 @@ public class NullResizerTest
 	public void sourceLargerThanDest() throws IOException
 	{
 		// given
-		BufferedImage srcImage = ImageIO.read(new File("test-resources/Thumbnailator/grid.png"));
+		BufferedImage srcImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		BufferedImage destImage = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
 		
 		// when

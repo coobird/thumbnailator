@@ -23,7 +23,7 @@ public class FileThumbnailTaskTest
 	public void nullParameter() throws IOException
 	{
 		// given
-		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
 		outputFile.deleteOnExit();
 		
@@ -58,7 +58,7 @@ public class FileThumbnailTaskTest
 				true
 		);
 		
-		File inputFile = new File("test-resources/Thumbnailator/grid.jpg");
+		File inputFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
 		outputFile.deleteOnExit();
 		
