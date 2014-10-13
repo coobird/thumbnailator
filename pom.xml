@@ -41,6 +41,19 @@
           <target>1.5</target>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.1</version>
+        <configuration>
+          <doctitle>Thumbnailator API Documentation (Version ${project.version})</doctitle>
+          <windowtitle>Thumbnailator API Documentation (Version ${project.version})</windowtitle>
+          <locale>en_US</locale>
+          <show>public</show>
+          <use>false</use>
+          <destDir>javadoc</destDir>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
