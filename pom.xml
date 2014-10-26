@@ -44,6 +44,8 @@
         <configuration>
           <source>1.5</source>
           <target>1.5</target>
+          <debug>true</debug>
+          <debuglevel>lines</debuglevel>
         </configuration>
       </plugin>
       <plugin>
