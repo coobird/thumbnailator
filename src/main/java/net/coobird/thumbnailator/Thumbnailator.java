@@ -27,10 +27,6 @@ import net.coobird.thumbnailator.tasks.ThumbnailTask;
  * thumbnails using Thumbnailator.
  * <p>
  * When images are resized, the aspect ratio of the images are preserved.
- * <p>
- * Note: This class does not provide good support for large images.
- * For very large images, it is possible for an {@link OutOfMemoryError} to
- * occur during processing.
  * 
  * @author coobird
  *
