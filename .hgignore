@@ -1,8 +1,0 @@
-
-syntax: regexp
-^build\.credentials\.properties$
-^\.classpath$
-^\.project$
-^\.settings
-^bin/
-^target/
