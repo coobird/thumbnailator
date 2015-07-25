@@ -6,7 +6,7 @@
   <packaging>jar</packaging>
   <name>thumbnailator</name>
   <description>Thumbnailator - a thumbnail generation library for Java</description>
-  <url>http://code.google.com/p/thumbnailator</url>
+  <url>https://github.com/coobird/thumbnailator</url>
   <licenses>
     <license>
       <name>The MIT License (MIT)</name>
@@ -15,8 +15,9 @@
     </license>
   </licenses>
   <scm>
-    <url>http://code.google.com/p/thumbnailator</url>
-    <connection>scm:hg:https://code.google.com/p/thumbnailator</connection>
+    <url>https://github.com/coobird/thumbnailator</url>
+    <connection>scm:git:git@github.com:coobird/thumbnailator.git</connection>
+    <developerConnection>scm:git:git@github.com:coobird/thumbnailator.git</developerConnection>
   </scm>
   <developers>
     <developer>
