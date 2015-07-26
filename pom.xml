@@ -150,6 +150,44 @@
           <autoReleaseAfterClose>false</autoReleaseAfterClose>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.github.github</groupId>
+        <artifactId>site-maven-plugin</artifactId>
+        <version>0.11</version>
+        <configuration>
+          <message>Generated javadoc for Thumbnailator ${project.version}</message>
+          <outputDirectory>javadoc</outputDirectory>
+          <path>javadoc/${project.version}</path>
+          <merge>true</merge>
+          <noJekyll>true</noJekyll>
+          <server>github</server> 
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>site</goal>
+            </goals>
+            <phase>site-deploy</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <skip>true</skip>
+          <skipDeploy>true</skipDeploy>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.0</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
