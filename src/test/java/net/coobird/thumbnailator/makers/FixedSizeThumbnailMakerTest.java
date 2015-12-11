@@ -913,4 +913,40 @@ public class FixedSizeThumbnailMakerTest
 		assertEquals(10, thumbnail.getHeight());
 	}	
 	
+	@Test
+	public void scaledUp_ScaleUpEnabledFitWithinTrue()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(100, 99).build();
+
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(200, 200)
+		.keepAspectRatio(true)
+		.fitWithinDimensions(true)
+		.scaleUpDisabled(false)
+		.make(img);
+
+		// then
+		assertEquals(200, thumbnail.getWidth());
+		assertEquals(198, thumbnail.getHeight());
+	}
+
+	@Test
+	public void scaledUp_ScaleUpDisabledFitWithinTrue()
+	{
+		// given
+		BufferedImage img = new BufferedImageBuilder(100, 99).build();
+
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(200, 200)
+		.keepAspectRatio(true)
+		.fitWithinDimensions(true)
+		.scaleUpDisabled(true)
+		.make(img);
+
+		// then
+		assertEquals(100, thumbnail.getWidth());
+		assertEquals(99, thumbnail.getHeight());
+	}
+
 }

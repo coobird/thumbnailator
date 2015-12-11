@@ -65,6 +65,7 @@ public final class ThumbnailParameterBuilder
 	private double heightScalingFactor = Double.NaN;
 	private int imageType = ThumbnailParameter.DEFAULT_IMAGE_TYPE;
 	private boolean keepAspectRatio = true;
+	private boolean scaleUpDisabled = false;
 	private float thumbnailQuality = ThumbnailParameter.DEFAULT_QUALITY;
 	private String thumbnailFormat = ThumbnailParameter.ORIGINAL_FORMAT;
 	private String thumbnailFormatType = ThumbnailParameter.DEFAULT_FORMAT_TYPE;
@@ -202,6 +203,20 @@ public final class ThumbnailParameterBuilder
 	public ThumbnailParameterBuilder keepAspectRatio(boolean keep)
 	{
 		this.keepAspectRatio = keep;
+		return this;
+	}
+
+	/**
+	 * Sets whether or not the thumbnail should be scaled up in case specified
+	 * is bigger than source image's size
+	 *
+	 * @param disabled		Whether or not to scale up the thumbnail in case
+	 * 						thumbnail's size is bigger than original image.
+	 * @return			A reference to this object.
+	 */
+	public ThumbnailParameterBuilder scaleUpDisabled(boolean disabled)
+	{
+		this.scaleUpDisabled = disabled;
 		return this;
 	}
 	
@@ -369,6 +384,7 @@ public final class ThumbnailParameterBuilder
 					heightScalingFactor,
 					sourceRegion,
 					keepAspectRatio,
+					scaleUpDisabled,
 					thumbnailFormat,
 					thumbnailFormatType,
 					thumbnailQuality,
@@ -386,6 +402,7 @@ public final class ThumbnailParameterBuilder
 					new Dimension(width, height),
 					sourceRegion,
 					keepAspectRatio,
+					scaleUpDisabled,
 					thumbnailFormat,
 					thumbnailFormatType,
 					thumbnailQuality,
