@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -132,7 +134,15 @@ public class InputStreamImageSourceTest
 		catch (IOException e)
 		{
 			// then
-			assertEquals("Error reading PNG image data", e.getMessage());
+			List<String> validMessages = Arrays.asList(
+			    "Error reading PNG metadata",
+			    "Error reading PNG image data"
+			);
+			String message = e.getMessage();
+			if (!validMessages.contains(message))
+			{
+			    fail("Unexpected error message: " + e.getMessage());
+			}
 			throw e;
 		}
 		fail();
