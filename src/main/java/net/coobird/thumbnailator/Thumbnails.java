@@ -714,6 +714,7 @@ instance.asFiles("path/to/thumbnail");
 			DITHERING("dithering"),
 			RENDERING("rendering"),
 			KEEP_ASPECT_RATIO("keepAspectRatio"),
+			SCALE_UP("scaleUp"),
 			OUTPUT_FORMAT("outputFormat"),
 			OUTPUT_FORMAT_TYPE("outputFormatType"),
 			OUTPUT_QUALITY("outputQuality"),
@@ -759,6 +760,7 @@ instance.asFiles("path/to/thumbnail");
 			statusMap.put(Properties.DITHERING, Status.OPTIONAL);
 			statusMap.put(Properties.RENDERING, Status.OPTIONAL);
 			statusMap.put(Properties.KEEP_ASPECT_RATIO, Status.OPTIONAL);
+			statusMap.put(Properties.SCALE_UP, Status.OPTIONAL);
 			statusMap.put(Properties.OUTPUT_FORMAT, Status.OPTIONAL);
 			statusMap.put(Properties.OUTPUT_FORMAT_TYPE, Status.OPTIONAL);
 			statusMap.put(Properties.OUTPUT_QUALITY, Status.OPTIONAL);
@@ -819,6 +821,7 @@ instance.asFiles("path/to/thumbnail");
 		
 		private int imageType = IMAGE_TYPE_UNSPECIFIED;
 		private boolean keepAspectRatio = true;
+		private boolean scaleUp = true;
 		
 		private String outputFormat = ThumbnailParameter.DETERMINE_FORMAT;
 		private String outputFormatType = ThumbnailParameter.DEFAULT_FORMAT_TYPE;
@@ -1581,6 +1584,21 @@ Thumbnails.of(image)
 		}
 		
 		/**
+		 * Sets whether or not the thumbnail should be scaled up in case specified size
+		 * is bigger than source image's size.
+		 *
+		 * @param scaleUp         Whether or not to scale up the thumbnail in case
+		 *                        thumbnail's size is bigger than original image.
+		 * @return                Reference to this object.
+		 */
+		public Builder<T> scaleUp(boolean scaleUp)
+		{
+		    updateStatus(Properties.SCALE_UP, Status.ALREADY_SET);
+		    this.scaleUp = scaleUp;
+		    return this;
+		}
+
+		/**
 		 * Sets the output quality of the compression algorithm used to
 		 * compress the thumbnail when it is written to an external destination
 		 * such as a file or output stream.
@@ -2178,6 +2196,7 @@ watermark(Positions.CENTER, image, opacity);
 						new Dimension(width, height),
 						sourceRegion,
 						keepAspectRatio,
+						scaleUp,
 						outputFormat,
 						outputFormatType,
 						outputQuality,
@@ -2196,6 +2215,7 @@ watermark(Positions.CENTER, image, opacity);
 						scaleHeight,
 						sourceRegion,
 						keepAspectRatio,
+						scaleUp,
 						outputFormat,
 						outputFormatType,
 						outputQuality,
