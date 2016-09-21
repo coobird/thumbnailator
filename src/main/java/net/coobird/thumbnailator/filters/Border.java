@@ -115,8 +115,8 @@ public class Border implements ImageFilter
 	{
 		int imageFinalWidth = img.getWidth() + borderLeft + borderRight;
 		int imageFinalHeight = img.getHeight() + borderTop + borderBottom;
-		int containedImageWidth = imageFinalWidth;
-		int containedImageHeight = imageFinalHeight;
+		int containedImageWidth = img.getWidth();
+		int containedImageHeight = img.getHeight();
 		
 		BufferedImage finalImage =
 			new BufferedImage(imageFinalWidth, imageFinalHeight, img.getType());
