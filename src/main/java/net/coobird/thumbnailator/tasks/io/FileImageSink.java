@@ -181,7 +181,7 @@ public class FileImageSink implements ImageSink<File>
 	 * @return						Returns {@code true} if the specified file
 	 * 								extension is valid for the specified format.
 	 */
-	private static boolean isMatchingFormat(String formatName, String fileExtension)
+	private static boolean isMatchingFormat(String formatName, String fileExtension) throws UnsupportedFormatException
 	{
 		if (formatName == null || fileExtension == null)
 		{
@@ -195,7 +195,10 @@ public class FileImageSink implements ImageSink<File>
 		}
 		catch (NoSuchElementException e)
 		{
-			return false;
+			throw new UnsupportedFormatException(
+					formatName,
+					"No suitable ImageWriter found for " + formatName + "."
+			);
 		}
 		
 		String[] suffixes = iw.getOriginatingProvider().getFileSuffixes();
