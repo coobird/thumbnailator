@@ -328,20 +328,26 @@ public class FileImageSinkTest
 		// when
 		sink.write(imgToWrite);
 		
-		// then
-		assertEquals(outputFile, sink.getSink());
+		try
+		{
+			// then
+			assertEquals(outputFile, sink.getSink());
 
-		verify(iwParam, never()).setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-		verify(iwParam, never()).setCompressionType(anyString());
-		verify(iwParam, never()).setCompressionQuality(anyFloat());
-		
-		// - check to see that parameters were not read, as this format doesn't
-		// support compression.
-		verify(param, never()).getOutputQuality();
-		verify(param, never()).getOutputFormatType();
-		
-		// clean up
-		IIORegistry.getDefaultInstance().deregisterServiceProvider(spi);
+			verify(iwParam, never()).setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+			verify(iwParam, never()).setCompressionType(anyString());
+			verify(iwParam, never()).setCompressionQuality(anyFloat());
+			
+			// - check to see that parameters were not read, as this format doesn't
+			// support compression.
+			verify(param, never()).getOutputQuality();
+			verify(param, never()).getOutputFormatType();
+			
+		}
+		finally
+		{
+			// clean up
+			IIORegistry.getDefaultInstance().deregisterServiceProvider(spi);
+		}
 	}
 	
 	@Test
@@ -381,18 +387,23 @@ public class FileImageSinkTest
 		sink.write(imgToWrite);
 		
 		// then
-		assertEquals(outputFile, sink.getSink());
-		
-		verify(iwParam, atLeastOnce()).setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-		verify(iwParam, never()).setCompressionType(anyString());
-		verify(iwParam, atLeastOnce()).setCompressionQuality(0.8f);
-		
-		// - check to see that parameters was read
-		verify(param, atLeastOnce()).getOutputQuality();
-		verify(param, atLeastOnce()).getOutputFormatType();
-		
-		// clean up
-		IIORegistry.getDefaultInstance().deregisterServiceProvider(spi);
+		try
+		{
+			assertEquals(outputFile, sink.getSink());
+			
+			verify(iwParam, atLeastOnce()).setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+			verify(iwParam, never()).setCompressionType(anyString());
+			verify(iwParam, atLeastOnce()).setCompressionQuality(0.8f);
+			
+			// - check to see that parameters was read
+			verify(param, atLeastOnce()).getOutputQuality();
+			verify(param, atLeastOnce()).getOutputFormatType();
+		}
+		finally
+		{
+			// clean up
+			IIORegistry.getDefaultInstance().deregisterServiceProvider(spi);
+		}
 	}
 	
 	@Test
@@ -431,19 +442,24 @@ public class FileImageSinkTest
 		// when
 		sink.write(imgToWrite);
 		
-		// then
-		assertEquals(outputFile, sink.getSink());
-		
-		verify(iwParam, atLeastOnce()).setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-		verify(iwParam, atLeastOnce()).setCompressionType("FOOBAR");
-		verify(iwParam, atLeastOnce()).setCompressionQuality(0.8f);
-		
-		// - check to see that parameters was read
-		verify(param, atLeastOnce()).getOutputQuality();
-		verify(param, atLeastOnce()).getOutputFormatType();
-		
-		// clean up
-		IIORegistry.getDefaultInstance().deregisterServiceProvider(spi);
+		try
+		{
+			// then
+			assertEquals(outputFile, sink.getSink());
+			
+			verify(iwParam, atLeastOnce()).setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+			verify(iwParam, atLeastOnce()).setCompressionType("FOOBAR");
+			verify(iwParam, atLeastOnce()).setCompressionQuality(0.8f);
+			
+			// - check to see that parameters was read
+			verify(param, atLeastOnce()).getOutputQuality();
+			verify(param, atLeastOnce()).getOutputFormatType();
+		}
+		finally
+		{
+			// clean up
+			IIORegistry.getDefaultInstance().deregisterServiceProvider(spi);
+		}
 	}
 
 	@Test
