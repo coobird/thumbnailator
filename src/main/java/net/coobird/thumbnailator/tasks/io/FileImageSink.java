@@ -5,20 +5,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
 
-import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
-import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
-import javax.imageio.stream.ImageOutputStream;
 
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
-import net.coobird.thumbnailator.util.BufferedImages;
-import net.coobird.thumbnailator.util.ThumbnailatorUtils;
 
 /**
  * An {@link ImageSink} which writes the resulting thumbnail to a file.
