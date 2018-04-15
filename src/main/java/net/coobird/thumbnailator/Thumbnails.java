@@ -228,6 +228,9 @@ public final class Thumbnails
 	
 	/**
 	 * Indicate to make thumbnails from the specified {@link InputStream}s.
+	 * <p>
+	 * Note that the {@link InputStream#close()} method will not be called
+	 * upon reading the source image from the {@link InputStream}. 
 	 * 
 	 * @param inputStreams		{@link InputStream}s which provide the images
 	 * 							for which thumbnails are to be produced for.
@@ -317,6 +320,9 @@ public final class Thumbnails
 	/**
 	 * Indicate to make thumbnails for images obtained from the specified
 	 * {@link InputStream}s.
+	 * <p>
+	 * Note that the {@link InputStream#close()} method will not be called
+	 * upon reading the source image from the {@link InputStream}. 
 	 * 
 	 * @param inputStreams		{@link InputStream}s which provide images for
 	 * 							which thumbnails are to be produced.
@@ -2683,6 +2689,10 @@ watermark(Positions.CENTER, image, opacity);
 		 * <p>
 		 * To call this method, the thumbnail must have been created from a
 		 * single source.
+		 * <p>
+		 * Note that the {@link OutputStream#close()} method will not be
+		 * called upon the completion of the thumbnail being written to the
+		 * {@link OutputStream}.
 		 * 
 		 * @param os				The output stream to which the thumbnail
 		 * 							is to be written to.
@@ -2732,6 +2742,10 @@ watermark(Positions.CENTER, image, opacity);
 		/**
 		 * Creates the thumbnails and writes them to {@link OutputStream}s
 		 * provided by the {@link Iterable}.
+		 * <p>
+		 * Note that the {@link OutputStream#close()} method will not be
+		 * called upon the completion of the thumbnail being written to the
+		 * {@link OutputStream}.
 		 * 
 		 * @param iterable			An {@link Iterable} which returns an
 		 * 							{@link Iterator} which returns the
