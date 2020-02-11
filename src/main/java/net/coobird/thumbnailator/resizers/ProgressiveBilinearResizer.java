@@ -71,7 +71,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer
 		// If multi-step downscaling is not required, perform one-step.
 		if ((targetWidth * 2 >= currentWidth) && (targetHeight * 2 >= currentHeight))
 		{
-			Graphics2D g = destImage.createGraphics();
+			Graphics2D g = createGraphics(destImage);
 			g.drawImage(srcImage, 0, 0, targetWidth, targetHeight, null);
 			g.dispose();
 			return;
@@ -84,8 +84,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer
 				destImage.getType()
 		);
 		
-		Graphics2D g = tempImage.createGraphics();
-		g.setRenderingHints(RENDERING_HINTS);
+		Graphics2D g = createGraphics(tempImage);
 		g.setComposite(AlphaComposite.Src);
 		
 		/*
@@ -135,7 +134,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer
 		g.dispose();
 		
 		// Draw the resized image onto the destination image.
-		Graphics2D destg = destImage.createGraphics();
+		Graphics2D destg = createGraphics(destImage);
 		destg.drawImage(tempImage, 0, 0, targetWidth, targetHeight, 0, 0, currentWidth, currentHeight, null);
 		destg.dispose();
 	}

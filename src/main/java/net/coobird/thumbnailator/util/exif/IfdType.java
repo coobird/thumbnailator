@@ -50,7 +50,7 @@ public enum IfdType
 	 * Two {@link #SLONG} values, where the first {@code SLONG} is the
 	 * numerator, while the second {@code SLONG} is the denominator.
 	 */
-	SRATIONAL(5, SLONG.size() * 2),
+	SRATIONAL(10, SLONG.size() * 2),
 	;
 	
 	private int value;

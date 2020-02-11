@@ -17,6 +17,8 @@ import javax.imageio.ImageIO;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -25,7 +27,7 @@ import org.junit.rules.TemporaryFolder;
  * Tests to see whether memory conservation code is triggered when the
  * {@code thumbnailator.conserveMemoryWorkaround} system property is set. 
  * <p>
- * These tests will not necessarily be successful, as the workaround is only
+ * These tests may not necessarily be successful, as the workaround is only
  * triggered under conditions where the JVM memory is deemed to be low, which
  * will depend upon the environment in which the tests are run.
  */
@@ -53,10 +55,15 @@ public class Issue69InputStreamImageSourceTest {
 		}
 	}
 	
+	@Before @After
+	public void clearSystemProperty() {
+		System.clearProperty("thumbnailator.conserveMemoryWorkaround");
+	}
+	
 	@Test
 	public void fromInputStreamBySizeWorkaroundDisabled() throws IOException {
 		// given
-		System.setProperty("thumbnailator.conserveMemoryWorkaround", "");
+		// The "thumbnailator.conserveMemoryWorkaround" system property is not set.
 
 		ThumbnailParameter param = new ThumbnailParameterBuilder().size(200, 200).build();
 		InputStreamImageSource source = new InputStreamImageSource(new ByteArrayInputStream(sourceByteArray));
@@ -92,7 +99,7 @@ public class Issue69InputStreamImageSourceTest {
 	@Test
 	public void fromInputStreamByScaleWorkaroundDisabled() throws IOException {
 		// given
-		System.setProperty("thumbnailator.conserveMemoryWorkaround", "");
+		// The "thumbnailator.conserveMemoryWorkaround" system property is not set.
 		
 		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(0.1).build();
 		InputStreamImageSource source = new InputStreamImageSource(new ByteArrayInputStream(sourceByteArray));

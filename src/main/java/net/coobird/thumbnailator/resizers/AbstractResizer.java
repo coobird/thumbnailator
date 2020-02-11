@@ -81,12 +81,23 @@ public abstract class AbstractResizer implements Resizer
 		int width = destImage.getWidth();
 		int height = destImage.getHeight();
 		
-		Graphics2D g = destImage.createGraphics();
-		
-		g.setRenderingHints(RENDERING_HINTS);
-		
+		Graphics2D g = createGraphics(destImage);
 		g.drawImage(srcImage, 0, 0, width, height, null);
 		g.dispose();
+	}
+	
+	/**
+	 * Returns a {@link Graphics2D} object with rendering hints pre-applied.
+	 * @param img	{@link BufferedImage} for which the {@link Graphics2D}
+	 * 				object should be generated for. 
+	 * @return	{@link Graphics2D} object for the given {@link BufferedImage}.
+	 */
+	protected Graphics2D createGraphics(BufferedImage img)
+	{
+		Graphics2D g = img.createGraphics();
+		g.setRenderingHints(RENDERING_HINTS);
+		
+		return g;
 	}
 	
 	/**
