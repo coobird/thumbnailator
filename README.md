@@ -50,6 +50,7 @@ The following pages have more information on what _Thumbnailator_ can do:
 * [Features](https://github.com/coobird/thumbnailator/wiki/Features)
 * [Examples](https://github.com/coobird/thumbnailator/wiki/Examples)
 * [Thumbnailator API Documentation](https://coobird.github.io/thumbnailator/javadoc/0.4.8/)
+* [Frequently Asked Questions](https://github.com/coobird/thumbnailator/wiki/FAQ)
 
 # Disclaimer
 *Thumbnailator is still early in its development, and the APIs are subject to
