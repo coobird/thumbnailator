@@ -2332,4 +2332,24 @@ public class FileImageSinkTest
 		// then
 		assertEquals("png", sink.preferredOutputFormatName());
 	}
+
+	// What we really want to check the file resource is released.
+	@Test
+	public void write_FileDeletableAfterWrite_Issue148() throws IOException
+	{
+		// given
+		File outputFile = new File(TMPDIR, "test.png");
+
+		BufferedImage imgToWrite =
+				new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+
+		FileImageSink sink = new FileImageSink(outputFile);
+
+		// when
+		sink.write(imgToWrite);
+
+		// then
+		assertEquals(outputFile, sink.getSink());
+		assertTrue(outputFile.delete());
+	}
 }
