@@ -313,12 +313,13 @@ public class FileImageSink implements ImageSink<File>
 					"Could not determine output format."
 			);
 		}
-		
-		imageSink = new OutputStreamImageSink(new FileOutputStream(destinationFile));
+
+		FileOutputStream fos = new FileOutputStream(destinationFile);
+		imageSink = new OutputStreamImageSink(fos);
 		imageSink.setThumbnailParameter(param);
 		imageSink.setOutputFormatName(formatName);
-		
 		imageSink.write(img);
+		fos.close();
 	}
 
 	/**

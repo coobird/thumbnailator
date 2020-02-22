@@ -406,4 +406,23 @@ public class OutputStreamImageSinkTest
 		// clean up
 		IIORegistry.getDefaultInstance().deregisterServiceProvider(spi);
 	}
+
+	@Test
+	public void write_DoesNotCloseOutputStream() throws IOException
+	{
+		// given
+		OutputStream os = mock(OutputStream.class);
+
+		BufferedImage imgToWrite =
+				new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+
+		OutputStreamImageSink sink = new OutputStreamImageSink(os);
+		sink.setOutputFormatName("jpeg");
+
+		// when
+		sink.write(imgToWrite);
+
+		// then
+		verify(os, never()).close();
+	}
 }
