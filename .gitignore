@@ -1,5 +1,7 @@
 .classpath
 .project
 .settings
+.idea/
+thumbnailator.iml
 bin/
 target/
