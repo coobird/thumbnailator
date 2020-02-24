@@ -726,4 +726,21 @@ public class InputStreamImageSourceTest
 				}
 		);
 	}
+
+	@Test
+	public void readDoesNotCloseInputStream() throws IOException
+	{
+		// given
+		InputStream is = spy(new FileInputStream("src/test/resources/Thumbnailator/grid.png"));
+
+		InputStreamImageSource source = new InputStreamImageSource(is);
+
+		// when
+		BufferedImage img = source.read();
+
+		// then
+		assertEquals(100, img.getWidth());
+		assertEquals(100, img.getHeight());
+		verify(is, never()).close();
+	}
 }
