@@ -98,19 +98,19 @@ public class FileImageSource implements ImageSource<File>
 	{
 		try
 		{
-			imageSource = new InputStreamImageSource(new FileInputStream(sourceFile));
+			FileInputStream fis = new FileInputStream(sourceFile);
+			imageSource = new InputStreamImageSource(fis);
 			imageSource.setThumbnailParameter(param);
+			BufferedImage img = imageSource.read();
+			fis.close();
+
+			return img;
 		}
 		catch (FileNotFoundException e)
 		{
 			throw new FileNotFoundException(
 					"Could not find file: " + sourceFile.getAbsolutePath()
 			);
-		}
-		
-		try
-		{
-			return imageSource.read();
 		}
 		catch (UnsupportedFormatException e)
 		{
