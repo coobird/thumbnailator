@@ -2,6 +2,7 @@ package net.coobird.thumbnailator.tasks.io;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.Proxy;
 import java.net.URL;
@@ -122,23 +123,24 @@ public class URLImageSource extends AbstractImageSource<URL>
 
 	public BufferedImage read() throws IOException
 	{
-		InputStreamImageSource source;
+		InputStream is;
 		try
 		{
 			if (proxy != null)
 			{
-				source = new InputStreamImageSource(url.openConnection(proxy).getInputStream());
+				is = url.openConnection(proxy).getInputStream();
 			}
 			else
 			{
-				source = new InputStreamImageSource(url.openStream());
+				is = url.openStream();
 			}
 		}
 		catch (IOException e)
 		{
 			throw new IOException("Could not open connection to URL: " + url);
 		}
-		
+
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		source.setThumbnailParameter(param);
 		
 		BufferedImage img;
@@ -150,6 +152,8 @@ public class URLImageSource extends AbstractImageSource<URL>
 		{
 			throw new IOException("Could not obtain image from URL: " + url);
 		}
+
+		is.close();
 		
 		this.inputFormatName = source.getInputFormatName();
 		
