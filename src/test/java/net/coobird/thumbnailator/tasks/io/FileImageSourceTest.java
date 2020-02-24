@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import net.coobird.thumbnailator.TestUtils;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 import net.coobird.thumbnailator.geometry.AbsoluteSize;
@@ -19,11 +20,31 @@ import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.test.BufferedImageAssert;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 
 public class FileImageSourceTest
 {
+	/**
+	 * The temporary directory to use when creating files to use for this test.
+	 */
+	private static final String TMPDIR =
+			"src/test/resources/tmp/FileImageSourceTest";
+
+	@BeforeClass
+	public static void makeTemporaryDirectory()
+	{
+		TestUtils.makeTemporaryDirectory(TMPDIR);
+	}
+
+	@AfterClass
+	public static void deleteTemporaryDirectory()
+	{
+		TestUtils.deleteTemporaryDirectory(TMPDIR);
+	}
+
 	@Test
 	public void fileExists_Png() throws IOException
 	{
@@ -742,5 +763,25 @@ public class FileImageSourceTest
 						0, 0, 1,
 				}
 		);
+	}
+
+	// What we really want to check the file resource is released.
+	@Test
+	public void canRemoveSourceImage() throws IOException
+	{
+		// given
+		File inputFile = TestUtils.createTempFile(TMPDIR, "png");
+		TestUtils.copyFile(new File("src/test/resources/Thumbnailator/grid.png"), inputFile);
+
+		FileImageSource source = new FileImageSource(inputFile);
+
+		// when
+		source.read();
+
+		// then
+		assertEquals(inputFile, source.getSource());
+		assertTrue(inputFile.exists());
+		assertTrue(inputFile.delete());
+		assertFalse(inputFile.exists());
 	}
 }
