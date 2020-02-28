@@ -59,7 +59,7 @@
           <locale>en_US</locale>
           <show>public</show>
           <use>false</use>
-          <destDir>javadoc</destDir>
+          <destDir>${project.build.outputDirectory}/javadoc</destDir>
           <archive>
             <manifestEntries>
               <Specification-Title>Thumbnailator API Documentation</Specification-Title>
@@ -78,6 +78,13 @@
             <goals>
               <goal>jar</goal>
             </goals>
+          </execution>
+          <execution>
+            <id>site-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <phase>site</phase>
           </execution>
         </executions>
       </plugin>
@@ -146,7 +153,7 @@
         <version>0.11</version>
         <configuration>
           <message>Generated javadoc for Thumbnailator ${project.version}</message>
-          <outputDirectory>javadoc</outputDirectory>
+          <outputDirectory>${project.build.outputDirectory}/javadoc</outputDirectory>
           <path>javadoc/${project.version}</path>
           <merge>true</merge>
           <noJekyll>true</noJekyll>
@@ -220,9 +227,17 @@
             </configuration>
             <executions>
               <execution>
+                <id>for-release</id>
                 <goals>
                   <goal>toolchain</goal>
                 </goals>
+              </execution>
+              <execution>
+                <id>for-javadoc</id>
+                <goals>
+                  <goal>toolchain</goal>
+                </goals>
+                <phase>pre-site</phase>
               </execution>
             </executions>
           </plugin>
