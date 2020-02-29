@@ -14,8 +14,7 @@ import net.coobird.thumbnailator.geometry.Position;
  * @author coobird
  *
  */
-public class Watermark implements ImageFilter
-{
+public class Watermark implements ImageFilter {
 	/**
 	 * The position of the watermark.
 	 */
@@ -44,19 +43,14 @@ public class Watermark implements ImageFilter
 	 * 							transparent, and {@code 1.0f} is completely
 	 * 							opaque.
 	 */
-	public Watermark(Position position, BufferedImage watermarkImg,
-			float opacity)
-	{
-		if (position == null)
-		{
+	public Watermark(Position position, BufferedImage watermarkImg, float opacity) {
+		if (position == null) {
 			throw new NullPointerException("Position is null.");
 		}
-		if (watermarkImg == null)
-		{
+		if (watermarkImg == null) {
 			throw new NullPointerException("Watermark image is null.");
 		}
-		if (opacity > 1.0f || opacity < 0.0f)
-		{
+		if (opacity > 1.0f || opacity < 0.0f) {
 			throw new IllegalArgumentException("Opacity is out of range of " +
 					"between 0.0f and 1.0f.");
 		}
@@ -66,8 +60,7 @@ public class Watermark implements ImageFilter
 		this.opacity = opacity;
 	}
 
-	public BufferedImage apply(BufferedImage img)
-	{
+	public BufferedImage apply(BufferedImage img) {
 		int width = img.getWidth();
 		int height = img.getHeight();
 		int type = img.getType();

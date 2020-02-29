@@ -16,8 +16,7 @@ import java.awt.image.BufferedImage;
  * @author coobird
  *
  */
-public interface ImageFilter
-{
+public interface ImageFilter {
 	/**
 	 * Applies a image filtering operation on an image.
 	 * 

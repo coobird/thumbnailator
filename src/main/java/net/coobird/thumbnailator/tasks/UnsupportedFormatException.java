@@ -9,8 +9,7 @@ import java.io.IOException;
  * @author coobird
  *
  */
-public class UnsupportedFormatException extends IOException
-{
+public class UnsupportedFormatException extends IOException {
 	/**
 	 * An ID used for serialization.
 	 */
@@ -32,8 +31,7 @@ public class UnsupportedFormatException extends IOException
 	 * 
 	 * @param formatName	Format name.
 	 */
-	public UnsupportedFormatException(String formatName)
-	{
+	public UnsupportedFormatException(String formatName) {
 		super();
 		this.formatName = formatName;
 	}
@@ -45,8 +43,7 @@ public class UnsupportedFormatException extends IOException
 	 * @param formatName	Format name.
 	 * @param s				A message detailing the exception.
 	 */
-	public UnsupportedFormatException(String formatName, String s)
-	{
+	public UnsupportedFormatException(String formatName, String s) {
 		super(s);
 		this.formatName = formatName;
 	}
@@ -56,8 +53,7 @@ public class UnsupportedFormatException extends IOException
 	 * 
 	 * @return			Format name.
 	 */
-	public String getFormatName()
-	{
+	public String getFormatName() {
 		return formatName;
 	}
 }

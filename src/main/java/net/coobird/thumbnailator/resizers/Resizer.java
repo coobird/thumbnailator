@@ -8,8 +8,7 @@ import java.awt.image.BufferedImage;
  * @author coobird
  *
  */
-public interface Resizer
-{
+public interface Resizer {
 	/**
 	 * Resizes an image.
 	 * <p>

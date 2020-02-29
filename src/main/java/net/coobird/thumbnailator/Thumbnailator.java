@@ -31,8 +31,7 @@ import net.coobird.thumbnailator.tasks.ThumbnailTask;
  * @author coobird
  *
  */
-public final class Thumbnailator
-{
+public final class Thumbnailator {
 	/**
 	 * This class is not intended to be instantiated.
 	 */
@@ -45,8 +44,7 @@ public final class Thumbnailator
 	 * @throws IOException		Thrown when a problem occurs when creating a
 	 * 							thumbnail.
 	 */
-	public static void createThumbnail(ThumbnailTask<?, ?> task) throws IOException
-	{
+	public static void createThumbnail(ThumbnailTask<?, ?> task) throws IOException {
 		ThumbnailParameter param = task.getParam();
 		
 		// Obtain the original image.
@@ -62,24 +60,19 @@ public final class Thumbnailator
 		 * If the original type is a custom type, then the default image type
 		 * will be used.
 		 */
-		if (param.useOriginalImageType())
-		{
+		if (param.useOriginalImageType()) {
 			int imageTypeToUse = sourceImage.getType();
 			
-			if (imageTypeToUse == BufferedImage.TYPE_CUSTOM)
-			{
+			if (imageTypeToUse == BufferedImage.TYPE_CUSTOM) {
 				imageType = ThumbnailParameter.DEFAULT_IMAGE_TYPE;
-			}
-			else
-			{
+			} else {
 				imageType = sourceImage.getType();
 			}
 		}
 		
 		BufferedImage destinationImage;
 		
-		if (param.getSize() != null)
-		{
+		if (param.getSize() != null) {
 			// Get the dimensions of the original and thumbnail images.
 			int destinationWidth = param.getSize().width;
 			int destinationHeight = param.getSize().height;
@@ -93,9 +86,8 @@ public final class Thumbnailator
 					.imageType(imageType)
 					.resizerFactory(param.getResizerFactory())
 					.make(sourceImage);
-		}
-		else if (!Double.isNaN(param.getWidthScalingFactor()))
-		{
+
+		} else if (!Double.isNaN(param.getWidthScalingFactor())) {
 			// Create the thumbnail.
 			destinationImage =
 				new ScaledThumbnailMaker()
@@ -103,16 +95,14 @@ public final class Thumbnailator
 					.imageType(imageType)
 					.resizerFactory(param.getResizerFactory())
 					.make(sourceImage);
-		}
-		else
-		{
+
+		} else {
 			throw new IllegalStateException("Parameters to make thumbnail" +
 					" does not have scaling factor nor thumbnail size specified.");
 		}
 		
 		// Perform the image filters
-		for (ImageFilter filter : param.getImageFilters())
-		{
+		for (ImageFilter filter : param.getImageFilters()) {
 			destinationImage = filter.apply(destinationImage);
 		}
 		
@@ -150,8 +140,8 @@ public final class Thumbnailator
 			BufferedImage img,
 			int width,
 			int height
-	)
-	{
+	) {
+
 		validateDimensions(width, height);
 		
 		Dimension imgSize = new Dimension(img.getWidth(), img.getHeight());
@@ -189,21 +179,17 @@ public final class Thumbnailator
 			File outFile,
 			int width,
 			int height
-	) throws IOException
-	{
+	) throws IOException {
+
 		validateDimensions(width, height);
 		
-		if (inFile == null)
-		{
+		if (inFile == null) {
 			throw new NullPointerException("Input file is null.");
-		}
-		else if (outFile == null)
-		{
+		} else if (outFile == null) {
 			throw new NullPointerException("Output file is null.");
 		}
 		
-		if (!inFile.exists())
-		{
+		if (!inFile.exists()) {
 			throw new IOException("Input file does not exist.");
 		}
 
@@ -227,12 +213,11 @@ public final class Thumbnailator
 			File f,
 			int width,
 			int height
-	) throws IOException
-	{
+	) throws IOException {
+
 		validateDimensions(width, height);
 		
-		if (f == null)
-		{
+		if (f == null) {
 			throw new NullPointerException("Input file is null.");
 		}
 		
@@ -259,8 +244,8 @@ public final class Thumbnailator
 			Image img,
 			int width,
 			int height
-	)
-	{
+	) {
+
 		validateDimensions(width, height);
 		
 		// Copy the image from Image into a new BufferedImage.
@@ -296,8 +281,8 @@ public final class Thumbnailator
 			OutputStream os,
 			int width,
 			int height
-	) throws IOException
-	{
+	) throws IOException {
+
 		Thumbnailator.createThumbnail(
 				is, os, ThumbnailParameter.ORIGINAL_FORMAT, width, height);
 	}
@@ -324,16 +309,13 @@ public final class Thumbnailator
 			String format,
 			int width,
 			int height
-	) throws IOException
-	{
+	) throws IOException {
+
 		validateDimensions(width, height);
 		
-		if (is == null)
-		{
+		if (is == null) {
 			throw new NullPointerException("InputStream is null.");
-		}
-		else if (os == null)
-		{
+		} else if (os == null) {
 			throw new NullPointerException("OutputStream is null.");
 		}
 
@@ -369,17 +351,14 @@ public final class Thumbnailator
 			Rename rename,
 			int width,
 			int height
-	)
-	throws IOException
-	{
+	) throws IOException {
+
 		validateDimensions(width, height);
 		
-		if (files == null)
-		{
+		if (files == null) {
 			throw new NullPointerException("Collection of Files is null.");
 		}
-		if (rename == null)
-		{
+		if (rename == null) {
 			throw new NullPointerException("Rename is null.");
 		}
 		
@@ -390,8 +369,7 @@ public final class Thumbnailator
 				.size(width, height)
 				.build();
 		
-		for (File inFile : files)
-		{
+		for (File inFile : files) {
 			File outFile =
 				new File(inFile.getParent(), rename.apply(inFile.getName(), param));
 			
@@ -426,17 +404,14 @@ public final class Thumbnailator
 			Rename rename,
 			int width,
 			int height
-	)
-	throws IOException
-	{
+	) throws IOException {
+
 		validateDimensions(width, height);
 		
-		if (files == null)
-		{
+		if (files == null) {
 			throw new NullPointerException("Collection of Files is null.");
 		}
-		if (rename == null)
-		{
+		if (rename == null) {
 			throw new NullPointerException("Rename is null.");
 		}
 		
@@ -445,8 +420,7 @@ public final class Thumbnailator
 				.size(width, height)
 				.build();
 		
-		for (File inFile : files)
-		{
+		for (File inFile : files) {
 			File outFile =
 				new File(inFile.getParent(), rename.apply(inFile.getName(), param));
 			
@@ -462,22 +436,19 @@ public final class Thumbnailator
 	 * reason for the exception.
 	 * <p>
 	 * This method is used to perform a check on the output dimensions of a
-	 * thumbnail for the {@link Thumbnails#createThumbnail} methods.
+	 * thumbnail for the {@link Thumbnailator#createThumbnail} methods.
 	 * 
 	 * @param width		The width to validate.
 	 * @param height	The height to validate.
 	 */
-	private static void validateDimensions(int width, int height)
-	{
-		if (width <= 0 && height <= 0)
-		{
+	private static void validateDimensions(int width, int height) {
+		if (width <= 0 && height <= 0) {
 			throw new IllegalArgumentException(
 					"Destination image dimensions must not be less than " +
 					"0 pixels."
 			);
-		}
-		else if (width <= 0 || height <= 0)
-		{
+
+		} else if (width <= 0 || height <= 0) {
 			String dimension = width == 0 ? "width" : "height";
 			
 			throw new IllegalArgumentException(

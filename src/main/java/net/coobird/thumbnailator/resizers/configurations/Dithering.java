@@ -13,8 +13,7 @@ import java.awt.RenderingHints.Key;
  * @author coobird
  *
  */
-public enum Dithering implements ResizerConfiguration
-{
+public enum Dithering implements ResizerConfiguration {
 	/**
 	 * A hint used to enable dithering.
 	 */
@@ -41,18 +40,15 @@ public enum Dithering implements ResizerConfiguration
 	 * 
 	 * @param value		The rendering hint value.
 	 */
-	private Dithering(Object value)
-	{
+	private Dithering(Object value) {
 		this.value = value;
 	}
 
-	public Key getKey()
-	{
+	public Key getKey() {
 		return RenderingHints.KEY_DITHERING;
 	}
 
-	public Object getValue()
-	{
+	public Object getValue() {
 		return value;
 	}
 }

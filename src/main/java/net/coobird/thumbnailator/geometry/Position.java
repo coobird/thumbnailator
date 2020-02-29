@@ -9,8 +9,7 @@ import java.awt.Point;
  * @author coobird
  *
  */
-public interface Position
-{
+public interface Position {
 	/**
 	 * Calculates the position of an object enclosed by an enclosing object.
 	 * 

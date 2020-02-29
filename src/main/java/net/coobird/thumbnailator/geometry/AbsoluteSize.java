@@ -10,8 +10,7 @@ import java.awt.Dimension;
  * @since	0.3.4
  *
  */
-public class AbsoluteSize implements Size
-{
+public class AbsoluteSize implements Size {
 	/**
 	 * The size of the object.
 	 */
@@ -23,10 +22,8 @@ public class AbsoluteSize implements Size
 	 * @param size		Size of the enclosed object.
 	 * @throws NullPointerException		If the size is {@code null}.
 	 */
-	public AbsoluteSize(Dimension size)
-	{
-		if (size == null)
-		{
+	public AbsoluteSize(Dimension size) {
+		if (size == null) {
 			throw new NullPointerException("Size cannot be null.");
 		}
 		this.size = new Dimension(size);
@@ -40,10 +37,8 @@ public class AbsoluteSize implements Size
 	 * @throws IllegalArgumentException		If the width and/or height is less
 	 * 										than or equal to {@code 0}.
 	 */
-	public AbsoluteSize(int width, int height)
-	{
-		if (width <= 0 || height <= 0)
-		{
+	public AbsoluteSize(int width, int height) {
+		if (width <= 0 || height <= 0) {
 			throw new IllegalArgumentException(
 					"Width and height must be greater than 0."
 			);
@@ -51,10 +46,8 @@ public class AbsoluteSize implements Size
 		this.size = new Dimension(width, height);
 	}
 
-	public Dimension calculate(int width, int height)
-	{
-		if (width <= 0 || height <= 0)
-		{
+	public Dimension calculate(int width, int height) {
+		if (width <= 0 || height <= 0) {
 			throw new IllegalArgumentException(
 					"Width and height must be greater than 0."
 			);
@@ -68,8 +61,7 @@ public class AbsoluteSize implements Size
 	 * @return		{@code String} representation of this object.
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "AbsoluteSize [width=" + size.width + ", height=" + size.height + "]";
 	}
 }

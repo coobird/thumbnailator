@@ -13,8 +13,7 @@ import java.awt.RenderingHints.Key;
  * @author coobird
  *
  */
-public enum AlphaInterpolation implements ResizerConfiguration
-{
+public enum AlphaInterpolation implements ResizerConfiguration {
 	/**
 	 * A hint used to emphasize speed when performing alpha interpolation.
 	 */
@@ -41,18 +40,15 @@ public enum AlphaInterpolation implements ResizerConfiguration
 	 * 
 	 * @param value		The rendering hint value.
 	 */
-	private AlphaInterpolation(Object value)
-	{
+	private AlphaInterpolation(Object value) {
 		this.value = value;
 	}
 
-	public Key getKey()
-	{
+	public Key getKey() {
 		return RenderingHints.KEY_ALPHA_INTERPOLATION;
 	}
 
-	public Object getValue()
-	{
+	public Object getValue() {
 		return value;
 	}
 }

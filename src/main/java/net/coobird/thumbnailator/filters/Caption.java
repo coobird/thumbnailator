@@ -16,8 +16,7 @@ import net.coobird.thumbnailator.util.BufferedImages;
  * @author coobird
  *
  */
-public class Caption implements ImageFilter
-{
+public class Caption implements ImageFilter {
 	/**
 	 * The text of the caption.
 	 */

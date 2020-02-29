@@ -76,8 +76,7 @@ resizer.resize(sourceImage, destImage);
  * @since	0.4.0
  *
  */
-public class DefaultResizerFactory implements ResizerFactory
-{
+public class DefaultResizerFactory implements ResizerFactory {
 	private static final DefaultResizerFactory INSTANCE = new DefaultResizerFactory();
 
 	/**
@@ -90,44 +89,32 @@ public class DefaultResizerFactory implements ResizerFactory
 	 * 
 	 * @return		An instance of this class.
 	 */
-	public static ResizerFactory getInstance()
-	{
+	public static ResizerFactory getInstance() {
 		return INSTANCE;
 	}
 	
-	public Resizer getResizer()
-	{
+	public Resizer getResizer() {
 		return Resizers.PROGRESSIVE;
 	}
 	
-	public Resizer getResizer(Dimension originalSize, Dimension thumbnailSize)
-	{
+	public Resizer getResizer(Dimension originalSize, Dimension thumbnailSize) {
 		int origWidth = originalSize.width;
 		int origHeight = originalSize.height;
 		int thumbWidth = thumbnailSize.width;
 		int thumbHeight = thumbnailSize.height;
 		
-		if (thumbWidth < origWidth && thumbHeight < origHeight)
-		{
-			if (thumbWidth < (origWidth / 2) && thumbHeight < (origHeight / 2))
-			{
+		if (thumbWidth < origWidth && thumbHeight < origHeight) {
+			if (thumbWidth < (origWidth / 2) && thumbHeight < (origHeight / 2)) {
 				return Resizers.PROGRESSIVE;
-			}
-			else
-			{
+			} else {
 				return Resizers.BILINEAR;
 			}
 		}
-		else if (thumbWidth > origWidth && thumbHeight > origHeight)
-		{
+		else if (thumbWidth > origWidth && thumbHeight > origHeight) {
 			return Resizers.BICUBIC;
-		}
-		else if (thumbWidth == origWidth && thumbHeight == origHeight)
-		{
+		} else if (thumbWidth == origWidth && thumbHeight == origHeight) {
 			return Resizers.NULL;
-		}
-		else
-		{
+		} else {
 			return getResizer();
 		}
 	}

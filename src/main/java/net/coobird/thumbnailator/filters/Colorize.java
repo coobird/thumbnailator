@@ -12,8 +12,7 @@ import net.coobird.thumbnailator.builders.BufferedImageBuilder;
  * @author coobird
  *
  */
-public final class Colorize implements ImageFilter
-{
+public final class Colorize implements ImageFilter {
 	/**
 	 * The color to tint a target image with.
 	 */
@@ -29,8 +28,7 @@ public final class Colorize implements ImageFilter
 	 * 
 	 * @param c				Color to tint with.
 	 */
-	public Colorize(Color c)
-	{
+	public Colorize(Color c) {
 		this.c = c;
 	}
 	
@@ -43,8 +41,7 @@ public final class Colorize implements ImageFilter
 	 * @param c				Color to tint with.
 	 * @param alpha			The opacity of the tint.
 	 */
-	public Colorize(Color c, float alpha)
-	{
+	public Colorize(Color c, float alpha) {
 		this(c, (int)(255 * alpha));
 	}
 	
@@ -57,10 +54,8 @@ public final class Colorize implements ImageFilter
 	 * @param c				Color to tint with.
 	 * @param alpha			The opacity of the tint.
 	 */
-	public Colorize(Color c, int alpha)
-	{
-		if (alpha > 255 || alpha < 0)
-		{
+	public Colorize(Color c, int alpha) {
+		if (alpha > 255 || alpha < 0) {
 			throw new IllegalArgumentException(
 					"Specified alpha value is outside the range of allowed " +
 					"values.");
@@ -74,8 +69,7 @@ public final class Colorize implements ImageFilter
 		this.c = new Color(r, g, b, a);
 	}
 	
-	public BufferedImage apply(BufferedImage img)
-	{
+	public BufferedImage apply(BufferedImage img) {
 		int width = img.getWidth();
 		int height = img.getHeight();
 		

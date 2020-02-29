@@ -8,8 +8,7 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * @author coobird
  *
  */
-public abstract class Rename
-{
+public abstract class Rename {
 	/**
 	 * A {@code Rename} which does not alter the given file name.
 	 * <p>
@@ -25,8 +24,7 @@ public abstract class Rename
 	 */
 	public static final Rename NO_CHANGE = new Rename() {
 		@Override
-		public String apply(String name, ThumbnailParameter param)
-		{
+		public String apply(String name, ThumbnailParameter param) {
 			return name;
 		}
 	};
@@ -46,8 +44,7 @@ public abstract class Rename
 	 */
 	public static final Rename PREFIX_DOT_THUMBNAIL = new Rename() {
 		@Override
-		public String apply(String fileName, ThumbnailParameter param)
-		{
+		public String apply(String fileName, ThumbnailParameter param) {
 			return appendPrefix(fileName, "thumbnail.");
 		}
 	};
@@ -87,8 +84,7 @@ public abstract class Rename
 	 */
 	public static final Rename PREFIX_HYPHEN_THUMBNAIL = new Rename() {
 		@Override
-		public String apply(String fileName, ThumbnailParameter param)
-		{
+		public String apply(String fileName, ThumbnailParameter param) {
 			return appendPrefix(fileName, "thumbnail-");
 		}
 	};
@@ -109,8 +105,7 @@ public abstract class Rename
 	 */
 	public static final Rename SUFFIX_DOT_THUMBNAIL = new Rename() {
 		@Override
-		public String apply(String fileName, ThumbnailParameter param)
-		{
+		public String apply(String fileName, ThumbnailParameter param) {
 			return appendSuffix(fileName, ".thumbnail");
 		}
 	};
@@ -152,8 +147,7 @@ public abstract class Rename
 	 */
 	public static final Rename SUFFIX_HYPHEN_THUMBNAIL = new Rename() {
 		@Override
-		public String apply(String fileName, ThumbnailParameter param)
-		{
+		public String apply(String fileName, ThumbnailParameter param) {
 			return appendSuffix(fileName, "-thumbnail");
 		}
 	};
@@ -184,20 +178,16 @@ public abstract class Rename
 	 * @param suffix		The suffix to add.
 	 * @return				File name with specified suffixed affixed.
 	 */
-	protected String appendSuffix(String fileName, String suffix)
-	{
+	protected String appendSuffix(String fileName, String suffix) {
 		String newFileName = "";
 		
 		int indexOfDot = fileName.lastIndexOf('.');
 		
-		if (indexOfDot != -1)
-		{
+		if (indexOfDot != -1) {
 			newFileName = fileName.substring(0, indexOfDot);
 			newFileName += suffix;
 			newFileName += fileName.substring(indexOfDot);
-		}
-		else
-		{
+		} else {
 			newFileName = fileName + suffix;
 		}
 		
@@ -211,8 +201,7 @@ public abstract class Rename
 	 * @param prefix		The prefix to add.
 	 * @return				File name with the specified prefix affixed.
 	 */
-	protected String appendPrefix(String fileName, String prefix)
-	{
+	protected String appendPrefix(String fileName, String prefix) {
 		return prefix + fileName;
 	}
 }

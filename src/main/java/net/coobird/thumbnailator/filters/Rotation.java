@@ -16,8 +16,7 @@ import net.coobird.thumbnailator.builders.BufferedImageBuilder;
  * @author coobird
  *
  */
-public class Rotation
-{
+public class Rotation {
 	/**
 	 * This class is not intended to be instantiated.
 	 */
@@ -32,8 +31,7 @@ public class Rotation
 	 * @author coobird
 	 *
 	 */
-	public abstract static class Rotator implements ImageFilter
-	{
+	public abstract static class Rotator implements ImageFilter {
 		/**
 		 * This class is not intended to be instantiated.
 		 */
@@ -52,12 +50,10 @@ public class Rotation
 	 * @return				An instance of {@code Rotator} which will rotate
 	 * 						a given image.
 	 */
-	public static Rotator newRotator(final double angle)
-	{
+	public static Rotator newRotator(final double angle) {
 		Rotator r = new Rotator() {
 			
-			private double[] calculatePosition(double x, double y, double angle)
-			{
+			private double[] calculatePosition(double x, double y, double angle) {
 				angle = Math.toRadians(angle);
 				
 				double nx = (Math.cos(angle) * x) - (Math.sin(angle) * y);
@@ -66,8 +62,7 @@ public class Rotation
 				return new double[] {nx, ny};
 			}
 			
-			public BufferedImage apply(BufferedImage img)
-			{
+			public BufferedImage apply(BufferedImage img) {
 				int width = img.getWidth();
 				int height = img.getHeight();
 				

@@ -7,8 +7,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-public class ProgressiveBilinearResizerTest
-{
+public class ProgressiveBilinearResizerTest {
+
 	/**
 	 * Test for
 	 * {@link ProgressiveBilinearResizer#resize(BufferedImage, BufferedImage)}
@@ -24,8 +24,7 @@ public class ProgressiveBilinearResizerTest
 	 * @throws IOException
 	 */
 	@Test(expected=NullPointerException.class)
-	public void resizeNullAndNull()
-	{
+	public void resizeNullAndNull() {
 		BufferedImage srcImage = null;
 		BufferedImage destImage = null;
 		
@@ -49,8 +48,7 @@ public class ProgressiveBilinearResizerTest
 	 * @throws IOException
 	 */
 	@Test(expected=NullPointerException.class)
-	public void resizeSpecifiedAndNull()
-	{
+	public void resizeSpecifiedAndNull() {
 		BufferedImage srcImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		BufferedImage destImage = null;
 		
@@ -74,8 +72,7 @@ public class ProgressiveBilinearResizerTest
 	 * @throws IOException
 	 */
 	@Test(expected=NullPointerException.class)
-	public void resizeNullAndSpecified()
-	{
+	public void resizeNullAndSpecified() {
 		BufferedImage srcImage = null;
 		BufferedImage destImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		

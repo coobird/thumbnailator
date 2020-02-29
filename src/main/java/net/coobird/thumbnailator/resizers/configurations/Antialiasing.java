@@ -13,8 +13,7 @@ import java.awt.RenderingHints.Key;
  * @author coobird
  *
  */
-public enum Antialiasing implements ResizerConfiguration
-{
+public enum Antialiasing implements ResizerConfiguration {
 	/**
 	 * A hint to enable antialiasing.
 	 */
@@ -41,18 +40,15 @@ public enum Antialiasing implements ResizerConfiguration
 	 * 
 	 * @param value		The rendering hint value.
 	 */
-	private Antialiasing(Object value)
-	{
+	private Antialiasing(Object value) {
 		this.value = value;
 	}
 
-	public Key getKey()
-	{
+	public Key getKey() {
 		return RenderingHints.KEY_ANTIALIASING;
 	}
 
-	public Object getValue()
-	{
+	public Object getValue() {
 		return value;
 	}
 }

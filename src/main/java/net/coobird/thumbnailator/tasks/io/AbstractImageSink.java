@@ -11,8 +11,7 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * @author coobird
  *
  */
-public abstract class AbstractImageSink<T> implements ImageSink<T>
-{
+public abstract class AbstractImageSink<T> implements ImageSink<T> {
 	/**
 	 * The name of the format to output the image as.
 	 */
@@ -28,31 +27,25 @@ public abstract class AbstractImageSink<T> implements ImageSink<T>
 	 */
 	protected AbstractImageSink() {}
 	
-	public void setOutputFormatName(String format)
-	{
+	public void setOutputFormatName(String format) {
 		outputFormat = format;
 	}
 	
-	public void setThumbnailParameter(ThumbnailParameter param)
-	{
+	public void setThumbnailParameter(ThumbnailParameter param) {
 		this.param = param;
 	}
 
-	public void write(BufferedImage img) throws IOException
-	{
-		if (img == null)
-		{
+	public void write(BufferedImage img) throws IOException {
+		if (img == null) {
 			throw new NullPointerException("Cannot write a null image.");
 		}
 		
-		if (ThumbnailParameter.DETERMINE_FORMAT.equals(outputFormat))
-		{
+		if (ThumbnailParameter.DETERMINE_FORMAT.equals(outputFormat)) {
 			outputFormat = preferredOutputFormatName();
 		}
 	}
 	
-	public String preferredOutputFormatName()
-	{
+	public String preferredOutputFormatName() {
 		return ThumbnailParameter.ORIGINAL_FORMAT;
 	}
 }

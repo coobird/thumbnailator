@@ -23,8 +23,7 @@ import org.junit.Test;
 public class ExifUtilsTest {
 	
 	@Test
-	public void exifOrientation1() throws Exception
-	{
+	public void exifOrientation1() throws Exception {
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
 		reader.setInput(ImageIO.createImageInputStream(new File("src/test/resources/Exif/orientation_1.jpg")));
@@ -37,8 +36,7 @@ public class ExifUtilsTest {
 	}
 	
 	@Test
-	public void exifOrientation2() throws Exception
-	{
+	public void exifOrientation2() throws Exception {
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
 		reader.setInput(ImageIO.createImageInputStream(new File("src/test/resources/Exif/orientation_2.jpg")));
@@ -51,8 +49,7 @@ public class ExifUtilsTest {
 	}
 	
 	@Test
-	public void exifOrientation3() throws Exception
-	{
+	public void exifOrientation3() throws Exception {
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
 		reader.setInput(ImageIO.createImageInputStream(new File("src/test/resources/Exif/orientation_3.jpg")));
@@ -65,8 +62,7 @@ public class ExifUtilsTest {
 	}
 	
 	@Test
-	public void exifOrientation4() throws Exception
-	{
+	public void exifOrientation4() throws Exception {
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
 		reader.setInput(ImageIO.createImageInputStream(new File("src/test/resources/Exif/orientation_4.jpg")));
@@ -79,8 +75,7 @@ public class ExifUtilsTest {
 	}
 	
 	@Test
-	public void exifOrientation5() throws Exception
-	{
+	public void exifOrientation5() throws Exception {
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
 		reader.setInput(ImageIO.createImageInputStream(new File("src/test/resources/Exif/orientation_5.jpg")));
@@ -93,8 +88,7 @@ public class ExifUtilsTest {
 	}
 	
 	@Test
-	public void exifOrientation6() throws Exception
-	{
+	public void exifOrientation6() throws Exception {
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
 		reader.setInput(ImageIO.createImageInputStream(new File("src/test/resources/Exif/orientation_6.jpg")));
@@ -107,8 +101,7 @@ public class ExifUtilsTest {
 	}
 	
 	@Test
-	public void exifOrientation7() throws Exception
-	{
+	public void exifOrientation7() throws Exception {
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
 		reader.setInput(ImageIO.createImageInputStream(new File("src/test/resources/Exif/orientation_7.jpg")));
@@ -121,8 +114,7 @@ public class ExifUtilsTest {
 	}
 	
 	@Test
-	public void exifOrientation8() throws Exception
-	{
+	public void exifOrientation8() throws Exception {
 		// given
 		ImageReader reader = ImageIO.getImageReadersByFormatName("jpg").next();
 		reader.setInput(ImageIO.createImageInputStream(new File("src/test/resources/Exif/orientation_8.jpg")));

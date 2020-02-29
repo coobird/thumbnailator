@@ -13,8 +13,7 @@ import java.net.URL;
  * @author coobird
  *
  */
-public class URLImageSource extends AbstractImageSource<URL>
-{
+public class URLImageSource extends AbstractImageSource<URL> {
 	/**
 	 * The URL from which to retrieve the source image.
 	 */
@@ -34,12 +33,10 @@ public class URLImageSource extends AbstractImageSource<URL>
 	 * @param url		URL to the source image.
 	 * @throws NullPointerException		If the URL is null
 	 */
-	public URLImageSource(URL url)
-	{
+	public URLImageSource(URL url) {
 		super();
 		
-		if (url == null)
-		{
+		if (url == null) {
 			throw new NullPointerException("URL cannot be null.");
 		}
 		
@@ -55,12 +52,10 @@ public class URLImageSource extends AbstractImageSource<URL>
 	 * @throws NullPointerException		If the URL is null
 	 * @throws MalformedURLException	If the URL is not valid.
 	 */
-	public URLImageSource(String url) throws MalformedURLException
-	{
+	public URLImageSource(String url) throws MalformedURLException {
 		super();
 		
-		if (url == null)
-		{
+		if (url == null) {
 			throw new NullPointerException("URL cannot be null.");
 		}
 		
@@ -77,16 +72,12 @@ public class URLImageSource extends AbstractImageSource<URL>
 	 * @param proxy		Proxy to use to connect to the URL.
 	 * @throws NullPointerException		If the URL and or the proxy is null
 	 */
-	public URLImageSource(URL url, Proxy proxy)
-	{
+	public URLImageSource(URL url, Proxy proxy) {
 		super();
 		
-		if (url == null)
-		{
+		if (url == null) {
 			throw new NullPointerException("URL cannot be null.");
-		}
-		else if (proxy == null)
-		{
+		} else if (proxy == null) {
 			throw new NullPointerException("Proxy cannot be null.");
 		}
 		
@@ -104,16 +95,12 @@ public class URLImageSource extends AbstractImageSource<URL>
 	 * @throws NullPointerException		If the URL and or the proxy is null
 	 * @throws MalformedURLException	If the URL is not valid.
 	 */
-	public URLImageSource(String url, Proxy proxy) throws MalformedURLException
-	{
+	public URLImageSource(String url, Proxy proxy) throws MalformedURLException {
 		super();
 		
-		if (url == null)
-		{
+		if (url == null) {
 			throw new NullPointerException("URL cannot be null.");
-		}
-		else if (proxy == null)
-		{
+		} else if (proxy == null) {
 			throw new NullPointerException("Proxy cannot be null.");
 		}
 		
@@ -121,22 +108,16 @@ public class URLImageSource extends AbstractImageSource<URL>
 		this.proxy = proxy;
 	}
 
-	public BufferedImage read() throws IOException
-	{
+	public BufferedImage read() throws IOException {
 		InputStream is;
-		try
-		{
-			if (proxy != null)
-			{
+		try {
+			if (proxy != null) {
 				is = url.openConnection(proxy).getInputStream();
-			}
-			else
-			{
+			} else {
 				is = url.openStream();
 			}
-		}
-		catch (IOException e)
-		{
+
+		} catch (IOException e) {
 			throw new IOException("Could not open connection to URL: " + url);
 		}
 
@@ -144,12 +125,9 @@ public class URLImageSource extends AbstractImageSource<URL>
 		source.setThumbnailParameter(param);
 		
 		BufferedImage img;
-		try
-		{
+		try {
 			img = source.read();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw new IOException("Could not obtain image from URL: " + url);
 		}
 
@@ -165,8 +143,7 @@ public class URLImageSource extends AbstractImageSource<URL>
 	 * 
 	 * @return the url		The URL to the source image.s
 	 */
-	public URL getSource()
-	{
+	public URL getSource() {
 		return url;
 	}
 
@@ -176,8 +153,7 @@ public class URLImageSource extends AbstractImageSource<URL>
 	 * 
 	 * @return the proxy	The proxy used to connect to a URL.
 	 */
-	public Proxy getProxy()
-	{
+	public Proxy getProxy() {
 		return proxy;
 	}
 }

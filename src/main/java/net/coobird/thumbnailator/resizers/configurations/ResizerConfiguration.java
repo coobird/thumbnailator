@@ -11,8 +11,7 @@ import net.coobird.thumbnailator.resizers.Resizer;
  * @author coobird
  *
  */
-public interface ResizerConfiguration
-{
+public interface ResizerConfiguration {
 	/**
 	 * Returns a rendering hint key.
 	 * 

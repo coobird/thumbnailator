@@ -24,8 +24,7 @@ import net.coobird.thumbnailator.tasks.io.ImageSource;
  * @param <D> 		The destination class to which the thumbnail is stored
  * 					or written.
  */
-public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D>
-{
+public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D> {
 	/**
 	 * The source from which the image is retrieved or read.
 	 */
@@ -51,15 +50,12 @@ public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D>
 	 * 									{@link ImageSource} or {@link ImageSink}
 	 * 									is {@code null}.
 	 */
-	public SourceSinkThumbnailTask(ThumbnailParameter param, ImageSource<S> source, ImageSink<D> destination)
-	{
+	public SourceSinkThumbnailTask(ThumbnailParameter param, ImageSource<S> source, ImageSink<D> destination) {
 		super(param);
-		if (source == null)
-		{
+		if (source == null) {
 			throw new NullPointerException("ImageSource cannot be null.");
 		}
-		if (destination == null)
-		{
+		if (destination == null) {
 			throw new NullPointerException("ImageSink cannot be null.");
 		}
 		
@@ -71,8 +67,7 @@ public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D>
 	}
 
 	@Override
-	public BufferedImage read() throws IOException
-	{
+	public BufferedImage read() throws IOException {
 		BufferedImage img = source.read();
 		inputFormatName = source.getInputFormatName();
 		
@@ -80,22 +75,17 @@ public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D>
 	}
 
 	@Override
-	public void write(BufferedImage img) throws IOException
-	{
+	public void write(BufferedImage img) throws IOException {
 		String paramOutputFormat = param.getOutputFormat();
 		String formatName = null;
 		
-		if (ThumbnailParameter.DETERMINE_FORMAT.equals(paramOutputFormat))
-		{
+		if (ThumbnailParameter.DETERMINE_FORMAT.equals(paramOutputFormat)) {
 			paramOutputFormat = destination.preferredOutputFormatName();
 		}
 		
-		if (paramOutputFormat == ThumbnailParameter.ORIGINAL_FORMAT)
-		{
+		if (paramOutputFormat == ThumbnailParameter.ORIGINAL_FORMAT) {
 			formatName = inputFormatName;
-		}
-		else
-		{
+		} else {
 			formatName = paramOutputFormat;
 		}
 
@@ -104,14 +94,12 @@ public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D>
 	}
 
 	@Override
-	public S getSource()
-	{
+	public S getSource() {
 		return source.getSource();
 	}
 	
 	@Override
-	public D getDestination()
-	{
+	public D getDestination() {
 		return destination.getSink();
 	}
 }

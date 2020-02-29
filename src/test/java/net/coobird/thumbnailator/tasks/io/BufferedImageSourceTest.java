@@ -17,19 +17,14 @@ import net.coobird.thumbnailator.test.BufferedImageComparer;
 
 import org.junit.Test;
 
-public class BufferedImageSourceTest
-{
+public class BufferedImageSourceTest {
 	@Test(expected=NullPointerException.class)
-	public void givenNullImage() throws IOException
-	{
-		try
-		{
+	public void givenNullImage() throws IOException {
+		try {
 			// given
 			// when
 			new BufferedImageSource(null);
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 			assertEquals("Image cannot be null.", e.getMessage());
 			throw e;
@@ -37,8 +32,7 @@ public class BufferedImageSourceTest
 	}
 	
 	@Test
-	public void givenValidImage() throws IOException
-	{
+	public void givenValidImage() throws IOException {
 		// given
 		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		BufferedImageSource source = new BufferedImageSource(sourceImage);
@@ -54,19 +48,15 @@ public class BufferedImageSourceTest
 	}
 	
 	@Test(expected=IllegalStateException.class)
-	public void givenValidImage_getInputFormatNameBeforeRead() throws IOException
-	{
+	public void givenValidImage_getInputFormatNameBeforeRead() throws IOException {
 		// given
 		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		BufferedImageSource source = new BufferedImageSource(sourceImage);
 		
-		try
-		{
+		try {
 			// when
 			source.getInputFormatName();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 			assertEquals("Input has not been read yet.", e.getMessage());
 			throw e;
@@ -89,8 +79,7 @@ public class BufferedImageSourceTest
 	 *                        source
 	 */
 	@Test
-	public void appliesSourceRegion() throws IOException
-	{
+	public void appliesSourceRegion() throws IOException {
 		// given
 		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		
@@ -126,8 +115,7 @@ public class BufferedImageSourceTest
 	 *                             region
 	 */
 	@Test
-	public void appliesSourceRegionTooBig() throws IOException
-	{
+	public void appliesSourceRegionTooBig() throws IOException {
 		// given
 		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		
@@ -163,8 +151,7 @@ public class BufferedImageSourceTest
 	 *                        source
 	 */
 	@Test
-	public void appliesSourceRegionBeyondOrigin() throws IOException
-	{
+	public void appliesSourceRegionBeyondOrigin() throws IOException {
 		// given
 		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		
@@ -185,8 +172,7 @@ public class BufferedImageSourceTest
 	}
 	
 	@Test
-	public void appliesSourceRegionNotSpecified() throws IOException
-	{
+	public void appliesSourceRegionNotSpecified() throws IOException {
 		// given
 		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		

@@ -10,8 +10,7 @@ import java.awt.Dimension;
  * @since	0.4.0
  *
  */
-public interface ResizerFactory
-{
+public interface ResizerFactory {
 	/**
 	 * Returns the default {@link Resizer}.
 	 * 

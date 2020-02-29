@@ -21,8 +21,7 @@ import net.coobird.thumbnailator.resizers.ResizerFactory;
  * @author coobird
  *
  */
-public class ThumbnailParameter
-{
+public class ThumbnailParameter {
 	/**
 	 * A constant used to denote that the output format of the thumbnail should
 	 * be the same as the format of the original image.
@@ -267,8 +266,7 @@ public class ThumbnailParameter
 			ResizerFactory resizerFactory,
 			boolean fitWithinDimensions,
 			boolean useExifOrientation
-	)
-	{
+	) {
 		// The following 2 fields are set by the public constructors.
 		this.thumbnailSize = thumbnailSize;
 		this.widthScalingFactor = widthScalingFactor;
@@ -287,8 +285,7 @@ public class ThumbnailParameter
 		 * being used, one must use the Float.NaN method.
 		 */
 		if ( (outputQuality < 0.0f || outputQuality > 1.0f) &&
-				!Float.isNaN(outputQuality) )
-		{
+				!Float.isNaN(outputQuality) ) {
 			throw new IllegalArgumentException("The output quality must be " +
 					"between 0.0f and 1.0f, or Float.NaN to use the default " +
 			"compression quality of codec being used.");
@@ -298,17 +295,13 @@ public class ThumbnailParameter
 		this.imageType = imageType;
 		
 		// Creating a new ArrayList, as `filters` should be mutable as of 0.4.3.
-		if (filters == null)
-		{
+		if (filters == null) {
 			this.filters = new ArrayList<ImageFilter>();
-		}
-		else
-		{
+		} else {
 			this.filters = new ArrayList<ImageFilter>(filters);
 		}
 				
-		if (resizerFactory == null)
-		{
+		if (resizerFactory == null) {
 			throw new IllegalArgumentException("Resizer cannot be null");
 		}
 		
@@ -320,14 +313,11 @@ public class ThumbnailParameter
 	/**
 	 * Perform validations on the {@code thumbnailSize} field.
 	 */
-	private void validateThumbnailSize()
-	{
-		if (thumbnailSize == null)
-		{
+	private void validateThumbnailSize() {
+		if (thumbnailSize == null) {
 			throw new IllegalArgumentException("Thumbnail size cannot be null.");
-		}
-		else if (thumbnailSize.width < 0 || thumbnailSize.height < 0)
-		{
+
+		} else if (thumbnailSize.width < 0 || thumbnailSize.height < 0) {
 			throw new IllegalArgumentException("Thumbnail dimensions must be greater than 0.");
 		}
 	}
@@ -335,18 +325,14 @@ public class ThumbnailParameter
 	/**
 	 * Perform validations on the {@code scalingFactor} field.
 	 */
-	private void validateScalingFactor()
-	{
-		if (widthScalingFactor <= 0.0 || heightScalingFactor <= 0.0)
-		{
+	private void validateScalingFactor() {
+		if (widthScalingFactor <= 0.0 || heightScalingFactor <= 0.0) {
 			throw new IllegalArgumentException("Scaling factor is less than or equal to 0.");
-		}
-		else if (Double.isNaN(widthScalingFactor) || Double.isInfinite(widthScalingFactor))
-		{
+
+		} else if (Double.isNaN(widthScalingFactor) || Double.isInfinite(widthScalingFactor)) {
 			throw new IllegalArgumentException("Scaling factor must be a rational number.");
-		}
-		else if (Double.isNaN(heightScalingFactor) || Double.isInfinite(heightScalingFactor))
-		{
+
+		} else if (Double.isNaN(heightScalingFactor) || Double.isInfinite(heightScalingFactor)) {
 			throw new IllegalArgumentException("Scaling factor must be a rational number.");
 		}
 	}
@@ -436,8 +422,7 @@ public class ThumbnailParameter
 			Resizer resizer,
 			boolean fitWithinDimensions,
 			boolean useExifOrientation
-	)
-	{
+	) {
 		this(
 				thumbnailSize,
 				Double.NaN,
@@ -549,8 +534,7 @@ public class ThumbnailParameter
 			Resizer resizer,
 			boolean fitWithinDimensions,
 			boolean useExifOrientation
-	)
-	{
+	) {
 		this(
 				null,
 				widthScalingFactor,
@@ -656,8 +640,7 @@ public class ThumbnailParameter
 			ResizerFactory resizerFactory,
 			boolean fitWithinDimensions,
 			boolean useExifOrientation
-	)
-	{
+	) {
 		this(
 				thumbnailSize,
 				Double.NaN,
@@ -770,8 +753,7 @@ public class ThumbnailParameter
 			ResizerFactory resizerFactory,
 			boolean fitWithinDimensions,
 			boolean useExifOrientation
-	)
-	{
+	) {
 		this(
 				null,
 				widthScalingFactor,
@@ -799,14 +781,10 @@ public class ThumbnailParameter
 	 * 
 	 * @return		The size of the thumbnail.
 	 */
-	public Dimension getSize()
-	{
-		if (thumbnailSize != null)
-		{
+	public Dimension getSize() {
+		if (thumbnailSize != null) {
 			return (Dimension)thumbnailSize.clone();
-		}
-		else
-		{
+		} else {
 			return null;
 		}
 	}
@@ -821,8 +799,7 @@ public class ThumbnailParameter
 	 * @return		The width scaling factor for the thumbnail.
 	 * @since	0.3.10
 	 */
-	public double getWidthScalingFactor()
-	{
+	public double getWidthScalingFactor() {
 		return widthScalingFactor;
 	}
 	
@@ -836,8 +813,7 @@ public class ThumbnailParameter
 	 * @return		The height scaling factor for the thumbnail.
 	 * @since	0.3.10
 	 */
-	public double getHeightScalingFactor()
-	{
+	public double getHeightScalingFactor() {
 		return heightScalingFactor;
 	}
 
@@ -847,8 +823,7 @@ public class ThumbnailParameter
 	 * 
 	 * @return		The type of the image.
 	 */
-	public int getType()
-	{
+	public int getType() {
 		return imageType;
 	}
 
@@ -859,8 +834,7 @@ public class ThumbnailParameter
 	 * @return 		{@code true} if the thumbnail is to maintain the aspect
 	 * 				ratio of the original image, {@code false} otherwise.
 	 */
-	public boolean isKeepAspectRatio()
-	{
+	public boolean isKeepAspectRatio() {
 		return keepAspectRatio;
 	}
 
@@ -877,8 +851,7 @@ public class ThumbnailParameter
 	 * 
 	 * @return 		The output format for the thumbnail.
 	 */
-	public String getOutputFormat()
-	{
+	public String getOutputFormat() {
 		return outputFormat;
 	}
 	
@@ -891,8 +864,7 @@ public class ThumbnailParameter
 	 *
 	 * @return 		The output format type for the thumbnail.
 	 */
-	public String getOutputFormatType()
-	{
+	public String getOutputFormatType() {
 		return outputFormatType;
 	}
 
@@ -908,8 +880,7 @@ public class ThumbnailParameter
 	 * 
 	 * @return 		The compression quality settings for the thumbnail.
 	 */
-	public float getOutputQuality()
-	{
+	public float getOutputQuality() {
 		return outputQuality;
 	}
 
@@ -921,8 +892,7 @@ public class ThumbnailParameter
 	 * 
 	 * @return		The {@link ImageFilter}s which are applied to the thumbnail.
 	 */
-	public List<ImageFilter> getImageFilters()
-	{
+	public List<ImageFilter> getImageFilters() {
 		return filters;
 	}
 	
@@ -933,8 +903,7 @@ public class ThumbnailParameter
 	 * @return		The default {@link Resizer} to use when performing a resize
 	 * 				operation.
 	 */
-	public Resizer getResizer()
-	{
+	public Resizer getResizer() {
 		return resizerFactory.getResizer();
 	}
 	
@@ -946,8 +915,7 @@ public class ThumbnailParameter
 	 * @return		The {@link ResizerFactory} to use to obtain the
 	 * 				{@link Resizer}.
 	 */
-	public ResizerFactory getResizerFactory()
-	{
+	public ResizerFactory getResizerFactory() {
 		return resizerFactory;
 	}
 	
@@ -958,8 +926,7 @@ public class ThumbnailParameter
 	 * @return		{@code true} if the original image type should be used,
 	 * 				{@code false} otherwise.
 	 */
-	public boolean useOriginalImageType()
-	{
+	public boolean useOriginalImageType() {
 		return imageType == ORIGINAL_IMAGE_TYPE;
 	}
 	
@@ -973,8 +940,7 @@ public class ThumbnailParameter
      * 				A value of {@code null} indicates that the entire source
      * 				image should be used to create the thumbnail.
 	 */
-	public Region getSourceRegion()
-	{
+	public Region getSourceRegion() {
 		return sourceRegion;
 	}
 	
@@ -987,8 +953,7 @@ public class ThumbnailParameter
 	 * 				is going to exceed those dimensions.
 	 * @since	0.4.0
 	 */
-	public boolean fitWithinDimenions()
-	{
+	public boolean fitWithinDimenions() {
 		return fitWithinDimensions;
 	}
 	
@@ -1001,8 +966,7 @@ public class ThumbnailParameter
 	 * 				{@code false} otherwise.
 	 * @since	0.4.3
 	 */
-	public boolean useExifOrientation()
-	{
+	public boolean useExifOrientation() {
 		return useExifOrientation;
 	}
 }

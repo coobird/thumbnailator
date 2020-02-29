@@ -27,8 +27,7 @@ import net.coobird.thumbnailator.util.exif.Orientation;
  * @author coobird
  *
  */
-public class InputStreamImageSource extends AbstractImageSource<InputStream>
-{
+public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 	/**
 	 * The index used to obtain the first image in an image file.
 	 */
@@ -48,30 +47,25 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream>
 	 * @throws NullPointerException		If the {@link InputStream} is
 	 * 									{@code null}.
 	 */
-	public InputStreamImageSource(InputStream is)
-	{
+	public InputStreamImageSource(InputStream is) {
 		super();
-		
-		if (is == null)
-		{
+
+		if (is == null) {
 			throw new NullPointerException("InputStream cannot be null.");
 		}
 		
 		this.is = is;
 	}
 
-	public BufferedImage read() throws IOException
-	{
+	public BufferedImage read() throws IOException {
 		ImageInputStream iis = ImageIO.createImageInputStream(is);
 		
-		if (iis == null)
-		{
+		if (iis == null) {
 			throw new IOException("Could not open InputStream.");
 		}
 		
 		Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
-		if (!readers.hasNext())
-		{
+		if (!readers.hasNext()) {
 			throw new UnsupportedFormatException(
 					UnsupportedFormatException.UNKNOWN,
 					"No suitable ImageReader found for source data."
@@ -82,17 +76,13 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream>
 		reader.setInput(iis);
 		inputFormatName = reader.getFormatName();
 		
-		try
-		{
-			if (param.useExifOrientation())
-			{
+		try {
+			if (param.useExifOrientation()) {
 				Orientation orientation;
-				orientation =
-						ExifUtils.getExifOrientation(reader, FIRST_IMAGE_INDEX);
+				orientation = ExifUtils.getExifOrientation(reader, FIRST_IMAGE_INDEX);
 				
 				// Skip this code block if there's no rotation needed.
-				if (orientation != null && orientation != Orientation.TOP_LEFT)
-				{
+				if (orientation != null && orientation != Orientation.TOP_LEFT) {
 					List<ImageFilter> filters = param.getImageFilters();
 					
 					// EXIF orientation filter is added to the beginning, as
@@ -101,9 +91,7 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream>
 					filters.add(0, ExifFilterUtils.getFilterForOrientation(orientation));
 				}
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			// If something goes wrong, then skip the orientation-related
 			// processing.
 			// TODO Ought to have some way to track errors.
@@ -115,8 +103,7 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream>
 		int width = reader.getWidth(FIRST_IMAGE_INDEX);
 		int height = reader.getHeight(FIRST_IMAGE_INDEX);
 		
-		if (param != null && param.getSourceRegion() != null)
-		{
+		if (param != null && param.getSourceRegion() != null) {
 			Region region = param.getSourceRegion();
 			Rectangle sourceRegion = region.calculate(width, height);
 			
@@ -133,19 +120,16 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream>
 				"true".equals(System.getProperty("thumbnailator.conserveMemoryWorkaround")) &&
 				width > 1800 && height > 1800 &&
 				(width * height * 4 > Runtime.getRuntime().freeMemory() / 4)
-		)
-		{
+		) {
 			int subsampling = 1;
 			
 			// Calculate the maximum subsampling that can be used.
-			if (param.getSize() != null && (param.getSize().width * 2 < width && param.getSize().height * 2 < height))
-			{
+			if (param.getSize() != null && (param.getSize().width * 2 < width && param.getSize().height * 2 < height)) {
 				double widthScaling = (double)width / (double)param.getSize().width;
 				double heightScaling = (double)height / (double)param.getSize().height;
 				subsampling = (int)Math.floor(Math.min(widthScaling, heightScaling));
-			}
-			else if (param.getSize() == null)
-			{
+
+			} else if (param.getSize() == null) {
 				subsampling = (int)Math.max(1, Math.floor(1 / Math.max(param.getHeightScalingFactor(), param.getWidthScalingFactor())));
 			}
 			
@@ -154,10 +138,8 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream>
 			for (; (width / subsampling) < 600 || (height / subsampling) < 600; subsampling--);
 			
 			// If scaling factor based resize is used, need to change the scaling factor.
-			if (param.getSize() == null)
-			{
-				try
-				{
+			if (param.getSize() == null) {
+				try {
 					Class<?> c = param.getClass();
 					Field heightField = c.getDeclaredField("heightScalingFactor");
 					Field widthField = c.getDeclaredField("widthScalingFactor");
@@ -165,9 +147,8 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream>
 					widthField.setAccessible(true);
 					heightField.set(param, param.getHeightScalingFactor() * (double)subsampling);
 					widthField.set(param, param.getWidthScalingFactor() * (double)subsampling);
-				}
-				catch (Exception e)
-				{
+
+				} catch (Exception e) {
 					// If we can't update the parameter, then disable subsampling.
 					subsampling = 1;
 				}
@@ -194,8 +175,7 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream>
 		return finishedReading(img);
 	}
 
-	public InputStream getSource()
-	{
+	public InputStream getSource() {
 		return is;
 	}
 }

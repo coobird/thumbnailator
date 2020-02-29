@@ -27,12 +27,11 @@ import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 
-public class SourceSinkThumbnailTaskTest
-{
+public class SourceSinkThumbnailTaskTest {
+
 	@SuppressWarnings("unchecked")
 	@Test
-	public void task_UsesPreferredFromDestination() throws Exception
-	{
+	public void task_UsesPreferredFromDestination() throws Exception {
 		// given
 		ThumbnailParameter param =
 			new ThumbnailParameterBuilder()
@@ -62,8 +61,7 @@ public class SourceSinkThumbnailTaskTest
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void task_UsesOriginalFormat() throws Exception
-	{
+	public void task_UsesOriginalFormat() throws Exception {
 		// given
 		ThumbnailParameter param =
 			new ThumbnailParameterBuilder()
@@ -92,8 +90,7 @@ public class SourceSinkThumbnailTaskTest
 	}
 	
 	@Test
-	public void task_SizeOnly_InputStream_BufferedImage() throws IOException
-	{
+	public void task_SizeOnly_InputStream_BufferedImage() throws IOException {
 		// given
 		ThumbnailParameter param =
 			new ThumbnailParameterBuilder().size(50, 50).build();
@@ -117,8 +114,7 @@ public class SourceSinkThumbnailTaskTest
 	
 	
 	@Test
-	public void task_SizeOnly_InputStream_OutputStream() throws IOException
-	{
+	public void task_SizeOnly_InputStream_OutputStream() throws IOException {
 		// given
 		ThumbnailParameter param =
 			new ThumbnailParameterBuilder().size(50, 50).build();
@@ -148,8 +144,7 @@ public class SourceSinkThumbnailTaskTest
 	}
 	
 	@Test
-	public void task_ChangeOutputFormat_InputStream_OutputStream() throws IOException
-	{
+	public void task_ChangeOutputFormat_InputStream_OutputStream() throws IOException {
 		// given
 		ThumbnailParameter param =
 			new ThumbnailParameterBuilder().size(50, 50).format("jpg").build();
@@ -178,8 +173,7 @@ public class SourceSinkThumbnailTaskTest
 	}
 	
 	@Test
-	public void task_ChangeOutputFormat_File_OutputStream() throws IOException
-	{
+	public void task_ChangeOutputFormat_File_OutputStream() throws IOException {
 		// given
 		ThumbnailParameter param =
 			new ThumbnailParameterBuilder().size(50, 50).format("jpg").build();
@@ -215,8 +209,7 @@ public class SourceSinkThumbnailTaskTest
 	 * @throws IOException		When a problem occurs while making image data.
 	 */
 	private static byte[] makeImageData(String format, int width, int height)
-			throws IOException
-	{
+			throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ImageIO.write(img, format, baos);

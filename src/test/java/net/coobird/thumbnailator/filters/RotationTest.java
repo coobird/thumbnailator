@@ -21,15 +21,14 @@ import org.junit.Test;
  * @author coobird
  *
  */
-public class RotationTest
-{
+public class RotationTest {
+
 	/**
 	 * Checks that the input image contents are not altered, when using the
 	 * {@link Rotation#newRotator(double)} method.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_SpecifiedRotator()
-	{
+	public void inputContentsAreNotAltered_SpecifiedRotator() {
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		BufferedImage copyImage = BufferedImages.copy(originalImage);
@@ -48,8 +47,7 @@ public class RotationTest
 	 * the constants defined in the {@link Rotation} class.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_UsingConstantField()
-	{
+	public void inputContentsAreNotAltered_UsingConstantField() {
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		BufferedImage copyImage = BufferedImages.copy(originalImage);

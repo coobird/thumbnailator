@@ -26,11 +26,9 @@ import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
 
-public class OutputStreamImageSinkTest
-{
+public class OutputStreamImageSinkTest {
 	@Test
-	public void validOutputStream()
-	{
+	public void validOutputStream() {
 		// given
 		OutputStream os = mock(OutputStream.class);
 		
@@ -42,18 +40,14 @@ public class OutputStreamImageSinkTest
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void nullOutputStream()
-	{
+	public void nullOutputStream() {
 		// given
 		OutputStream f = null;
 		
-		try
-		{
+		try {
 			// when
 			new OutputStreamImageSink(f);
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 			assertEquals("OutputStream cannot be null.", e.getMessage());
 			throw e;
@@ -61,8 +55,7 @@ public class OutputStreamImageSinkTest
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void write_NullImage() throws IOException
-	{
+	public void write_NullImage() throws IOException {
 		// given
 		OutputStream os = mock(OutputStream.class);
 
@@ -71,13 +64,10 @@ public class OutputStreamImageSinkTest
 		OutputStreamImageSink sink = new OutputStreamImageSink(os);
 		sink.setOutputFormatName("png");
 		
-		try
-		{
+		try {
 			// when
 			sink.write(img);
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 			assertEquals("Cannot write a null image.", e.getMessage());
 			throw e;
@@ -85,8 +75,7 @@ public class OutputStreamImageSinkTest
 	}
 	
 	@Test(expected=IllegalStateException.class)
-	public void write_ValidImage_SetOutputFormat_NotSet() throws IOException
-	{
+	public void write_ValidImage_SetOutputFormat_NotSet() throws IOException {
 		// given
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
@@ -95,13 +84,10 @@ public class OutputStreamImageSinkTest
 		
 		OutputStreamImageSink sink = new OutputStreamImageSink(os);
 		
-		try
-		{
+		try {
 			// when
 			sink.write(imgToWrite);
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 			assertEquals("Output format has not been set.", e.getMessage());
 			throw e;
@@ -109,8 +95,7 @@ public class OutputStreamImageSinkTest
 	}
 	
 	@Test(expected=IllegalStateException.class)
-	public void write_ValidImage_SetOutputFormat_OriginalFormat() throws IOException
-	{
+	public void write_ValidImage_SetOutputFormat_OriginalFormat() throws IOException {
 		// given
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
@@ -120,13 +105,10 @@ public class OutputStreamImageSinkTest
 		OutputStreamImageSink sink = new OutputStreamImageSink(os);
 		sink.setOutputFormatName(ThumbnailParameter.ORIGINAL_FORMAT);
 		
-		try
-		{
+		try {
 			// when
 			sink.write(imgToWrite);
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 			assertEquals("Output format has not been set.", e.getMessage());
 			throw e;
@@ -134,8 +116,7 @@ public class OutputStreamImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_SetOutputFormat() throws IOException
-	{
+	public void write_ValidImage_SetOutputFormat() throws IOException {
 		// given
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
@@ -160,8 +141,7 @@ public class OutputStreamImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_SetThumbnailParameter_BMP_QualityAndOutputFormatType_BothDefault() throws IOException
-	{
+	public void write_ValidImage_SetThumbnailParameter_BMP_QualityAndOutputFormatType_BothDefault() throws IOException {
 		// given
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
@@ -194,8 +174,7 @@ public class OutputStreamImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_SetThumbnailParameter_BMP_QualityAndOutputFormatType_BothNonDefault() throws IOException
-	{
+	public void write_ValidImage_SetThumbnailParameter_BMP_QualityAndOutputFormatType_BothNonDefault() throws IOException {
 		// given
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
@@ -228,8 +207,7 @@ public class OutputStreamImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_SetThumbnailParameter_BMP_OutputFormatType() throws IOException
-	{
+	public void write_ValidImage_SetThumbnailParameter_BMP_OutputFormatType() throws IOException {
 		// given
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
@@ -261,8 +239,7 @@ public class OutputStreamImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_WriterCantCompress() throws IOException
-	{
+	public void write_ValidImage_WriterCantCompress() throws IOException {
 		// given
 		ImageWriteParam iwParam = mock(ImageWriteParam.class);
 		ImageWriter writer = mock(ImageWriter.class);
@@ -310,8 +287,7 @@ public class OutputStreamImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_WriterCanCompress_NoCompressionTypeFromWriter() throws IOException
-	{
+	public void write_ValidImage_WriterCanCompress_NoCompressionTypeFromWriter() throws IOException {
 		// given
 		ImageWriteParam iwParam = mock(ImageWriteParam.class);
 		ImageWriter writer = mock(ImageWriter.class);
@@ -359,8 +335,7 @@ public class OutputStreamImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_WriterCanCompress_HasCompressionTypeFromWriter() throws IOException
-	{
+	public void write_ValidImage_WriterCanCompress_HasCompressionTypeFromWriter() throws IOException {
 		// given
 		ImageWriteParam iwParam = mock(ImageWriteParam.class);
 		ImageWriter writer = mock(ImageWriter.class);
@@ -408,8 +383,7 @@ public class OutputStreamImageSinkTest
 	}
 
 	@Test
-	public void write_DoesNotCloseOutputStream() throws IOException
-	{
+	public void write_DoesNotCloseOutputStream() throws IOException {
 		// given
 		OutputStream os = mock(OutputStream.class);
 

@@ -18,8 +18,7 @@ import net.coobird.thumbnailator.tasks.io.FileImageSource;
  * @author coobird
  *
  */
-public class FileThumbnailTask extends ThumbnailTask<File, File>
-{
+public class FileThumbnailTask extends ThumbnailTask<File, File> {
 	/**
 	 * The {@link SourceSinkThumbnailTask} used to perform the task.
 	 */
@@ -35,8 +34,7 @@ public class FileThumbnailTask extends ThumbnailTask<File, File>
 	 * @param destinationFile	The {@link File} to which thumbnail is written.
 	 * @throws NullPointerException		If the parameter is {@code null}.
 	 */
-	public FileThumbnailTask(ThumbnailParameter param, File sourceFile, File destinationFile)
-	{
+	public FileThumbnailTask(ThumbnailParameter param, File sourceFile, File destinationFile) {
 		super(param);
 		this.task = new SourceSinkThumbnailTask<File, File>(
 				param,
@@ -46,32 +44,27 @@ public class FileThumbnailTask extends ThumbnailTask<File, File>
 	}
 
 	@Override
-	public BufferedImage read() throws IOException
-	{
+	public BufferedImage read() throws IOException {
 		return task.read();
 	}
 	
 	@Override
-	public void write(BufferedImage img) throws IOException
-	{
+	public void write(BufferedImage img) throws IOException {
 		task.write(img);
 	}
 
 	@Override
-	public ThumbnailParameter getParam()
-	{
+	public ThumbnailParameter getParam() {
 		return task.getParam();
 	}
 
 	@Override
-	public File getSource()
-	{
+	public File getSource() {
 		return task.getSource();
 	}
 	
 	@Override
-	public File getDestination()
-	{
+	public File getDestination() {
 		return task.getDestination();
 	}
 }

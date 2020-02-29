@@ -12,8 +12,8 @@ import net.coobird.thumbnailator.resizers.Resizers;
 
 import org.junit.Test;
 
-public class ThumbnailParameterBuilderTest
-{
+public class ThumbnailParameterBuilderTest {
+
 	/**
 	 * Test for the {@link ThumbnailParameterBuilder#build()} method, where
 	 * <ol>
@@ -25,8 +25,7 @@ public class ThumbnailParameterBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void build_NothingSet()
-	{
+	public void build_NothingSet() {
 		new ThumbnailParameterBuilder().build();
 		
 		fail();
@@ -43,8 +42,7 @@ public class ThumbnailParameterBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void build_OnlySize_IntInt()
-	{
+	public void build_OnlySize_IntInt() {
 		ThumbnailParameter param = new ThumbnailParameterBuilder()
 				.size(100, 100)
 				.build();
@@ -71,8 +69,7 @@ public class ThumbnailParameterBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void build_OnlySize_Dimension()
-	{
+	public void build_OnlySize_Dimension() {
 		ThumbnailParameter param = new ThumbnailParameterBuilder()
 				.size(new Dimension(100, 100))
 				.build();
@@ -99,8 +96,7 @@ public class ThumbnailParameterBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void build_OnlyScale()
-	{
+	public void build_OnlyScale() {
 		ThumbnailParameter param = new ThumbnailParameterBuilder()
 				.scale(0.5)
 				.build();
@@ -127,8 +123,7 @@ public class ThumbnailParameterBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void build_OnlyScale_NaN()
-	{
+	public void build_OnlyScale_NaN() {
 		new ThumbnailParameterBuilder().scale(Double.NaN).build();
 		fail();
 	}
@@ -144,8 +139,7 @@ public class ThumbnailParameterBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void build_OnlyScale_PositiveInfinity()
-	{
+	public void build_OnlyScale_PositiveInfinity() {
 		new ThumbnailParameterBuilder().scale(Double.POSITIVE_INFINITY).build();
 		fail();
 	}
@@ -161,15 +155,13 @@ public class ThumbnailParameterBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void build_OnlyScale_NegativeInfinity()
-	{
+	public void build_OnlyScale_NegativeInfinity() {
 		new ThumbnailParameterBuilder().scale(Double.NEGATIVE_INFINITY).build();
 		fail();
 	}
 
 	@Test
-	public void build_OnlyScaleTwoArg()
-	{
+	public void build_OnlyScaleTwoArg() {
 		// given, when
 		ThumbnailParameter param =
 			new ThumbnailParameterBuilder().scale(0.6, 0.4).build();
@@ -187,64 +179,55 @@ public class ThumbnailParameterBuilderTest
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void build_OnlyScaleTwoArg_NaN_Valid()
-	{
+	public void build_OnlyScaleTwoArg_NaN_Valid() {
 		new ThumbnailParameterBuilder().scale(Double.NaN, 0.4).build();
 		fail();
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void build_OnlyScaleTwoArg_Valid_NaN()
-	{
+	public void build_OnlyScaleTwoArg_Valid_NaN() {
 		new ThumbnailParameterBuilder().scale(0.6, Double.NaN).build();
 		fail();
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void build_OnlyScaleTwoArg_NaN_NaN()
-	{
+	public void build_OnlyScaleTwoArg_NaN_NaN() {
 		new ThumbnailParameterBuilder().scale(Double.NaN, Double.NaN).build();
 		fail();
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void build_OnlyScaleTwoArg_PositiveInfinity_Valid()
-	{
+	public void build_OnlyScaleTwoArg_PositiveInfinity_Valid() {
 		new ThumbnailParameterBuilder().scale(Double.POSITIVE_INFINITY, 0.4).build();
 		fail();
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void build_OnlyScaleTwoArg_Valid_PositiveInfinity()
-	{
+	public void build_OnlyScaleTwoArg_Valid_PositiveInfinity() {
 		new ThumbnailParameterBuilder().scale(0.6, Double.POSITIVE_INFINITY).build();
 		fail();
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void build_OnlyScaleTwoArg_PositiveInfinity_PositiveInfinity()
-	{
+	public void build_OnlyScaleTwoArg_PositiveInfinity_PositiveInfinity() {
 		new ThumbnailParameterBuilder().scale(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY).build();
 		fail();
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void build_OnlyScaleTwoArg_NegativeInfinity_Valid()
-	{
+	public void build_OnlyScaleTwoArg_NegativeInfinity_Valid() {
 		new ThumbnailParameterBuilder().scale(Double.NEGATIVE_INFINITY, 0.4).build();
 		fail();
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void build_OnlyScaleTwoArg_Valid_NegativeInfinity()
-	{
+	public void build_OnlyScaleTwoArg_Valid_NegativeInfinity() {
 		new ThumbnailParameterBuilder().scale(0.6, Double.NEGATIVE_INFINITY).build();
 		fail();
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void build_OnlyScaleTwoArg_NegativeInfinity_NegativeInfinity()
-	{
+	public void build_OnlyScaleTwoArg_NegativeInfinity_NegativeInfinity() {
 		new ThumbnailParameterBuilder().scale(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY).build();
 		fail();
 	}
@@ -260,8 +243,7 @@ public class ThumbnailParameterBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void build_calledResizer_returnsGivenResizer()
-	{
+	public void build_calledResizer_returnsGivenResizer() {
 		ThumbnailParameter param = new ThumbnailParameterBuilder()
 			.scale(0.5)
 			.resizer(Resizers.BICUBIC)
@@ -282,8 +264,7 @@ public class ThumbnailParameterBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void build_calledResizer_returnedResizerFactoryReturnsResizer()
-	{
+	public void build_calledResizer_returnedResizerFactoryReturnsResizer() {
 		ThumbnailParameter param = new ThumbnailParameterBuilder()
 			.scale(0.5)
 			.resizer(Resizers.BICUBIC)
@@ -303,16 +284,13 @@ public class ThumbnailParameterBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void build_calledResizerFactory()
-	{
+	public void build_calledResizerFactory() {
 		ResizerFactory rf = new ResizerFactory() {
-			public Resizer getResizer(Dimension arg0, Dimension arg1)
-			{
+			public Resizer getResizer(Dimension arg0, Dimension arg1) {
 				return null;
 			}
 			
-			public Resizer getResizer()
-			{
+			public Resizer getResizer() {
 				return null;
 			}
 		};

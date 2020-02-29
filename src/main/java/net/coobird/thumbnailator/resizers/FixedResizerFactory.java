@@ -9,8 +9,7 @@ import java.awt.Dimension;
  * @author coobird
  * @since	0.4.0
  */
-public class FixedResizerFactory implements ResizerFactory
-{
+public class FixedResizerFactory implements ResizerFactory {
 	/**
 	 * The resizer which is to be returned unconditionally by this class.
 	 */
@@ -23,18 +22,15 @@ public class FixedResizerFactory implements ResizerFactory
 	 * @param resizer		The {@link Resizer} instance that is to be returned
 	 * 						under all circumstances.
 	 */
-	public FixedResizerFactory(Resizer resizer)
-	{
+	public FixedResizerFactory(Resizer resizer) {
 		this.resizer = resizer;
 	}
 
-	public Resizer getResizer()
-	{
+	public Resizer getResizer() {
 		return resizer;
 	}
 
-	public Resizer getResizer(Dimension originalSize, Dimension thumbnailSize)
-	{
+	public Resizer getResizer(Dimension originalSize, Dimension thumbnailSize) {
 		return resizer;
 	}
 }

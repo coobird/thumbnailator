@@ -20,8 +20,8 @@ import static org.mockito.Mockito.*;
  * @author coobird
  *
  */
-public class ScaledThumbnailMakerTest
-{
+public class ScaledThumbnailMakerTest {
+
 	/**
 	 * A convenience method to make a test image.
 	 */
@@ -42,8 +42,7 @@ public class ScaledThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void uninitializedWithNoArgConstructor()
-	{
+	public void uninitializedWithNoArgConstructor() {
 		// given
 		BufferedImage img = makeTestImage200x200();
 		
@@ -68,8 +67,7 @@ public class ScaledThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test
-	public void makeWithOneArgConstructor()
-	{
+	public void makeWithOneArgConstructor() {
 		BufferedImage img = makeTestImage200x200();
 		
 		BufferedImage thumbnail = new ScaledThumbnailMaker(0.5).make(img);
@@ -93,8 +91,7 @@ public class ScaledThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void makeWithOneArgConstructorWithScaleOneArg()
-	{
+	public void makeWithOneArgConstructorWithScaleOneArg() {
 		BufferedImage img = makeTestImage200x200();
 		
 		new ScaledThumbnailMaker(0.5)
@@ -103,8 +100,7 @@ public class ScaledThumbnailMakerTest
 	}
 	
 	@Test(expected=IllegalStateException.class)
-	public void makeWithOneArgConstructorWithScaleTwoArg()
-	{
+	public void makeWithOneArgConstructorWithScaleTwoArg() {
 		BufferedImage img = makeTestImage200x200();
 		
 		new ScaledThumbnailMaker(0.5)
@@ -113,8 +109,7 @@ public class ScaledThumbnailMakerTest
 	}
 	
 	@Test
-	public void makeWithTwoArgConstructor()
-	{
+	public void makeWithTwoArgConstructor() {
 		// given
 		BufferedImage img = makeTestImage200x200();
 		
@@ -127,8 +122,7 @@ public class ScaledThumbnailMakerTest
 	}
 	
 	@Test(expected=IllegalStateException.class)
-	public void makeWithTwoArgConstructorWithScaleOneArg()
-	{
+	public void makeWithTwoArgConstructorWithScaleOneArg() {
 		// given
 		BufferedImage img = makeTestImage200x200();
 		
@@ -142,8 +136,7 @@ public class ScaledThumbnailMakerTest
 	}
 	
 	@Test(expected=IllegalStateException.class)
-	public void makeWithTwoArgConstructorWithScaleTwoArg()
-	{
+	public void makeWithTwoArgConstructorWithScaleTwoArg() {
 		// given
 		BufferedImage img = makeTestImage200x200();
 		
@@ -171,8 +164,7 @@ public class ScaledThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test
-	public void makeWithNoArgConstructorAndScaleOneArg()
-	{
+	public void makeWithNoArgConstructorAndScaleOneArg() {
 		BufferedImage img = makeTestImage200x200();
 		
 		BufferedImage thumbnail = new ScaledThumbnailMaker()
@@ -185,8 +177,7 @@ public class ScaledThumbnailMakerTest
 	}
 
 	@Test
-	public void makeWithNoArgConstructorAndScaleTwoArg()
-	{
+	public void makeWithNoArgConstructorAndScaleTwoArg() {
 		// given
 		BufferedImage img = makeTestImage200x200();
 		
@@ -212,8 +203,7 @@ public class ScaledThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test
-	public void verifyResizerFactoryBeingCalled()
-	{
+	public void verifyResizerFactoryBeingCalled() {
 		// given
 		BufferedImage img = makeTestImage200x200();
 		Resizer spyResizer = spy(new ProgressiveBilinearResizer());
@@ -233,136 +223,103 @@ public class ScaledThumbnailMakerTest
 	}
 	
 	@Test
-	public void scaleIsZeroThroughOneArgConstructor()
-	{
+	public void scaleIsZeroThroughOneArgConstructor() {
 		// given
-		try
-		{
+		try {
 			// when
 			new ScaledThumbnailMaker(0);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void scaleIsZeroThroughOneArgScaleMethod()
-	{
+	public void scaleIsZeroThroughOneArgScaleMethod() {
 		// given
-		try
-		{
+		try {
 			// when
 			new ScaledThumbnailMaker().scale(0);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void scaleIsZeroThroughTwoArgConstructor()
-	{
+	public void scaleIsZeroThroughTwoArgConstructor() {
 		// given
-		try
-		{
+		try {
 			// when
 			new ScaledThumbnailMaker(0, 0);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void scaleIsZeroThroughTwoArgScaleMethod()
-	{
+	public void scaleIsZeroThroughTwoArgScaleMethod() {
 		// given
-		try
-		{
+		try {
 			// when
 			new ScaledThumbnailMaker().scale(0, 0);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void scaleIsNegativeThroughOneArgConstructor()
-	{
+	public void scaleIsNegativeThroughOneArgConstructor() {
 		// given
-		try
-		{
+		try {
 			// when
 			new ScaledThumbnailMaker(-1);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void scaleIsNegativeThroughOneArgScaleMethod()
-	{
+	public void scaleIsNegativeThroughOneArgScaleMethod() {
 		// given
-		try
-		{
+		try {
 			// when
 			new ScaledThumbnailMaker().scale(-1);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void scaleIsNegativeThroughTwoArgConstructor()
-	{
+	public void scaleIsNegativeThroughTwoArgConstructor() {
 		// given
-		try
-		{
+		try {
 			// when
 			new ScaledThumbnailMaker(1, -1);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void scaleIsNegativeThroughTwoArgScaleMethod()
-	{
+	public void scaleIsNegativeThroughTwoArgScaleMethod() {
 		// given
-		try
-		{
+		try {
 			// when
 			new ScaledThumbnailMaker().scale(1, -1);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void isRoundingWidthRatherThanTruncate_scaleOneArg()
-	{
+	public void isRoundingWidthRatherThanTruncate_scaleOneArg() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(99, 100).build();
 		
@@ -375,8 +332,7 @@ public class ScaledThumbnailMakerTest
 	}
 	
 	@Test
-	public void isRoundingHeightRatherThanTruncate_scaleOneArg()
-	{
+	public void isRoundingHeightRatherThanTruncate_scaleOneArg() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(100, 99).build();
 		
@@ -389,8 +345,7 @@ public class ScaledThumbnailMakerTest
 	}
 	
 	@Test
-	public void isRoundingWidthRatherThanTruncate_scaleTwoArg()
-	{
+	public void isRoundingWidthRatherThanTruncate_scaleTwoArg() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(99, 100).build();
 		
@@ -403,8 +358,7 @@ public class ScaledThumbnailMakerTest
 	}
 	
 	@Test
-	public void isRoundingHeightRatherThanTruncate_scaleTwoArg()
-	{
+	public void isRoundingHeightRatherThanTruncate_scaleTwoArg() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(100, 99).build();
 		
@@ -417,8 +371,7 @@ public class ScaledThumbnailMakerTest
 	}
 	
 	@Test
-	public void widthBecomesZeroIfTruncated()
-	{
+	public void widthBecomesZeroIfTruncated() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(9, 100).build();
 		
@@ -431,8 +384,7 @@ public class ScaledThumbnailMakerTest
 	}
 	
 	@Test
-	public void widthBecomesZeroIfTruncatedButIsOneIfRounded()
-	{
+	public void widthBecomesZeroIfTruncatedButIsOneIfRounded() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(10, 100).build();
 		
@@ -445,8 +397,7 @@ public class ScaledThumbnailMakerTest
 	}
 	
 	@Test
-	public void widthBecomesZeroIfTruncatedAndIsZeroIfRounded()
-	{
+	public void widthBecomesZeroIfTruncatedAndIsZeroIfRounded() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(1, 100).build();
 		
@@ -459,8 +410,7 @@ public class ScaledThumbnailMakerTest
 	}
 	
 	@Test
-	public void heightBecomesZeroIfTruncated()
-	{
+	public void heightBecomesZeroIfTruncated() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(100, 9).build();
 		
@@ -473,8 +423,7 @@ public class ScaledThumbnailMakerTest
 	}
 	
 	@Test
-	public void heightBecomesZeroIfTruncatedButIsOneIfRounded()
-	{
+	public void heightBecomesZeroIfTruncatedButIsOneIfRounded() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(100, 10).build();
 		
@@ -487,8 +436,7 @@ public class ScaledThumbnailMakerTest
 	}
 	
 	@Test
-	public void heightBecomesZeroIfTruncatedAndIsZeroIfRounded()
-	{
+	public void heightBecomesZeroIfTruncatedAndIsZeroIfRounded() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(100, 1).build();
 		

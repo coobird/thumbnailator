@@ -43,8 +43,7 @@ BufferedImage thumbnail = new FixedSizeThumbnailMaker()
  * @author coobird
  *
  */
-public final class FixedSizeThumbnailMaker extends ThumbnailMaker
-{
+public final class FixedSizeThumbnailMaker extends ThumbnailMaker {
 	private static final String PARAM_SIZE = "size";
 	private static final String PARAM_KEEP_RATIO = "keepRatio";
 	private static final String PARAM_FIT_WITHIN = "fitWithinDimensions";
@@ -61,8 +60,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * of the original image should be maintained in the thumbnail must be
 	 * set before this instance is able to produce thumbnails.
 	 */
-	public FixedSizeThumbnailMaker()
-	{
+	public FixedSizeThumbnailMaker() {
 		super();
 		ready.unset(PARAM_SIZE);
 		ready.unset(PARAM_KEEP_RATIO);
@@ -81,8 +79,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * @param width			The width of the thumbnail to produce.
 	 * @param height		The height of the thumbnails to produce.
 	 */
-	public FixedSizeThumbnailMaker(int width, int height)
-	{
+	public FixedSizeThumbnailMaker(int width, int height) {
 		this();
 		size(width, height);
 	}
@@ -102,8 +99,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * 						thumbnail image will have the same aspect ratio
 	 * 						as the original image.
 	 */
-	public FixedSizeThumbnailMaker(int width, int height, boolean aspectRatio)
-	{
+	public FixedSizeThumbnailMaker(int width, int height, boolean aspectRatio) {
 		this();
 		size(width, height);
 		keepAspectRatio(aspectRatio);
@@ -131,8 +127,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * 						will be sized to fit within the specified
 	 * 						{@code width} and {@code height}.
 	 */
-	public FixedSizeThumbnailMaker(int width, int height, boolean aspectRatio, boolean fit)
-	{
+	public FixedSizeThumbnailMaker(int width, int height, boolean aspectRatio, boolean fit) {
 		this();
 		size(width, height);
 		keepAspectRatio(aspectRatio);
@@ -150,23 +145,19 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * 									{@code width} or {@code height} is less
 	 * 									than or equal to zero.
 	 */
-	public FixedSizeThumbnailMaker size(int width, int height)
-	{
-		if (ready.isSet(PARAM_SIZE))
-		{
+	public FixedSizeThumbnailMaker size(int width, int height) {
+		if (ready.isSet(PARAM_SIZE)) {
 			throw new IllegalStateException(
 					"The size has already been set."
 			);
 		}
 		
-		if (width <= 0)
-		{
+		if (width <= 0) {
 			throw new IllegalArgumentException(
 					"Width must be greater than zero."
 			);
 		}
-		if (height <= 0)
-		{
+		if (height <= 0) {
 			throw new IllegalArgumentException(
 					"Height must be greater than zero."
 			);
@@ -193,10 +184,8 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * @throws IllegalStateException	If whether to keep the aspect ratio has
 	 * 									already	been previously set.
 	 */
-	public FixedSizeThumbnailMaker keepAspectRatio(boolean keep)
-	{
-		if (ready.isSet(PARAM_KEEP_RATIO))
-		{
+	public FixedSizeThumbnailMaker keepAspectRatio(boolean keep) {
+		if (ready.isSet(PARAM_KEEP_RATIO)) {
 			throw new IllegalStateException(
 					"Whether to keep the aspect ratio has already been set."
 			);
@@ -232,10 +221,8 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * 									already	been previously set.
 	 * @since 0.4.0
 	 */
-	public FixedSizeThumbnailMaker fitWithinDimensions(boolean fit)
-	{
-		if (ready.isSet(PARAM_FIT_WITHIN))
-		{
+	public FixedSizeThumbnailMaker fitWithinDimensions(boolean fit) {
+		if (ready.isSet(PARAM_FIT_WITHIN)) {
 			throw new IllegalStateException(
 					"Whether to fit within dimensions has already been set."
 			);
@@ -247,13 +234,11 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	}
 	
 	@Override
-	public BufferedImage make(BufferedImage img)
-	{
+	public BufferedImage make(BufferedImage img) {
 		int targetWidth = this.width;
 		int targetHeight = this.height;
 
-		if (keepRatio)
-		{
+		if (keepRatio) {
 			int sourceWidth = img.getWidth();
 			int sourceHeight = img.getHeight();
 			
@@ -264,30 +249,20 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 			 * If the ratios are not the same, then the appropriate
 			 * width and height must be picked.
 			 */
-			if (Double.compare(sourceRatio, targetRatio) != 0)
-			{
-				if (fitWithinDimensions)
-				{
-					if (sourceRatio > targetRatio)
-					{
+			if (Double.compare(sourceRatio, targetRatio) != 0) {
+				if (fitWithinDimensions) {
+					if (sourceRatio > targetRatio) {
 						targetWidth = width;
 						targetHeight = (int)Math.round(targetWidth / sourceRatio);
-					}
-					else
-					{
+					} else {
 						targetWidth = (int)Math.round(targetHeight * sourceRatio);
 						targetHeight = height;
 					}
-				}
-				else
-				{
-					if (sourceRatio > targetRatio)
-					{
+				} else {
+					if (sourceRatio > targetRatio) {
 						targetWidth = (int)Math.round(targetHeight * sourceRatio);
 						targetHeight = height;
-					}
-					else
-					{
+					} else {
 						targetWidth = width;
 						targetHeight = (int)Math.round(targetWidth / sourceRatio);
 					}

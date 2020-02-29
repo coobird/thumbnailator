@@ -6,11 +6,10 @@ import java.awt.Dimension;
 
 import org.junit.Test;
 
-public class DefaultResizerFactoryTest
-{
+public class DefaultResizerFactoryTest {
+
 	@Test
-	public void defaultResizer()
-	{
+	public void defaultResizer() {
 		// given
 		Resizer resizer = Resizers.PROGRESSIVE;
 		ResizerFactory factory = DefaultResizerFactory.getInstance();
@@ -23,8 +22,7 @@ public class DefaultResizerFactoryTest
 	}
 	
 	@Test
-	public void resizerWhereSourceSmallerThanDestination()
-	{
+	public void resizerWhereSourceSmallerThanDestination() {
 		// given
 		Resizer resizer = Resizers.BICUBIC;
 		ResizerFactory factory = DefaultResizerFactory.getInstance();
@@ -40,8 +38,7 @@ public class DefaultResizerFactoryTest
 	}
 	
 	@Test
-	public void resizerWhereSourceLargerThanDestination_LessThan2Times()
-	{
+	public void resizerWhereSourceLargerThanDestination_LessThan2Times() {
 		// given
 		Resizer resizer = Resizers.BILINEAR;
 		ResizerFactory factory = DefaultResizerFactory.getInstance();
@@ -57,8 +54,7 @@ public class DefaultResizerFactoryTest
 	}
 	
 	@Test
-	public void resizerWhereSourceLargerThanDestination_2Times()
-	{
+	public void resizerWhereSourceLargerThanDestination_2Times() {
 		// given
 		Resizer resizer = Resizers.BILINEAR;
 		ResizerFactory factory = DefaultResizerFactory.getInstance();
@@ -74,8 +70,7 @@ public class DefaultResizerFactoryTest
 	}
 	
 	@Test
-	public void resizerWhereSourceLargerThanDestination_MoreThan2Times()
-	{
+	public void resizerWhereSourceLargerThanDestination_MoreThan2Times() {
 		// given
 		Resizer resizer = Resizers.PROGRESSIVE;
 		ResizerFactory factory = DefaultResizerFactory.getInstance();
@@ -91,8 +86,7 @@ public class DefaultResizerFactoryTest
 	}
 	
 	@Test
-	public void resizerWhereSourceSameSizeAsDestination()
-	{
+	public void resizerWhereSourceSameSizeAsDestination() {
 		// given
 		Resizer resizer = Resizers.NULL;
 		ResizerFactory factory = DefaultResizerFactory.getInstance();
@@ -108,8 +102,7 @@ public class DefaultResizerFactoryTest
 	}
 	
 	@Test
-	public void resizerWhereSourceHeightLargerThanDestination()
-	{
+	public void resizerWhereSourceHeightLargerThanDestination() {
 		// given
 		Resizer resizer = Resizers.PROGRESSIVE;
 		ResizerFactory factory = DefaultResizerFactory.getInstance();
@@ -125,8 +118,7 @@ public class DefaultResizerFactoryTest
 	}
 	
 	@Test
-	public void resizerWhereSourceHeightSmallerThanDestination()
-	{
+	public void resizerWhereSourceHeightSmallerThanDestination() {
 		// given
 		Resizer resizer = Resizers.PROGRESSIVE;
 		ResizerFactory factory = DefaultResizerFactory.getInstance();
@@ -142,8 +134,7 @@ public class DefaultResizerFactoryTest
 	}
 	
 	@Test
-	public void resizerWhereSourceWidthLargerThanDestination()
-	{
+	public void resizerWhereSourceWidthLargerThanDestination() {
 		// given
 		Resizer resizer = Resizers.PROGRESSIVE;
 		ResizerFactory factory = DefaultResizerFactory.getInstance();
@@ -159,8 +150,7 @@ public class DefaultResizerFactoryTest
 	}
 	
 	@Test
-	public void resizerWhereSourceWidthSmallerThanDestination()
-	{
+	public void resizerWhereSourceWidthSmallerThanDestination() {
 		// given
 		Resizer resizer = Resizers.PROGRESSIVE;
 		ResizerFactory factory = DefaultResizerFactory.getInstance();

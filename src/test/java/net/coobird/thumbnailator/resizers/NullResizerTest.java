@@ -11,11 +11,10 @@ import net.coobird.thumbnailator.test.BufferedImageComparer;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class NullResizerTest
-{
+public class NullResizerTest {
+
 	@Test
-	public void sourceAndDestSameDimension() throws IOException
-	{
+	public void sourceAndDestSameDimension() throws IOException {
 		// given
 		BufferedImage srcImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		BufferedImage destImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
@@ -30,8 +29,7 @@ public class NullResizerTest
 	}
 	
 	@Test
-	public void sourceSmallerThanDest() throws IOException
-	{
+	public void sourceSmallerThanDest() throws IOException {
 		// given
 		BufferedImage srcImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		BufferedImage destImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
@@ -44,8 +42,7 @@ public class NullResizerTest
 	}
 	
 	@Test
-	public void sourceLargerThanDest() throws IOException
-	{
+	public void sourceLargerThanDest() throws IOException {
 		// given
 		BufferedImage srcImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		BufferedImage destImage = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
@@ -58,60 +55,48 @@ public class NullResizerTest
 	}
 	
 	@Test
-	public void resizeNullAndNull()
-	{
+	public void resizeNullAndNull() {
 		// given
 		BufferedImage srcImage = null;
 		BufferedImage destImage = null;
 		
-		try
-		{
+		try {
 			// when
 			new NullResizer().resize(srcImage, destImage);
 			fail();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			// then
 			assertEquals("The source and/or destination image is null.", e.getMessage());
 		}
 	}
 	
 	@Test
-	public void resizeSpecifiedAndNull()
-	{
+	public void resizeSpecifiedAndNull() {
 		// given
 		BufferedImage srcImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		BufferedImage destImage = null;
 		
-		try
-		{
+		try {
 			// when
 			new NullResizer().resize(srcImage, destImage);
 			fail();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			// then
 			assertEquals("The source and/or destination image is null.", e.getMessage());
 		}
 	}
 	
 	@Test
-	public void resizeNullAndSpecified()
-	{
+	public void resizeNullAndSpecified() {
 		// given
 		BufferedImage srcImage = null;
 		BufferedImage destImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
-		try
-		{
+		try {
 			// when
 			new NullResizer().resize(srcImage, destImage);
 			fail();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			// then
 			assertEquals("The source and/or destination image is null.", e.getMessage());
 		}

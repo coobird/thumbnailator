@@ -16,25 +16,20 @@ import net.coobird.thumbnailator.resizers.Resizers;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class FileThumbnailTaskTest
-{
+public class FileThumbnailTaskTest {
 
 	@Test(expected=NullPointerException.class)
-	public void nullParameter() throws IOException
-	{
+	public void nullParameter() throws IOException {
 		// given
 		File inputFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
 		outputFile.deleteOnExit();
 		
-		try
-		{
+		try {
 			// when
 			new FileThumbnailTask(null, inputFile, outputFile);
 			fail();
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 			assertEquals("The parameter is null.", e.getMessage());
 			throw e;
@@ -42,8 +37,7 @@ public class FileThumbnailTaskTest
 	}
 	
 	@Test
-	public void testRead_CorrectUsage() throws IOException
-	{
+	public void testRead_CorrectUsage() throws IOException {
 		ThumbnailParameter param = new ThumbnailParameter(
 				new Dimension(50, 50),
 				null,
@@ -69,20 +63,17 @@ public class FileThumbnailTaskTest
 	}
 
 	@Ignore
-	public void testWrite()
-	{
+	public void testWrite() {
 		fail("Not yet implemented");
 	}
 
 	@Ignore
-	public void testFileThumbnailTask()
-	{
+	public void testFileThumbnailTask() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testGetParam()
-	{
+	public void testGetParam() {
 		ThumbnailParameter param = new ThumbnailParameter(
 				new Dimension(50, 50),
 				null,

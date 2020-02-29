@@ -25,8 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 
-public class FileImageSourceTest
-{
+public class FileImageSourceTest {
 	/**
 	 * The temporary directory to use when creating files to use for this test.
 	 */
@@ -34,20 +33,17 @@ public class FileImageSourceTest
 			"src/test/resources/tmp/FileImageSourceTest";
 
 	@BeforeClass
-	public static void makeTemporaryDirectory()
-	{
+	public static void makeTemporaryDirectory() {
 		TestUtils.makeTemporaryDirectory(TMPDIR);
 	}
 
 	@AfterClass
-	public static void deleteTemporaryDirectory()
-	{
+	public static void deleteTemporaryDirectory() {
 		TestUtils.deleteTemporaryDirectory(TMPDIR);
 	}
 
 	@Test
-	public void fileExists_Png() throws IOException
-	{
+	public void fileExists_Png() throws IOException {
 		// given
 		FileImageSource source = new FileImageSource(new File("src/test/resources/Thumbnailator/grid.png"));
 		
@@ -61,8 +57,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void fileExists_Jpeg() throws IOException
-	{
+	public void fileExists_Jpeg() throws IOException {
 		// given
 		FileImageSource source = new FileImageSource(new File("src/test/resources/Thumbnailator/grid.jpg"));
 		
@@ -76,8 +71,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void fileExists_Bmp() throws IOException
-	{
+	public void fileExists_Bmp() throws IOException {
 		// given
 		FileImageSource source = new FileImageSource(new File("src/test/resources/Thumbnailator/grid.bmp"));
 		
@@ -91,18 +85,14 @@ public class FileImageSourceTest
 	}
 	
 	@Test(expected=FileNotFoundException.class)
-	public void fileDoesNotExists() throws IOException
-	{
+	public void fileDoesNotExists() throws IOException {
 		// given
 		FileImageSource source = new FileImageSource(new File("notfound"));
 		
-		try
-		{
+		try {
 			// when
 			source.read();
-		}
-		catch (FileNotFoundException e)
-		{
+		} catch (FileNotFoundException e) {
 			// then
 			assertThat(e.getMessage(), containsString("Could not find file"));
 			throw e;
@@ -111,8 +101,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void fileExists_Png_AsString() throws IOException
-	{
+	public void fileExists_Png_AsString() throws IOException {
 		// given
 		FileImageSource source = new FileImageSource("src/test/resources/Thumbnailator/grid.png");
 		
@@ -126,8 +115,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void fileExists_Jpeg_AsString() throws IOException
-	{
+	public void fileExists_Jpeg_AsString() throws IOException {
 		// given
 		FileImageSource source = new FileImageSource("src/test/resources/Thumbnailator/grid.jpg");
 		
@@ -141,8 +129,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void fileExists_Bmp_AsString() throws IOException
-	{
+	public void fileExists_Bmp_AsString() throws IOException {
 		// given
 		FileImageSource source = new FileImageSource("src/test/resources/Thumbnailator/grid.bmp");
 		
@@ -156,18 +143,14 @@ public class FileImageSourceTest
 	}
 	
 	@Test(expected=FileNotFoundException.class)
-	public void fileDoesNotExists_AsString() throws IOException
-	{
+	public void fileDoesNotExists_AsString() throws IOException {
 		// given
 		FileImageSource source = new FileImageSource("notfound");
 		
-		try
-		{
+		try {
 			// when
 			source.read();
-		}
-		catch (FileNotFoundException e)
-		{
+		} catch (FileNotFoundException e) {
 			// then
 			assertThat(e.getMessage(), containsString("Could not find file"));
 			throw e;
@@ -176,18 +159,14 @@ public class FileImageSourceTest
 	}
 	
 	@Test(expected=IllegalStateException.class)
-	public void fileExists_getInputFormatNameBeforeRead() throws IOException
-	{
+	public void fileExists_getInputFormatNameBeforeRead() throws IOException {
 		// given
 		FileImageSource source = new FileImageSource(new File("src/test/resources/Thumbnailator/grid.png"));
 		
-		try
-		{
+		try {
 			// when
 			source.getInputFormatName();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 			assertEquals("Input has not been read yet.", e.getMessage());
 			throw e;
@@ -209,8 +188,7 @@ public class FileImageSourceTest
 	 *                        source
 	 */
 	@Test
-	public void appliesSourceRegion() throws IOException
-	{
+	public void appliesSourceRegion() throws IOException {
 		// given
 		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -247,8 +225,7 @@ public class FileImageSourceTest
 	 *                             region
 	 */
 	@Test
-	public void appliesSourceRegionTooBig() throws IOException
-	{
+	public void appliesSourceRegionTooBig() throws IOException {
 		// given
 		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -285,8 +262,7 @@ public class FileImageSourceTest
 	 *                        source
 	 */
 	@Test
-	public void appliesSourceRegionBeyondOrigin() throws IOException
-	{
+	public void appliesSourceRegionBeyondOrigin() throws IOException {
 		// given
 		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -308,8 +284,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void appliesSourceRegionNotSpecified() throws IOException
-	{
+	public void appliesSourceRegionNotSpecified() throws IOException {
 		// given
 		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -329,8 +304,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void readImageUnaffectedForOrientation1() throws Exception
-	{
+	public void readImageUnaffectedForOrientation1() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_1.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -349,8 +323,7 @@ public class FileImageSourceTest
 	}
 
 	@Test
-	public void readImageUnaffectedForOrientation2() throws Exception
-	{
+	public void readImageUnaffectedForOrientation2() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -369,8 +342,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void readImageUnaffectedForOrientation3() throws Exception
-	{
+	public void readImageUnaffectedForOrientation3() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_3.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -389,8 +361,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void readImageUnaffectedForOrientation4() throws Exception
-	{
+	public void readImageUnaffectedForOrientation4() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_4.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -409,8 +380,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void readImageUnaffectedForOrientation5() throws Exception
-	{
+	public void readImageUnaffectedForOrientation5() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_5.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -429,8 +399,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void readImageUnaffectedForOrientation6() throws Exception
-	{
+	public void readImageUnaffectedForOrientation6() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_6.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -449,8 +418,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void readImageUnaffectedForOrientation7() throws Exception
-	{
+	public void readImageUnaffectedForOrientation7() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_7.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -469,8 +437,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void readImageUnaffectedForOrientation8() throws Exception
-	{
+	public void readImageUnaffectedForOrientation8() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_8.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -489,8 +456,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void containsCorrectFilterForOrientation1() throws Exception
-	{
+	public void containsCorrectFilterForOrientation1() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_1.jpg");
 		FileImageSource source = new FileImageSource(sourceFile);
@@ -507,8 +473,7 @@ public class FileImageSourceTest
 	}	
 	
 	@Test
-	public void containsCorrectFilterForOrientation2() throws Exception
-	{
+	public void containsCorrectFilterForOrientation2() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -535,8 +500,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void containsCorrectFilterForOrientation3() throws Exception
-	{
+	public void containsCorrectFilterForOrientation3() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_3.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -563,8 +527,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void containsCorrectFilterForOrientation4() throws Exception
-	{
+	public void containsCorrectFilterForOrientation4() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_4.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -591,8 +554,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void containsCorrectFilterForOrientation5() throws Exception
-	{
+	public void containsCorrectFilterForOrientation5() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_5.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -619,8 +581,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void containsCorrectFilterForOrientation6() throws Exception
-	{
+	public void containsCorrectFilterForOrientation6() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_6.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -647,8 +608,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void containsCorrectFilterForOrientation7() throws Exception
-	{
+	public void containsCorrectFilterForOrientation7() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_7.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -675,8 +635,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void containsCorrectFilterForOrientation8() throws Exception
-	{
+	public void containsCorrectFilterForOrientation8() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_8.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -703,8 +662,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void useExifOrientationIsTrue_OrientationHonored() throws Exception
-	{
+	public void useExifOrientationIsTrue_OrientationHonored() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
 		BufferedImage sourceImage = ImageIO.read(sourceFile);
@@ -735,8 +693,7 @@ public class FileImageSourceTest
 	}
 	
 	@Test
-	public void useExifOrientationIsFalse_OrientationIgnored() throws Exception
-	{
+	public void useExifOrientationIsFalse_OrientationIgnored() throws Exception {
 		// given
 		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
 		
@@ -767,8 +724,7 @@ public class FileImageSourceTest
 
 	// What we really want to check the file resource is released.
 	@Test
-	public void canRemoveSourceImage() throws IOException
-	{
+	public void canRemoveSourceImage() throws IOException {
 		// given
 		File inputFile = TestUtils.createTempFile(TMPDIR, "png");
 		TestUtils.copyFile(new File("src/test/resources/Thumbnailator/grid.png"), inputFile);

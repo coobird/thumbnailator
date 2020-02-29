@@ -10,8 +10,7 @@ import java.awt.Dimension;
  * @since	0.3.4
  *
  */
-public interface Size
-{
+public interface Size {
 	/**
 	 * Calculates the size of the object.
 	 * 

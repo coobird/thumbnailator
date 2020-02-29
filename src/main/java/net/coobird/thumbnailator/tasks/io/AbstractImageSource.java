@@ -8,8 +8,7 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * @author coobird
  *
  */
-public abstract class AbstractImageSource<T> implements ImageSource<T>
-{
+public abstract class AbstractImageSource<T> implements ImageSource<T> {
 	/**
 	 * The image format of the input image.
 	 */
@@ -45,21 +44,17 @@ return finishedReading(sourceImage);
 	 * @param returnValue	The return value of the {@link #read()} method.
 	 * @return				The return value of the {@link #read()} method.
 	 */
-	protected <V> V finishedReading(V returnValue)
-	{
+	protected <V> V finishedReading(V returnValue) {
 		hasReadInput = true;
 		return returnValue;
 	}
 	
-	public void setThumbnailParameter(ThumbnailParameter param)
-	{
+	public void setThumbnailParameter(ThumbnailParameter param) {
 		this.param = param;
 	}
 	
-	public String getInputFormatName()
-	{
-		if (!hasReadInput)
-		{
+	public String getInputFormatName() {
+		if (!hasReadInput) {
 			throw new IllegalStateException("Input has not been read yet.");
 		}
 		return inputFormatName;

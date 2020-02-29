@@ -6,11 +6,10 @@ import java.awt.Dimension;
 
 import org.junit.Test;
 
-public class FixedResizerFactoryTest
-{
+public class FixedResizerFactoryTest {
+
 	@Test
-	public void defaultResizer()
-	{
+	public void defaultResizer() {
 		// given
 		Resizer resizer = Resizers.BICUBIC;
 		ResizerFactory factory = new FixedResizerFactory(resizer);
@@ -23,8 +22,7 @@ public class FixedResizerFactoryTest
 	}
 	
 	@Test
-	public void resizerWhereSourceSmallerThanDestination()
-	{
+	public void resizerWhereSourceSmallerThanDestination() {
 		// given
 		Resizer resizer = Resizers.BICUBIC;
 		ResizerFactory factory = new FixedResizerFactory(resizer);
@@ -40,8 +38,7 @@ public class FixedResizerFactoryTest
 	}
 	
 	@Test
-	public void resizerWhereSourceLargerThanDestination()
-	{
+	public void resizerWhereSourceLargerThanDestination() {
 		// given
 		Resizer resizer = Resizers.BICUBIC;
 		ResizerFactory factory = new FixedResizerFactory(resizer);
@@ -57,8 +54,7 @@ public class FixedResizerFactoryTest
 	}
 	
 	@Test
-	public void resizerWhereSourceSameSizeAsDestination()
-	{
+	public void resizerWhereSourceSameSizeAsDestination() {
 		// given
 		Resizer resizer = Resizers.BICUBIC;
 		ResizerFactory factory = new FixedResizerFactory(resizer);
@@ -74,8 +70,7 @@ public class FixedResizerFactoryTest
 	}
 	
 	@Test
-	public void resizerWhereSourceHeightLargerThanDestination()
-	{
+	public void resizerWhereSourceHeightLargerThanDestination() {
 		// given
 		Resizer resizer = Resizers.BICUBIC;
 		ResizerFactory factory = new FixedResizerFactory(resizer);
@@ -91,8 +86,7 @@ public class FixedResizerFactoryTest
 	}
 	
 	@Test
-	public void resizerWhereSourceHeightSmallerThanDestination()
-	{
+	public void resizerWhereSourceHeightSmallerThanDestination() {
 		// given
 		Resizer resizer = Resizers.BICUBIC;
 		ResizerFactory factory = new FixedResizerFactory(resizer);
@@ -108,8 +102,7 @@ public class FixedResizerFactoryTest
 	}
 	
 	@Test
-	public void resizerWhereSourceWidthLargerThanDestination()
-	{
+	public void resizerWhereSourceWidthLargerThanDestination() {
 		// given
 		Resizer resizer = Resizers.BICUBIC;
 		ResizerFactory factory = new FixedResizerFactory(resizer);
@@ -125,8 +118,7 @@ public class FixedResizerFactoryTest
 	}
 	
 	@Test
-	public void resizerWhereSourceWidthSmallerThanDestination()
-	{
+	public void resizerWhereSourceWidthSmallerThanDestination() {
 		// given
 		Resizer resizer = Resizers.BICUBIC;
 		ResizerFactory factory = new FixedResizerFactory(resizer);

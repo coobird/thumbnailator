@@ -9,8 +9,7 @@ import java.awt.Dimension;
  * @since	0.3.4
  *
  */
-public class RelativeSize implements Size
-{
+public class RelativeSize implements Size {
 	/**
 	 * The scaling factor to use for the enclosed object.
 	 */
@@ -26,11 +25,9 @@ public class RelativeSize implements Size
 	 * 										the range of {@code 0.0d} and
 	 * 										{@code 1.0d}, inclusive.
 	 */
-	public RelativeSize(double scalingFactor)
-	{
+	public RelativeSize(double scalingFactor) {
 		super();
-		if (scalingFactor < 0.0d || scalingFactor > 1.0d)
-		{
+		if (scalingFactor < 0.0d || scalingFactor > 1.0d) {
 			throw new IllegalArgumentException(
 					"The scaling factor must be between 0.0d and 1.0d, inclusive."
 			);
@@ -38,10 +35,8 @@ public class RelativeSize implements Size
 		this.scalingFactor = scalingFactor;
 	}
 
-	public Dimension calculate(int width, int height)
-	{
-		if (width <= 0 || height <= 0)
-		{
+	public Dimension calculate(int width, int height) {
+		if (width <= 0 || height <= 0) {
 			throw new IllegalArgumentException(
 					"Width and height must be greater than 0."
 			);
@@ -57,8 +52,7 @@ public class RelativeSize implements Size
 	 * @return		{@code String} representation of this object.
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "RelativeSize [scalingFactor=" + scalingFactor + "]";
 	}
 }

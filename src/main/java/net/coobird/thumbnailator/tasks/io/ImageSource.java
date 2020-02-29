@@ -14,8 +14,7 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * @author coobird
  *
  */
-public interface ImageSource<T>
-{
+public interface ImageSource<T> {
 	/**
 	 * Retrieves the image from the source.
 	 * 

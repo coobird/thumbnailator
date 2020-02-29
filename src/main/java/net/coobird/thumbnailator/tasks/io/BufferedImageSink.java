@@ -10,8 +10,7 @@ import java.io.IOException;
  * @author coobird
  *
  */
-public class BufferedImageSink extends AbstractImageSink<BufferedImage>
-{
+public class BufferedImageSink extends AbstractImageSink<BufferedImage> {
 	/**
 	 * The {@link BufferedImage} which holds the thumbnail.
 	 */
@@ -22,8 +21,7 @@ public class BufferedImageSink extends AbstractImageSink<BufferedImage>
 	 */
 	private boolean written = false;
 	
-	public void write(BufferedImage img) throws IOException
-	{
+	public void write(BufferedImage img) throws IOException {
 		super.write(img);
 		
 		this.img = img;
@@ -37,18 +35,15 @@ public class BufferedImageSink extends AbstractImageSink<BufferedImage>
 	 * @throws IllegalStateException	If a thumbnail has not been stored to
 	 * 									this {@link BufferedImageSink} yet.
 	 */
-	public BufferedImage getSink()
-	{
-		if (!written)
-		{
+	public BufferedImage getSink() {
+		if (!written) {
 			throw new IllegalStateException("BufferedImageSink has not been written to yet.");
 		}
 		return img;
 	}
 
 	@Override
-	public void setOutputFormatName(String format)
-	{
+	public void setOutputFormatName(String format) {
 		// do nothing
 	}
 }

@@ -46,8 +46,7 @@ BufferedImage thumbnail = new ScaledThumbnailMaker()
  * @author coobird
  *
  */
-public final class ScaledThumbnailMaker extends ThumbnailMaker
-{
+public final class ScaledThumbnailMaker extends ThumbnailMaker {
 	private static final String PARAM_SCALE = "scale";
 	
 	/**
@@ -73,8 +72,7 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	 * before generating a thumbnail.
 	 * </p>
 	 */
-	public ScaledThumbnailMaker()
-	{
+	public ScaledThumbnailMaker() {
 		super();
 		ready.unset(PARAM_SCALE);
 	}
@@ -86,8 +84,7 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	 * @param factor			The scaling factor to apply when resizing an
 	 * 							image to create a thumbnail.
 	 */
-	public ScaledThumbnailMaker(double factor)
-	{
+	public ScaledThumbnailMaker(double factor) {
 		this();
 		scale(factor);
 	}
@@ -102,8 +99,7 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	 * 							resizing an image to create a thumbnail.
 	 * @since	0.3.10
 	 */
-	public ScaledThumbnailMaker(double widthFactor, double heightFactor)
-	{
+	public ScaledThumbnailMaker(double widthFactor, double heightFactor) {
 		this();
 		scale(widthFactor, heightFactor);
 	}
@@ -122,8 +118,7 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	 * @throws IllegalStateException	If the scaling factor has already
 	 * 									been previously set.
 	 */
-	public ScaledThumbnailMaker scale(double factor)
-	{
+	public ScaledThumbnailMaker scale(double factor) {
 		return scale(factor, factor);
 	}
 	
@@ -141,17 +136,14 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	 * 									been previously set.
 	 * @since	0.3.10
 	 */
-	public ScaledThumbnailMaker scale(double widthFactor, double heightFactor)
-	{
-		if (ready.isSet(PARAM_SCALE))
-		{
+	public ScaledThumbnailMaker scale(double widthFactor, double heightFactor) {
+		if (ready.isSet(PARAM_SCALE)) {
 			throw new IllegalStateException(
 					"The scaling factor has already been set."
 			);
 		}
 		
-		if (widthFactor <= 0 || heightFactor <= 0)
-		{
+		if (widthFactor <= 0 || heightFactor <= 0) {
 			throw new IllegalArgumentException(
 					"The scaling factor must be greater than zero."	
 			);
@@ -164,8 +156,7 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker
 	}
 	
 	@Override
-	public BufferedImage make(BufferedImage img)
-	{
+	public BufferedImage make(BufferedImage img) {
 		int width = (int)Math.round(img.getWidth() * widthFactor);
 		int height = (int)Math.round(img.getHeight() * heightFactor);
 		

@@ -6,11 +6,9 @@ import java.io.IOException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class BufferedImageSinkTest
-{
+public class BufferedImageSinkTest {
 	@Test
-	public void writeImage() throws IOException
-	{
+	public void writeImage() throws IOException {
 		// given
 		BufferedImage img =
 			new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
@@ -24,19 +22,15 @@ public class BufferedImageSinkTest
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void writeNull() throws IOException
-	{
+	public void writeNull() throws IOException {
 		// given
 		BufferedImage img = null;
 		
-		try
-		{
+		try {
 			// when
 			new BufferedImageSink().write(img);
 			fail();
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 			assertEquals("Cannot write a null image.", e.getMessage());
 			throw e;
@@ -44,18 +38,14 @@ public class BufferedImageSinkTest
 	}
 	
 	@Test(expected=IllegalStateException.class)
-	public void getSink_BeforeWrite() throws IOException
-	{
+	public void getSink_BeforeWrite() throws IOException {
 		// given
 		
-		try
-		{
+		try {
 			// when
 			new BufferedImageSink().getSink();
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 			assertEquals("BufferedImageSink has not been written to yet.", e.getMessage());
 			throw e;
@@ -63,8 +53,7 @@ public class BufferedImageSinkTest
 	}
 	
 	@Test
-	public void setOutputFormatName_DoesntAffectAnything() throws IOException
-	{
+	public void setOutputFormatName_DoesntAffectAnything() throws IOException {
 		// given
 		BufferedImageSink sink0 = new BufferedImageSink();
 		BufferedImageSink sink1 = new BufferedImageSink();

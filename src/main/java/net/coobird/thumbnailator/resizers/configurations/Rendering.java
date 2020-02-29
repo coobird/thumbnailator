@@ -13,8 +13,7 @@ import java.awt.RenderingHints.Key;
  * @author coobird
  *
  */
-public enum Rendering implements ResizerConfiguration
-{
+public enum Rendering implements ResizerConfiguration {
 	/**
 	 * A hint used to emphasize speed when rendering.
 	 */
@@ -39,18 +38,15 @@ public enum Rendering implements ResizerConfiguration
 	/**
 	 * @param value
 	 */
-	private Rendering(Object value)
-	{
+	private Rendering(Object value) {
 		this.value = value;
 	}
 
-	public Key getKey()
-	{
+	public Key getKey() {
 		return RenderingHints.KEY_ALPHA_INTERPOLATION;
 	}
 
-	public Object getValue()
-	{
+	public Object getValue() {
 		return value;
 	}
 }

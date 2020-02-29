@@ -15,8 +15,7 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * @author coobird
  *
  */
-public interface ImageSink<T>
-{
+public interface ImageSink<T> {
 	/**
 	 * Writes the resulting image to a destination.
 	 * 

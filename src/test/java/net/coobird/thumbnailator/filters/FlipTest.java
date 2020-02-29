@@ -58,8 +58,7 @@ public class FlipTest {
 	 * {@link Flip#HORIZONTAL}.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_UsingFlipHorizontal()
-	{
+	public void inputContentsAreNotAltered_UsingFlipHorizontal() {
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		BufferedImage copyImage = BufferedImages.copy(originalImage);
@@ -78,8 +77,7 @@ public class FlipTest {
 	 * {@link Flip#VERTICAL}.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_UsingFlipVertical()
-	{
+	public void inputContentsAreNotAltered_UsingFlipVertical() {
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		BufferedImage copyImage = BufferedImages.copy(originalImage);

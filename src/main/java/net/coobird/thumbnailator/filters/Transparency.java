@@ -13,8 +13,7 @@ import java.awt.image.BufferedImage;
  * @author coobird
  *
  */
-public class Transparency implements ImageFilter
-{
+public class Transparency implements ImageFilter {
 	/**
 	 * The alpha composite to use when drawing the transparent image.
 	 */
@@ -29,12 +28,10 @@ public class Transparency implements ImageFilter
 	 * @throws IllegalArgumentException	If the specified opacity is outside of
 	 * 									the range specified above.
 	 */
-	public Transparency(float alpha)
-	{
+	public Transparency(float alpha) {
 		super();
 		
-		if (alpha < 0.0f || alpha > 1.0f)
-		{
+		if (alpha < 0.0f || alpha > 1.0f) {
 			throw new IllegalArgumentException(
 					"The alpha must be between 0.0f and 1.0f, inclusive.");
 		}
@@ -54,13 +51,11 @@ public class Transparency implements ImageFilter
 	 * @throws IllegalArgumentException	If the specified opacity is outside of
 	 * 									the range specified above.
 	 */
-	public Transparency(double alpha)
-	{
+	public Transparency(double alpha) {
 		this((float)alpha);
 	}
 
-	public BufferedImage apply(BufferedImage img)
-	{
+	public BufferedImage apply(BufferedImage img) {
 		int width = img.getWidth();
 		int height = img.getHeight();
 		
@@ -81,8 +76,7 @@ public class Transparency implements ImageFilter
 	 * @return		The opacity in the range of {@code 0.0f} (transparent) to
 	 * 				{@code 1.0f} (opaque).
 	 */
-	public float getAlpha()
-	{
+	public float getAlpha() {
 		return composite.getAlpha();
 	}
 }

@@ -22,8 +22,7 @@ import net.coobird.thumbnailator.tasks.io.OutputStreamImageSink;
  * @author coobird
  *
  */
-public class StreamThumbnailTask extends ThumbnailTask<InputStream, OutputStream>
-{
+public class StreamThumbnailTask extends ThumbnailTask<InputStream, OutputStream> {
 	/**
 	 * The {@link SourceSinkThumbnailTask} used to perform the task.
 	 */
@@ -40,8 +39,7 @@ public class StreamThumbnailTask extends ThumbnailTask<InputStream, OutputStream
 	 * @param os		The {@link OutputStream} to send thumbnail data to.
 	 * @throws NullPointerException		If the parameter is {@code null}.
 	 */
-	public StreamThumbnailTask(ThumbnailParameter param, InputStream is, OutputStream os)
-	{
+	public StreamThumbnailTask(ThumbnailParameter param, InputStream is, OutputStream os) {
 		super(param);
 		this.task = new SourceSinkThumbnailTask<InputStream, OutputStream>(
 				param,
@@ -51,32 +49,27 @@ public class StreamThumbnailTask extends ThumbnailTask<InputStream, OutputStream
 	}
 
 	@Override
-	public BufferedImage read() throws IOException
-	{
+	public BufferedImage read() throws IOException {
 		return task.read();
 	}
 
 	@Override
-	public void write(BufferedImage img) throws IOException
-	{
+	public void write(BufferedImage img) throws IOException {
 		task.write(img);
 	}
 
 	@Override
-	public ThumbnailParameter getParam()
-	{
+	public ThumbnailParameter getParam() {
 		return task.getParam();
 	}
 	
 	@Override
-	public InputStream getSource()
-	{
+	public InputStream getSource() {
 		return task.getSource();
 	}
 
 	@Override
-	public OutputStream getDestination()
-	{
+	public OutputStream getDestination() {
 		return task.getDestination();
 	}
 }

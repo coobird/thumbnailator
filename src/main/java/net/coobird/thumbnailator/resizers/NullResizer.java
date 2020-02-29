@@ -16,14 +16,12 @@ import java.util.Map;
  * @since	0.4.0
  *
  */
-public class NullResizer extends AbstractResizer
-{
+public class NullResizer extends AbstractResizer {
 	/**
 	 * Instantiates the {@code NullResizer} which draws the source image at
 	 * the origin of the destination image.
 	 */
-	public NullResizer()
-	{
+	public NullResizer() {
 		this(
 				RenderingHints.VALUE_INTERPOLATION_BILINEAR,
 				Collections.<Key, Object>emptyMap()
@@ -37,13 +35,11 @@ public class NullResizer extends AbstractResizer
 	 * @param interpolationValue		Not used.
 	 * @param hints						Not used.
 	 */
-	private NullResizer(Object interpolationValue, Map<Key, Object> hints)
-	{
+	private NullResizer(Object interpolationValue, Map<Key, Object> hints) {
 		super(interpolationValue, hints);
 	}
 
-	public void resize(BufferedImage srcImage, BufferedImage destImage)
-	{
+	public void resize(BufferedImage srcImage, BufferedImage destImage) {
 		super.performChecks(srcImage, destImage);
 		
 		Graphics g = destImage.getGraphics();

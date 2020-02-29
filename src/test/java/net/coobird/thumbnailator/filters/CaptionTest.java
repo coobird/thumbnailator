@@ -20,14 +20,13 @@ import org.junit.Test;
  * @author coobird
  *
  */
-public class CaptionTest
-{
+public class CaptionTest {
+
 	/**
 	 * Checks that the input image contents are not altered.
 	 */
 	@Test
-	public void inputContentsAreNotAltered()
-	{
+	public void inputContentsAreNotAltered() {
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		BufferedImage copyImage = BufferedImages.copy(originalImage);

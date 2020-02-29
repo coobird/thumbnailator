@@ -6,11 +6,10 @@ import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class RenameTest
-{
+public class RenameTest {
+
 	@Test
-	public void renameNoChange_NameGiven_ParamNull()
-	{
+	public void renameNoChange_NameGiven_ParamNull() {
 		// given
 		String name = "filename";
 		ThumbnailParameter param = null;
@@ -23,8 +22,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameNoChange_NameGiven_ParamGiven()
-	{
+	public void renameNoChange_NameGiven_ParamGiven() {
 		// given
 		String name = "filename";
 		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
@@ -37,8 +35,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renamePrefixDotThumbnail_NameGiven_ParamNull()
-	{
+	public void renamePrefixDotThumbnail_NameGiven_ParamNull() {
 		// given
 		String name = "filename";
 		ThumbnailParameter param = null;
@@ -51,8 +48,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renamePrefixDotThumbnail_NameGiven_ParamGiven()
-	{
+	public void renamePrefixDotThumbnail_NameGiven_ParamGiven() {
 		// given
 		String name = "filename";
 		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
@@ -65,8 +61,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renamePrefixHyphenThumbnail_NameGiven_ParamNull()
-	{
+	public void renamePrefixHyphenThumbnail_NameGiven_ParamNull() {
 		// given
 		String name = "filename";
 		ThumbnailParameter param = null;
@@ -79,8 +74,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renamePrefixHyphenThumbnail_NameGiven_ParamGiven()
-	{
+	public void renamePrefixHyphenThumbnail_NameGiven_ParamGiven() {
 		// given
 		String name = "filename";
 		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
@@ -93,8 +87,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameSuffixDotThumbnail_NameGiven_ParamNull()
-	{
+	public void renameSuffixDotThumbnail_NameGiven_ParamNull() {
 		// given
 		String name = "filename";
 		ThumbnailParameter param = null;
@@ -107,8 +100,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameSuffixDotThumbnail_NameGiven_ParamGiven()
-	{
+	public void renameSuffixDotThumbnail_NameGiven_ParamGiven() {
 		// given
 		String name = "filename";
 		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
@@ -121,8 +113,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameSuffixHyphenThumbnail_NameGiven_ParamNull()
-	{
+	public void renameSuffixHyphenThumbnail_NameGiven_ParamNull() {
 		// given
 		String name = "filename";
 		ThumbnailParameter param = null;
@@ -135,8 +126,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameSuffixHyphenThumbnail_NameGiven_ParamGiven()
-	{
+	public void renameSuffixHyphenThumbnail_NameGiven_ParamGiven() {
 		// given
 		String name = "filename";
 		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
@@ -149,8 +139,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameNoChange_NameGiven_ParamNull_WithExtension()
-	{
+	public void renameNoChange_NameGiven_ParamNull_WithExtension() {
 		// given
 		String name = "filename.jpg";
 		ThumbnailParameter param = null;
@@ -163,8 +152,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameNoChange_NameGiven_ParamGiven_WithExtension()
-	{
+	public void renameNoChange_NameGiven_ParamGiven_WithExtension() {
 		// given
 		String name = "filename.jpg";
 		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
@@ -177,8 +165,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renamePrefixDotThumbnail_NameGiven_ParamNull_WithExtension()
-	{
+	public void renamePrefixDotThumbnail_NameGiven_ParamNull_WithExtension() {
 		// given
 		String name = "filename.jpg";
 		ThumbnailParameter param = null;
@@ -191,8 +178,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renamePrefixDotThumbnail_NameGiven_ParamGiven_WithExtension()
-	{
+	public void renamePrefixDotThumbnail_NameGiven_ParamGiven_WithExtension() {
 		// given
 		String name = "filename.jpg";
 		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
@@ -205,8 +191,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renamePrefixHyphenThumbnail_NameGiven_ParamNull_WithExtension()
-	{
+	public void renamePrefixHyphenThumbnail_NameGiven_ParamNull_WithExtension() {
 		// given
 		String name = "filename.jpg";
 		ThumbnailParameter param = null;
@@ -219,8 +204,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renamePrefixHyphenThumbnail_NameGiven_ParamGiven_WithExtension()
-	{
+	public void renamePrefixHyphenThumbnail_NameGiven_ParamGiven_WithExtension() {
 		// given
 		String name = "filename.jpg";
 		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
@@ -233,8 +217,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameSuffixDotThumbnail_NameGiven_ParamNull_WithExtension()
-	{
+	public void renameSuffixDotThumbnail_NameGiven_ParamNull_WithExtension() {
 		// given
 		String name = "filename.jpg";
 		ThumbnailParameter param = null;
@@ -247,8 +230,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameSuffixDotThumbnail_NameGiven_ParamGiven_WithExtension()
-	{
+	public void renameSuffixDotThumbnail_NameGiven_ParamGiven_WithExtension() {
 		// given
 		String name = "filename.jpg";
 		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
@@ -261,8 +243,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameSuffixHyphenThumbnail_NameGiven_ParamNull_WithExtension()
-	{
+	public void renameSuffixHyphenThumbnail_NameGiven_ParamNull_WithExtension() {
 		// given
 		String name = "filename.jpg";
 		ThumbnailParameter param = null;
@@ -275,8 +256,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameSuffixHyphenThumbnail_NameGiven_ParamGiven_WithExtension()
-	{
+	public void renameSuffixHyphenThumbnail_NameGiven_ParamGiven_WithExtension() {
 		// given
 		String name = "filename.jpg";
 		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
@@ -289,8 +269,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameNoChange_NameGiven_ParamNull_WithMultipleDots()
-	{
+	public void renameNoChange_NameGiven_ParamNull_WithMultipleDots() {
 		// given
 		String name = "filename.middle.jpg";
 		ThumbnailParameter param = null;
@@ -303,8 +282,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameNoChange_NameGiven_ParamGiven_WithMultipleDots()
-	{
+	public void renameNoChange_NameGiven_ParamGiven_WithMultipleDots() {
 		// given
 		String name = "filename.middle.jpg";
 		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
@@ -317,8 +295,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renamePrefixDotThumbnail_NameGiven_ParamNull_WithMultipleDots()
-	{
+	public void renamePrefixDotThumbnail_NameGiven_ParamNull_WithMultipleDots() {
 		// given
 		String name = "filename.middle.jpg";
 		ThumbnailParameter param = null;
@@ -331,8 +308,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renamePrefixDotThumbnail_NameGiven_ParamGiven_WithMultipleDots()
-	{
+	public void renamePrefixDotThumbnail_NameGiven_ParamGiven_WithMultipleDots() {
 		// given
 		String name = "filename.middle.jpg";
 		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
@@ -345,8 +321,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renamePrefixHyphenThumbnail_NameGiven_ParamNull_WithMultipleDots()
-	{
+	public void renamePrefixHyphenThumbnail_NameGiven_ParamNull_WithMultipleDots() {
 		// given
 		String name = "filename.middle.jpg";
 		ThumbnailParameter param = null;
@@ -359,8 +334,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renamePrefixHyphenThumbnail_NameGiven_ParamGiven_WithMultipleDots()
-	{
+	public void renamePrefixHyphenThumbnail_NameGiven_ParamGiven_WithMultipleDots() {
 		// given
 		String name = "filename.middle.jpg";
 		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
@@ -373,8 +347,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameSuffixDotThumbnail_NameGiven_ParamNull_WithMultipleDots()
-	{
+	public void renameSuffixDotThumbnail_NameGiven_ParamNull_WithMultipleDots() {
 		// given
 		String name = "filename.middle.jpg";
 		ThumbnailParameter param = null;
@@ -387,8 +360,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameSuffixDotThumbnail_NameGiven_ParamGiven_WithMultipleDots()
-	{
+	public void renameSuffixDotThumbnail_NameGiven_ParamGiven_WithMultipleDots() {
 		// given
 		String name = "filename.middle.jpg";
 		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();
@@ -401,8 +373,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameSuffixHyphenThumbnail_NameGiven_ParamNull_WithMultipleDots()
-	{
+	public void renameSuffixHyphenThumbnail_NameGiven_ParamNull_WithMultipleDots() {
 		// given
 		String name = "filename.middle.jpg";
 		ThumbnailParameter param = null;
@@ -415,8 +386,7 @@ public class RenameTest
 	}
 	
 	@Test
-	public void renameSuffixHyphenThumbnail_NameGiven_ParamGiven_WithMultipleDots()
-	{
+	public void renameSuffixHyphenThumbnail_NameGiven_ParamGiven_WithMultipleDots() {
 		// given
 		String name = "filename.middle.jpg";
 		ThumbnailParameter param = new ThumbnailParameterBuilder().scale(1.0).build();

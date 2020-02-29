@@ -23,23 +23,18 @@ import net.coobird.thumbnailator.test.BufferedImageComparer;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class StreamThumbnailTaskTest
-{
+public class StreamThumbnailTaskTest {
 	@Test(expected=NullPointerException.class)
-	public void nullParameter() throws IOException
-	{
+	public void nullParameter() throws IOException {
 		// given
 		InputStream is = mock(InputStream.class);
 		OutputStream os = mock(OutputStream.class);
 		
-		try
-		{
+		try {
 			// when
 			new StreamThumbnailTask(null, is, os);
 			fail();
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 			assertEquals("The parameter is null.", e.getMessage());
 			verifyZeroInteractions(is);
@@ -49,8 +44,7 @@ public class StreamThumbnailTaskTest
 	}
 
 	@Test
-	public void testRead_CorrectUsage() throws IOException
-	{
+	public void testRead_CorrectUsage() throws IOException {
 		ThumbnailParameter param = new ThumbnailParameter(
 				new Dimension(50, 50),
 				null,
@@ -82,8 +76,7 @@ public class StreamThumbnailTaskTest
 	}
 	
 	@Test
-	public void testWrite_CorrectUsage() throws IOException
-	{
+	public void testWrite_CorrectUsage() throws IOException {
 		ThumbnailParameter param = new ThumbnailParameter(
 				new Dimension(50, 50),
 				null,
@@ -118,14 +111,12 @@ public class StreamThumbnailTaskTest
 	}
 
 	@Ignore
-	public void testStreamThumbnailTask()
-	{
+	public void testStreamThumbnailTask() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testGetParam()
-	{
+	public void testGetParam() {
 		ThumbnailParameter param = new ThumbnailParameter(
 				new Dimension(50, 50),
 				null,

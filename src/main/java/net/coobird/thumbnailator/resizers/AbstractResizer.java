@@ -14,8 +14,7 @@ import java.util.Map;
  * @author coobird
  *
  */
-public abstract class AbstractResizer implements Resizer
-{
+public abstract class AbstractResizer implements Resizer {
 	/**
 	 * Rendering hints to use when resizing an image.
 	 */
@@ -39,16 +38,14 @@ public abstract class AbstractResizer implements Resizer
 	protected AbstractResizer(
 			Object interpolationValue,
 			Map<RenderingHints.Key, Object> hints
-	)
-	{
+	) {
 		RENDERING_HINTS = new HashMap<RenderingHints.Key, Object>();
 		RENDERING_HINTS.put(KEY_INTERPOLATION, interpolationValue);
 		
 		if (
 				hints.containsKey(KEY_INTERPOLATION)
 				&& !interpolationValue.equals(hints.get(KEY_INTERPOLATION))
-		)
-		{
+		) {
 			throw new IllegalArgumentException("Cannot change the " +
 					"RenderingHints.KEY_INTERPOLATION value.");
 		}
@@ -74,8 +71,7 @@ public abstract class AbstractResizer implements Resizer
 	 * @throws NullPointerException		When the source and/or the destination
 	 * 									image is {@code null}.
 	 */
-	public void resize(BufferedImage srcImage, BufferedImage destImage)
-	{
+	public void resize(BufferedImage srcImage, BufferedImage destImage) {
 		performChecks(srcImage, destImage);
 		
 		int width = destImage.getWidth();
@@ -92,8 +88,7 @@ public abstract class AbstractResizer implements Resizer
 	 * 				object should be generated for. 
 	 * @return	{@link Graphics2D} object for the given {@link BufferedImage}.
 	 */
-	protected Graphics2D createGraphics(BufferedImage img)
-	{
+	protected Graphics2D createGraphics(BufferedImage img) {
 		Graphics2D g = img.createGraphics();
 		g.setRenderingHints(RENDERING_HINTS);
 		
@@ -107,10 +102,8 @@ public abstract class AbstractResizer implements Resizer
 	 * @param srcImage		The source image.
 	 * @param destImage		The destination image.
 	 */
-	protected void performChecks(BufferedImage srcImage, BufferedImage destImage)
-	{
-		if (srcImage == null || destImage == null)
-		{
+	protected void performChecks(BufferedImage srcImage, BufferedImage destImage) {
+		if (srcImage == null || destImage == null) {
 			throw new NullPointerException(
 					"The source and/or destination image is null."
 			);
@@ -126,8 +119,7 @@ public abstract class AbstractResizer implements Resizer
 	 * @see RenderingHints
 	 * @return		Rendering hints used when resizing the image.
 	 */
-	public Map<RenderingHints.Key, Object> getRenderingHints()
-	{
+	public Map<RenderingHints.Key, Object> getRenderingHints() {
 		return UNMODIFIABLE_RENDERING_HINTS;
 	}
 }

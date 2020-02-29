@@ -23,8 +23,7 @@ import net.coobird.thumbnailator.geometry.Position;
  * @since 0.3.2
  *
  */
-public class Canvas implements ImageFilter
-{
+public class Canvas implements ImageFilter {
 	/**
 	 * The width of the enclosing image.
 	 */
@@ -64,8 +63,7 @@ public class Canvas implements ImageFilter
 	 * @param height		The height of the filtered image.
 	 * @param position		The position to place the enclosed image.
 	 */
-	public Canvas(int width, int height, Position position)
-	{
+	public Canvas(int width, int height, Position position) {
 		this(width, height, position, true, null);
 	}
 	
@@ -83,8 +81,7 @@ public class Canvas implements ImageFilter
 	 * 						enclosed image has dimensions which are larger than
 	 * 						the specified {@code width} and {@code height}.
 	 */
-	public Canvas(int width, int height, Position position, boolean crop)
-	{
+	public Canvas(int width, int height, Position position, boolean crop) {
 		this(width, height, position, crop, null);
 	}
 	
@@ -101,8 +98,7 @@ public class Canvas implements ImageFilter
 	 * 						image which is transparent will be filled with
 	 * 						the specified color as well.
 	 */
-	public Canvas(int width, int height, Position position, Color fillColor)
-	{
+	public Canvas(int width, int height, Position position, Color fillColor) {
 		this(width, height, position, true, fillColor);
 	}
 	
@@ -120,8 +116,7 @@ public class Canvas implements ImageFilter
 	 * 						image which is transparent will be filled with
 	 * 						the specified color as well.
 	 */
-	public Canvas(int width, int height, Position position, boolean crop, Color fillColor)
-	{
+	public Canvas(int width, int height, Position position, boolean crop, Color fillColor) {
 		super();
 		this.width = width;
 		this.height = height;
@@ -130,8 +125,7 @@ public class Canvas implements ImageFilter
 		this.fillColor = fillColor;
 	}
 
-	public BufferedImage apply(BufferedImage img)
-	{
+	public BufferedImage apply(BufferedImage img) {
 		int widthToUse = width;
 		int heightToUse = height;
 		
@@ -141,12 +135,10 @@ public class Canvas implements ImageFilter
 		 * then the enclosing image will have its dimension enlarged.
 		 * 
 		 */
-		if (!crop && img.getWidth() > width)
-		{
+		if (!crop && img.getWidth() > width) {
 			widthToUse = img.getWidth();
 		}
-		if (!crop && img.getHeight() > height)
-		{
+		if (!crop && img.getHeight() > height) {
 			heightToUse = img.getHeight();
 		}
 		
@@ -160,17 +152,15 @@ public class Canvas implements ImageFilter
 		
 		Graphics g = finalImage.getGraphics();
 		
-		if (fillColor == null && !img.getColorModel().hasAlpha())
-		{
+		if (fillColor == null && !img.getColorModel().hasAlpha()) {
 			/*
 			 * Fulfills the specification to use a black fill color for images
 			 * w/o alpha, if the fill color isn't specified.
 			 */
 			g.setColor(Color.black);
 			g.fillRect(0, 0, width, height);
-		}
-		else if (fillColor != null)
-		{
+
+		} else if (fillColor != null) {
 			g.setColor(fillColor);
 			g.fillRect(0, 0, widthToUse, heightToUse);
 		}

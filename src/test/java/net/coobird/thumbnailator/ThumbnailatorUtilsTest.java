@@ -13,11 +13,10 @@ import org.junit.Test;
  * @author coobird
  *
  */
-public class ThumbnailatorUtilsTest
-{
+public class ThumbnailatorUtilsTest {
+
 	@Test
-	public void isSupportedOutputFormat_SupportedFormat()
-	{
+	public void isSupportedOutputFormat_SupportedFormat() {
 		// given a supported format
 		String format = "JPEG";
 		
@@ -29,8 +28,7 @@ public class ThumbnailatorUtilsTest
 	}
 	
 	@Test
-	public void isSupportedOutputFormat_UnsupportedFormat()
-	{
+	public void isSupportedOutputFormat_UnsupportedFormat() {
 		// given an unsupported format
 		String format = "foobar";
 		
@@ -42,8 +40,7 @@ public class ThumbnailatorUtilsTest
 	}
 	
 	@Test
-	public void isSupportedOutputFormat_OriginalFormat()
-	{
+	public void isSupportedOutputFormat_OriginalFormat() {
 		// given an unsupported format
 		String format = ThumbnailParameter.ORIGINAL_FORMAT;
 		
@@ -55,8 +52,7 @@ public class ThumbnailatorUtilsTest
 	}
 
 	@Test
-	public void isSupportedOutputFormatType_SupportedFormat_SupportedType()
-	{
+	public void isSupportedOutputFormatType_SupportedFormat_SupportedType() {
 		// given a supported format, and supported type
 		String format = "JPEG";
 		String type = "JPEG";
@@ -70,8 +66,7 @@ public class ThumbnailatorUtilsTest
 	}
 	
 	@Test
-	public void isSupportedOutputFormatType_SupportedFormat_UnsupportedType()
-	{
+	public void isSupportedOutputFormatType_SupportedFormat_UnsupportedType() {
 		// given a supported format, and unsupported type
 		String format = "JPEG";
 		String type = "foobar";
@@ -85,8 +80,7 @@ public class ThumbnailatorUtilsTest
 	}
 	
 	@Test
-	public void isSupportedOutputFormatType_SupportedFormat_DefaultType()
-	{
+	public void isSupportedOutputFormatType_SupportedFormat_DefaultType() {
 		// given a supported format, and unsupported type
 		String format = "JPEG";
 		String type = ThumbnailParameter.DEFAULT_FORMAT_TYPE;
@@ -100,8 +94,7 @@ public class ThumbnailatorUtilsTest
 	}
 	
 	@Test
-	public void isSupportedOutputFormatType_UnsupportedFormat_SomeType()
-	{
+	public void isSupportedOutputFormatType_UnsupportedFormat_SomeType() {
 		// given an unsupported format, and some type
 		String format = "foobar";
 		String type = "foobar";
@@ -115,8 +108,7 @@ public class ThumbnailatorUtilsTest
 	}
 	
 	@Test
-	public void isSupportedOutputFormatType_UnsupportedFormat_DefaultType()
-	{
+	public void isSupportedOutputFormatType_UnsupportedFormat_DefaultType() {
 		// given an unsupported format, and default type
 		String format = "foobar";
 		String type = ThumbnailParameter.DEFAULT_FORMAT_TYPE;
@@ -130,8 +122,7 @@ public class ThumbnailatorUtilsTest
 	}
 	
 	@Test
-	public void isSupportedOutputFormatType_OriginalFormat_SomeType()
-	{
+	public void isSupportedOutputFormatType_OriginalFormat_SomeType() {
 		// given a the original format, and some type
 		String format = ThumbnailParameter.ORIGINAL_FORMAT;
 		String type = "foobar";
@@ -145,8 +136,7 @@ public class ThumbnailatorUtilsTest
 	}
 	
 	@Test
-	public void isSupportedOutputFormatType_OriginalFormat_DefaultType()
-	{
+	public void isSupportedOutputFormatType_OriginalFormat_DefaultType() {
 		// given a original format, and default type
 		String format = ThumbnailParameter.ORIGINAL_FORMAT;
 		String type = ThumbnailParameter.DEFAULT_FORMAT_TYPE;

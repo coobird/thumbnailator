@@ -55,8 +55,7 @@ import net.coobird.thumbnailator.resizers.ResizerFactory;
  * @author coobird
  *
  */
-public final class ThumbnailParameterBuilder
-{
+public final class ThumbnailParameterBuilder {
 	private static final int UNINITIALIZED = -1;
 	
 	private int width = UNINITIALIZED;
@@ -77,9 +76,7 @@ public final class ThumbnailParameterBuilder
 	/**
 	 * Creates an instance of a {@link ThumbnailParameterBuilder}.
 	 */
-	public ThumbnailParameterBuilder()
-	{
-	}
+	public ThumbnailParameterBuilder() {}
 	
 	/**
 	 * Sets the image type fo the thumbnail.
@@ -87,8 +84,7 @@ public final class ThumbnailParameterBuilder
 	 * @param type			The image type of the thumbnail.
 	 * @return				A reference to this object.
 	 */
-	public ThumbnailParameterBuilder imageType(int type)
-	{
+	public ThumbnailParameterBuilder imageType(int type) {
 		imageType = type;
 		return this;
 	}
@@ -99,8 +95,7 @@ public final class ThumbnailParameterBuilder
 	 * @param size		The dimensions of the thumbnail.
 	 * @return			A reference to this object.
 	 */
-	public ThumbnailParameterBuilder size(Dimension size)
-	{
+	public ThumbnailParameterBuilder size(Dimension size) {
 		size(size.width, size.height);
 		return this;
 	}
@@ -113,14 +108,11 @@ public final class ThumbnailParameterBuilder
 	 * @return			A reference to this object.
 	 * @throws IllegalArgumentException	If the widht or height is less than 0.
 	 */
-	public ThumbnailParameterBuilder size(int width, int height)
-	{
-		if (width < 0)
-		{
+	public ThumbnailParameterBuilder size(int width, int height) {
+		if (width < 0) {
 			throw new IllegalArgumentException("Width must be greater than 0.");
 		}
-		if (height < 0)
-		{
+		if (height < 0) {
 			throw new IllegalArgumentException("Height must be greater than 0.");
 		}
 		
@@ -138,8 +130,7 @@ public final class ThumbnailParameterBuilder
 	 * 										rational number, or if it is less
 	 * 										than {@code 0.0}.
 	 */
-	public ThumbnailParameterBuilder scale(double scalingFactor)
-	{
+	public ThumbnailParameterBuilder scale(double scalingFactor) {
 		return scale(scalingFactor, scalingFactor);
 	}
 	
@@ -156,18 +147,14 @@ public final class ThumbnailParameterBuilder
 	 * 										than {@code 0.0}.
 	 * @since	0.3.10
 	 */
-	public ThumbnailParameterBuilder scale(double widthScalingFactor, double heightScalingFactor)
-	{
-		if (widthScalingFactor <= 0.0 || heightScalingFactor <= 0.0)
-		{
+	public ThumbnailParameterBuilder scale(double widthScalingFactor, double heightScalingFactor) {
+		if (widthScalingFactor <= 0.0 || heightScalingFactor <= 0.0) {
 			throw new IllegalArgumentException("Scaling factor is less than or equal to 0.");
-		}
-		else if (Double.isNaN(widthScalingFactor) || Double.isInfinite(widthScalingFactor))
-		{
+
+		} else if (Double.isNaN(widthScalingFactor) || Double.isInfinite(widthScalingFactor)) {
 			throw new IllegalArgumentException("Scaling factor must be a rational number.");
-		}
-		else if (Double.isNaN(heightScalingFactor) || Double.isInfinite(heightScalingFactor))
-		{
+
+		} else if (Double.isNaN(heightScalingFactor) || Double.isInfinite(heightScalingFactor)) {
 			throw new IllegalArgumentException("Scaling factor must be a rational number.");
 		}
 		
@@ -184,8 +171,7 @@ public final class ThumbnailParameterBuilder
 	 * @return			A reference to this object.
 	 * @since	0.3.4
 	 */
-	public ThumbnailParameterBuilder region(Region sourceRegion)
-	{
+	public ThumbnailParameterBuilder region(Region sourceRegion) {
 		this.sourceRegion = sourceRegion;
 		return this;
 	}
@@ -199,8 +185,7 @@ public final class ThumbnailParameterBuilder
 	 * 					otherwise.
 	 * @return			A reference to this object.
 	 */
-	public ThumbnailParameterBuilder keepAspectRatio(boolean keep)
-	{
+	public ThumbnailParameterBuilder keepAspectRatio(boolean keep) {
 		this.keepAspectRatio = keep;
 		return this;
 	}
@@ -218,8 +203,7 @@ public final class ThumbnailParameterBuilder
 	 * @param quality		The compression quality setting of the thumbnail.
 	 * @return				A reference to this object.
 	 */
-	public ThumbnailParameterBuilder quality(float quality)
-	{
+	public ThumbnailParameterBuilder quality(float quality) {
 		this.thumbnailQuality = quality;
 		return this;
 	}
@@ -230,8 +214,7 @@ public final class ThumbnailParameterBuilder
 	 * @param format		The output format of the thumbnail.
 	 * @return				A reference to this object.
 	 */
-	public ThumbnailParameterBuilder format(String format)
-	{
+	public ThumbnailParameterBuilder format(String format) {
 		this.thumbnailFormat = format;
 		return this;
 	}
@@ -242,8 +225,7 @@ public final class ThumbnailParameterBuilder
 	 * @param formatType	The output format type of the thumbnail.
 	 * @return				A reference to this object.
 	 */
-	public ThumbnailParameterBuilder formatType(String formatType)
-	{
+	public ThumbnailParameterBuilder formatType(String formatType) {
 		this.thumbnailFormatType = formatType;
 		return this;
 	}
@@ -256,10 +238,8 @@ public final class ThumbnailParameterBuilder
 	 * @param filters		The output format type of the thumbnail.
 	 * @return				A reference to this object.
 	 */
-	public ThumbnailParameterBuilder filters(List<ImageFilter> filters)
-	{
-		if (filters == null)
-		{
+	public ThumbnailParameterBuilder filters(List<ImageFilter> filters) {
+		if (filters == null) {
 			throw new NullPointerException("Filters is null.");
 		}
 		
@@ -279,10 +259,8 @@ public final class ThumbnailParameterBuilder
 	 * 						thumbnail.
 	 * @return				A reference to this object.
 	 */
-	public ThumbnailParameterBuilder resizer(Resizer resizer)
-	{
-		if (resizer == null)
-		{
+	public ThumbnailParameterBuilder resizer(Resizer resizer) {
+		if (resizer == null) {
 			throw new NullPointerException("Resizer is null.");
 		}
 		
@@ -304,10 +282,8 @@ public final class ThumbnailParameterBuilder
 	 * @return					A reference to this object.
 	 * @since	0.4.0
 	 */
-	public ThumbnailParameterBuilder resizerFactory(ResizerFactory resizerFactory)
-	{
-		if (resizerFactory == null)
-		{
+	public ThumbnailParameterBuilder resizerFactory(ResizerFactory resizerFactory) {
+		if (resizerFactory == null) {
 			throw new NullPointerException("Resizer is null.");
 		}
 		
@@ -325,8 +301,7 @@ public final class ThumbnailParameterBuilder
 	 * @return			A reference to this object.
 	 * @since	0.4.0
 	 */
-	public ThumbnailParameterBuilder fitWithinDimensions(boolean fit)
-	{
+	public ThumbnailParameterBuilder fitWithinDimensions(boolean fit) {
 		this.fitWithinDimensions = fit;
 		return this;
 	}
@@ -341,8 +316,7 @@ public final class ThumbnailParameterBuilder
 	 * @return			A reference to this object.
 	 * @since	0.4.3
 	 */
-	public ThumbnailParameterBuilder useExifOrientation(boolean use)
-	{
+	public ThumbnailParameterBuilder useExifOrientation(boolean use) {
 		this.useExifOrientation = use;
 		return this;
 	}
@@ -359,10 +333,8 @@ public final class ThumbnailParameterBuilder
 	 * @throws IllegalStateException	If neither the size nor the scaling
 	 * 									factor has been set.
 	 */
-	public ThumbnailParameter build()
-	{
-		if (!Double.isNaN(widthScalingFactor))
-		{
+	public ThumbnailParameter build() {
+		if (!Double.isNaN(widthScalingFactor)) {
 			// If scaling factor has been set.
 			return new ThumbnailParameter(
 					widthScalingFactor,
@@ -378,10 +350,8 @@ public final class ThumbnailParameterBuilder
 					fitWithinDimensions,
 					useExifOrientation
 			);
-			
-		}
-		else if (width != UNINITIALIZED && height != UNINITIALIZED)
-		{
+
+		} else if (width != UNINITIALIZED && height != UNINITIALIZED) {
 			return new ThumbnailParameter(
 					new Dimension(width, height),
 					sourceRegion,
@@ -395,9 +365,7 @@ public final class ThumbnailParameterBuilder
 					fitWithinDimensions,
 					useExifOrientation
 			);
-		}
-		else
-		{
+		} else {
 			throw new IllegalStateException(
 					"The size nor the scaling factor has been set."
 			);

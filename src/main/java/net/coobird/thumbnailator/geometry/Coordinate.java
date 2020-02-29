@@ -9,8 +9,7 @@ import java.awt.Point;
  * @author coobird
  *
  */
-public final class Coordinate implements Position
-{
+public final class Coordinate implements Position {
 	/**
 	 * The horizontal position of the image to be enclosed.
 	 */
@@ -30,16 +29,15 @@ public final class Coordinate implements Position
 	 * @param y			The vertical component of the top-left corner of the
 	 * 					image to be enclosed.
 	 */
-	public Coordinate(int x, int y)
-	{
+	public Coordinate(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 
 	public Point calculate(int enclosingWidth, int enclosingHeight, int width,
 			int height, int insetLeft, int insetRight, int insetTop,
-			int insetBottom)
-	{
+			int insetBottom) {
+
 		int x = this.x + insetLeft;
 		int y = this.y + insetTop;
 		

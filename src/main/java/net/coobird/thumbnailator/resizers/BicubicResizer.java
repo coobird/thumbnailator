@@ -11,13 +11,11 @@ import java.util.Map;
  * @author coobird
  *
  */
-public class BicubicResizer extends AbstractResizer
-{
+public class BicubicResizer extends AbstractResizer {
 	/**
 	 * Instantiates a {@link BicubicResizer} with default rendering hints.
 	 */
-	public BicubicResizer()
-	{
+	public BicubicResizer() {
 		this(Collections.<RenderingHints.Key, Object>emptyMap());
 	}
 	
@@ -26,8 +24,7 @@ public class BicubicResizer extends AbstractResizer
 	 * 
 	 * @param hints		Additional rendering hints to apply.
 	 */
-	public BicubicResizer(Map<RenderingHints.Key, Object> hints)
-	{
+	public BicubicResizer(Map<RenderingHints.Key, Object> hints) {
 		super(RenderingHints.VALUE_INTERPOLATION_BICUBIC, hints);
 	}
 	
@@ -48,8 +45,7 @@ public class BicubicResizer extends AbstractResizer
 	 */
 	@Override
 	public void resize(BufferedImage srcImage, BufferedImage destImage)
-			throws NullPointerException
-	{
+			throws NullPointerException {
 		super.resize(srcImage, destImage);
 	}
 }

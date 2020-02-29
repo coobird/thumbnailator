@@ -29,8 +29,7 @@ import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
  * @author coobird
  *
  */
-public class FileImageSink implements ImageSink<File>
-{
+public class FileImageSink implements ImageSink<File> {
 	/**
 	 * The file to which the thumbnail is written to.
 	 * <p>
@@ -60,10 +59,8 @@ public class FileImageSink implements ImageSink<File>
 	 * implementation of the {@link AbstractImageSink} without having to
 	 * instantiate a {@link OutputStreamImageSink} object before needed.
 	 */
-	private static class UninitializedImageSink extends AbstractImageSink<Void>
-	{
-		public Void getSink()
-		{
+	private static class UninitializedImageSink extends AbstractImageSink<Void> {
+		public Void getSink() {
 			throw new IllegalStateException("This should not happen.");
 		}
 	}
@@ -83,8 +80,7 @@ public class FileImageSink implements ImageSink<File>
 	 * @param destinationFile		The destination file.
 	 * @throws NullPointerException	If the specified file is {@code null}.
 	 */
-	public FileImageSink(File destinationFile)
-	{
+	public FileImageSink(File destinationFile) {
 		this(destinationFile, true);
 	}
 	
@@ -103,12 +99,10 @@ public class FileImageSink implements ImageSink<File>
 	 * 								it already exists.
 	 * @throws NullPointerException	If the specified file is {@code null}.
 	 */
-	public FileImageSink(File destinationFile, boolean allowOverwrite)
-	{
+	public FileImageSink(File destinationFile, boolean allowOverwrite) {
 		super();
 		
-		if (destinationFile == null)
-		{
+		if (destinationFile == null) {
 			throw new NullPointerException("File cannot be null.");
 		}
 		
@@ -132,8 +126,7 @@ public class FileImageSink implements ImageSink<File>
 	 * @param destinationFilePath	The destination file path.
 	 * @throws NullPointerException	If the specified file path is {@code null}.
 	 */
-	public FileImageSink(String destinationFilePath)
-	{
+	public FileImageSink(String destinationFilePath) {
 		this(destinationFilePath, true);
 	}
 	
@@ -152,12 +145,10 @@ public class FileImageSink implements ImageSink<File>
 	 * 								it already exists.
 	 * @throws NullPointerException	If the specified file path is {@code null}.
 	 */
-	public FileImageSink(String destinationFilePath, boolean allowOverwrite)
-	{
+	public FileImageSink(String destinationFilePath, boolean allowOverwrite) {
 		super();
 		
-		if (destinationFilePath == null)
-		{
+		if (destinationFilePath == null) {
 			throw new NullPointerException("File cannot be null.");
 		}
 		
@@ -175,20 +166,16 @@ public class FileImageSink implements ImageSink<File>
 	 * @return						Returns {@code true} if the specified file
 	 * 								extension is valid for the specified format.
 	 */
-	private static boolean isMatchingFormat(String formatName, String fileExtension) throws UnsupportedFormatException
-	{
-		if (formatName == null || fileExtension == null)
-		{
+	private static boolean isMatchingFormat(String formatName, String fileExtension) throws UnsupportedFormatException {
+		if (formatName == null || fileExtension == null) {
 			return false;
 		}
 		
 		ImageWriter iw;
-		try
-		{
+		try {
 			iw = ImageIO.getImageWritersByFormatName(formatName).next();
-		}
-		catch (NoSuchElementException e)
-		{
+
+		} catch (NoSuchElementException e) {
 			throw new UnsupportedFormatException(
 					formatName,
 					"No suitable ImageWriter found for " + formatName + "."
@@ -197,10 +184,8 @@ public class FileImageSink implements ImageSink<File>
 		
 		String[] suffixes = iw.getOriginatingProvider().getFileSuffixes();
 		
-		for (String suffix : suffixes)
-		{
-			if (fileExtension.equalsIgnoreCase(suffix))
-			{
+		for (String suffix : suffixes) {
+			if (fileExtension.equalsIgnoreCase(suffix)) {
 				return true;
 			}
 		}
@@ -213,14 +198,12 @@ public class FileImageSink implements ImageSink<File>
 	 * @param f			The file.
 	 * @return			The extension of the file.
 	 */
-	private static String getExtension(File f)
-	{
+	private static String getExtension(File f) {
 		String fileName = f.getName();
 		if (
 				fileName.indexOf('.') != -1
 				&& fileName.lastIndexOf('.') != fileName.length() - 1
-		)
-		{
+		) {
 			int lastIndex = fileName.lastIndexOf('.');
 			return fileName.substring(lastIndex + 1);
 		}
@@ -228,22 +211,16 @@ public class FileImageSink implements ImageSink<File>
 		return null;
 	}
 	
-	public String preferredOutputFormatName()
-	{
+	public String preferredOutputFormatName() {
 		String fileExtension = getExtension(destinationFile);
 
-		if (fileExtension != null)
-		{
+		if (fileExtension != null) {
 			Iterator<ImageReader> rIter = ImageIO.getImageReadersBySuffix(fileExtension);
 			
-			if (rIter.hasNext())
-			{
-				try
-				{
+			if (rIter.hasNext()) {
+				try {
 					return rIter.next().getFormatName();
-				}
-				catch (IOException e)
-				{
+				} catch (IOException e) {
 					return ThumbnailParameter.ORIGINAL_FORMAT;
 				}
 			}
@@ -270,8 +247,7 @@ public class FileImageSink implements ImageSink<File>
 	 * 										destination file and the destination
 	 * 										file already exists.
 	 */
-	public void write(BufferedImage img) throws IOException
-	{
+	public void write(BufferedImage img) throws IOException {
 		/*
 		 * Add or replace the file extension of the output file.
 		 * 
@@ -283,8 +259,7 @@ public class FileImageSink implements ImageSink<File>
 		String fileExtension = getExtension(destinationFile);
 		
 		String formatName = outputFormat;
-		if (formatName != null && (fileExtension == null || !isMatchingFormat(formatName, fileExtension)))
-		{
+		if (formatName != null && (fileExtension == null || !isMatchingFormat(formatName, fileExtension))) {
 			destinationFile = new File(destinationFile.getAbsolutePath() + "." + formatName);
 		}
 		
@@ -296,18 +271,15 @@ public class FileImageSink implements ImageSink<File>
 		 * If a formatName is not specified, then attempt to determine it from
 		 * the file extension.
 		 */
-		if (formatName == null && fileExtension != null)
-		{
+		if (formatName == null && fileExtension != null) {
 			Iterator<ImageReader> rIter = ImageIO.getImageReadersBySuffix(fileExtension);
 			
-			if (rIter.hasNext())
-			{
+			if (rIter.hasNext()) {
 				formatName = rIter.next().getFormatName();
 			}
 		}
 		
-		if (formatName == null)
-		{
+		if (formatName == null) {
 			throw new UnsupportedFormatException(
 					formatName,
 					"Could not determine output format."
@@ -332,8 +304,7 @@ public class FileImageSink implements ImageSink<File>
 	 * 
 	 * @return the destinationFile
 	 */
-	public File getSink()
-	{
+	public File getSink() {
 		return destinationFile;
 	}
 	

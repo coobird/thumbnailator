@@ -19,8 +19,7 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * @author coobird
  *
  */
-public abstract class ThumbnailTask<S, D>
-{
+public abstract class ThumbnailTask<S, D> {
 	/**
 	 * The parameters to use when creating a thumbnail.
 	 */
@@ -46,10 +45,8 @@ public abstract class ThumbnailTask<S, D>
 	 * @param param			The parameters to use when creating thumbnails.
 	 * @throws NullPointerException		If the parameter is {@code null}.
 	 */
-	protected ThumbnailTask(ThumbnailParameter param)
-	{
-		if (param == null)
-		{
+	protected ThumbnailTask(ThumbnailParameter param) {
+		if (param == null) {
 			throw new NullPointerException("The parameter is null.");
 		}
 		this.param = param;
@@ -86,8 +83,7 @@ public abstract class ThumbnailTask<S, D>
 	 * 
 	 * @return				The parameters to use when generating thumbnails.
 	 */
-	public ThumbnailParameter getParam()
-	{
+	public ThumbnailParameter getParam() {
 		return param;
 	}
 	

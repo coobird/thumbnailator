@@ -12,8 +12,7 @@ import java.awt.Rectangle;
  * @since	0.3.4
  *
  */
-public final class Region
-{
+public final class Region {
 	/**
 	 * Position of the region.
 	 */
@@ -33,15 +32,12 @@ public final class Region
 	 * @throws NullPointerException		When the position and/or the size is
 	 * 									{@code null}.
 	 */
-	public Region(Position position, Size size)
-	{
+	public Region(Position position, Size size) {
 		super();
-		if (position == null)
-		{
+		if (position == null) {
 			throw new NullPointerException("Position cannot be null.");
 		}
-		if (size == null)
-		{
+		if (size == null) {
 			throw new NullPointerException("Size cannot be null.");
 		}
 		
@@ -54,8 +50,7 @@ public final class Region
 	 * 
 	 * @return 				Position of the region.
 	 */
-	public Position getPosition()
-	{
+	public Position getPosition() {
 		return position;
 	}
 	
@@ -64,8 +59,7 @@ public final class Region
 	 * 
 	 * @return 				Size of the region.
 	 */
-	public Size getSize()
-	{
+	public Size getSize() {
 		return size;
 	}
 	
@@ -81,8 +75,7 @@ public final class Region
 	 * @param height	Height of the enclosing region.
 	 * @return			Position and size of the enclosed region.
 	 */
-	public Rectangle calculate(int width, int height)
-	{
+	public Rectangle calculate(int width, int height) {
 		Dimension d = size.calculate(width, height);
 
 		Point p = position.calculate(
@@ -101,8 +94,7 @@ public final class Region
 	 * @return		{@code String} representation of this region.
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "Region [position=" + position + ", size=" + size + "]";
 	}
 }

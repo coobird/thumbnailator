@@ -9,8 +9,7 @@ import java.awt.image.BufferedImage;
  * @author coobird
  *
  */
-public final class BufferedImages
-{
+public final class BufferedImages {
 	/**
 	 * This class is not intended to be instantiated.
 	 */
@@ -23,8 +22,7 @@ public final class BufferedImages
 	 * @param img		The image to copy.
 	 * @return			A copy of the specified image.
 	 */
-	public static BufferedImage copy(BufferedImage img)
-	{
+	public static BufferedImage copy(BufferedImage img) {
 		return copy(img, img.getType());
 	}
 	
@@ -36,8 +34,7 @@ public final class BufferedImages
 	 * @param imageType	The image type for the image to return.
 	 * @return			A copy of the specified image.
 	 */
-	public static BufferedImage copy(BufferedImage img, int imageType)
-	{
+	public static BufferedImage copy(BufferedImage img, int imageType) {
 		int width = img.getWidth();
 		int height = img.getHeight();
 		

@@ -16,8 +16,7 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * @author coobird
  *
  */
-public final class ThumbnailatorUtils
-{
+public final class ThumbnailatorUtils {
 	/**
 	 *  This class is not intended to be instantiated.
 	 */
@@ -29,16 +28,12 @@ public final class ThumbnailatorUtils
 	 * @return		A {@link List} of supported output formats. If no formats
 	 * 				are supported, an empty list is returned.
 	 */
-	public static List<String> getSupportedOutputFormats()
-	{
+	public static List<String> getSupportedOutputFormats() {
 		String[] formats = ImageIO.getWriterFormatNames();
 		
-		if (formats == null)
-		{
+		if (formats == null) {
 			return Collections.emptyList();
-		}
-		else
-		{
+		} else {
 			return Arrays.asList(formats);
 		}
 	}
@@ -52,15 +47,12 @@ public final class ThumbnailatorUtils
 	 */
 	public static boolean isSupportedOutputFormat(String format)
 	{
-		if (format == ThumbnailParameter.ORIGINAL_FORMAT)
-		{
+		if (format == ThumbnailParameter.ORIGINAL_FORMAT) {
 			return true;
 		}
 		
-		for (String supportedFormat : getSupportedOutputFormats())
-		{
-			if (supportedFormat.equals(format))
-			{
+		for (String supportedFormat : getSupportedOutputFormats()) {
+			if (supportedFormat.equals(format)) {
 				return true;
 			}
 		}
@@ -77,35 +69,26 @@ public final class ThumbnailatorUtils
 	 * 				supported for the specified format, then an empty list
 	 * 				is returned.
 	 */
-	public static List<String> getSupportedOutputFormatTypes(String format)
-	{
-		if (format == ThumbnailParameter.ORIGINAL_FORMAT)
-		{
+	public static List<String> getSupportedOutputFormatTypes(String format) {
+		if (format == ThumbnailParameter.ORIGINAL_FORMAT) {
 			return Collections.emptyList();
 		}
 		
 		Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(format);
-		if (!writers.hasNext())
-		{
+		if (!writers.hasNext()) {
 			return Collections.emptyList();
 		}
 		
 		String[] types;
-		try
-		{
+		try {
 			types = writers.next().getDefaultWriteParam().getCompressionTypes();
-		}
-		catch (UnsupportedOperationException e)
-		{
+		} catch (UnsupportedOperationException e) {
 			return Collections.emptyList();
 		}
 		
-		if (types == null)
-		{
+		if (types == null) {
 			return Collections.emptyList();
-		}
-		else
-		{
+		} else {
 			return Arrays.asList(types);
 		}
 	}
@@ -119,32 +102,25 @@ public final class ThumbnailatorUtils
 	 * @return			{@code true} if the format type is supported by the
 	 * 					specified supported format, {@code false} otherwise.
 	 */
-	public static boolean isSupportedOutputFormatType(String format, String type)
-	{
-		if (!isSupportedOutputFormat(format))
-		{
+	public static boolean isSupportedOutputFormatType(String format, String type) {
+		if (!isSupportedOutputFormat(format)) {
 			return false;
 		}
 		
 		if (format == ThumbnailParameter.ORIGINAL_FORMAT
-				&& type == ThumbnailParameter.DEFAULT_FORMAT_TYPE)
-		{
+				&& type == ThumbnailParameter.DEFAULT_FORMAT_TYPE) {
 			return true;
-		}
-		else if (format == ThumbnailParameter.ORIGINAL_FORMAT
-				&& type != ThumbnailParameter.DEFAULT_FORMAT_TYPE)
-		{
+
+		} else if (format == ThumbnailParameter.ORIGINAL_FORMAT
+				&& type != ThumbnailParameter.DEFAULT_FORMAT_TYPE) {
 			return false;
-		}
-		else if (type == ThumbnailParameter.DEFAULT_FORMAT_TYPE)
-		{
+
+		} else if (type == ThumbnailParameter.DEFAULT_FORMAT_TYPE) {
 			return true;
 		}
 		
-		for (String supportedType : getSupportedOutputFormatTypes(format))
-		{
-			if (supportedType.equals(type))
-			{
+		for (String supportedType : getSupportedOutputFormatTypes(format)) {
+			if (supportedType.equals(type)) {
 				return true;
 			}
 		}

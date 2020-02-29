@@ -32,8 +32,7 @@ Resizers.BILINEAR.resize(sourceImage, destImage);
  * @author coobird
  *
  */
-public enum Resizers implements Resizer
-{
+public enum Resizers implements Resizer {
 	/**
 	 * A {@link Resizer} which does not perform resizing operations. The source
 	 * image will be drawn at the origin of the destination image.
@@ -64,13 +63,11 @@ public enum Resizers implements Resizer
 	
 	private final Resizer resizer;
 	
-	private Resizers(Resizer resizer)
-	{
+	private Resizers(Resizer resizer) {
 		this.resizer = resizer;
 	}
 
-	public void resize(BufferedImage srcImage, BufferedImage destImage)
-	{
+	public void resize(BufferedImage srcImage, BufferedImage destImage) {
 		resizer.resize(srcImage, destImage);
 	}
 }

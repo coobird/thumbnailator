@@ -18,8 +18,7 @@ import net.coobird.thumbnailator.resizers.ResizerFactory;
  * @author coobird
  *
  */
-public abstract class ThumbnailMaker
-{
+public abstract class ThumbnailMaker {
 	/**
 	 * String used for an exception message.
 	 */
@@ -55,10 +54,8 @@ public abstract class ThumbnailMaker
 	 * @author coobird
 	 *
 	 */
-	protected final static class ReadinessTracker
-	{
-		private final Map<String, Boolean> alreadySetMap =
-			new HashMap<String, Boolean>();
+	protected final static class ReadinessTracker {
+		private final Map<String, Boolean> alreadySetMap = new HashMap<String, Boolean>();
 		
 		/**
 		 * Returns whether or not the {@link ThumbnailMaker} has all its
@@ -67,12 +64,9 @@ public abstract class ThumbnailMaker
 		 * @return			{@code true} if the {@link ThumbnailMaker} is ready
 		 * 					to make thumbnails, {@code false} otherwise.
 		 */
-		protected boolean isReady()
-		{
-			for (Map.Entry<String, Boolean> entry : alreadySetMap.entrySet())
-			{
-				if (!entry.getValue())
-				{
+		protected boolean isReady() {
+			for (Map.Entry<String, Boolean> entry : alreadySetMap.entrySet()) {
+				if (!entry.getValue()) {
 					return false;
 				}
 			}
@@ -85,8 +79,7 @@ public abstract class ThumbnailMaker
 		 * 
 		 * @param parameterName		The parameter which has not been set.
 		 */
-		protected void unset(String parameterName)
-		{
+		protected void unset(String parameterName) {
 			alreadySetMap.put(parameterName, false);
 		}
 		
@@ -96,8 +89,7 @@ public abstract class ThumbnailMaker
 		 * 
 		 * @param parameterName		The parameter to be marked as being set.
 		 */
-		protected void set(String parameterName)
-		{
+		protected void set(String parameterName) {
 			alreadySetMap.put(parameterName, true);
 		}
 		
@@ -109,8 +101,7 @@ public abstract class ThumbnailMaker
 		 * @return					{@code true} if the parameter has been set,
 		 * 							{@code false} otherwise.
 		 */
-		protected boolean isSet(String parameterName)
-		{
+		protected boolean isSet(String parameterName) {
 			return alreadySetMap.get(parameterName);
 		}
 	}
@@ -145,8 +136,7 @@ public abstract class ThumbnailMaker
 	/**
 	 * Creates and initializes an instance of {@link ThumbnailMaker}.
 	 */
-	public ThumbnailMaker()
-	{
+	public ThumbnailMaker() {
 		ready = new ReadinessTracker();
 		ready.unset(PARAM_IMAGE_TYPE);
 		ready.unset(PARAM_RESIZER);
@@ -177,25 +167,17 @@ public abstract class ThumbnailMaker
 	 * @throws IllegalArgumentException		If the width and/or height is less
 	 * 										than or equal to zero.
 	 */
-	protected BufferedImage makeThumbnail(
-			BufferedImage img,
-			int width,
-			int height
-	)
-	{
-		if (!ready.isReady())
-		{
+	protected BufferedImage makeThumbnail(BufferedImage img, int width, int height) {
+		if (!ready.isReady()) {
 			throw new IllegalStateException(ThumbnailMaker.NOT_READY_FOR_MAKE);
 		}
 		
-		if (width <= 0)
-		{
+		if (width <= 0) {
 			throw new IllegalArgumentException(
 					"Width must be greater than zero."
 			);
 		}
-		if (height <= 0)
-		{
+		if (height <= 0) {
 			throw new IllegalArgumentException(
 					"Height must be greater than zero."
 			);
@@ -220,8 +202,7 @@ public abstract class ThumbnailMaker
 	 * @param imageType		The type of the {@code BufferedImage}.
 	 * @return				A reference to this object.
 	 */
-	public ThumbnailMaker imageType(int imageType)
-	{
+	public ThumbnailMaker imageType(int imageType) {
 		this.imageType = imageType;
 		ready.set(PARAM_IMAGE_TYPE);
 		return this;
@@ -232,8 +213,7 @@ public abstract class ThumbnailMaker
 	 * 
 	 * @return				A reference to this object.
 	 */
-	public ThumbnailMaker defaultImageType()
-	{
+	public ThumbnailMaker defaultImageType() {
 		return imageType(DEFAULT_IMAGE_TYPE);
 	}
 	
@@ -244,8 +224,7 @@ public abstract class ThumbnailMaker
 	 * 						to create the thumbnail.
 	 * @return				A reference to this object.
 	 */
-	public ThumbnailMaker resizer(Resizer resizer)
-	{
+	public ThumbnailMaker resizer(Resizer resizer) {
 		this.resizerFactory = new FixedResizerFactory(resizer);
 		ready.set(PARAM_RESIZER);
 		ready.set(PARAM_RESIZERFACTORY);
@@ -257,8 +236,7 @@ public abstract class ThumbnailMaker
 	 * 
 	 * @return				A reference to this object.
 	 */
-	public ThumbnailMaker defaultResizer()
-	{
+	public ThumbnailMaker defaultResizer() {
 		return defaultResizerFactory();
 	}
 	
@@ -272,8 +250,7 @@ public abstract class ThumbnailMaker
 	 * @return				A reference to this object.
 	 * @since	0.4.0
 	 */
-	public ThumbnailMaker resizerFactory(ResizerFactory resizerFactory)
-	{
+	public ThumbnailMaker resizerFactory(ResizerFactory resizerFactory) {
 		this.resizerFactory = resizerFactory;
 		ready.set(PARAM_RESIZER);
 		ready.set(PARAM_RESIZERFACTORY);
@@ -286,8 +263,7 @@ public abstract class ThumbnailMaker
 	 * @return				A reference to this object.
 	 * @since	0.4.0
 	 */
-	public ThumbnailMaker defaultResizerFactory()
-	{
+	public ThumbnailMaker defaultResizerFactory() {
 		this.resizerFactory = DefaultResizerFactory.getInstance();
 		ready.set(PARAM_RESIZER);
 		ready.set(PARAM_RESIZERFACTORY);

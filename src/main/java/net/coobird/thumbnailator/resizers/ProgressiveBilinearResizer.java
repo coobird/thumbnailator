@@ -22,14 +22,12 @@ import java.util.Map;
  * @author coobird
  *
  */
-public class ProgressiveBilinearResizer extends AbstractResizer
-{
+public class ProgressiveBilinearResizer extends AbstractResizer {
 	/**
 	 * Instantiates a {@link ProgressiveBilinearResizer} with default
 	 * rendering hints.
 	 */
-	public ProgressiveBilinearResizer()
-	{
+	public ProgressiveBilinearResizer() {
 		this(Collections.<RenderingHints.Key, Object>emptyMap());
 	}
 	
@@ -39,8 +37,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer
 	 * 
 	 * @param hints		Additional rendering hints to apply.
 	 */
-	public ProgressiveBilinearResizer(Map<RenderingHints.Key, Object> hints)
-	{
+	public ProgressiveBilinearResizer(Map<RenderingHints.Key, Object> hints) {
 		super(RenderingHints.VALUE_INTERPOLATION_BILINEAR, hints);
 	}
 	
@@ -58,8 +55,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer
 	 */	
 	@Override
 	public void resize(BufferedImage srcImage, BufferedImage destImage)
-			throws NullPointerException
-	{
+			throws NullPointerException {
 		super.performChecks(srcImage, destImage);
 		
 		int currentWidth = srcImage.getWidth();
@@ -69,8 +65,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer
 		final int targetHeight = destImage.getHeight();
 		
 		// If multi-step downscaling is not required, perform one-step.
-		if ((targetWidth * 2 >= currentWidth) && (targetHeight * 2 >= currentHeight))
-		{
+		if ((targetWidth * 2 >= currentWidth) && (targetHeight * 2 >= currentHeight)) {
 			Graphics2D g = createGraphics(destImage);
 			g.drawImage(srcImage, 0, 0, targetWidth, targetHeight, null);
 			g.dispose();
@@ -96,8 +91,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer
 		int startWidth = targetWidth;
 		int startHeight = targetHeight;
 		
-		while (startWidth < currentWidth && startHeight < currentHeight)
-		{
+		while (startWidth < currentWidth && startHeight < currentHeight) {
 			startWidth *= 2;
 			startHeight *= 2;
 		}
@@ -109,17 +103,14 @@ public class ProgressiveBilinearResizer extends AbstractResizer
 		g.drawImage(srcImage, 0, 0, currentWidth, currentHeight, null);
 		
 		// Perform an in-place progressive bilinear resize.
-		while (	(currentWidth >= targetWidth * 2) && (currentHeight >= targetHeight * 2) )
-		{
+		while (	(currentWidth >= targetWidth * 2) && (currentHeight >= targetHeight * 2) ) {
 			currentWidth /= 2;
 			currentHeight /= 2;
 			
-			if (currentWidth < targetWidth)
-			{
+			if (currentWidth < targetWidth) {
 				currentWidth = targetWidth;
 			}
-			if (currentHeight < targetHeight)
-			{
+			if (currentHeight < targetHeight) {
 				currentHeight = targetHeight;
 			}
 			

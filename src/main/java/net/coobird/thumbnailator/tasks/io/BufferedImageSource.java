@@ -13,8 +13,7 @@ import net.coobird.thumbnailator.geometry.Region;
  * @author coobird
  *
  */
-public class BufferedImageSource extends AbstractImageSource<BufferedImage>
-{
+public class BufferedImageSource extends AbstractImageSource<BufferedImage> {
 	/**
 	 * The image that should be used as the source for making a thumbnail.
 	 */
@@ -28,37 +27,30 @@ public class BufferedImageSource extends AbstractImageSource<BufferedImage>
 	 * @param img		The source image.
 	 * @throws NullPointerException		If the image is null.
 	 */
-	public BufferedImageSource(BufferedImage img)
-	{
+	public BufferedImageSource(BufferedImage img) {
 		super();
 		
-		if (img == null)
-		{
+		if (img == null) {
 			throw new NullPointerException("Image cannot be null.");
 		}
 		
 		this.img = img;
 	}
 
-	public BufferedImage read() throws IOException
-	{
+	public BufferedImage read() throws IOException {
 		inputFormatName = null;
 		
-		if (param != null && param.getSourceRegion() != null)
-		{
+		if (param != null && param.getSourceRegion() != null) {
 			Region region = param.getSourceRegion();
 			Rectangle r = region.calculate(img.getWidth(), img.getHeight());
 			
 			return finishedReading(img.getSubimage(r.x, r.y, r.width, r.height));
-		}
-		else
-		{
+		} else {
 			return finishedReading(img);
 		}
 	}
 
-	public BufferedImage getSource()
-	{
+	public BufferedImage getSource() {
 		return img;
 	}
 }
