@@ -98,6 +98,12 @@ public class ThumbnailParameter
 	private final boolean keepAspectRatio;
 	
 	/**
+	 * Indicates whether or not the thumbnail should be scaled up in case the
+	 * specified size is bigger than source image's size.
+	 */
+	private final boolean scaleUp;
+
+	/**
 	 * The output format for the thumbnail.
 	 * <p>
 	 * A value of {@link ThumbnailParameter#ORIGINAL_FORMAT} indicates that the
@@ -259,6 +265,7 @@ public class ThumbnailParameter
 			double heightScalingFactor,
 			Region sourceRegion,
 			boolean keepAspectRatio,
+			boolean scaleUp,
 			String outputFormat,
 			String outputFormatType,
 			float outputQuality,
@@ -276,6 +283,8 @@ public class ThumbnailParameter
 		
 		this.keepAspectRatio = keepAspectRatio;
 		
+		this.scaleUp = scaleUp;
+
 		this.sourceRegion = sourceRegion;
 		this.outputFormat = outputFormat;
 		this.outputFormatType = outputFormatType;
@@ -428,6 +437,7 @@ public class ThumbnailParameter
 			Dimension thumbnailSize,
 			Region sourceRegion,
 			boolean keepAspectRatio,
+			boolean scaleUp,
 			String outputFormat,
 			String outputFormatType,
 			float outputQuality,
@@ -444,6 +454,7 @@ public class ThumbnailParameter
 				Double.NaN,
 				sourceRegion,
 				keepAspectRatio,
+				scaleUp,
 				outputFormat,
 				outputFormatType,
 				outputQuality,
@@ -541,6 +552,7 @@ public class ThumbnailParameter
 			double heightScalingFactor,
 			Region sourceRegion,
 			boolean keepAspectRatio,
+			boolean scaleUp,
 			String outputFormat,
 			String outputFormatType,
 			float outputQuality,
@@ -557,6 +569,7 @@ public class ThumbnailParameter
 				heightScalingFactor,
 				sourceRegion,
 				keepAspectRatio,
+				scaleUp,
 				outputFormat,
 				outputFormatType,
 				outputQuality,
@@ -648,6 +661,7 @@ public class ThumbnailParameter
 			Dimension thumbnailSize,
 			Region sourceRegion,
 			boolean keepAspectRatio,
+			boolean scaleUp,
 			String outputFormat,
 			String outputFormatType,
 			float outputQuality,
@@ -664,6 +678,7 @@ public class ThumbnailParameter
 				Double.NaN,
 				sourceRegion,
 				keepAspectRatio,
+				scaleUp,
 				outputFormat,
 				outputFormatType,
 				outputQuality,
@@ -762,6 +777,7 @@ public class ThumbnailParameter
 			double heightScalingFactor,
 			Region sourceRegion,
 			boolean keepAspectRatio,
+			boolean scaleUp,
 			String outputFormat,
 			String outputFormatType,
 			float outputQuality,
@@ -778,6 +794,7 @@ public class ThumbnailParameter
 				heightScalingFactor,
 				sourceRegion,
 				keepAspectRatio,
+				scaleUp,
 				outputFormat,
 				outputFormatType,
 				outputQuality,
@@ -863,6 +880,18 @@ public class ThumbnailParameter
 	{
 		return keepAspectRatio;
 	}
+
+    /**
+     * Returns whether or not the thumbnail should be scaled up in case the
+     * specified size is bigger than source image's size.
+     *
+     * @return      {@code true} if the thumbnail should be scaled up,
+     *              {@code false} otherwise.
+     */
+    public boolean isScaleUp()
+    {
+        return scaleUp;
+    }
 
 	/**
 	 * Returns the output format for the thumbnail.

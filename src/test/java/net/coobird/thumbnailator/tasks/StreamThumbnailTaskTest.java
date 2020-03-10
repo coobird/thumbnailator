@@ -55,6 +55,7 @@ public class StreamThumbnailTaskTest
 				new Dimension(50, 50),
 				null,
 				true,
+				true,
 				"png",
 				ThumbnailParameter.DEFAULT_FORMAT_TYPE,
 				ThumbnailParameter.DEFAULT_QUALITY,
@@ -88,6 +89,7 @@ public class StreamThumbnailTaskTest
 				new Dimension(50, 50),
 				null,
 				true,
+				false,
 				"png",
 				ThumbnailParameter.DEFAULT_FORMAT_TYPE,
 				ThumbnailParameter.DEFAULT_QUALITY,
@@ -129,6 +131,7 @@ public class StreamThumbnailTaskTest
 		ThumbnailParameter param = new ThumbnailParameter(
 				new Dimension(50, 50),
 				null,
+				true,
 				true,
 				"png",
 				ThumbnailParameter.DEFAULT_FORMAT_TYPE,

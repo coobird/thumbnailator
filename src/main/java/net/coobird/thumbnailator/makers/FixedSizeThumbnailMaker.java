@@ -52,6 +52,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	private int width;
 	private int height;
 	private boolean keepRatio;
+	private boolean scaleUp = true;
 	private boolean fitWithinDimensions;
 	
 	/**
@@ -207,6 +208,20 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 		return this;
 	}
 	
+    /**
+     * Sets whether or not the thumbnail should be scaled up in case specified
+     * size is bigger than source image's size
+     *
+     * @param scaleUp   Whether or not to scale up the thumbnail in case
+     *                  thumbnail's size is bigger than original image.
+     * @return          A reference to this object.
+     */
+    public FixedSizeThumbnailMaker scaleUp(boolean scaleUp)
+    {
+        this.scaleUp = scaleUp;
+        return this;
+    }
+
 	/**
 	 * Sets whether or not the thumbnail should fit within the specified
 	 * dimensions.
@@ -252,11 +267,20 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 		int targetWidth = this.width;
 		int targetHeight = this.height;
 
+        int sourceWidth = img.getWidth();
+        int sourceHeight = img.getHeight();
+
+        if (!scaleUp)
+        {
+            if (sourceWidth < targetWidth && sourceHeight < targetHeight)
+            {
+                targetWidth = sourceWidth;
+                targetHeight = sourceHeight;
+            }
+        }
+
 		if (keepRatio)
 		{
-			int sourceWidth = img.getWidth();
-			int sourceHeight = img.getHeight();
-			
 			double sourceRatio = (double)sourceWidth / (double)sourceHeight;
 			double targetRatio = (double)targetWidth / (double)targetHeight;
 			
