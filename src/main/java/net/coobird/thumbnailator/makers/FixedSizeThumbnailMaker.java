@@ -30,16 +30,16 @@ import java.awt.image.BufferedImage;
  * within 200 pixels by 200 pixels, while preserving the aspect ratio of the
  * source image:
  * <pre>
-BufferedImage img = ImageIO.read(new File("sourceImage.jpg"));
+ BufferedImage img = ImageIO.read(new File("sourceImage.jpg"));
 
-BufferedImage thumbnail = new FixedSizeThumbnailMaker()
-        .size(200, 200)
-        .keepAspectRatio(true)
-        .make(img);
+ BufferedImage thumbnail = new FixedSizeThumbnailMaker()
+ .size(200, 200)
+ .keepAspectRatio(true)
+ .make(img);
  * </pre>
  * </DD>
  * </DL>
- * 
+ *
  * @author coobird
  *
  */
@@ -48,12 +48,13 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	private static final String PARAM_SIZE = "size";
 	private static final String PARAM_KEEP_RATIO = "keepRatio";
 	private static final String PARAM_FIT_WITHIN = "fitWithinDimensions";
-	
+
 	private int width;
 	private int height;
 	private boolean keepRatio;
 	private boolean fitWithinDimensions;
-	
+	private boolean scaleUpDisabled;
+
 	/**
 	 * Creates a {@link FixedSizeThumbnailMaker}.
 	 * <p>
@@ -68,7 +69,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 		ready.unset(PARAM_KEEP_RATIO);
 		ready.unset(PARAM_FIT_WITHIN);
 	}
-	
+
 	/**
 	 * Creates a {@link FixedSizeThumbnailMaker} which creates thumbnails
 	 * with the specified size.
@@ -77,7 +78,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * aspect ratio of the original image should be maintained in the thumbnail
 	 * must be specified by calling the {@link #keepAspectRatio(boolean)}
 	 * method.
-	 * 
+	 *
 	 * @param width			The width of the thumbnail to produce.
 	 * @param height		The height of the thumbnails to produce.
 	 */
@@ -86,13 +87,13 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 		this();
 		size(width, height);
 	}
-	
+
 	/**
 	 * Creates a {@link FixedSizeThumbnailMaker} which creates thumbnails
 	 * with the specified size. Whether or not the aspect ratio of the original
 	 * image should be preserved by the thumbnail is also specified at
 	 * instantiation.
-	 * 
+	 *
 	 * @param width			The width of the thumbnail to produce.
 	 * @param height		The height of the thumbnails to produce.
 	 * @param aspectRatio	Whether or not to maintain the aspect ratio in the
@@ -108,14 +109,14 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 		size(width, height);
 		keepAspectRatio(aspectRatio);
 	}
-	
+
 	/**
 	 * Creates a {@link FixedSizeThumbnailMaker} which creates thumbnails
 	 * with the specified size. Whether or not the aspect ratio of the original
 	 * image should be preserved by the thumbnail, and whether to fit the
 	 * thumbnail within the given dimensions is also specified at
 	 * instantiation.
-	 * 
+	 *
 	 * @param width			The width of the thumbnail to produce.
 	 * @param height		The height of the thumbnails to produce.
 	 * @param aspectRatio	Whether or not to maintain the aspect ratio in the
@@ -138,10 +139,10 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 		keepAspectRatio(aspectRatio);
 		fitWithinDimensions(fit);
 	}
-	
+
 	/**
 	 * Sets the size of the thumbnail to produce.
-	 * 
+	 *
 	 * @param width				The width of the thumbnail to produce.
 	 * @param height			The height of the thumbnails to produce.
 	 * @return					A reference to this object.
@@ -158,7 +159,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 					"The size has already been set."
 			);
 		}
-		
+
 		if (width <= 0)
 		{
 			throw new IllegalArgumentException(
@@ -171,25 +172,25 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 					"Height must be greater than zero."
 			);
 		}
-		
+
 		this.width = width;
 		this.height = height;
 
 		ready.set(PARAM_SIZE);
 		return this;
 	}
-	
+
 	/**
 	 * Sets whether or not the thumbnail is to maintain the aspect ratio of
 	 * the original image.
-	 * 
+	 *
 	 * @param keep			Whether or not to maintain the aspect ratio in the
 	 * 						thumbnail the same as the original image.
 	 * 						<p>
 	 * 						If {@code true} is specified, then the
 	 * 						thumbnail image will have the same aspect ratio
 	 * 						as the original image.
- 	 * @return				A reference to this object.
+	 * @return				A reference to this object.
 	 * @throws IllegalStateException	If whether to keep the aspect ratio has
 	 * 									already	been previously set.
 	 */
@@ -206,7 +207,21 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 		ready.set(PARAM_KEEP_RATIO);
 		return this;
 	}
-	
+
+	/**
+	 * Sets whether or not the thumbnail should be scaled up in case specified
+	 * is bigger than source image's size
+	 *
+	 * @param disabled		Whether or not to scale up the thumbnail in case
+	 * 						thumbnail's size is bigger than original image.
+	 * @return				A reference to this object.
+	 */
+	public FixedSizeThumbnailMaker scaleUpDisabled(boolean disabled)
+	{
+		this.scaleUpDisabled = disabled;
+		return this;
+	}
+
 	/**
 	 * Sets whether or not the thumbnail should fit within the specified
 	 * dimensions.
@@ -220,7 +235,7 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 	 * When {@link #keepAspectRatio(boolean)} is {@code false}, then calling
 	 * this method with {@code true} or {@code false} makes no difference, as
 	 * the thumbnail dimensions will be exactly the given dimensions.
-	 * 
+	 *
 	 * @param fit			Whether or not to maintain the aspect ratio in the
 	 * 						thumbnail the same as the original image.
 	 * 						<p>
@@ -241,25 +256,25 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 			);
 		}
 		this.fitWithinDimensions = fit;
-		
+
 		ready.set(PARAM_FIT_WITHIN);
 		return this;
 	}
-	
+
 	@Override
 	public BufferedImage make(BufferedImage img)
 	{
 		int targetWidth = this.width;
 		int targetHeight = this.height;
 
+		int sourceWidth = img.getWidth();
+		int sourceHeight = img.getHeight();
+
 		if (keepRatio)
 		{
-			int sourceWidth = img.getWidth();
-			int sourceHeight = img.getHeight();
-			
 			double sourceRatio = (double)sourceWidth / (double)sourceHeight;
 			double targetRatio = (double)targetWidth / (double)targetHeight;
-			
+
 			/*
 			 * If the ratios are not the same, then the appropriate
 			 * width and height must be picked.
@@ -293,11 +308,41 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker
 					}
 				}
 			}
+
+			if (scaleUpDisabled)
+			{
+				/*
+				 * If thumbnail's size is bigger than size of original
+				 * image -> set target size to source size
+				 */
+				if ((targetWidth > sourceWidth) || (targetHeight > sourceHeight))
+				{
+					targetWidth = sourceWidth;
+					targetHeight = sourceHeight;
+				}
+			}
 		}
-		
+		else {
+			if (scaleUpDisabled)
+			{
+				/*
+				 * If thumbnail's size is bigger than size of original
+				 * image -> set target size to source size
+				 */
+				if (targetWidth > sourceWidth)
+				{
+					targetWidth = sourceWidth;
+				}
+				if (targetHeight > sourceHeight)
+				{
+					targetHeight = sourceHeight;
+				}
+			}
+		}
+
 		targetWidth = (targetWidth == 0) ? 1 : targetWidth;
 		targetHeight = (targetHeight == 0) ? 1 : targetHeight;
-		
+
 		return super.makeThumbnail(img, targetWidth, targetHeight);
 	}
 }
