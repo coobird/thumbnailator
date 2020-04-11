@@ -764,4 +764,29 @@ public class FileImageSourceTest {
 		assertTrue(inputFile.delete());
 		assertFalse(inputFile.exists());
 	}
+
+	// What we really want to check the file resource is released.
+	// Reproducible on Windows, not Linux. (Issue #143)
+	@Test
+	public void canRemoveSourceImageOnReadFailure() throws IOException {
+		// given
+		File inputFile = TestUtils.createTempFile(TMPDIR, "png");
+		TestUtils.copyFile(new File("src/test/resources/Thumbnailator/grid.png"), inputFile, 200);
+
+		FileImageSource source = new FileImageSource(inputFile);
+
+		// when
+		try {
+			source.read();
+			fail();
+		} catch (Exception e) {
+			// expected
+		}
+
+		// then
+		assertEquals(inputFile, source.getSource());
+		assertTrue(inputFile.exists());
+		assertTrue(inputFile.delete());
+		assertFalse(inputFile.exists());
+	}
 }

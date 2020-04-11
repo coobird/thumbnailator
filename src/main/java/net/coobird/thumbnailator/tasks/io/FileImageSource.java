@@ -111,18 +111,20 @@ public class FileImageSource implements ImageSource<File> {
 	}
 
 	public BufferedImage read() throws IOException {
+		FileInputStream fis;
 		try {
-			FileInputStream fis = new FileInputStream(sourceFile);
-			imageSource = new InputStreamImageSource(fis);
-			imageSource.setThumbnailParameter(param);
-			BufferedImage img = imageSource.read();
-			fis.close();
-			return img;
+			fis = new FileInputStream(sourceFile);
 
 		} catch (FileNotFoundException e) {
 			throw new FileNotFoundException(
 					"Could not find file: " + sourceFile.getAbsolutePath()
 			);
+		}
+
+		try {
+			imageSource = new InputStreamImageSource(fis);
+			imageSource.setThumbnailParameter(param);
+			return imageSource.read();
 
 		} catch (UnsupportedFormatException e) {
 			String sourcePath = sourceFile.getAbsolutePath();
@@ -130,6 +132,8 @@ public class FileImageSource implements ImageSource<File> {
 					UnsupportedFormatException.UNKNOWN,
 					"No suitable ImageReader found for " + sourcePath + "."
 			);
+		} finally {
+			fis.close();
 		}
 	}
 
