@@ -153,10 +153,10 @@ public class URLImageSource extends AbstractImageSource<URL> {
 			img = source.read();
 		} catch (Exception e) {
 			throw new IOException("Could not obtain image from URL: " + url);
+		} finally {
+			is.close();
 		}
 
-		is.close();
-		
 		this.inputFormatName = source.getInputFormatName();
 		
 		return finishedReading(img);
