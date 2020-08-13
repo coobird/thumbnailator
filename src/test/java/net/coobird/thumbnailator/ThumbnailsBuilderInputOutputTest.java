@@ -5173,11 +5173,11 @@ public class ThumbnailsBuilderInputOutputTest {
 	 * </ol>
 	 * and the expected outcome is,
 	 * <ol>
-	 * <li>The file size will be smaller after the resize.</li>
+	 * <li>The destination file is overwritten</li>
 	 * </ol>
 	 */	
 	@Test
-	public void fileSizeDecreasesAfterResize() throws IOException {
+	public void toFile_File_DefaultIsOverwrite() throws IOException {
 		// set up
 		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = new File("src/test/resources/Thumbnailator/tmp-grid.png");
@@ -5186,18 +5186,17 @@ public class ThumbnailsBuilderInputOutputTest {
 		TestUtils.copyFile(sourceFile, f);
 		
 		// given
-		long fileSizeBefore = f.length();
-		
 		// when
 		Thumbnails.of(f)
-			.size(100, 100)
+			.size(50, 50)
 			.toFile(f);
-		
+
 		// then
-		long fileSizeAfter = f.length();
+		BufferedImage img = ImageIO.read(f);
 		f.delete();
-		
-		assertTrue(fileSizeAfter < fileSizeBefore);
+
+		assertEquals(50, img.getWidth());
+		assertEquals(50, img.getHeight());
 	}
 	
 	/**
@@ -5219,21 +5218,20 @@ public class ThumbnailsBuilderInputOutputTest {
 		
 		// copy the image to a temporary file.
 		TestUtils.copyFile(sourceFile, f);
-		
+
 		// given
-		long fileSizeBefore = f.length();
-		
 		// when
 		Thumbnails.of(f)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.toFile(f);
 		
 		// then
-		long fileSizeAfter = f.length();
+		BufferedImage img = ImageIO.read(f);
 		f.delete();
-		
-		assertTrue(fileSizeAfter < fileSizeBefore);
+
+		assertEquals(50, img.getWidth());
+		assertEquals(50, img.getHeight());
 	}
 	
 	/**
@@ -5260,7 +5258,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		// when
 		try {
 			Thumbnails.of(f)
-				.size(100, 100)
+				.size(50, 50)
 				.allowOverwrite(false)
 				.toFile(f);
 			
@@ -5294,19 +5292,18 @@ public class ThumbnailsBuilderInputOutputTest {
 		TestUtils.copyFile(sourceFile, f);
 		
 		// given
-		long fileSizeBefore = f.length();
-		
 		// when
 		Thumbnails.of(f)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.toFile(f.getAbsolutePath());
 		
 		// then
-		long fileSizeAfter = f.length();
+		BufferedImage img = ImageIO.read(f);
 		f.delete();
 		
-		assertTrue(fileSizeAfter < fileSizeBefore);
+		assertEquals(50, img.getWidth());
+		assertEquals(50, img.getHeight());
 	}
 	
 	/**
