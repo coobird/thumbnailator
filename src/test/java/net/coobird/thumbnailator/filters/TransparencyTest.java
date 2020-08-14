@@ -28,8 +28,6 @@ import static org.junit.Assert.*;
 
 import java.awt.image.BufferedImage;
 
-import net.coobird.thumbnailator.filters.ImageFilter;
-import net.coobird.thumbnailator.filters.Transparency;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 import net.coobird.thumbnailator.util.BufferedImages;
 
