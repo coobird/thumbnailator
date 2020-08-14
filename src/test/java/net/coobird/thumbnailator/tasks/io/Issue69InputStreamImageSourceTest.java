@@ -57,8 +57,6 @@ import org.junit.rules.TemporaryFolder;
  */
 public class Issue69InputStreamImageSourceTest {
 	
-	@Rule
-	public TemporaryFolder tempFolder = new TemporaryFolder();
 	public static byte[] sourceByteArray;
 	public static int SIZE = 8000;
 	
