@@ -26,6 +26,7 @@ package net.coobird.thumbnailator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
@@ -41,9 +42,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.imageio.ImageIO;
 
@@ -56,7 +57,9 @@ import net.coobird.thumbnailator.test.BufferedImageComparer;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 public class ThumbnailsBuilderInputOutputTest {
 
@@ -5163,7 +5166,34 @@ public class ThumbnailsBuilderInputOutputTest {
 		assertEquals(100, thumbnails.get(1).getWidth());
 		assertEquals(100, thumbnails.get(1).getHeight());
 	}
-	
+
+	private void assertImageExists(File f, int width, int height) throws IOException {
+		assertTrue("f exists.", f.exists());
+
+		BufferedImage img = ImageIO.read(f);
+		assertNotNull("Read image is null.", img);
+		assertEquals(width, img.getWidth());
+		assertEquals(height, img.getHeight());
+	}
+
+	@Rule
+	public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+	private AtomicInteger counter = new AtomicInteger(0);
+	private String generatePngName() {
+		return this.getClass().getName() + "_" + counter.incrementAndGet() + ".png";
+	}
+
+	private File newCopyOfPngFile() throws IOException {
+		File f = temporaryFolder.newFile(generatePngName());
+		TestUtils.copyFile(new File("src/test/resources/Thumbnailator/grid.png"), f);
+		return f;
+	}
+
+	private File newUncreatedPngFile() throws IOException {
+		return new File(temporaryFolder.getRoot(), generatePngName());
+	}
+
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
@@ -5179,12 +5209,8 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFile_File_DefaultIsOverwrite() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		File f = new File("src/test/resources/Thumbnailator/tmp-grid.png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, f);
-		
+		File f = newCopyOfPngFile();
+
 		// given
 		// when
 		Thumbnails.of(f)
@@ -5192,11 +5218,7 @@ public class ThumbnailsBuilderInputOutputTest {
 			.toFile(f);
 
 		// then
-		BufferedImage img = ImageIO.read(f);
-		f.delete();
-
-		assertEquals(50, img.getWidth());
-		assertEquals(50, img.getHeight());
+		assertImageExists(f, 50, 50);
 	}
 	
 	/**
@@ -5213,12 +5235,8 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFile_File_AllowOverwrite() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		File f = TestUtils.createTempFile(TMPDIR, "png");
+		File f = newCopyOfPngFile();
 		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, f);
-
 		// given
 		// when
 		Thumbnails.of(f)
@@ -5227,11 +5245,7 @@ public class ThumbnailsBuilderInputOutputTest {
 			.toFile(f);
 		
 		// then
-		BufferedImage img = ImageIO.read(f);
-		f.delete();
-
-		assertEquals(50, img.getWidth());
-		assertEquals(50, img.getHeight());
+		assertImageExists(f, 50, 50);
 	}
 	
 	/**
@@ -5248,12 +5262,8 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFile_File_DisallowOverwrite() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		File f = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, f);
-		
+		File f = newCopyOfPngFile();
+
 		// given
 		// when
 		try {
@@ -5266,8 +5276,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		} catch (IllegalArgumentException e) {
 			// then
 			assertEquals("The destination file exists.", e.getMessage());
-			assertTrue(sourceFile.length() == f.length());
-			f.delete();
+			assertImageExists(f, 100, 100);
 		}
 	}
 	
@@ -5285,12 +5294,8 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFile_String_AllowOverwrite() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		File f = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, f);
-		
+		File f = newCopyOfPngFile();
+
 		// given
 		// when
 		Thumbnails.of(f)
@@ -5299,11 +5304,7 @@ public class ThumbnailsBuilderInputOutputTest {
 			.toFile(f.getAbsolutePath());
 		
 		// then
-		BufferedImage img = ImageIO.read(f);
-		f.delete();
-		
-		assertEquals(50, img.getWidth());
-		assertEquals(50, img.getHeight());
+		assertImageExists(f, 50, 50);
 	}
 	
 	/**
@@ -5320,17 +5321,13 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFile_String_DisallowOverwrite() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		File f = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, f);
+		File f = newCopyOfPngFile();
 		
 		// given
 		// when
 		try {
 			Thumbnails.of(f)
-				.size(100, 100)
+				.size(50, 50)
 				.allowOverwrite(false)
 				.toFile(f.getAbsolutePath());
 			
@@ -5338,8 +5335,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		} catch (IllegalArgumentException e) {
 			// then
 			assertEquals("The destination file exists.", e.getMessage());
-			assertTrue(sourceFile.length() == f.length());
-			f.delete();
+			assertImageExists(f, 100, 100);
 		}
 	}
 	
@@ -5358,29 +5354,18 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesIterable_AllowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
+		File originalFile = newCopyOfPngFile();
+		File fileThatDoesntExist = newUncreatedPngFile();
 		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.toFiles(Arrays.asList(fileThatDoesntExist));
 		
 		// then
-		assertTrue(fileThatDoesntExist.exists());
-		
-		// clean up
-		originalFile.delete();
-		fileThatDoesntExist.delete();
+		assertImageExists(fileThatDoesntExist, 50, 50);
 	}
 	
 	/**
@@ -5398,31 +5383,18 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesIterable_AllowOverwrite_SingleFile_OutputFileExists() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		TestUtils.copyFile(sourceFile, fileThatExists);
-		
+		File originalFile = newCopyOfPngFile();
+		File fileThatExists = newUncreatedPngFile();
+
 		// given
-		
 		// when
 		Thumbnails.of(originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.toFiles(Arrays.asList(fileThatExists));
 		
 		// then
-		assertTrue(fileThatExists.exists());
-		assertFalse(sourceFile.length() == fileThatExists.length());
-		
-		// clean up
-		originalFile.delete();
-		fileThatExists.delete();
+		assertImageExists(fileThatExists, 50, 50);
 	}
 	
 	/**
@@ -5440,29 +5412,18 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesIterable_DisallowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
+		File originalFile = newCopyOfPngFile();
+		File fileThatDoesntExist = newUncreatedPngFile();
 		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.toFiles(Arrays.asList(fileThatDoesntExist));
 		
 		// then
-		assertTrue(fileThatDoesntExist.exists());
-		
-		// clean up
-		originalFile.delete();
-		fileThatDoesntExist.delete();
+		assertImageExists(fileThatDoesntExist, 50, 50);
 	}
 	
 	/**
@@ -5480,31 +5441,18 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesIterable_DisallowOverwrite_SingleFile_OutputFileExists() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		TestUtils.copyFile(sourceFile, fileThatExists);
+		File originalFile = newCopyOfPngFile();
+		File fileThatExists = newCopyOfPngFile();
 		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.toFiles(Arrays.asList(fileThatExists));
 		
 		// then
-		assertTrue(fileThatExists.exists());
-		assertTrue(sourceFile.length() == fileThatExists.length());
-		
-		// clean up
-		originalFile.delete();
-		fileThatExists.delete();
+		assertImageExists(fileThatExists, 100, 100);
 	}
 	
 	/**
@@ -5523,32 +5471,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesIterable_AllowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
-		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
+		File originalFile = newCopyOfPngFile();
+		File fileThatDoesntExist1 = newUncreatedPngFile();
+		File fileThatDoesntExist2 = newUncreatedPngFile();
 		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile, originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.toFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2));
 		
 		// then
-		assertTrue(fileThatDoesntExist1.exists());
-		assertTrue(fileThatDoesntExist2.exists());
-		
-		// clean up
-		originalFile.delete();
-		fileThatDoesntExist1.delete();
-		fileThatDoesntExist2.delete();
+		assertImageExists(fileThatDoesntExist1, 50, 50);
+		assertImageExists(fileThatDoesntExist2, 50, 50);
 	}
 	
 	/**
@@ -5567,34 +5503,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesIterable_AllowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
-		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		TestUtils.copyFile(sourceFile, fileThatExists);
+		File originalFile = newCopyOfPngFile();
+		File fileThatDoesntExist = newUncreatedPngFile();
+		File fileThatExists = newCopyOfPngFile();
 		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile, originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.toFiles(Arrays.asList(fileThatDoesntExist, fileThatExists));
 		
 		// then
-		assertTrue(fileThatDoesntExist.exists());
-		assertTrue(fileThatExists.exists());
-		assertFalse(sourceFile.length() == fileThatExists.length());
-		
-		// clean up
-		originalFile.delete();
-		fileThatDoesntExist.delete();
-		fileThatExists.delete();
+		assertImageExists(fileThatDoesntExist, 50, 50);
+		assertImageExists(fileThatExists, 50, 50);
 	}
 	
 	/**
@@ -5613,36 +5535,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesIterable_AllowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
-		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		TestUtils.copyFile(sourceFile, fileThatExists1);
-		TestUtils.copyFile(sourceFile, fileThatExists2);
+		File originalFile = newCopyOfPngFile();
+		File fileThatExists1 = newCopyOfPngFile();
+		File fileThatExists2 = newCopyOfPngFile();
 		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile, originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.toFiles(Arrays.asList(fileThatExists1, fileThatExists2));
 		
 		// then
-		assertTrue(fileThatExists1.exists());
-		assertTrue(fileThatExists2.exists());
-		assertFalse(sourceFile.length() == fileThatExists1.length());
-		assertFalse(sourceFile.length() == fileThatExists2.length());
-		
-		// clean up
-		originalFile.delete();
-		fileThatExists1.delete();
-		fileThatExists2.delete();
+		assertImageExists(fileThatExists1, 50, 50);
+		assertImageExists(fileThatExists2, 50, 50);
 	}
 	
 	/**
@@ -5661,32 +5567,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesIterable_DisallowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
-		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
+		File originalFile = newCopyOfPngFile();
+		File fileThatDoesntExist1 = newUncreatedPngFile();
+		File fileThatDoesntExist2 = newUncreatedPngFile();
 		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile, originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.toFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2));
 		
 		// then
-		assertTrue(fileThatDoesntExist1.exists());
-		assertTrue(fileThatDoesntExist2.exists());
-		
-		// clean up
-		originalFile.delete();
-		fileThatDoesntExist1.delete();
-		fileThatDoesntExist2.delete();
+		assertImageExists(fileThatDoesntExist1, 50, 50);
+		assertImageExists(fileThatDoesntExist2, 50, 50);
 	}
 	
 	/**
@@ -5705,34 +5599,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesIterable_DisallowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
-		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		TestUtils.copyFile(sourceFile, fileThatExists);
+		File originalFile = newCopyOfPngFile();
+		File fileThatDoesntExist = newUncreatedPngFile();
+		File fileThatExists = newCopyOfPngFile();
 		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile, originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.toFiles(Arrays.asList(fileThatDoesntExist, fileThatExists));
 		
 		// then
-		assertTrue(fileThatDoesntExist.exists());
-		assertTrue(fileThatExists.exists());
-		assertTrue(sourceFile.length() == fileThatExists.length());
-		
-		// clean up
-		originalFile.delete();
-		fileThatDoesntExist.delete();
-		fileThatExists.delete();
+		assertImageExists(fileThatDoesntExist, 50, 50);
+		assertImageExists(fileThatExists, 100, 100);
 	}
 	
 	/**
@@ -5751,36 +5631,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesIterable_DisallowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
-		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		TestUtils.copyFile(sourceFile, fileThatExists1);
-		TestUtils.copyFile(sourceFile, fileThatExists2);
+		File originalFile = newCopyOfPngFile();
+		File fileThatExists1 = newCopyOfPngFile();
+		File fileThatExists2 = newCopyOfPngFile();
 		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile, originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.toFiles(Arrays.asList(fileThatExists1, fileThatExists2));
 		
 		// then
-		assertTrue(fileThatExists1.exists());
-		assertTrue(fileThatExists2.exists());
-		assertTrue(sourceFile.length() == fileThatExists1.length());
-		assertTrue(sourceFile.length() == fileThatExists2.length());
-		
-		// clean up
-		originalFile.delete();
-		fileThatExists1.delete();
-		fileThatExists2.delete();
+		assertImageExists(fileThatExists1, 100, 100);
+		assertImageExists(fileThatExists2, 100, 100);
 	}
 	
 	/**
@@ -5799,33 +5663,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesIterable_AllowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
-		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		
+		File originalFile = newCopyOfPngFile();
+		File fileThatDoesntExist1 = newUncreatedPngFile();
+		File fileThatDoesntExist2 = newUncreatedPngFile();
+
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2));
 		
 		// then
-		assertTrue(fileThatDoesntExist1.exists());
-		assertTrue(fileThatDoesntExist2.exists());
-		assertEquals(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), list);
-		
-		// clean up
-		originalFile.delete();
-		fileThatDoesntExist1.delete();
-		fileThatDoesntExist2.delete();
+		assertImageExists(fileThatDoesntExist1, 50, 50);
+		assertImageExists(fileThatDoesntExist2, 50, 50);
 	}
 	
 	/**
@@ -5844,37 +5695,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesIterable_AllowOverwrite_SingleFile_OutputFileExists() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
-		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		TestUtils.copyFile(sourceFile, fileThatExists1);
-		TestUtils.copyFile(sourceFile, fileThatExists2);
+		File originalFile = newCopyOfPngFile();
+		File fileThatExists1 = newCopyOfPngFile();
+		File fileThatExists2 = newCopyOfPngFile();
 		
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.asFiles(Arrays.asList(fileThatExists1, fileThatExists2));
 		
 		// then
-		assertTrue(fileThatExists1.exists());
-		assertTrue(fileThatExists2.exists());
-		assertFalse(sourceFile.length() == fileThatExists1.length());
-		assertFalse(sourceFile.length() == fileThatExists2.length());
-		assertEquals(Arrays.asList(fileThatExists1, fileThatExists2), list);
-		
-		// clean up
-		originalFile.delete();
-		fileThatExists1.delete();
-		fileThatExists2.delete();
+		assertImageExists(fileThatExists1, 50, 50);
+		assertImageExists(fileThatExists2, 50, 50);
 	}
 	
 	/**
@@ -5893,33 +5727,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesIterable_DisallowOverwrite_SingleFiles_OutputFileDoesNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
-		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
+		File originalFile = newCopyOfPngFile();
+		File fileThatDoesntExist1 = newUncreatedPngFile();
+		File fileThatDoesntExist2 = newUncreatedPngFile();
 		
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2));
 		
 		// then
-		assertTrue(fileThatDoesntExist1.exists());
-		assertTrue(fileThatDoesntExist2.exists());
-		assertEquals(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), list);
-		
-		// clean up
-		originalFile.delete();
-		fileThatDoesntExist1.delete();
-		fileThatDoesntExist2.delete();
+		assertImageExists(fileThatDoesntExist1, 50, 50);
+		assertImageExists(fileThatDoesntExist2, 50, 50);
 	}
 	
 	/**
@@ -5938,37 +5759,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesIterable_DisallowOverwrite_SingleFile_OutputFileExists() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
-		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		TestUtils.copyFile(sourceFile, fileThatExists1);
-		TestUtils.copyFile(sourceFile, fileThatExists2);
-		
+		File originalFile = newCopyOfPngFile();
+		File fileThatExists1 = newCopyOfPngFile();
+		File fileThatExists2 = newCopyOfPngFile();
+
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.asFiles(Arrays.asList(fileThatExists1, fileThatExists2));
 		
 		// then
-		assertTrue(fileThatExists1.exists());
-		assertTrue(fileThatExists2.exists());
-		assertTrue(sourceFile.length() == fileThatExists1.length());
-		assertTrue(sourceFile.length() == fileThatExists2.length());
-		assertEquals(Collections.emptyList(), list);
-		
-		// clean up
-		originalFile.delete();
-		fileThatExists1.delete();
-		fileThatExists2.delete();
+		assertImageExists(fileThatExists1, 100, 100);
+		assertImageExists(fileThatExists2, 100, 100);
 	}
 	
 	/**
@@ -5988,33 +5792,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesIterable_AllowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
-		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
+		File originalFile = newCopyOfPngFile();
+		File fileThatDoesntExist1 = newUncreatedPngFile();
+		File fileThatDoesntExist2 = newUncreatedPngFile();
 		
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2));
 		
 		// then
-		assertTrue(fileThatDoesntExist1.exists());
-		assertTrue(fileThatDoesntExist2.exists());
-		assertEquals(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), list);
-		
-		// clean up
-		originalFile.delete();
-		fileThatDoesntExist1.delete();
-		fileThatDoesntExist2.delete();
+		assertImageExists(fileThatDoesntExist1, 50, 50);
+		assertImageExists(fileThatDoesntExist2, 50, 50);
 	}
 	
 	/**
@@ -6034,35 +5825,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesIterable_AllowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
-		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		TestUtils.copyFile(sourceFile, fileThatExists);
-		
+		File originalFile = newCopyOfPngFile();
+		File fileThatDoesntExist = newUncreatedPngFile();
+		File fileThatExists = newCopyOfPngFile();
+
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.asFiles(Arrays.asList(fileThatDoesntExist, fileThatExists));
 		
 		// then
-		assertTrue(fileThatDoesntExist.exists());
-		assertTrue(fileThatExists.exists());
-		assertFalse(sourceFile.length() == fileThatExists.length());
-		assertEquals(Arrays.asList(fileThatDoesntExist, fileThatExists), list);
-		
-		// clean up
-		originalFile.delete();
-		fileThatDoesntExist.delete();
-		fileThatExists.delete();
+		assertImageExists(fileThatDoesntExist, 50, 50);
+		assertImageExists(fileThatExists, 50, 50);
 	}
 	
 	/**
@@ -6082,37 +5858,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesIterable_AllowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
-		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		TestUtils.copyFile(sourceFile, fileThatExists1);
-		TestUtils.copyFile(sourceFile, fileThatExists2);
-		
+		File originalFile = newCopyOfPngFile();
+		File fileThatExists1 = newCopyOfPngFile();
+		File fileThatExists2 = newCopyOfPngFile();
+
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.asFiles(Arrays.asList(fileThatExists1, fileThatExists2));
 		
 		// then
-		assertTrue(fileThatExists1.exists());
-		assertTrue(fileThatExists2.exists());
-		assertFalse(sourceFile.length() == fileThatExists1.length());
-		assertFalse(sourceFile.length() == fileThatExists2.length());
-		assertEquals(Arrays.asList(fileThatExists1, fileThatExists2), list);
-		
-		// clean up
-		originalFile.delete();
-		fileThatExists1.delete();
-		fileThatExists2.delete();
+		assertImageExists(fileThatExists1, 50, 50);
+		assertImageExists(fileThatExists2, 50, 50);
 	}
 	
 	/**
@@ -6132,33 +5891,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesIterable_DisallowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatDoesntExist1 = TestUtils.createTempFile(TMPDIR, "png");
-		File fileThatDoesntExist2 = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		
+		File originalFile = newCopyOfPngFile();
+		File fileThatDoesntExist1 = newUncreatedPngFile();
+		File fileThatDoesntExist2 = newUncreatedPngFile();
+
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2));
 		
 		// then
-		assertTrue(fileThatDoesntExist1.exists());
-		assertTrue(fileThatDoesntExist2.exists());
-		assertEquals(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), list);
-		
-		// clean up
-		originalFile.delete();
-		fileThatDoesntExist1.delete();
-		fileThatDoesntExist2.delete();
+		assertImageExists(fileThatDoesntExist1, 50, 50);
+		assertImageExists(fileThatDoesntExist2, 50, 50);
 	}
 	
 	/**
@@ -6178,35 +5924,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesIterable_DisallowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatDoesntExist = TestUtils.createTempFile(TMPDIR, "png");
-		File fileThatExists = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		TestUtils.copyFile(sourceFile, fileThatExists);
+		File originalFile = newCopyOfPngFile();
+		File fileThatDoesntExist = newUncreatedPngFile();
+		File fileThatExists = newCopyOfPngFile();
 		
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.asFiles(Arrays.asList(fileThatDoesntExist, fileThatExists));
 		
 		// then
-		assertTrue(fileThatDoesntExist.exists());
-		assertTrue(fileThatExists.exists());
-		assertTrue(sourceFile.length() == fileThatExists.length());
-		assertEquals(Arrays.asList(fileThatDoesntExist), list);
-		
-		// clean up
-		originalFile.delete();
-		fileThatDoesntExist.delete();
-		fileThatExists.delete();
+		assertImageExists(fileThatDoesntExist, 50, 50);
+		assertImageExists(fileThatExists, 100, 100);
 	}
 	
 	/**
@@ -6226,37 +5957,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesIterable_DisallowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
-		File fileThatExists1 = TestUtils.createTempFile(TMPDIR, "png");
-		File fileThatExists2 = TestUtils.createTempFile(TMPDIR, "png");
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		TestUtils.copyFile(sourceFile, fileThatExists1);
-		TestUtils.copyFile(sourceFile, fileThatExists2);
-		
+		File originalFile = newCopyOfPngFile();
+		File fileThatExists1 = newCopyOfPngFile();
+		File fileThatExists2 = newCopyOfPngFile();
+
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile, originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.asFiles(Arrays.asList(fileThatExists1, fileThatExists2));
 		
 		// then
-		assertTrue(fileThatExists1.exists());
-		assertTrue(fileThatExists2.exists());
-		assertTrue(sourceFile.length() == fileThatExists1.length());
-		assertTrue(sourceFile.length() == fileThatExists2.length());
-		assertEquals(Collections.emptyList(), list);
-		
-		// clean up
-		originalFile.delete();
-		fileThatExists1.delete();
-		fileThatExists2.delete();
+		assertImageExists(fileThatExists1, 100, 100);
+		assertImageExists(fileThatExists2, 100, 100);
 	}
 
 	/**
@@ -6274,30 +5988,19 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesRename_AllowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
+		File originalFile = newCopyOfPngFile();
 		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
 		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.toFiles(rename);
 		
 		// then
-		assertTrue(fileThatDoesntExist.exists());
-		
-		// clean up
-		originalFile.delete();
-		fileThatDoesntExist.delete();
+		assertImageExists(fileThatDoesntExist, 50, 50);
 	}
 	
 	/**
@@ -6315,32 +6018,21 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesRename_AllowOverwrite_SingleFile_OutputFileExists() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
-		
+		File originalFile = newCopyOfPngFile();
+
 		File fileThatExists = makeRenamedFile(originalFile, rename);
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		TestUtils.copyFile(sourceFile, fileThatExists);
-		
+		TestUtils.copyFile(originalFile, fileThatExists);
+
 		// given
-		
 		// when
 		Thumbnails.of(originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.toFiles(rename);
 		
 		// then
-		assertTrue(fileThatExists.exists());
-		assertFalse(sourceFile.length() == fileThatExists.length());
-		
-		// clean up
-		originalFile.delete();
-		fileThatExists.delete();
+		assertImageExists(fileThatExists, 50, 50);
 	}
 	
 	/**
@@ -6358,30 +6050,20 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesRename_DisallowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile = newCopyOfPngFile();
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
 		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.toFiles(rename);
 		
 		// then
-		assertTrue(fileThatDoesntExist.exists());
-		
-		// clean up
-		originalFile.delete();
-		fileThatDoesntExist.delete();
+		assertImageExists(fileThatDoesntExist, 50, 50);
 	}
 	
 	/**
@@ -6399,32 +6081,22 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesRename_DisallowOverwrite_SingleFile_OutputFileExists() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile = newCopyOfPngFile();
 		
 		File fileThatExists = makeRenamedFile(originalFile, rename);
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		TestUtils.copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(originalFile, fileThatExists);
 		
 		// given
 		
 		// when
 		Thumbnails.of(originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.toFiles(rename);
 		
 		// then
-		assertTrue(fileThatExists.exists());
-		assertTrue(sourceFile.length() == fileThatExists.length());
-		
-		// clean up
-		originalFile.delete();
-		fileThatExists.delete();
+		assertImageExists(fileThatExists, 100, 100);
 	}
 	
 	/**
@@ -6443,36 +6115,23 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesRename_AllowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
-		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile1 = newCopyOfPngFile();
+		File originalFile2 = newCopyOfPngFile();
 		
 		File fileThatDoesntExist1 = makeRenamedFile(originalFile1, rename);
 		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
 		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile1);
-		TestUtils.copyFile(sourceFile, originalFile2);
-		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile1, originalFile2)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.toFiles(rename);
 		
 		// then
-		assertTrue(fileThatDoesntExist1.exists());
-		assertTrue(fileThatDoesntExist2.exists());
-		
-		// clean up
-		originalFile1.delete();
-		originalFile2.delete();
-		fileThatDoesntExist1.delete();
-		fileThatDoesntExist2.delete();
+		assertImageExists(fileThatDoesntExist1, 50, 50);
+		assertImageExists(fileThatDoesntExist2, 50, 50);
 	}
 	
 	/**
@@ -6491,38 +6150,24 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesRename_AllowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
-		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile1 = newCopyOfPngFile();
+		File originalFile2 = newCopyOfPngFile();
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile1, rename);
 		File fileThatExists = makeRenamedFile(originalFile2, rename);
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile1);
-		TestUtils.copyFile(sourceFile, originalFile2);
-		TestUtils.copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(originalFile2, fileThatExists);
 		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile1, originalFile2)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.toFiles(rename);
 		
 		// then
-		assertTrue(fileThatDoesntExist.exists());
-		assertTrue(fileThatExists.exists());
-		assertFalse(sourceFile.length() == fileThatExists.length());
-		
-		// clean up
-		originalFile1.delete();
-		originalFile2.delete();
-		fileThatDoesntExist.delete();
-		fileThatExists.delete();
+		assertImageExists(fileThatDoesntExist, 50, 50);
+		assertImageExists(fileThatExists, 50, 50);
 	}
 	
 	/**
@@ -6541,40 +6186,25 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesRename_AllowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
-		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile1 = newCopyOfPngFile();
+		File originalFile2 = newCopyOfPngFile();
 		
 		File fileThatExists1 = makeRenamedFile(originalFile1, rename);
 		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile1);
-		TestUtils.copyFile(sourceFile, originalFile2);
-		TestUtils.copyFile(sourceFile, fileThatExists1);
-		TestUtils.copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(originalFile1, fileThatExists1);
+		TestUtils.copyFile(originalFile2, fileThatExists2);
 		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile1, originalFile2)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.toFiles(rename);
 		
 		// then
-		assertTrue(fileThatExists1.exists());
-		assertTrue(fileThatExists2.exists());
-		assertFalse(sourceFile.length() == fileThatExists1.length());
-		assertFalse(sourceFile.length() == fileThatExists2.length());
-		
-		// clean up
-		originalFile1.delete();
-		originalFile2.delete();
-		fileThatExists1.delete();
-		fileThatExists2.delete();
+		assertImageExists(fileThatExists1, 50, 50);
+		assertImageExists(fileThatExists2, 50, 50);
 	}
 	
 	/**
@@ -6593,36 +6223,23 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesRename_DisallowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
-		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile1 = newCopyOfPngFile();
+		File originalFile2 = newCopyOfPngFile();
 		
 		File fileThatDoesntExist1 = makeRenamedFile(originalFile1, rename);
 		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
 		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile1);
-		TestUtils.copyFile(sourceFile, originalFile2);
-		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile1, originalFile2)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.toFiles(rename);
 		
 		// then
-		assertTrue(fileThatDoesntExist1.exists());
-		assertTrue(fileThatDoesntExist2.exists());
-		
-		// clean up
-		originalFile1.delete();
-		originalFile2.delete();
-		fileThatDoesntExist1.delete();
-		fileThatDoesntExist2.delete();
+		assertImageExists(fileThatDoesntExist1, 50, 50);
+		assertImageExists(fileThatDoesntExist2, 50, 50);
 	}
 	
 	/**
@@ -6641,38 +6258,24 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesRename_DisallowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
-		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile1 = newCopyOfPngFile();
+		File originalFile2 = newCopyOfPngFile();
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile1, rename);
 		File fileThatExists = makeRenamedFile(originalFile2, rename);
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile1);
-		TestUtils.copyFile(sourceFile, originalFile2);
-		TestUtils.copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(originalFile2, fileThatExists);
 		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile1, originalFile2)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.toFiles(rename);
 		
 		// then
-		assertTrue(fileThatDoesntExist.exists());
-		assertTrue(fileThatExists.exists());
-		assertTrue(sourceFile.length() == fileThatExists.length());
-		
-		// clean up
-		originalFile1.delete();
-		originalFile2.delete();
-		fileThatDoesntExist.delete();
-		fileThatExists.delete();
+		assertImageExists(fileThatDoesntExist, 50, 50);
+		assertImageExists(fileThatExists, 100, 100);
 	}
 	
 	/**
@@ -6691,40 +6294,25 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void toFilesRename_DisallowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
-		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile1 = newCopyOfPngFile();
+		File originalFile2 = newCopyOfPngFile();
 		
 		File fileThatExists1 = makeRenamedFile(originalFile1, rename);
 		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile1);
-		TestUtils.copyFile(sourceFile, originalFile2);
-		TestUtils.copyFile(sourceFile, fileThatExists1);
-		TestUtils.copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(originalFile1, fileThatExists1);
+		TestUtils.copyFile(originalFile2, fileThatExists2);
 		
 		// given
-		
 		// when
 		Thumbnails.of(originalFile1, originalFile2)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.toFiles(rename);
 		
 		// then
-		assertTrue(fileThatExists1.exists());
-		assertTrue(fileThatExists2.exists());
-		assertTrue(sourceFile.length() == fileThatExists1.length());
-		assertTrue(sourceFile.length() == fileThatExists2.length());
-		
-		// clean up
-		originalFile1.delete();
-		originalFile2.delete();
-		fileThatExists1.delete();
-		fileThatExists2.delete();
+		assertImageExists(fileThatExists1, 100, 100);
+		assertImageExists(fileThatExists2, 100, 100);
 	}
 
 	/**
@@ -6742,31 +6330,22 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesRename_AllowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile = newCopyOfPngFile();
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
 		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.asFiles(rename);
 		
 		// then
-		assertTrue(fileThatDoesntExist.exists());
-		assertEquals(Arrays.asList(fileThatDoesntExist), list);
-		
-		// clean up
-		originalFile.delete();
-		fileThatDoesntExist.delete();
+		assertEquals(1, list.size());
+		assertEquals(fileThatDoesntExist.getAbsolutePath(), list.get(0).getAbsolutePath());
+		assertImageExists(fileThatDoesntExist, 50, 50);
 	}
 	
 	/**
@@ -6784,33 +6363,24 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesRename_AllowOverwrite_SingleFile_OutputFileExists() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile = newCopyOfPngFile();
 		
 		File fileThatExists = makeRenamedFile(originalFile, rename);
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		TestUtils.copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(originalFile, fileThatExists);
 		
 		// given
 		
 		// when
 		List<File> list = Thumbnails.of(originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.asFiles(rename);
 		
 		// then
-		assertTrue(fileThatExists.exists());
-		assertFalse(sourceFile.length() == fileThatExists.length());
-		assertEquals(Arrays.asList(fileThatExists), list);
-
-		// clean up
-		originalFile.delete();
-		fileThatExists.delete();
+		assertEquals(1, list.size());
+		assertEquals(fileThatExists.getAbsolutePath(), list.get(0).getAbsolutePath());
+		assertImageExists(fileThatExists, 50, 50);
 	}
 	
 	/**
@@ -6828,31 +6398,22 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesRename_DisallowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile = newCopyOfPngFile();
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		
+
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.asFiles(rename);
 		
 		// then
-		assertTrue(fileThatDoesntExist.exists());
-		assertEquals(Arrays.asList(fileThatDoesntExist), list);
-		
-		// clean up
-		originalFile.delete();
-		fileThatDoesntExist.delete();
+		assertEquals(1, list.size());
+		assertEquals(fileThatDoesntExist.getAbsolutePath(), list.get(0).getAbsolutePath());
+		assertImageExists(fileThatDoesntExist, 50, 50);
 	}
 	
 	/**
@@ -6870,33 +6431,23 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesRename_DisallowOverwrite_SingleFile_OutputFileExists() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile = newCopyOfPngFile();
 		
 		File fileThatExists = makeRenamedFile(originalFile, rename);
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile);
-		TestUtils.copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(originalFile, fileThatExists);
 		
 		// given
 		
 		// when
 		List<File> list = Thumbnails.of(originalFile)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.asFiles(rename);
 		
 		// then
-		assertTrue(fileThatExists.exists());
-		assertTrue(sourceFile.length() == fileThatExists.length());
-		assertEquals(Collections.emptyList(), list);
-		
-		// clean up
-		originalFile.delete();
-		fileThatExists.delete();
+		assertEquals(0, list.size());
+		assertImageExists(fileThatExists, 100, 100);
 	}
 	
 	/**
@@ -6915,37 +6466,26 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesRename_AllowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
-		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile1 = newCopyOfPngFile();
+		File originalFile2 = newCopyOfPngFile();
 		
 		File fileThatDoesntExist1 = makeRenamedFile(originalFile1, rename);
 		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile1);
-		TestUtils.copyFile(sourceFile, originalFile2);
-		
+
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile1, originalFile2)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.asFiles(rename);
 		
 		// then
-		assertTrue(fileThatDoesntExist1.exists());
-		assertTrue(fileThatDoesntExist2.exists());
-		assertEquals(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), list);
-		
-		// clean up
-		originalFile1.delete();
-		originalFile2.delete();
-		fileThatDoesntExist1.delete();
-		fileThatDoesntExist2.delete();
+		assertEquals(2, list.size());
+		assertEquals(fileThatDoesntExist1.getAbsolutePath(), list.get(0).getAbsolutePath());
+		assertEquals(fileThatDoesntExist2.getAbsolutePath(), list.get(1).getAbsolutePath());
+		assertImageExists(fileThatDoesntExist1, 50, 50);
+		assertImageExists(fileThatDoesntExist2, 50, 50);
 	}
 	
 	/**
@@ -6964,39 +6504,27 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesRename_AllowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
-		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile1 = newCopyOfPngFile();
+		File originalFile2 = newCopyOfPngFile();
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile1, rename);
 		File fileThatExists = makeRenamedFile(originalFile2, rename);
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile1);
-		TestUtils.copyFile(sourceFile, originalFile2);
-		TestUtils.copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(originalFile2, fileThatExists);
 		
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile1, originalFile2)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.asFiles(rename);
 		
 		// then
-		assertTrue(fileThatDoesntExist.exists());
-		assertTrue(fileThatExists.exists());
-		assertFalse(sourceFile.length() == fileThatExists.length());
-		assertEquals(Arrays.asList(fileThatDoesntExist, fileThatExists), list);
-		
-		// clean up
-		originalFile1.delete();
-		originalFile2.delete();
-		fileThatDoesntExist.delete();
-		fileThatExists.delete();
+		assertEquals(2, list.size());
+		assertEquals(fileThatDoesntExist.getAbsolutePath(), list.get(0).getAbsolutePath());
+		assertEquals(fileThatExists.getAbsolutePath(), list.get(1).getAbsolutePath());
+		assertImageExists(fileThatDoesntExist, 50, 50);
+		assertImageExists(fileThatExists, 50, 50);
 	}
 	
 	/**
@@ -7015,41 +6543,28 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesRename_AllowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
-		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile1 = newCopyOfPngFile();
+		File originalFile2 = newCopyOfPngFile();
 		
 		File fileThatExists1 = makeRenamedFile(originalFile1, rename);
 		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile1);
-		TestUtils.copyFile(sourceFile, originalFile2);
-		TestUtils.copyFile(sourceFile, fileThatExists1);
-		TestUtils.copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(originalFile1, fileThatExists1);
+		TestUtils.copyFile(originalFile2, fileThatExists2);
 		
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile1, originalFile2)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.asFiles(rename);
 		
 		// then
-		assertTrue(fileThatExists1.exists());
-		assertTrue(fileThatExists2.exists());
-		assertFalse(sourceFile.length() == fileThatExists1.length());
-		assertFalse(sourceFile.length() == fileThatExists2.length());
-		assertEquals(Arrays.asList(fileThatExists1, fileThatExists2), list);
-		
-		// clean up
-		originalFile1.delete();
-		originalFile2.delete();
-		fileThatExists1.delete();
-		fileThatExists2.delete();
+		assertEquals(2, list.size());
+		assertEquals(fileThatExists1.getAbsolutePath(), list.get(0).getAbsolutePath());
+		assertEquals(fileThatExists2.getAbsolutePath(), list.get(1).getAbsolutePath());
+		assertImageExists(fileThatExists1, 50, 50);
+		assertImageExists(fileThatExists2, 50, 50);
 	}
 	
 	/**
@@ -7068,37 +6583,26 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesRename_DisallowOverwrite_MultipleFiles_AllOutputFilesDoNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
-		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile1 = newCopyOfPngFile();
+		File originalFile2 = newCopyOfPngFile();
 		
 		File fileThatDoesntExist1 = makeRenamedFile(originalFile1, rename);
 		File fileThatDoesntExist2 = makeRenamedFile(originalFile2, rename);
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile1);
-		TestUtils.copyFile(sourceFile, originalFile2);
-		
+
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile1, originalFile2)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(true)
 			.asFiles(rename);
 		
 		// then
-		assertTrue(fileThatDoesntExist1.exists());
-		assertTrue(fileThatDoesntExist2.exists());
-		assertEquals(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2), list);
-		
-		// clean up
-		originalFile1.delete();
-		originalFile2.delete();
-		fileThatDoesntExist1.delete();
-		fileThatDoesntExist2.delete();
+		assertEquals(2, list.size());
+		assertEquals(fileThatDoesntExist1.getAbsolutePath(), list.get(0).getAbsolutePath());
+		assertEquals(fileThatDoesntExist2.getAbsolutePath(), list.get(1).getAbsolutePath());
+		assertImageExists(fileThatDoesntExist1, 50, 50);
+		assertImageExists(fileThatDoesntExist2, 50, 50);
 	}
 	
 	/**
@@ -7117,39 +6621,26 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesRename_DisallowOverwrite_MultipleFiles_SomeOutputFilesDoNotExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
-		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile1 = newCopyOfPngFile();
+		File originalFile2 = newCopyOfPngFile();
 		
 		File fileThatDoesntExist = makeRenamedFile(originalFile1, rename);
 		File fileThatExists = makeRenamedFile(originalFile2, rename);
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile1);
-		TestUtils.copyFile(sourceFile, originalFile2);
-		TestUtils.copyFile(sourceFile, fileThatExists);
+		TestUtils.copyFile(originalFile2, fileThatExists);
 		
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile1, originalFile2)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.asFiles(rename);
 		
 		// then
-		assertTrue(fileThatDoesntExist.exists());
-		assertTrue(fileThatExists.exists());
-		assertTrue(sourceFile.length() == fileThatExists.length());
-		assertEquals(Arrays.asList(fileThatDoesntExist), list);
-		
-		// clean up
-		originalFile1.delete();
-		originalFile2.delete();
-		fileThatDoesntExist.delete();
-		fileThatExists.delete();
+		assertEquals(1, list.size());
+		assertEquals(fileThatDoesntExist.getAbsolutePath(), list.get(0).getAbsolutePath());
+		assertImageExists(fileThatDoesntExist, 50, 50);
+		assertImageExists(fileThatExists, 100, 100);
 	}
 	
 	/**
@@ -7168,41 +6659,26 @@ public class ThumbnailsBuilderInputOutputTest {
 	@Test
 	public void asFilesRename_DisallowOverwrite_MultipleFiles_AllOutputFilesExist() throws IOException {
 		// set up
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		
 		Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-		File originalFile1 = TestUtils.createTempFile(TMPDIR, "png");
-		File originalFile2 = TestUtils.createTempFile(TMPDIR, "png");
+		File originalFile1 = newCopyOfPngFile();
+		File originalFile2 = newCopyOfPngFile();
 		
 		File fileThatExists1 = makeRenamedFile(originalFile1, rename);
 		File fileThatExists2 = makeRenamedFile(originalFile2, rename);
-		
-		// copy the image to a temporary file.
-		TestUtils.copyFile(sourceFile, originalFile1);
-		TestUtils.copyFile(sourceFile, originalFile2);
-		TestUtils.copyFile(sourceFile, fileThatExists1);
-		TestUtils.copyFile(sourceFile, fileThatExists2);
+		TestUtils.copyFile(originalFile1, fileThatExists1);
+		TestUtils.copyFile(originalFile2, fileThatExists2);
 		
 		// given
-		
 		// when
 		List<File> list = Thumbnails.of(originalFile1, originalFile2)
-			.size(100, 100)
+			.size(50, 50)
 			.allowOverwrite(false)
 			.asFiles(rename);
 		
 		// then
-		assertTrue(fileThatExists1.exists());
-		assertTrue(fileThatExists2.exists());
-		assertTrue(sourceFile.length() == fileThatExists1.length());
-		assertTrue(sourceFile.length() == fileThatExists2.length());
-		assertEquals(Collections.emptyList(), list);
-		
-		// clean up
-		originalFile1.delete();
-		originalFile2.delete();
-		fileThatExists1.delete();
-		fileThatExists2.delete();
+		assertEquals(0, list.size());
+		assertImageExists(fileThatExists1, 100, 100);
+		assertImageExists(fileThatExists2, 100, 100);
 	}
 	
 	@Test
