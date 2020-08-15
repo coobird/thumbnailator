@@ -61,7 +61,7 @@ public class Issue69FileImageSourceTest {
 	public void prepareSource() throws IOException {
 		tempFile = tempFolder.newFile("temp.jpg");
 		
-		BufferedImage img = new BufferedImage(SIZE, SIZE, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage img = new BufferedImage(SIZE, SIZE, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = img.createGraphics();
 		g.setPaint(new GradientPaint(0, 0, Color.blue, SIZE, SIZE, Color.red));
 		g.dispose();

@@ -30,8 +30,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 
-import net.coobird.thumbnailator.filters.Caption;
-import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.geometry.Positions;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 import net.coobird.thumbnailator.util.BufferedImages;

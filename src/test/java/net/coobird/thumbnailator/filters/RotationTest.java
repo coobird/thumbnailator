@@ -31,8 +31,6 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
-import net.coobird.thumbnailator.filters.ImageFilter;
-import net.coobird.thumbnailator.filters.Rotation;
 import net.coobird.thumbnailator.test.BufferedImageAssert;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 import net.coobird.thumbnailator.util.BufferedImages;

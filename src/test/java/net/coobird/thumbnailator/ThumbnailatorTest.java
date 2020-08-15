@@ -3468,7 +3468,9 @@ public class ThumbnailatorTest {
 	 */
 	private byte[] makeImageData(String format, int width, int height)
 	throws IOException {
-		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		BufferedImage img = new BufferedImageBuilder(200, 200)
+				.imageType("jpg".equals(format) ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB)
+				.build();
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ImageIO.write(img, format, baos);
 		

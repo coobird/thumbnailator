@@ -80,6 +80,10 @@ public class TestUtils {
 	}
 	
 	public static File createTempFile(String dir, String ext) throws IOException {
+		return createTempFile(new File(dir), ext);
+	}
+
+	public static File createTempFile(File dir, String ext) throws IOException {
 		return new File(
 				dir,
 				"tmp-" + Math.abs(new Random().nextLong()) + "." + ext

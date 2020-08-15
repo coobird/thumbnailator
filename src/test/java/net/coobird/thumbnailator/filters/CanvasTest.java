@@ -29,8 +29,6 @@ import static org.junit.Assert.*;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-import net.coobird.thumbnailator.filters.Canvas;
-import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.geometry.Positions;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 import net.coobird.thumbnailator.util.BufferedImages;

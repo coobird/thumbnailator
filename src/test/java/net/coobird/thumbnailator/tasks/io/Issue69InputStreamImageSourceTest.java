@@ -57,13 +57,11 @@ import org.junit.rules.TemporaryFolder;
  */
 public class Issue69InputStreamImageSourceTest {
 	
-	@Rule
-	public TemporaryFolder tempFolder = new TemporaryFolder();
 	public static byte[] sourceByteArray;
 	public static int SIZE = 8000;
 	
 	static {
-		BufferedImage img = new BufferedImage(SIZE, SIZE, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage img = new BufferedImage(SIZE, SIZE, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = img.createGraphics();
 		g.setPaint(new GradientPaint(0, 0, Color.blue, SIZE, SIZE, Color.red));
 		g.dispose();
