@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.tasks;
 
 import static org.junit.Assert.*;
@@ -23,23 +47,18 @@ import net.coobird.thumbnailator.test.BufferedImageComparer;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class StreamThumbnailTaskTest
-{
+public class StreamThumbnailTaskTest {
 	@Test(expected=NullPointerException.class)
-	public void nullParameter() throws IOException
-	{
+	public void nullParameter() throws IOException {
 		// given
 		InputStream is = mock(InputStream.class);
 		OutputStream os = mock(OutputStream.class);
 		
-		try
-		{
+		try {
 			// when
 			new StreamThumbnailTask(null, is, os);
 			fail();
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 			assertEquals("The parameter is null.", e.getMessage());
 			verifyZeroInteractions(is);
@@ -49,8 +68,7 @@ public class StreamThumbnailTaskTest
 	}
 
 	@Test
-	public void testRead_CorrectUsage() throws IOException
-	{
+	public void testRead_CorrectUsage() throws IOException {
 		ThumbnailParameter param = new ThumbnailParameter(
 				new Dimension(50, 50),
 				null,
@@ -82,8 +100,7 @@ public class StreamThumbnailTaskTest
 	}
 	
 	@Test
-	public void testWrite_CorrectUsage() throws IOException
-	{
+	public void testWrite_CorrectUsage() throws IOException {
 		ThumbnailParameter param = new ThumbnailParameter(
 				new Dimension(50, 50),
 				null,
@@ -118,14 +135,12 @@ public class StreamThumbnailTaskTest
 	}
 
 	@Ignore
-	public void testStreamThumbnailTask()
-	{
+	public void testStreamThumbnailTask() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testGetParam()
-	{
+	public void testGetParam() {
 		ThumbnailParameter param = new ThumbnailParameter(
 				new Dimension(50, 50),
 				null,

@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.tasks.io;
 
 import java.awt.image.BufferedImage;
@@ -26,8 +50,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
 
-public class FileImageSinkTest
-{
+public class FileImageSinkTest {
 	/**
 	 * The temporary directory to use when creating files to use for this test.
 	 */
@@ -35,20 +58,17 @@ public class FileImageSinkTest
 			"src/test/resources/tmp/FileImageSinkTest";
 	
 	@BeforeClass
-	public static void makeTemporaryDirectory()
-	{
+	public static void makeTemporaryDirectory() {
 		TestUtils.makeTemporaryDirectory(TMPDIR);
 	}
 	
 	@AfterClass
-	public static void deleteTemporaryDirectory()
-	{
+	public static void deleteTemporaryDirectory() {
 		TestUtils.deleteTemporaryDirectory(TMPDIR);
 	}
 
 	@Test
-	public void validFilename_File()
-	{
+	public void validFilename_File() {
 		// given
 		File f = new File(TMPDIR, "test.png");
 		
@@ -60,8 +80,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void validFilename_String()
-	{
+	public void validFilename_String() {
 		// given
 		String f = TMPDIR + "/test.png";
 		
@@ -73,18 +92,14 @@ public class FileImageSinkTest
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void nullFilename_File()
-	{
+	public void nullFilename_File() {
 		// given
 		File f = null;
 		
-		try
-		{
+		try {
 			// when
 			new FileImageSink(f);
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 			assertEquals("File cannot be null.", e.getMessage());
 			throw e;
@@ -92,18 +107,14 @@ public class FileImageSinkTest
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void nullFilename_String()
-	{
+	public void nullFilename_String() {
 		// given
 		String f = null;
 		
-		try
-		{
+		try {
 			// when
 			new FileImageSink(f);
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 			assertEquals("File cannot be null.", e.getMessage());
 			throw e;
@@ -111,8 +122,7 @@ public class FileImageSinkTest
 	}
 
 	@Test(expected=NullPointerException.class)
-	public void write_NullImage() throws IOException
-	{
+	public void write_NullImage() throws IOException {
 		// given
 		File f = new File(TMPDIR, "test.png");
 		f.deleteOnExit();
@@ -122,13 +132,10 @@ public class FileImageSinkTest
 		FileImageSink sink = new FileImageSink(f);
 		sink.setOutputFormatName("png");
 		
-		try
-		{
+		try {
 			// when
 			sink.write(img);
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 			assertEquals("Cannot write a null image.", e.getMessage());
 			throw e;
@@ -136,8 +143,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage() throws IOException
-	{
+	public void write_ValidImage() throws IOException {
 		// given
 		File outputFile = new File(TMPDIR, "test.png");
 		outputFile.deleteOnExit();
@@ -161,8 +167,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_SetOutputFormatWithSameAsExtension() throws IOException
-	{
+	public void write_ValidImage_SetOutputFormatWithSameAsExtension() throws IOException {
 		// given
 		File outputFile = new File(TMPDIR, "test.png");
 		outputFile.deleteOnExit();
@@ -187,8 +192,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_SetOutputFormatWithDifferentExtension() throws IOException
-	{
+	public void write_ValidImage_SetOutputFormatWithDifferentExtension() throws IOException {
 		// given
 		File outputFile = new File(TMPDIR, "test.png");
 		
@@ -215,8 +219,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_SetOutputFormat_OutputFileHasNoExtension() throws IOException
-	{
+	public void write_ValidImage_SetOutputFormat_OutputFileHasNoExtension() throws IOException {
 		// given
 		File outputFile = new File(TMPDIR, "test");
 		
@@ -243,8 +246,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_InvalidFileExtension() throws IOException
-	{
+	public void write_ValidImage_InvalidFileExtension() throws IOException {
 		// given
 		File outputFile = new File(TMPDIR, "test.foo");
 		outputFile.deleteOnExit();
@@ -255,20 +257,16 @@ public class FileImageSinkTest
 		FileImageSink sink = new FileImageSink(outputFile);
 		
 		// when
-		try
-		{
+		try {
 			sink.write(imgToWrite);
 			fail();
-		}
-		catch (UnsupportedFormatException e)
-		{
+		} catch (UnsupportedFormatException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void write_ValidImage_InvalidFileExtension_OutputFormatSetToValidFormat() throws IOException
-	{
+	public void write_ValidImage_InvalidFileExtension_OutputFormatSetToValidFormat() throws IOException {
 		// given
 		File outputFile = new File(TMPDIR, "test.foo");
 		File actualOutputFile = new File(TMPDIR, "test.foo.png");
@@ -294,8 +292,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_WriterCantCompress() throws IOException
-	{
+	public void write_ValidImage_WriterCantCompress() throws IOException {
 		// given
 		ImageWriteParam iwParam = mock(ImageWriteParam.class);
 		ImageWriter writer = mock(ImageWriter.class);
@@ -328,8 +325,7 @@ public class FileImageSinkTest
 		// when
 		sink.write(imgToWrite);
 		
-		try
-		{
+		try {
 			// then
 			assertEquals(outputFile, sink.getSink());
 
@@ -343,16 +339,14 @@ public class FileImageSinkTest
 			verify(param, never()).getOutputFormatType();
 			
 		}
-		finally
-		{
+		finally {
 			// clean up
 			IIORegistry.getDefaultInstance().deregisterServiceProvider(spi);
 		}
 	}
 	
 	@Test
-	public void write_ValidImage_WriterCanCompress_NoCompressionTypeFromWriter() throws IOException
-	{
+	public void write_ValidImage_WriterCanCompress_NoCompressionTypeFromWriter() throws IOException {
 		// given
 		ImageWriteParam iwParam = mock(ImageWriteParam.class);
 		ImageWriter writer = mock(ImageWriter.class);
@@ -387,8 +381,7 @@ public class FileImageSinkTest
 		sink.write(imgToWrite);
 		
 		// then
-		try
-		{
+		try {
 			assertEquals(outputFile, sink.getSink());
 			
 			verify(iwParam, atLeastOnce()).setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
@@ -399,16 +392,14 @@ public class FileImageSinkTest
 			verify(param, atLeastOnce()).getOutputQuality();
 			verify(param, atLeastOnce()).getOutputFormatType();
 		}
-		finally
-		{
+		finally {
 			// clean up
 			IIORegistry.getDefaultInstance().deregisterServiceProvider(spi);
 		}
 	}
 	
 	@Test
-	public void write_ValidImage_WriterCanCompress_HasCompressionTypeFromWriter() throws IOException
-	{
+	public void write_ValidImage_WriterCanCompress_HasCompressionTypeFromWriter() throws IOException {
 		// given
 		ImageWriteParam iwParam = mock(ImageWriteParam.class);
 		ImageWriter writer = mock(ImageWriter.class);
@@ -442,8 +433,7 @@ public class FileImageSinkTest
 		// when
 		sink.write(imgToWrite);
 		
-		try
-		{
+		try {
 			// then
 			assertEquals(outputFile, sink.getSink());
 			
@@ -455,16 +445,14 @@ public class FileImageSinkTest
 			verify(param, atLeastOnce()).getOutputQuality();
 			verify(param, atLeastOnce()).getOutputFormatType();
 		}
-		finally
-		{
+		finally {
 			// clean up
 			IIORegistry.getDefaultInstance().deregisterServiceProvider(spi);
 		}
 	}
 
 	@Test
-	public void write_ValidImage_SetThumbnailParameter_BMP_QualityAndOutputFormatType_BothDefault() throws IOException
-	{
+	public void write_ValidImage_SetThumbnailParameter_BMP_QualityAndOutputFormatType_BothDefault() throws IOException {
 		// given
 		File outputFile = new File(TMPDIR, "test.bmp");
 		outputFile.deleteOnExit();
@@ -496,8 +484,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_SetThumbnailParameter_BMP_QualityAndOutputFormatType_BothNonDefault() throws IOException
-	{
+	public void write_ValidImage_SetThumbnailParameter_BMP_QualityAndOutputFormatType_BothNonDefault() throws IOException {
 		// given
 		File outputFile = new File(TMPDIR, "test.bmp");
 		outputFile.deleteOnExit();
@@ -529,8 +516,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_SetThumbnailParameter_BMP_OutputFormatType() throws IOException
-	{
+	public void write_ValidImage_SetThumbnailParameter_BMP_OutputFormatType() throws IOException {
 		// given
 		File outputFile = new File(TMPDIR, "test.bmp");
 		outputFile.deleteOnExit();
@@ -561,8 +547,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_png() throws IOException
-	{
+	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_png() throws IOException {
 		// given
 		File outputFile = new File(TMPDIR, "test.png");
 		outputFile.deleteOnExit();
@@ -587,8 +572,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_bmp() throws IOException
-	{
+	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_bmp() throws IOException {
 		// given
 		File outputFile = new File(TMPDIR, "test.bmp");
 		outputFile.deleteOnExit();
@@ -613,8 +597,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_jpg() throws IOException
-	{
+	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_jpg() throws IOException {
 		// given
 		File outputFile = new File(TMPDIR, "test.jpg");
 		outputFile.deleteOnExit();
@@ -639,8 +622,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_jpeg() throws IOException
-	{
+	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_jpeg() throws IOException {
 		// given
 		File outputFile = new File(TMPDIR, "test.jpeg");
 		outputFile.deleteOnExit();
@@ -665,8 +647,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_Jpeg() throws IOException
-	{
+	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_Jpeg() throws IOException {
 		// given
 		File outputFile = new File(TMPDIR, "test.Jpeg");
 		outputFile.deleteOnExit();
@@ -691,8 +672,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test(expected=UnsupportedFormatException.class)
-	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_NoFileExtension() throws IOException
-	{
+	public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_NoFileExtension() throws IOException {
 		// given
 		File outputFile = new File(TMPDIR, "test");
 		outputFile.deleteOnExit();
@@ -702,14 +682,11 @@ public class FileImageSinkTest
 		
 		FileImageSink sink = new FileImageSink(outputFile);
 		
-		try
-		{
+		try {
 			// when
 			sink.setOutputFormatName(ThumbnailParameter.ORIGINAL_FORMAT);
 			sink.write(imgToWrite);
-		}
-		catch (UnsupportedFormatException e)
-		{
+		} catch (UnsupportedFormatException e) {
 			// then
 			assertEquals("Could not determine output format.", e.getMessage());
 			throw e;
@@ -717,8 +694,7 @@ public class FileImageSinkTest
 	}
 
 	@Test
-	public void write_NoExtentionSpecified() throws IOException
-	{
+	public void write_NoExtentionSpecified() throws IOException {
 		// set up
 		File f = new File(TMPDIR, "tmp-" + Math.abs(new Random().nextLong()));
 		
@@ -726,20 +702,16 @@ public class FileImageSinkTest
 		FileImageSink sink = new FileImageSink(f);
 		
 		// when
-		try
-		{
+		try {
 			sink.write(new BufferedImageBuilder(100, 100).build());
 			fail();
-		}
-		catch (UnsupportedFormatException e)
-		{
+		} catch (UnsupportedFormatException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPNG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPNG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		
@@ -756,8 +728,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIspng() throws IOException
-	{
+	public void write_SpecifiedExtensionIspng() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -774,8 +745,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPng() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPng() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		
@@ -792,8 +762,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIspng() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIspng() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		
@@ -811,8 +780,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIspng() throws IOException
-	{
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIspng() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -830,8 +798,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIspng() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIspng() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		
@@ -849,8 +816,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsPNG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsPNG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		
@@ -868,8 +834,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsPNG() throws IOException
-	{
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsPNG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -887,8 +852,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsPNG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsPNG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		
@@ -906,8 +870,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsPng() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsPng() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		
@@ -925,8 +888,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsPng() throws IOException
-	{
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsPng() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		
@@ -944,8 +906,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsPng() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsPng() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		
@@ -963,8 +924,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsjpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsjpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		File expectedFile = new File(f.getAbsolutePath() + ".jpg");
@@ -983,8 +943,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsjpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsjpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		File expectedFile = new File(f.getAbsolutePath() + ".jpg");
@@ -1003,8 +962,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsjpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsjpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		File expectedFile = new File(f.getAbsolutePath() + ".jpg");
@@ -1023,8 +981,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsjpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsjpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		File expectedFile = new File(f.getAbsolutePath() + ".jpeg");
@@ -1043,8 +1000,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsjpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsjpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		File expectedFile = new File(f.getAbsolutePath() + ".jpeg");
@@ -1063,8 +1019,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsjpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsjpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		File expectedFile = new File(f.getAbsolutePath() + ".jpeg");
@@ -1083,8 +1038,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsJPG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsJPG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		File expectedFile = new File(f.getAbsolutePath() + ".JPG");
@@ -1103,8 +1057,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsJPG() throws IOException
-	{
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsJPG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		File expectedFile = new File(f.getAbsolutePath() + ".JPG");
@@ -1123,8 +1076,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsJPG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsJPG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		File expectedFile = new File(f.getAbsolutePath() + ".JPG");
@@ -1143,8 +1095,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsJPEG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsJPEG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		File expectedFile = new File(f.getAbsolutePath() + ".JPEG");
@@ -1163,8 +1114,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsJPEG() throws IOException
-	{
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsJPEG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		File expectedFile = new File(f.getAbsolutePath() + ".JPEG");
@@ -1183,8 +1133,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsJPEG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsJPEG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		File expectedFile = new File(f.getAbsolutePath() + ".JPEG");
@@ -1203,8 +1152,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsJpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsJpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		File expectedFile = new File(f.getAbsolutePath() + ".Jpg");
@@ -1223,8 +1171,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsJpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsJpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		File expectedFile = new File(f.getAbsolutePath() + ".Jpg");
@@ -1243,8 +1190,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsJpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsJpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		File expectedFile = new File(f.getAbsolutePath() + ".Jpg");
@@ -1263,8 +1209,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsJpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPNG_SpecifiedOutputFormatIsJpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "PNG");
 		File expectedFile = new File(f.getAbsolutePath() + ".Jpeg");
@@ -1283,8 +1228,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsJpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIspng_SpecifiedOutputFormatIsJpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "png");
 		File expectedFile = new File(f.getAbsolutePath() + ".Jpeg");
@@ -1303,8 +1247,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsJpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsPng_SpecifiedOutputFormatIsJpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Png");
 		File expectedFile = new File(f.getAbsolutePath() + ".Jpeg");
@@ -1323,8 +1266,7 @@ public class FileImageSinkTest
 	}
 
 	@Test
-	public void write_SpecifiedExtensionIsJPG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJPG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "JPG");
 		
@@ -1341,8 +1283,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJPEG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJPEG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
 		
@@ -1359,8 +1300,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsjpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsjpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		
@@ -1377,8 +1317,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsjpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsjpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
 		
@@ -1395,8 +1334,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
 		
@@ -1413,8 +1351,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
 		
@@ -1431,8 +1368,7 @@ public class FileImageSinkTest
 	}
 
 	@Test
-	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsjpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsjpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "JPG");
 		
@@ -1450,8 +1386,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsjpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsjpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
 		
@@ -1469,8 +1404,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsjpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsjpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		
@@ -1488,8 +1422,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsjpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsjpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
 		
@@ -1507,8 +1440,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsjpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsjpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
 		
@@ -1526,8 +1458,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsjpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsjpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
 		
@@ -1545,8 +1476,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsjpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsjpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "JPG");
 		
@@ -1564,8 +1494,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsjpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsjpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
 		
@@ -1583,8 +1512,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsjpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsjpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		
@@ -1602,8 +1530,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsjpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsjpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
 		
@@ -1621,8 +1548,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsjpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsjpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
 		
@@ -1640,8 +1566,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsjpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsjpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
 		
@@ -1659,8 +1584,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsJPG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsJPG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "JPG");
 		
@@ -1678,8 +1602,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsJPG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsJPG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
 		
@@ -1697,8 +1620,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsJPG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsJPG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		
@@ -1716,8 +1638,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsJPG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsJPG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
 		
@@ -1735,8 +1656,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsJPG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsJPG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
 		
@@ -1754,8 +1674,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsJPG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsJPG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
 		
@@ -1773,8 +1692,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsJPEG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsJPEG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "JPG");
 		
@@ -1792,8 +1710,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsJPEG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsJPEG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
 		
@@ -1811,8 +1728,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsJPEG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsJPEG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		
@@ -1830,8 +1746,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsJPEG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsJPEG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
 		
@@ -1849,8 +1764,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsJPEG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsJPEG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
 		
@@ -1868,8 +1782,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsJPEG() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsJPEG() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
 		
@@ -1887,8 +1800,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsJpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsJpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "JPG");
 		
@@ -1906,8 +1818,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsJpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsJpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
 		
@@ -1925,8 +1836,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsJpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsJpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		
@@ -1944,8 +1854,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsJpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsJpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
 		
@@ -1963,8 +1872,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsJpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsJpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
 		
@@ -1982,8 +1890,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsJpg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsJpg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
 		
@@ -2001,8 +1908,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsJpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJPG_SpecifiedOutputFormatIsJpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "JPG");
 		
@@ -2020,8 +1926,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsJpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJPEG_SpecifiedOutputFormatIsJpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "JPEG");
 		
@@ -2039,8 +1944,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsJpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsjpg_SpecifiedOutputFormatIsJpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "jpg");
 		
@@ -2058,8 +1962,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsJpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsjpeg_SpecifiedOutputFormatIsJpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "jpeg");
 		
@@ -2077,8 +1980,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsJpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJpg_SpecifiedOutputFormatIsJpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Jpg");
 		
@@ -2096,8 +1998,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsJpeg() throws IOException
-	{
+	public void write_SpecifiedExtensionIsJpeg_SpecifiedOutputFormatIsJpeg() throws IOException {
 		// set up
 		File f = TestUtils.createTempFile(TMPDIR, "Jpeg");
 		
@@ -2115,8 +2016,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void constructorFile_write_allowOverwriteTrue() throws IOException
-	{
+	public void constructorFile_write_allowOverwriteTrue() throws IOException {
 		// set up
 		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = new File(TMPDIR, "tmp-grid.png");
@@ -2138,8 +2038,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void constructorFile_write_allowOverwriteFalse() throws IOException
-	{
+	public void constructorFile_write_allowOverwriteFalse() throws IOException {
 		// set up
 		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = new File(TMPDIR, "tmp-grid.png");
@@ -2151,12 +2050,9 @@ public class FileImageSinkTest
 		FileImageSink sink = new FileImageSink(f, false);
 		
 		// when
-		try
-		{
+		try {
 			sink.write(ImageIO.read(f));
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			assertEquals("The destination file exists.", e.getMessage());
 			throw e;
 		}
@@ -2166,8 +2062,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void constructorString_write_allowOverwriteTrue() throws IOException
-	{
+	public void constructorString_write_allowOverwriteTrue() throws IOException {
 		// set up
 		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = new File(TMPDIR, "tmp-grid.png");
@@ -2189,8 +2084,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void constructorString_write_allowOverwriteFalse() throws IOException
-	{
+	public void constructorString_write_allowOverwriteFalse() throws IOException {
 		// set up
 		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
 		File f = new File(TMPDIR, "tmp-grid.png");
@@ -2202,12 +2096,9 @@ public class FileImageSinkTest
 		FileImageSink sink = new FileImageSink(f.getAbsolutePath(), false);
 		
 		// when
-		try
-		{
+		try {
 			sink.write(ImageIO.read(f));
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			assertEquals("The destination file exists.", e.getMessage());
 			throw e;
 		}
@@ -2217,8 +2108,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void preferredOutputFormatName_FileIsjpg()
-	{
+	public void preferredOutputFormatName_FileIsjpg() {
 		// given
 		File f = new File(TMPDIR, "tmp.jpg");
 		
@@ -2230,8 +2120,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void preferredOutputFormatName_FileIsjpeg()
-	{
+	public void preferredOutputFormatName_FileIsjpeg() {
 		// given
 		File f = new File(TMPDIR, "tmp.jpeg");
 		
@@ -2243,8 +2132,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void preferredOutputFormatName_FileIsJpg()
-	{
+	public void preferredOutputFormatName_FileIsJpg() {
 		// given
 		File f = new File(TMPDIR, "tmp.Jpg");
 		
@@ -2256,8 +2144,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void preferredOutputFormatName_FileIsJpeg()
-	{
+	public void preferredOutputFormatName_FileIsJpeg() {
 		// given
 		File f = new File(TMPDIR, "tmp.Jpeg");
 		
@@ -2269,8 +2156,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void preferredOutputFormatName_FileIsJPG()
-	{
+	public void preferredOutputFormatName_FileIsJPG() {
 		// given
 		File f = new File(TMPDIR, "tmp.JPG");
 		
@@ -2282,8 +2168,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void preferredOutputFormatName_FileIsJPEG()
-	{
+	public void preferredOutputFormatName_FileIsJPEG() {
 		// given
 		File f = new File(TMPDIR, "tmp.JPEG");
 		
@@ -2295,8 +2180,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void preferredOutputFormatName_FileIspng()
-	{
+	public void preferredOutputFormatName_FileIspng() {
 		// given
 		File f = new File(TMPDIR, "tmp.png");
 		
@@ -2308,8 +2192,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void preferredOutputFormatName_FileIsPng()
-	{
+	public void preferredOutputFormatName_FileIsPng() {
 		// given
 		File f = new File(TMPDIR, "tmp.Png");
 		
@@ -2321,8 +2204,7 @@ public class FileImageSinkTest
 	}
 	
 	@Test
-	public void preferredOutputFormatName_FileIsPNG()
-	{
+	public void preferredOutputFormatName_FileIsPNG() {
 		// given
 		File f = new File(TMPDIR, "tmp.PNG");
 		
@@ -2335,8 +2217,7 @@ public class FileImageSinkTest
 
 	// What we really want to check the file resource is released.
 	@Test
-	public void write_FileDeletableAfterWrite_Issue148() throws IOException
-	{
+	public void write_FileDeletableAfterWrite_Issue148() throws IOException {
 		// given
 		File outputFile = new File(TMPDIR, "test.png");
 

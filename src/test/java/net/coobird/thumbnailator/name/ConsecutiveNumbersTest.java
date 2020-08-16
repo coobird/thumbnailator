@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.name;
 
 import java.io.File;
@@ -7,11 +31,10 @@ import java.util.Iterator;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class ConsecutiveNumbersTest
-{
+public class ConsecutiveNumbersTest {
+
 	@Test
-	public void noArgConstructor()
-	{
+	public void noArgConstructor() {
 		// given
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames();
 		
@@ -25,8 +48,7 @@ public class ConsecutiveNumbersTest
 	}
 	
 	@Test
-	public void startNumberSpecified()
-	{
+	public void startNumberSpecified() {
 		// given
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames(5);
 		
@@ -40,8 +62,7 @@ public class ConsecutiveNumbersTest
 	}
 	
 	@Test
-	public void givenParentDir() throws IOException
-	{
+	public void givenParentDir() throws IOException {
 		// given
 		File dir = new File("src/test/resources/Thumbnailator");
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames(dir);
@@ -56,8 +77,7 @@ public class ConsecutiveNumbersTest
 	}
 	
 	@Test
-	public void givenParentDir_WithTrailingSlash() throws IOException
-	{
+	public void givenParentDir_WithTrailingSlash() throws IOException {
 		// given
 		File dir = new File("src/test/resources/Thumbnailator/");
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames(dir);
@@ -72,18 +92,14 @@ public class ConsecutiveNumbersTest
 	}
 	
 	@Test(expected=IOException.class)
-	public void givenParentDir_WithFile() throws IOException
-	{
-		try
-		{
+	public void givenParentDir_WithFile() throws IOException {
+		try {
 			// given
 			File dir = new File("src/test/resources/Thumbnailator/grid.png");
 
 			// when
 			new ConsecutivelyNumberedFilenames(dir);
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			// then
 			assertEquals("Specified path is not a directory or does not exist.", e.getMessage());
 			throw e;
@@ -91,18 +107,14 @@ public class ConsecutiveNumbersTest
 	}
 	
 	@Test(expected=IOException.class)
-	public void givenParentDir_WithNonExistentDir() throws IOException
-	{
-		try
-		{
+	public void givenParentDir_WithNonExistentDir() throws IOException {
+		try {
 			// given
 			File dir = new File("src/test/resources/Thumbnailator/foobar");
 			
 			// when
 			new ConsecutivelyNumberedFilenames(dir);
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			// then
 			assertEquals("Specified path is not a directory or does not exist.", e.getMessage());
 			throw e;
@@ -110,8 +122,7 @@ public class ConsecutiveNumbersTest
 	}
 
 	@Test
-	public void formatOnly_WithZeroPadding()
-	{
+	public void formatOnly_WithZeroPadding() {
 		// given
 		ConsecutivelyNumberedFilenames sAndC = new ConsecutivelyNumberedFilenames("hello-%04d.jpg");
 		
@@ -125,8 +136,7 @@ public class ConsecutiveNumbersTest
 	}
 	
 	@Test
-	public void formatOnly_WithText()
-	{
+	public void formatOnly_WithText() {
 		// given
 		ConsecutivelyNumberedFilenames sAndC = new ConsecutivelyNumberedFilenames("hello-%d.jpg");
 		
@@ -141,8 +151,7 @@ public class ConsecutiveNumbersTest
 	
 	
 	@Test
-	public void givenParentDir_StartNumberSpecified() throws IOException
-	{
+	public void givenParentDir_StartNumberSpecified() throws IOException {
 		// given
 		File dir = new File("src/test/resources/Thumbnailator");
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames(dir, 5);
@@ -157,18 +166,14 @@ public class ConsecutiveNumbersTest
 	}
 
 	@Test(expected=IOException.class)
-	public void givenParentDir_StartNumberSpecified_WhereDirIsInvalid() throws IOException
-	{
-		try
-		{
+	public void givenParentDir_StartNumberSpecified_WhereDirIsInvalid() throws IOException {
+		try {
 			// given
 			File dir = new File("src/test/resources/Thumbnailator/foobar");
 			
 			// when
 			new ConsecutivelyNumberedFilenames(dir, 5);
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			// then
 			assertEquals("Specified path is not a directory or does not exist.", e.getMessage());
 			throw e;
@@ -177,8 +182,7 @@ public class ConsecutiveNumbersTest
 	}
 	
 	@Test
-	public void givenParentDir_formatWithZeroPadding() throws IOException
-	{
+	public void givenParentDir_formatWithZeroPadding() throws IOException {
 		// given
 		File dir = new File("src/test/resources/Thumbnailator");
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames(dir, "hello-%04d.jpg");
@@ -193,8 +197,7 @@ public class ConsecutiveNumbersTest
 	}
 	
 	@Test
-	public void givenParentDir_formatWithText() throws IOException
-	{
+	public void givenParentDir_formatWithText() throws IOException {
 		// given
 		File dir = new File("src/test/resources/Thumbnailator");
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames(dir, "hello-%d.jpg");
@@ -209,18 +212,14 @@ public class ConsecutiveNumbersTest
 	}
 	
 	@Test(expected=IOException.class)
-	public void givenParentDir_formatWithText_WhereDirIsInvalid() throws IOException
-	{
-		try
-		{
+	public void givenParentDir_formatWithText_WhereDirIsInvalid() throws IOException {
+		try {
 			// given
 			File dir = new File("src/test/resources/Thumbnailator/foobar");
 			
 			// when
 			new ConsecutivelyNumberedFilenames(dir, "hello-%d.jpg");
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			// then
 			assertEquals("Specified path is not a directory or does not exist.", e.getMessage());
 			throw e;
@@ -228,8 +227,7 @@ public class ConsecutiveNumbersTest
 	}
 	
 	@Test
-	public void formatWithZeroPadding_StartNumberSpecified()
-	{
+	public void formatWithZeroPadding_StartNumberSpecified() {
 		// given
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames("hello-%04d.jpg", 5);
 		
@@ -243,8 +241,7 @@ public class ConsecutiveNumbersTest
 	}
 	
 	@Test
-	public void formatWithText_StartNumberSpecified()
-	{
+	public void formatWithText_StartNumberSpecified() {
 		// given
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames("hello-%d.jpg", 5);
 		
@@ -258,8 +255,7 @@ public class ConsecutiveNumbersTest
 	}
 	
 	@Test
-	public void givenParentDir_formatWithZeroPadding_StartNumberSpecified() throws IOException
-	{
+	public void givenParentDir_formatWithZeroPadding_StartNumberSpecified() throws IOException {
 		// given
 		File dir = new File("src/test/resources/Thumbnailator");
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames(dir, "hello-%04d.jpg", 5);
@@ -274,8 +270,7 @@ public class ConsecutiveNumbersTest
 	}
 	
 	@Test
-	public void givenParentDir_formatWithText_StartNumberSpecified() throws IOException
-	{
+	public void givenParentDir_formatWithText_StartNumberSpecified() throws IOException {
 		// given
 		File dir = new File("src/test/resources/Thumbnailator");
 		ConsecutivelyNumberedFilenames consecutiveNumbers = new ConsecutivelyNumberedFilenames(dir, "hello-%d.jpg", 5);
@@ -290,18 +285,14 @@ public class ConsecutiveNumbersTest
 	}
 	
 	@Test(expected=IOException.class)
-	public void givenParentDir_formatWithText_StartNumberSpecified_WhereDirIsInvalid() throws IOException
-	{
-		try
-		{
+	public void givenParentDir_formatWithText_StartNumberSpecified_WhereDirIsInvalid() throws IOException {
+		try {
 			// given
 			File dir = new File("src/test/resources/Thumbnailator/foobar");
 			
 			// when
 			new ConsecutivelyNumberedFilenames(dir, "hello-%d.jpg", 5);
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			// then
 			assertEquals("Specified path is not a directory or does not exist.", e.getMessage());
 			throw e;

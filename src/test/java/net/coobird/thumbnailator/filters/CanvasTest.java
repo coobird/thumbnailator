@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.filters;
 
 import static org.junit.Assert.*;
@@ -5,8 +29,6 @@ import static org.junit.Assert.*;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-import net.coobird.thumbnailator.filters.Canvas;
-import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.geometry.Positions;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 import net.coobird.thumbnailator.util.BufferedImages;
@@ -19,14 +41,13 @@ import org.junit.Test;
  * @author coobird
  *
  */
-public class CanvasTest
-{
+public class CanvasTest {
+
 	/**
 	 * Checks that the input image contents are not altered.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_WidthHeightPositionConstructor()
-	{
+	public void inputContentsAreNotAltered_WidthHeightPositionConstructor() {
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		BufferedImage copyImage = BufferedImages.copy(originalImage);
@@ -44,8 +65,7 @@ public class CanvasTest
 	 * Checks that the input image contents are not altered.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_WidthHeightPositionCropConstructor()
-	{
+	public void inputContentsAreNotAltered_WidthHeightPositionCropConstructor() {
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		BufferedImage copyImage = BufferedImages.copy(originalImage);
@@ -63,8 +83,7 @@ public class CanvasTest
 	 * Checks that the input image contents are not altered.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_WidthHeightPositionColorConstructor()
-	{
+	public void inputContentsAreNotAltered_WidthHeightPositionColorConstructor() {
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		BufferedImage copyImage = BufferedImages.copy(originalImage);
@@ -82,8 +101,7 @@ public class CanvasTest
 	 * Checks that the input image contents are not altered.
 	 */
 	@Test
-	public void inputContentsAreNotAltered_WidthHeightPositionCropColorConstructor()
-	{
+	public void inputContentsAreNotAltered_WidthHeightPositionCropColorConstructor() {
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		BufferedImage copyImage = BufferedImages.copy(originalImage);
@@ -101,8 +119,7 @@ public class CanvasTest
 	 * Checks that the image is cropped
 	 */
 	@Test
-	public void croppingEnabled_WidthHeightPositionCropColorConstructor()
-	{
+	public void croppingEnabled_WidthHeightPositionCropColorConstructor() {
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		ImageFilter filter = new Canvas(100, 100, Positions.CENTER, true, Color.black);
@@ -119,8 +136,7 @@ public class CanvasTest
 	 * Checks that the image is not cropped
 	 */
 	@Test
-	public void croppingDisabled_WidthHeightExceeds_WidthHeightPositionCropColorConstructor()
-	{
+	public void croppingDisabled_WidthHeightExceeds_WidthHeightPositionCropColorConstructor() {
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		ImageFilter filter = new Canvas(100, 100, Positions.CENTER, false, Color.black);
@@ -139,8 +155,7 @@ public class CanvasTest
 	 * - the original height is within the specified height
 	 */
 	@Test
-	public void croppingDisabled_WidthExceeds_WidthHeightPositionCropColorConstructor()
-	{
+	public void croppingDisabled_WidthExceeds_WidthHeightPositionCropColorConstructor() {
 		// given
 		BufferedImage originalImage = new BufferedImage(200, 90, BufferedImage.TYPE_INT_ARGB);
 		ImageFilter filter = new Canvas(100, 100, Positions.CENTER, false, Color.black);
@@ -159,8 +174,7 @@ public class CanvasTest
 	 * - the original height exceeds the specified width
 	 */
 	@Test
-	public void croppingDisabled_HeightExceeds_WidthHeightPositionCropColorConstructor()
-	{
+	public void croppingDisabled_HeightExceeds_WidthHeightPositionCropColorConstructor() {
 		// given
 		BufferedImage originalImage = new BufferedImage(90, 200, BufferedImage.TYPE_INT_ARGB);
 		ImageFilter filter = new Canvas(100, 100, Positions.CENTER, false, Color.black);
@@ -177,8 +191,7 @@ public class CanvasTest
 	 * Checks that the image is enclosed
 	 */
 	@Test
-	public void croppingEnabled_WidthHeightSmaller_WidthHeightPositionCropColorConstructor()
-	{
+	public void croppingEnabled_WidthHeightSmaller_WidthHeightPositionCropColorConstructor() {
 		// given
 		BufferedImage originalImage = new BufferedImage(90, 90, BufferedImage.TYPE_INT_ARGB);
 		ImageFilter filter = new Canvas(100, 100, Positions.CENTER, true, Color.black);
@@ -195,8 +208,7 @@ public class CanvasTest
 	 * Checks that the image is enclosed
 	 */
 	@Test
-	public void croppingDisabled_WidthHeightSmaller_WidthHeightPositionCropColorConstructor()
-	{
+	public void croppingDisabled_WidthHeightSmaller_WidthHeightPositionCropColorConstructor() {
 		// given
 		BufferedImage originalImage = new BufferedImage(90, 90, BufferedImage.TYPE_INT_ARGB);
 		ImageFilter filter = new Canvas(100, 100, Positions.CENTER, false, Color.black);
@@ -210,8 +222,7 @@ public class CanvasTest
 	}
 	
 	@Test
-	public void subsequentImagesCroppedCorrectly()
-	{
+	public void subsequentImagesCroppedCorrectly() {
 		/*
 		 * Original code was changing the width/height settings when cropping
 		 * was disabled, and if the image was larger than the width/height
@@ -235,8 +246,7 @@ public class CanvasTest
 	}
 	
 	@Test
-	public void usesBlackFillcolorForNonAlphaImages()
-	{
+	public void usesBlackFillcolorForNonAlphaImages() {
 		// given
 		BufferedImage originalImage = new BufferedImage(90, 100, BufferedImage.TYPE_INT_RGB);
 		ImageFilter filter = new Canvas(100, 100, Positions.CENTER);
@@ -252,8 +262,7 @@ public class CanvasTest
 	}
 	
 	@Test
-	public void usesSpecifiedFillcolorForNonAlphaImages()
-	{
+	public void usesSpecifiedFillcolorForNonAlphaImages() {
 		// given
 		BufferedImage originalImage = new BufferedImage(90, 100, BufferedImage.TYPE_INT_RGB);
 		ImageFilter filter = new Canvas(100, 100, Positions.CENTER, Color.blue);
@@ -269,8 +278,7 @@ public class CanvasTest
 	}
 	
 	@Test
-	public void noFillColorForAlphaImages()
-	{
+	public void noFillColorForAlphaImages() {
 		// given
 		BufferedImage originalImage = new BufferedImage(90, 100, BufferedImage.TYPE_INT_ARGB);
 		ImageFilter filter = new Canvas(100, 100, Positions.CENTER);
@@ -286,8 +294,7 @@ public class CanvasTest
 	}
 	
 	@Test
-	public void usesSpecifiedFillColorForAlphaImages()
-	{
+	public void usesSpecifiedFillColorForAlphaImages() {
 		// given
 		BufferedImage originalImage = new BufferedImage(90, 100, BufferedImage.TYPE_INT_ARGB);
 		ImageFilter filter = new Canvas(100, 100, Positions.CENTER, Color.blue);

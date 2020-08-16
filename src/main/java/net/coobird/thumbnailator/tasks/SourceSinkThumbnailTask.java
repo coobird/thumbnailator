@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.tasks;
 
 import java.awt.image.BufferedImage;
@@ -24,8 +48,7 @@ import net.coobird.thumbnailator.tasks.io.ImageSource;
  * @param <D> 		The destination class to which the thumbnail is stored
  * 					or written.
  */
-public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D>
-{
+public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D> {
 	/**
 	 * The source from which the image is retrieved or read.
 	 */
@@ -51,15 +74,12 @@ public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D>
 	 * 									{@link ImageSource} or {@link ImageSink}
 	 * 									is {@code null}.
 	 */
-	public SourceSinkThumbnailTask(ThumbnailParameter param, ImageSource<S> source, ImageSink<D> destination)
-	{
+	public SourceSinkThumbnailTask(ThumbnailParameter param, ImageSource<S> source, ImageSink<D> destination) {
 		super(param);
-		if (source == null)
-		{
+		if (source == null) {
 			throw new NullPointerException("ImageSource cannot be null.");
 		}
-		if (destination == null)
-		{
+		if (destination == null) {
 			throw new NullPointerException("ImageSink cannot be null.");
 		}
 		
@@ -71,8 +91,7 @@ public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D>
 	}
 
 	@Override
-	public BufferedImage read() throws IOException
-	{
+	public BufferedImage read() throws IOException {
 		BufferedImage img = source.read();
 		inputFormatName = source.getInputFormatName();
 		
@@ -80,22 +99,17 @@ public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D>
 	}
 
 	@Override
-	public void write(BufferedImage img) throws IOException
-	{
+	public void write(BufferedImage img) throws IOException {
 		String paramOutputFormat = param.getOutputFormat();
 		String formatName = null;
 		
-		if (ThumbnailParameter.DETERMINE_FORMAT.equals(paramOutputFormat))
-		{
+		if (ThumbnailParameter.DETERMINE_FORMAT.equals(paramOutputFormat)) {
 			paramOutputFormat = destination.preferredOutputFormatName();
 		}
 		
-		if (paramOutputFormat == ThumbnailParameter.ORIGINAL_FORMAT)
-		{
+		if (paramOutputFormat == ThumbnailParameter.ORIGINAL_FORMAT) {
 			formatName = inputFormatName;
-		}
-		else
-		{
+		} else {
 			formatName = paramOutputFormat;
 		}
 
@@ -104,14 +118,12 @@ public class SourceSinkThumbnailTask<S, D> extends ThumbnailTask<S, D>
 	}
 
 	@Override
-	public S getSource()
-	{
+	public S getSource() {
 		return source.getSource();
 	}
 	
 	@Override
-	public D getDestination()
-	{
+	public D getDestination() {
 		return destination.getSink();
 	}
 }

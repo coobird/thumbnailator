@@ -1,4 +1,4 @@
-_*February 24, 2020: Thumbnailator 0.4.11 has been released!
+_*August 16, 2020: Thumbnailator 0.4.12 has been released!
 See [Changes](https://github.com/coobird/thumbnailator/wiki/Changes) for details.*_
 
 _*Thumbnailator is now available through
@@ -49,7 +49,7 @@ The following pages have more information on what _Thumbnailator_ can do:
 
 * [Features](https://github.com/coobird/thumbnailator/wiki/Features)
 * [Examples](https://github.com/coobird/thumbnailator/wiki/Examples)
-* [Thumbnailator API Documentation](https://coobird.github.io/thumbnailator/javadoc/0.4.11/)
+* [Thumbnailator API Documentation](https://coobird.github.io/thumbnailator/javadoc/0.4.12/)
 * [Frequently Asked Questions](https://github.com/coobird/thumbnailator/wiki/FAQ)
 
 # Disclaimer

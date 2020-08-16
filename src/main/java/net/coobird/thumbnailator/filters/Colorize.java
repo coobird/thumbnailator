@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.filters;
 
 import java.awt.Color;
@@ -12,8 +36,7 @@ import net.coobird.thumbnailator.builders.BufferedImageBuilder;
  * @author coobird
  *
  */
-public final class Colorize implements ImageFilter
-{
+public final class Colorize implements ImageFilter {
 	/**
 	 * The color to tint a target image with.
 	 */
@@ -29,8 +52,7 @@ public final class Colorize implements ImageFilter
 	 * 
 	 * @param c				Color to tint with.
 	 */
-	public Colorize(Color c)
-	{
+	public Colorize(Color c) {
 		this.c = c;
 	}
 	
@@ -43,8 +65,7 @@ public final class Colorize implements ImageFilter
 	 * @param c				Color to tint with.
 	 * @param alpha			The opacity of the tint.
 	 */
-	public Colorize(Color c, float alpha)
-	{
+	public Colorize(Color c, float alpha) {
 		this(c, (int)(255 * alpha));
 	}
 	
@@ -57,10 +78,8 @@ public final class Colorize implements ImageFilter
 	 * @param c				Color to tint with.
 	 * @param alpha			The opacity of the tint.
 	 */
-	public Colorize(Color c, int alpha)
-	{
-		if (alpha > 255 || alpha < 0)
-		{
+	public Colorize(Color c, int alpha) {
+		if (alpha > 255 || alpha < 0) {
 			throw new IllegalArgumentException(
 					"Specified alpha value is outside the range of allowed " +
 					"values.");
@@ -74,8 +93,7 @@ public final class Colorize implements ImageFilter
 		this.c = new Color(r, g, b, a);
 	}
 	
-	public BufferedImage apply(BufferedImage img)
-	{
+	public BufferedImage apply(BufferedImage img) {
 		int width = img.getWidth();
 		int height = img.getHeight();
 		

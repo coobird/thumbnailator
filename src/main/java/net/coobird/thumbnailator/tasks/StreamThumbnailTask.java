@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.tasks;
 
 import java.awt.image.BufferedImage;
@@ -22,8 +46,7 @@ import net.coobird.thumbnailator.tasks.io.OutputStreamImageSink;
  * @author coobird
  *
  */
-public class StreamThumbnailTask extends ThumbnailTask<InputStream, OutputStream>
-{
+public class StreamThumbnailTask extends ThumbnailTask<InputStream, OutputStream> {
 	/**
 	 * The {@link SourceSinkThumbnailTask} used to perform the task.
 	 */
@@ -40,8 +63,7 @@ public class StreamThumbnailTask extends ThumbnailTask<InputStream, OutputStream
 	 * @param os		The {@link OutputStream} to send thumbnail data to.
 	 * @throws NullPointerException		If the parameter is {@code null}.
 	 */
-	public StreamThumbnailTask(ThumbnailParameter param, InputStream is, OutputStream os)
-	{
+	public StreamThumbnailTask(ThumbnailParameter param, InputStream is, OutputStream os) {
 		super(param);
 		this.task = new SourceSinkThumbnailTask<InputStream, OutputStream>(
 				param,
@@ -51,32 +73,27 @@ public class StreamThumbnailTask extends ThumbnailTask<InputStream, OutputStream
 	}
 
 	@Override
-	public BufferedImage read() throws IOException
-	{
+	public BufferedImage read() throws IOException {
 		return task.read();
 	}
 
 	@Override
-	public void write(BufferedImage img) throws IOException
-	{
+	public void write(BufferedImage img) throws IOException {
 		task.write(img);
 	}
 
 	@Override
-	public ThumbnailParameter getParam()
-	{
+	public ThumbnailParameter getParam() {
 		return task.getParam();
 	}
 	
 	@Override
-	public InputStream getSource()
-	{
+	public InputStream getSource() {
 		return task.getSource();
 	}
 
 	@Override
-	public OutputStream getDestination()
-	{
+	public OutputStream getDestination() {
 		return task.getDestination();
 	}
 }

@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.filters;
 
 import java.awt.image.BufferedImage;
@@ -15,8 +39,7 @@ import net.coobird.thumbnailator.util.BufferedImages;
  * @author coobird
  *
  */
-public final class Pipeline implements ImageFilter
-{
+public final class Pipeline implements ImageFilter {
 	/**
 	 * A list of image filters to apply.
 	 */
@@ -37,8 +60,7 @@ public final class Pipeline implements ImageFilter
 	/**
 	 * Instantiates a new {@link Pipeline} with no image filters to apply.
 	 */
-	public Pipeline()
-	{
+	public Pipeline() {
 		this(Collections.<ImageFilter>emptyList());
 	}
 	
@@ -48,8 +70,7 @@ public final class Pipeline implements ImageFilter
 	 * 
 	 * @param filters		An array of {@link ImageFilter}s to apply.
 	 */
-	public Pipeline(ImageFilter... filters)
-	{
+	public Pipeline(ImageFilter... filters) {
 		this(Arrays.asList(filters));
 	}
 	
@@ -59,10 +80,8 @@ public final class Pipeline implements ImageFilter
 	 * 
 	 * @param filters		A list of {@link ImageFilter}s to apply.
 	 */
-	public Pipeline(List<ImageFilter> filters)
-	{
-		if (filters == null)
-		{
+	public Pipeline(List<ImageFilter> filters) {
+		if (filters == null) {
 			throw new NullPointerException("Cannot instantiate with a null" +
 			"list of image filters.");
 		}
@@ -75,10 +94,8 @@ public final class Pipeline implements ImageFilter
 	/**
 	 * Adds an {@code ImageFilter} to the pipeline.
 	 */
-	public void add(ImageFilter filter)
-	{
-		if (filter == null)
-		{
+	public void add(ImageFilter filter) {
+		if (filter == null) {
 			throw new NullPointerException("An image filter must not be null.");
 		}
 		
@@ -88,10 +105,8 @@ public final class Pipeline implements ImageFilter
 	/**
 	 * Adds an {@code ImageFilter} to the beginning of the pipeline.
 	 */
-	public void addFirst(ImageFilter filter)
-	{
-		if (filter == null)
-		{
+	public void addFirst(ImageFilter filter) {
+		if (filter == null) {
 			throw new NullPointerException("An image filter must not be null.");
 		}
 		
@@ -103,10 +118,8 @@ public final class Pipeline implements ImageFilter
 	 * 
 	 * @param filters			A list of filters to add to the pipeline.
 	 */
-	public void addAll(List<ImageFilter> filters)
-	{
-		if (filters == null)
-		{
+	public void addAll(List<ImageFilter> filters) {
+		if (filters == null) {
 			throw new NullPointerException("A list of image filters must not be null.");
 		}
 		
@@ -120,22 +133,18 @@ public final class Pipeline implements ImageFilter
 	 * @return					A list of filters which are applied by this
 	 * 							pipeline.
 	 */
-	public List<ImageFilter> getFilters()
-	{
+	public List<ImageFilter> getFilters() {
 		return unmodifiableFiltersToApply;
 	}
 	
-	public BufferedImage apply(BufferedImage img)
-	{
-		if (filtersToApply.isEmpty())
-		{
+	public BufferedImage apply(BufferedImage img) {
+		if (filtersToApply.isEmpty()) {
 			return img;
 		}
 		
 		BufferedImage image = BufferedImages.copy(img);
 		
-		for (ImageFilter filter : filtersToApply)
-		{
+		for (ImageFilter filter : filtersToApply) {
 			image = filter.apply(image);
 		}
 		

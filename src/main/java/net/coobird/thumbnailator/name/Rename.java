@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.name;
 
 import net.coobird.thumbnailator.ThumbnailParameter;
@@ -8,8 +32,7 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  * @author coobird
  *
  */
-public abstract class Rename
-{
+public abstract class Rename {
 	/**
 	 * A {@code Rename} which does not alter the given file name.
 	 * <p>
@@ -25,8 +48,7 @@ public abstract class Rename
 	 */
 	public static final Rename NO_CHANGE = new Rename() {
 		@Override
-		public String apply(String name, ThumbnailParameter param)
-		{
+		public String apply(String name, ThumbnailParameter param) {
 			return name;
 		}
 	};
@@ -46,8 +68,7 @@ public abstract class Rename
 	 */
 	public static final Rename PREFIX_DOT_THUMBNAIL = new Rename() {
 		@Override
-		public String apply(String fileName, ThumbnailParameter param)
-		{
+		public String apply(String fileName, ThumbnailParameter param) {
 			return appendPrefix(fileName, "thumbnail.");
 		}
 	};
@@ -87,8 +108,7 @@ public abstract class Rename
 	 */
 	public static final Rename PREFIX_HYPHEN_THUMBNAIL = new Rename() {
 		@Override
-		public String apply(String fileName, ThumbnailParameter param)
-		{
+		public String apply(String fileName, ThumbnailParameter param) {
 			return appendPrefix(fileName, "thumbnail-");
 		}
 	};
@@ -109,8 +129,7 @@ public abstract class Rename
 	 */
 	public static final Rename SUFFIX_DOT_THUMBNAIL = new Rename() {
 		@Override
-		public String apply(String fileName, ThumbnailParameter param)
-		{
+		public String apply(String fileName, ThumbnailParameter param) {
 			return appendSuffix(fileName, ".thumbnail");
 		}
 	};
@@ -152,8 +171,7 @@ public abstract class Rename
 	 */
 	public static final Rename SUFFIX_HYPHEN_THUMBNAIL = new Rename() {
 		@Override
-		public String apply(String fileName, ThumbnailParameter param)
-		{
+		public String apply(String fileName, ThumbnailParameter param) {
 			return appendSuffix(fileName, "-thumbnail");
 		}
 	};
@@ -184,20 +202,16 @@ public abstract class Rename
 	 * @param suffix		The suffix to add.
 	 * @return				File name with specified suffixed affixed.
 	 */
-	protected String appendSuffix(String fileName, String suffix)
-	{
+	protected String appendSuffix(String fileName, String suffix) {
 		String newFileName = "";
 		
 		int indexOfDot = fileName.lastIndexOf('.');
 		
-		if (indexOfDot != -1)
-		{
+		if (indexOfDot != -1) {
 			newFileName = fileName.substring(0, indexOfDot);
 			newFileName += suffix;
 			newFileName += fileName.substring(indexOfDot);
-		}
-		else
-		{
+		} else {
 			newFileName = fileName + suffix;
 		}
 		
@@ -211,8 +225,7 @@ public abstract class Rename
 	 * @param prefix		The prefix to add.
 	 * @return				File name with the specified prefix affixed.
 	 */
-	protected String appendPrefix(String fileName, String prefix)
-	{
+	protected String appendPrefix(String fileName, String prefix) {
 		return prefix + fileName;
 	}
 }

@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.resizers;
 
 import java.awt.Graphics2D;
@@ -14,8 +38,7 @@ import java.util.Map;
  * @author coobird
  *
  */
-public abstract class AbstractResizer implements Resizer
-{
+public abstract class AbstractResizer implements Resizer {
 	/**
 	 * Rendering hints to use when resizing an image.
 	 */
@@ -39,16 +62,14 @@ public abstract class AbstractResizer implements Resizer
 	protected AbstractResizer(
 			Object interpolationValue,
 			Map<RenderingHints.Key, Object> hints
-	)
-	{
+	) {
 		RENDERING_HINTS = new HashMap<RenderingHints.Key, Object>();
 		RENDERING_HINTS.put(KEY_INTERPOLATION, interpolationValue);
 		
 		if (
 				hints.containsKey(KEY_INTERPOLATION)
 				&& !interpolationValue.equals(hints.get(KEY_INTERPOLATION))
-		)
-		{
+		) {
 			throw new IllegalArgumentException("Cannot change the " +
 					"RenderingHints.KEY_INTERPOLATION value.");
 		}
@@ -74,8 +95,7 @@ public abstract class AbstractResizer implements Resizer
 	 * @throws NullPointerException		When the source and/or the destination
 	 * 									image is {@code null}.
 	 */
-	public void resize(BufferedImage srcImage, BufferedImage destImage)
-	{
+	public void resize(BufferedImage srcImage, BufferedImage destImage) {
 		performChecks(srcImage, destImage);
 		
 		int width = destImage.getWidth();
@@ -92,8 +112,7 @@ public abstract class AbstractResizer implements Resizer
 	 * 				object should be generated for. 
 	 * @return	{@link Graphics2D} object for the given {@link BufferedImage}.
 	 */
-	protected Graphics2D createGraphics(BufferedImage img)
-	{
+	protected Graphics2D createGraphics(BufferedImage img) {
 		Graphics2D g = img.createGraphics();
 		g.setRenderingHints(RENDERING_HINTS);
 		
@@ -107,10 +126,8 @@ public abstract class AbstractResizer implements Resizer
 	 * @param srcImage		The source image.
 	 * @param destImage		The destination image.
 	 */
-	protected void performChecks(BufferedImage srcImage, BufferedImage destImage)
-	{
-		if (srcImage == null || destImage == null)
-		{
+	protected void performChecks(BufferedImage srcImage, BufferedImage destImage) {
+		if (srcImage == null || destImage == null) {
 			throw new NullPointerException(
 					"The source and/or destination image is null."
 			);
@@ -126,8 +143,7 @@ public abstract class AbstractResizer implements Resizer
 	 * @see RenderingHints
 	 * @return		Rendering hints used when resizing the image.
 	 */
-	public Map<RenderingHints.Key, Object> getRenderingHints()
-	{
+	public Map<RenderingHints.Key, Object> getRenderingHints() {
 		return UNMODIFIABLE_RENDERING_HINTS;
 	}
 }

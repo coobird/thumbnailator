@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.name;
 
 import java.io.File;
@@ -13,8 +37,7 @@ import java.util.Iterator;
  * @author coobird
  *
  */
-public class ConsecutivelyNumberedFilenames implements Iterable<File>
-{
+public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	/**
 	 * The iterator to return upon the {@link #iterator()} method being called.
 	 */
@@ -34,8 +57,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * </ol>
 	 * and so on.
 	 */
-	public ConsecutivelyNumberedFilenames()
-	{
+	public ConsecutivelyNumberedFilenames() {
 		this.iter = new ConsecutivelyNumberedFilenamesIterator(new File("").getParentFile(), "%d", 0);
 	}
 
@@ -56,8 +78,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * 
 	 * @param start		The value from which to start counting.
 	 */
-	public ConsecutivelyNumberedFilenames(int start)
-	{
+	public ConsecutivelyNumberedFilenames(int start) {
 		this.iter = new ConsecutivelyNumberedFilenamesIterator(new File("").getParentFile(), "%d", start);
 	}
 	
@@ -80,8 +101,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
  	 * @throws IOException	If the specified directory path is not a directory,
  	 * 						or if does not exist.
 	 */
-	public ConsecutivelyNumberedFilenames(File dir) throws IOException
-	{
+	public ConsecutivelyNumberedFilenames(File dir) throws IOException {
 		checkDirectory(dir);
 		this.iter = new ConsecutivelyNumberedFilenamesIterator(dir, "%d", 0);
 	}
@@ -109,8 +129,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * 
 	 * @param format		The format string to use.
 	 */
-	public ConsecutivelyNumberedFilenames(String format)
-	{
+	public ConsecutivelyNumberedFilenames(String format) {
 		this.iter = new ConsecutivelyNumberedFilenamesIterator(new File("").getParentFile(), format, 0);
 	}
 
@@ -135,8 +154,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
  	 * @throws IOException	If the specified directory path is not a directory,
  	 * 						or if does not exist.
 	 */
-	public ConsecutivelyNumberedFilenames(File dir, int start) throws IOException
-	{
+	public ConsecutivelyNumberedFilenames(File dir, int start) throws IOException {
 		checkDirectory(dir);
 		this.iter = new ConsecutivelyNumberedFilenamesIterator(dir, "%d", start);
 	}
@@ -169,8 +187,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
  	 * @throws IOException	If the specified directory path is not a directory,
  	 * 						or if does not exist.
 	 */
-	public ConsecutivelyNumberedFilenames(File dir, String format) throws IOException
-	{
+	public ConsecutivelyNumberedFilenames(File dir, String format) throws IOException {
 		checkDirectory(dir);
 		this.iter = new ConsecutivelyNumberedFilenamesIterator(dir, format, 0);
 	}
@@ -200,8 +217,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * @param format		The format string to use.
 	 * @param start			The value from which to start counting.
 	 */
-	public ConsecutivelyNumberedFilenames(String format, int start)
-	{
+	public ConsecutivelyNumberedFilenames(String format, int start) {
 		this.iter = new ConsecutivelyNumberedFilenamesIterator(new File("").getParentFile(), format, start);
 	}
 
@@ -234,50 +250,42 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
  	 * @throws IOException	If the specified directory path is not a directory,
  	 * 						or if does not exist.
 	 */
-	public ConsecutivelyNumberedFilenames(File dir, String format, int start) throws IOException
-	{
+	public ConsecutivelyNumberedFilenames(File dir, String format, int start) throws IOException {
 		checkDirectory(dir);
 		this.iter = new ConsecutivelyNumberedFilenamesIterator(dir, format, start);
 	}
 
-	private static void checkDirectory(File dir) throws IOException
-	{
-		if (!dir.isDirectory())
-		{
+	private static void checkDirectory(File dir) throws IOException {
+		if (!dir.isDirectory()) {
 			throw new IOException(
 					"Specified path is not a directory or does not exist."
 			);
 		}
 	}
 
-	private static class ConsecutivelyNumberedFilenamesIterator implements Iterator<File>
-	{
+	private static class ConsecutivelyNumberedFilenamesIterator implements Iterator<File> {
 		private final File dir;
 		private final String format;
 		private int count;
 		
-		public ConsecutivelyNumberedFilenamesIterator(File dir, String format, int start)
-		{
+		public ConsecutivelyNumberedFilenamesIterator(File dir, String format, int start) {
 			super();
 			this.dir = dir;
 			this.format = format;
 			this.count = start;
 		}
 
-		public boolean hasNext()
-		{
+		public boolean hasNext() {
 			return true;
 		}
 
-		public File next()
-		{
+		public File next() {
 			File f = new File(dir, String.format(format, count));
 			count++;
 			return f;
 		}
 
-		public void remove()
-		{
+		public void remove() {
 			throw new UnsupportedOperationException(
 					"Cannot remove elements from this iterator."
 			);
@@ -290,8 +298,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File>
 	 * 
 	 * @return		An iterator which generates file names.
 	 */
-	public Iterator<File> iterator()
-	{
+	public Iterator<File> iterator() {
 		return iter;
 	}
 }

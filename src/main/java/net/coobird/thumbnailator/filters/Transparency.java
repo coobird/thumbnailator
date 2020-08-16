@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.filters;
 
 import java.awt.AlphaComposite;
@@ -13,8 +37,7 @@ import java.awt.image.BufferedImage;
  * @author coobird
  *
  */
-public class Transparency implements ImageFilter
-{
+public class Transparency implements ImageFilter {
 	/**
 	 * The alpha composite to use when drawing the transparent image.
 	 */
@@ -29,12 +52,10 @@ public class Transparency implements ImageFilter
 	 * @throws IllegalArgumentException	If the specified opacity is outside of
 	 * 									the range specified above.
 	 */
-	public Transparency(float alpha)
-	{
+	public Transparency(float alpha) {
 		super();
 		
-		if (alpha < 0.0f || alpha > 1.0f)
-		{
+		if (alpha < 0.0f || alpha > 1.0f) {
 			throw new IllegalArgumentException(
 					"The alpha must be between 0.0f and 1.0f, inclusive.");
 		}
@@ -54,13 +75,11 @@ public class Transparency implements ImageFilter
 	 * @throws IllegalArgumentException	If the specified opacity is outside of
 	 * 									the range specified above.
 	 */
-	public Transparency(double alpha)
-	{
+	public Transparency(double alpha) {
 		this((float)alpha);
 	}
 
-	public BufferedImage apply(BufferedImage img)
-	{
+	public BufferedImage apply(BufferedImage img) {
 		int width = img.getWidth();
 		int height = img.getHeight();
 		
@@ -81,8 +100,7 @@ public class Transparency implements ImageFilter
 	 * @return		The opacity in the range of {@code 0.0f} (transparent) to
 	 * 				{@code 1.0f} (opaque).
 	 */
-	public float getAlpha()
-	{
+	public float getAlpha() {
 		return composite.getAlpha();
 	}
 }

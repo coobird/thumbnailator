@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.tasks.io;
 
 import java.awt.image.BufferedImage;
@@ -24,8 +48,7 @@ import net.coobird.thumbnailator.util.ThumbnailatorUtils;
  * @author coobird
  *
  */
-public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
-{
+public class OutputStreamImageSink extends AbstractImageSink<OutputStream> {
 	/**
 	 * The {@link OutputStream} to which the thumbnail image is to be
 	 * written to.
@@ -40,12 +63,10 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 	 * @throws NullPointerException		If the {@link OutputStream} is
 	 * 									{@code null}.
 	 */
-	public OutputStreamImageSink(OutputStream os)
-	{
+	public OutputStreamImageSink(OutputStream os) {
 		super();
 		
-		if (os == null)
-		{
+		if (os == null) {
 			throw new NullPointerException("OutputStream cannot be null.");
 		}
 		
@@ -68,22 +89,18 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 	 * 									{@link #setOutputFormatName(String)}
 	 * 									method.
 	 */
-	public void write(BufferedImage img) throws IOException
-	{
+	public void write(BufferedImage img) throws IOException {
 		super.write(img);
 		
-		if (outputFormat == null)
-		{
+		if (outputFormat == null) {
 			throw new IllegalStateException("Output format has not been set.");
 		}
 		
 		String formatName = outputFormat;
 			
-		Iterator<ImageWriter> writers =
-			ImageIO.getImageWritersByFormatName(formatName);
+		Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(formatName);
 		
-		if (!writers.hasNext())
-		{
+		if (!writers.hasNext()) {
 			throw new UnsupportedFormatException(
 					formatName,
 					"No suitable ImageWriter found for " + formatName + "."
@@ -93,8 +110,7 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 		ImageWriter writer = writers.next();
 		
 		ImageWriteParam writeParam = writer.getDefaultWriteParam();
-		if (writeParam.canWriteCompressed() && param != null)
-		{
+		if (writeParam.canWriteCompressed() && param != null) {
 			writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
 			
 			/*
@@ -104,17 +120,14 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 			 * The value to denote that the codec's default compression type
 			 * should be used is null.
 			 */
-			if (param.getOutputFormatType() != ThumbnailParameter.DEFAULT_FORMAT_TYPE)
-			{
+			if (param.getOutputFormatType() != ThumbnailParameter.DEFAULT_FORMAT_TYPE) {
 				writeParam.setCompressionType(param.getOutputFormatType());
-			}
-			else
-			{
+
+			} else {
 				List<String> supportedFormats =
 					ThumbnailatorUtils.getSupportedOutputFormatTypes(formatName);
 				
-				if (!supportedFormats.isEmpty())
-				{
+				if (!supportedFormats.isEmpty()) {
 					writeParam.setCompressionType(supportedFormats.get(0));
 				}
 			}
@@ -126,8 +139,7 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 			 * The value to denote that the codec's default compression quality
 			 * should be used is Float.NaN.
 			 */
-			if (!Float.isNaN(param.getOutputQuality()))
-			{
+			if (!Float.isNaN(param.getOutputQuality())) {
 				writeParam.setCompressionQuality(param.getOutputQuality());
 			}
 		}
@@ -158,8 +170,7 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 		 */
 		ImageOutputStream ios = ImageIO.createImageOutputStream(os);
 		
-		if (ios == null)
-		{
+		if (ios == null) {
 			throw new IOException("Could not open OutputStream.");
 		}
 		
@@ -180,8 +191,7 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 				formatName.equalsIgnoreCase("jpg")
 				|| formatName.equalsIgnoreCase("jpeg")
 				|| formatName.equalsIgnoreCase("bmp")
-		)
-		{
+		) {
 			img = BufferedImages.copy(img, BufferedImage.TYPE_INT_RGB);
 		}
 		
@@ -202,8 +212,7 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream>
 		ios.close();
 	}
 
-	public OutputStream getSink()
-	{
+	public OutputStream getSink() {
 		return os;
 	}
 }

@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.makers;
 
 import java.awt.Dimension;
@@ -19,8 +43,8 @@ import static org.mockito.Mockito.*;
  * @author coobird
  *
  */
-public class FixedSizeThumbnailMakerTest
-{
+public class FixedSizeThumbnailMakerTest {
+
 	/**
 	 * A convenience method to make a test image.
 	 */
@@ -42,8 +66,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void uninitializedWithNoArgConstructor()
-	{
+	public void uninitializedWithNoArgConstructor() {
 		BufferedImage img = makeTestImage200x200();
 		
 		new FixedSizeThumbnailMaker().make(img);
@@ -65,8 +88,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void uninitializedWithTwoArgConstructor()
-	{
+	public void uninitializedWithTwoArgConstructor() {
 		BufferedImage img = makeTestImage200x200();
 		
 		new FixedSizeThumbnailMaker(100, 100).make(img);
@@ -89,8 +111,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void unintializedNoArgConstructorAndAspectRatioSpecified()
-	{
+	public void unintializedNoArgConstructorAndAspectRatioSpecified() {
 		BufferedImage img = makeTestImage200x200();
 		
 		new FixedSizeThumbnailMaker()
@@ -115,8 +136,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void uninitializedTwoArgConstructorAndAspectRatioSpecified()
-	{
+	public void uninitializedTwoArgConstructorAndAspectRatioSpecified() {
 		BufferedImage img = makeTestImage200x200();
 		
 		new FixedSizeThumbnailMaker(100, 100)
@@ -140,8 +160,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test
-	public void twoArgConstructorAndAspectRatioAndFitWithinDimensionsSpecified()
-	{
+	public void twoArgConstructorAndAspectRatioAndFitWithinDimensionsSpecified() {
 		BufferedImage img = makeTestImage200x200();
 		
 		BufferedImage thumbnail = new FixedSizeThumbnailMaker(100, 100)
@@ -155,8 +174,7 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void threeArgumentConstructorThenFitWithinDimenions()
-	{
+	public void threeArgumentConstructorThenFitWithinDimenions() {
 		// given
 		BufferedImage img = makeTestImage200x200();
 		
@@ -172,8 +190,7 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void fourArgumentConstructor()
-	{
+	public void fourArgumentConstructor() {
 		// given
 		BufferedImage img = makeTestImage200x200();
 		
@@ -188,8 +205,7 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void keepAspectRatioFalseAndFitWithinDimensionsTrueAllowed()
-	{
+	public void keepAspectRatioFalseAndFitWithinDimensionsTrueAllowed() {
 		// given
 		BufferedImage img = makeTestImage200x200();
 		
@@ -206,8 +222,7 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void keepAspectRatioFalseAndFitWithinDimensionsFalseAllowed()
-	{
+	public void keepAspectRatioFalseAndFitWithinDimensionsFalseAllowed() {
 		// given
 		BufferedImage img = makeTestImage200x200();
 		
@@ -239,8 +254,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test
-	public void keepAspectRatioWithOffRatioTargetSizeForVertical()
-	{
+	public void keepAspectRatioWithOffRatioTargetSizeForVertical() {
 		BufferedImage img = makeTestImage200x200();
 		
 		BufferedImage thumbnail = new FixedSizeThumbnailMaker(100, 50)
@@ -269,8 +283,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test
-	public void keepAspectRatioWithOffRatioTargetSizeForHorizontal()
-	{
+	public void keepAspectRatioWithOffRatioTargetSizeForHorizontal() {
 		BufferedImage img = makeTestImage200x200();
 		
 		BufferedImage thumbnail = new FixedSizeThumbnailMaker(50, 100)
@@ -298,8 +311,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test
-	public void noKeepAspectRatioWithOffRatioTargetSizeForVertical()
-	{
+	public void noKeepAspectRatioWithOffRatioTargetSizeForVertical() {
 		BufferedImage img = makeTestImage200x200();
 		
 		BufferedImage thumbnail = new FixedSizeThumbnailMaker(100, 50)
@@ -327,8 +339,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test
-	public void noKeepAspectRatioWithOffRatioTargetSizeForHorizontal()
-	{
+	public void noKeepAspectRatioWithOffRatioTargetSizeForHorizontal() {
 		BufferedImage img = makeTestImage200x200();
 		
 		BufferedImage thumbnail = new FixedSizeThumbnailMaker(50, 100)
@@ -342,8 +353,7 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void keepAspectRatioAndNoFitWithinWithOffRatioTargetSizeForVertical()
-	{
+	public void keepAspectRatioAndNoFitWithinWithOffRatioTargetSizeForVertical() {
 		// given
 		BufferedImage img = makeTestImage200x200();
 		
@@ -360,8 +370,7 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void keepAspectRatioAndNoFitWithinWithOffRatioTargetSizeForHorizontal()
-	{
+	public void keepAspectRatioAndNoFitWithinWithOffRatioTargetSizeForHorizontal() {
 		// given
 		BufferedImage img = makeTestImage200x200();
 		
@@ -378,8 +387,7 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void noKeepAspectRatioAndNoFitWithinWithOffRatioTargetSizeForVertical()
-	{
+	public void noKeepAspectRatioAndNoFitWithinWithOffRatioTargetSizeForVertical() {
 		// given
 		BufferedImage img = makeTestImage200x200();
 		
@@ -396,8 +404,7 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void noKeepAspectRatioAndNoFitWithinWithOffRatioTargetSizeForHorizontal()
-	{
+	public void noKeepAspectRatioAndNoFitWithinWithOffRatioTargetSizeForHorizontal() {
 		// given
 		BufferedImage img = makeTestImage200x200();
 		
@@ -426,8 +433,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void twoArgConstructorThenSize()
-	{
+	public void twoArgConstructorThenSize() {
 		new FixedSizeThumbnailMaker(50, 100)
 				.size(50, 100);
 		
@@ -447,8 +453,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void threeArgConstructorThenKeepAspectRatio()
-	{
+	public void threeArgConstructorThenKeepAspectRatio() {
 		new FixedSizeThumbnailMaker(50, 100, true)
 				.keepAspectRatio(true);
 		
@@ -468,8 +473,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void threeArgConstructorThenSize()
-	{
+	public void threeArgConstructorThenSize() {
 		new FixedSizeThumbnailMaker(50, 100, true)
 				.size(100,100);
 		
@@ -489,8 +493,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void fourArgConstructorThenSize()
-	{
+	public void fourArgConstructorThenSize() {
 		new FixedSizeThumbnailMaker(50, 100, true, true)
 				.size(100, 100);
 		
@@ -510,8 +513,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void fourArgConstructorThenKeepAspectRatio()
-	{
+	public void fourArgConstructorThenKeepAspectRatio() {
 		new FixedSizeThumbnailMaker(50, 100, true, true)
 				.keepAspectRatio(true);
 		
@@ -531,8 +533,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void fourArgConstructorThenFitWithinDimensions()
-	{
+	public void fourArgConstructorThenFitWithinDimensions() {
 		new FixedSizeThumbnailMaker(50, 100, true, true)
 				.fitWithinDimensions(true);
 		
@@ -550,8 +551,7 @@ public class FixedSizeThumbnailMakerTest
 	 * </ol>
 	 */
 	@Test
-	public void verifyResizerFactoryBeingCalled()
-	{
+	public void verifyResizerFactoryBeingCalled() {
 		// given
 		BufferedImage img = makeTestImage200x200();
 		Resizer spyResizer = spy(new ProgressiveBilinearResizer());
@@ -573,8 +573,7 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void heightZeroIfTruncatedButOneIfRounded_FitWithinTrue()
-	{
+	public void heightZeroIfTruncatedButOneIfRounded_FitWithinTrue() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(100, 6).build();
 		
@@ -590,8 +589,7 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void heightZeroIfTruncated_FitWithinTrue()
-	{
+	public void heightZeroIfTruncated_FitWithinTrue() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(100, 4).build();
 		
@@ -607,8 +605,7 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void widthZeroIfTruncatedButOneIfRounded_FitWithinTrue()
-	{
+	public void widthZeroIfTruncatedButOneIfRounded_FitWithinTrue() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(6, 100).build();
 		
@@ -624,8 +621,7 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void widthZeroIfTruncated_FitWithinTrue()
-	{
+	public void widthZeroIfTruncated_FitWithinTrue() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(4, 100).build();
 		
@@ -641,213 +637,164 @@ public class FixedSizeThumbnailMakerTest
 	}
 	
 	@Test
-	public void sizeGivenZeroForWidthViaConstructor()
-	{
+	public void sizeGivenZeroForWidthViaConstructor() {
 		// given
 		
-		try
-		{
+		try {
 			// when
 			new FixedSizeThumbnailMaker(0, 10);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void sizeGivenZeroForWidthViaMethod()
-	{
+	public void sizeGivenZeroForWidthViaMethod() {
 		// given
 		
-		try
-		{
+		try {
 			// when
 			new FixedSizeThumbnailMaker().size(0, 10);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void sizeGivenZeroForHeightViaConstructor()
-	{
+	public void sizeGivenZeroForHeightViaConstructor() {
 		// given
 		
-		try
-		{
+		try {
 			// when
 			new FixedSizeThumbnailMaker(10, 0);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void sizeGivenZeroForHeightViaMethod()
-	{
+	public void sizeGivenZeroForHeightViaMethod() {
 		// given
 		
-		try
-		{
+		try {
 			// when
 			new FixedSizeThumbnailMaker().size(10, 0);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void sizeGivenZeroForWidthAndHeightViaConstructor()
-	{
+	public void sizeGivenZeroForWidthAndHeightViaConstructor() {
 		// given
 		
-		try
-		{
+		try {
 			// when
 			new FixedSizeThumbnailMaker(0, 0);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void sizeGivenZeroForWidthAndHeightViaMethod()
-	{
+	public void sizeGivenZeroForWidthAndHeightViaMethod() {
 		// given
 		
-		try
-		{
+		try {
 			// when
 			new FixedSizeThumbnailMaker().size(0, 0);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void sizeGivenNegativeForWidthViaConstructor()
-	{
+	public void sizeGivenNegativeForWidthViaConstructor() {
 		// given
 		
-		try
-		{
+		try {
 			// when
 			new FixedSizeThumbnailMaker(-1, 10);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void sizeGivenNegativeForWidthViaMethod()
-	{
+	public void sizeGivenNegativeForWidthViaMethod() {
 		// given
 		
-		try
-		{
+		try {
 			// when
 			new FixedSizeThumbnailMaker().size(-1, 10);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void sizeGivenNegativeForHeightViaConstructor()
-	{
+	public void sizeGivenNegativeForHeightViaConstructor() {
 		// given
 		
-		try
-		{
+		try {
 			// when
 			new FixedSizeThumbnailMaker(10, -1);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void sizeGivenNegativeForHeightViaMethod()
-	{
+	public void sizeGivenNegativeForHeightViaMethod() {
 		// given
 		
-		try
-		{
+		try {
 			// when
 			new FixedSizeThumbnailMaker().size(10, -1);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void sizeGivenNegativeForWidthAndHeightViaConstructor()
-	{
+	public void sizeGivenNegativeForWidthAndHeightViaConstructor() {
 		// given
 		
-		try
-		{
+		try {
 			// when
 			new FixedSizeThumbnailMaker(-1, -1);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void sizeGivenNegativeForWidthAndHeightViaMethod()
-	{
+	public void sizeGivenNegativeForWidthAndHeightViaMethod() {
 		// given
 		
-		try
-		{
+		try {
 			// when
 			new FixedSizeThumbnailMaker().size(-1, -1);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
 
 
 	@Test
-	public void widthBeingRounded_FitWithinTrue()
-	{
+	public void widthBeingRounded_FitWithinTrue() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(99, 100).build();
 		
@@ -863,8 +810,7 @@ public class FixedSizeThumbnailMakerTest
 	}	
 	
 	@Test
-	public void widthBeingRounded_FitWithinFalse()
-	{
+	public void widthBeingRounded_FitWithinFalse() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(99, 100).build();
 		
@@ -880,8 +826,7 @@ public class FixedSizeThumbnailMakerTest
 	}	
 	
 	@Test
-	public void heightBeingRounded_FitWithinTrue()
-	{
+	public void heightBeingRounded_FitWithinTrue() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(100, 99).build();
 		
@@ -897,8 +842,7 @@ public class FixedSizeThumbnailMakerTest
 	}	
 	
 	@Test
-	public void heightBeingRounded_FitWithinFalse()
-	{
+	public void heightBeingRounded_FitWithinFalse() {
 		// given
 		BufferedImage img = new BufferedImageBuilder(100, 99).build();
 		

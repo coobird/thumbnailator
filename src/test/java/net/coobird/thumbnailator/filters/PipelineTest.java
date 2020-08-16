@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.filters;
 
 import java.awt.image.BufferedImage;
@@ -17,11 +41,10 @@ import static org.junit.Assert.*;
  * @author coobird
  *
  */
-public class PipelineTest
-{
+public class PipelineTest {
+
 	@Test
-	public void singleFilter_ArrayConstructor()
-	{
+	public void singleFilter_ArrayConstructor() {
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		
@@ -37,8 +60,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void singleFilter_ListConstructor()
-	{
+	public void singleFilter_ListConstructor() {
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		
@@ -54,8 +76,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void singleFilter_EmptyConstructor_Add()
-	{
+	public void singleFilter_EmptyConstructor_Add() {
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		
@@ -72,8 +93,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void singleFilter_EmptyConstructor_AddAll()
-	{
+	public void singleFilter_EmptyConstructor_AddAll() {
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		
@@ -90,8 +110,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void multipleFilter_ArrayConstructor()
-	{
+	public void multipleFilter_ArrayConstructor() {
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		
@@ -109,8 +128,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void multipleFilter_ListConstructor()
-	{
+	public void multipleFilter_ListConstructor() {
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		
@@ -128,8 +146,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void multipleFilter_EmptyConstructor_Add()
-	{
+	public void multipleFilter_EmptyConstructor_Add() {
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		
@@ -149,8 +166,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void multipleFilter_EmptyConstructor_AddAll()
-	{
+	public void multipleFilter_EmptyConstructor_AddAll() {
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		
@@ -169,8 +185,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void filterOrderForTwo()
-	{
+	public void filterOrderForTwo() {
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		final List<Integer> order = new ArrayList<Integer>();
@@ -201,8 +216,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void filterOrderForTwoWithAddFirstForFirst()
-	{
+	public void filterOrderForTwoWithAddFirstForFirst() {
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		final List<Integer> order = new ArrayList<Integer>();
@@ -233,8 +247,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void filterOrderForTwoWithAddFirstForSecond()
-	{
+	public void filterOrderForTwoWithAddFirstForSecond() {
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		final List<Integer> order = new ArrayList<Integer>();
@@ -265,8 +278,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void filterOrderForThree()
-	{
+	public void filterOrderForThree() {
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		final List<Integer> order = new ArrayList<Integer>();
@@ -305,8 +317,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void filterOrderForThreeWithAddFirstForFirst()
-	{
+	public void filterOrderForThreeWithAddFirstForFirst() {
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		final List<Integer> order = new ArrayList<Integer>();
@@ -345,8 +356,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void filterOrderForThreeWithAddFirstForSecond()
-	{
+	public void filterOrderForThreeWithAddFirstForSecond() {
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		final List<Integer> order = new ArrayList<Integer>();
@@ -385,8 +395,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void filterOrderForThreeWithAddFirstForThird()
-	{
+	public void filterOrderForThreeWithAddFirstForThird() {
 		// given
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		final List<Integer> order = new ArrayList<Integer>();
@@ -425,8 +434,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void getFiltersWhereFiltersGivenByListConstructor()
-	{
+	public void getFiltersWhereFiltersGivenByListConstructor() {
 		// given
 		ImageFilter filter1 = mock(ImageFilter.class);
 		ImageFilter filter2 = mock(ImageFilter.class);
@@ -445,8 +453,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void getFiltersWhereFiltersGivenByVarargsConstructor()
-	{
+	public void getFiltersWhereFiltersGivenByVarargsConstructor() {
 		// given
 		ImageFilter filter1 = mock(ImageFilter.class);
 		ImageFilter filter2 = mock(ImageFilter.class);
@@ -461,8 +468,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void getFiltersWhereFiltersGivenByNoArgsConstructor()
-	{
+	public void getFiltersWhereFiltersGivenByNoArgsConstructor() {
 		// given
 		Pipeline pipeline = new Pipeline();
 		
@@ -474,8 +480,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void getFiltersWhereFiltersAddedByAdd()
-	{
+	public void getFiltersWhereFiltersAddedByAdd() {
 		// given
 		ImageFilter filter1 = mock(ImageFilter.class);
 		ImageFilter filter2 = mock(ImageFilter.class);
@@ -492,8 +497,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void getFiltersWhereFiltersAddedByAddAll()
-	{
+	public void getFiltersWhereFiltersAddedByAddAll() {
 		// given
 		ImageFilter filter1 = mock(ImageFilter.class);
 		ImageFilter filter2 = mock(ImageFilter.class);
@@ -509,8 +513,7 @@ public class PipelineTest
 	}
 	
 	@Test
-	public void getFiltersWhereFiltersAddedByAddFirst()
-	{
+	public void getFiltersWhereFiltersAddedByAddFirst() {
 		// given
 		ImageFilter filter1 = mock(ImageFilter.class);
 		ImageFilter filter2 = mock(ImageFilter.class);

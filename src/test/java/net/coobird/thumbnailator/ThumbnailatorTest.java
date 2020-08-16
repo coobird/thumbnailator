@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator;
 
 import static org.junit.Assert.*;
@@ -45,8 +69,8 @@ import static org.mockito.Mockito.*;
  *
  */
 @SuppressWarnings("deprecation")
-public class ThumbnailatorTest
-{
+public class ThumbnailatorTest {
+
 	/**
 	 * Test for
 	 * {@link Thumbnailator#createThumbnailCollection(Collection, Rename, int, int)}
@@ -61,8 +85,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnailCollections_negativeWidth() throws IOException
-	{
+	public void testCreateThumbnailCollections_negativeWidth() throws IOException {
 		/*
 		 * The files to make thumbnails of.
 		 */
@@ -95,8 +118,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnailCollections_negativeHeight() throws IOException
-	{
+	public void testCreateThumbnailCollections_negativeHeight() throws IOException {
 		/*
 		 * The files to make thumbnails of.
 		 */
@@ -130,8 +152,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnailCollections_negativeWidthAndHeight() throws IOException
-	{
+	public void testCreateThumbnailCollections_negativeWidthAndHeight() throws IOException {
 		/*
 		 * The files to make thumbnails of.
 		 */
@@ -165,10 +186,8 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testCreateThumbnailCollections_nullCollection() throws IOException
-	{
-		try
-		{
+	public void testCreateThumbnailCollections_nullCollection() throws IOException {
+		try {
 			Thumbnailator.createThumbnailsAsCollection(
 					null,
 					Rename.PREFIX_DOT_THUMBNAIL,
@@ -177,9 +196,7 @@ public class ThumbnailatorTest
 			);
 			
 			fail();
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			assertEquals("Collection of Files is null.", e.getMessage());
 			throw e;
 		}
@@ -200,8 +217,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testCreateThumbnailCollections_nullRename() throws IOException
-	{
+	public void testCreateThumbnailCollections_nullRename() throws IOException {
 		/*
 		 * The files to make thumbnails of.
 		 */
@@ -211,8 +227,7 @@ public class ThumbnailatorTest
 				new File("src/test/resources/Thumbnailator/grid.bmp")
 		);
 		
-		try
-		{
+		try {
 			Thumbnailator.createThumbnailsAsCollection(
 					files,
 					null,
@@ -221,9 +236,7 @@ public class ThumbnailatorTest
 			);
 			
 			fail();
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			assertEquals("Rename is null.", e.getMessage());
 			throw e;
 		}
@@ -244,8 +257,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnailCollections_NoErrors_EmptyList() throws IOException
-	{
+	public void testCreateThumbnailCollections_NoErrors_EmptyList() throws IOException {
 		/*
 		 * The files to make thumbnails of -- nothing!
 		 */
@@ -277,8 +289,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnailCollections_NoErrors_EmptySet() throws IOException
-	{
+	public void testCreateThumbnailCollections_NoErrors_EmptySet() throws IOException {
 		/*
 		 * The files to make thumbnails of -- nothing!
 		 */
@@ -307,8 +318,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnailCollections_NoErrors() throws IOException
-	{
+	public void testCreateThumbnailCollections_NoErrors() throws IOException {
 		/*
 		 * The files to make thumbnails of.
 		 */
@@ -320,8 +330,7 @@ public class ThumbnailatorTest
 		/*
 		 * Used to perform clean up.
 		 */
-		for (File f : files)
-		{
+		for (File f : files) {
 			String fileName = f.getName();
 			String newFileName =
 				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
@@ -368,8 +377,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IOException.class)
-	public void testCreateThumbnailCollections_ErrorDuringProcessing_FileNotFound() throws IOException
-	{
+	public void testCreateThumbnailCollections_ErrorDuringProcessing_FileNotFound() throws IOException {
 		/*
 		 * The files to make thumbnails of.
 		 */
@@ -383,8 +391,7 @@ public class ThumbnailatorTest
 		/*
 		 * Used to perform clean up.
 		 */
-		for (File f : files)
-		{
+		for (File f : files) {
 			String fileName = f.getName();
 			String newFileName =
 				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
@@ -417,8 +424,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=UnsupportedFormatException.class)
-	public void testCreateThumbnailCollections_ErrorDuringProcessing_CantWriteThumbnail() throws IOException
-	{
+	public void testCreateThumbnailCollections_ErrorDuringProcessing_CantWriteThumbnail() throws IOException {
 		/*
 		 * The files to make thumbnails of.
 		 */
@@ -433,10 +439,8 @@ public class ThumbnailatorTest
 		// a thumbnail whose source was a gif file.
 		Rename brokenRenamer = new Rename() {
 			@Override
-			public String apply(String name, ThumbnailParameter param)
-			{
-				if (name.endsWith(".gif"))
-				{
+			public String apply(String name, ThumbnailParameter param) {
+				if (name.endsWith(".gif")) {
 					return "thumbnail." + name + ".foobar";
 				}
 				
@@ -447,8 +451,7 @@ public class ThumbnailatorTest
 		/*
 		 * Used to perform clean up.
 		 */
-		for (File f : files)
-		{
+		for (File f : files) {
 			String fileName = f.getName();
 			String newFileName =
 				brokenRenamer.apply(fileName, null);
@@ -482,13 +485,10 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnailCollections_NoErrors_CollectionExtendsFile() throws IOException
-	{
-		class File2 extends File
-		{
+	public void testCreateThumbnailCollections_NoErrors_CollectionExtendsFile() throws IOException {
+		class File2 extends File {
 			private static final long serialVersionUID = 1L;
-			public File2(String pathname)
-			{
+			public File2(String pathname) {
 				super(pathname);
 			}
 		}
@@ -504,8 +504,7 @@ public class ThumbnailatorTest
 		/*
 		 * Used to perform clean up.
 		 */
-		for (File f : files)
-		{
+		for (File f : files) {
 			String fileName = f.getName();
 			String newFileName =
 				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
@@ -551,8 +550,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnails_negativeWidth() throws IOException
-	{
+	public void testCreateThumbnails_negativeWidth() throws IOException {
 		/*
 		 * The files to make thumbnails of.
 		 */
@@ -585,8 +583,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnails_negativeHeight() throws IOException
-	{
+	public void testCreateThumbnails_negativeHeight() throws IOException {
 		/*
 		 * The files to make thumbnails of.
 		 */
@@ -620,8 +617,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnails_negativeWidthAndHeight() throws IOException
-	{
+	public void testCreateThumbnails_negativeWidthAndHeight() throws IOException {
 		/*
 		 * The files to make thumbnails of.
 		 */
@@ -655,10 +651,8 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testCreateThumbnails_nullCollection() throws IOException
-	{
-		try
-		{
+	public void testCreateThumbnails_nullCollection() throws IOException {
+		try {
 			Thumbnailator.createThumbnails(
 					null,
 					Rename.PREFIX_DOT_THUMBNAIL,
@@ -667,9 +661,7 @@ public class ThumbnailatorTest
 			);
 			
 			fail();
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			assertEquals("Collection of Files is null.", e.getMessage());
 			throw e;
 		}
@@ -690,8 +682,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testCreateThumbnails_nullRename() throws IOException
-	{
+	public void testCreateThumbnails_nullRename() throws IOException {
 		/*
 		 * The files to make thumbnails of.
 		 */
@@ -701,8 +692,7 @@ public class ThumbnailatorTest
 				new File("src/test/resources/Thumbnailator/grid.bmp")
 		);
 		
-		try
-		{
+		try {
 			Thumbnailator.createThumbnails(
 					files,
 					null,
@@ -711,9 +701,7 @@ public class ThumbnailatorTest
 			);
 			
 			fail();
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			assertEquals("Rename is null.", e.getMessage());
 			throw e;
 		}
@@ -734,8 +722,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnails_NoErrors_EmptyList() throws IOException
-	{
+	public void testCreateThumbnails_NoErrors_EmptyList() throws IOException {
 		/*
 		 * The files to make thumbnails of -- nothing!
 		 */
@@ -764,8 +751,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnails_NoErrors_EmptySet() throws IOException
-	{
+	public void testCreateThumbnails_NoErrors_EmptySet() throws IOException {
 		/*
 		 * The files to make thumbnails of -- nothing!
 		 */
@@ -794,8 +780,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnails_NoErrors() throws IOException
-	{
+	public void testCreateThumbnails_NoErrors() throws IOException {
 		/*
 		 * The files to make thumbnails of.
 		 */
@@ -807,8 +792,7 @@ public class ThumbnailatorTest
 		/*
 		 * Used to perform clean up.
 		 */
-		for (File f : files)
-		{
+		for (File f : files) {
 			String fileName = f.getName();
 			String newFileName =
 				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
@@ -854,8 +838,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IOException.class)
-	public void testCreateThumbnails_ErrorDuringProcessing_FileNotFound() throws IOException
-	{
+	public void testCreateThumbnails_ErrorDuringProcessing_FileNotFound() throws IOException {
 		/*
 		 * The files to make thumbnails of.
 		 */
@@ -869,8 +852,7 @@ public class ThumbnailatorTest
 		/*
 		 * Used to perform clean up.
 		 */
-		for (File f : files)
-		{
+		for (File f : files) {
 			String fileName = f.getName();
 			String newFileName =
 				Rename.PREFIX_DOT_THUMBNAIL.apply(fileName, null);
@@ -903,8 +885,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=UnsupportedFormatException.class)
-	public void testCreateThumbnails_ErrorDuringProcessing_CantWriteThumbnail() throws IOException
-	{
+	public void testCreateThumbnails_ErrorDuringProcessing_CantWriteThumbnail() throws IOException {
 		/*
 		 * The files to make thumbnails of.
 		 */
@@ -919,10 +900,8 @@ public class ThumbnailatorTest
 		// a thumbnail whose source was a gif file.
 		Rename brokenRenamer = new Rename() {
 			@Override
-			public String apply(String name, ThumbnailParameter param)
-			{
-				if (name.endsWith(".gif"))
-				{
+			public String apply(String name, ThumbnailParameter param) {
+				if (name.endsWith(".gif")) {
 					return "thumbnail." + name + ".foobar";
 				}
 				
@@ -933,8 +912,7 @@ public class ThumbnailatorTest
 		/*
 		 * Used to perform clean up.
 		 */
-		for (File f : files)
-		{
+		for (File f : files) {
 			String fileName = f.getName();
 			String newFileName =
 				brokenRenamer.apply(fileName, null);
@@ -966,8 +944,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testCreateThumbnail_IOII_nullIS() throws IOException
-	{
+	public void testCreateThumbnail_IOII_nullIS() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -993,8 +970,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testCreateThumbnail_IOII_nullOS() throws IOException
-	{
+	public void testCreateThumbnail_IOII_nullOS() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1022,8 +998,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testCreateThumbnail_IOII_nullISnullOS() throws IOException
-	{
+	public void testCreateThumbnail_IOII_nullISnullOS() throws IOException {
 		Thumbnailator.createThumbnail((InputStream)null, null, 50, 50);
 		fail();
 	}
@@ -1042,8 +1017,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnail_IOII_negativeWidth() throws IOException
-	{
+	public void testCreateThumbnail_IOII_negativeWidth() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1070,8 +1044,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnail_IOII_negativeHeight() throws IOException
-	{
+	public void testCreateThumbnail_IOII_negativeHeight() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1099,8 +1072,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnail_IOII_negativeWidthAndHeight() throws IOException
-	{
+	public void testCreateThumbnail_IOII_negativeWidthAndHeight() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1128,8 +1100,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_IOII_Jpg() throws IOException
-	{
+	public void testCreateThumbnail_IOII_Jpg() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1164,8 +1135,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void testCreateThumbnail_IOII_Png() throws IOException
-	{
+	public void testCreateThumbnail_IOII_Png() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1200,8 +1170,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void testCreateThumbnail_IOII_Bmp() throws IOException
-	{
+	public void testCreateThumbnail_IOII_Bmp() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1242,8 +1211,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void testCreateThumbnail_IOII_Gif() throws IOException
-	{
+	public void testCreateThumbnail_IOII_Gif() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1255,14 +1223,12 @@ public class ThumbnailatorTest
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		try
-		{
+		try {
 			Thumbnailator.createThumbnail(is, os, 50, 50);
 			
 			// This case should pass on Java 6 and later, as those JREs have a
 			// GIF writer.
-			if (System.getProperty("java.version").startsWith("1.5"))
-			{
+			if (System.getProperty("java.version").startsWith("1.5")) {
 				fail();
 			}
 			
@@ -1283,12 +1249,9 @@ public class ThumbnailatorTest
 			assertEquals(50, img.getWidth());
 			assertEquals(50, img.getHeight());
 			
-		}
-		catch (UnsupportedFormatException e)
-		{
+		} catch (UnsupportedFormatException e) {
 			// This case should pass on Java 6 and later.
-			if (!System.getProperty("java.version").startsWith("1.5"))
-			{
+			if (!System.getProperty("java.version").startsWith("1.5")) {
 				fail();
 			}
 			
@@ -1311,8 +1274,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */	
 	@Test(expected=IOException.class)
-	public void testCreateThumbnail_IOII_IOExceptionFromIS() throws IOException
-	{
+	public void testCreateThumbnail_IOII_IOExceptionFromIS() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1342,8 +1304,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */	
 	@Test(expected=IOException.class)
-	public void testCreateThumbnail_IOII_IOExceptionFromOS() throws IOException
-	{
+	public void testCreateThumbnail_IOII_IOExceptionFromOS() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1377,8 +1338,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_IOSII_Transcoding_Jpeg_Png() throws IOException
-	{
+	public void testCreateThumbnail_IOSII_Transcoding_Jpeg_Png() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1426,8 +1386,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_IOSII_Transcoding_Jpeg_Bmp() throws IOException
-	{
+	public void testCreateThumbnail_IOSII_Transcoding_Jpeg_Bmp() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1477,8 +1436,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_IOSII_Transcoding_Jpeg_Gif() throws IOException
-	{
+	public void testCreateThumbnail_IOSII_Transcoding_Jpeg_Gif() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1490,14 +1448,12 @@ public class ThumbnailatorTest
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		try
-		{
+		try {
 			Thumbnailator.createThumbnail(is, os, "gif", 50, 50);
 			
 			// This case should pass on Java 6 and later, as those JREs have a
 			// GIF writer.
-			if (System.getProperty("java.version").startsWith("1.5"))
-			{
+			if (System.getProperty("java.version").startsWith("1.5")) {
 				fail();
 			}
 			
@@ -1518,12 +1474,9 @@ public class ThumbnailatorTest
 			assertEquals(50, img.getWidth());
 			assertEquals(50, img.getHeight());
 			
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// This case should pass on Java 6 and later.
-			if (!System.getProperty("java.version").startsWith("1.5"))
-			{
+			if (!System.getProperty("java.version").startsWith("1.5")) {
 				fail();
 			}
 			
@@ -1548,8 +1501,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_IOSII_Transcoding_Png_Jpeg() throws IOException
-	{
+	public void testCreateThumbnail_IOSII_Transcoding_Png_Jpeg() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1597,8 +1549,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_IOSII_Transcoding_Png_Bmp() throws IOException
-	{
+	public void testCreateThumbnail_IOSII_Transcoding_Png_Bmp() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1648,8 +1599,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_IOSII_Transcoding_Png_Gif() throws IOException
-	{
+	public void testCreateThumbnail_IOSII_Transcoding_Png_Gif() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1661,14 +1611,12 @@ public class ThumbnailatorTest
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		try
-		{
+		try {
 			Thumbnailator.createThumbnail(is, os, "gif", 50, 50);
 			
 			// This case should pass on Java 6 and later, as those JREs have a
 			// GIF writer.
-			if (System.getProperty("java.version").startsWith("1.5"))
-			{
+			if (System.getProperty("java.version").startsWith("1.5")) {
 				fail();
 			}
 			
@@ -1689,12 +1637,9 @@ public class ThumbnailatorTest
 			assertEquals(50, img.getWidth());
 			assertEquals(50, img.getHeight());
 			
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// This case should pass on Java 6 and later.
-			if (!System.getProperty("java.version").startsWith("1.5"))
-			{
+			if (!System.getProperty("java.version").startsWith("1.5")) {
 				fail();
 			}
 			
@@ -1719,8 +1664,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_IOSII_Transcoding_Bmp_Png() throws IOException
-	{
+	public void testCreateThumbnail_IOSII_Transcoding_Bmp_Png() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1768,8 +1712,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_IOSII_Transcoding_Bmp_Jpeg() throws IOException
-	{
+	public void testCreateThumbnail_IOSII_Transcoding_Bmp_Jpeg() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1819,8 +1762,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_IOSII_Transcoding_Bmp_Gif() throws IOException
-	{
+	public void testCreateThumbnail_IOSII_Transcoding_Bmp_Gif() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1832,14 +1774,12 @@ public class ThumbnailatorTest
 		InputStream is = new ByteArrayInputStream(bytes);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
-		try
-		{
+		try {
 			Thumbnailator.createThumbnail(is, os, "gif", 50, 50);
 			
 			// This case should pass on Java 6 and later, as those JREs have a
 			// GIF writer.
-			if (System.getProperty("java.version").startsWith("1.5"))
-			{
+			if (System.getProperty("java.version").startsWith("1.5")) {
 				fail();
 			}
 			
@@ -1860,12 +1800,9 @@ public class ThumbnailatorTest
 			assertEquals(50, img.getWidth());
 			assertEquals(50, img.getHeight());
 			
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// This case should pass on Java 6 and later.
-			if (!System.getProperty("java.version").startsWith("1.5"))
-			{
+			if (!System.getProperty("java.version").startsWith("1.5")) {
 				fail();
 			}
 			
@@ -1890,8 +1827,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_IOSII_Transcoding_Gif_Png() throws IOException
-	{
+	public void testCreateThumbnail_IOSII_Transcoding_Gif_Png() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1939,8 +1875,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_IOSII_Transcoding_Gif_Jpeg() throws IOException
-	{
+	public void testCreateThumbnail_IOSII_Transcoding_Gif_Jpeg() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -1988,8 +1923,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_IOSII_Transcoding_Gif_Bmp() throws IOException
-	{
+	public void testCreateThumbnail_IOSII_Transcoding_Gif_Bmp() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2034,8 +1968,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */	
 	@Test(expected=IOException.class)
-	public void testCreateThumbnail_IOSII_IOExceptionFromIS() throws IOException
-	{
+	public void testCreateThumbnail_IOSII_IOExceptionFromIS() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2065,8 +1998,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */	
 	@Test(expected=IOException.class)
-	public void testCreateThumbnail_IOSII_IOExceptionFromOS() throws IOException
-	{
+	public void testCreateThumbnail_IOSII_IOExceptionFromOS() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2097,8 +2029,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testCreateThumbnail_FFII_nullInputFile() throws IOException
-	{
+	public void testCreateThumbnail_FFII_nullInputFile() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2124,8 +2055,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testCreateThumbnail_FFII_nullOutputFile() throws IOException
-	{
+	public void testCreateThumbnail_FFII_nullOutputFile() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2152,8 +2082,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testCreateThumbnail_FFII_nullInputAndOutputFiles() throws IOException
-	{
+	public void testCreateThumbnail_FFII_nullInputAndOutputFiles() throws IOException {
 		Thumbnailator.createThumbnail((File)null, null, 50, 50);
 		fail();
 	}
@@ -2172,8 +2101,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnail_FFII_negativeWidth() throws IOException
-	{
+	public void testCreateThumbnail_FFII_negativeWidth() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2199,8 +2127,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnail_FFII_negativeHeight() throws IOException
-	{
+	public void testCreateThumbnail_FFII_negativeHeight() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2227,8 +2154,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnail_FFII_negativeWidthAndHeight() throws IOException
-	{
+	public void testCreateThumbnail_FFII_negativeWidthAndHeight() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2255,8 +2181,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FFII_Jpg() throws IOException
-	{
+	public void testCreateThumbnail_FFII_Jpg() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2287,8 +2212,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FFII_Png() throws IOException
-	{
+	public void testCreateThumbnail_FFII_Png() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2319,8 +2243,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void testCreateThumbnail_FFII_Bmp() throws IOException
-	{
+	public void testCreateThumbnail_FFII_Bmp() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2352,8 +2275,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void testCreateThumbnail_FFII_Gif() throws IOException
-	{
+	public void testCreateThumbnail_FFII_Gif() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2361,14 +2283,12 @@ public class ThumbnailatorTest
 		File outputFile = new File("src/test/resources/Thumbnailator/tmp.gif");
 		outputFile.deleteOnExit();
 		
-		try
-		{
+		try {
 			Thumbnailator.createThumbnail(inputFile, outputFile, 50, 50);
 			
 			// This case should pass on Java 6 and later, as those JREs have a
 			// GIF writer.
-			if (System.getProperty("java.version").startsWith("1.5"))
-			{
+			if (System.getProperty("java.version").startsWith("1.5")) {
 				fail();
 			}
 			
@@ -2386,12 +2306,9 @@ public class ThumbnailatorTest
 			assertEquals(50, img.getWidth());
 			assertEquals(50, img.getHeight());
 			
-		}
-		catch (UnsupportedFormatException e)
-		{
+		} catch (UnsupportedFormatException e) {
 			// This case should pass on Java 6 and later.
-			if (!System.getProperty("java.version").startsWith("1.5"))
-			{
+			if (!System.getProperty("java.version").startsWith("1.5")) {
 				fail();
 			}
 			
@@ -2417,8 +2334,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FFII_Transcoding_Jpeg_Png() throws IOException
-	{
+	public void testCreateThumbnail_FFII_Transcoding_Jpeg_Png() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2457,8 +2373,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FFII_Transcoding_Jpeg_Bmp() throws IOException
-	{
+	public void testCreateThumbnail_FFII_Transcoding_Jpeg_Bmp() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2498,8 +2413,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FFII_Transcoding_Jpeg_Gif() throws IOException
-	{
+	public void testCreateThumbnail_FFII_Transcoding_Jpeg_Gif() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2507,14 +2421,12 @@ public class ThumbnailatorTest
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".gif");
 		outputFile.deleteOnExit();
 		
-		try
-		{
+		try {
 			Thumbnailator.createThumbnail(inputFile, outputFile, 50, 50);
 			
 			// This case should pass on Java 6 and later, as those JREs have a
 			// GIF writer.
-			if (System.getProperty("java.version").startsWith("1.5"))
-			{
+			if (System.getProperty("java.version").startsWith("1.5")) {
 				fail();
 			}
 			
@@ -2532,12 +2444,9 @@ public class ThumbnailatorTest
 			assertEquals(50, img.getWidth());
 			assertEquals(50, img.getHeight());
 			
-		}
-		catch (UnsupportedFormatException e)
-		{
+		} catch (UnsupportedFormatException e) {
 			// This case should pass on Java 6 and later.
-			if (!System.getProperty("java.version").startsWith("1.5"))
-			{
+			if (!System.getProperty("java.version").startsWith("1.5")) {
 				fail();
 			}
 			
@@ -2563,8 +2472,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FFII_Transcoding_Png_Jpeg() throws IOException
-	{
+	public void testCreateThumbnail_FFII_Transcoding_Png_Jpeg() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2603,8 +2511,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FFII_Transcoding_Png_Bmp() throws IOException
-	{
+	public void testCreateThumbnail_FFII_Transcoding_Png_Bmp() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2644,8 +2551,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FFII_Transcoding_Png_Gif() throws IOException
-	{
+	public void testCreateThumbnail_FFII_Transcoding_Png_Gif() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2653,14 +2559,12 @@ public class ThumbnailatorTest
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".gif");
 		outputFile.deleteOnExit();
 		
-		try
-		{
+		try {
 			Thumbnailator.createThumbnail(inputFile, outputFile, 50, 50);
 			
 			// This case should pass on Java 6 and later, as those JREs have a
 			// GIF writer.
-			if (System.getProperty("java.version").startsWith("1.5"))
-			{
+			if (System.getProperty("java.version").startsWith("1.5")) {
 				fail();
 			}
 			
@@ -2678,12 +2582,9 @@ public class ThumbnailatorTest
 			assertEquals(50, img.getWidth());
 			assertEquals(50, img.getHeight());
 			
-		}
-		catch (UnsupportedFormatException e)
-		{
+		} catch (UnsupportedFormatException e) {
 			// This case should pass on Java 6 and later.
-			if (!System.getProperty("java.version").startsWith("1.5"))
-			{
+			if (!System.getProperty("java.version").startsWith("1.5")) {
 				fail();
 			}
 			
@@ -2709,8 +2610,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FFII_Transcoding_Bmp_Png() throws IOException
-	{
+	public void testCreateThumbnail_FFII_Transcoding_Bmp_Png() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2749,8 +2649,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FFII_Transcoding_Bmp_Jpeg() throws IOException
-	{
+	public void testCreateThumbnail_FFII_Transcoding_Bmp_Jpeg() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2790,8 +2689,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FFII_Transcoding_Bmp_Gif() throws IOException
-	{
+	public void testCreateThumbnail_FFII_Transcoding_Bmp_Gif() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2799,14 +2697,12 @@ public class ThumbnailatorTest
 		File outputFile = File.createTempFile("thumbnailator-testing-", ".gif");
 		outputFile.deleteOnExit();
 		
-		try
-		{
+		try {
 			Thumbnailator.createThumbnail(inputFile, outputFile, 50, 50);
 			
 			// This case should pass on Java 6 and later, as those JREs have a
 			// GIF writer.
-			if (System.getProperty("java.version").startsWith("1.5"))
-			{
+			if (System.getProperty("java.version").startsWith("1.5")) {
 				fail();
 			}
 			
@@ -2824,12 +2720,9 @@ public class ThumbnailatorTest
 			assertEquals(50, img.getWidth());
 			assertEquals(50, img.getHeight());
 			
-		}
-		catch (UnsupportedFormatException e)
-		{
+		} catch (UnsupportedFormatException e) {
 			// This case should pass on Java 6 and later.
-			if (!System.getProperty("java.version").startsWith("1.5"))
-			{
+			if (!System.getProperty("java.version").startsWith("1.5")) {
 				fail();
 			}
 			
@@ -2855,8 +2748,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FFII_Transcoding_Gif_Png() throws IOException
-	{
+	public void testCreateThumbnail_FFII_Transcoding_Gif_Png() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2895,8 +2787,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FFII_Transcoding_Gif_Jpeg() throws IOException
-	{
+	public void testCreateThumbnail_FFII_Transcoding_Gif_Jpeg() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2935,8 +2826,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FFII_Transcoding_Gif_Bmp() throws IOException
-	{
+	public void testCreateThumbnail_FFII_Transcoding_Gif_Bmp() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -2972,21 +2862,17 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FFII_nonExistentInputFile() throws IOException
-	{
+	public void testCreateThumbnail_FFII_nonExistentInputFile() throws IOException {
 		/*
 		 * Actual test
 		 */
 		File inputFile = new File("foo.jpg");
 		File outputFile = new File("bar.jpg");
 		
-		try
-		{
+		try {
 			Thumbnailator.createThumbnail(inputFile, outputFile, 50, 50);
 			fail();
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			assertEquals("Input file does not exist.", e.getMessage());
 		}
 	}
@@ -3005,21 +2891,17 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FFII_invalidOutputFile() throws IOException
-	{
+	public void testCreateThumbnail_FFII_invalidOutputFile() throws IOException {
 		/*
 		 * Actual test
 		 */
 		File inputFile = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outputFile = new File("@\\#?/^%*&/|!!$:#");
 		
-		try
-		{
+		try {
 			Thumbnailator.createThumbnail(inputFile, outputFile, 50, 50);
 			fail();
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			// An IOException is expected. Likely a FileNotFoundException.
 		}
 	}
@@ -3038,8 +2920,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Ignore
-	public void testCreateThumbnail_FFII_IOExceptionOnWrite() throws IOException
-	{
+	public void testCreateThumbnail_FFII_IOExceptionOnWrite() throws IOException {
 		//Cannot craft a test case to test this condition.
 		fail();
 	}
@@ -3058,8 +2939,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=NullPointerException.class)
-	public void testCreateThumbnail_FII_nullInputFile() throws IOException
-	{
+	public void testCreateThumbnail_FII_nullInputFile() throws IOException {
 		Thumbnailator.createThumbnail((File)null, 50, 50);
 		fail();
 	}
@@ -3078,8 +2958,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnail_FII_negativeWidth() throws IOException
-	{
+	public void testCreateThumbnail_FII_negativeWidth() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -3104,8 +2983,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnail_FII_negativeHeight() throws IOException
-	{
+	public void testCreateThumbnail_FII_negativeHeight() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -3131,8 +3009,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnail_FII_negativeWidthAndHeight() throws IOException
-	{
+	public void testCreateThumbnail_FII_negativeWidthAndHeight() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -3158,8 +3035,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FII_Jpg() throws IOException
-	{
+	public void testCreateThumbnail_FII_Jpg() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -3186,8 +3062,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_FII_Png() throws IOException
-	{
+	public void testCreateThumbnail_FII_Png() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -3214,8 +3089,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void testCreateThumbnail_FII_Bmp() throws IOException
-	{
+	public void testCreateThumbnail_FII_Bmp() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -3242,8 +3116,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void testCreateThumbnail_FII_Gif() throws IOException
-	{
+	public void testCreateThumbnail_FII_Gif() throws IOException {
 		/*
 		 * Actual test
 		 */
@@ -3268,8 +3141,7 @@ public class ThumbnailatorTest
 	 * 
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnail_BII_negativeWidth()
-	{
+	public void testCreateThumbnail_BII_negativeWidth() {
 		/*
 		 * Actual test
 		 */
@@ -3293,8 +3165,7 @@ public class ThumbnailatorTest
 	 * 
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnail_BII_negativeHeight()
-	{
+	public void testCreateThumbnail_BII_negativeHeight() {
 		/*
 		 * Actual test
 		 */
@@ -3319,8 +3190,7 @@ public class ThumbnailatorTest
 	 * 
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnail_BII_negativeWidthAndHeight()
-	{
+	public void testCreateThumbnail_BII_negativeWidthAndHeight() {
 		/*
 		 * Actual test
 		 */
@@ -3344,8 +3214,7 @@ public class ThumbnailatorTest
 	 * 
 	 */
 	@Test
-	public void testCreateThumbnail_BII_CorrectUsage()
-	{
+	public void testCreateThumbnail_BII_CorrectUsage() {
 		/*
 		 * Actual test
 		 */
@@ -3372,8 +3241,7 @@ public class ThumbnailatorTest
 	 * 
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnail_III_negativeWidth()
-	{
+	public void testCreateThumbnail_III_negativeWidth() {
 		/*
 		 * Actual test
 		 */
@@ -3397,8 +3265,7 @@ public class ThumbnailatorTest
 	 * 
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnail_III_negativeHeight()
-	{
+	public void testCreateThumbnail_III_negativeHeight() {
 		/*
 		 * Actual test
 		 */
@@ -3423,8 +3290,7 @@ public class ThumbnailatorTest
 	 * 
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public void testCreateThumbnail_III_negativeWidthAndHeight()
-	{
+	public void testCreateThumbnail_III_negativeWidthAndHeight() {
 		/*
 		 * Actual test
 		 */
@@ -3448,8 +3314,7 @@ public class ThumbnailatorTest
 	 * 
 	 */
 	@Test
-	public void testCreateThumbnail_III_CorrectUsage()
-	{
+	public void testCreateThumbnail_III_CorrectUsage() {
 		/*
 		 * Actual test
 		 */
@@ -3477,8 +3342,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_ThumbnailTask_ResizerFactoryBeingUsed_UsingSize() throws IOException
-	{
+	public void testCreateThumbnail_ThumbnailTask_ResizerFactoryBeingUsed_UsingSize() throws IOException {
 		// given
 		BufferedImageSource source = new BufferedImageSource(
 				new BufferedImageBuilder(200, 200, BufferedImage.TYPE_INT_ARGB).build()
@@ -3520,8 +3384,7 @@ public class ThumbnailatorTest
 	 * @throws IOException
 	 */
 	@Test
-	public void testCreateThumbnail_ThumbnailTask_ResizerFactoryBeingUsed_UsingScale() throws IOException
-	{
+	public void testCreateThumbnail_ThumbnailTask_ResizerFactoryBeingUsed_UsingScale() throws IOException {
 		// given
 		BufferedImageSource source = new BufferedImageSource(
 				new BufferedImageBuilder(200, 200, BufferedImage.TYPE_INT_ARGB).build()
@@ -3549,8 +3412,7 @@ public class ThumbnailatorTest
 	}
 
 	@Test
-	public void renameGivenThumbnailParameter_createThumbnails() throws IOException
-	{
+	public void renameGivenThumbnailParameter_createThumbnails() throws IOException {
 		// given
 		Rename rename = mock(Rename.class);
 		when(rename.apply(anyString(), any(ThumbnailParameter.class)))
@@ -3573,8 +3435,7 @@ public class ThumbnailatorTest
 	}
 	
 	@Test
-	public void renameGivenThumbnailParameter_createThumbnailsAsCollection() throws IOException
-	{
+	public void renameGivenThumbnailParameter_createThumbnailsAsCollection() throws IOException {
 		// given
 		Rename rename = mock(Rename.class);
 		when(rename.apply(anyString(), any(ThumbnailParameter.class)))
@@ -3606,9 +3467,10 @@ public class ThumbnailatorTest
 	 * @throws IOException		When a problem occurs while making image data.
 	 */
 	private byte[] makeImageData(String format, int width, int height)
-	throws IOException
-	{
-		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+	throws IOException {
+		BufferedImage img = new BufferedImageBuilder(200, 200)
+				.imageType("jpg".equals(format) ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB)
+				.build();
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ImageIO.write(img, format, baos);
 		

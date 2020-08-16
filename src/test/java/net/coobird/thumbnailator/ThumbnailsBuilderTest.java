@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator;
 
 import static org.junit.Assert.*;
@@ -44,8 +68,8 @@ import org.mockito.ArgumentCaptor;
  * @author coobird
  *
  */
-public class ThumbnailsBuilderTest
-{
+public class ThumbnailsBuilderTest {
+
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
@@ -58,22 +82,18 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void sizeWithZeroWidth() throws IOException
-	{
+	public void sizeWithZeroWidth() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		try
-		{
+		try {
 			// when
 			Thumbnails.of(img)
 				.size(0, 50)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
@@ -90,22 +110,18 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void sizeWithZeroHeight() throws IOException
-	{
+	public void sizeWithZeroHeight() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		try
-		{
+		try {
 			// when
 			Thumbnails.of(img)
 				.size(50, 0)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
@@ -123,8 +139,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void sizeWithHeightAsALargeNumber() throws IOException
-	{
+	public void sizeWithHeightAsALargeNumber() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -151,8 +166,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void sizeWithWidthAsALargeNumber() throws IOException
-	{
+	public void sizeWithWidthAsALargeNumber() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -178,22 +192,18 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void sizeWithZeroWidthAndHeight() throws IOException
-	{
+	public void sizeWithZeroWidthAndHeight() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		try
-		{
+		try {
 			// when
 			Thumbnails.of(img)
 				.size(0, 0)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
@@ -211,8 +221,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void sizeOnly() throws IOException
-	{
+	public void sizeOnly() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		BufferedImage thumbnail = Thumbnails.of(img)
@@ -234,8 +243,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void sizeTwice() throws IOException
-	{
+	public void sizeTwice() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -255,8 +263,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void widthTwice() throws IOException
-	{
+	public void widthTwice() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -277,8 +284,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void widthThenSize() throws IOException
-	{
+	public void widthThenSize() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -299,8 +305,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void sizeThenWidth() throws IOException
-	{
+	public void sizeThenWidth() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -320,8 +325,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void heightTwice() throws IOException
-	{
+	public void heightTwice() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -342,8 +346,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void heightThenSize() throws IOException
-	{
+	public void heightThenSize() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -364,8 +367,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void sizeThenHeight() throws IOException
-	{
+	public void sizeThenHeight() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -389,8 +391,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void sizeWithAspectRatioTrue() throws IOException
-	{
+	public void sizeWithAspectRatioTrue() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		BufferedImage thumbnail = Thumbnails.of(img)
@@ -416,8 +417,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void sizeWithAspectRatioFalse() throws IOException
-	{
+	public void sizeWithAspectRatioFalse() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		BufferedImage thumbnail = Thumbnails.of(img)
@@ -430,46 +430,38 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void sizeWithScale() throws IOException
-	{
+	public void sizeWithScale() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.size(100, 100)
 				.scale(0.5)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 			assertTrue(e.getMessage().contains("scale cannot be set"));
 		}
 	}
 	
 	@Test
-	public void sizeWithScaleTwoArg() throws IOException
-	{
+	public void sizeWithScaleTwoArg() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 			.size(100, 100)
 			.scale(0.5, 0.5)
 			.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 			assertTrue(e.getMessage().contains("scale cannot be set"));
 		}
@@ -488,8 +480,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void forceSizeOnly() throws IOException
-	{
+	public void forceSizeOnly() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		BufferedImage thumbnail = Thumbnails.of(img)
@@ -511,8 +502,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void forceSizeTwice() throws IOException
-	{
+	public void forceSizeTwice() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -533,8 +523,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void forceSizeWithAspectRatioTrue() throws IOException
-	{
+	public void forceSizeWithAspectRatioTrue() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -555,8 +544,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void forceSizeWithAspectRatioFalse() throws IOException
-	{
+	public void forceSizeWithAspectRatioFalse() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -576,8 +564,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void allowOverwriteCalledOnce() throws IOException
-	{
+	public void allowOverwriteCalledOnce() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -601,8 +588,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void allowOverwriteCalledTwice() throws IOException
-	{
+	public void allowOverwriteCalledTwice() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -630,8 +616,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void scaleOnly() throws IOException
-	{
+	public void scaleOnly() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		BufferedImage thumbnail = Thumbnails.of(img)
@@ -654,21 +639,17 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void scaleWithAspectRatioTrue() throws IOException
-	{
+	public void scaleWithAspectRatioTrue() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.5f)
 				.keepAspectRatio(true)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			assertTrue(e.getMessage().contains("scaling factor has already been specified"));
 		}
 	}
@@ -685,74 +666,61 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void scaleWithAspectRatioFalse() throws IOException
-	{
+	public void scaleWithAspectRatioFalse() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.5f)
 				.keepAspectRatio(false)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			assertTrue(e.getMessage().contains("scaling factor has already been specified"));
 		}
 	}
 	
 	@Test
-	public void scaleWithScaleTwoArg() throws IOException
-	{
+	public void scaleWithScaleTwoArg() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 			.scale(0.5f)
 			.scale(0.5, 0.5)
 			.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 			assertTrue(e.getMessage().contains("scale is already set"));
 		}
 	}
 	
 	@Test
-	public void scaleWithSize() throws IOException
-	{
+	public void scaleWithSize() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.5f)
 				.size(100, 100)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 			assertTrue(e.getMessage().contains("size cannot be set"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgOnly() throws IOException
-	{
+	public void scaleTwoArgOnly() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -767,467 +735,383 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void scaleTwoArgWithAspectRatioTrue() throws IOException
-	{
+	public void scaleTwoArgWithAspectRatioTrue() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.6, 0.4)
 				.keepAspectRatio(true)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor has already been specified"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgWithAspectRatioFalse() throws IOException
-	{
+	public void scaleTwoArgWithAspectRatioFalse() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.6, 0.4)
 				.keepAspectRatio(false)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor has already been specified"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgWithScaleOneArg() throws IOException
-	{
+	public void scaleTwoArgWithScaleOneArg() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.6, 0.4)
 				.scale(0.5)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 			assertTrue(e.getMessage().contains("scale is already set"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgWithScaleTwoArg() throws IOException
-	{
+	public void scaleTwoArgWithScaleTwoArg() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.6, 0.4)
 				.scale(0.5, 0.5)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 			assertTrue(e.getMessage().contains("scale is already set"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgWithSize() throws IOException
-	{
+	public void scaleTwoArgWithSize() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.6, 0.4)
 				.size(100, 100)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 			assertTrue(e.getMessage().contains("size cannot be set"));
 		}
 	}
 	
 	@Test
-	public void scaleWithZeroFactor() throws IOException
-	{
+	public void scaleWithZeroFactor() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.0)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor is equal to or less than 0"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgWithValidAndZeroFactor() throws IOException
-	{
+	public void scaleTwoArgWithValidAndZeroFactor() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.5, 0.0)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor is equal to or less than 0"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgWithZeroFactorAndValid() throws IOException
-	{
+	public void scaleTwoArgWithZeroFactorAndValid() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.0, 0.5)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor is equal to or less than 0"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgWithZeroFactorAndZeroFactor() throws IOException
-	{
+	public void scaleTwoArgWithZeroFactorAndZeroFactor() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.0, 0.0)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor is equal to or less than 0"));
 		}
 	}
 	
 	@Test
-	public void scaleWithNaN() throws IOException
-	{
+	public void scaleWithNaN() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(Double.NaN)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor is not a number"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgWithValidAndNaN() throws IOException
-	{
+	public void scaleTwoArgWithValidAndNaN() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.5, Double.NaN)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor is not a number"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgWithNaNAndValid() throws IOException
-	{
+	public void scaleTwoArgWithNaNAndValid() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(Double.NaN, 0.5)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor is not a number"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgWithNaNAndNaN() throws IOException
-	{
+	public void scaleTwoArgWithNaNAndNaN() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(Double.NaN, Double.NaN)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor is not a number"));
 		}
 	}
 	
 	@Test
-	public void scaleWithPositiveInfinity() throws IOException
-	{
+	public void scaleWithPositiveInfinity() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(Double.POSITIVE_INFINITY)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor cannot be infinity"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgWithValidAndPositiveInfinity() throws IOException
-	{
+	public void scaleTwoArgWithValidAndPositiveInfinity() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.5, Double.POSITIVE_INFINITY)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor cannot be infinity"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgWithPositiveInfinityAndValid() throws IOException
-	{
+	public void scaleTwoArgWithPositiveInfinityAndValid() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(Double.POSITIVE_INFINITY, 0.5)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor cannot be infinity"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgWithPositiveInfinityAndPositiveInfinity() throws IOException
-	{
+	public void scaleTwoArgWithPositiveInfinityAndPositiveInfinity() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor cannot be infinity"));
 		}
 	}
 	
 	@Test
-	public void scaleWithNegativeInfinity() throws IOException
-	{
+	public void scaleWithNegativeInfinity() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(Double.NEGATIVE_INFINITY)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor is equal to or less than 0"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgWithValidAndNegativeInfinity() throws IOException
-	{
+	public void scaleTwoArgWithValidAndNegativeInfinity() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.5, Double.NEGATIVE_INFINITY)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor is equal to or less than 0"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgWithNegativeInfinityAndValid() throws IOException
-	{
+	public void scaleTwoArgWithNegativeInfinityAndValid() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(Double.NEGATIVE_INFINITY, 0.5)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor is equal to or less than 0"));
 		}
 	}
 	
 	@Test
-	public void scaleTwoArgWithNegativeInfinityAndNegativeInfinity() throws IOException
-	{
+	public void scaleTwoArgWithNegativeInfinityAndNegativeInfinity() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 			assertTrue(e.getMessage().contains("scaling factor is equal to or less than 0"));
 		}
@@ -1244,19 +1128,15 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void keepAspectRatioBeforeSize() throws IOException
-	{
+	public void keepAspectRatioBeforeSize() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.keepAspectRatio(false);
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			assertTrue(e.getMessage().contains("unless the size parameter has already been specified."));
 		}
 	}
@@ -1272,41 +1152,33 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void keepAspectRatioAfterScale() throws IOException
-	{
+	public void keepAspectRatioAfterScale() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.5f)
 				.keepAspectRatio(false)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			assertTrue(e.getMessage().contains("scaling factor has already been specified"));
 		}
 	}
 	
 	@Test
-	public void keepAspectRatioAfterScaleTwoArg() throws IOException
-	{
+	public void keepAspectRatioAfterScaleTwoArg() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.scale(0.6, 0.4)
 				.keepAspectRatio(true)
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			assertTrue(e.getMessage().contains("scaling factor has already been specified"));
 		}
 	}
@@ -1322,8 +1194,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void resizerOnly() throws IOException
-	{
+	public void resizerOnly() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Resizer resizer = mock(Resizer.class);
@@ -1348,8 +1219,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=IllegalStateException.class)
-	public void resizerTwice() throws IOException
-	{
+	public void resizerTwice() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -1370,8 +1240,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void scalingModeOnly() throws IOException
-	{
+	public void scalingModeOnly() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -1391,8 +1260,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=IllegalStateException.class)
-	public void scalingModeTwice() throws IOException
-	{
+	public void scalingModeTwice() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -1414,8 +1282,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=IllegalStateException.class)
-	public void resizerThenScalingMode() throws IOException
-	{
+	public void resizerThenScalingMode() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -1437,8 +1304,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=IllegalStateException.class)
-	public void resizerFactoryThenScalingMode() throws IOException
-	{
+	public void resizerFactoryThenScalingMode() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -1460,8 +1326,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=IllegalStateException.class)
-	public void scalingModeThenResizer() throws IOException
-	{
+	public void scalingModeThenResizer() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -1483,8 +1348,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=IllegalStateException.class)
-	public void scalingModeThenResizerFactory() throws IOException
-	{
+	public void scalingModeThenResizerFactory() throws IOException {
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
 		Thumbnails.of(img)
@@ -1506,8 +1370,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void imageTypeNotCalled() throws IOException
-	{
+	public void imageTypeNotCalled() throws IOException {
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_BYTE_INDEXED);
 		
 		BufferedImage thumbnail = Thumbnails.of(img)
@@ -1530,8 +1393,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void imageTypeCalledSameType() throws IOException
-	{
+	public void imageTypeCalledSameType() throws IOException {
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_BYTE_GRAY);
 		
 		BufferedImage thumbnail = Thumbnails.of(img)
@@ -1555,8 +1417,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void imageTypeCalledDifferentType() throws IOException
-	{
+	public void imageTypeCalledDifferentType() throws IOException {
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_BYTE_GRAY);
 		
 		BufferedImage thumbnail = Thumbnails.of(img)
@@ -1578,8 +1439,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=IllegalStateException.class)
-	public void imageTypeCalledTwice() throws IOException
-	{
+	public void imageTypeCalledTwice() throws IOException {
 		BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_BYTE_GRAY);
 		
 		Thumbnails.of(img)
@@ -1602,8 +1462,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void sourceRegion_Region() throws IOException
-	{
+	public void sourceRegion_Region() throws IOException {
 		// given
 		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
@@ -1634,24 +1493,20 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void sourceRegion_Region_Null() throws IOException
-	{
+	public void sourceRegion_Region_Null() throws IOException {
 		// given
 		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.sourceRegion((Region)null)
 				.size(50, 50)
 				.toFile(outFile);
 			fail();
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 		}
 	}
@@ -1669,8 +1524,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void sourceRegion_Rectangle() throws IOException
-	{
+	public void sourceRegion_Rectangle() throws IOException {
 		// given
 		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
@@ -1701,24 +1555,20 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void sourceRegion_Rectangle_Null() throws IOException
-	{
+	public void sourceRegion_Rectangle_Null() throws IOException {
 		// given
 		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.sourceRegion((Rectangle)null)
 				.size(50, 50)
 				.toFile(outFile);
 			fail();
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 		}
 	}
@@ -1736,8 +1586,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void sourceRegion_PositionSize() throws IOException
-	{
+	public void sourceRegion_PositionSize() throws IOException {
 		// given
 		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
@@ -1768,24 +1617,20 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void sourceRegion_PositionSize_PositionNull() throws IOException
-	{
+	public void sourceRegion_PositionSize_PositionNull() throws IOException {
 		// given
 		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.sourceRegion(null, new AbsoluteSize(50, 50))
 				.size(50, 50)
 				.toFile(outFile);
 			fail();
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 		}
 	}
@@ -1802,24 +1647,20 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void sourceRegion_PositionSize_SizeNull() throws IOException
-	{
+	public void sourceRegion_PositionSize_SizeNull() throws IOException {
 		// given
 		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.sourceRegion(new Coordinate(0, 0), null)
 				.size(50, 50)
 				.toFile(outFile);
 			fail();
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 		}
 	}
@@ -1837,8 +1678,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void sourceRegion_PositionIntInt() throws IOException
-	{
+	public void sourceRegion_PositionIntInt() throws IOException {
 		// given
 		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
@@ -1869,24 +1709,20 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void sourceRegion_PositionIntInt_PositionNull() throws IOException
-	{
+	public void sourceRegion_PositionIntInt_PositionNull() throws IOException {
 		// given
 		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.sourceRegion(null, 50, 50)
 				.size(50, 50)
 				.toFile(outFile);
 			fail();
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 		}
 	}
@@ -1903,24 +1739,20 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void sourceRegion_PositionIntInt_WidthNonPositive() throws IOException
-	{
+	public void sourceRegion_PositionIntInt_WidthNonPositive() throws IOException {
 		// given
 		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.sourceRegion(new Coordinate(0, 0), -1, 50)
 				.size(50, 50)
 				.toFile(outFile);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
@@ -1937,24 +1769,20 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void sourceRegion_PositionIntInt_HeightNonPositive() throws IOException
-	{
+	public void sourceRegion_PositionIntInt_HeightNonPositive() throws IOException {
 		// given
 		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 			.sourceRegion(new Coordinate(0, 0), 50, -1)
 			.size(50, 50)
 			.toFile(outFile);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
@@ -1972,8 +1800,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void sourceRegion_IntIntIntInt() throws IOException
-	{
+	public void sourceRegion_IntIntIntInt() throws IOException {
 		// given
 		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
@@ -2004,24 +1831,20 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void sourceRegion_IntIntIntInt_WidthNonPositive() throws IOException
-	{
+	public void sourceRegion_IntIntIntInt_WidthNonPositive() throws IOException {
 		// given
 		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 				.sourceRegion(0, 0, -1, 50)
 				.size(50, 50)
 				.toFile(outFile);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
@@ -2038,24 +1861,20 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void sourceRegion_IntIntIntInt_HeightNonPositive() throws IOException
-	{
+	public void sourceRegion_IntIntIntInt_HeightNonPositive() throws IOException {
 		// given
 		BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
 		
 		// when
-		try
-		{
+		try {
 			Thumbnails.of(img)
 			.sourceRegion(0, 0, 50, -1)
 			.size(50, 50)
 			.toFile(outFile);
 			fail();
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// then
 		}
 	}
@@ -2074,8 +1893,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputQuality_float_ValidArg_ZeroZero() throws IOException
-	{
+	public void outputQuality_float_ValidArg_ZeroZero() throws IOException {
 		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
@@ -2106,8 +1924,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputQuality_float_ValidArg_ZeroFive() throws IOException
-	{
+	public void outputQuality_float_ValidArg_ZeroFive() throws IOException {
 		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
@@ -2138,8 +1955,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputQuality_float_ValidArg_OneZero() throws IOException
-	{
+	public void outputQuality_float_ValidArg_OneZero() throws IOException {
 		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
@@ -2168,8 +1984,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
-	public void outputQuality_float_InvalidArg_Negative() throws IOException
-	{
+	public void outputQuality_float_InvalidArg_Negative() throws IOException {
 		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
@@ -2193,8 +2008,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
-	public void outputQuality_float_InvalidArg_OverOne() throws IOException
-	{
+	public void outputQuality_float_InvalidArg_OverOne() throws IOException {
 		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
@@ -2219,8 +2033,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputQuality_double_ValidArg_ZeroZero() throws IOException
-	{
+	public void outputQuality_double_ValidArg_ZeroZero() throws IOException {
 		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
@@ -2251,8 +2064,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputQuality_double_ValidArg_ZeroFive() throws IOException
-	{
+	public void outputQuality_double_ValidArg_ZeroFive() throws IOException {
 		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
@@ -2283,8 +2095,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputQuality_double_ValidArg_OneZero() throws IOException
-	{
+	public void outputQuality_double_ValidArg_OneZero() throws IOException {
 		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
@@ -2313,8 +2124,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
-	public void outputQuality_double_InvalidArg_Negative() throws IOException
-	{
+	public void outputQuality_double_InvalidArg_Negative() throws IOException {
 		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
@@ -2337,8 +2147,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
-	public void outputQuality_double_InvalidArg_OverOne() throws IOException
-	{
+	public void outputQuality_double_InvalidArg_OverOne() throws IOException {
 		File f = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
@@ -2364,8 +2173,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputFormat_SameAsOriginal_SameAsFileExtension() throws IOException
-	{
+	public void outputFormat_SameAsOriginal_SameAsFileExtension() throws IOException {
 		File f = new File("src/test/resources/Thumbnailator/grid.png");
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		outFile.deleteOnExit();
@@ -2399,8 +2207,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputFormat_DiffersFromOriginal_SameAsFileExtension() throws IOException
-	{
+	public void outputFormat_DiffersFromOriginal_SameAsFileExtension() throws IOException {
 		File f = new File("src/test/resources/Thumbnailator/grid.png");
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
@@ -2434,8 +2241,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputFormat_DiffersFromOriginal_SameAsFileExtension_Jpeg() throws IOException
-	{
+	public void outputFormat_DiffersFromOriginal_SameAsFileExtension_Jpeg() throws IOException {
 		File f = new File("src/test/resources/Thumbnailator/grid.png");
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		outFile.deleteOnExit();
@@ -2470,8 +2276,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputFormat_SameAsOriginal_DiffersFromFileExtension() throws IOException
-	{
+	public void outputFormat_SameAsOriginal_DiffersFromFileExtension() throws IOException {
 		File f = new File("src/test/resources/Thumbnailator/grid.png");
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
 		
@@ -2508,8 +2313,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputFormat_DiffersFromOriginal_DiffersFromFileExtension() throws IOException
-	{
+	public void outputFormat_DiffersFromOriginal_DiffersFromFileExtension() throws IOException {
 		File f = new File("src/test/resources/Thumbnailator/grid.png");
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 
@@ -2546,8 +2350,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputFormat_DiffersFromOriginal_DiffersFromFileExtension_Jpeg() throws IOException
-	{
+	public void outputFormat_DiffersFromOriginal_DiffersFromFileExtension_Jpeg() throws IOException {
 		File f = new File("src/test/resources/Thumbnailator/grid.png");
 		File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
 		
@@ -2584,8 +2387,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputFormat_Multiple_SameAsOriginal_SameAsExtension_Both() throws IOException
-	{
+	public void outputFormat_Multiple_SameAsOriginal_SameAsExtension_Both() throws IOException {
 		// given
 		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
 		File f2 = new File("src/test/resources/Thumbnailator/igrid.png");
@@ -2635,8 +2437,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputFormat_Multiple_FirstExtensionSame_SecondExtensionDifferent() throws IOException
-	{
+	public void outputFormat_Multiple_FirstExtensionSame_SecondExtensionDifferent() throws IOException {
 		// given
 		File f1 = new File("src/test/resources/Thumbnailator/grid.png");
 		File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
@@ -2685,8 +2486,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputFormat_Multiple_FirstExtensionDifferent_SecondExtensionSame() throws IOException
-	{
+	public void outputFormat_Multiple_FirstExtensionDifferent_SecondExtensionSame() throws IOException {
 		// given
 		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f2 = new File("src/test/resources/Thumbnailator/grid.png");
@@ -2735,8 +2535,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputFormat_Multiple_FirstExtensionDifferent_SecondExtensionDifferent() throws IOException
-	{
+	public void outputFormat_Multiple_FirstExtensionDifferent_SecondExtensionDifferent() throws IOException {
 		// given
 		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		File f2 = new File("src/test/resources/Thumbnailator/grid.bmp");
@@ -2779,8 +2578,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputFormat_SupportedFormat() throws IOException
-	{
+	public void outputFormat_SupportedFormat() throws IOException {
 		// given
 		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
@@ -2803,8 +2601,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
-	public void outputFormat_UnsupportedFormat() throws IOException
-	{
+	public void outputFormat_UnsupportedFormat() throws IOException {
 		// given
 		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
@@ -2830,8 +2627,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputFormat_Checks_FormatSpecified_TypeSupported() throws IOException
-	{
+	public void outputFormat_Checks_FormatSpecified_TypeSupported() throws IOException {
 		// given
 		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
@@ -2859,8 +2655,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
-	public void outputFormat_Checks_FormatSpecified_FormatDoesNotSupportCompression() throws IOException
-	{
+	public void outputFormat_Checks_FormatSpecified_FormatDoesNotSupportCompression() throws IOException {
 		// given
 		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
@@ -2887,8 +2682,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
-	public void outputFormat_Checks_FormatSpecified_TypeUnsupported() throws IOException
-	{
+	public void outputFormat_Checks_FormatSpecified_TypeUnsupported() throws IOException {
 		// given
 		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
@@ -2915,8 +2709,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputFormat_Checks_FormatSpecified_TypeDefault() throws IOException
-	{
+	public void outputFormat_Checks_FormatSpecified_TypeDefault() throws IOException {
 		// given
 		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
@@ -2943,8 +2736,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test(expected=IllegalArgumentException.class)
-	public void outputFormat_Checks_FormatSpecifiedAsOriginal_TypeSpecified() throws IOException
-	{
+	public void outputFormat_Checks_FormatSpecifiedAsOriginal_TypeSpecified() throws IOException {
 		// given
 		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
@@ -2971,8 +2763,7 @@ public class ThumbnailsBuilderTest
 	 * @throws IOException
 	 */	
 	@Test
-	public void outputFormat_Checks_FormatSpecifiedAsOriginal_TypeIsDefaultForFormat() throws IOException
-	{
+	public void outputFormat_Checks_FormatSpecifiedAsOriginal_TypeIsDefaultForFormat() throws IOException {
 		// given
 		File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
 		
@@ -2997,18 +2788,14 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=NullPointerException.class)
-	public void resizer_Null()
-	{
-		try
-		{
+	public void resizer_Null() {
+		try {
 			// given
 			// when
 			Thumbnails.of("non-existent-file")
 				.size(200, 200)
 				.resizer(null);
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 			assertEquals("Resizer is null.", e.getMessage());
 			throw e;
@@ -3026,18 +2813,14 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=NullPointerException.class)
-	public void alphaInterpolation_Null()
-	{
-		try
-		{
+	public void alphaInterpolation_Null() {
+		try {
 			// given
 			// when
 			Thumbnails.of("non-existent-file")
 				.size(200, 200)
 				.alphaInterpolation(null);
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 			assertEquals("Alpha interpolation is null.", e.getMessage());
 			throw e;
@@ -3055,18 +2838,14 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=NullPointerException.class)
-	public void dithering_Null()
-	{
-		try
-		{
+	public void dithering_Null() {
+		try {
 			// given
 			// when
 			Thumbnails.of("non-existent-file")
 				.size(200, 200)
 				.dithering(null);
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 			assertEquals("Dithering is null.", e.getMessage());
 			throw e;
@@ -3084,18 +2863,14 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=NullPointerException.class)
-	public void antialiasing_Null()
-	{
-		try
-		{
+	public void antialiasing_Null() {
+		try {
 			// given
 			// when
 			Thumbnails.of("non-existent-file")
 				.size(200, 200)
 				.antialiasing(null);
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 			assertEquals("Antialiasing is null.", e.getMessage());
 			throw e;
@@ -3113,18 +2888,14 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=NullPointerException.class)
-	public void rendering_Null()
-	{
-		try
-		{
+	public void rendering_Null() {
+		try {
 			// given
 			// when
 			Thumbnails.of("non-existent-file")
 				.size(200, 200)
 				.rendering(null);
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 			assertEquals("Rendering is null.", e.getMessage());
 			throw e;
@@ -3142,18 +2913,14 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test(expected=NullPointerException.class)
-	public void scalingMode_Null()
-	{
-		try
-		{
+	public void scalingMode_Null() {
+		try {
 			// given
 			// when
 			Thumbnails.of("non-existent-file")
 				.size(200, 200)
 				.scalingMode(null);
-		}
-		catch (NullPointerException e)
-		{
+		} catch (NullPointerException e) {
 			// then
 			assertEquals("Scaling mode is null.", e.getMessage());
 			throw e;
@@ -3172,8 +2939,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void resizerThenResizerFactory() throws IOException
-	{
+	public void resizerThenResizerFactory() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -3200,8 +2966,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void resizerFactoryThenResizer() throws IOException
-	{
+	public void resizerFactoryThenResizer() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -3228,8 +2993,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void resizerThenAlphainterpolation() throws IOException
-	{
+	public void resizerThenAlphainterpolation() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -3257,8 +3021,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void resizerThenDithering() throws IOException
-	{
+	public void resizerThenDithering() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -3286,8 +3049,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void resizerThenAntialiasing() throws IOException
-	{
+	public void resizerThenAntialiasing() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -3315,8 +3077,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void resizerThenRendering() throws IOException
-	{
+	public void resizerThenRendering() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -3344,8 +3105,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void resizerFactoryThenAlphainterpolation() throws IOException
-	{
+	public void resizerFactoryThenAlphainterpolation() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -3372,8 +3132,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void resizerFactoryThenDithering() throws IOException
-	{
+	public void resizerFactoryThenDithering() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -3400,8 +3159,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void resizerFactoryThenAntialiasing() throws IOException
-	{
+	public void resizerFactoryThenAntialiasing() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -3428,8 +3186,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test(expected=IllegalStateException.class)
-	public void resizerFactoryThenRendering() throws IOException
-	{
+	public void resizerFactoryThenRendering() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -3445,8 +3202,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void renameGivenThumbnailParameter() throws IOException
-	{
+	public void renameGivenThumbnailParameter() throws IOException {
 		// given
 		Rename rename = mock(Rename.class);
 		when(rename.apply(anyString(), any(ThumbnailParameter.class)))
@@ -3483,8 +3239,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void width() throws IOException
-	{
+	public void width() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 100).build();
 		
@@ -3510,8 +3265,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void height() throws IOException
-	{
+	public void height() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 100).build();
 		
@@ -3540,8 +3294,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void widthAndHeight() throws IOException
-	{
+	public void widthAndHeight() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 100).build();
 		
@@ -3571,8 +3324,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void heightAndWidth() throws IOException
-	{
+	public void heightAndWidth() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 100).build();
 		
@@ -3599,13 +3351,11 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void widthNotPreservingTheAspectRatio() throws IOException
-	{
+	public void widthNotPreservingTheAspectRatio() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 100).build();
 		
-		try
-		{
+		try {
 			// when
 			Thumbnails.of(img)
 				.keepAspectRatio(false)
@@ -3613,9 +3363,7 @@ public class ThumbnailsBuilderTest
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 		}
 	}
@@ -3632,21 +3380,17 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void heightNotPreservingTheAspectRatio() throws IOException
-	{
+	public void heightNotPreservingTheAspectRatio() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 100).build();
 		
-		try
-		{
+		try {
 			// when
 			Thumbnails.of(img)
 				.height(50)
 				.keepAspectRatio(false)
 				.asBufferedImage();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 		}
 	}
@@ -3664,22 +3408,18 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void widthAndHeightNotPreservingTheAspectRatio() throws IOException
-	{
+	public void widthAndHeightNotPreservingTheAspectRatio() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 100).build();
 		
-		try
-		{
+		try {
 			// when
 			Thumbnails.of(img)
 				.width(50)
 				.height(50)
 				.keepAspectRatio(false)
 				.asBufferedImage();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 		}
 	}
@@ -3697,22 +3437,18 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void heightAndWidthNotPreservingTheAspectRatio() throws IOException
-	{
+	public void heightAndWidthNotPreservingTheAspectRatio() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 100).build();
 		
-		try
-		{
+		try {
 			// when
 			Thumbnails.of(img)
 				.height(50)
 				.width(50)
 				.keepAspectRatio(false)
 				.asBufferedImage();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 		}
 	}
@@ -3729,13 +3465,11 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void widthNotPreservingTheAspectRatioFirst() throws IOException
-	{
+	public void widthNotPreservingTheAspectRatioFirst() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 100).build();
 		
-		try
-		{
+		try {
 			// when
 			Thumbnails.of(img)
 				.keepAspectRatio(false)
@@ -3743,9 +3477,7 @@ public class ThumbnailsBuilderTest
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 		}
 	}
@@ -3762,54 +3494,17 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void heightNotPreservingTheAspectRatioFirst() throws IOException
-	{
+	public void heightNotPreservingTheAspectRatioFirst() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 100).build();
 		
-		try
-		{
+		try {
 			// when
 			Thumbnails.of(img)
 				.keepAspectRatio(false)
 				.height(50)
 				.asBufferedImage();
-		}
-		catch (IllegalStateException e)
-		{
-			// then
-		}
-	}
-	
-	/**
-	 * Test for the {@link Thumbnails.Builder} class where,
-	 * <ol>
-	 * <li>The keepAspectRatio is called with false, first</li>
-	 * <li>The width method is called</li>
-	 * <li>The height method is called</li>
-	 * </ol>
-	 * and the expected outcome is,
-	 * <ol>
-	 * <li>An IllegalStateException is thrown.</li>
-	 * </ol>
-	 */	
-	@Test
-	public void widthAndHeightNotPreservingTheAspectRatioFirst() throws IOException
-	{
-		// given
-		BufferedImage img = new BufferedImageBuilder(200, 100).build();
-		
-		try
-		{
-			// when
-			Thumbnails.of(img)
-				.keepAspectRatio(false)
-				.width(50)
-				.height(50)
-				.asBufferedImage();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 		}
 	}
@@ -3827,22 +3522,47 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void heightAndWidthNotPreservingTheAspectRatioFirst() throws IOException
-	{
+	public void widthAndHeightNotPreservingTheAspectRatioFirst() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 100).build();
 		
-		try
-		{
+		try {
+			// when
+			Thumbnails.of(img)
+				.keepAspectRatio(false)
+				.width(50)
+				.height(50)
+				.asBufferedImage();
+		} catch (IllegalStateException e) {
+			// then
+		}
+	}
+	
+	/**
+	 * Test for the {@link Thumbnails.Builder} class where,
+	 * <ol>
+	 * <li>The keepAspectRatio is called with false, first</li>
+	 * <li>The width method is called</li>
+	 * <li>The height method is called</li>
+	 * </ol>
+	 * and the expected outcome is,
+	 * <ol>
+	 * <li>An IllegalStateException is thrown.</li>
+	 * </ol>
+	 */	
+	@Test
+	public void heightAndWidthNotPreservingTheAspectRatioFirst() throws IOException {
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 100).build();
+		
+		try {
 			// when
 			Thumbnails.of(img)
 				.keepAspectRatio(false)
 				.height(50)
 				.width(50)
 				.asBufferedImage();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 		}
 	}
@@ -3860,8 +3580,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void widthAndPreservingTheAspectRatio() throws IOException
-	{
+	public void widthAndPreservingTheAspectRatio() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 100).build();
 		
@@ -3889,8 +3608,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void heightAndPreservingTheAspectRatio() throws IOException
-	{
+	public void heightAndPreservingTheAspectRatio() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 100).build();
 		
@@ -3921,8 +3639,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void widthAndHeightAndPreservingTheAspectRatio() throws IOException
-	{
+	public void widthAndHeightAndPreservingTheAspectRatio() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 100).build();
 		
@@ -3954,8 +3671,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */	
 	@Test
-	public void heightAndWidthAndPreservingTheAspectRatio() throws IOException
-	{
+	public void heightAndWidthAndPreservingTheAspectRatio() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 100).build();
 		
@@ -3982,8 +3698,7 @@ public class ThumbnailsBuilderTest
 	 * </ol>
 	 */
 	@Test
-	public void resizerFactoryCalledOnResize() throws IOException
-	{
+	public void resizerFactoryCalledOnResize() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		ResizerFactory resizerFactory = mock(ResizerFactory.class);
@@ -4002,8 +3717,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropWithSizeBefore() throws IOException
-	{
+	public void cropWithSizeBefore() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -4019,8 +3733,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropWithSizeAfter() throws IOException
-	{
+	public void cropWithSizeAfter() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -4036,8 +3749,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropWithAspectRatioTrueBefore() throws IOException
-	{
+	public void cropWithAspectRatioTrueBefore() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -4054,8 +3766,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropWithAspectRatioTrueAfter() throws IOException
-	{
+	public void cropWithAspectRatioTrueAfter() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -4072,8 +3783,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropWithAspectRatioFalseBefore() throws IOException
-	{
+	public void cropWithAspectRatioFalseBefore() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -4090,8 +3800,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropWithAspectRatioFalseAfter() throws IOException
-	{
+	public void cropWithAspectRatioFalseAfter() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
@@ -4108,13 +3817,11 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropWithScaleBeforeShouldFail() throws IOException
-	{
+	public void cropWithScaleBeforeShouldFail() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		try
-		{
+		try {
 			// when
 			Thumbnails.of(img)
 				.scale(0.5)
@@ -4122,21 +3829,17 @@ public class ThumbnailsBuilderTest
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void cropWithScaleAfterShouldFail() throws IOException
-	{
+	public void cropWithScaleAfterShouldFail() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		try
-		{
+		try {
 			// when
 			Thumbnails.of(img)
 				.crop(Positions.CENTER)
@@ -4144,37 +3847,30 @@ public class ThumbnailsBuilderTest
 				.asBufferedImage();
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void cropTwice() throws IOException
-	{
+	public void cropTwice() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		
-		try
-		{
+		try {
 			// when
 			Thumbnails.of(img)
 				.crop(Positions.CENTER)
 				.crop(Positions.CENTER);
 			
 			fail();
-		}
-		catch (IllegalStateException e)
-		{
+		} catch (IllegalStateException e) {
 			// then
 		}
 	}
 	
 	@Test
-	public void cropCenterThenWatermarkCenter() throws IOException
-	{
+	public void cropCenterThenWatermarkCenter() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
@@ -4212,8 +3908,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropCenterThenWatermarkTopLeft() throws IOException
-	{
+	public void cropCenterThenWatermarkTopLeft() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
@@ -4251,8 +3946,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropCenterThenWatermarkTopRight() throws IOException
-	{
+	public void cropCenterThenWatermarkTopRight() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
@@ -4290,8 +3984,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropCenterThenWatermarkBottomLeft() throws IOException
-	{
+	public void cropCenterThenWatermarkBottomLeft() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
@@ -4329,8 +4022,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropCenterThenWatermarkBottomRight() throws IOException
-	{
+	public void cropCenterThenWatermarkBottomRight() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 200).build();
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
@@ -4368,8 +4060,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropCenterThenWatermarkCenterNonSquareOriginalWide() throws IOException
-	{
+	public void cropCenterThenWatermarkCenterNonSquareOriginalWide() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(300, 200).build();
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
@@ -4407,8 +4098,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropCenterThenWatermarkTopLeftNonSquareOriginalWide() throws IOException
-	{
+	public void cropCenterThenWatermarkTopLeftNonSquareOriginalWide() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(300, 200).build();
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
@@ -4446,8 +4136,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropCenterThenWatermarkTopRightNonSquareOriginalWide() throws IOException
-	{
+	public void cropCenterThenWatermarkTopRightNonSquareOriginalWide() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(300, 200).build();
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
@@ -4485,8 +4174,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropCenterThenWatermarkBottomLeftNonSquareOriginalWide() throws IOException
-	{
+	public void cropCenterThenWatermarkBottomLeftNonSquareOriginalWide() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(300, 200).build();
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
@@ -4524,8 +4212,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropCenterThenWatermarkBottomRightNonSquareOriginalWide() throws IOException
-	{
+	public void cropCenterThenWatermarkBottomRightNonSquareOriginalWide() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(300, 200).build();
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
@@ -4563,8 +4250,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropCenterThenWatermarkCenterNonSquareOriginalTall() throws IOException
-	{
+	public void cropCenterThenWatermarkCenterNonSquareOriginalTall() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 300).build();
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
@@ -4602,8 +4288,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropCenterThenWatermarkTopLeftNonSquareOriginalTall() throws IOException
-	{
+	public void cropCenterThenWatermarkTopLeftNonSquareOriginalTall() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 300).build();
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
@@ -4641,8 +4326,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropCenterThenWatermarkTopRightNonSquareOriginalTall() throws IOException
-	{
+	public void cropCenterThenWatermarkTopRightNonSquareOriginalTall() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 300).build();
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
@@ -4680,8 +4364,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropCenterThenWatermarkBottomLeftNonSquareOriginalTall() throws IOException
-	{
+	public void cropCenterThenWatermarkBottomLeftNonSquareOriginalTall() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 300).build();
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
@@ -4719,8 +4402,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void cropCenterThenWatermarkBottomRightNonSquareOriginalTall() throws IOException
-	{
+	public void cropCenterThenWatermarkBottomRightNonSquareOriginalTall() throws IOException {
 		// given
 		BufferedImage img = new BufferedImageBuilder(200, 300).build();
 		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
@@ -4758,8 +4440,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation1File() throws IOException
-	{
+	public void watermarkExifOrientation1File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_1.jpg";
 		
@@ -4780,8 +4461,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation2File() throws IOException
-	{
+	public void watermarkExifOrientation2File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_2.jpg";
 		
@@ -4802,8 +4482,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation3File() throws IOException
-	{
+	public void watermarkExifOrientation3File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_3.jpg";
 		
@@ -4824,8 +4503,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation4File() throws IOException
-	{
+	public void watermarkExifOrientation4File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_4.jpg";
 		
@@ -4846,8 +4524,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation5File() throws IOException
-	{
+	public void watermarkExifOrientation5File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_5.jpg";
 		
@@ -4868,8 +4545,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation6File() throws IOException
-	{
+	public void watermarkExifOrientation6File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_6.jpg";
 		
@@ -4890,8 +4566,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation7File() throws IOException
-	{
+	public void watermarkExifOrientation7File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_7.jpg";
 		
@@ -4912,8 +4587,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation8File() throws IOException
-	{
+	public void watermarkExifOrientation8File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_8.jpg";
 		
@@ -4934,8 +4608,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation1InputStream() throws IOException
-	{
+	public void watermarkExifOrientation1InputStream() throws IOException {
 		// given
 		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_1.jpg");
 		
@@ -4956,8 +4629,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation2InputStream() throws IOException
-	{
+	public void watermarkExifOrientation2InputStream() throws IOException {
 		// given
 		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_2.jpg");
 		
@@ -4978,8 +4650,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation3InputStream() throws IOException
-	{
+	public void watermarkExifOrientation3InputStream() throws IOException {
 		// given
 		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_3.jpg");
 		
@@ -5000,8 +4671,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation4InputStream() throws IOException
-	{
+	public void watermarkExifOrientation4InputStream() throws IOException {
 		// given
 		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_4.jpg");
 		
@@ -5022,8 +4692,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation5InputStream() throws IOException
-	{
+	public void watermarkExifOrientation5InputStream() throws IOException {
 		// given
 		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_5.jpg");
 		
@@ -5044,8 +4713,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation6InputStream() throws IOException
-	{
+	public void watermarkExifOrientation6InputStream() throws IOException {
 		// given
 		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_6.jpg");
 		
@@ -5066,8 +4734,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation7InputStream() throws IOException
-	{
+	public void watermarkExifOrientation7InputStream() throws IOException {
 		// given
 		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_7.jpg");
 		
@@ -5088,8 +4755,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkExifOrientation8InputStream() throws IOException
-	{
+	public void watermarkExifOrientation8InputStream() throws IOException {
 		// given
 		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_8.jpg");
 		
@@ -5110,8 +4776,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropExifOrientation1File() throws IOException
-	{
+	public void watermarkAndCropExifOrientation1File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_1.jpg";
 		
@@ -5133,8 +4798,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropExifOrientation2File() throws IOException
-	{
+	public void watermarkAndCropExifOrientation2File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_2.jpg";
 		
@@ -5156,8 +4820,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropExifOrientation3File() throws IOException
-	{
+	public void watermarkAndCropExifOrientation3File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_3.jpg";
 		
@@ -5179,8 +4842,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropExifOrientation4File() throws IOException
-	{
+	public void watermarkAndCropExifOrientation4File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_4.jpg";
 		
@@ -5202,8 +4864,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropExifOrientation5File() throws IOException
-	{
+	public void watermarkAndCropExifOrientation5File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_5.jpg";
 		
@@ -5225,8 +4886,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropExifOrientation6File() throws IOException
-	{
+	public void watermarkAndCropExifOrientation6File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_6.jpg";
 		
@@ -5248,8 +4908,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropExifOrientation7File() throws IOException
-	{
+	public void watermarkAndCropExifOrientation7File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_7.jpg";
 		
@@ -5271,8 +4930,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropExifOrientation8File() throws IOException
-	{
+	public void watermarkAndCropExifOrientation8File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_8.jpg";
 		
@@ -5294,8 +4952,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropExifOrientation1InputStream() throws IOException
-	{
+	public void watermarkAndCropExifOrientation1InputStream() throws IOException {
 		// given
 		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_1.jpg");
 		
@@ -5317,8 +4974,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropExifOrientation2InputStream() throws IOException
-	{
+	public void watermarkAndCropExifOrientation2InputStream() throws IOException {
 		// given
 		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_2.jpg");
 		
@@ -5340,8 +4996,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropExifOrientation3InputStream() throws IOException
-	{
+	public void watermarkAndCropExifOrientation3InputStream() throws IOException {
 		// given
 		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_3.jpg");
 		
@@ -5363,8 +5018,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropExifOrientation4InputStream() throws IOException
-	{
+	public void watermarkAndCropExifOrientation4InputStream() throws IOException {
 		// given
 		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_4.jpg");
 		
@@ -5386,8 +5040,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropExifOrientation5InputStream() throws IOException
-	{
+	public void watermarkAndCropExifOrientation5InputStream() throws IOException {
 		// given
 		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_5.jpg");
 		
@@ -5409,8 +5062,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropExifOrientation6InputStream() throws IOException
-	{
+	public void watermarkAndCropExifOrientation6InputStream() throws IOException {
 		// given
 		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_6.jpg");
 		
@@ -5432,8 +5084,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropExifOrientation7InputStream() throws IOException
-	{
+	public void watermarkAndCropExifOrientation7InputStream() throws IOException {
 		// given
 		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_7.jpg");
 		
@@ -5455,8 +5106,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropExifOrientation8InputStream() throws IOException
-	{
+	public void watermarkAndCropExifOrientation8InputStream() throws IOException {
 		// given
 		InputStream imgIS = new FileInputStream("src/test/resources/Exif/source_8.jpg");
 		
@@ -5478,8 +5128,7 @@ public class ThumbnailsBuilderTest
 	}
 
 	@Test
-	public void watermarkAndCropNonCenterExifOrientation1File() throws IOException
-	{
+	public void watermarkAndCropNonCenterExifOrientation1File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_1.jpg";
 		
@@ -5501,8 +5150,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropNonCenterExifOrientation2File() throws IOException
-	{
+	public void watermarkAndCropNonCenterExifOrientation2File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_2.jpg";
 		
@@ -5524,8 +5172,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropNonCenterExifOrientation3File() throws IOException
-	{
+	public void watermarkAndCropNonCenterExifOrientation3File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_3.jpg";
 		
@@ -5547,8 +5194,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropNonCenterExifOrientation4File() throws IOException
-	{
+	public void watermarkAndCropNonCenterExifOrientation4File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_4.jpg";
 		
@@ -5570,8 +5216,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropNonCenterExifOrientation5File() throws IOException
-	{
+	public void watermarkAndCropNonCenterExifOrientation5File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_5.jpg";
 		
@@ -5593,8 +5238,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropNonCenterExifOrientation6File() throws IOException
-	{
+	public void watermarkAndCropNonCenterExifOrientation6File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_6.jpg";
 		
@@ -5616,8 +5260,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropNonCenterExifOrientation7File() throws IOException
-	{
+	public void watermarkAndCropNonCenterExifOrientation7File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_7.jpg";
 		
@@ -5639,8 +5282,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkAndCropNonCenterExifOrientation8File() throws IOException
-	{
+	public void watermarkAndCropNonCenterExifOrientation8File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_8.jpg";
 		
@@ -5662,8 +5304,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkCenterAndCropNonCenterExifOrientation1File() throws IOException
-	{
+	public void watermarkCenterAndCropNonCenterExifOrientation1File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_1.jpg";
 		
@@ -5685,8 +5326,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkCenterAndCropNonCenterExifOrientation2File() throws IOException
-	{
+	public void watermarkCenterAndCropNonCenterExifOrientation2File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_2.jpg";
 		
@@ -5708,8 +5348,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkCenterAndCropNonCenterExifOrientation3File() throws IOException
-	{
+	public void watermarkCenterAndCropNonCenterExifOrientation3File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_3.jpg";
 		
@@ -5731,8 +5370,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkCenterAndCropNonCenterExifOrientation4File() throws IOException
-	{
+	public void watermarkCenterAndCropNonCenterExifOrientation4File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_4.jpg";
 		
@@ -5754,8 +5392,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkCenterAndCropNonCenterExifOrientation5File() throws IOException
-	{
+	public void watermarkCenterAndCropNonCenterExifOrientation5File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_5.jpg";
 		
@@ -5777,8 +5414,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkCenterAndCropNonCenterExifOrientation6File() throws IOException
-	{
+	public void watermarkCenterAndCropNonCenterExifOrientation6File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_6.jpg";
 		
@@ -5800,8 +5436,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkCenterAndCropNonCenterExifOrientation7File() throws IOException
-	{
+	public void watermarkCenterAndCropNonCenterExifOrientation7File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_7.jpg";
 		
@@ -5823,8 +5458,7 @@ public class ThumbnailsBuilderTest
 	}
 	
 	@Test
-	public void watermarkCenterAndCropNonCenterExifOrientation8File() throws IOException
-	{
+	public void watermarkCenterAndCropNonCenterExifOrientation8File() throws IOException {
 		// given
 		String imgPath = "src/test/resources/Exif/source_8.jpg";
 		

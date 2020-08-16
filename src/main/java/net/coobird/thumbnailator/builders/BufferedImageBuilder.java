@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.builders;
 
 import java.awt.Dimension;
@@ -9,8 +33,7 @@ import java.awt.image.BufferedImage;
  * @author coobird
  *
  */
-public final class BufferedImageBuilder
-{
+public final class BufferedImageBuilder {
 	/**
 	 * The default image type of the {@link BufferedImage}s to be created
 	 * by this builder.
@@ -39,8 +62,7 @@ public final class BufferedImageBuilder
 	 * 
 	 * @param size			The size of the {@link BufferedImage} to build.
 	 */
-	public BufferedImageBuilder(Dimension size)
-	{
+	public BufferedImageBuilder(Dimension size) {
 		this(size.width, size.height);
 	}
 	
@@ -51,8 +73,7 @@ public final class BufferedImageBuilder
 	 * @param size			The size of the {@link BufferedImage} to build.
 	 * @param imageType		The image type of the {@link BufferedImage} to build.
 	 */
-	public BufferedImageBuilder(Dimension size, int imageType)
-	{
+	public BufferedImageBuilder(Dimension size, int imageType) {
 		this(size.width, size.height, imageType);
 	}
 	
@@ -63,8 +84,7 @@ public final class BufferedImageBuilder
 	 * @param width			The width of the {@link BufferedImage} to build.
 	 * @param height		The height of the {@link BufferedImage} to build.
 	 */
-	public BufferedImageBuilder(int width, int height)
-	{
+	public BufferedImageBuilder(int width, int height) {
 		this(width, height, DEFAULT_TYPE);
 	}
 	
@@ -76,8 +96,7 @@ public final class BufferedImageBuilder
 	 * @param height		The height of the {@link BufferedImage} to build.
 	 * @param imageType		The image type of the {@link BufferedImage} to build.
 	 */
-	public BufferedImageBuilder(int width, int height, int imageType)
-	{
+	public BufferedImageBuilder(int width, int height, int imageType) {
 		size(width, height);
 		imageType(imageType);
 	}
@@ -88,8 +107,7 @@ public final class BufferedImageBuilder
 	 * @return		Returns a newly created {@link BufferedImage} from the
 	 * 				parameters set in the {@link BufferedImageBuilder}.
 	 */
-	public BufferedImage build()
-	{
+	public BufferedImage build() {
 		return new BufferedImage(width, height, imageType);
 	}
 
@@ -99,10 +117,8 @@ public final class BufferedImageBuilder
 	 * @param imageType		The image type to use.
 	 * @return				This {@link BufferedImageBuilder} instance.
 	 */
-	public BufferedImageBuilder imageType(int imageType)
-	{
+	public BufferedImageBuilder imageType(int imageType) {
 		this.imageType = imageType;
-		
 		return this;
 	}
 	
@@ -113,11 +129,9 @@ public final class BufferedImageBuilder
 	 * @param height		The height of the image to create.
 	 * @return				This {@link BufferedImageBuilder} instance.
 	 */
-	public BufferedImageBuilder size(int width, int height)
-	{
+	public BufferedImageBuilder size(int width, int height) {
 		width(width);
 		height(height);
-		
 		return this;
 	}
 	
@@ -127,17 +141,14 @@ public final class BufferedImageBuilder
 	 * @param width			The width of the image to create.
 	 * @return				This {@link BufferedImageBuilder} instance.
 	 */
-	public BufferedImageBuilder width(int width)
-	{
-		if (width <= 0)
-		{
+	public BufferedImageBuilder width(int width) {
+		if (width <= 0) {
 			throw new IllegalArgumentException(
 					"Width must be greater than 0."
 			);
 		}
 		
 		this.width = width;
-		
 		return this;
 	}
 	
@@ -147,17 +158,14 @@ public final class BufferedImageBuilder
 	 * @param height		The height of the image to create.
 	 * @return				This {@link BufferedImageBuilder} instance.
 	 */
-	public BufferedImageBuilder height(int height)
-	{
-		if (height <= 0)
-		{
+	public BufferedImageBuilder height(int height) {
+		if (height <= 0) {
 			throw new IllegalArgumentException(
 					"Height must be greater than 0."
 			);
 		}
 
 		this.height = height;
-		
 		return this;
 	}
 }

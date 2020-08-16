@@ -1,3 +1,27 @@
+/*
+ * Thumbnailator - a thumbnail generation library
+ *
+ * Copyright (c) 2008-2020 Chris Kroells
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package net.coobird.thumbnailator.filters;
 
 import java.awt.AlphaComposite;
@@ -14,8 +38,7 @@ import net.coobird.thumbnailator.geometry.Position;
  * @author coobird
  *
  */
-public class Watermark implements ImageFilter
-{
+public class Watermark implements ImageFilter {
 	/**
 	 * The position of the watermark.
 	 */
@@ -44,19 +67,14 @@ public class Watermark implements ImageFilter
 	 * 							transparent, and {@code 1.0f} is completely
 	 * 							opaque.
 	 */
-	public Watermark(Position position, BufferedImage watermarkImg,
-			float opacity)
-	{
-		if (position == null)
-		{
+	public Watermark(Position position, BufferedImage watermarkImg, float opacity) {
+		if (position == null) {
 			throw new NullPointerException("Position is null.");
 		}
-		if (watermarkImg == null)
-		{
+		if (watermarkImg == null) {
 			throw new NullPointerException("Watermark image is null.");
 		}
-		if (opacity > 1.0f || opacity < 0.0f)
-		{
+		if (opacity > 1.0f || opacity < 0.0f) {
 			throw new IllegalArgumentException("Opacity is out of range of " +
 					"between 0.0f and 1.0f.");
 		}
@@ -66,8 +84,7 @@ public class Watermark implements ImageFilter
 		this.opacity = opacity;
 	}
 
-	public BufferedImage apply(BufferedImage img)
-	{
+	public BufferedImage apply(BufferedImage img) {
 		int width = img.getWidth();
 		int height = img.getHeight();
 		int type = img.getType();
