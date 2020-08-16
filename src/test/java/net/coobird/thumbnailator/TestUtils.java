@@ -35,18 +35,30 @@ import javax.imageio.ImageIO;
 
 public class TestUtils {
 	/**
-	 * Copies a file.
+	 * Copies a specified length of the source file.
 	 * 
+	 * @param sourceFile		The source file.
+	 * @param destFile			The destination file.
+	 * @param length			Length of source file to copy.
+	 * @throws IOException		If an IOException is thrown.
+	 */
+	public static void copyFile(File sourceFile, File destFile, long length) throws IOException {
+		FileInputStream fis = new FileInputStream(sourceFile);
+		FileOutputStream fos = new FileOutputStream(destFile);
+		fis.getChannel().transferTo(0, length, fos.getChannel());
+		fis.close();
+		fos.close();
+	}
+
+	/**
+	 * Copies a file.
+	 *
 	 * @param sourceFile		The source file.
 	 * @param destFile			The destination file.
 	 * @throws IOException		If an IOException is thrown.
 	 */
 	public static void copyFile(File sourceFile, File destFile) throws IOException {
-		FileInputStream fis = new FileInputStream(sourceFile);
-		FileOutputStream fos = new FileOutputStream(destFile);
-		fis.getChannel().transferTo(0, sourceFile.length(), fos.getChannel());
-		fis.close();
-		fos.close();
+		copyFile(sourceFile, destFile, sourceFile.length());
 	}
 
 	/**
