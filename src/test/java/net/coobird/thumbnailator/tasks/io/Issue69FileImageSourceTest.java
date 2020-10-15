@@ -24,9 +24,7 @@
 
 package net.coobird.thumbnailator.tasks.io;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +32,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 
 import org.junit.Before;
@@ -131,6 +130,40 @@ public class Issue69FileImageSourceTest {
 		// when
 		BufferedImage img = source.read();
 		
+		// then
+		assertTrue(img.getWidth() < SIZE);
+		assertTrue(img.getWidth() >= 600);
+		assertTrue(img.getHeight() < SIZE);
+		assertTrue(img.getHeight() >= 600);
+	}
+
+	// Reproduces Issue 161.
+	// https://github.com/coobird/thumbnailator/issues/161
+	@Test
+	public void usingThumbnailsWidthWorkaroundEnabled() throws IOException {
+		// given
+		System.setProperty("thumbnailator.conserveMemoryWorkaround", "true");
+
+		// when
+		BufferedImage img = Thumbnails.of(tempFile).width(600).asBufferedImage();
+
+		// then
+		assertTrue(img.getWidth() < SIZE);
+		assertTrue(img.getWidth() >= 600);
+		assertTrue(img.getHeight() < SIZE);
+		assertTrue(img.getHeight() >= 600);
+	}
+
+	// Reproduces Issue 161.
+	// https://github.com/coobird/thumbnailator/issues/161
+	@Test
+	public void usingThumbnailsHeightWorkaroundEnabled() throws IOException {
+		// given
+		System.setProperty("thumbnailator.conserveMemoryWorkaround", "true");
+
+		// when
+		BufferedImage img = Thumbnails.of(tempFile).height(600).asBufferedImage();
+
 		// then
 		assertTrue(img.getWidth() < SIZE);
 		assertTrue(img.getWidth() >= 600);

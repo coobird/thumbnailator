@@ -185,8 +185,16 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 
 			// Calculate the maximum subsampling that can be used.
 			if (param.getSize() != null && (param.getSize().width * 2 < width && param.getSize().height * 2 < height)) {
-				double widthScaling = (double)width / (double)param.getSize().width;
-				double heightScaling = (double)height / (double)param.getSize().height;
+				int targetWidth = param.getSize().width;
+				int targetHeight = param.getSize().height;
+
+				// Handle cases where .width() or .height() is called. (Issue 161)
+				targetWidth = targetWidth != Integer.MAX_VALUE ? targetWidth : targetHeight;
+				targetHeight = targetHeight != Integer.MAX_VALUE ? targetHeight : targetWidth;
+
+				double widthScaling = (double)width / (double)targetWidth;
+				double heightScaling = (double)height / (double)targetHeight;
+
 				subsampling = (int)Math.floor(Math.min(widthScaling, heightScaling));
 
 			} else if (param.getSize() == null) {
