@@ -29,6 +29,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
+import net.coobird.thumbnailator.util.BufferedImages;
 
 /**
  * A class containing rotation filters.
@@ -144,7 +145,11 @@ public class Rotation {
 				
 				g.drawImage(img, centerX, centerY, null);
 				g.dispose();
-				
+
+				if (img.getType() != newImage.getType()) {
+					return BufferedImages.copy(newImage, img.getType());
+				}
+
 				return newImage;
 			}
 		};

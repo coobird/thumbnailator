@@ -24,6 +24,7 @@
 
 package net.coobird.thumbnailator.filters;
 
+import static net.coobird.thumbnailator.filters.ImageFilterTestUtils.assertImageTypeRetained;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
@@ -65,5 +66,17 @@ public class CaptionTest {
 		
 		// then
 		assertTrue(BufferedImageComparer.isSame(originalImage, copyImage));
+	}
+
+	@Test
+	public void imageTypeForInputAndOutputIsTheSame() {
+		ImageFilter filter = new Caption(
+				"hello",
+				new Font("Monospaced", Font.PLAIN, 14),
+				Color.black,
+				Positions.BOTTOM_CENTER, 0
+		);
+
+		assertImageTypeRetained(filter);
 	}
 }

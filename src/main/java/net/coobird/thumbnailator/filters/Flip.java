@@ -46,7 +46,7 @@ public class Flip {
 			int height = img.getHeight();
 			
 			BufferedImage newImage =
-					new BufferedImageBuilder(width, height).build();
+					new BufferedImageBuilder(width, height, img.getType()).build();
 			
 			Graphics g = newImage.getGraphics();
 			g.drawImage(img, width, 0, 0, height, 0, 0, width, height, null);
@@ -65,7 +65,7 @@ public class Flip {
 			int height = img.getHeight();
 			
 			BufferedImage newImage =
-					new BufferedImageBuilder(width, height).build();
+					new BufferedImageBuilder(width, height, img.getType()).build();
 			
 			Graphics g = newImage.getGraphics();
 			g.drawImage(img, 0, height, width, 0, 0, 0, width, height, null);

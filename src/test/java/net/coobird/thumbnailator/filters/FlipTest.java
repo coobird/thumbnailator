@@ -24,6 +24,7 @@
 
 package net.coobird.thumbnailator.filters;
 
+import static net.coobird.thumbnailator.filters.ImageFilterTestUtils.assertImageTypeRetained;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.image.BufferedImage;
@@ -113,5 +114,15 @@ public class FlipTest {
 		
 		// then
 		assertTrue(BufferedImageComparer.isSame(originalImage, copyImage));
+	}
+
+	@Test
+	public void imageTypeForInputAndOutputIsTheSame_UsingFlipHorizontal() {
+		assertImageTypeRetained(Flip.HORIZONTAL);
+	}
+
+	@Test
+	public void imageTypeForInputAndOutputIsTheSame_UsingFlipVertical() {
+		assertImageTypeRetained(Flip.VERTICAL);
 	}
 }
