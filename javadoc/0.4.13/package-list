@@ -1,0 +1,12 @@
+net.coobird.thumbnailator
+net.coobird.thumbnailator.builders
+net.coobird.thumbnailator.filters
+net.coobird.thumbnailator.geometry
+net.coobird.thumbnailator.makers
+net.coobird.thumbnailator.name
+net.coobird.thumbnailator.resizers
+net.coobird.thumbnailator.resizers.configurations
+net.coobird.thumbnailator.tasks
+net.coobird.thumbnailator.tasks.io
+net.coobird.thumbnailator.util
+net.coobird.thumbnailator.util.exif
