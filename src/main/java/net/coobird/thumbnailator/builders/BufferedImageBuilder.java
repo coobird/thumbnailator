@@ -115,9 +115,15 @@ public final class BufferedImageBuilder {
 	 * Sets the type of the image of the {@link BufferedImage}.
 	 * 
 	 * @param imageType		The image type to use.
+	 * 						If {@link BufferedImage#TYPE_CUSTOM} is used, it
+	 * 						be substituted by {@link BufferedImage#TYPE_INT_ARGB}.
 	 * @return				This {@link BufferedImageBuilder} instance.
 	 */
 	public BufferedImageBuilder imageType(int imageType) {
+		if (imageType == BufferedImage.TYPE_CUSTOM) {
+			imageType = DEFAULT_TYPE;
+		}
+
 		this.imageType = imageType;
 		return this;
 	}
