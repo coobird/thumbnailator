@@ -29,6 +29,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
+import net.coobird.thumbnailator.util.BufferedImages;
 
 /**
  * An image filter which will add a color tint to an image.
@@ -101,12 +102,14 @@ public final class Colorize implements ImageFilter {
 		
 		Graphics2D g = newImage.createGraphics();
 		g.drawImage(img, 0, 0, null);
-		
 		g.setColor(c);
 		g.fillRect(0, 0, width, height);
-		
 		g.dispose();
-		
+
+		if (img.getType() != newImage.getType()) {
+			return BufferedImages.copy(newImage, img.getType());
+		}
+
 		return newImage;
 	}
 }

@@ -24,6 +24,8 @@
 
 package net.coobird.thumbnailator.resizers;
 
+import net.coobird.thumbnailator.builders.BufferedImageBuilder;
+
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -97,11 +99,11 @@ public class ProgressiveBilinearResizer extends AbstractResizer {
 		}
 		
 		// Temporary image used for in-place resizing of image.
-		BufferedImage tempImage = new BufferedImage(
+		BufferedImage tempImage = new BufferedImageBuilder(
 				currentWidth,
 				currentHeight,
 				destImage.getType()
-		);
+		).build();
 		
 		Graphics2D g = createGraphics(tempImage);
 		g.setComposite(AlphaComposite.Src);

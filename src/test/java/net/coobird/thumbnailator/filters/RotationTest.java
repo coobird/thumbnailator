@@ -24,6 +24,7 @@
 
 package net.coobird.thumbnailator.filters;
 
+import static net.coobird.thumbnailator.filters.ImageFilterTestUtils.assertImageTypeRetained;
 import static org.junit.Assert.*;
 
 import java.awt.image.BufferedImage;
@@ -81,6 +82,16 @@ public class RotationTest {
 		
 		// then
 		assertTrue(BufferedImageComparer.isSame(originalImage, copyImage));
+	}
+
+	@Test
+	public void imageTypeForInputAndOutputIsTheSame_SpecifiedRotator() {
+		assertImageTypeRetained(Rotation.newRotator(45));
+	}
+
+	@Test
+	public void imageTypeForInputAndOutputIsTheSame_UsingConstantField() {
+		assertImageTypeRetained(Rotation.LEFT_90_DEGREES);
 	}
 	
 	@Test

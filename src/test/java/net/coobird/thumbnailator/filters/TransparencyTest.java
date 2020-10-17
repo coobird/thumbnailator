@@ -24,6 +24,7 @@
 
 package net.coobird.thumbnailator.filters;
 
+import static net.coobird.thumbnailator.filters.ImageFilterTestUtils.assertImageTypeRetained;
 import static org.junit.Assert.*;
 
 import java.awt.image.BufferedImage;
@@ -77,5 +78,15 @@ public class TransparencyTest {
 		
 		// then
 		assertTrue(BufferedImageComparer.isSame(originalImage, copyImage));
+	}
+
+	@Test
+	public void imageTypeForInputAndOutputIsTheSame_DoubleConstructor() {
+		assertImageTypeRetained(new Transparency(0.5));
+	}
+
+	@Test
+	public void imageTypeForInputAndOutputIsTheSame_FloatConstructor() {
+		assertImageTypeRetained(new Transparency(0.5f));
 	}
 }

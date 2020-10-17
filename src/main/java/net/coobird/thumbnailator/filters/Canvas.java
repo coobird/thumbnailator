@@ -29,6 +29,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.geometry.Position;
 
 /**
@@ -171,8 +172,11 @@ public class Canvas implements ImageFilter {
 				0, 0, 0, 0
 		);
 		
-		BufferedImage finalImage =
-			new BufferedImage(widthToUse, heightToUse, img.getType());
+		BufferedImage finalImage = new BufferedImageBuilder(
+				widthToUse,
+				heightToUse,
+				img.getType()
+		).build();
 		
 		Graphics g = finalImage.getGraphics();
 		

@@ -24,6 +24,8 @@
 
 package net.coobird.thumbnailator.util;
 
+import net.coobird.thumbnailator.builders.BufferedImageBuilder;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -61,12 +63,11 @@ public final class BufferedImages {
 	public static BufferedImage copy(BufferedImage img, int imageType) {
 		int width = img.getWidth();
 		int height = img.getHeight();
-		
-		BufferedImage newImage = new BufferedImage(width, height, imageType);
+
+		BufferedImage newImage = new BufferedImageBuilder(width, height, imageType).build();
+
 		Graphics g = newImage.createGraphics();
-		
 		g.drawImage(img, 0, 0, null);
-		
 		g.dispose();
 		
 		return newImage;
