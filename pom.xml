@@ -70,7 +70,6 @@
               <Implementation-Vendor>coobird.net</Implementation-Vendor>
             </manifestEntries>
           </archive>
-          <excludeResources>false</excludeResources>
         </configuration>
         <executions>
           <execution>
@@ -103,7 +102,6 @@
               <Implementation-Vendor>coobird.net</Implementation-Vendor>
             </manifestEntries>
           </archive>
-          <excludeResources>false</excludeResources>
         </configuration>
       </plugin>
       <plugin>
