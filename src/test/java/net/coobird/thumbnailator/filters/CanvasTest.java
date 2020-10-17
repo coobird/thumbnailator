@@ -24,6 +24,7 @@
 
 package net.coobird.thumbnailator.filters;
 
+import static net.coobird.thumbnailator.filters.ImageFilterTestUtils.assertImageTypeRetained;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
@@ -114,7 +115,27 @@ public class CanvasTest {
 		// then
 		assertTrue(BufferedImageComparer.isSame(originalImage, copyImage));
 	}
-	
+
+	@Test
+	public void imageTypeForInputAndOutputIsTheSame_WidthHeightPositionConstructor() {
+		assertImageTypeRetained(new Canvas(100, 100, Positions.CENTER));
+	}
+
+	@Test
+	public void imageTypeForInputAndOutputIsTheSame_WidthHeightPositionCropConstructor() {
+		assertImageTypeRetained(new Canvas(100, 100, Positions.CENTER, true));
+	}
+
+	@Test
+	public void imageTypeForInputAndOutputIsTheSame_WidthHeightPositionColorConstructor() {
+		assertImageTypeRetained(new Canvas(100, 100, Positions.CENTER, Color.black));
+	}
+
+	@Test
+	public void imageTypeForInputAndOutputIsTheSame_WidthHeightPositionCropColorConstructor() {
+		assertImageTypeRetained(new Canvas(100, 100, Positions.CENTER, true, Color.black));
+	}
+
 	/**
 	 * Checks that the image is cropped
 	 */

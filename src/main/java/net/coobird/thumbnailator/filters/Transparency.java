@@ -24,6 +24,8 @@
 
 package net.coobird.thumbnailator.filters;
 
+import net.coobird.thumbnailator.util.BufferedImages;
+
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -90,7 +92,11 @@ public class Transparency implements ImageFilter {
 		g.setComposite(composite);
 		g.drawImage(img, 0, 0, null);
 		g.dispose();
-		
+
+		if (img.getType() != finalImage.getType()) {
+			return BufferedImages.copy(finalImage, img.getType());
+		}
+
 		return finalImage;
 	}
 	

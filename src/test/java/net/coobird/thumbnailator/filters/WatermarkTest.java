@@ -24,6 +24,7 @@
 
 package net.coobird.thumbnailator.filters;
 
+import static net.coobird.thumbnailator.filters.ImageFilterTestUtils.assertImageTypeRetained;
 import static org.junit.Assert.*;
 
 import java.awt.image.BufferedImage;
@@ -60,5 +61,11 @@ public class WatermarkTest {
 		
 		// then
 		assertTrue(BufferedImageComparer.isSame(originalImage, copyImage));
+	}
+
+	@Test
+	public void imageTypeForInputAndOutputIsTheSame() {
+		BufferedImage watermarkImg = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
+		assertImageTypeRetained(new Watermark(Positions.BOTTOM_CENTER, watermarkImg, 0.5f));
 	}
 }
