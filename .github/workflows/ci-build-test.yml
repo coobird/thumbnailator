@@ -21,4 +21,4 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: mvn -B verify --file pom.xml
+      run: mvn -B verify -Dmaven.javadoc.skip=true --file pom.xml
