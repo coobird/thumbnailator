@@ -56,3 +56,5 @@ The following pages have more information on what _Thumbnailator_ can do:
 *Thumbnailator is still early in its development, and the APIs are subject to
 change at any time.*
 
+# License
+Thumbnailtor is released under the MIT License.
