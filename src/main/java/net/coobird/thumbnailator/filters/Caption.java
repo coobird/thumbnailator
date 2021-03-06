@@ -87,11 +87,29 @@ public class Caption implements ImageFilter {
 	 * 					{@code 1.0f}, where {@code 0.0f} is completely
 	 * 					transparent, and {@code 1.0f} is completely opaque.
 	 * @param position	The position of the caption.
-	 * @param insets	The inset size around the caption.
+	 * @param insets	The inset size around the caption. Cannot be negative.
 	 */
-	public Caption(String caption, Font font, Color c, float alpha,
-			Position position, int insets)
-	{
+	public Caption(String caption, Font font, Color c, float alpha, Position position, int insets) {
+		if (caption == null) {
+			throw new NullPointerException("Caption is null.");
+		}
+		if (font == null) {
+			throw new NullPointerException("Font is null.");
+		}
+		if (c == null) {
+			throw new NullPointerException("Color is null.");
+		}
+		if (alpha > 1.0f || alpha < 0.0f) {
+			throw new IllegalArgumentException("Opacity is out of range of " +
+					"between 0.0f and 1.0f.");
+		}
+		if (position == null) {
+			throw new NullPointerException("Position is null.");
+		}
+		if (insets < 0) {
+			throw new IllegalArgumentException("Insets cannot be negative.");
+		}
+
 		this.caption = caption;
 		this.font = font;
 		this.c = c;
@@ -109,21 +127,13 @@ public class Caption implements ImageFilter {
 	 * @param font		The font of the caption.
 	 * @param c			The color of the caption.
 	 * @param position	The position of the caption.
-	 * @param insets	The inset size around the caption.
+	 * @param insets	The inset size around the caption. Cannot be negative.
 	 */
-	public Caption(String caption, Font font, Color c, Position position,
-			int insets)
-	{
-		this.caption = caption;
-		this.font = font;
-		this.c = c;
-		this.alpha = 1.0f;
-		this.position = position;
-		this.insets = insets;
+	public Caption(String caption, Font font, Color c, Position position, int insets) {
+		this(caption, font, c, 1.0f, position, insets);
 	}
 
-	public BufferedImage apply(BufferedImage img)
-	{
+	public BufferedImage apply(BufferedImage img) {
 		BufferedImage newImage = BufferedImages.copy(img);
 		
 		Graphics2D g = newImage.createGraphics();
