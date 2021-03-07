@@ -70,6 +70,28 @@ import org.mockito.ArgumentCaptor;
  */
 public class ThumbnailsBuilderTest {
 
+	/* Following images are for image-based comparisons */
+	private static final Color BACKGROUND_COLOR = Color.black;
+	private static final Color WATERMARK_COLOR = Color.white;
+
+	private static final BufferedImage ORIGINAL_IMAGE;
+	private static final BufferedImage WATERMARK_IMAGE;
+
+	static {
+		Graphics g;
+		ORIGINAL_IMAGE = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
+		g = ORIGINAL_IMAGE.getGraphics();
+		g.setColor(BACKGROUND_COLOR);
+		g.fillRect(0, 0, 200, 200);
+		g.dispose();
+
+		WATERMARK_IMAGE = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
+		g = WATERMARK_IMAGE.getGraphics();
+		g.setColor(WATERMARK_COLOR);
+		g.fillRect(0, 0, 50, 50);
+		g.dispose();
+	}
+
 	/**
 	 * Test for the {@link Thumbnails.Builder} class where,
 	 * <ol>
@@ -3872,210 +3894,135 @@ public class ThumbnailsBuilderTest {
 	@Test
 	public void cropCenterThenWatermarkCenter() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
-		
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 200);
-		g.dispose();
-		
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 25, 25);
-		g.dispose();
-		
 		// when
-		BufferedImage thumbnail = Thumbnails.of(img)
+		BufferedImage thumbnail = Thumbnails.of(ORIGINAL_IMAGE)
 			.size(100, 100)
 			.crop(Positions.CENTER)
-			.watermark(Positions.CENTER, watermark, 1.0f)
+			.watermark(Positions.CENTER, WATERMARK_IMAGE, 1.0f)
 			.asBufferedImage();
 		
 		// then
-		assertEquals(100, thumbnail.getWidth());
-		assertEquals(100, thumbnail.getHeight());
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,   0));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99,  0));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
-		assertEquals(Color.white.getRGB(), thumbnail.getRGB(50, 50));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  99));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 99));
+		BufferedImage expected = new BufferedImageBuilder(100, 100).build();
+		Graphics g = expected.getGraphics();
+		g.setColor(BACKGROUND_COLOR);
+		g.fillRect(0, 0, 100, 100);
+		g.setColor(WATERMARK_COLOR);
+		g.fillRect(25, 25, 50, 50);
+		g.dispose();
+
+		assertTrue(BufferedImageComparer.isSame(expected, thumbnail));
 	}
 	
 	@Test
 	public void cropCenterThenWatermarkTopLeft() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
-		
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 200);
-		g.dispose();
-		
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 25, 25);
-		g.dispose();
-		
 		// when
-		BufferedImage thumbnail = Thumbnails.of(img)
+		BufferedImage thumbnail = Thumbnails.of(ORIGINAL_IMAGE)
 				.size(100, 100)
 				.crop(Positions.CENTER)
-				.watermark(Positions.TOP_LEFT, watermark, 1.0f)
+				.watermark(Positions.TOP_LEFT, WATERMARK_IMAGE, 1.0f)
 				.asBufferedImage();
-		
+
 		// then
-		assertEquals(100, thumbnail.getWidth());
-		assertEquals(100, thumbnail.getHeight());
-		assertEquals(Color.white.getRGB(), thumbnail.getRGB(0,   0));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99,  0));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 50));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  99));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 99));
+		BufferedImage expected = new BufferedImageBuilder(100, 100).build();
+		Graphics g = expected.getGraphics();
+		g.setColor(BACKGROUND_COLOR);
+		g.fillRect(0, 0, 100, 100);
+		g.setColor(WATERMARK_COLOR);
+		g.fillRect(0, 0, 50, 50);
+		g.dispose();
+
+		assertTrue(BufferedImageComparer.isSame(expected, thumbnail));
 	}
 	
 	@Test
 	public void cropCenterThenWatermarkTopRight() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
-		
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 200);
-		g.dispose();
-		
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 25, 25);
-		g.dispose();
-		
 		// when
-		BufferedImage thumbnail = Thumbnails.of(img)
+		BufferedImage thumbnail = Thumbnails.of(ORIGINAL_IMAGE)
 				.size(100, 100)
 				.crop(Positions.CENTER)
-				.watermark(Positions.TOP_RIGHT, watermark, 1.0f)
+				.watermark(Positions.TOP_RIGHT, WATERMARK_IMAGE, 1.0f)
 				.asBufferedImage();
-		
+
 		// then
-		assertEquals(100, thumbnail.getWidth());
-		assertEquals(100, thumbnail.getHeight());
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,   0));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
-		assertEquals(Color.white.getRGB(), thumbnail.getRGB(99,  0));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 50));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  99));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 99));
+		BufferedImage expected = new BufferedImageBuilder(100, 100).build();
+		Graphics g = expected.getGraphics();
+		g.setColor(BACKGROUND_COLOR);
+		g.fillRect(0, 0, 100, 100);
+		g.setColor(WATERMARK_COLOR);
+		g.fillRect(50, 0, 50, 50);
+		g.dispose();
+
+		assertTrue(BufferedImageComparer.isSame(expected, thumbnail));
 	}
 	
 	@Test
 	public void cropCenterThenWatermarkBottomLeft() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
-		
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 200);
-		g.dispose();
-		
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 25, 25);
-		g.dispose();
-		
 		// when
-		BufferedImage thumbnail = Thumbnails.of(img)
+		BufferedImage thumbnail = Thumbnails.of(ORIGINAL_IMAGE)
 				.size(100, 100)
 				.crop(Positions.CENTER)
-				.watermark(Positions.BOTTOM_LEFT, watermark, 1.0f)
+				.watermark(Positions.BOTTOM_LEFT, WATERMARK_IMAGE, 1.0f)
 				.asBufferedImage();
-		
+
 		// then
-		assertEquals(100, thumbnail.getWidth());
-		assertEquals(100, thumbnail.getHeight());
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,   0));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99,  0));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 50));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
-		assertEquals(Color.white.getRGB(), thumbnail.getRGB(0,  99));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 99));
+		BufferedImage expected = new BufferedImageBuilder(100, 100).build();
+		Graphics g = expected.getGraphics();
+		g.setColor(BACKGROUND_COLOR);
+		g.fillRect(0, 0, 100, 100);
+		g.setColor(WATERMARK_COLOR);
+		g.fillRect(0, 50, 50, 50);
+		g.dispose();
+
+		assertTrue(BufferedImageComparer.isSame(expected, thumbnail));
 	}
 	
 	@Test
 	public void cropCenterThenWatermarkBottomRight() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
-		
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 200);
-		g.dispose();
-		
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 25, 25);
-		g.dispose();
-		
 		// when
-		BufferedImage thumbnail = Thumbnails.of(img)
+		BufferedImage thumbnail = Thumbnails.of(ORIGINAL_IMAGE)
 				.size(100, 100)
 				.crop(Positions.CENTER)
-				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.watermark(Positions.BOTTOM_RIGHT, WATERMARK_IMAGE, 1.0f)
 				.asBufferedImage();
-		
+
 		// then
-		assertEquals(100, thumbnail.getWidth());
-		assertEquals(100, thumbnail.getHeight());
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,   0));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50,  0));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99,  0));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  50));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 50));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(99, 50));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(0,  99));
-		assertEquals(Color.black.getRGB(), thumbnail.getRGB(50, 99));
-		assertEquals(Color.white.getRGB(), thumbnail.getRGB(99, 99));
+		BufferedImage expected = new BufferedImageBuilder(100, 100).build();
+		Graphics g = expected.getGraphics();
+		g.setColor(BACKGROUND_COLOR);
+		g.fillRect(0, 0, 100, 100);
+		g.setColor(WATERMARK_COLOR);
+		g.fillRect(50, 50, 50, 50);
+		g.dispose();
+
+		assertTrue(BufferedImageComparer.isSame(expected, thumbnail));
+	}
+
+	/**
+	 * Return a {@code BufferedImage} filled with a color.
+	 * @param width		Width of image.
+	 * @param height	Height of image.
+	 * @param color		Color to fill image with.
+	 * @return			A {@code BufferedImage} filled with a color.
+	 */
+	private static BufferedImage makeColorFilledImage(int width, int height, Color color) {
+		BufferedImage img = new BufferedImageBuilder(width, height).build();
+		Graphics g = img.getGraphics();
+		g.setColor(color);
+		g.fillRect(0, 0, width, height);
+		g.dispose();
+		return img;
 	}
 	
 	@Test
 	public void cropCenterThenWatermarkCenterNonSquareOriginalWide() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(300, 200).build();
-		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
-		
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 300, 200);
-		g.dispose();
-		
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 25, 25);
-		g.dispose();
-		
+		BufferedImage img = makeColorFilledImage(300, 200, BACKGROUND_COLOR);
+		BufferedImage watermark = makeColorFilledImage(25, 25, WATERMARK_COLOR);
+
 		// when
 		BufferedImage thumbnail = Thumbnails.of(img)
 				.size(100, 100)
@@ -4100,20 +4047,9 @@ public class ThumbnailsBuilderTest {
 	@Test
 	public void cropCenterThenWatermarkTopLeftNonSquareOriginalWide() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(300, 200).build();
-		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
-		
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 300, 200);
-		g.dispose();
-		
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 25, 25);
-		g.dispose();
-		
+		BufferedImage img = makeColorFilledImage(300, 200, BACKGROUND_COLOR);
+		BufferedImage watermark = makeColorFilledImage(25, 25, WATERMARK_COLOR);
+
 		// when
 		BufferedImage thumbnail = Thumbnails.of(img)
 				.size(100, 100)
@@ -4138,19 +4074,8 @@ public class ThumbnailsBuilderTest {
 	@Test
 	public void cropCenterThenWatermarkTopRightNonSquareOriginalWide() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(300, 200).build();
-		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
-		
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 300, 200);
-		g.dispose();
-		
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 25, 25);
-		g.dispose();
+		BufferedImage img = makeColorFilledImage(300, 200, BACKGROUND_COLOR);
+		BufferedImage watermark = makeColorFilledImage(25, 25, WATERMARK_COLOR);
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.of(img)
@@ -4176,19 +4101,8 @@ public class ThumbnailsBuilderTest {
 	@Test
 	public void cropCenterThenWatermarkBottomLeftNonSquareOriginalWide() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(300, 200).build();
-		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
-		
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 300, 200);
-		g.dispose();
-		
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 25, 25);
-		g.dispose();
+		BufferedImage img = makeColorFilledImage(300, 200, BACKGROUND_COLOR);
+		BufferedImage watermark = makeColorFilledImage(25, 25, WATERMARK_COLOR);
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.of(img)
@@ -4214,19 +4128,8 @@ public class ThumbnailsBuilderTest {
 	@Test
 	public void cropCenterThenWatermarkBottomRightNonSquareOriginalWide() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(300, 200).build();
-		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
-		
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 300, 200);
-		g.dispose();
-		
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 25, 25);
-		g.dispose();
+		BufferedImage img = makeColorFilledImage(300, 200, BACKGROUND_COLOR);
+		BufferedImage watermark = makeColorFilledImage(25, 25, WATERMARK_COLOR);
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.of(img)
@@ -4252,19 +4155,8 @@ public class ThumbnailsBuilderTest {
 	@Test
 	public void cropCenterThenWatermarkCenterNonSquareOriginalTall() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(200, 300).build();
-		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
-		
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 300);
-		g.dispose();
-		
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 25, 25);
-		g.dispose();
+		BufferedImage img = makeColorFilledImage(200, 300, BACKGROUND_COLOR);
+		BufferedImage watermark = makeColorFilledImage(25, 25, WATERMARK_COLOR);
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.of(img)
@@ -4290,19 +4182,8 @@ public class ThumbnailsBuilderTest {
 	@Test
 	public void cropCenterThenWatermarkTopLeftNonSquareOriginalTall() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(200, 300).build();
-		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
-		
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 300);
-		g.dispose();
-		
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 25, 25);
-		g.dispose();
+		BufferedImage img = makeColorFilledImage(200, 300, BACKGROUND_COLOR);
+		BufferedImage watermark = makeColorFilledImage(25, 25, WATERMARK_COLOR);
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.of(img)
@@ -4328,19 +4209,8 @@ public class ThumbnailsBuilderTest {
 	@Test
 	public void cropCenterThenWatermarkTopRightNonSquareOriginalTall() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(200, 300).build();
-		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
-		
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 300);
-		g.dispose();
-		
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 25, 25);
-		g.dispose();
+		BufferedImage img = makeColorFilledImage(200, 300, BACKGROUND_COLOR);
+		BufferedImage watermark = makeColorFilledImage(25, 25, WATERMARK_COLOR);
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.of(img)
@@ -4366,19 +4236,8 @@ public class ThumbnailsBuilderTest {
 	@Test
 	public void cropCenterThenWatermarkBottomLeftNonSquareOriginalTall() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(200, 300).build();
-		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
-		
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 300);
-		g.dispose();
-		
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 25, 25);
-		g.dispose();
+		BufferedImage img = makeColorFilledImage(200, 300, BACKGROUND_COLOR);
+		BufferedImage watermark = makeColorFilledImage(25, 25, WATERMARK_COLOR);
 		
 		// when
 		BufferedImage thumbnail = Thumbnails.of(img)
@@ -4404,20 +4263,9 @@ public class ThumbnailsBuilderTest {
 	@Test
 	public void cropCenterThenWatermarkBottomRightNonSquareOriginalTall() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(200, 300).build();
-		BufferedImage watermark = new BufferedImageBuilder(25, 25).build();
-		
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 300);
-		g.dispose();
-		
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 25, 25);
-		g.dispose();
-		
+		BufferedImage img = makeColorFilledImage(200, 300, BACKGROUND_COLOR);
+		BufferedImage watermark = makeColorFilledImage(25, 25, WATERMARK_COLOR);
+
 		// when
 		BufferedImage thumbnail = Thumbnails.of(img)
 				.size(100, 100)
@@ -5482,29 +5330,15 @@ public class ThumbnailsBuilderTest {
 	@Test
 	public void watermarkWithInsetsZeroIsSameAsWithoutInsetsSetWithSameScale() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		BufferedImage watermark = new BufferedImageBuilder(50, 50).build();
-
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 200);
-		g.dispose();
-
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 50, 50);
-		g.dispose();
-
 		// when
-		BufferedImage zeroInsetsResult = Thumbnails.of(img)
+		BufferedImage zeroInsetsResult = Thumbnails.of(ORIGINAL_IMAGE)
 				.scale(1)
-				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f, 0)
+				.watermark(Positions.BOTTOM_RIGHT, WATERMARK_IMAGE, 1.0f, 0)
 				.asBufferedImage();
 
-		BufferedImage noInsetsSetResult = Thumbnails.of(img)
+		BufferedImage noInsetsSetResult = Thumbnails.of(ORIGINAL_IMAGE)
 				.scale(1)
-				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.watermark(Positions.BOTTOM_RIGHT, WATERMARK_IMAGE, 1.0f)
 				.asBufferedImage();
 
 		// then
@@ -5514,29 +5348,15 @@ public class ThumbnailsBuilderTest {
 	@Test
 	public void watermarkWithInsetsZeroIsSameAsWithoutInsetsSetWithHalfScale() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		BufferedImage watermark = new BufferedImageBuilder(50, 50).build();
-
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 200);
-		g.dispose();
-
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 50, 50);
-		g.dispose();
-
 		// when
-		BufferedImage zeroInsetsResult = Thumbnails.of(img)
+		BufferedImage zeroInsetsResult = Thumbnails.of(ORIGINAL_IMAGE)
 				.scale(0.5)
-				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f, 0)
+				.watermark(Positions.BOTTOM_RIGHT, WATERMARK_IMAGE, 1.0f, 0)
 				.asBufferedImage();
 
-		BufferedImage noInsetsSetResult = Thumbnails.of(img)
+		BufferedImage noInsetsSetResult = Thumbnails.of(ORIGINAL_IMAGE)
 				.scale(0.5)
-				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.watermark(Positions.BOTTOM_RIGHT, WATERMARK_IMAGE, 1.0f)
 				.asBufferedImage();
 
 		// then
@@ -5546,29 +5366,15 @@ public class ThumbnailsBuilderTest {
 	@Test
 	public void watermarkWithInsetsZeroIsSameAsWithoutInsetsSetWithSizeResize() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		BufferedImage watermark = new BufferedImageBuilder(50, 50).build();
-
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 200);
-		g.dispose();
-
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 50, 50);
-		g.dispose();
-
 		// when
-		BufferedImage zeroInsetsResult = Thumbnails.of(img)
+		BufferedImage zeroInsetsResult = Thumbnails.of(ORIGINAL_IMAGE)
 				.size(100, 100)
-				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f, 0)
+				.watermark(Positions.BOTTOM_RIGHT, WATERMARK_IMAGE, 1.0f, 0)
 				.asBufferedImage();
 
-		BufferedImage noInsetsSetResult = Thumbnails.of(img)
+		BufferedImage noInsetsSetResult = Thumbnails.of(ORIGINAL_IMAGE)
 				.size(100, 100)
-				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.watermark(Positions.BOTTOM_RIGHT, WATERMARK_IMAGE, 1.0f)
 				.asBufferedImage();
 
 		// then
@@ -5578,31 +5384,17 @@ public class ThumbnailsBuilderTest {
 	@Test
 	public void watermarkWithInsetsSetUsingSizeToResize() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		BufferedImage watermark = new BufferedImageBuilder(50, 50).build();
-
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 200);
-		g.dispose();
-
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 50, 50);
-		g.dispose();
-
 		// when
-		BufferedImage insetsResult = Thumbnails.of(img)
+		BufferedImage insetsResult = Thumbnails.of(ORIGINAL_IMAGE)
 				.size(100, 100)
-				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f, 5)
+				.watermark(Positions.BOTTOM_RIGHT, WATERMARK_IMAGE, 1.0f, 5)
 				.asBufferedImage();
 
 		BufferedImage expected = new BufferedImageBuilder(100, 100).build();
-		g = expected.getGraphics();
-		g.setColor(Color.black);
+		Graphics g = expected.getGraphics();
+		g.setColor(BACKGROUND_COLOR);
 		g.fillRect(0, 0, 100, 100);
-		g.setColor(Color.white);
+		g.setColor(WATERMARK_COLOR);
 		g.fillRect(45, 45, 50, 50);
 		g.dispose();
 
@@ -5613,31 +5405,17 @@ public class ThumbnailsBuilderTest {
 	@Test
 	public void watermarkWithInsetsSetUsingScaleToResize() throws IOException {
 		// given
-		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		BufferedImage watermark = new BufferedImageBuilder(50, 50).build();
-
-		Graphics g;
-		g = img.getGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 200);
-		g.dispose();
-
-		g = watermark.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, 50, 50);
-		g.dispose();
-
 		// when
-		BufferedImage insetsResult = Thumbnails.of(img)
+		BufferedImage insetsResult = Thumbnails.of(ORIGINAL_IMAGE)
 				.scale(0.5)
-				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f, 5)
+				.watermark(Positions.BOTTOM_RIGHT, WATERMARK_IMAGE, 1.0f, 5)
 				.asBufferedImage();
 
 		BufferedImage expected = new BufferedImageBuilder(100, 100).build();
-		g = expected.getGraphics();
-		g.setColor(Color.black);
+		Graphics g = expected.getGraphics();
+		g.setColor(BACKGROUND_COLOR);
 		g.fillRect(0, 0, 100, 100);
-		g.setColor(Color.white);
+		g.setColor(WATERMARK_COLOR);
 		g.fillRect(45, 45, 50, 50);
 		g.dispose();
 
