@@ -5478,4 +5478,170 @@ public class ThumbnailsBuilderTest {
 		// then
 		assertEquals(Color.blue.getRGB(), thumbnail.getRGB(25, 50));
 	}
+
+	@Test
+	public void watermarkWithInsetsZeroIsSameAsWithoutInsetsSetWithSameScale() throws IOException {
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		BufferedImage watermark = new BufferedImageBuilder(50, 50).build();
+
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 200);
+		g.dispose();
+
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 50, 50);
+		g.dispose();
+
+		// when
+		BufferedImage zeroInsetsResult = Thumbnails.of(img)
+				.scale(1)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f, 0)
+				.asBufferedImage();
+
+		BufferedImage noInsetsSetResult = Thumbnails.of(img)
+				.scale(1)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+
+		// then
+		assertTrue(BufferedImageComparer.isSame(noInsetsSetResult, zeroInsetsResult));
+	}
+
+	@Test
+	public void watermarkWithInsetsZeroIsSameAsWithoutInsetsSetWithHalfScale() throws IOException {
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		BufferedImage watermark = new BufferedImageBuilder(50, 50).build();
+
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 200);
+		g.dispose();
+
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 50, 50);
+		g.dispose();
+
+		// when
+		BufferedImage zeroInsetsResult = Thumbnails.of(img)
+				.scale(0.5)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f, 0)
+				.asBufferedImage();
+
+		BufferedImage noInsetsSetResult = Thumbnails.of(img)
+				.scale(0.5)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+
+		// then
+		assertTrue(BufferedImageComparer.isSame(noInsetsSetResult, zeroInsetsResult));
+	}
+
+	@Test
+	public void watermarkWithInsetsZeroIsSameAsWithoutInsetsSetWithSizeResize() throws IOException {
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		BufferedImage watermark = new BufferedImageBuilder(50, 50).build();
+
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 200);
+		g.dispose();
+
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 50, 50);
+		g.dispose();
+
+		// when
+		BufferedImage zeroInsetsResult = Thumbnails.of(img)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f, 0)
+				.asBufferedImage();
+
+		BufferedImage noInsetsSetResult = Thumbnails.of(img)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f)
+				.asBufferedImage();
+
+		// then
+		assertTrue(BufferedImageComparer.isSame(noInsetsSetResult, zeroInsetsResult));
+	}
+
+	@Test
+	public void watermarkWithInsetsSetUsingSizeToResize() throws IOException {
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		BufferedImage watermark = new BufferedImageBuilder(50, 50).build();
+
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 200);
+		g.dispose();
+
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 50, 50);
+		g.dispose();
+
+		// when
+		BufferedImage insetsResult = Thumbnails.of(img)
+				.size(100, 100)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f, 5)
+				.asBufferedImage();
+
+		BufferedImage expected = new BufferedImageBuilder(100, 100).build();
+		g = expected.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 100, 100);
+		g.setColor(Color.white);
+		g.fillRect(45, 45, 50, 50);
+		g.dispose();
+
+		// then
+		assertTrue(BufferedImageComparer.isSame(expected, insetsResult));
+	}
+
+	@Test
+	public void watermarkWithInsetsSetUsingScaleToResize() throws IOException {
+		// given
+		BufferedImage img = new BufferedImageBuilder(200, 200).build();
+		BufferedImage watermark = new BufferedImageBuilder(50, 50).build();
+
+		Graphics g;
+		g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 200);
+		g.dispose();
+
+		g = watermark.getGraphics();
+		g.setColor(Color.white);
+		g.fillRect(0, 0, 50, 50);
+		g.dispose();
+
+		// when
+		BufferedImage insetsResult = Thumbnails.of(img)
+				.scale(0.5)
+				.watermark(Positions.BOTTOM_RIGHT, watermark, 1.0f, 5)
+				.asBufferedImage();
+
+		BufferedImage expected = new BufferedImageBuilder(100, 100).build();
+		g = expected.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 100, 100);
+		g.setColor(Color.white);
+		g.fillRect(45, 45, 50, 50);
+		g.dispose();
+
+		// then
+		assertTrue(BufferedImageComparer.isSame(expected, insetsResult));
+	}
 }
