@@ -319,7 +319,7 @@ public class FileImageSink implements ImageSink<File> {
 	}
 
 	/**
-	 * Returns the detination file of the thumbnail image.
+	 * Returns the destination file of the thumbnail image.
 	 * <p>
 	 * If the final destination of the thumbnail changes in the course of
 	 * writing the thumbnail. (For example, if the file extension for the given
