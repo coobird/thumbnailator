@@ -28,6 +28,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -2232,5 +2233,33 @@ public class FileImageSinkTest {
 		// then
 		assertEquals(outputFile, sink.getSink());
 		assertTrue(outputFile.delete());
+	}
+
+	@Test
+	public void write_ErrorOnWriteClosesOutputStream() throws IOException {
+		// given
+		File outputFile = new File(TMPDIR, "test.png");
+
+		BufferedImage imgToWrite =
+				new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+
+		OutputStream mockOs = mock(OutputStream.class);
+		doThrow(new IOException("Write error")).when(mockOs).write(anyInt());
+		doThrow(new IOException("Write error")).when(mockOs).write(any(byte[].class));
+		doThrow(new IOException("Write error")).when(mockOs).write(any(byte[].class), anyInt(), anyInt());
+
+		FileImageSink sink = spy(new FileImageSink(outputFile));
+		doReturn(mockOs).when(sink).createOutputStream(any(File.class));
+
+		// when
+		try {
+			sink.write(imgToWrite);
+			fail();
+		} catch (IOException e) {
+			assertEquals("Write error", e.getCause().getMessage());
+		}
+
+		// then
+		verify(mockOs).close();
 	}
 }
