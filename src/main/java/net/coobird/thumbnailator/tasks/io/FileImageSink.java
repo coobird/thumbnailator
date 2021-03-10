@@ -28,6 +28,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -310,16 +311,24 @@ public class FileImageSink implements ImageSink<File> {
 			);
 		}
 
-		FileOutputStream fos = new FileOutputStream(destinationFile);
-		imageSink = new OutputStreamImageSink(fos);
+		OutputStream os = createOutputStream(destinationFile);
+		imageSink = new OutputStreamImageSink(os);
 		imageSink.setThumbnailParameter(param);
 		imageSink.setOutputFormatName(formatName);
-		imageSink.write(img);
-		fos.close();
+		try {
+			imageSink.write(img);
+		} finally {
+			os.close();
+		}
+	}
+
+	// Visible for testing only.
+	OutputStream createOutputStream(File destinationFile) throws IOException {
+		return new FileOutputStream(destinationFile);
 	}
 
 	/**
-	 * Returns the detination file of the thumbnail image.
+	 * Returns the destination file of the thumbnail image.
 	 * <p>
 	 * If the final destination of the thumbnail changes in the course of
 	 * writing the thumbnail. (For example, if the file extension for the given

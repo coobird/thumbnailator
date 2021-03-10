@@ -1868,6 +1868,35 @@ watermark(Positions.CENTER, image, opacity);
 			filterPipeline.add(new Watermark(position, image, opacity));
 			return this;
 		}
+
+		/**
+		 * Sets the image, opacity, position and insets for the watermark to
+		 * apply on to the thumbnail.
+		 * <p>
+		 * This method can be called multiple times to apply multiple
+		 * watermarks.
+		 * <p>
+		 * If multiple watermarks are to be applied, the watermarks will be
+		 * applied in the order that this method is called.
+		 * <p>
+		 * Calling this method to set this parameter is optional.
+		 *
+		 * @param position		The position of the watermark.
+		 * @param image			The image of the watermark.
+		 * @param opacity		The opacity of the watermark.
+		 * 						<p>
+		 * 						The value should be between {@code 0.0f} and
+		 * 						{@code 1.0f}, where {@code 0.0f} is completely
+		 * 						transparent, and {@code 1.0f} is completely
+		 * 						opaque.
+		 * @param insets		Inset size around the watermark.
+		 * 						Cannot be negative.
+		 * @return				Reference to this object.
+		 */
+		public Builder<T> watermark(Position position, BufferedImage image, float opacity, int insets) {
+			filterPipeline.add(new Watermark(position, image, opacity, insets));
+			return this;
+		}
 		
 		/*
 		 * rotation

@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.coobird</groupId>
   <artifactId>thumbnailator</artifactId>
-  <version>0.4.13</version>
+  <version>0.4.14</version>
   <packaging>jar</packaging>
   <name>thumbnailator</name>
   <description>Thumbnailator - a thumbnail generation library for Java</description>
@@ -70,7 +70,6 @@
               <Implementation-Vendor>coobird.net</Implementation-Vendor>
             </manifestEntries>
           </archive>
-          <excludeResources>false</excludeResources>
         </configuration>
         <executions>
           <execution>
@@ -103,7 +102,6 @@
               <Implementation-Vendor>coobird.net</Implementation-Vendor>
             </manifestEntries>
           </archive>
-          <excludeResources>false</excludeResources>
         </configuration>
       </plugin>
       <plugin>
@@ -175,14 +173,6 @@
         <configuration>
           <skip>true</skip>
           <skipDeploy>true</skipDeploy>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>2.0</version>
-        <configuration>
-          <skip>true</skip>
         </configuration>
       </plugin>
       <plugin>

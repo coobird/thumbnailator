@@ -53,7 +53,11 @@ public class Watermark implements ImageFilter {
 	 * The opacity of the watermark.
 	 */
 	private final float opacity;
-	
+
+	/**
+	 * The insets for the watermark.
+	 */
+	private final int insets;
 
 	/**
 	 * Instantiates a filter which applies a watermark to an image.
@@ -66,8 +70,10 @@ public class Watermark implements ImageFilter {
 	 * 							{@code 1.0f}, where {@code 0.0f} is completely
 	 * 							transparent, and {@code 1.0f} is completely
 	 * 							opaque.
+	 * @param insets			Inset size around the watermark.
+	 * 							Cannot be negative.
 	 */
-	public Watermark(Position position, BufferedImage watermarkImg, float opacity) {
+	public Watermark(Position position, BufferedImage watermarkImg, float opacity, int insets) {
 		if (position == null) {
 			throw new NullPointerException("Position is null.");
 		}
@@ -78,10 +84,30 @@ public class Watermark implements ImageFilter {
 			throw new IllegalArgumentException("Opacity is out of range of " +
 					"between 0.0f and 1.0f.");
 		}
+		if (insets < 0) {
+			throw new IllegalArgumentException("Insets cannot be negative.");
+		}
 		
 		this.position = position;
 		this.watermarkImg = watermarkImg;
 		this.opacity = opacity;
+		this.insets = insets;
+	}
+
+	/**
+	 * Instantiates a filter which applies a watermark to an image.
+	 *
+	 * @param position			The position of the watermark.
+	 * @param watermarkImg		The watermark image.
+	 * @param opacity			The opacity of the watermark.
+	 * 							<p>
+	 * 							The value should be between {@code 0.0f} and
+	 * 							{@code 1.0f}, where {@code 0.0f} is completely
+	 * 							transparent, and {@code 1.0f} is completely
+	 * 							opaque.
+	 */
+	public Watermark(Position position, BufferedImage watermarkImg, float opacity) {
+		this(position, watermarkImg, opacity, 0);
 	}
 
 	public BufferedImage apply(BufferedImage img) {
@@ -97,7 +123,7 @@ public class Watermark implements ImageFilter {
 
 		Point p = position.calculate(
 				width, height, watermarkWidth, watermarkHeight,
-				0, 0, 0, 0
+				insets, insets, insets, insets
 		);
 
 		Graphics2D g = imgWithWatermark.createGraphics();
