@@ -60,6 +60,12 @@
           <show>public</show>
           <use>false</use>
           <destDir>${project.build.outputDirectory}/javadoc</destDir>
+          <javaApiLinks>
+            <property>
+              <name>api_1.5</name>
+              <value>https://docs.oracle.com/javase/1.5.0/docs/api/</value>
+            </property>
+          </javaApiLinks>
           <archive>
             <manifestEntries>
               <Specification-Title>Thumbnailator API Documentation</Specification-Title>
@@ -144,7 +150,6 @@
           </execution>
         </executions>
       </plugin>
-
       <plugin>
         <groupId>com.github.github</groupId>
         <artifactId>site-maven-plugin</artifactId>
