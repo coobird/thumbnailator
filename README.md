@@ -4,6 +4,9 @@ See [Changes](https://github.com/coobird/thumbnailator/wiki/Changes) for details
 _*Thumbnailator is now available through
 [Maven](https://github.com/coobird/thumbnailator/wiki/Maven)!*_
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.coobird/thumbnailator/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.coobird/thumbnailator)
+[![javadoc](https://javadoc.io/badge2/net.coobird/thumbnailator/javadoc.svg)](https://javadoc.io/doc/net.coobird/thumbnailator)
+
 # What is Thumbnailator?
 
 ![](https://raw.githubusercontent.com/wiki/coobird/thumbnailator/img/home/home-image.png)
