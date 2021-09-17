@@ -34,7 +34,7 @@ import java.awt.Dimension;
  * <dl>
  * <dt>{@code Resizer}s returned by this {@code ResizerFactory}:</dt>
  * <dd>
- * The {@link Resizer}s returned by this {@link ResizerFactory} depends upon
+ * The {@link Resizer}s returned by this {@link ResizerFactory} depends on
  * the size of the source and destination images. The conditions and the
  * {@link Resizer}s returned are as follows:
  * 
@@ -71,10 +71,11 @@ import java.awt.Dimension;
  * <DL>
  * <DT><B>Usage:</B></DT>
  * <DD>
+ * <p>
  * The following example code demonstrates how to use {@link DefaultResizerFactory}
  * in order to obtain the optimal {@link Resizer}, and using that in order to
  * perform the resizing operation.
- * <p>
+ * </p>
  * <pre>
 BufferedImage sourceImage = new BufferedImageBuilder(400, 400).build();
 BufferedImage destImage = new BufferedImageBuilder(200, 200).build();
@@ -90,10 +91,11 @@ resizer.resize(sourceImage, destImage);
  * </pre>
  * </DD>
  * </DL>
+ * <p>
  * When a specific {@link Resizer} is required, the {@link Resizers}
  * {@code enum} is another way to obtain {@link Resizer}s.
- * <p>
- * 
+ * </p>
+ *
  * @see Resizers
  *
  * @author coobird

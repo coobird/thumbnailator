@@ -364,6 +364,7 @@ public final class Thumbnailator {
 	 * @param height		The height of the thumbnail.
 	 * @throws IOException	Thrown when a problem occurs when reading from
 	 * 						{@code File} representing an image file.
+	 * @return 			A collection of {@code File}s to the thumbnails.
 	 * 
 	 * @deprecated		This method has been deprecated in favor of using the
 	 * 					{@link Thumbnails#fromFiles(Iterable)} interface.

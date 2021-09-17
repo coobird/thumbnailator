@@ -34,17 +34,17 @@ import net.coobird.thumbnailator.ThumbnailParameter;
  */
 public abstract class Rename {
 	/**
+	 * <p>
 	 * A {@code Rename} which does not alter the given file name.
+	 * </p>
+	 * <p>
+	 * For example, given {@code picture.jpg}, result is {@code picture.jpg}.
+	 * </p>
 	 * <p>
 	 * Note: The {@link #apply(String, ThumbnailParameter)} method does not use
 	 * the {@code param} parameter. A value of {@code null} for {@code param} is
 	 * permitted.
-	 * <p>
-	 * <dt>Example</dt>
-	 * <ul>
-	 * <li>Before: {@code picture.jpg}</li>
-	 * <li>After: {@code picture.jpg}</li>
-	 * </ul>
+	 * </p>
 	 */
 	public static final Rename NO_CHANGE = new Rename() {
 		@Override
@@ -54,17 +54,18 @@ public abstract class Rename {
 	};
 	
 	/**
+	 * <p>
 	 * Appends {@code thumbnail.} to the beginning of the file name.
+	 * </p>
+	 * <p>
+	 * For example, given {@code picture.jpg}, result is
+	 * {@code thumbnail.picture.jpg}.
+	 * </p>
 	 * <p>
 	 * Note: The {@link #apply(String, ThumbnailParameter)} method does not use
 	 * the {@code param} parameter. A value of {@code null} for {@code param} is
 	 * permitted.
-	 * <p>
-	 * <dt>Example</dt>
-	 * <ul>
-	 * <li>Before: {@code picture.jpg}</li>
-	 * <li>After: {@code thumbnail.picture.jpg}</li>
-	 * </ul>
+	 * </p>
 	 */
 	public static final Rename PREFIX_DOT_THUMBNAIL = new Rename() {
 		@Override
@@ -74,17 +75,18 @@ public abstract class Rename {
 	};
 	
 	/**
+	 * <p>
 	 * Appends {@code thumbnail-} to the beginning of the file name.
+	 * </p>
+	 * <p>
+	 * For example, given {@code picture.jpg}, result is
+	 * {@code thumbnail-picture.jpg}.
+	 * </p>
 	 * <p>
 	 * Note: The {@link #apply(String, ThumbnailParameter)} method does not use
 	 * the {@code param} parameter. A value of {@code null} for {@code param} is
 	 * permitted.
-	 * <p>
-	 * <dt>Example</dt>
-	 * <ul>
-	 * <li>Before: {@code picture.jpg}</li>
-	 * <li>After: {@code thumbnail-picture.jpg}</li>
-	 * </ul>
+	 * </p>
 	 * 
 	 * @deprecated 		Please use the correctly spelled
 	 * 					{@link Rename#PREFIX_HYPHEN_THUMBNAIL}. This constant
@@ -94,17 +96,18 @@ public abstract class Rename {
 	public static final Rename PREFIX_HYPTHEN_THUMBNAIL = Rename.PREFIX_HYPHEN_THUMBNAIL;
 	
 	/**
+	 * <p>
 	 * Appends {@code thumbnail-} to the beginning of the file name.
+	 * </p>
+	 * <p>
+	 * For example, given {@code picture.jpg}, result is
+	 * {@code thumbnail-picture.jpg}.
+	 * </p>
 	 * <p>
 	 * Note: The {@link #apply(String, ThumbnailParameter)} method does not use
 	 * the {@code param} parameter. A value of {@code null} for {@code param} is
 	 * permitted.
-	 * <p>
-	 * <dt>Example</dt>
-	 * <ul>
-	 * <li>Before: {@code picture.jpg}</li>
-	 * <li>After: {@code thumbnail-picture.jpg}</li>
-	 * </ul>
+	 * </p>
 	 */
 	public static final Rename PREFIX_HYPHEN_THUMBNAIL = new Rename() {
 		@Override
@@ -114,18 +117,19 @@ public abstract class Rename {
 	};
 	
 	/**
+	 * <p>
 	 * Appends {@code .thumbnail} to the file name prior to the extension of
 	 * the file.
+	 * </p>
+	 * <p>
+	 * For example, given {@code picture.jpg}, result is
+	 * {@code picture.thumbnail.jpg}.
+	 * </p>
 	 * <p>
 	 * Note: The {@link #apply(String, ThumbnailParameter)} method does not use
 	 * the {@code param} parameter. A value of {@code null} for {@code param} is
 	 * permitted.
-	 * <p>
-	 * <dt>Example</dt>
-	 * <ul>
-	 * <li>Before: {@code picture.jpg}</li>
-	 * <li>After: {@code picture.thumbnail.jpg}</li>
-	 * </ul>
+	 * </p>
 	 */
 	public static final Rename SUFFIX_DOT_THUMBNAIL = new Rename() {
 		@Override
@@ -135,18 +139,19 @@ public abstract class Rename {
 	};
 	
 	/**
+	 * <p>
 	 * Appends {@code -thumbnail} to the file name prior to the extension of
 	 * the file.
+	 * </p>
+	 * <p>
+	 * For example, given {@code picture.jpg}, result is
+	 * {@code picture-thumbnail.jpg}.
+	 * </p>
 	 * <p>
 	 * Note: The {@link #apply(String, ThumbnailParameter)} method does not use
 	 * the {@code param} parameter. A value of {@code null} for {@code param} is
 	 * permitted.
-	 * <p>
-	 * <dt>Example</dt>
-	 * <ul>
-	 * <li>Before: {@code picture.jpg}</li>
-	 * <li>After: {@code picture-thumbnail.jpg}</li>
-	 * </ul>
+	 * </p>
 	 * 
 	 * @deprecated 		Please use the correctly spelled
 	 * 					{@link Rename#SUFFIX_HYPHEN_THUMBNAIL}. This constant
@@ -156,18 +161,19 @@ public abstract class Rename {
 	public static final Rename SUFFIX_HYPTHEN_THUMBNAIL = Rename.SUFFIX_HYPHEN_THUMBNAIL;
 	
 	/**
+	 * <p>
 	 * Appends {@code -thumbnail} to the file name prior to the extension of
 	 * the file.
+	 * </p>
+	 * <p>
+	 * For example, given {@code picture.jpg}, result is
+	 * {@code picture-thumbnail.jpg}.
+	 * </p>
 	 * <p>
 	 * Note: The {@link #apply(String, ThumbnailParameter)} method does not use
 	 * the {@code param} parameter. A value of {@code null} for {@code param} is
 	 * permitted.
-	 * <p>
-	 * <dt>Example</dt>
-	 * <ul>
-	 * <li>Before: {@code picture.jpg}</li>
-	 * <li>After: {@code picture-thumbnail.jpg}</li>
-	 * </ul>
+	 * </p>
 	 */
 	public static final Rename SUFFIX_HYPHEN_THUMBNAIL = new Rename() {
 		@Override
