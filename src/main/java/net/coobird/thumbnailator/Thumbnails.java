@@ -78,21 +78,26 @@ import net.coobird.thumbnailator.tasks.io.URLImageSource;
 import net.coobird.thumbnailator.util.ThumbnailatorUtils;
 
 /**
+ * <p>
  * Provides a fluent interface to create thumbnails.
+ * </p>
  * <p>
  * This is the main entry point for creating thumbnails with Thumbnailator.
+ * </p>
  * <p>
  * By using the Thumbnailator's fluent interface, it is possible to write
  * thumbnail generation code which resembles written English.
+ * </p>
  * <DL>
  * <DT><B>Usage:</B></DT>
  * <DD>
+ * <p>
  * The following example code demonstrates how to use the fluent interface
  * to create a thumbnail from multiple files from a directory, resizing them to
  * a maximum of 200 pixels by 200 pixels while preserving the aspect ratio of
  * the original, then saving the resulting thumbnails as JPEG images with file
  * names having {@code thumbnail.} appended to the beginning of the file name.
- * <p>
+ * </p>
  * <pre>
 Thumbnails.of(directory.listFiles())
     .size(200, 200)
@@ -105,21 +110,25 @@ Thumbnails.of(directory.listFiles())
  * </pre>
  * </DD>
  * </DL>
+ * <p>
  * For more examples, please visit the <a href="http://code.google.com/p/thumbnailator/">
  * Thumbnailator</a> project page.
- * <p> 
+ * </p>
  * <h2>Important Implementation Notes</h2>
+ * <p>
  * Upon calling one of the {@code Thumbnails.of(...)} methods, <em>in the
  * current implementation</em>, an instance of an inner class of this class is
  * returned. In most cases, the returned instance should not be used by
  * storing it in a local variable, as changes in the internal implementation
  * could break code in the future.
+ * </p>
  * <p>
  * As a rule of thumb, <em>always method chain from the {@code Thumbnails.of}
  * all the way until the output method (e.g. {@code toFile}, {@code asBufferedImage},
  * etc.) is called without breaking them down into single statements.</em>
  * See the "Usage" section above for the intended use of the Thumbnailator's
- * fluent interface. 
+ * fluent interface.
+ * </p>
  * <DL>
  * <DT><B>Unintended Use:</B></DT>
  * <DD>
@@ -376,7 +385,7 @@ public final class Thumbnails {
 	 * and less future-proof, as changes to this class (which is just an
 	 * inner class of the {@link Thumbnails} class) can lead to broken code  
 	 * when attempting to use future releases of Thumbnailator.
-	 * <p>
+	 * </p>
 	 * <DL>
 	 * <DT><B>Intended Use:</B></DT>
 	 * <DD>
@@ -1163,6 +1172,7 @@ Thumbnails.of(image)
 		 * 
 		 * @param region		A rectangular region which specifies the source
 		 * 						region to use when creating the thumbnail.
+		 * @return				Reference to this object.
 		 * @throws NullPointerException		If the region is {@code null}.
 		 * @since 	0.3.4
 		 */
@@ -1205,6 +1215,7 @@ Thumbnails.of(image)
 		 * 						{@link Positions#CENTER} is specified, the
 		 * 						resulting thumbnail will be made by cropping to
 		 * 						the center of the image.
+		 * @return				Reference to this object.
 		 * @throws NullPointerException		If the position is {@code null}.
 		 * @since 	0.4.0
 		 */
@@ -1244,7 +1255,7 @@ Thumbnails.of(image)
 		 * 							will not be altered. For specific behavior,
 		 * 							please refer to the specific output methods
 		 * 							listed above.
-		 * 						
+		 * @return					Reference to this object.
 		 * @since 	0.3.7
 		 */
 		public Builder<T> allowOverwrite(boolean allowOverwrite) {
@@ -1785,24 +1796,30 @@ Thumbnails.of(image)
 		}
 		
 		/**
+		 * <p>
 		 * Sets the image of the watermark to apply on the thumbnail.
+		 * </p>
 		 * <p>
 		 * This method is a convenience method for the
 		 * {@link #watermark(Position, BufferedImage, float)} method, where
 		 * the opacity is 50%, and the position is set to center of the
 		 * thumbnail:
-		 * <p>
+		 * </p>
 		 * <pre>
 watermark(Positions.CENTER, image, 0.5f);
 		 * </pre>
+		 * <p>
 		 * This method can be called multiple times to apply multiple
 		 * watermarks.
+		 * </p>
 		 * <p>
 		 * If multiple watermarks are to be applied, the watermarks will be
 		 * applied in the order that this method is called.
+		 * </p>
 		 * <p>
 		 * Calling this method to set this parameter is optional.
-		 * 
+		 * </p>
+		 *
 		 * @param image			The image of the watermark.
 		 * @return				Reference to this object.
 		 */
@@ -1811,23 +1828,29 @@ watermark(Positions.CENTER, image, 0.5f);
 		}
 		
 		/**
+		 * <p>
 		 * Sets the image and opacity of the watermark to apply on
 		 * the thumbnail.
+		 * </p>
 		 * <p>
 		 * This method is a convenience method for the
 		 * {@link #watermark(Position, BufferedImage, float)} method, where
 		 * the opacity is 50%:
-		 * <p>
+		 * </p>
 		 * <pre>
 watermark(Positions.CENTER, image, opacity);
 		 * </pre>
+		 * <p>
 		 * This method can be called multiple times to apply multiple
 		 * watermarks.
+		 * </p>
 		 * <p>
 		 * If multiple watermarks are to be applied, the watermarks will be
 		 * applied in the order that this method is called.
+		 * </p>
 		 * <p>
 		 * Calling this method to set this parameter is optional.
+		 * </p>
 		 * 
 		 * @param image			The image of the watermark.
 		 * @param opacity		The opacity of the watermark.
@@ -2138,16 +2161,20 @@ watermark(Positions.CENTER, image, opacity);
 		}
 		
 		/**
+		 * <p>
 		 * Create the thumbnails and return as a {@link List} of
 		 * {@link BufferedImage}s.
+		 * </p>
+		 * <p><strong>Note about performance</strong></p>
 		 * <p>
-		 * <h3>Note about performance</h3>
 		 * If there are many thumbnails generated at once, it is possible that
 		 * the Java virtual machine's heap space will run out and an
 		 * {@link OutOfMemoryError} could result.
+		 * </p>
 		 * <p>
 		 * If many thumbnails are being processed at once, then using the
 		 * {@link #iterableBufferedImages()} method would be preferable.
+		 * </p>
 		 * 
 		 * @return		A list of thumbnails.
 		 * @throws IOException					If an problem occurred during

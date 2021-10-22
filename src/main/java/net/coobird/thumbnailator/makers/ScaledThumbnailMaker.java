@@ -27,14 +27,16 @@ package net.coobird.thumbnailator.makers;
 import java.awt.image.BufferedImage;
 
 /**
+ * <p>
  * A {@link ThumbnailMaker} which scales an image by a specified scaling factor
  * when producing a thumbnail.
+ * </p>
  * <p>
  * Upon calculating the size of the thumbnail, if any of the dimensions are
  * {@code 0}, then that dimension will be promoted to {@code 1}. This will
  * cause some resizing operations to not preserve the aspect ratio of the
  * original image.
- * <p>
+ * </p>
  * <DL>
  * <DT><B>Usage:</B></DT>
  * <DD>
@@ -48,10 +50,11 @@ BufferedImage thumbnail = new ScaledThumbnailMaker()
  * </pre>
  * </DD>
  * </DL>
+ * <p>
  * It is also possible to independently specify the scaling factor for the
  * width and height. (If the two scaling factors are not equal then the aspect
  * ratio of the original image will not be preserved.)
- * <p>
+ * </p>
  * <DL>
  * <DT><B>Usage:</B></DT>
  * <DD>
@@ -65,8 +68,7 @@ BufferedImage thumbnail = new ScaledThumbnailMaker()
  * </pre>
  * </DD>
  * </DL>
- * <DL>
- * 
+ *
  * @author coobird
  *
  */

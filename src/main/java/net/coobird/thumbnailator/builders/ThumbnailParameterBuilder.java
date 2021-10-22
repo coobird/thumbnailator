@@ -38,11 +38,13 @@ import net.coobird.thumbnailator.resizers.Resizer;
 import net.coobird.thumbnailator.resizers.ResizerFactory;
 
 /**
+ * <p>
  * A builder for generating {@link ThumbnailParameter}.
+ * </p>
  * <p>
  * The default values assigned to the {@link ThumbnailParameter} created by
  * the {@link ThumbnailParameterBuilder} are as follows:
- * <p>
+ * </p>
  * <dl>
  * <dt>width</dt>
  * <dd>Unassigned. Must be set by the {@link #size(int, int)} method.</dd>

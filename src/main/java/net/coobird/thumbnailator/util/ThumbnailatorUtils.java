@@ -87,7 +87,8 @@ public final class ThumbnailatorUtils {
 	/**
 	 * Returns a {@link List} of supported output formats types for a specified
 	 * output format.
-	 * 
+	 *
+	 * @param format	The output format.
 	 * @return		A {@link List} of supported output formats types. If no
 	 * 				formats types are supported, or if compression is not
 	 * 				supported for the specified format, then an empty list
