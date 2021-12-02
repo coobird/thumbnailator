@@ -110,40 +110,55 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream> {
 		ImageWriter writer = writers.next();
 		
 		ImageWriteParam writeParam = writer.getDefaultWriteParam();
-		if (writeParam.canWriteCompressed() && param != null) {
-			writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-			
+		if (writeParam.canWriteCompressed()) {
 			/*
 			 * Sets the compression format type, if specified.
-			 * 
+			 *
 			 * Note:
 			 * The value to denote that the codec's default compression type
 			 * should be used is null.
 			 */
-			if (param.getOutputFormatType() != ThumbnailParameter.DEFAULT_FORMAT_TYPE) {
-				writeParam.setCompressionType(param.getOutputFormatType());
+			String compressionType = null;
+			if (param != null && param.getOutputFormatType() != ThumbnailParameter.DEFAULT_FORMAT_TYPE) {
+				compressionType = param.getOutputFormatType();
 
 			} else {
 				List<String> supportedFormats =
-					ThumbnailatorUtils.getSupportedOutputFormatTypes(formatName);
-				
+						ThumbnailatorUtils.getSupportedOutputFormatTypes(formatName);
+
 				if (!supportedFormats.isEmpty()) {
-					writeParam.setCompressionType(supportedFormats.get(0));
+					compressionType = supportedFormats.get(0);
 				}
 			}
-	
+			if (compressionType != null) {
+				setCompressionModeExplicit(writeParam);
+				writeParam.setCompressionType(compressionType);
+			}
+
 			/*
 			 * Sets the compression quality, if specified.
-			 * 
+			 *
 			 * Note:
 			 * The value to denote that the codec's default compression quality
 			 * should be used is Float.NaN.
 			 */
-			if (!Float.isNaN(param.getOutputQuality())) {
+			if (param != null && !Float.isNaN(param.getOutputQuality())) {
+				setCompressionModeExplicit(writeParam);
 				writeParam.setCompressionQuality(param.getOutputQuality());
+
+			} else if (isPng(formatName) && isJava9OrNewer() && isDefaultPngWriter(writer)) {
+				/*
+				 * Before Java 9, the PNG writer bundled with the JRE was
+				 * using maximum compression.
+				 * To replicate the behavior in Java 9+, the compression
+				 * quality is set to 0.0f to trigger maximum compression.
+				 * See Issue #156: https://github.com/coobird/thumbnailator/issues/156
+				 */
+				setCompressionModeExplicit(writeParam);
+				writeParam.setCompressionQuality(0.0f);
 			}
 		}
-		
+
 		/*
 		 * The following line is not surrounded by a try-catch, as catching
 		 * the `IOException` and re-throwing would not give a good feedback as
@@ -187,11 +202,7 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream> {
 		 * Also, the BMP writer appears not to support ARGB, so an RGB image
 		 * will be produced before saving.
 		 */
-		if (
-				formatName.equalsIgnoreCase("jpg")
-				|| formatName.equalsIgnoreCase("jpeg")
-				|| formatName.equalsIgnoreCase("bmp")
-		) {
+		if (isJpegOrBmp(formatName)) {
 			img = BufferedImages.copy(img, BufferedImage.TYPE_INT_RGB);
 		}
 		
@@ -210,6 +221,40 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream> {
 		writer.dispose();
 		
 		ios.close();
+	}
+
+	/**
+	 * Sets the compression mode to explicit, if not already.
+	 * A check exists to prevent setting the explicit mode more than once,
+	 * as any previously set parameters will be discarded.
+	 *
+	 * @param writeParam	Current image writer parameters.
+	 */
+	private void setCompressionModeExplicit(ImageWriteParam writeParam) {
+		if (writeParam.getCompressionMode() != ImageWriteParam.MODE_EXPLICIT) {
+			writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+		}
+	}
+
+	private boolean isJpegOrBmp(String formatName) {
+		return formatName.equalsIgnoreCase("jpg")
+				|| formatName.equalsIgnoreCase("jpeg")
+				|| formatName.equalsIgnoreCase("bmp");
+	}
+
+	private boolean isPng(String formatName) {
+		return formatName.equalsIgnoreCase("png");
+	}
+
+	private boolean isDefaultPngWriter(ImageWriter writer) {
+		String writerClassName = writer.getClass().getName();
+		return "com.sun.imageio.plugins.png.PNGImageWriter".equals(writerClassName);
+	}
+
+	private boolean isJava9OrNewer() {
+		String version = System.getProperty("java.specification.version");
+		// Up to Java 8, specification version was 1.x.
+		return version != null && !version.contains(".");
 	}
 
 	public OutputStream getSink() {

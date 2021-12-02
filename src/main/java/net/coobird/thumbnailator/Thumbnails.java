@@ -1528,6 +1528,13 @@ Thumbnails.of(image)
 		 * Calling this method multiple times, or the
 		 * {@link #outputQuality(double)} in conjunction with this method will
 		 * result in an {@link IllegalStateException} to be thrown.
+		 * <p>
+		 * <em>
+		 * Implementation note:
+		 * Compression quality settings are ignored when the underlying
+		 * image writer does not support compression. This behavior is subject
+		 * to change in the future.
+		 * </em>
 		 * 
 		 * @param quality		The compression quality to use when writing
 		 * 						the thumbnail.
@@ -1571,6 +1578,13 @@ Thumbnails.of(image)
 		 * Calling this method multiple times, or the
 		 * {@link #outputQuality(float)} in conjunction with this method will
 		 * result in an {@link IllegalStateException} to be thrown.
+		 * <p>
+		 * <em>
+		 * Implementation note:
+		 * Compression quality settings are ignored when the underlying
+		 * image writer does not support compression. This behavior is subject
+		 * to change in the future.
+		 * </em>
 		 * 
 		 * @param quality		The compression quality to use when writing
 		 * 						the thumbnail.
@@ -1725,6 +1739,13 @@ Thumbnails.of(image)
 		 * {@link #outputFormat} method is disabled, in order to prevent
 		 * cases where the output format type does not exist in the format
 		 * specified for the {@code outputFormat} method.
+		 * <p>
+		 * <em>
+		 * Implementation note:
+		 * Compression format type settings are ignored when the underlying
+		 * image writer does not support compression. This behavior is subject
+		 * to change in the future.
+		 * </em>
 		 *
 		 * @param formatType	The compression format type
 		 * @return				Reference to this object.
