@@ -27,21 +27,24 @@ package net.coobird.thumbnailator.resizers;
 import java.awt.image.BufferedImage;
 
 /**
+ * <p>
  * This enum can be used to select a specific {@link Resizer} in order
  * to perform a resizing operation.
+ * </p>
  * <p>
  * The instance held by a value of this enum is a single instance. When using
  * specific implementations of {@link Resizer}s, it is preferable to obtain
  * an instance of a {@link Resizer} through this enum or the
  * {@link DefaultResizerFactory} class in order to prevent many instances of the
  * {@link Resizer} class implementations from being instantiated.
- * <p>
+ * </p>
  * <DL>
  * <DT><B>Usage:</B></DT>
  * <DD>
+ * <p>
  * The following example code demonstrates how to use the {@link Resizers} enum
  * in order to resize an image using bilinear interpolation:
- * <p>
+ * </p>
  * <pre>
 BufferedImage sourceImage = new BufferedImageBuilder(400, 400).build();
 BufferedImage destImage = new BufferedImageBuilder(200, 200).build();

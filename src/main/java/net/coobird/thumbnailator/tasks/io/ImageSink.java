@@ -70,11 +70,15 @@ public interface ImageSink<T> {
 	public void setThumbnailParameter(ThumbnailParameter param);
 	
 	/**
+	 * <p>
 	 * Returns the output format to use from information provided for the
 	 * output image.
+	 * </p>
 	 * <p>
 	 * If the output format cannot be determined, then
 	 * {@link ThumbnailParameter#ORIGINAL_FORMAT} should be returned.
+	 * </p>
+	 * @return 					Name of the preferred output format.
 	 */
 	public String preferredOutputFormatName();
 	

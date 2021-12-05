@@ -27,8 +27,10 @@ package net.coobird.thumbnailator.makers;
 import java.awt.image.BufferedImage;
 
 /**
+ * <p>
  * A {@link ThumbnailMaker} which resizes an image to a specified dimension
  * when producing a thumbnail.
+ * </p>
  * <p>
  * Optionally, if the aspect ratio of the thumbnail is to be maintained the same
  * as the original image (by calling the {@link #keepAspectRatio(boolean)}
@@ -36,17 +38,19 @@ import java.awt.image.BufferedImage;
  * {@link #size(int, int)} method, {@link #FixedSizeThumbnailMaker(int, int)} or
  * {@link #FixedSizeThumbnailMaker(int, int, boolean)} constructor will be used
  * as the maximum constraint of dimensions of the thumbnail.
+ * </p>
  * <p>
  * In other words, when the aspect ratio is to be kept constant, then
  * thumbnails which are created will be sized to fit inside the dimensions
  * specified by the size parameter.
+ * </p>
  * <p>
  * Upon calculating the size of the thumbnail, if any of the dimensions are
  * {@code 0}, then that dimension will be promoted to {@code 1}, regardless of
  * whether the aspect ratio of the original image is to be maintained. This will
  * lead to some thumbnails not preserving the aspect ratio of the original
  * image, even if {@link #keepAspectRatio(boolean)} has been {@code true}.
- * <p>
+ * </p>
  * <DL>
  * <DT><B>Usage:</B></DT>
  * <DD>

@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.coobird</groupId>
   <artifactId>thumbnailator</artifactId>
-  <version>0.4.14</version>
+  <version>0.4.15</version>
   <packaging>jar</packaging>
   <name>thumbnailator</name>
   <description>Thumbnailator - a thumbnail generation library for Java</description>
@@ -60,6 +60,12 @@
           <show>public</show>
           <use>false</use>
           <destDir>${project.build.outputDirectory}/javadoc</destDir>
+          <javaApiLinks>
+            <property>
+              <name>api_1.5</name>
+              <value>https://docs.oracle.com/javase/1.5.0/docs/api/</value>
+            </property>
+          </javaApiLinks>
           <archive>
             <manifestEntries>
               <Specification-Title>Thumbnailator API Documentation</Specification-Title>
@@ -130,21 +136,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.5</version>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
       <plugin>
         <groupId>com.github.github</groupId>
         <artifactId>site-maven-plugin</artifactId>
@@ -228,6 +219,20 @@
                   <goal>toolchain</goal>
                 </goals>
                 <phase>pre-site</phase>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.5</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
               </execution>
             </executions>
           </plugin>

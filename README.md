@@ -1,4 +1,4 @@
-_*March 11, 2021: Thumbnailator 0.4.14 has been released!
+_*December 5, 2021: Thumbnailator 0.4.15 has been released!
 See [Changes](https://github.com/coobird/thumbnailator/wiki/Changes) for details.*_
 
 _*Thumbnailator is now available through

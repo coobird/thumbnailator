@@ -44,38 +44,46 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	private final Iterator<File> iter;
 
 	/**
+	 * <p>
 	 * Instantiates an {@code ConsecutivelyNumberedFilenames} object which
 	 * returns {@link File}s with file names which are consecutively numbered
 	 * beginning from {@code 0}.
-	 * <p>
-	 * <h3>File name sequence</h3>
+	 * </p>
+	 * <p><strong>File name sequence</strong></p>
 	 * <ol>
 	 * <li><code>0</code></li>
 	 * <li><code>1</code></li>
 	 * <li><code>2</code></li>
 	 * <li><code>3</code></li>
 	 * </ol>
+	 * <p>
 	 * and so on.
+	 * </p>
 	 */
 	public ConsecutivelyNumberedFilenames() {
 		this.iter = new ConsecutivelyNumberedFilenamesIterator(new File("").getParentFile(), "%d", 0);
 	}
 
 	/**
+	 * <p>
 	 * Instantiates an {@code ConsecutivelyNumberedFilenames} object which
 	 * returns {@link File}s with file names which are consecutively numbered
 	 * beginning from the given value.
+	 * </p>
+	 * <p><strong>File name sequence</strong></p>
 	 * <p>
-	 * <h3>File name sequence</h3>
 	 * For a case where the given value is {@code 5}:
+	 * </p>
 	 * <ol>
 	 * <li><code>5</code></li>
 	 * <li><code>6</code></li>
 	 * <li><code>7</code></li>
 	 * <li><code>8</code></li>
 	 * </ol>
+	 * <p>
 	 * and so on.
-	 * 
+	 * </p>
+	 *
 	 * @param start		The value from which to start counting.
 	 */
 	public ConsecutivelyNumberedFilenames(int start) {
@@ -83,20 +91,25 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	}
 	
 	/**
+	 * <p>
 	 * Instantiates an {@code ConsecutivelyNumberedFilenames} object which
 	 * returns {@link File}s with file names which are consecutively numbered
 	 * beginning from {@code 0}, with the directory specified.
+	 * </p>
+	 * <p><strong>File name sequence</strong></p>
 	 * <p>
-	 * <h3>File name sequence</h3>
 	 * For a case where the parent directory is {@code /foo/bar/}:
+	 * </p>
 	 * <ol>
 	 * <li><code>/foo/bar/0</code></li>
 	 * <li><code>/foo/bar/1</code></li>
 	 * <li><code>/foo/bar/2</code></li>
 	 * <li><code>/foo/bar/3</code></li>
 	 * </ol>
+	 * <p>
 	 * and so on.
-	 * 
+	 * </p>
+	 *
  	 * @param dir			The directory in which the files are to be located.
  	 * @throws IOException	If the specified directory path is not a directory,
  	 * 						or if does not exist.
@@ -107,26 +120,32 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	}
 	
 	/**
+	 * <p>
 	 * Instantiates an {@code ConsecutivelyNumberedFilenames} object which
 	 * returns {@link File}s with file names which are based on a format string.
 	 * The numbering will be consecutive from {@code 0}.
+	 * </p>
 	 * <p>
 	 * The format string should contain the string {@code %d} which will be
 	 * replaced with a consecutively counted number. Additional formatting
 	 * can be applied. For more details, please refer to the section on
 	 * <em>Numeric</em> formatting in the Java API specification for the
 	 * {@link Formatter} class.
+	 * </p>
+	 * <p><strong>File name sequence</strong></p>
 	 * <p>
-	 * <h3>File name sequence</h3>
 	 * For a case where the format string is {@code image-%d}:
+	 * </p>
 	 * <ol>
 	 * <li><code>image-0</code></li>
 	 * <li><code>image-1</code></li>
 	 * <li><code>image-2</code></li>
 	 * <li><code>image-3</code></li>
 	 * </ol>
+	 * <p>
 	 * and so on.
-	 * 
+	 * </p>
+	 *
 	 * @param format		The format string to use.
 	 */
 	public ConsecutivelyNumberedFilenames(String format) {
@@ -134,21 +153,26 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	}
 
 	/**
+	 * <p>
 	 * Instantiates an {@code ConsecutivelyNumberedFilenames} object which
 	 * returns {@link File}s with file names which are consecutively numbered
 	 * beginning from from the given value, with the directory specified.
+	 * </p>
+	 * <p><strong>File name sequence</strong></p>
 	 * <p>
-	 * <h3>File name sequence</h3>
 	 * For a case where the parent directory is {@code /foo/bar/}, and the
 	 * specified value is {@code 5}:
+	 * </p>
 	 * <ol>
 	 * <li><code>/foo/bar/5</code></li>
 	 * <li><code>/foo/bar/6</code></li>
 	 * <li><code>/foo/bar/7</code></li>
 	 * <li><code>/foo/bar/8</code></li>
 	 * </ol>
+	 * <p>
 	 * and so on.
-	 * 
+	 * </p>
+	 *
 	 * @param dir			The directory in which the files are to be located.
 	 * @param start			The value from which to start counting.
  	 * @throws IOException	If the specified directory path is not a directory,
@@ -160,28 +184,34 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	}
 	
 	/**
+	 * <p>
 	 * Instantiates an {@code ConsecutivelyNumberedFilenames} object which
 	 * returns {@link File}s with file names which are based on a format string,
 	 * located in the directory specified. The numbering will be consecutively
 	 * counted from {@code 0}.
+	 * </p>
 	 * <p>
 	 * The format string should contain the string {@code %d} which will be
 	 * replaced with a consecutively counted number. Additional formatting
 	 * can be applied. For more details, please refer to the section on
 	 * <em>Numeric</em> formatting in the Java API specification for the
 	 * {@link Formatter} class.
+	 * </p>
+	 * <p><strong>File name sequence</strong></p>
 	 * <p>
-	 * <h3>File name sequence</h3>
 	 * For a case where the parent directory is {@code /foo/bar/},
 	 * with the format string {@code image-%d}:
+	 * </p>
 	 * <ol>
 	 * <li><code>/foo/bar/image-0</code></li>
 	 * <li><code>/foo/bar/image-1</code></li>
 	 * <li><code>/foo/bar/image-2</code></li>
 	 * <li><code>/foo/bar/image-3</code></li>
 	 * </ol>
+	 * <p>
 	 * and so on.
-	 * 
+	 * </p>
+	 *
 	 * @param dir			The directory in which the files are to be located.
 	 * @param format		The format string to use.
  	 * @throws IOException	If the specified directory path is not a directory,
@@ -193,27 +223,33 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	}
 
 	/**
+	 * <p>
 	 * Instantiates an {@code ConsecutivelyNumberedFilenames} object which
 	 * returns {@link File}s with file names which are based on a format string.
 	 * The numbering will be consecutive from the specified value.
+	 * </p>
 	 * <p>
 	 * The format string should contain the string {@code %d} which will be
 	 * replaced with a consecutively counted number. Additional formatting
 	 * can be applied. For more details, please refer to the section on
 	 * <em>Numeric</em> formatting in the Java API specification for the
 	 * {@link Formatter} class.
+	 * </p>
+	 * <p><strong>File name sequence</strong></p>
 	 * <p>
-	 * <h3>File name sequence</h3>
 	 * For a case where the parent directory is {@code /foo/bar/}, and the
 	 * specified value is {@code 5}, with the format string {@code image-%d}:
+	 * </p>
 	 * <ol>
 	 * <li><code>image-5</code></li>
 	 * <li><code>image-6</code></li>
 	 * <li><code>image-7</code></li>
 	 * <li><code>image-8</code></li>
 	 * </ol>
+	 * <p>
 	 * and so on.
-	 * 
+	 * </p>
+	 *
 	 * @param format		The format string to use.
 	 * @param start			The value from which to start counting.
 	 */
@@ -222,28 +258,34 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	}
 
 	/**
+	 * <p>
 	 * Instantiates an {@code ConsecutivelyNumberedFilenames} object which
 	 * returns {@link File}s with file names which are based on a format string,
 	 * located in the directory specified. The numbering will be consecutive
 	 * from the specified value.
+	 * </p>
 	 * <p>
 	 * The format string should contain the string {@code %d} which will be
 	 * replaced with a consecutively counted number. Additional formatting
 	 * can be applied. For more details, please refer to the section on
 	 * <em>Numeric</em> formatting in the Java API specification for the
 	 * {@link Formatter} class.
+	 * </p>
+	 * <p><strong>File name sequence</strong></p>
 	 * <p>
-	 * <h3>File name sequence</h3>
 	 * For a case where the parent directory is {@code /foo/bar/}, and the
 	 * specified value is {@code 5}, with format string {@code image-%d}:
+	 * </p>
 	 * <ol>
 	 * <li><code>/foo/bar/image-5</code></li>
 	 * <li><code>/foo/bar/image-6</code></li>
 	 * <li><code>/foo/bar/image-7</code></li>
 	 * <li><code>/foo/bar/image-8</code></li>
 	 * </ol>
+	 * <p>
 	 * and so on.
-	 * 
+	 * </p>
+	 *
 	 * @param dir			The directory in which the files are to be located.
 	 * @param format		The format string to use.
 	 * @param start			The value from which to start counting.

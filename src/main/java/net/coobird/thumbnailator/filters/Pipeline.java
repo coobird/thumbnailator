@@ -93,6 +93,8 @@ public final class Pipeline implements ImageFilter {
 	
 	/**
 	 * Adds an {@code ImageFilter} to the pipeline.
+	 *
+	 * @param filter		An {@code ImageFilter}.
 	 */
 	public void add(ImageFilter filter) {
 		if (filter == null) {
@@ -104,6 +106,8 @@ public final class Pipeline implements ImageFilter {
 	
 	/**
 	 * Adds an {@code ImageFilter} to the beginning of the pipeline.
+	 *
+	 * @param filter		An {@code ImageFilter}.
 	 */
 	public void addFirst(ImageFilter filter) {
 		if (filter == null) {
