@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2021 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -60,6 +60,7 @@ public final class ExifUtils {
 	 * 						metadata should be read from.
 	 * @return				The orientation information obtained from the
 	 * 						Exif metadata, as a {@link Orientation} enum.
+	 * 						Returns {@code null} if no orientation is found.
 	 * @throws IOException				When an error occurs during reading.
 	 * @throws IllegalArgumentException	If the {@link ImageReader} does not
 	 * 									have the target image set, or if the
@@ -97,7 +98,15 @@ public final class ExifUtils {
 		return null;
 	}
 
-	private static Orientation getOrientationFromExif(byte[] exifData) {
+	/**
+	 * Returns the orientation obtained from the Exif metadata.
+	 *
+	 * @param exifData		A byte array containing Exif data.
+	 * @return				The orientation information obtained from the
+	 * 						Exif metadata, as a {@link Orientation} enum.
+	 * 						Returns {@code null} if no orientation is found.
+	 */
+	public static Orientation getOrientationFromExif(byte[] exifData) {
 		// Needed to make byte-wise reading easier.
 		ByteBuffer buffer = ByteBuffer.wrap(exifData);
 
