@@ -1,0 +1,3 @@
+Files here are fragments from adding JFIF segments to "source_2.jpg".
+XMP tag is included as it is also a APP1 like Exif.
+The Exif reader should cope with XMP properly.
