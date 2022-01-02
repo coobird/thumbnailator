@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2021 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,6 +39,7 @@ import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
+import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
@@ -58,9 +61,9 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 	private static final int FIRST_IMAGE_INDEX = 0;
 	
 	/**
-	 * The {@link InputStream} from which the source image is to be read.
+	 * A {@link InputStream} from which the source image is to be read.
 	 */
-	private final InputStream is;
+	private InputStream is;
 	
 	/**
 	 * Instantiates an {@link InputStreamImageSource} with the
@@ -77,8 +80,335 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 		if (is == null) {
 			throw new NullPointerException("InputStream cannot be null.");
 		}
-		
-		this.is = is;
+
+		if (!Boolean.getBoolean("thumbnailator.disableExifWorkaround")) {
+			this.is = new ExifCaptureInputStream(is);
+		} else {
+			this.is = is;
+		}
+	}
+
+	@Override
+	public void setThumbnailParameter(ThumbnailParameter param) {
+		super.setThumbnailParameter(param);
+
+		if (param == null || !param.useExifOrientation()) {
+			if (is instanceof ExifCaptureInputStream) {
+				// Revert to original `InputStream` and use that directly.
+				is = ((ExifCaptureInputStream)is).is;
+			}
+		}
+	}
+
+	/**
+	 * An {@link InputStream} which intercepts the data stream to find Exif
+	 * data and captures it if present.
+	 */
+	private static final class ExifCaptureInputStream extends InputStream {
+		/**
+		 * Original {@link InputStream} which reads from the image source.
+		 */
+		private final InputStream is;
+
+		// Following are states for this input stream.
+
+		/**
+		 * Flag to indicate data stream should be intercepted and collected.
+		 */
+		private boolean doIntercept = true;
+
+		/**
+		 * A threshold on how much data to be intercepted.
+		 * This is a safety mechanism to prevent buffering too much information.
+		 */
+		private static final int INTERCEPT_THRESHOLD = 1024 * 1024;
+
+		/**
+		 * Buffer to collect the input data to read JPEG images for JFIF marker segments.
+		 * This will also be used to store the Exif data, if found.
+ 		 */
+		private byte[] buffer = new byte[0];
+
+		/**
+		 * Current position for reading the buffer.
+		 */
+		int position = 0;
+
+		/**
+		 * Total bytes intercepted from the data stream.
+		 */
+		int totalRead = 0;
+
+		/**
+		 * Number of remaining bytes to skip ahead in the buffer.
+		 * This value is positive when next location to skip to is outside the
+		 * buffer's current contents.
+		 */
+		int remainingSkip = 0;
+
+		/**
+		 * Marker for the beginning of the APP1 marker segment.
+		 * Its position is where the APP1 marker starts, not the payload.
+		 */
+		private int startApp1 = Integer.MIN_VALUE;
+
+		/**
+		 * Marker for the end of the APP1 marker segment.
+		 */
+		private int endApp1 = Integer.MAX_VALUE;
+
+		/**
+		 * A flag to indicate that we expect APP1 payload (which contains Exif
+		 * contents) is being streamed, so they should be captured into the
+		 * {@code buffer}.
+		 */
+		private boolean doCaptureApp1 = false;
+
+		/**
+		 * A flag to indicate that the {@code buffer} contains the complete
+		 * Exif information.
+		 */
+		private boolean hasCapturedExif = false;
+
+		/**
+		 * A flag to indicate whether to output debug logs.
+		 */
+		private final boolean isDebug = Boolean.getBoolean("thumbnailator.debugLog.exifWorkaround")
+				|| Boolean.getBoolean("thumbnailator.debugLog");
+
+		/**
+		 * Returns Exif data captured from the JPEG image.
+		 * @return	Returns captured Exif data, or {@code null} if unavailable.
+		 */
+		private byte[] getExifData() {
+			return hasCapturedExif ? buffer : null;
+		}
+
+		// TODO Any performance penalties?
+		private ExifCaptureInputStream(InputStream is) {
+			this.is = is;
+		}
+
+		/**
+		 * Terminate intercept.
+		 * Drops the collected buffer to relieve pressure on memory.
+		 *
+		 * Do not call this when Exif was found, as buffer (containing Exif)
+		 * will be lost.
+		 */
+		private void terminateIntercept() {
+			doIntercept = false;
+			buffer = null;
+		}
+
+		/**
+		 * Debug message.
+		 */
+		private void debugln(String format, Object... args) {
+			if (isDebug) {
+				System.err.printf("[thumbnailator.exifWorkaround] " + format + "%n", args);
+			}
+		}
+
+		@Override
+		public int read(byte[] b, int off, int len) throws IOException {
+			int bytesRead = is.read(b, off, len);
+			if (bytesRead == -1) {
+				return bytesRead;
+			}
+
+			if (!doIntercept) {
+				debugln("Skip intercept.");
+				return bytesRead;
+			}
+
+			if (off != 0) {
+				debugln("Offset: %s != 0; terminating intercept.", off);
+				terminateIntercept();
+				return bytesRead;
+			}
+
+			totalRead += bytesRead;
+			if (totalRead > INTERCEPT_THRESHOLD) {
+				debugln("Exceeded intercept threshold, terminating intercept. %s > %s", totalRead, INTERCEPT_THRESHOLD);
+				terminateIntercept();
+				return bytesRead;
+			}
+
+			debugln("Total read: %s", totalRead);
+			debugln("Bytes read: %s", bytesRead);
+
+			byte[] tmpBuffer = new byte[totalRead];
+			System.arraycopy(buffer, 0, tmpBuffer, 0, Math.min(tmpBuffer.length, buffer.length));
+			System.arraycopy(b, off, tmpBuffer, totalRead - bytesRead, bytesRead);
+			buffer = tmpBuffer;
+
+			debugln("Source: %s", Arrays.toString(b));
+			debugln("Buffer: %s", Arrays.toString(buffer));
+
+			while (position < totalRead && (totalRead - position) >= 2) {
+				debugln("Start loop, position: %s", position);
+
+				if (remainingSkip > 0) {
+					position += remainingSkip;
+					remainingSkip = 0;
+					debugln("Skip requested, new position: %s", position);
+					continue;
+				}
+
+				if (doCaptureApp1) {
+					// Check we can buffer up to "Exif" identifier.
+					if (startApp1 + 8 > position) {
+						debugln("APP1 shorter than expected, terminating intercept.");
+						terminateIntercept();
+						break;
+					}
+					byte[] header = new byte[4];
+					System.arraycopy(buffer, startApp1 + 4, header, 0, header.length);
+
+					if (new String(header).equals("Exif")) {
+						debugln("Found Exif!");
+						hasCapturedExif = true;
+						doIntercept = false;
+						byte[] exifData = new byte[endApp1 - (startApp1 + 4)];
+						System.arraycopy(buffer, startApp1 + 4, exifData, 0, exifData.length);
+						buffer = exifData;
+						break;
+					} else {
+						debugln("APP1 was not Exif.");
+						hasCapturedExif = false;
+						doIntercept = true;
+						doCaptureApp1 = false;
+					}
+				}
+
+				if (position == 0 && totalRead >= 2) {
+					// Check the first two bytes of stream to see if SOI exists.
+					// If SOI is not found, this is not a JPEG.
+					debugln("Check if JPEG. buffer: %s", Arrays.toString(buffer));
+					if (!(buffer[position] == (byte) 0xFF && buffer[position + 1] == (byte) 0xD8)) {
+						// Not SOI, so it's not a JPEG.
+						// We no longer need to keep intercepting.
+						debugln("JFIF SOI not found. Not JPEG.");
+						terminateIntercept();
+						break;
+					}
+
+					position += 2;
+					continue;
+				}
+
+				debugln("Prior to 2-byte section. position: %s, total read: %s", position, totalRead);
+				if (position + 2 <= totalRead) {
+					if (buffer[position] == (byte) 0xFF) {
+						if (buffer[position + 1] >= (byte) 0xD0 && buffer[position + 1] <= (byte) 0xD7) {
+							// RSTn - a 2-byte marker.
+							debugln("Found RSTn marker.");
+							position += 2;
+							continue;
+						} else if (buffer[position + 1] == (byte) 0xDA || buffer[position + 1] == (byte) 0xD9) {
+							// 0xDA -> SOS - Start of Scan
+							// 0xD9 -> EOI - End of Image
+							// In both cases, terminate the scan for Exif data.
+							debugln("Stop scan for Exif. Found: %s, %s", buffer[position], buffer[position + 1]);
+							terminateIntercept();
+							break;
+						}
+					}
+				}
+
+				debugln("Prior to 4-byte section. position: %s, total read: %s", position, totalRead);
+				if (position + 4 <= totalRead) {
+					try {
+						if (buffer[position] == (byte) 0xFF) {
+							if (buffer[position + 1] == (byte) 0xE1) {
+								// APP1
+								doCaptureApp1 = true;
+								startApp1 = position;
+
+								// payload + marker
+								int incrementBy = getPayloadLength(buffer[position + 2], buffer[position + 3]) + 4;
+								debugln("Prior to 2-byte section. position: %s, total read: %s", position, totalRead);
+
+								int newPosition = incrementBy + position;
+								endApp1 = newPosition;
+								debugln("Found APP1. position: %s, total read: %s, increment by: %s", position, totalRead, incrementBy);
+								debugln("Found APP1. start: %s, end: %s", startApp1, endApp1);
+								if (newPosition > totalRead) {
+									remainingSkip = newPosition - totalRead;
+									position = totalRead;
+									debugln("Skip request; remaining skip: %s", remainingSkip);
+								} else {
+									position = newPosition;
+									debugln("No skip needed; new position: %s", newPosition);
+								}
+								continue;
+
+							} else if (buffer[1] == (byte) 0xDD) {
+								// DRI (this is a 4-byte marker w/o payload.)
+								debugln("Found DRI.");
+								position += 4;
+								continue;
+							}
+
+							// Other markers like APP0, DQT don't need any special processing.
+
+							int incrementBy = getPayloadLength(buffer[position + 2], buffer[position + 3]) + 4;
+							int newPosition = incrementBy + position;
+							debugln("Other 4-byte. position: %s, total read: %s, increment by: %s", position, totalRead, incrementBy);
+							debugln("Other 4-byte. start: %s, end: %s", startApp1, endApp1);
+							if (newPosition > totalRead) {
+								remainingSkip = newPosition - totalRead;
+								position = totalRead;
+								debugln("Skip request; remaining skip: %s", remainingSkip);
+							} else {
+								position = newPosition;
+								debugln("No skip needed; new position: %s", newPosition);
+							}
+							continue;
+						}
+					} catch (Exception e) {
+						// Immediately drop everything, as we can't recover.
+						// TODO Record what went wrong.
+						debugln("[Exception] Exception thrown. Terminating intercept.");
+						debugln("[Exception] %s", e.toString());
+						for (StackTraceElement el : e.getStackTrace()) {
+							debugln("[Exception] %s", el.toString());
+						}
+						terminateIntercept();
+						break;
+					}
+				}
+
+				terminateIntercept();
+				debugln("Shouldn't be here. Terminating intercept.");
+				break;
+			}
+
+			return bytesRead;
+		}
+
+		@Override
+		public int read() throws IOException {
+			return is.read();
+		}
+
+		/**
+		 * Returns the payload length from the marker header.
+		 * @param a			First byte of payload length.
+		 * @param b			Second byte of payload length.
+		 * @return			Length as an integer.
+		 */
+		private static int getPayloadLength(byte a, byte b) {
+			int length = ByteBuffer.wrap(new byte[] {a, b}).getShort() - 2;
+			if (length <= 0) {
+				throw new IllegalStateException(
+						"Expected a positive payload length, but was " + length
+				);
+			}
+
+			return length;
+		}
 	}
 
 	public BufferedImage read() throws IOException {
@@ -136,12 +466,28 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 	}
 
 	private BufferedImage readImage(ImageReader reader) throws IOException {
-		inputFormatName = reader.getFormatName();
 
 		try {
 			if (param.useExifOrientation()) {
-				Orientation orientation;
-				orientation = ExifUtils.getExifOrientation(reader, FIRST_IMAGE_INDEX);
+				Orientation orientation = null;
+
+				// Attempt to use Exif reader of the ImageReader.
+				// If the ImageReader fails like seen in Issue #108, use the
+				// backup method of using the captured Exif data.
+				boolean useExifFromRawData = false;
+				try {
+					orientation = ExifUtils.getExifOrientation(reader, FIRST_IMAGE_INDEX);
+				} catch (Exception e) {
+					// TODO Would be useful to capture why it didn't work.
+					useExifFromRawData = true;
+				}
+
+				if (useExifFromRawData && is instanceof ExifCaptureInputStream) {
+					byte[] exifData = ((ExifCaptureInputStream)is).getExifData();
+					if (exifData != null) {
+						orientation = ExifUtils.getOrientationFromExif(exifData);
+					}
+				}
 
 				// Skip this code block if there's no rotation needed.
 				if (orientation != null && orientation != Orientation.TOP_LEFT) {
@@ -158,6 +504,8 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 			// processing.
 			// TODO Ought to have some way to track errors.
 		}
+
+		inputFormatName = reader.getFormatName();
 
 		ImageReadParam irParam = reader.getDefaultReadParam();
 		int width = reader.getWidth(FIRST_IMAGE_INDEX);
@@ -177,9 +525,9 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 		 * https://github.com/coobird/thumbnailator/issues/69
 		 */
 		if (param != null &&
-				"true".equals(System.getProperty("thumbnailator.conserveMemoryWorkaround")) &&
+				Boolean.getBoolean("thumbnailator.conserveMemoryWorkaround") &&
 				width > 1800 && height > 1800 &&
-				(width * height * 4 > Runtime.getRuntime().freeMemory() / 4)
+				(width * height * 4L > Runtime.getRuntime().freeMemory() / 4)
 		) {
 			int subsampling = 1;
 
