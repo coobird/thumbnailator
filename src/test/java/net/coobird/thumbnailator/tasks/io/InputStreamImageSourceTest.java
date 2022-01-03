@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,17 +24,15 @@
 
 package net.coobird.thumbnailator.tasks.io;
 
+import static net.coobird.thumbnailator.TestUtils.getImageFromResource;
+import static net.coobird.thumbnailator.TestUtils.getResourceStream;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
@@ -51,7 +49,7 @@ import org.junit.Test;
 
 public class InputStreamImageSourceTest {
 	@Test(expected=NullPointerException.class)
-	public void givenNullInputStream() throws IOException {
+	public void givenNullInputStream() {
 		try {
 			// given
 			// when
@@ -66,10 +64,12 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void fileExists_Png() throws IOException {
 		// given
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream("src/test/resources/Thumbnailator/grid.png"));
+		InputStream is = getResourceStream("Thumbnailator/grid.png");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		
 		// when
 		BufferedImage img = source.read();
+		is.close();
 		
 		// then
 		assertEquals(100, img.getWidth());
@@ -80,10 +80,12 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void fileExists_Jpeg() throws IOException {
 		// given
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream("src/test/resources/Thumbnailator/grid.jpg"));
+		InputStream is = getResourceStream("Thumbnailator/grid.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		
 		// when
 		BufferedImage img = source.read();
+		is.close();
 		
 		// then
 		assertEquals(100, img.getWidth());
@@ -94,10 +96,12 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void fileExists_Bmp() throws IOException {
 		// given
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream("src/test/resources/Thumbnailator/grid.bmp"));
+		InputStream is = getResourceStream("Thumbnailator/grid.bmp");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		
 		// when
 		BufferedImage img = source.read();
+		is.close();
 		
 		// then
 		assertEquals(100, img.getWidth());
@@ -131,7 +135,9 @@ public class InputStreamImageSourceTest {
 		try {
 			// given
 			byte[] bytes = new byte[100];
-			new FileInputStream("src/test/resources/Thumbnailator/grid.png").read(bytes);
+			InputStream sourceIs = getResourceStream("Thumbnailator/grid.png");
+			sourceIs.read(bytes);
+			sourceIs.close();
 			
 			ByteArrayInputStream is = new ByteArrayInputStream(bytes);
 			InputStreamImageSource source = new InputStreamImageSource(is);
@@ -149,7 +155,8 @@ public class InputStreamImageSourceTest {
 	@Test(expected=IllegalStateException.class)
 	public void fileExists_getInputFormatNameBeforeRead() throws IOException {
 		// given
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream("src/test/resources/Thumbnailator/grid.png"));
+		InputStream is = getResourceStream("Thumbnailator/grid.png");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		
 		try {
 			// when
@@ -158,6 +165,8 @@ public class InputStreamImageSourceTest {
 			// then
 			assertEquals("Input has not been read yet.", e.getMessage());
 			throw e;
+		} finally {
+			is.close();
 		}
 	}
 	
@@ -178,10 +187,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void appliesSourceRegion() throws IOException {
 		// given
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Thumbnailator/grid.png");
 		
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Thumbnailator/grid.png");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		source.setThumbnailParameter(
 				new ThumbnailParameterBuilder()
 					.region(new Region(Positions.TOP_LEFT, new AbsoluteSize(40, 40)))
@@ -191,6 +200,7 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		BufferedImage img = source.read();
+		is.close();
 			
 		// then
 		BufferedImage expectedImg = sourceImage.getSubimage(0, 0, 40, 40);
@@ -215,10 +225,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void appliesSourceRegionTooBig() throws IOException {
 		// given
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Thumbnailator/grid.png");
 		
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Thumbnailator/grid.png");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		source.setThumbnailParameter(
 				new ThumbnailParameterBuilder()
 					.region(new Region(new Coordinate(20, 20), new AbsoluteSize(100, 100)))
@@ -228,6 +238,7 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		BufferedImage img = source.read();
+		is.close();
 		
 		// then
 		BufferedImage expectedImg = sourceImage.getSubimage(20, 20, 80, 80);
@@ -252,10 +263,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void appliesSourceRegionBeyondOrigin() throws IOException {
 		// given
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Thumbnailator/grid.png");
 		
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Thumbnailator/grid.png");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		source.setThumbnailParameter(
 				new ThumbnailParameterBuilder()
 					.region(new Region(new Coordinate(-20, -20), new AbsoluteSize(100, 100)))
@@ -265,6 +276,7 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		BufferedImage img = source.read();
+		is.close();
 		
 		// then
 		BufferedImage expectedImg = sourceImage.getSubimage(0, 0, 80, 80);
@@ -274,10 +286,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void appliesSourceRegionNotSpecified() throws IOException {
 		// given
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Thumbnailator/grid.png");
 		
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Thumbnailator/grid.png");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		source.setThumbnailParameter(
 				new ThumbnailParameterBuilder()
 					.size(20, 20)
@@ -286,6 +298,7 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		BufferedImage img = source.read();
+		is.close();
 		
 		// then
 		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
@@ -294,10 +307,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void readImageUnaffectedForOrientation1() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_1.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Exif/source_1.jpg");
 
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_1.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -305,6 +318,7 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		BufferedImage img = source.read();
+		is.close();
 		
 		// then
 		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
@@ -313,10 +327,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void readImageUnaffectedForOrientation2() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Exif/source_2.jpg");
 
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_2.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -324,6 +338,7 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		BufferedImage img = source.read();
+		is.close();
 		
 		// then
 		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
@@ -332,10 +347,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void readImageUnaffectedForOrientation3() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_3.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Exif/source_3.jpg");
 
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_3.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -343,6 +358,7 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		BufferedImage img = source.read();
+		is.close();
 		
 		// then
 		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
@@ -351,10 +367,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void readImageUnaffectedForOrientation4() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_4.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Exif/source_4.jpg");
 
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_4.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -362,6 +378,7 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		BufferedImage img = source.read();
+		is.close();
 		
 		// then
 		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
@@ -370,10 +387,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void readImageUnaffectedForOrientation5() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_5.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Exif/source_5.jpg");
 
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_5.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -381,6 +398,7 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		BufferedImage img = source.read();
+		is.close();
 		
 		// then
 		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
@@ -389,10 +407,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void readImageUnaffectedForOrientation6() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_6.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Exif/source_6.jpg");
 
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_6.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -400,6 +418,7 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		BufferedImage img = source.read();
+		is.close();
 		
 		// then
 		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
@@ -408,10 +427,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void readImageUnaffectedForOrientation7() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_7.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Exif/source_7.jpg");
 
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_7.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -419,6 +438,7 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		BufferedImage img = source.read();
+		is.close();
 		
 		// then
 		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
@@ -427,10 +447,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void readImageUnaffectedForOrientation8() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_8.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Exif/source_8.jpg");
 
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_8.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -438,6 +458,7 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		BufferedImage img = source.read();
+		is.close();
 		
 		// then
 		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
@@ -446,8 +467,8 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void containsCorrectFilterForOrientation1() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_1.jpg");
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_1.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -455,6 +476,7 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		source.read();
+		is.close();
 		
 		// then
 		assertTrue(param.getImageFilters().isEmpty());
@@ -463,10 +485,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void containsCorrectFilterForOrientation2() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Exif/source_2.jpg");
 		
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_2.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -474,6 +496,7 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		source.read();
+		is.close();
 		
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
@@ -490,10 +513,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void containsCorrectFilterForOrientation3() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_3.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Exif/source_3.jpg");
 		
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_3.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -501,7 +524,8 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		source.read();
-		
+		is.close();
+
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
@@ -517,10 +541,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void containsCorrectFilterForOrientation4() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_4.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Exif/source_4.jpg");
 		
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_4.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -528,7 +552,8 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		source.read();
-		
+		is.close();
+
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
@@ -544,10 +569,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void containsCorrectFilterForOrientation5() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_5.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Exif/source_5.jpg");
 		
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_5.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -555,7 +580,8 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		source.read();
-		
+		is.close();
+
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
@@ -571,10 +597,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void containsCorrectFilterForOrientation6() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_6.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Exif/source_6.jpg");
 		
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_6.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -582,7 +608,8 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		source.read();
-		
+		is.close();
+
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
@@ -598,10 +625,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void containsCorrectFilterForOrientation7() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_7.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Exif/source_7.jpg");
 		
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_7.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -609,7 +636,8 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		source.read();
-		
+		is.close();
+
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
@@ -625,10 +653,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void containsCorrectFilterForOrientation8() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_8.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Exif/source_8.jpg");
 		
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_8.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder().size(20, 20).build();
@@ -636,7 +664,8 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		source.read();
-		
+		is.close();
+
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
@@ -652,10 +681,10 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void useExifOrientationIsTrue_OrientationHonored() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
+		BufferedImage sourceImage = getImageFromResource("Exif/source_2.jpg");
 		
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_2.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder()
@@ -667,7 +696,8 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		source.read();
-		
+		is.close();
+
 		// then
 		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
 		BufferedImageAssert.assertMatches(
@@ -683,8 +713,8 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void useExifOrientationIsFalse_OrientationIgnored() throws Exception {
 		// given
-		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
-		InputStreamImageSource source = new InputStreamImageSource(new FileInputStream(sourceFile));
+		InputStream is = getResourceStream("Exif/source_2.jpg");
+		InputStreamImageSource source = new InputStreamImageSource(is);
 		
 		ThumbnailParameter param =
 				new ThumbnailParameterBuilder()
@@ -696,6 +726,7 @@ public class InputStreamImageSourceTest {
 		
 		// when
 		BufferedImage result = source.read();
+		is.close();
 		
 		// then
 		assertTrue(param.getImageFilters().isEmpty());
@@ -712,7 +743,7 @@ public class InputStreamImageSourceTest {
 	@Test
 	public void readDoesNotCloseInputStream() throws IOException {
 		// given
-		InputStream is = spy(new FileInputStream("src/test/resources/Thumbnailator/grid.png"));
+		InputStream is = spy(getResourceStream("Thumbnailator/grid.png"));
 
 		InputStreamImageSource source = new InputStreamImageSource(is);
 
