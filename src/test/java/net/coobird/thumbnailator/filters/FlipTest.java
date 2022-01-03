@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,11 @@
 
 package net.coobird.thumbnailator.filters;
 
+import static net.coobird.thumbnailator.TestUtils.getImageFromResource;
 import static net.coobird.thumbnailator.filters.ImageFilterTestUtils.assertImageTypeRetained;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-
-import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.test.BufferedImageAssert;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
@@ -43,7 +41,7 @@ public class FlipTest {
 	@Test
 	public void flipHorizontal() throws Exception {
 		// given
-		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/original.png"));
+		BufferedImage img = getImageFromResource("Exif/original.png");
 		
 		// when
 		BufferedImage result = Flip.HORIZONTAL.apply(img);
@@ -62,7 +60,7 @@ public class FlipTest {
 	@Test
 	public void flipVertical() throws Exception {
 		// given
-		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/original.png"));
+		BufferedImage img = getImageFromResource("Exif/original.png");
 		
 		// when
 		BufferedImage result = Flip.VERTICAL.apply(img);
