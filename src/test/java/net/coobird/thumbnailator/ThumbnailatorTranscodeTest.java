@@ -47,11 +47,33 @@ import java.util.List;
 import java.util.Map;
 
 import static net.coobird.thumbnailator.TestUtils.copyResourceToTemporaryFile;
+import static net.coobird.thumbnailator.TestUtils.getResourceStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Enclosed.class)
 public class ThumbnailatorTranscodeTest {
+
+	private static final List<String> SUPPORTED_FORMATS = Arrays.asList("jpg", "png", "bmp", "gif");
+
+	@Ignore
+	public static class SupportedFormatsBase {
+		@Parameterized.Parameters(name = "format={0}")
+		public static Collection<Object> testCases() {
+			List<Object[]> cases = new ArrayList<Object[]>();
+			for (String input : SUPPORTED_FORMATS) {
+				cases.add(new Object[] { input });
+			}
+			return Arrays.asList(cases.toArray());
+		}
+
+		@Parameterized.Parameter
+		public String supportedFormat;
+
+		protected boolean isTestForGifOutputInJava5() {
+			return "gif".equals(supportedFormat) && System.getProperty("java.version").startsWith("1.5");
+		}
+	}
 
 	@Ignore
 	public static class InputOutputExpectationBase {
@@ -66,10 +88,8 @@ public class ThumbnailatorTranscodeTest {
 				put("gif", "gif");
 			}};
 
-			List<String> supportedFormats = Arrays.asList("jpg", "png", "bmp", "gif");
-
-			for (String input : supportedFormats) {
-				for (String output : supportedFormats) {
+			for (String input : SUPPORTED_FORMATS) {
+				for (String output : SUPPORTED_FORMATS) {
 					if (input.equals(output)) {
 						continue;
 					}
@@ -152,6 +172,65 @@ public class ThumbnailatorTranscodeTest {
 			);
 			assertEquals(50, img.getWidth());
 			assertEquals(50, img.getHeight());
+		}
+	}
+
+	@RunWith(Parameterized.class)
+	public static class SupportedInputFormatsForFiles extends SupportedFormatsBase {
+		@Rule
+		public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+		@Test
+		public void testCreateThumbnailForFileToFile() throws IOException {
+			// Skip in Java 5, as GIF writer was first included in Java 6.
+			if (isTestForGifOutputInJava5()) {
+				return;
+			}
+
+			File inputFile = copyResourceToTemporaryFile(String.format("Thumbnailator/grid.%s", supportedFormat), temporaryFolder);
+			File outputFile = temporaryFolder.newFile(String.format("tmp.%s", supportedFormat));
+
+			Thumbnailator.createThumbnail(inputFile, outputFile, 50, 50);
+
+			assertTrue(outputFile.exists());
+			BufferedImage img = ImageIO.read(outputFile);
+			assertEquals(50, img.getWidth());
+			assertEquals(50, img.getHeight());
+		}
+
+		@Test
+		public void testCreateThumbnailForFileToBufferedImage() throws IOException {
+			// Skip in Java 5, as GIF writer was first included in Java 6.
+			if (isTestForGifOutputInJava5()) {
+				return;
+			}
+
+			File inputFile = copyResourceToTemporaryFile(String.format("Thumbnailator/grid.%s", supportedFormat), temporaryFolder);
+
+			BufferedImage img = Thumbnailator.createThumbnail(inputFile, 50, 50);
+			assertEquals(50, img.getWidth());
+			assertEquals(50, img.getHeight());
+		}
+	}
+
+	@RunWith(Parameterized.class)
+	public static class SupportedInputFormatsForStreams extends SupportedFormatsBase {
+		@Test
+		public void testCreateThumbnailForInputStreamToOutputStream() throws IOException {
+			// Skip in Java 5, as GIF writer was first included in Java 6.
+			if (isTestForGifOutputInJava5()) {
+				return;
+			}
+
+			InputStream is = getResourceStream(String.format("Thumbnailator/grid.%s", supportedFormat));
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+			Thumbnailator.createThumbnail(is, os, 50, 50);
+
+			InputStream thumbIs = new ByteArrayInputStream(os.toByteArray());
+			BufferedImage thumb = ImageIO.read(thumbIs);
+			assertEquals(50, thumb.getWidth());
+			assertEquals(50, thumb.getHeight());
 		}
 	}
 }
