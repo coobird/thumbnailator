@@ -1051,8 +1051,8 @@ Thumbnails.of(image)
 		}
 		
 		/**
-		 * Specifies the source region from which the thumbnail is to be
-		 * created from.
+		 * Specifies the region of the source image where the thumbnail
+		 * will be created from.
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
@@ -1075,8 +1075,8 @@ Thumbnails.of(image)
 		}
 		
 		/**
-		 * Specifies the source region from which the thumbnail is to be
-		 * created from.
+		 * Specifies the region of the source image where the thumbnail
+		 * will be created from.
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
@@ -1100,15 +1100,15 @@ Thumbnails.of(image)
 		}
 
 		/**
-		 * Specifies the source region from which the thumbnail is to be
-		 * created from.
+		 * Specifies the region of the source image where the thumbnail
+		 * will be created from.
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
 		 * 
-		 * @param x				The horizontal-compoennt of the top left-hand
+		 * @param x				The horizontal-component of the top left-hand
 		 * 						corner of the source region.
-		 * @param y				The vertical-compoennt of the top left-hand
+		 * @param y				The vertical-component of the top left-hand
 		 * 						corner of the source region.
 		 * @param width			Width of the source region.
 		 * @param height		Height of the source region.
@@ -1131,8 +1131,8 @@ Thumbnails.of(image)
 		}
 		
 		/**
-		 * Specifies the source region from which the thumbnail is to be
-		 * created from.
+		 * Specifies the region of the source image where the thumbnail
+		 * will be created from.
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
@@ -1164,8 +1164,8 @@ Thumbnails.of(image)
 		}
 		
 		/**
-		 * Specifies the source region from which the thumbnail is to be
-		 * created from.
+		 * Specifies the region of the source image where the thumbnail
+		 * will be created from.
 		 * <p>
 		 * Calling this method multiple times will result in an
 		 * {@link IllegalStateException} to be thrown.
