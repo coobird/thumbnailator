@@ -24,6 +24,7 @@
 
 package net.coobird.thumbnailator.util.exif;
 
+import net.coobird.thumbnailator.TestUtils;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.test.BufferedImageAssert;
 import org.junit.After;
@@ -62,8 +63,8 @@ public class ExifWorkaroundTest {
     @Parameterized.Parameter
     public List<String> tags;
 
-    private InputStream getFromResource(String name) {
-        return this.getClass().getClassLoader().getResourceAsStream("Exif/fragments/" + name);
+    private InputStream getFromResource(String name) throws IOException {
+        return TestUtils.getResourceStream("Exif/fragments/" + name);
     }
 
     private InputStream buildJpeg() throws IOException {
@@ -79,6 +80,7 @@ public class ExifWorkaroundTest {
             while (is.available() > 0) {
                 baos.write(is.read());
             }
+            is.close();
         }
 
         return new ByteArrayInputStream(baos.toByteArray());
