@@ -1188,27 +1188,34 @@ Thumbnails.of(image)
 		}
 		
 		/**
-		 * Crops the thumbnail to the size specified when calling the
-		 * {@link #size(int, int)} method, positioned by the given
-		 * {@link Position} object.
-		 * <p>
-		 * Calling this method will guarantee that the size of the thumbnail
-		 * will be exactly the dimensions specified in the
-		 * {@link #size(int, int)} method.
-		 * <p>
-		 * Internally, the resizing is performed in two steps.
-		 * First, the thumbnail will be sized so that one of the dimensions will
-		 * be sized exactly to the dimension specified in the {@code size}
-		 * method, while allowing the other dimension to overhang the specified
-		 * dimension. Then, the thumbnail will be cropped to the dimensions
-		 * specified in the {@code size} method, positioned using the speficied
-		 * {@link Position} object.
-		 * <p>
-		 * Once this method is called, calling the {@link #scale(double)} method
-		 * will result in an {@link IllegalStateException}.
-		 * <p>
-		 * Calling this method multiple times will result in an
-		 * {@link IllegalStateException} to be thrown.
+		 * Crops the thumbnail at the position specified by {@link Position}.
+		 * This method must be used along with the {@link #size(int, int)}
+		 * method to specify the size of the thumbnail.
+		 *
+		 * <p>This method will guarantee that the thumbnail will be exactly
+		 * the dimensions specified in the {@link #size(int, int)} method.
+		 *
+		 * <p>Internally, the resizing is performed in two steps:
+		 *
+		 * <p>First, the thumbnail will be sized so that one of the dimensions
+		 * will be exactly the dimension specified in the {@code size} method.
+		 * The other dimension may overhang the specified dimension.
+		 * For example, if the {@code .size(200, 200)} is called and the
+		 * source image is 400 x 600, the image will be resized to 200 x 300,
+		 * internally.
+		 *
+		 * <p>Next, the resized image will be cropped to the dimensions
+		 * specified in the {@code size} method, positioned using
+		 * the specified {@link Position} object.
+		 * Continuing the example from the previous paragraph, the 200 x 300
+		 * image will be cropped to 200 x 200 using the specified positioning.
+		 *
+		 * <p>Once this method is called, calling the {@link #scale(double)}
+		 * or {@link #scale(double, double)} method will throw an
+		 * {@link IllegalStateException}.
+		 *
+		 * <p>Calling this method multiple times will throw an
+		 * {@link IllegalStateException}.
 		 *
 		 * @param position		The position to which the thumbnail should be
 		 * 						cropped to. For example, if
