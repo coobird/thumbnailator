@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2021 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -378,6 +378,14 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 						terminateIntercept();
 						break;
 					}
+				}
+
+				if (totalRead <= 6) {
+					// SOI (2 bytes) + marker+length (4 bytes) == 6 bytes
+					// If we didn't find a 2-byte (standalone) marker, then
+					// we'll need to wait around to get enough one for 4-byte.
+					debugln("Not enough data read. Attempt one additional read.");
+					break;
 				}
 
 				terminateIntercept();
