@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2021 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -210,6 +210,15 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 			}
 		}
 
+		/**
+		 * Debug message, optimized to reduce calls on Arrays.toString.
+		 */
+		private void debugln(String format, byte[] array) {
+			if (isDebug) {
+				debugln(format, Arrays.toString(array));
+			}
+		}
+
 		@Override
 		public int read(byte[] b, int off, int len) throws IOException {
 			int bytesRead = is.read(b, off, len);
@@ -243,8 +252,8 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 			System.arraycopy(b, off, tmpBuffer, totalRead - bytesRead, bytesRead);
 			buffer = tmpBuffer;
 
-			debugln("Source: %s", Arrays.toString(b));
-			debugln("Buffer: %s", Arrays.toString(buffer));
+			debugln("Source: %s", b);
+			debugln("Buffer: %s", buffer);
 
 			while (position < totalRead && (totalRead - position) >= 2) {
 				debugln("Start loop, position: %s", position);
@@ -285,7 +294,7 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 				if (position == 0 && totalRead >= 2) {
 					// Check the first two bytes of stream to see if SOI exists.
 					// If SOI is not found, this is not a JPEG.
-					debugln("Check if JPEG. buffer: %s", Arrays.toString(buffer));
+					debugln("Check if JPEG. buffer: %s", buffer);
 					if (!(buffer[position] == (byte) 0xFF && buffer[position + 1] == (byte) 0xD8)) {
 						// Not SOI, so it's not a JPEG.
 						// We no longer need to keep intercepting.
@@ -378,6 +387,14 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 						terminateIntercept();
 						break;
 					}
+				}
+
+				if (totalRead <= 6) {
+					// SOI (2 bytes) + marker+length (4 bytes) == 6 bytes
+					// If we didn't find a 2-byte (standalone) marker, then
+					// we'll need to wait around to get enough one for 4-byte.
+					debugln("Not enough data read. Attempt one additional read.");
+					break;
 				}
 
 				terminateIntercept();
