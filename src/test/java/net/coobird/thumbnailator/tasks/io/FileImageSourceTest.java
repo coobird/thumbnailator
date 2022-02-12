@@ -77,48 +77,6 @@ public class FileImageSourceTest {
 
 	public static class Tests {
 
-		@Test
-		public void fileExists_Png() throws IOException {
-			// given
-			FileImageSource source = new FileImageSource(new File("src/test/resources/Thumbnailator/grid.png"));
-
-			// when
-			BufferedImage img = source.read();
-
-			// then
-			assertEquals(100, img.getWidth());
-			assertEquals(100, img.getHeight());
-			assertEquals("png", source.getInputFormatName());
-		}
-
-		@Test
-		public void fileExists_Jpeg() throws IOException {
-			// given
-			FileImageSource source = new FileImageSource(new File("src/test/resources/Thumbnailator/grid.jpg"));
-
-			// when
-			BufferedImage img = source.read();
-
-			// then
-			assertEquals(100, img.getWidth());
-			assertEquals(100, img.getHeight());
-			assertEquals("JPEG", source.getInputFormatName());
-		}
-
-		@Test
-		public void fileExists_Bmp() throws IOException {
-			// given
-			FileImageSource source = new FileImageSource(new File("src/test/resources/Thumbnailator/grid.bmp"));
-
-			// when
-			BufferedImage img = source.read();
-
-			// then
-			assertEquals(100, img.getWidth());
-			assertEquals(100, img.getHeight());
-			assertEquals("bmp", source.getInputFormatName());
-		}
-
 		@Test(expected=FileNotFoundException.class)
 		public void fileDoesNotExists() throws IOException {
 			// given
@@ -133,48 +91,6 @@ public class FileImageSourceTest {
 				throw e;
 			}
 			fail();
-		}
-
-		@Test
-		public void fileExists_Png_AsString() throws IOException {
-			// given
-			FileImageSource source = new FileImageSource("src/test/resources/Thumbnailator/grid.png");
-
-			// when
-			BufferedImage img = source.read();
-
-			// then
-			assertEquals(100, img.getWidth());
-			assertEquals(100, img.getHeight());
-			assertEquals("png", source.getInputFormatName());
-		}
-
-		@Test
-		public void fileExists_Jpeg_AsString() throws IOException {
-			// given
-			FileImageSource source = new FileImageSource("src/test/resources/Thumbnailator/grid.jpg");
-
-			// when
-			BufferedImage img = source.read();
-
-			// then
-			assertEquals(100, img.getWidth());
-			assertEquals(100, img.getHeight());
-			assertEquals("JPEG", source.getInputFormatName());
-		}
-
-		@Test
-		public void fileExists_Bmp_AsString() throws IOException {
-			// given
-			FileImageSource source = new FileImageSource("src/test/resources/Thumbnailator/grid.bmp");
-
-			// when
-			BufferedImage img = source.read();
-
-			// then
-			assertEquals(100, img.getWidth());
-			assertEquals(100, img.getHeight());
-			assertEquals("bmp", source.getInputFormatName());
 		}
 
 		@Test(expected=FileNotFoundException.class)
@@ -441,6 +357,61 @@ public class FileImageSourceTest {
 			assertTrue(inputFile.exists());
 			assertTrue(inputFile.delete());
 			assertFalse(inputFile.exists());
+		}
+	}
+
+	@RunWith(Parameterized.class)
+	public static class FileReadTests {
+		@Parameterized.Parameters
+		public static Object[][] formats() {
+			return new Object[][] {
+					new Object[] { "png", "png" },
+					new Object[] { "jpg", "JPEG" },
+					new Object[] { "bmp", "bmp" },
+			};
+		}
+
+		@Parameterized.Parameter
+		public String format;
+
+		@Parameterized.Parameter(1)
+		public String expectedFormat;
+
+		@Rule
+		public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+		@Test
+		public void fileExistsUsingFile() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					String.format("Thumbnailator/grid.%s", format), temporaryFolder
+			);
+			FileImageSource source = new FileImageSource(sourceFile);
+
+			// when
+			BufferedImage img = source.read();
+
+			// then
+			assertEquals(100, img.getWidth());
+			assertEquals(100, img.getHeight());
+			assertEquals(expectedFormat, source.getInputFormatName());
+		}
+
+		@Test
+		public void fileExistsUsingString() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					String.format("Thumbnailator/grid.%s", format), temporaryFolder
+			);
+			FileImageSource source = new FileImageSource(sourceFile.getAbsolutePath());
+
+			// when
+			BufferedImage img = source.read();
+
+			// then
+			assertEquals(100, img.getWidth());
+			assertEquals(100, img.getHeight());
+			assertEquals(expectedFormat, source.getInputFormatName());
 		}
 	}
 
