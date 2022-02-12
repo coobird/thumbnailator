@@ -59,28 +59,16 @@ import static org.junit.Assert.fail;
 
 @RunWith(Enclosed.class)
 public class FileImageSourceTest {
-	/**
-	 * The temporary directory to use when creating files to use for this test.
-	 */
-	private static final String TMPDIR =
-			"src/test/resources/tmp/FileImageSourceTest";
-
-	@BeforeClass
-	public static void makeTemporaryDirectory() {
-		TestUtils.makeTemporaryDirectory(TMPDIR);
-	}
-
-	@AfterClass
-	public static void deleteTemporaryDirectory() {
-		TestUtils.deleteTemporaryDirectory(TMPDIR);
-	}
 
 	public static class Tests {
+		@Rule
+		public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 		@Test(expected=FileNotFoundException.class)
 		public void fileDoesNotExists() throws IOException {
 			// given
-			FileImageSource source = new FileImageSource(new File("notfound"));
+			File nonExistentFile = new File(temporaryFolder.getRoot(), "nonExistentFile");
+			FileImageSource source = new FileImageSource(nonExistentFile);
 
 			try {
 				// when
@@ -96,7 +84,8 @@ public class FileImageSourceTest {
 		@Test(expected=FileNotFoundException.class)
 		public void fileDoesNotExists_AsString() throws IOException {
 			// given
-			FileImageSource source = new FileImageSource("notfound");
+			File nonExistentFile = new File(temporaryFolder.getRoot(), "nonExistentFile");
+			FileImageSource source = new FileImageSource(nonExistentFile.getAbsolutePath());
 
 			try {
 				// when
@@ -112,7 +101,10 @@ public class FileImageSourceTest {
 		@Test(expected=IllegalStateException.class)
 		public void fileExists_getInputFormatNameBeforeRead() throws IOException {
 			// given
-			FileImageSource source = new FileImageSource(new File("src/test/resources/Thumbnailator/grid.png"));
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			FileImageSource source = new FileImageSource(sourceFile);
 
 			try {
 				// when
@@ -141,7 +133,9 @@ public class FileImageSourceTest {
 		@Test
 		public void appliesSourceRegion() throws IOException {
 			// given
-			File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
 			BufferedImage sourceImage = ImageIO.read(sourceFile);
 
 			FileImageSource source = new FileImageSource(sourceFile);
@@ -178,7 +172,9 @@ public class FileImageSourceTest {
 		@Test
 		public void appliesSourceRegionTooBig() throws IOException {
 			// given
-			File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
 			BufferedImage sourceImage = ImageIO.read(sourceFile);
 
 			FileImageSource source = new FileImageSource(sourceFile);
@@ -215,7 +211,9 @@ public class FileImageSourceTest {
 		@Test
 		public void appliesSourceRegionBeyondOrigin() throws IOException {
 			// given
-			File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
 			BufferedImage sourceImage = ImageIO.read(sourceFile);
 
 			FileImageSource source = new FileImageSource(sourceFile);
@@ -237,7 +235,9 @@ public class FileImageSourceTest {
 		@Test
 		public void appliesSourceRegionNotSpecified() throws IOException {
 			// given
-			File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
 			BufferedImage sourceImage = ImageIO.read(sourceFile);
 
 			FileImageSource source = new FileImageSource(sourceFile);
@@ -257,7 +257,9 @@ public class FileImageSourceTest {
 		@Test
 		public void useExifOrientationIsTrue_OrientationHonored() throws Exception {
 			// given
-			File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Exif/source_2.jpg", temporaryFolder
+			);
 			BufferedImage sourceImage = ImageIO.read(sourceFile);
 
 			FileImageSource source = new FileImageSource(sourceFile);
@@ -288,8 +290,9 @@ public class FileImageSourceTest {
 		@Test
 		public void useExifOrientationIsFalse_OrientationIgnored() throws Exception {
 			// given
-			File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
-
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Exif/source_2.jpg", temporaryFolder
+			);
 			FileImageSource source = new FileImageSource(sourceFile);
 
 			ThumbnailParameter param =
@@ -319,9 +322,9 @@ public class FileImageSourceTest {
 		@Test
 		public void canRemoveSourceImage() throws IOException {
 			// given
-			File inputFile = TestUtils.createTempFile(TMPDIR, "png");
-			TestUtils.copyFile(new File("src/test/resources/Thumbnailator/grid.png"), inputFile);
-
+			File inputFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
 			FileImageSource source = new FileImageSource(inputFile);
 
 			// when
@@ -339,8 +342,13 @@ public class FileImageSourceTest {
 		@Test
 		public void canRemoveSourceImageOnReadFailure() throws IOException {
 			// given
-			File inputFile = TestUtils.createTempFile(TMPDIR, "png");
-			TestUtils.copyFile(new File("src/test/resources/Thumbnailator/grid.png"), inputFile, 200);
+			File inputFile = temporaryFolder.newFile("something.png");
+			TestUtils.copyFile(
+					TestUtils.copyResourceToTemporaryFile(
+							"Thumbnailator/grid.png", temporaryFolder
+					)
+					, inputFile, 200
+			);
 
 			FileImageSource source = new FileImageSource(inputFile);
 
