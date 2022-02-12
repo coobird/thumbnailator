@@ -380,13 +380,16 @@ public class FileImageSourceTest {
 		@Rule
 		public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-		@Test
-		public void fileExistsUsingFile() throws IOException {
+		private interface FileImageSourceSupplier {
+			FileImageSource get(File sourceFile);
+		}
+
+		private void test(FileImageSourceSupplier supplier) throws IOException {
 			// given
 			File sourceFile = TestUtils.copyResourceToTemporaryFile(
 					String.format("Thumbnailator/grid.%s", format), temporaryFolder
 			);
-			FileImageSource source = new FileImageSource(sourceFile);
+			FileImageSource source = supplier.get(sourceFile);
 
 			// when
 			BufferedImage img = source.read();
@@ -398,20 +401,21 @@ public class FileImageSourceTest {
 		}
 
 		@Test
+		public void fileExistsUsingFile() throws IOException {
+			test(new FileImageSourceSupplier() {
+				public FileImageSource get(File sourceFile) {
+					return new FileImageSource(sourceFile);
+				}
+			});
+		}
+
+		@Test
 		public void fileExistsUsingString() throws IOException {
-			// given
-			File sourceFile = TestUtils.copyResourceToTemporaryFile(
-					String.format("Thumbnailator/grid.%s", format), temporaryFolder
-			);
-			FileImageSource source = new FileImageSource(sourceFile.getAbsolutePath());
-
-			// when
-			BufferedImage img = source.read();
-
-			// then
-			assertEquals(100, img.getWidth());
-			assertEquals(100, img.getHeight());
-			assertEquals(expectedFormat, source.getInputFormatName());
+			test(new FileImageSourceSupplier() {
+				public FileImageSource get(File sourceFile) {
+					return new FileImageSource(sourceFile.getAbsolutePath());
+				}
+			});
 		}
 	}
 
