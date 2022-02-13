@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,30 +25,38 @@
 package net.coobird.thumbnailator.tasks;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
+import net.coobird.thumbnailator.TestUtils;
 import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.resizers.Resizers;
 
-import org.junit.Ignore;
+import net.coobird.thumbnailator.test.BufferedImageComparer;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+
+import javax.imageio.ImageIO;
 
 public class FileThumbnailTaskTest {
+
+	@Rule
+	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	@Test(expected=NullPointerException.class)
 	public void nullParameter() throws IOException {
 		// given
-		File inputFile = new File("src/test/resources/Thumbnailator/grid.jpg");
-		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
-		outputFile.deleteOnExit();
-		
+		File inputFile = TestUtils.copyResourceToTemporaryFile(
+				"Thumbnailator/grid.jpg",
+				temporaryFolder
+		);
+		File outputFile = temporaryFolder.newFile("output.png");
+
 		try {
 			// when
 			new FileThumbnailTask(null, inputFile, outputFile);
@@ -76,28 +84,50 @@ public class FileThumbnailTaskTest {
 				true
 		);
 		
-		File inputFile = new File("src/test/resources/Thumbnailator/grid.jpg");
-		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
-		outputFile.deleteOnExit();
-		
+		File inputFile = TestUtils.copyResourceToTemporaryFile(
+				"Thumbnailator/grid.jpg",
+				temporaryFolder
+		);
+		File outputFile = temporaryFolder.newFile("output.png");
+
 		FileThumbnailTask task =
 			new FileThumbnailTask(param, inputFile, outputFile);
 		
 		task.read();
 	}
 
-	@Ignore
-	public void testWrite() {
-		fail("Not yet implemented");
-	}
+	@Test
+	public void testWrite() throws IOException {
+		ThumbnailParameter param = new ThumbnailParameter(
+				new Dimension(50, 50),
+				null,
+				true,
+				"png",
+				ThumbnailParameter.DEFAULT_FORMAT_TYPE,
+				ThumbnailParameter.DEFAULT_QUALITY,
+				BufferedImage.TYPE_INT_ARGB,
+				null,
+				Resizers.PROGRESSIVE,
+				true,
+				true
+		);
 
-	@Ignore
-	public void testFileThumbnailTask() {
-		fail("Not yet implemented");
+		// When inputFile is read, then an exception should be thrown.
+		// Lack of exception means no interaction with input.
+		File inputFile = temporaryFolder.newFile("random-doesnt-exist");
+		File outputFile = temporaryFolder.newFile("output.png");
+
+		FileThumbnailTask task = new FileThumbnailTask(param, inputFile, outputFile);
+		BufferedImage img = new BufferedImageBuilder(50, 50).build();
+
+		task.write(img);
+
+		BufferedImage outputImage = ImageIO.read(outputFile);
+		assertTrue(BufferedImageComparer.isRGBSimilar(img, outputImage));
 	}
 
 	@Test
-	public void testGetParam() {
+	public void testGetParam() throws IOException {
 		ThumbnailParameter param = new ThumbnailParameter(
 				new Dimension(50, 50),
 				null,
@@ -111,15 +141,15 @@ public class FileThumbnailTaskTest {
 				true,
 				true
 		);
+
+		// When inputFile is read, then an exception should be thrown.
+		// Lack of exception means no interaction with input.
+		File inputFile = temporaryFolder.newFile("random-doesnt-exist");
+		File outputFile = new File(temporaryFolder.getRoot(), "shouldnt-exist");
 		
-		InputStream is = mock(InputStream.class);
-		OutputStream os = mock(OutputStream.class);
-		
-		StreamThumbnailTask task = new StreamThumbnailTask(param, is, os);
+		FileThumbnailTask task = new FileThumbnailTask(param, inputFile, outputFile);
 		
 		assertEquals(param, task.getParam());
-
-		verifyZeroInteractions(is);
-		verifyZeroInteractions(os);
+		assertFalse(outputFile.exists());
 	}
 }
