@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,17 +39,23 @@ import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
 
+import net.coobird.thumbnailator.TestUtils;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.resizers.Resizers;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 public class StreamThumbnailTaskTest {
+
+	@Rule
+	public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
 	@Test(expected=NullPointerException.class)
-	public void nullParameter() throws IOException {
+	public void nullParameter() {
 		// given
 		InputStream is = mock(InputStream.class);
 		OutputStream os = mock(OutputStream.class);
@@ -83,10 +89,11 @@ public class StreamThumbnailTaskTest {
 				true
 		);
 		
-		File inputFile = new File("src/test/resources/Thumbnailator/grid.jpg");
-		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
-		outputFile.deleteOnExit();
-		
+		File inputFile = TestUtils.copyResourceToTemporaryFile(
+				"Thumbnailator/grid.jpg", temporaryFolder
+		);
+		File outputFile = temporaryFolder.newFile("output.png");
+
 		InputStream spyIs = spy(new FileInputStream(inputFile));
 		OutputStream spyOs = spy(new FileOutputStream(outputFile));
 		
@@ -114,10 +121,11 @@ public class StreamThumbnailTaskTest {
 				true,
 				true
 		);
-		
-		File inputFile = new File("src/test/resources/Thumbnailator/grid.jpg");
-		File outputFile = File.createTempFile("thumbnailator-testing-", ".png");
-		outputFile.deleteOnExit();
+
+		File inputFile = TestUtils.copyResourceToTemporaryFile(
+				"Thumbnailator/grid.jpg", temporaryFolder
+		);
+		File outputFile = temporaryFolder.newFile("output.png");
 		
 		InputStream spyIs = spy(new FileInputStream(inputFile));
 		OutputStream spyOs = spy(new FileOutputStream(outputFile));
@@ -132,11 +140,6 @@ public class StreamThumbnailTaskTest {
 		
 		BufferedImage outputImage = ImageIO.read(outputFile);
 		assertTrue(BufferedImageComparer.isRGBSimilar(img, outputImage));
-	}
-
-	@Ignore
-	public void testStreamThumbnailTask() {
-		fail("Not yet implemented");
 	}
 
 	@Test
@@ -159,7 +162,7 @@ public class StreamThumbnailTaskTest {
 		OutputStream os = mock(OutputStream.class);
 		
 		StreamThumbnailTask task = new StreamThumbnailTask(param, is, os);
-		
+
 		assertEquals(param, task.getParam());
 
 		verifyZeroInteractions(is);
