@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -49,9 +49,14 @@ import net.coobird.thumbnailator.tasks.io.OutputStreamImageSink;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 public class SourceSinkThumbnailTaskTest {
+
+	@Rule
+	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	@SuppressWarnings("unchecked")
 	@Test
@@ -119,8 +124,7 @@ public class SourceSinkThumbnailTaskTest {
 		ThumbnailParameter param =
 			new ThumbnailParameterBuilder().size(50, 50).build();
 		
-		ByteArrayInputStream is =
-			new ByteArrayInputStream(makeImageData("png", 200, 200));
+		InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 		
 		InputStreamImageSource source = new InputStreamImageSource(is);
 		BufferedImageSink destination = new BufferedImageSink();
@@ -143,8 +147,7 @@ public class SourceSinkThumbnailTaskTest {
 		ThumbnailParameter param =
 			new ThumbnailParameterBuilder().size(50, 50).build();
 		
-		byte[] imageData = makeImageData("png", 200, 200);
-		ByteArrayInputStream is = new ByteArrayInputStream(imageData);
+		InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
 		InputStreamImageSource source = new InputStreamImageSource(is);
@@ -172,9 +175,8 @@ public class SourceSinkThumbnailTaskTest {
 		// given
 		ThumbnailParameter param =
 			new ThumbnailParameterBuilder().size(50, 50).format("jpg").build();
-		
-		byte[] imageData = makeImageData("png", 200, 200);
-		ByteArrayInputStream is = new ByteArrayInputStream(imageData);
+
+		InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		
 		InputStreamImageSource source = new InputStreamImageSource(is);
@@ -203,8 +205,11 @@ public class SourceSinkThumbnailTaskTest {
 			new ThumbnailParameterBuilder().size(50, 50).format("jpg").build();
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		
-		FileImageSource source = new FileImageSource("src/test/resources/Thumbnailator/grid.bmp");
+
+		File sourceFile = TestUtils.copyResourceToTemporaryFile(
+				"Thumbnailator/grid.bmp", temporaryFolder
+		);
+		FileImageSource source = new FileImageSource(sourceFile);
 		OutputStreamImageSink destination = new OutputStreamImageSink(os);
 		
 		// when
@@ -221,23 +226,5 @@ public class SourceSinkThumbnailTaskTest {
 		destIs = new ByteArrayInputStream(os.toByteArray());
 		String formatName = TestUtils.getFormatName(destIs);
 		assertEquals("JPEG", formatName);
-	}
-
-	/**
-	 * Returns test image data as an array of {@code byte}s.
-	 * 
-	 * @param format			Image format.
-	 * @param width				Image width.
-	 * @param height			Image height.
-	 * @return					A {@code byte[]} of image data.
-	 * @throws IOException		When a problem occurs while making image data.
-	 */
-	private static byte[] makeImageData(String format, int width, int height)
-			throws IOException {
-		BufferedImage img = new BufferedImageBuilder(200, 200).build();
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(img, format, baos);
-		
-		return baos.toByteArray();
 	}
 }
