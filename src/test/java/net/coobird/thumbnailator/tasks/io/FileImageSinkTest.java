@@ -559,153 +559,6 @@ public class FileImageSinkTest {
 		}
 
 		@Test
-		public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_png() throws IOException {
-			// given
-			File outputFile = new File(TMPDIR, "test.png");
-			outputFile.deleteOnExit();
-
-			BufferedImage imgToWrite =
-					new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
-
-			FileImageSink sink = new FileImageSink(outputFile);
-
-			// when
-			sink.setOutputFormatName(ThumbnailParameter.ORIGINAL_FORMAT);
-			sink.write(imgToWrite);
-
-			// then
-			assertEquals(outputFile, sink.getSink());
-
-			BufferedImage writtenImg = ImageIO.read(outputFile);
-			assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
-
-			String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
-			assertEquals("png", formatName);
-		}
-
-		@Test
-		public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_bmp() throws IOException {
-			// given
-			File outputFile = new File(TMPDIR, "test.bmp");
-			outputFile.deleteOnExit();
-
-			BufferedImage imgToWrite =
-					new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
-
-			FileImageSink sink = new FileImageSink(outputFile);
-
-			// when
-			sink.setOutputFormatName(ThumbnailParameter.ORIGINAL_FORMAT);
-			sink.write(imgToWrite);
-
-			// then
-			assertEquals(outputFile, sink.getSink());
-
-			BufferedImage writtenImg = ImageIO.read(outputFile);
-			assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
-
-			String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
-			assertEquals("bmp", formatName);
-		}
-
-		@Test
-		public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_jpg() throws IOException {
-			// given
-			File outputFile = new File(TMPDIR, "test.jpg");
-			outputFile.deleteOnExit();
-
-			BufferedImage imgToWrite =
-					new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
-
-			FileImageSink sink = new FileImageSink(outputFile);
-
-			// when
-			sink.setOutputFormatName(ThumbnailParameter.ORIGINAL_FORMAT);
-			sink.write(imgToWrite);
-
-			// then
-			assertEquals(outputFile, sink.getSink());
-
-			BufferedImage writtenImg = ImageIO.read(outputFile);
-			assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
-
-			String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
-			assertEquals("JPEG", formatName);
-		}
-
-		@Test
-		public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_jpeg() throws IOException {
-			// given
-			File outputFile = new File(TMPDIR, "test.jpeg");
-			outputFile.deleteOnExit();
-
-			BufferedImage imgToWrite =
-					new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
-
-			FileImageSink sink = new FileImageSink(outputFile);
-
-			// when
-			sink.setOutputFormatName(ThumbnailParameter.ORIGINAL_FORMAT);
-			sink.write(imgToWrite);
-
-			// then
-			assertEquals(outputFile, sink.getSink());
-
-			BufferedImage writtenImg = ImageIO.read(outputFile);
-			assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
-
-			String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
-			assertEquals("JPEG", formatName);
-		}
-
-		@Test
-		public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_FileExtension_Jpeg() throws IOException {
-			// given
-			File outputFile = new File(TMPDIR, "test.Jpeg");
-			outputFile.deleteOnExit();
-
-			BufferedImage imgToWrite =
-					new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
-
-			FileImageSink sink = new FileImageSink(outputFile);
-
-			// when
-			sink.setOutputFormatName(ThumbnailParameter.ORIGINAL_FORMAT);
-			sink.write(imgToWrite);
-
-			// then
-			assertEquals(outputFile, sink.getSink());
-
-			BufferedImage writtenImg = ImageIO.read(outputFile);
-			assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
-
-			String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
-			assertEquals("JPEG", formatName);
-		}
-
-		@Test(expected = UnsupportedFormatException.class)
-		public void write_ValidImage_SetOutputFormatWithOriginalFormatConstant_NoFileExtension() throws IOException {
-			// given
-			File outputFile = new File(TMPDIR, "test");
-			outputFile.deleteOnExit();
-
-			BufferedImage imgToWrite =
-					new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
-
-			FileImageSink sink = new FileImageSink(outputFile);
-
-			try {
-				// when
-				sink.setOutputFormatName(ThumbnailParameter.ORIGINAL_FORMAT);
-				sink.write(imgToWrite);
-			} catch (UnsupportedFormatException e) {
-				// then
-				assertEquals("Could not determine output format.", e.getMessage());
-				throw e;
-			}
-		}
-
-		@Test
 		public void write_NoExtentionSpecified() throws IOException {
 			// set up
 			File f = new File(TMPDIR, "tmp-" + Math.abs(new Random().nextLong()));
@@ -814,114 +667,6 @@ public class FileImageSinkTest {
 			f.delete();
 		}
 
-		@Test
-		public void preferredOutputFormatName_FileIsjpg() {
-			// given
-			File f = new File(TMPDIR, "tmp.jpg");
-
-			// when
-			FileImageSink sink = new FileImageSink(f);
-
-			// then
-			assertEquals("JPEG", sink.preferredOutputFormatName());
-		}
-
-		@Test
-		public void preferredOutputFormatName_FileIsjpeg() {
-			// given
-			File f = new File(TMPDIR, "tmp.jpeg");
-
-			// when
-			FileImageSink sink = new FileImageSink(f);
-
-			// then
-			assertEquals("JPEG", sink.preferredOutputFormatName());
-		}
-
-		@Test
-		public void preferredOutputFormatName_FileIsJpg() {
-			// given
-			File f = new File(TMPDIR, "tmp.Jpg");
-
-			// when
-			FileImageSink sink = new FileImageSink(f);
-
-			// then
-			assertEquals("JPEG", sink.preferredOutputFormatName());
-		}
-
-		@Test
-		public void preferredOutputFormatName_FileIsJpeg() {
-			// given
-			File f = new File(TMPDIR, "tmp.Jpeg");
-
-			// when
-			FileImageSink sink = new FileImageSink(f);
-
-			// then
-			assertEquals("JPEG", sink.preferredOutputFormatName());
-		}
-
-		@Test
-		public void preferredOutputFormatName_FileIsJPG() {
-			// given
-			File f = new File(TMPDIR, "tmp.JPG");
-
-			// when
-			FileImageSink sink = new FileImageSink(f);
-
-			// then
-			assertEquals("JPEG", sink.preferredOutputFormatName());
-		}
-
-		@Test
-		public void preferredOutputFormatName_FileIsJPEG() {
-			// given
-			File f = new File(TMPDIR, "tmp.JPEG");
-
-			// when
-			FileImageSink sink = new FileImageSink(f);
-
-			// then
-			assertEquals("JPEG", sink.preferredOutputFormatName());
-		}
-
-		@Test
-		public void preferredOutputFormatName_FileIspng() {
-			// given
-			File f = new File(TMPDIR, "tmp.png");
-
-			// when
-			FileImageSink sink = new FileImageSink(f);
-
-			// then
-			assertEquals("png", sink.preferredOutputFormatName());
-		}
-
-		@Test
-		public void preferredOutputFormatName_FileIsPng() {
-			// given
-			File f = new File(TMPDIR, "tmp.Png");
-
-			// when
-			FileImageSink sink = new FileImageSink(f);
-
-			// then
-			assertEquals("png", sink.preferredOutputFormatName());
-		}
-
-		@Test
-		public void preferredOutputFormatName_FileIsPNG() {
-			// given
-			File f = new File(TMPDIR, "tmp.PNG");
-
-			// when
-			FileImageSink sink = new FileImageSink(f);
-
-			// then
-			assertEquals("png", sink.preferredOutputFormatName());
-		}
-
 		// What we really want to check the file resource is released.
 		@Test
 		public void write_FileDeletableAfterWrite_Issue148() throws IOException {
@@ -992,6 +737,77 @@ public class FileImageSinkTest {
 
 	private static String getExpectedFormat(String s) {
 		return EXPECTED_FORMAT_NAMES.get(s.toLowerCase());
+	}
+
+	@RunWith(Parameterized.class)
+	public static class FormatDependentTests {
+		@Parameterized.Parameters(name = "specifiedName={0}, expectedFormat={1}")
+		public static Collection<Object> testCases() {
+			List<Object[]> cases = new ArrayList<Object[]>();
+
+			for (String extension : FORMAT_NAMES) {
+				// Extension of null is not valid.
+				if (extension == null) {
+					continue;
+				}
+				String specifiedName = String.format("output.%s", extension);
+				String expectedFormat = getExpectedFormat(extension.toLowerCase());
+
+				cases.add(
+						new Object[] {
+								specifiedName,
+								expectedFormat
+						}
+				);
+			}
+
+			return Arrays.asList(cases.toArray());
+		}
+
+		@Parameterized.Parameter
+		public String specifiedName;
+
+		@Parameterized.Parameter(1)
+		public String expectedFormat;
+
+		@Rule
+		public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+		@Test
+		public void writeWithOriginalOutputFormat() throws IOException {
+			// given
+			File outputFile = new File(temporaryFolder.getRoot(), specifiedName);
+
+			BufferedImage imgToWrite =
+					new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+
+			FileImageSink sink = new FileImageSink(outputFile);
+
+			// when
+			sink.setOutputFormatName(ThumbnailParameter.ORIGINAL_FORMAT);
+			sink.write(imgToWrite);
+
+			// then
+			assertEquals(outputFile, sink.getSink());
+
+			BufferedImage writtenImg = ImageIO.read(outputFile);
+			assertTrue(BufferedImageComparer.isRGBSimilar(imgToWrite, writtenImg));
+
+			String formatName = TestUtils.getFormatName(new FileInputStream(outputFile));
+			assertEquals(expectedFormat, formatName);
+		}
+
+		@Test
+		public void preferredOutputFormatName() {
+			// given
+			File outputFile = new File(temporaryFolder.getRoot(), specifiedName);
+
+			// when
+			FileImageSink sink = new FileImageSink(outputFile);
+
+			// then
+			assertEquals(expectedFormat, sink.preferredOutputFormatName());
+		}
 	}
 
 	@RunWith(Parameterized.class)
