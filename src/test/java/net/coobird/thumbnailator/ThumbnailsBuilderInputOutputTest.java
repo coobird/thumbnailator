@@ -44,6 +44,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -5351,510 +5352,6 @@ public class ThumbnailsBuilderInputOutputTest {
 			}
 		}
 
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument toFiles(Iterable) is called</li>
-		 * <li>allowOverwrite is true</li>
-		 * <li>single file specified, and it does not exist.</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is written</li>
-		 * </ol>
-		 */
-		@Test
-		public void toFilesIterable_AllowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException {
-			// set up
-			File originalFile = newCopyOfPngFile();
-			File fileThatDoesntExist = newUncreatedPngFile();
-
-			// given
-			// when
-			Thumbnails.of(originalFile)
-				.size(50, 50)
-				.allowOverwrite(true)
-				.toFiles(Arrays.asList(fileThatDoesntExist));
-
-			// then
-			assertImageExists(fileThatDoesntExist, 50, 50);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument toFiles(Iterable) is called</li>
-		 * <li>allowOverwrite is true</li>
-		 * <li>single file specified, and it exists</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is overwritten</li>
-		 * </ol>
-		 */
-		@Test
-		public void toFilesIterable_AllowOverwrite_SingleFile_OutputFileExists() throws IOException {
-			// set up
-			File originalFile = newCopyOfPngFile();
-			File fileThatExists = newUncreatedPngFile();
-
-			// given
-			// when
-			Thumbnails.of(originalFile)
-				.size(50, 50)
-				.allowOverwrite(true)
-				.toFiles(Arrays.asList(fileThatExists));
-
-			// then
-			assertImageExists(fileThatExists, 50, 50);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument toFiles(Iterable) is called</li>
-		 * <li>allowOverwrite is false</li>
-		 * <li>single file specified, and it does not exist.</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is written</li>
-		 * </ol>
-		 */
-		@Test
-		public void toFilesIterable_DisallowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException {
-			// set up
-			File originalFile = newCopyOfPngFile();
-			File fileThatDoesntExist = newUncreatedPngFile();
-
-			// given
-			// when
-			Thumbnails.of(originalFile)
-				.size(50, 50)
-				.allowOverwrite(false)
-				.toFiles(Arrays.asList(fileThatDoesntExist));
-
-			// then
-			assertImageExists(fileThatDoesntExist, 50, 50);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument toFiles(Iterable) is called</li>
-		 * <li>allowOverwrite is false</li>
-		 * <li>single file specified, and it exists</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is not written</li>
-		 * </ol>
-		 */
-		@Test
-		public void toFilesIterable_DisallowOverwrite_SingleFile_OutputFileExists() throws IOException {
-			// set up
-			File originalFile = newCopyOfPngFile();
-			File fileThatExists = newCopyOfPngFile();
-
-			// given
-			// when
-			Thumbnails.of(originalFile)
-				.size(50, 50)
-				.allowOverwrite(false)
-				.toFiles(Arrays.asList(fileThatExists));
-
-			// then
-			assertImageExists(fileThatExists, 100, 100);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument asFiles(Iterable) is called</li>
-		 * <li>allowOverwrite is true</li>
-		 * <li>single file specified, and it does not exist.</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is written</li>
-		 * <li>The returned list contains only files which were written</li>
-		 * </ol>
-		 */
-		@Test
-		public void asFilesIterable_AllowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException {
-			// set up
-			File originalFile = newCopyOfPngFile();
-			File fileThatDoesntExist1 = newUncreatedPngFile();
-			File fileThatDoesntExist2 = newUncreatedPngFile();
-
-			// given
-			// when
-			List<File> list = Thumbnails.of(originalFile, originalFile)
-				.size(50, 50)
-				.allowOverwrite(true)
-				.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2));
-
-			// then
-			assertImageExists(fileThatDoesntExist1, 50, 50);
-			assertImageExists(fileThatDoesntExist2, 50, 50);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument toFiles(Iterable) is called</li>
-		 * <li>allowOverwrite is true</li>
-		 * <li>single file specified, and it does not exist.</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is overwritten</li>
-		 * <li>The returned list contains only files which were written</li>
-		 * </ol>
-		 */
-		@Test
-		public void asFilesIterable_AllowOverwrite_SingleFile_OutputFileExists() throws IOException {
-			// set up
-			File originalFile = newCopyOfPngFile();
-			File fileThatExists1 = newCopyOfPngFile();
-			File fileThatExists2 = newCopyOfPngFile();
-
-			// given
-			// when
-			List<File> list = Thumbnails.of(originalFile, originalFile)
-				.size(50, 50)
-				.allowOverwrite(true)
-				.asFiles(Arrays.asList(fileThatExists1, fileThatExists2));
-
-			// then
-			assertImageExists(fileThatExists1, 50, 50);
-			assertImageExists(fileThatExists2, 50, 50);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument toFiles(Iterable) is called</li>
-		 * <li>allowOverwrite is false</li>
-		 * <li>single file specified, and it does not exist.</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is written</li>
-		 * <li>The returned list contains only files which were written</li>
-		 * </ol>
-		 */
-		@Test
-		public void asFilesIterable_DisallowOverwrite_SingleFiles_OutputFileDoesNotExist() throws IOException {
-			// set up
-			File originalFile = newCopyOfPngFile();
-			File fileThatDoesntExist1 = newUncreatedPngFile();
-			File fileThatDoesntExist2 = newUncreatedPngFile();
-
-			// given
-			// when
-			List<File> list = Thumbnails.of(originalFile, originalFile)
-				.size(50, 50)
-				.allowOverwrite(false)
-				.asFiles(Arrays.asList(fileThatDoesntExist1, fileThatDoesntExist2));
-
-			// then
-			assertImageExists(fileThatDoesntExist1, 50, 50);
-			assertImageExists(fileThatDoesntExist2, 50, 50);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument toFiles(Iterable) is called</li>
-		 * <li>allowOverwrite is false</li>
-		 * <li>single file specified, and it does not exist.</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is not written</li>
-		 * <li>The returned list is empty</li>
-		 * </ol>
-		 */
-		@Test
-		public void asFilesIterable_DisallowOverwrite_SingleFile_OutputFileExists() throws IOException {
-			// set up
-			File originalFile = newCopyOfPngFile();
-			File fileThatExists1 = newCopyOfPngFile();
-			File fileThatExists2 = newCopyOfPngFile();
-
-			// given
-			// when
-			List<File> list = Thumbnails.of(originalFile, originalFile)
-				.size(50, 50)
-				.allowOverwrite(false)
-				.asFiles(Arrays.asList(fileThatExists1, fileThatExists2));
-
-			// then
-			assertImageExists(fileThatExists1, 100, 100);
-			assertImageExists(fileThatExists2, 100, 100);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument toFiles(Rename) is called</li>
-		 * <li>allowOverwrite is true</li>
-		 * <li>single file specified, and it does not exist.</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is written</li>
-		 * </ol>
-		 */
-		@Test
-		public void toFilesRename_AllowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException {
-			// set up
-			Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-			File originalFile = newCopyOfPngFile();
-			File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
-
-			// given
-			// when
-			Thumbnails.of(originalFile)
-				.size(50, 50)
-				.allowOverwrite(true)
-				.toFiles(rename);
-
-			// then
-			assertImageExists(fileThatDoesntExist, 50, 50);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument toFiles(Rename) is called</li>
-		 * <li>allowOverwrite is true</li>
-		 * <li>single file specified, and it exists</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is overwritten</li>
-		 * </ol>
-		 */
-		@Test
-		public void toFilesRename_AllowOverwrite_SingleFile_OutputFileExists() throws IOException {
-			// set up
-			Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-			File originalFile = newCopyOfPngFile();
-
-			File fileThatExists = makeRenamedFile(originalFile, rename);
-			TestUtils.copyFile(originalFile, fileThatExists);
-
-			// given
-			// when
-			Thumbnails.of(originalFile)
-				.size(50, 50)
-				.allowOverwrite(true)
-				.toFiles(rename);
-
-			// then
-			assertImageExists(fileThatExists, 50, 50);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument toFiles(Rename) is called</li>
-		 * <li>allowOverwrite is false</li>
-		 * <li>single file specified, and it does not exist.</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is written</li>
-		 * </ol>
-		 */
-		@Test
-		public void toFilesRename_DisallowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException {
-			// set up
-			Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-			File originalFile = newCopyOfPngFile();
-
-			File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
-
-			// given
-			// when
-			Thumbnails.of(originalFile)
-				.size(50, 50)
-				.allowOverwrite(false)
-				.toFiles(rename);
-
-			// then
-			assertImageExists(fileThatDoesntExist, 50, 50);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument toFiles(Rename) is called</li>
-		 * <li>allowOverwrite is false</li>
-		 * <li>single file specified, and it exists</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is not written</li>
-		 * </ol>
-		 */
-		@Test
-		public void toFilesRename_DisallowOverwrite_SingleFile_OutputFileExists() throws IOException {
-			// set up
-			Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-			File originalFile = newCopyOfPngFile();
-
-			File fileThatExists = makeRenamedFile(originalFile, rename);
-			TestUtils.copyFile(originalFile, fileThatExists);
-
-			// given
-
-			// when
-			Thumbnails.of(originalFile)
-				.size(50, 50)
-				.allowOverwrite(false)
-				.toFiles(rename);
-
-			// then
-			assertImageExists(fileThatExists, 100, 100);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument asFiles(Rename) is called</li>
-		 * <li>allowOverwrite is true</li>
-		 * <li>single file specified, and it does not exist.</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is written</li>
-		 * </ol>
-		 */
-		@Test
-		public void asFilesRename_AllowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException {
-			// set up
-			Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-			File originalFile = newCopyOfPngFile();
-
-			File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
-
-			// given
-			// when
-			List<File> list = Thumbnails.of(originalFile)
-				.size(50, 50)
-				.allowOverwrite(true)
-				.asFiles(rename);
-
-			// then
-			assertEquals(1, list.size());
-			assertEquals(fileThatDoesntExist.getAbsolutePath(), list.get(0).getAbsolutePath());
-			assertImageExists(fileThatDoesntExist, 50, 50);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument asFiles(Rename) is called</li>
-		 * <li>allowOverwrite is true</li>
-		 * <li>single file specified, and it exists</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is overwritten</li>
-		 * </ol>
-		 */
-		@Test
-		public void asFilesRename_AllowOverwrite_SingleFile_OutputFileExists() throws IOException {
-			// set up
-			Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-			File originalFile = newCopyOfPngFile();
-
-			File fileThatExists = makeRenamedFile(originalFile, rename);
-			TestUtils.copyFile(originalFile, fileThatExists);
-
-			// given
-
-			// when
-			List<File> list = Thumbnails.of(originalFile)
-				.size(50, 50)
-				.allowOverwrite(true)
-				.asFiles(rename);
-
-			// then
-			assertEquals(1, list.size());
-			assertEquals(fileThatExists.getAbsolutePath(), list.get(0).getAbsolutePath());
-			assertImageExists(fileThatExists, 50, 50);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument asFiles(Rename) is called</li>
-		 * <li>allowOverwrite is false</li>
-		 * <li>single file specified, and it does not exist.</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is written</li>
-		 * </ol>
-		 */
-		@Test
-		public void asFilesRename_DisallowOverwrite_SingleFile_OutputFileDoesNotExist() throws IOException {
-			// set up
-			Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-			File originalFile = newCopyOfPngFile();
-
-			File fileThatDoesntExist = makeRenamedFile(originalFile, rename);
-
-			// given
-			// when
-			List<File> list = Thumbnails.of(originalFile)
-				.size(50, 50)
-				.allowOverwrite(false)
-				.asFiles(rename);
-
-			// then
-			assertEquals(1, list.size());
-			assertEquals(fileThatDoesntExist.getAbsolutePath(), list.get(0).getAbsolutePath());
-			assertImageExists(fileThatDoesntExist, 50, 50);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument asFiles(Rename) is called</li>
-		 * <li>allowOverwrite is false</li>
-		 * <li>single file specified, and it exists</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is not written</li>
-		 * </ol>
-		 */
-		@Test
-		public void asFilesRename_DisallowOverwrite_SingleFile_OutputFileExists() throws IOException {
-			// set up
-			Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
-			File originalFile = newCopyOfPngFile();
-
-			File fileThatExists = makeRenamedFile(originalFile, rename);
-			TestUtils.copyFile(originalFile, fileThatExists);
-
-			// given
-
-			// when
-			List<File> list = Thumbnails.of(originalFile)
-				.size(50, 50)
-				.allowOverwrite(false)
-				.asFiles(rename);
-
-			// then
-			assertEquals(0, list.size());
-			assertImageExists(fileThatExists, 100, 100);
-		}
 
 		@Test
 		public void toFiles_Rename_WritesToSameDir_AllInputFromSameDir() throws IOException {
@@ -7352,6 +6849,171 @@ public class ThumbnailsBuilderInputOutputTest {
 							1, 0, 0,
 					}
 			);
+		}
+	}
+
+	@RunWith(Parameterized.class)
+	public static class OutputSingleFilesTests {
+
+		@Parameterized.Parameters(name = "outputFileExists={0}, allowOverwrite={1}, expectOutputChanged={2}")
+		public static Object[][] values() {
+			return new Object[][] {
+					new Object[] { true, true, true },
+					new Object[] { false, true, true },
+					new Object[] { true, false, false },
+					new Object[] { false, false, true }
+			};
+		}
+
+		@Parameterized.Parameter
+		public boolean outputFileExists;
+
+		@Parameterized.Parameter(1)
+		public boolean allowOverwrite;
+
+		@Parameterized.Parameter(2)
+		public boolean expectOutputChanged;
+
+		@Rule
+		public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+		// States for tests.
+		File outputFile;
+
+		private void verify() throws IOException {
+			// then
+			if (expectOutputChanged) {
+				assertImageExists(outputFile, 50, 50);
+			} else {
+				assertImageExists(outputFile, 100, 100);
+			}
+		}
+
+		@Test
+		public void toFilesIterable() throws IOException {
+			outputFile = new File(temporaryFolder.getRoot(), "first.png");
+
+			File originalFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png",
+					temporaryFolder
+			);
+
+			if (outputFileExists) {
+				TestUtils.copyFile(originalFile, outputFile);
+			}
+
+			Thumbnails.of(originalFile)
+					.size(50, 50)
+					.allowOverwrite(allowOverwrite)
+					.toFiles(Collections.singletonList(outputFile));
+
+			verify();
+		}
+
+		@Test
+		public void asFilesIterable() throws IOException {
+			outputFile = new File(temporaryFolder.getRoot(), "first.png");
+
+			File originalFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png",
+					temporaryFolder
+			);
+
+			if (outputFileExists) {
+				TestUtils.copyFile(originalFile, outputFile);
+			}
+
+			List<File> outputFiles = Thumbnails.of(originalFile)
+					.size(50, 50)
+					.allowOverwrite(allowOverwrite)
+					.asFiles(Collections.singletonList(outputFile));
+
+			// Check contents of returned list.
+			Queue<File> verificationQueue = new LinkedList<File>(outputFiles);
+			int expectedListSize = 0;
+			if (expectOutputChanged) {
+				expectedListSize++;
+				assertEquals(outputFile, verificationQueue.remove());
+			}
+			assertEquals(0, verificationQueue.size());
+			assertEquals(expectedListSize, outputFiles.size());
+
+			verify();
+		}
+
+		@Test
+		public void toFilesRename() throws IOException {
+			Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+
+			File originalFile = TestUtils.copyResourceToFile(
+					"Thumbnailator/grid.png", new File(temporaryFolder.getRoot(), "first.png")
+			);
+
+			ThumbnailParameter param =
+					new ThumbnailParameterBuilder()
+							.size(50, 50)
+							.build();
+			outputFile = new File(
+					temporaryFolder.getRoot(), rename.apply(originalFile.getName(), param)
+			);
+
+			if (outputFileExists) {
+				TestUtils.copyFile(originalFile, outputFile);
+			}
+
+			Thumbnails.of(originalFile)
+					.size(50, 50)
+					.allowOverwrite(allowOverwrite)
+					.toFiles(rename);
+
+			verify();
+		}
+
+		@Test
+		public void asFilesRename() throws IOException {
+			Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
+
+			File originalFile = TestUtils.copyResourceToFile(
+					"Thumbnailator/grid.png", new File(temporaryFolder.getRoot(), "first.png")
+			);
+
+			ThumbnailParameter param =
+					new ThumbnailParameterBuilder()
+							.size(50, 50)
+							.build();
+			outputFile = new File(
+					temporaryFolder.getRoot(), rename.apply(originalFile.getName(), param)
+			);
+
+			if (outputFileExists) {
+				TestUtils.copyFile(originalFile, outputFile);
+			}
+
+			List<File> outputFiles = Thumbnails.of(originalFile)
+					.size(50, 50)
+					.allowOverwrite(allowOverwrite)
+					.asFiles(rename);
+
+			// Check contents of returned list.
+			Queue<File> verificationQueue = new LinkedList<File>(outputFiles);
+			int expectedListSize = 0;
+			if (expectOutputChanged) {
+				expectedListSize++;
+				assertEquals(outputFile, verificationQueue.remove());
+			}
+			assertEquals(0, verificationQueue.size());
+			assertEquals(expectedListSize, outputFiles.size());
+
+			verify();
+		}
+
+		private void assertImageExists(File f, int width, int height) throws IOException {
+			assertTrue("f exists.", f.exists());
+
+			BufferedImage img = ImageIO.read(f);
+			assertNotNull("Read image is null.", img);
+			assertEquals(width, img.getWidth());
+			assertEquals(height, img.getHeight());
 		}
 	}
 
