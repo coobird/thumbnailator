@@ -33,6 +33,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -1493,18 +1495,15 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void sourceRegion_Region() throws IOException {
 			// given
-			BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
-			Thumbnails.of(img)
+			BufferedImage thumbnail = Thumbnails.of(img)
 					.sourceRegion(new Region(new Coordinate(0, 0), new AbsoluteSize(50, 50)))
 					.size(50, 50)
-					.toFile(outFile);
+					.asBufferedImage();
 
 			// then
-			BufferedImage thumbnail = ImageIO.read(outFile);
 			assertEquals(50, thumbnail.getWidth());
 			assertEquals(50, thumbnail.getHeight());
 			assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, img.getSubimage(0, 0, 50, 50)));
@@ -1525,16 +1524,14 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void sourceRegion_Region_Null() throws IOException {
 			// given
-			BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
 			try {
 				Thumbnails.of(img)
 						.sourceRegion((Region) null)
 						.size(50, 50)
-						.toFile(outFile);
+						.asBufferedImage();
 				fail();
 			} catch (NullPointerException e) {
 				// then
@@ -1557,18 +1554,15 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void sourceRegion_Rectangle() throws IOException {
 			// given
-			BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
-			Thumbnails.of(img)
+			BufferedImage thumbnail = Thumbnails.of(img)
 					.sourceRegion(new Rectangle(0, 0, 50, 50))
 					.size(50, 50)
-					.toFile(outFile);
+					.asBufferedImage();
 
 			// then
-			BufferedImage thumbnail = ImageIO.read(outFile);
 			assertEquals(50, thumbnail.getWidth());
 			assertEquals(50, thumbnail.getHeight());
 			assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, img.getSubimage(0, 0, 50, 50)));
@@ -1589,16 +1583,14 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void sourceRegion_Rectangle_Null() throws IOException {
 			// given
-			BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
 			try {
 				Thumbnails.of(img)
 						.sourceRegion((Rectangle) null)
 						.size(50, 50)
-						.toFile(outFile);
+						.asBufferedImage();
 				fail();
 			} catch (NullPointerException e) {
 				// then
@@ -1621,18 +1613,15 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void sourceRegion_PositionSize() throws IOException {
 			// given
-			BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
-			Thumbnails.of(img)
+			BufferedImage thumbnail = Thumbnails.of(img)
 					.sourceRegion(new Coordinate(0, 0), new AbsoluteSize(50, 50))
 					.size(50, 50)
-					.toFile(outFile);
+					.asBufferedImage();
 
 			// then
-			BufferedImage thumbnail = ImageIO.read(outFile);
 			assertEquals(50, thumbnail.getWidth());
 			assertEquals(50, thumbnail.getHeight());
 			assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, img.getSubimage(0, 0, 50, 50)));
@@ -1653,16 +1642,14 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void sourceRegion_PositionSize_PositionNull() throws IOException {
 			// given
-			BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
 			try {
 				Thumbnails.of(img)
 						.sourceRegion(null, new AbsoluteSize(50, 50))
 						.size(50, 50)
-						.toFile(outFile);
+						.asBufferedImage();
 				fail();
 			} catch (NullPointerException e) {
 				// then
@@ -1684,16 +1671,14 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void sourceRegion_PositionSize_SizeNull() throws IOException {
 			// given
-			BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
 			try {
 				Thumbnails.of(img)
 						.sourceRegion(new Coordinate(0, 0), null)
 						.size(50, 50)
-						.toFile(outFile);
+						.asBufferedImage();
 				fail();
 			} catch (NullPointerException e) {
 				// then
@@ -1716,18 +1701,15 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void sourceRegion_PositionIntInt() throws IOException {
 			// given
-			BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
-			Thumbnails.of(img)
+			BufferedImage thumbnail = Thumbnails.of(img)
 					.sourceRegion(new Coordinate(0, 0), 50, 50)
 					.size(50, 50)
-					.toFile(outFile);
+					.asBufferedImage();
 
 			// then
-			BufferedImage thumbnail = ImageIO.read(outFile);
 			assertEquals(50, thumbnail.getWidth());
 			assertEquals(50, thumbnail.getHeight());
 			assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, img.getSubimage(0, 0, 50, 50)));
@@ -1748,16 +1730,14 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void sourceRegion_PositionIntInt_PositionNull() throws IOException {
 			// given
-			BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
 			try {
 				Thumbnails.of(img)
 						.sourceRegion(null, 50, 50)
 						.size(50, 50)
-						.toFile(outFile);
+						.asBufferedImage();
 				fail();
 			} catch (NullPointerException e) {
 				// then
@@ -1779,16 +1759,14 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void sourceRegion_PositionIntInt_WidthNonPositive() throws IOException {
 			// given
-			BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
 			try {
 				Thumbnails.of(img)
 						.sourceRegion(new Coordinate(0, 0), -1, 50)
 						.size(50, 50)
-						.toFile(outFile);
+						.asBufferedImage();
 				fail();
 			} catch (IllegalArgumentException e) {
 				// then
@@ -1810,16 +1788,14 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void sourceRegion_PositionIntInt_HeightNonPositive() throws IOException {
 			// given
-			BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
 			try {
 				Thumbnails.of(img)
 						.sourceRegion(new Coordinate(0, 0), 50, -1)
 						.size(50, 50)
-						.toFile(outFile);
+						.asBufferedImage();
 				fail();
 			} catch (IllegalArgumentException e) {
 				// then
@@ -1842,18 +1818,15 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void sourceRegion_IntIntIntInt() throws IOException {
 			// given
-			BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
-			Thumbnails.of(img)
+			BufferedImage thumbnail = Thumbnails.of(img)
 					.sourceRegion(0, 0, 50, 50)
 					.size(50, 50)
-					.toFile(outFile);
+					.asBufferedImage();
 
 			// then
-			BufferedImage thumbnail = ImageIO.read(outFile);
 			assertEquals(50, thumbnail.getWidth());
 			assertEquals(50, thumbnail.getHeight());
 			assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, img.getSubimage(0, 0, 50, 50)));
@@ -1874,16 +1847,14 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void sourceRegion_IntIntIntInt_WidthNonPositive() throws IOException {
 			// given
-			BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
 			try {
 				Thumbnails.of(img)
 						.sourceRegion(0, 0, -1, 50)
 						.size(50, 50)
-						.toFile(outFile);
+						.asBufferedImage();
 				fail();
 			} catch (IllegalArgumentException e) {
 				// then
@@ -1905,16 +1876,14 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void sourceRegion_IntIntIntInt_HeightNonPositive() throws IOException {
 			// given
-			BufferedImage img = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
 			try {
 				Thumbnails.of(img)
 						.sourceRegion(0, 0, 50, -1)
 						.size(50, 50)
-						.toFile(outFile);
+						.asBufferedImage();
 				fail();
 			} catch (IllegalArgumentException e) {
 				// then
@@ -1937,17 +1906,16 @@ public class ThumbnailsBuilderTest {
 		 */
 		@Test
 		public void outputQuality_float_ValidArg_ZeroZero() throws IOException {
-			File f = new File("src/test/resources/Thumbnailator/grid.jpg");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
-			outFile.deleteOnExit();
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-			Thumbnails.of(f)
+			Thumbnails.of(is)
 					.size(50, 50)
 					.outputFormat("jpg")
 					.outputQuality(0.0f)
-					.toFile(outFile);
+					.toOutputStream(os);
 
-			BufferedImage thumbnail = ImageIO.read(outFile);
+			BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
 
 			assertEquals(50, thumbnail.getWidth());
 			assertEquals(50, thumbnail.getHeight());
@@ -1969,17 +1937,16 @@ public class ThumbnailsBuilderTest {
 		 */
 		@Test
 		public void outputQuality_float_ValidArg_ZeroFive() throws IOException {
-			File f = new File("src/test/resources/Thumbnailator/grid.jpg");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
-			outFile.deleteOnExit();
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-			Thumbnails.of(f)
+			Thumbnails.of(is)
 					.size(50, 50)
 					.outputFormat("jpg")
 					.outputQuality(0.5f)
-					.toFile(outFile);
+					.toOutputStream(os);
 
-			BufferedImage thumbnail = ImageIO.read(outFile);
+			BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
 
 			assertEquals(50, thumbnail.getWidth());
 			assertEquals(50, thumbnail.getHeight());
@@ -2001,17 +1968,16 @@ public class ThumbnailsBuilderTest {
 		 */
 		@Test
 		public void outputQuality_float_ValidArg_OneZero() throws IOException {
-			File f = new File("src/test/resources/Thumbnailator/grid.jpg");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
-			outFile.deleteOnExit();
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-			Thumbnails.of(f)
+			Thumbnails.of(is)
 					.size(50, 50)
 					.outputFormat("jpg")
 					.outputQuality(1.0f)
-					.toFile(outFile);
+					.toOutputStream(os);
 
-			BufferedImage thumbnail = ImageIO.read(outFile);
+			BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
 
 			assertEquals(50, thumbnail.getWidth());
 			assertEquals(50, thumbnail.getHeight());
@@ -2031,11 +1997,9 @@ public class ThumbnailsBuilderTest {
 		 */
 		@Test(expected = IllegalArgumentException.class)
 		public void outputQuality_float_InvalidArg_Negative() throws IOException {
-			File f = new File("src/test/resources/Thumbnailator/grid.jpg");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
-			outFile.deleteOnExit();
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
 
-			Thumbnails.of(f)
+			Thumbnails.of(is)
 					.size(50, 50)
 					.outputFormat("jpg")
 					.outputQuality(-0.01f);
@@ -2056,11 +2020,9 @@ public class ThumbnailsBuilderTest {
 		 */
 		@Test(expected = IllegalArgumentException.class)
 		public void outputQuality_float_InvalidArg_OverOne() throws IOException {
-			File f = new File("src/test/resources/Thumbnailator/grid.jpg");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
-			outFile.deleteOnExit();
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
 
-			Thumbnails.of(f)
+			Thumbnails.of(is)
 					.size(50, 50)
 					.outputFormat("jpg")
 					.outputQuality(1.01f);
@@ -2082,17 +2044,16 @@ public class ThumbnailsBuilderTest {
 		 */
 		@Test
 		public void outputQuality_double_ValidArg_ZeroZero() throws IOException {
-			File f = new File("src/test/resources/Thumbnailator/grid.jpg");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
-			outFile.deleteOnExit();
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-			Thumbnails.of(f)
+			Thumbnails.of(is)
 					.size(50, 50)
 					.outputFormat("jpg")
 					.outputQuality(0.0d)
-					.toFile(outFile);
+					.toOutputStream(os);
 
-			BufferedImage thumbnail = ImageIO.read(outFile);
+			BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
 
 			assertEquals(50, thumbnail.getWidth());
 			assertEquals(50, thumbnail.getHeight());
@@ -2114,17 +2075,16 @@ public class ThumbnailsBuilderTest {
 		 */
 		@Test
 		public void outputQuality_double_ValidArg_ZeroFive() throws IOException {
-			File f = new File("src/test/resources/Thumbnailator/grid.jpg");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
-			outFile.deleteOnExit();
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-			Thumbnails.of(f)
+			Thumbnails.of(is)
 					.size(50, 50)
 					.outputFormat("jpg")
 					.outputQuality(0.5d)
-					.toFile(outFile);
+					.toOutputStream(os);
 
-			BufferedImage thumbnail = ImageIO.read(outFile);
+			BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
 
 			assertEquals(50, thumbnail.getWidth());
 			assertEquals(50, thumbnail.getHeight());
@@ -2146,17 +2106,16 @@ public class ThumbnailsBuilderTest {
 		 */
 		@Test
 		public void outputQuality_double_ValidArg_OneZero() throws IOException {
-			File f = new File("src/test/resources/Thumbnailator/grid.jpg");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
-			outFile.deleteOnExit();
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-			Thumbnails.of(f)
+			Thumbnails.of(is)
 					.size(50, 50)
 					.outputFormat("jpg")
 					.outputQuality(1.0d)
-					.toFile(outFile);
+					.toOutputStream(os);
 
-			BufferedImage thumbnail = ImageIO.read(outFile);
+			BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
 
 			assertEquals(50, thumbnail.getWidth());
 			assertEquals(50, thumbnail.getHeight());
@@ -2176,11 +2135,9 @@ public class ThumbnailsBuilderTest {
 		 */
 		@Test(expected = IllegalArgumentException.class)
 		public void outputQuality_double_InvalidArg_Negative() throws IOException {
-			File f = new File("src/test/resources/Thumbnailator/grid.jpg");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
-			outFile.deleteOnExit();
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
 
-			Thumbnails.of(f)
+			Thumbnails.of(is)
 					.size(50, 50)
 					.outputFormat("jpg")
 					.outputQuality(-0.01d);
@@ -2200,11 +2157,9 @@ public class ThumbnailsBuilderTest {
 		 */
 		@Test(expected = IllegalArgumentException.class)
 		public void outputQuality_double_InvalidArg_OverOne() throws IOException {
-			File f = new File("src/test/resources/Thumbnailator/grid.jpg");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.jpg");
-			outFile.deleteOnExit();
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
 
-			Thumbnails.of(f)
+			Thumbnails.of(is)
 					.size(50, 50)
 					.outputFormat("jpg")
 					.outputQuality(1.01d);
@@ -2643,10 +2598,10 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void outputFormat_SupportedFormat() throws IOException {
 			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
-			Thumbnails.of(f1)
+			Thumbnails.of(img)
 					.size(50, 50)
 					.outputFormat("png");
 		}
@@ -2667,15 +2622,15 @@ public class ThumbnailsBuilderTest {
 		@Test(expected = IllegalArgumentException.class)
 		public void outputFormat_UnsupportedFormat() throws IOException {
 			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
-			Thumbnails.of(f1)
+			Thumbnails.of(img)
 					.size(50, 50)
 					.outputFormat("unsupported");
 
 			// then
-			// expect an IllagelArgumentException.
+			// expect an IllegalArgumentException.
 		}
 
 		/**
@@ -2694,10 +2649,10 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void outputFormat_Checks_FormatSpecified_TypeSupported() throws IOException {
 			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
-			Thumbnails.of(f1)
+			Thumbnails.of(img)
 					.size(50, 50)
 					.outputFormat("JPEG")
 					.outputFormatType("JPEG");
@@ -2723,16 +2678,16 @@ public class ThumbnailsBuilderTest {
 		@Test(expected = IllegalArgumentException.class)
 		public void outputFormat_Checks_FormatSpecified_FormatDoesNotSupportCompression() throws IOException {
 			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
-			Thumbnails.of(f1)
+			Thumbnails.of(img)
 					.size(50, 50)
 					.outputFormat("PNG")
 					.outputFormatType("JPEG");
 
 			// then
-			// expect an IllagelArgumentException.
+			// expect an IllegalArgumentException.
 		}
 
 		/**
@@ -2751,16 +2706,16 @@ public class ThumbnailsBuilderTest {
 		@Test(expected = IllegalArgumentException.class)
 		public void outputFormat_Checks_FormatSpecified_TypeUnsupported() throws IOException {
 			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
-			Thumbnails.of(f1)
+			Thumbnails.of(img)
 					.size(50, 50)
 					.outputFormat("JPEG")
 					.outputFormatType("foo");
 
 			// then
-			// expect an IllagelArgumentException.
+			// expect an IllegalArgumentException.
 		}
 
 		/**
@@ -2779,10 +2734,10 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void outputFormat_Checks_FormatSpecified_TypeDefault() throws IOException {
 			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
-			Thumbnails.of(f1)
+			Thumbnails.of(img)
 					.size(50, 50)
 					.outputFormat("JPEG")
 					.outputFormatType(ThumbnailParameter.DEFAULT_FORMAT_TYPE);
@@ -2807,16 +2762,16 @@ public class ThumbnailsBuilderTest {
 		@Test(expected = IllegalArgumentException.class)
 		public void outputFormat_Checks_FormatSpecifiedAsOriginal_TypeSpecified() throws IOException {
 			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
 			// when
-			Thumbnails.of(f1)
+			Thumbnails.of(img)
 					.size(50, 50)
 					.outputFormat(ThumbnailParameter.ORIGINAL_FORMAT)
 					.outputFormatType("JPEG");
 
 			// then
-			// expect an IllagelArgumentException.
+			// expect an IllegalArgumentException.
 		}
 
 		/**
@@ -2835,10 +2790,10 @@ public class ThumbnailsBuilderTest {
 		@Test
 		public void outputFormat_Checks_FormatSpecifiedAsOriginal_TypeIsDefaultForFormat() throws IOException {
 			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.jpg");
+			BufferedImage img = TestUtils.getImageFromResource("Thumbnailator/grid.jpg");
 
 			// when
-			Thumbnails.of(f1)
+			Thumbnails.of(img)
 					.size(50, 50)
 					.outputFormat(ThumbnailParameter.ORIGINAL_FORMAT)
 					.outputFormatType(ThumbnailParameter.DEFAULT_FORMAT_TYPE);
