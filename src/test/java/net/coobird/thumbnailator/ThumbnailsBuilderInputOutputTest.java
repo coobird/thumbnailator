@@ -6618,7 +6618,7 @@ public class ThumbnailsBuilderInputOutputTest {
 	}
 
 	@RunWith(Parameterized.class)
-	public static class OutputSingleFilesTests {
+	public static class FilesOutputSingleFileTests {
 
 		@Parameterized.Parameters(name = "outputFileExists={0}, allowOverwrite={1}, expectOutputChanged={2}")
 		public static Object[][] values() {
@@ -6655,7 +6655,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		}
 
 		@Test
-		public void toFilesIterable() throws IOException {
+		public void ofFileToFilesIterable() throws IOException {
 			outputFile = new File(temporaryFolder.getRoot(), "first.png");
 
 			File originalFile = TestUtils.copyResourceToTemporaryFile(
@@ -6676,7 +6676,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		}
 
 		@Test
-		public void asFilesIterable() throws IOException {
+		public void ofFileAsFilesIterable() throws IOException {
 			outputFile = new File(temporaryFolder.getRoot(), "first.png");
 
 			File originalFile = TestUtils.copyResourceToTemporaryFile(
@@ -6707,7 +6707,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		}
 
 		@Test
-		public void toFilesRename() throws IOException {
+		public void ofFileToFilesRename() throws IOException {
 			Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 
 			File originalFile = TestUtils.copyResourceToFile(
@@ -6735,7 +6735,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		}
 
 		@Test
-		public void asFilesRename() throws IOException {
+		public void ofFileAsFilesRename() throws IOException {
 			Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 
 			File originalFile = TestUtils.copyResourceToFile(
@@ -6783,7 +6783,7 @@ public class ThumbnailsBuilderInputOutputTest {
 	}
 
 	@RunWith(Parameterized.class)
-	public static class OutputMultipleFilesTests {
+	public static class FilesOutputMultipleFilesTests {
 
 		@Parameterized.Parameters(name = "firstExists={0}, secondExists={1}, allowOverwrite={2}, expectedFirstChanged={3}, expectSecondChanged={4}")
 		public static Object[][] values() {
@@ -6837,7 +6837,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		}
 
 		@Test
-		public void toFilesIterable() throws IOException {
+		public void ofFilesToFilesIterable() throws IOException {
 			firstOutputFile = new File(temporaryFolder.getRoot(), "first.png");
 			secondOutputFile = new File(temporaryFolder.getRoot(), "second.png");
 
@@ -6862,7 +6862,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		}
 
 		@Test
-		public void asFilesIterable() throws IOException {
+		public void ofFilesAsFilesIterable() throws IOException {
 			firstOutputFile = new File(temporaryFolder.getRoot(), "first.png");
 			secondOutputFile = new File(temporaryFolder.getRoot(), "second.png");
 
@@ -6902,7 +6902,7 @@ public class ThumbnailsBuilderInputOutputTest {
 
 
 		@Test
-		public void toFilesRename() throws IOException {
+		public void ofFilesToFilesRename() throws IOException {
 			Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 
 			File firstOriginalFile = TestUtils.copyResourceToFile(
@@ -6939,7 +6939,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		}
 
 		@Test
-		public void asFilesRename() throws IOException {
+		public void ofFilesAsFilesRename() throws IOException {
 			Rename rename = Rename.PREFIX_DOT_THUMBNAIL;
 
 			File firstOriginalFile = TestUtils.copyResourceToFile(
