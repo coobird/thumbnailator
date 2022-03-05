@@ -28,12 +28,10 @@ import static org.junit.Assert.*;
 import static org.junit.matchers.JUnitMatchers.*;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.Proxy;
 import java.net.URL;
 
-import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.TestUtils;
 import net.coobird.thumbnailator.ThumbnailParameter;
@@ -58,7 +56,9 @@ public class URLImageSourceTest {
 		public void proxySpecfied() throws IOException {
 			// given
 			Proxy proxy = Proxy.NO_PROXY;
-			URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.png"), proxy);
+			URLImageSource source = new URLImageSource(
+					TestUtils.getResource("Thumbnailator/grid.png")
+					, proxy);
 
 			// when
 			BufferedImage img = source.read();
@@ -70,7 +70,7 @@ public class URLImageSourceTest {
 		}
 
 		@Test(expected = NullPointerException.class)
-		public void givenNullURL() throws IOException {
+		public void givenNullURL() {
 			try {
 				// given
 				// when
@@ -102,7 +102,9 @@ public class URLImageSourceTest {
 			try {
 				// given
 				// when
-				new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.png"), null);
+				new URLImageSource(
+						TestUtils.getResource("Thumbnailator/grid.png"),
+						null);
 			} catch (NullPointerException e) {
 				// then
 				assertEquals("Proxy cannot be null.", e.getMessage());
@@ -115,7 +117,7 @@ public class URLImageSourceTest {
 			try {
 				// given
 				// when
-				new URLImageSource("file:src/test/resources/Thumbnailator/grid.png", null);
+				new URLImageSource("file:actualUrlDoesntMatter", null);
 			} catch (NullPointerException e) {
 				// then
 				assertEquals("Proxy cannot be null.", e.getMessage());
@@ -126,7 +128,9 @@ public class URLImageSourceTest {
 		@Test
 		public void fileExists_Png() throws IOException {
 			// given
-			URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.png"));
+			URLImageSource source = new URLImageSource(
+					TestUtils.getResource("Thumbnailator/grid.png")
+			);
 
 			// when
 			BufferedImage img = source.read();
@@ -140,7 +144,9 @@ public class URLImageSourceTest {
 		@Test
 		public void fileExists_Jpeg() throws IOException {
 			// given
-			URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.jpg"));
+			URLImageSource source = new URLImageSource(
+					TestUtils.getResource("Thumbnailator/grid.jpg")
+			);
 
 			// when
 			BufferedImage img = source.read();
@@ -154,7 +160,9 @@ public class URLImageSourceTest {
 		@Test
 		public void fileExists_Bmp() throws IOException {
 			// given
-			URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.bmp"));
+			URLImageSource source = new URLImageSource(
+					TestUtils.getResource("Thumbnailator/grid.bmp")
+			);
 
 			// when
 			BufferedImage img = source.read();
@@ -184,7 +192,9 @@ public class URLImageSourceTest {
 		@Test(expected = IllegalStateException.class)
 		public void fileExists_getInputFormatNameBeforeRead() throws IOException {
 			// given
-			URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.png"));
+			URLImageSource source = new URLImageSource(
+					TestUtils.getResource("Thumbnailator/grid.png")
+			);
 
 			try {
 				// when
@@ -214,10 +224,11 @@ public class URLImageSourceTest {
 		@Test
 		public void appliesSourceRegion() throws IOException {
 			// given
-			File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-			BufferedImage sourceImage = ImageIO.read(sourceFile);
+			BufferedImage sourceImage = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
-			URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.png"));
+			URLImageSource source = new URLImageSource(
+					TestUtils.getResource("Thumbnailator/grid.png")
+			);
 			source.setThumbnailParameter(
 					new ThumbnailParameterBuilder()
 							.region(new Region(Positions.TOP_LEFT, new AbsoluteSize(40, 40)))
@@ -251,10 +262,11 @@ public class URLImageSourceTest {
 		@Test
 		public void appliesSourceRegionTooBig() throws IOException {
 			// given
-			File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-			BufferedImage sourceImage = ImageIO.read(sourceFile);
+			BufferedImage sourceImage = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
-			URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.png"));
+			URLImageSource source = new URLImageSource(
+					TestUtils.getResource("Thumbnailator/grid.png")
+			);
 			source.setThumbnailParameter(
 					new ThumbnailParameterBuilder()
 							.region(new Region(new Coordinate(20, 20), new AbsoluteSize(100, 100)))
@@ -288,10 +300,11 @@ public class URLImageSourceTest {
 		@Test
 		public void appliesSourceRegionBeyondOrigin() throws IOException {
 			// given
-			File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-			BufferedImage sourceImage = ImageIO.read(sourceFile);
+			BufferedImage sourceImage = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
-			URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.png"));
+			URLImageSource source = new URLImageSource(
+					TestUtils.getResource("Thumbnailator/grid.png")
+			);
 			source.setThumbnailParameter(
 					new ThumbnailParameterBuilder()
 							.region(new Region(new Coordinate(-20, -20), new AbsoluteSize(100, 100)))
@@ -310,10 +323,11 @@ public class URLImageSourceTest {
 		@Test
 		public void appliesSourceRegionNotSpecified() throws IOException {
 			// given
-			File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-			BufferedImage sourceImage = ImageIO.read(sourceFile);
+			BufferedImage sourceImage = TestUtils.getImageFromResource("Thumbnailator/grid.png");
 
-			URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Thumbnailator/grid.png"));
+			URLImageSource source = new URLImageSource(
+					TestUtils.getResource("Thumbnailator/grid.png")
+			);
 			source.setThumbnailParameter(
 					new ThumbnailParameterBuilder()
 							.size(20, 20)
@@ -330,11 +344,11 @@ public class URLImageSourceTest {
 		@Test
 		public void useExifOrientationIsTrue_OrientationHonored() throws Exception {
 			// given
-			File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
-			BufferedImage sourceImage = ImageIO.read(sourceFile);
+			BufferedImage sourceImage = TestUtils.getImageFromResource("Exif/source_2.jpg");
 
-			URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_2.jpg"));
-
+			URLImageSource source = new URLImageSource(
+					TestUtils.getResource("Exif/source_2.jpg")
+			);
 			ThumbnailParameter param =
 					new ThumbnailParameterBuilder()
 							.size(20, 20)
@@ -361,7 +375,9 @@ public class URLImageSourceTest {
 		@Test
 		public void useExifOrientationIsFalse_OrientationIgnored() throws Exception {
 			// given
-			URLImageSource source = new URLImageSource(new URL("file:src/test/resources/Exif/source_2.jpg"));
+			URLImageSource source = new URLImageSource(
+					TestUtils.getResource("Exif/source_2.jpg")
+			);
 
 			ThumbnailParameter param =
 					new ThumbnailParameterBuilder()
