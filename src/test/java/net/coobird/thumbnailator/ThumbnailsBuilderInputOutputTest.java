@@ -6427,15 +6427,6 @@ public class ThumbnailsBuilderInputOutputTest {
 			// then
 			assertEquals("JPEG", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
 		}
-
-		private File makeRenamedFile(File f, Rename rename) {
-			ThumbnailParameter param =
-					new ThumbnailParameterBuilder()
-							.size(100, 100)
-							.build();
-
-			return new File(f.getParent(), Rename.PREFIX_DOT_THUMBNAIL.apply(f.getName(), param));
-		}
 	}
 
 	/**
