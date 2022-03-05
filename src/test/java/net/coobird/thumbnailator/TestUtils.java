@@ -32,6 +32,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -103,6 +104,14 @@ public class TestUtils {
 				dir,
 				"tmp-" + Math.abs(new Random().nextLong()) + "." + ext
 		);
+	}
+
+	public static URL getResource(String resourceName) throws IOException {
+		URL url = ClassLoader.getSystemClassLoader().getResource(resourceName);
+		if (url == null) {
+			throw new IOException("Resource not found: " + resourceName);
+		}
+		return url;
 	}
 
 	public static InputStream getResourceStream(String resourceName) throws IOException {
