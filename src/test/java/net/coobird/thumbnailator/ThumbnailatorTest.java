@@ -58,6 +58,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mockito.ArgumentCaptor;
 
 import static org.mockito.Matchers.*;
@@ -74,105 +75,6 @@ import static org.mockito.Mockito.*;
 public class ThumbnailatorTest {
 
 	public static class Tests {
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnailCollection(Collection, Rename, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Width is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 *
-		 * @throws IOException
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnailCollections_negativeWidth() throws IOException {
-			/*
-			 * The files to make thumbnails of.
-			 */
-			List<File> files = Arrays.asList(
-					new File("src/test/resources/Thumbnailator/grid.jpg"),
-					new File("src/test/resources/Thumbnailator/grid.png")
-			);
-
-			Thumbnailator.createThumbnailsAsCollection(
-					files,
-					Rename.PREFIX_DOT_THUMBNAIL,
-					-42,
-					50
-			);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnailsAsCollection(Collection, Rename, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Height is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 *
-		 * @throws IOException
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnailCollections_negativeHeight() throws IOException {
-			/*
-			 * The files to make thumbnails of.
-			 */
-			List<File> files = Arrays.asList(
-					new File("src/test/resources/Thumbnailator/grid.jpg"),
-					new File("src/test/resources/Thumbnailator/grid.png")
-			);
-
-			Thumbnailator.createThumbnailsAsCollection(
-					files,
-					Rename.PREFIX_DOT_THUMBNAIL,
-					50,
-					-42
-			);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnailsAsCollection(Collection, Rename, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Width is negative.
-		 * 2) Height is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 *
-		 * @throws IOException
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnailCollections_negativeWidthAndHeight() throws IOException {
-			/*
-			 * The files to make thumbnails of.
-			 */
-			List<File> files = Arrays.asList(
-					new File("src/test/resources/Thumbnailator/grid.jpg"),
-					new File("src/test/resources/Thumbnailator/grid.png")
-			);
-
-			Thumbnailator.createThumbnailsAsCollection(
-					files,
-					Rename.PREFIX_DOT_THUMBNAIL,
-					-42,
-					-42
-			);
-
-			fail();
-		}
 
 		/**
 		 * Test for
@@ -538,106 +440,6 @@ public class ThumbnailatorTest {
 			assertEquals(50, img1.getHeight());
 
 			assertTrue(!iter.hasNext());
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnails(Collection, Rename, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Width is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 *
-		 * @throws IOException
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnails_negativeWidth() throws IOException {
-			/*
-			 * The files to make thumbnails of.
-			 */
-			List<File> files = Arrays.asList(
-					new File("src/test/resources/Thumbnailator/grid.jpg"),
-					new File("src/test/resources/Thumbnailator/grid.png")
-			);
-
-			Thumbnailator.createThumbnails(
-					files,
-					Rename.PREFIX_DOT_THUMBNAIL,
-					-42,
-					50
-			);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnails(Collection, Rename, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Height is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 *
-		 * @throws IOException
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnails_negativeHeight() throws IOException {
-			/*
-			 * The files to make thumbnails of.
-			 */
-			List<File> files = Arrays.asList(
-					new File("src/test/resources/Thumbnailator/grid.jpg"),
-					new File("src/test/resources/Thumbnailator/grid.png")
-			);
-
-			Thumbnailator.createThumbnails(
-					files,
-					Rename.PREFIX_DOT_THUMBNAIL,
-					50,
-					-42
-			);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnails(Collection, Rename, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Width is negative.
-		 * 2) Height is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 *
-		 * @throws IOException
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnails_negativeWidthAndHeight() throws IOException {
-			/*
-			 * The files to make thumbnails of.
-			 */
-			List<File> files = Arrays.asList(
-					new File("src/test/resources/Thumbnailator/grid.jpg"),
-					new File("src/test/resources/Thumbnailator/grid.png")
-			);
-
-			Thumbnailator.createThumbnails(
-					files,
-					Rename.PREFIX_DOT_THUMBNAIL,
-					-42,
-					-42
-			);
-
-			fail();
 		}
 
 		/**
@@ -1012,88 +814,6 @@ public class ThumbnailatorTest {
 		 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, int, int)}
 		 * where,
 		 * <p>
-		 * 1) Width is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 *
-		 * @throws IOException
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnail_IOII_negativeWidth() throws IOException {
-			/*
-			 * Actual test
-			 */
-			byte[] bytes = makeImageData("jpg", 200, 200);
-			InputStream is = new ByteArrayInputStream(bytes);
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-
-			Thumbnailator.createThumbnail(is, os, -42, 50);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Height is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 *
-		 * @throws IOException
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnail_IOII_negativeHeight() throws IOException {
-			/*
-			 * Actual test
-			 */
-			byte[] bytes = makeImageData("jpg", 200, 200);
-			InputStream is = new ByteArrayInputStream(bytes);
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-
-			Thumbnailator.createThumbnail(is, os, 50, -42);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Width is negative.
-		 * 2) Height is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 *
-		 * @throws IOException
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnail_IOII_negativeWidthAndHeight() throws IOException {
-			/*
-			 * Actual test
-			 */
-			byte[] bytes = makeImageData("jpg", 200, 200);
-			InputStream is = new ByteArrayInputStream(bytes);
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-
-			Thumbnailator.createThumbnail(is, os, -42, -42);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnail(InputStream, OutputStream, int, int)}
-		 * where,
-		 * <p>
 		 * 1) InputStream throws an IOException during read.
 		 * <p>
 		 * Expected outcome is,
@@ -1288,85 +1008,6 @@ public class ThumbnailatorTest {
 		 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
 		 * where,
 		 * <p>
-		 * 1) Width is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 *
-		 * @throws IOException
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnail_FFII_negativeWidth() throws IOException {
-			/*
-			 * Actual test
-			 */
-			File inputFile = new File("foo.jpg");
-			File outputFile = new File("bar.jpg");
-
-			Thumbnailator.createThumbnail(inputFile, outputFile, -42, 50);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Height is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 *
-		 * @throws IOException
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnail_FFII_negativeHeight() throws IOException {
-			/*
-			 * Actual test
-			 */
-			File inputFile = new File("foo.jpg");
-			File outputFile = new File("bar.jpg");
-
-			Thumbnailator.createThumbnail(inputFile, outputFile, 50, -42);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Width is negative.
-		 * 2) Height is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 *
-		 * @throws IOException
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnail_FFII_negativeWidthAndHeight() throws IOException {
-			/*
-			 * Actual test
-			 */
-			File inputFile = new File("foo.jpg");
-			File outputFile = new File("bar.jpg");
-
-			Thumbnailator.createThumbnail(inputFile, outputFile, -42, -42);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnail(File, File, int, int)}
-		 * where,
-		 * <p>
 		 * 1) Input File does not exist.
 		 * <p>
 		 * Expected outcome is,
@@ -1460,152 +1101,6 @@ public class ThumbnailatorTest {
 
 		/**
 		 * Test for
-		 * {@link Thumbnailator#createThumbnail(File, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Width is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 *
-		 * @throws IOException
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnail_FII_negativeWidth() throws IOException {
-			/*
-			 * Actual test
-			 */
-			File inputFile = new File("foo.jpg");
-
-			Thumbnailator.createThumbnail(inputFile, -42, 50);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnail(File, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Height is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 *
-		 * @throws IOException
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnail_FII_negativeHeight() throws IOException {
-			/*
-			 * Actual test
-			 */
-			File inputFile = new File("foo.jpg");
-
-			Thumbnailator.createThumbnail(inputFile, 50, -42);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnail(File, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Width is negative.
-		 * 2) Height is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 *
-		 * @throws IOException
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnail_FII_negativeWidthAndHeight() throws IOException {
-			/*
-			 * Actual test
-			 */
-			File inputFile = new File("foo.jpg");
-
-			Thumbnailator.createThumbnail(inputFile, -42, -42);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnail(BufferedImage, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Width is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnail_BII_negativeWidth() {
-			/*
-			 * Actual test
-			 */
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-
-			Thumbnailator.createThumbnail(img, -42, 50);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnail(BufferedImage, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Height is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnail_BII_negativeHeight() {
-			/*
-			 * Actual test
-			 */
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-
-			Thumbnailator.createThumbnail(img, 50, -42);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnail(BufferedImage, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Width is negative.
-		 * 2) Height is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnail_BII_negativeWidthAndHeight() {
-			/*
-			 * Actual test
-			 */
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-
-			Thumbnailator.createThumbnail(img, -42, -42);
-
-			fail();
-		}
-
-		/**
-		 * Test for
 		 * {@link Thumbnailator#createThumbnail(BufferedImage, int, int)}
 		 * where,
 		 * <p>
@@ -1628,76 +1123,6 @@ public class ThumbnailatorTest {
 			assertEquals(50, thumbnail.getWidth());
 			assertEquals(50, thumbnail.getHeight());
 			assertEquals(BufferedImage.TYPE_INT_ARGB, thumbnail.getType());
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnail(Image, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Width is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnail_III_negativeWidth() {
-			/*
-			 * Actual test
-			 */
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-
-			Thumbnailator.createThumbnail((Image) img, -42, 50);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnail(Image, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Height is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnail_III_negativeHeight() {
-			/*
-			 * Actual test
-			 */
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-
-			Thumbnailator.createThumbnail((Image) img, 50, -42);
-
-			fail();
-		}
-
-		/**
-		 * Test for
-		 * {@link Thumbnailator#createThumbnail(Image, int, int)}
-		 * where,
-		 * <p>
-		 * 1) Width is negative.
-		 * 2) Height is negative.
-		 * <p>
-		 * Expected outcome is,
-		 * <p>
-		 * 1) Processing will stop with an IllegalArgumentException.
-		 */
-		@Test(expected = IllegalArgumentException.class)
-		public void testCreateThumbnail_III_negativeWidthAndHeight() {
-			/*
-			 * Actual test
-			 */
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-
-			Thumbnailator.createThumbnail((Image) img, -42, -42);
-
-			fail();
 		}
 
 		/**
@@ -1854,25 +1279,125 @@ public class ThumbnailatorTest {
 			// clean up
 			new File("src/test/resources/Thumbnailator/thumbnail.grid.png").deleteOnExit();
 		}
+	}
 
-		/**
-		 * Returns test image data as an array of {@code byte}s.
-		 *
-		 * @param format Image format.
-		 * @param width  Image width.
-		 * @param height Image height.
-		 * @throws IOException When a problem occurs while making image data.
-		 * @return A {@code byte[]} of image data.
-		 */
-		private byte[] makeImageData(String format, int width, int height)
-				throws IOException {
-			BufferedImage img = new BufferedImageBuilder(200, 200)
-					.imageType("jpg".equals(format) ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB)
-					.build();
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ImageIO.write(img, format, baos);
-
-			return baos.toByteArray();
+	@RunWith(Parameterized.class)
+	public static class InvalidDimensionsTests {
+		@Parameterized.Parameters(name = "width={0}, height={1}")
+		public static Object[][] values() {
+			return new Object[][] {
+					new Object[] {-42, 42},
+					new Object[] {42, -42},
+					new Object[] {-42, -42}
+			};
 		}
+
+		@Parameterized.Parameter
+		public int width;
+
+		@Parameterized.Parameter(1)
+		public int height;
+
+		@Test(expected = IllegalArgumentException.class)
+		public void testCreateThumbnailCollections() throws IOException {
+			List<File> files = Arrays.asList(
+					new File("foo.png"),
+					new File("bar.jpg")
+			);
+
+			Thumbnailator.createThumbnailsAsCollection(
+					files,
+					Rename.PREFIX_DOT_THUMBNAIL,
+					width,
+					height
+			);
+
+			fail();
+		}
+
+		@Test(expected = IllegalArgumentException.class)
+		public void testCreateThumbnails() throws IOException {
+			List<File> files = Arrays.asList(
+					new File("foo.png"),
+					new File("bar.jpg")
+			);
+
+			Thumbnailator.createThumbnails(
+					files,
+					Rename.PREFIX_DOT_THUMBNAIL,
+					width,
+					height
+			);
+
+			fail();
+		}
+
+		@Test(expected = IllegalArgumentException.class)
+		public void testCreateThumbnail_IOII() throws IOException {
+			byte[] bytes = makeImageData("jpg", 200, 200);
+			InputStream is = new ByteArrayInputStream(bytes);
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+			Thumbnailator.createThumbnail(is, os, width, height);
+
+			fail();
+		}
+
+		@Test(expected = IllegalArgumentException.class)
+		public void testCreateThumbnail_FII() throws IOException {
+			File inputFile = new File("foo.jpg");
+
+			Thumbnailator.createThumbnail(inputFile, width, height);
+
+			fail();
+		}
+
+		@Test(expected = IllegalArgumentException.class)
+		public void testCreateThumbnail_BII() {
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+
+			Thumbnailator.createThumbnail(img, width, height);
+
+			fail();
+		}
+
+		@Test(expected = IllegalArgumentException.class)
+		public void testCreateThumbnail_FFII() throws IOException {
+			File inputFile = new File("foo.jpg");
+			File outputFile = new File("bar.jpg");
+
+			Thumbnailator.createThumbnail(inputFile, outputFile, width, height);
+
+			fail();
+		}
+
+		@Test(expected = IllegalArgumentException.class)
+		public void testCreateThumbnail_III() {
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+
+			Thumbnailator.createThumbnail((Image) img, width, height);
+
+			fail();
+		}
+	}
+
+	/**
+	 * Returns test image data as an array of {@code byte}s.
+	 *
+	 * @param format Image format.
+	 * @param width  Image width.
+	 * @param height Image height.
+	 * @throws IOException When a problem occurs while making image data.
+	 * @return A {@code byte[]} of image data.
+	 */
+	private static byte[] makeImageData(String format, int width, int height)
+			throws IOException {
+		BufferedImage img = new BufferedImageBuilder(width, height)
+				.imageType("jpg".equals(format) ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB)
+				.build();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(img, format, baos);
+
+		return baos.toByteArray();
 	}
 }
