@@ -1505,1684 +1505,6 @@ public class ThumbnailsBuilderInputOutputTest {
 		/**
 		 * Test for the {@link Thumbnails.Builder} class where,
 		 * <ol>
-		 * <li>Thumbnails.of(File)</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is written to the specified file.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_File_toFile() throws IOException {
-			// given
-			File f = new File("src/test/resources/Thumbnailator/grid.png");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			// when
-			Thumbnails.of(f)
-				.size(50, 50)
-				.toFile(outFile);
-
-			// then
-			BufferedImage fromFileImage = ImageIO.read(outFile);
-			assertEquals(50, fromFileImage.getWidth());
-			assertEquals(50, fromFileImage.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File)</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_File_toFiles_Rename() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			outFile1.deleteOnExit();
-
-			// when
-			Thumbnails.of(f1)
-				.size(50, 50)
-				.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File)</li>
-		 * <li>asFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_File_asFiles_Rename() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			outFile1.deleteOnExit();
-
-			// when
-			List<File> thumbnails = Thumbnails.of(f1)
-				.size(50, 50)
-				.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			assertEquals(1, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File)</li>
-		 * <li>toFiles(Iterable<File>)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Iterable<File> object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_File_toFiles_Iterable() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-
-			// when
-			Thumbnails.of(f1)
-				.size(50, 50)
-				.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
-
-			// then
-			File outFile = new File("src/test/resources/Thumbnailator/temp-0.png");
-			outFile.deleteOnExit();
-
-			BufferedImage fromFileImage1 = ImageIO.read(outFile);
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File)</li>
-		 * <li>asFiles(Iterable<File>)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Iterable<File> object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_File_asFiles_Iterable() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-
-			// when
-			List<File> thumbnails = Thumbnails.of(f1)
-				.size(50, 50)
-				.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/temp-0.png");
-			outFile1.deleteOnExit();
-
-			assertEquals(1, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File)</li>
-		 * <li>asBufferedImage()</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Processing completes successfully.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_File_asBufferedImage() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-
-			// when
-			BufferedImage thumbnail = Thumbnails.of(f1)
-				.size(50, 50)
-				.asBufferedImage();
-
-			// then
-			assertEquals(50, thumbnail.getWidth());
-			assertEquals(50, thumbnail.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File)</li>
-		 * <li>asBufferedImages()</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Processing completes successfully.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_File_asBufferedImages() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-
-			// when
-			List<BufferedImage> thumbnails = Thumbnails.of(f1)
-				.size(50, 50)
-				.asBufferedImages();
-
-			// then
-			assertEquals(1, thumbnails.size());
-
-			BufferedImage thumbnail = thumbnails.get(0);
-			assertEquals(50, thumbnail.getWidth());
-			assertEquals(50, thumbnail.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File)</li>
-		 * <li>toOutputStream()</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Processing completes successfully.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_File_toOutputStream() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-
-			// when
-			Thumbnails.of(f1)
-				.size(50, 50)
-				.toOutputStream(os);
-
-			// then
-			BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
-			assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os.toByteArray())));
-			assertEquals(50, thumbnail.getWidth());
-			assertEquals(50, thumbnail.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File)</li>
-		 * <li>toOutputStreams()</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Processing completes successfully.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_File_toOutputStreams() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-
-			// when
-			Thumbnails.of(f1)
-				.size(50, 50)
-				.toOutputStreams(Arrays.asList(os));
-
-			// then
-			BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
-			assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os.toByteArray())));
-			assertEquals(50, thumbnail.getWidth());
-			assertEquals(50, thumbnail.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File)</li>
-		 * <li>iterableBufferedImages()</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Processing completes successfully.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_File_iterableBufferedImages() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-
-			// when
-			Iterable<BufferedImage> thumbnails = Thumbnails.of(f1)
-				.size(50, 50)
-				.iterableBufferedImages();
-
-			// then
-			Iterator<BufferedImage> iter = thumbnails.iterator();
-
-			BufferedImage thumbnail = iter.next();
-			assertEquals(50, thumbnail.getWidth());
-			assertEquals(50, thumbnail.getHeight());
-
-			assertFalse(iter.hasNext());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File, File)</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An IllegalArgumentException is thrown.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test(expected=IllegalArgumentException.class)
-		public void of_Files_toFile() throws IOException {
-			// given
-			File f = new File("src/test/resources/Thumbnailator/grid.png");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			try {
-				// when
-				Thumbnails.of(f, f)
-					.size(50, 50)
-					.toFile(outFile);
-			} catch (IllegalArgumentException e) {
-				// then
-				assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
-				throw e;
-			}
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File, File)</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and written to a file whose name is
-		 * generated from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_Files_toFiles_Rename() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
-
-			// when
-			Thumbnails.of(f1, f2)
-				.size(50, 50)
-				.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
-			outFile1.deleteOnExit();
-			outFile2.deleteOnExit();
-
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-
-			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File, File)</li>
-		 * <li>asFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and written to a file whose name is
-		 * generated from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_Files_asFiles_Rename() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
-
-			// when
-			List<File> thumbnails = Thumbnails.of(f1, f2)
-				.size(50, 50)
-				.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
-			outFile1.deleteOnExit();
-			outFile2.deleteOnExit();
-
-			assertEquals(2, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-
-			BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File, File)</li>
-		 * <li>toFiles(Iterable<File>)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and written to a file whose name is
-		 * generated from the Iterable<File> object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_Files_toFiles_Iterable() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
-
-			// when
-			Thumbnails.of(f1, f2)
-				.size(50, 50)
-				.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/temp-0.png");
-			File outFile2 = new File("src/test/resources/Thumbnailator/temp-1.png");
-			outFile1.deleteOnExit();
-			outFile2.deleteOnExit();
-
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-
-			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File, File)</li>
-		 * <li>asFiles(Iterable<File>)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and written to a file whose name is
-		 * generated from the Iterable<File> object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_Files_asFiles_Iterable() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
-
-			// when
-			List<File> thumbnails = Thumbnails.of(f1, f2)
-				.size(50, 50)
-				.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
-
-			// then
-			assertEquals(2, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-
-			BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-
-			// clean up
-			thumbnails.get(0).deleteOnExit();
-			thumbnails.get(1).deleteOnExit();
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File, File)</li>
-		 * <li>asBufferedImage()</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An IllegalArgumentException is thrown.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test(expected=IllegalArgumentException.class)
-		public void of_Files_asBufferedImage() throws IOException {
-			// given
-			File f = new File("src/test/resources/Thumbnailator/grid.png");
-
-			try {
-				// when
-				Thumbnails.of(f, f)
-					.size(50, 50)
-					.asBufferedImage();
-			} catch (IllegalArgumentException e) {
-				// then
-				assertEquals("Cannot create one thumbnail from multiple original images.", e.getMessage());
-				throw e;
-			}
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File, File)</li>
-		 * <li>asBufferedImages()</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and returned as BufferedImages in a List</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_Files_asBufferedImages() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
-
-			// when
-			List<BufferedImage> thumbnails = Thumbnails.of(f1, f2)
-				.size(50, 50)
-				.asBufferedImages();
-
-			// then
-			assertEquals(2, thumbnails.size());
-
-			BufferedImage thumbnail1 = thumbnails.get(0);
-			assertEquals(50, thumbnail1.getWidth());
-			assertEquals(50, thumbnail1.getHeight());
-
-			BufferedImage thumbnail2 = thumbnails.get(1);
-			assertEquals(50, thumbnail2.getWidth());
-			assertEquals(50, thumbnail2.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File, File)</li>
-		 * <li>toOutputStream()</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An IllegalArgumentException is thrown.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test(expected=IllegalArgumentException.class)
-		public void of_Files_toOutputStream() throws IOException {
-			// given
-			File f = new File("src/test/resources/Thumbnailator/grid.png");
-			OutputStream os = mock(OutputStream.class);
-
-			try {
-				// when
-				Thumbnails.of(f, f)
-					.size(50, 50)
-					.toOutputStream(os);
-			} catch (IllegalArgumentException e) {
-				// then
-				assertEquals("Cannot output multiple thumbnails to a single OutputStream.", e.getMessage());
-				verifyZeroInteractions(os);
-				throw e;
-			}
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File, File)</li>
-		 * <li>toOutputStreams()</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Processing will be successful.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_Files_toOutputStreams() throws IOException {
-			// given
-			File f = new File("src/test/resources/Thumbnailator/grid.png");
-			ByteArrayOutputStream os1 = new ByteArrayOutputStream();
-			ByteArrayOutputStream os2 = new ByteArrayOutputStream();
-
-			// when
-			Thumbnails.of(f, f)
-				.size(50, 50)
-				.toOutputStreams(Arrays.asList(os1, os2));
-
-			//then
-			BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os1.toByteArray()));
-			assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os1.toByteArray())));
-			assertEquals(50, thumbnail.getWidth());
-			assertEquals(50, thumbnail.getHeight());
-
-			thumbnail = ImageIO.read(new ByteArrayInputStream(os2.toByteArray()));
-			assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os2.toByteArray())));
-			assertEquals(50, thumbnail.getWidth());
-			assertEquals(50, thumbnail.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(File, File)</li>
-		 * <li>iterableBufferedImages()</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and an Iterable which can iterate over the
-		 * two BufferedImages is returned.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_Files_iterableBufferedImages() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
-
-			// when
-			Iterable<BufferedImage> thumbnails = Thumbnails.of(f1, f2)
-				.size(50, 50)
-				.iterableBufferedImages();
-
-			// then
-			Iterator<BufferedImage> iter = thumbnails.iterator();
-
-			BufferedImage thumbnail1 = iter.next();
-			assertEquals(50, thumbnail1.getWidth());
-			assertEquals(50, thumbnail1.getHeight());
-
-			BufferedImage thumbnail2 = iter.next();
-			assertEquals(50, thumbnail2.getWidth());
-			assertEquals(50, thumbnail2.getHeight());
-
-			assertFalse(iter.hasNext());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFiles([File])</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is written to the specified file.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFiles_Single_toFile() throws IOException {
-			// given
-			File f = new File("src/test/resources/Thumbnailator/grid.png");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			// when
-			Thumbnails.fromFiles(Arrays.asList(f))
-				.size(50, 50)
-				.toFile(outFile);
-
-			// then
-			BufferedImage fromFileImage = ImageIO.read(outFile);
-
-			assertEquals(50, fromFileImage.getWidth());
-			assertEquals(50, fromFileImage.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFiles([File, File])</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An IllegalArgumentException is thrown.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test(expected=IllegalArgumentException.class)
-		public void fromFiles_Multiple_toFile() throws IOException {
-			// given
-			File f = new File("src/test/resources/Thumbnailator/grid.png");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			// when
-			Thumbnails.fromFiles(Arrays.asList(f, f))
-				.size(50, 50)
-				.toFile(outFile);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFiles([File])</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFiles_Single_toFiles() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			outFile1.deleteOnExit();
-
-			// when
-			Thumbnails.fromFiles(Arrays.asList(f1))
-				.size(50, 50)
-				.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFiles([File, File])</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and written to a file whose name is
-		 * generated from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFiles_Multiple_toFiles() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
-
-			// when
-			Thumbnails.fromFiles(Arrays.asList(f1, f2))
-				.size(50, 50)
-				.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
-			outFile1.deleteOnExit();
-			outFile2.deleteOnExit();
-
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFiles([File])</li>
-		 * <li>asFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFiles_Single_asFiles() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			outFile1.deleteOnExit();
-
-			// when
-			List<File> thumbnails = Thumbnails.fromFiles(Arrays.asList(f1))
-				.size(50, 50)
-				.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			assertEquals(1, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFiles([File, File])</li>
-		 * <li>asFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and written to a file whose name is
-		 * generated from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFiles_Multiple_asFiles() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
-
-			// when
-			List<File> thumbnails = Thumbnails.fromFiles(Arrays.asList(f1, f2))
-				.size(50, 50)
-				.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
-			outFile1.deleteOnExit();
-			outFile2.deleteOnExit();
-
-			assertEquals(2, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-			BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFiles(Iterable[File])</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is written to the specified file.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFilesIterable_Single_toFile() throws IOException {
-			// given
-			File f = new File("src/test/resources/Thumbnailator/grid.png");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			// when
-			Thumbnails.fromFiles((Iterable<File>)Arrays.asList(f))
-				.size(50, 50)
-				.toFile(outFile);
-
-			// then
-			BufferedImage fromFileImage = ImageIO.read(outFile);
-
-			assertEquals(50, fromFileImage.getWidth());
-			assertEquals(50, fromFileImage.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFiles(Iterable[File, File])</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An IllegalArgumentException is thrown.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test(expected=IllegalArgumentException.class)
-		public void fromFilesIterable_Multiple_toFile() throws IOException {
-			// given
-			File f = new File("src/test/resources/Thumbnailator/grid.png");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			// when
-			Thumbnails.fromFiles((Iterable<File>)Arrays.asList(f, f))
-			.size(50, 50)
-			.toFile(outFile);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFiles(Iterable[File])</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFilesIterable_Single_toFiles() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			outFile1.deleteOnExit();
-
-			// when
-			Thumbnails.fromFiles((Iterable<File>)Arrays.asList(f1))
-				.size(50, 50)
-				.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFiles(Iterable[File, File])</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and written to a file whose name is
-		 * generated from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFilesIterable_Multiple_toFiles() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
-
-			// when
-			Thumbnails.fromFiles((Iterable<File>)Arrays.asList(f1, f2))
-				.size(50, 50)
-				.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
-			outFile1.deleteOnExit();
-			outFile2.deleteOnExit();
-
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFiles(Iterable[File])</li>
-		 * <li>asFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFilesIterable_Single_asFiles() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			outFile1.deleteOnExit();
-
-			// when
-			List<File> thumbnails = Thumbnails.fromFiles((Iterable<File>)Arrays.asList(f1))
-				.size(50, 50)
-				.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			assertEquals(1, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFiles(Iterable[File, File])</li>
-		 * <li>asFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and written to a file whose name is
-		 * generated from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFilesIterable_Multiple_asFiles() throws IOException {
-			// given
-			File f1 = new File("src/test/resources/Thumbnailator/grid.png");
-			File f2 = new File("src/test/resources/Thumbnailator/grid.jpg");
-
-			// when
-			List<File> thumbnails = Thumbnails.fromFiles((Iterable<File>)Arrays.asList(f1, f2))
-				.size(50, 50)
-				.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
-			outFile1.deleteOnExit();
-			outFile2.deleteOnExit();
-
-			assertEquals(2, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-			BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(String)</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is written to the specified file.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_String_toFile() throws IOException {
-			// given
-			String f = "src/test/resources/Thumbnailator/grid.png";
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			// when
-			Thumbnails.of(f)
-				.size(50, 50)
-				.toFile(outFile);
-
-			// then
-			BufferedImage fromFileImage = ImageIO.read(outFile);
-
-			assertEquals(50, fromFileImage.getWidth());
-			assertEquals(50, fromFileImage.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(String, String)</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An IllegalArgumentException is thrown.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test(expected=IllegalArgumentException.class)
-		public void of_Strings_toFile() throws IOException {
-			// given
-			String f = "src/test/resources/Thumbnailator/grid.png";
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			// when
-			Thumbnails.of(f, f)
-				.size(50, 50)
-				.toFile(outFile);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(String)</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_String_toFiles() throws IOException {
-			// given
-			String f1 = "src/test/resources/Thumbnailator/grid.png";
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			outFile1.deleteOnExit();
-
-			// when
-			Thumbnails.of(f1)
-				.size(50, 50)
-				.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(String, String)</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and written to a file whose name is
-		 * generated from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_Strings_toFiles() throws IOException {
-			// given
-			String f1 = "src/test/resources/Thumbnailator/grid.png";
-			String f2 = "src/test/resources/Thumbnailator/grid.jpg";
-
-			// when
-			Thumbnails.of(f1, f2)
-				.size(50, 50)
-				.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
-			outFile1.deleteOnExit();
-			outFile2.deleteOnExit();
-
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(String)</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_String_asFiles() throws IOException {
-			// given
-			String f1 = "src/test/resources/Thumbnailator/grid.png";
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			outFile1.deleteOnExit();
-
-			// when
-			List<File> thumbnails = Thumbnails.of(f1)
-				.size(50, 50)
-				.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			assertEquals(1, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(String, String)</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and written to a file whose name is
-		 * generated from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_Strings_asFiles() throws IOException {
-			// given
-			String f1 = "src/test/resources/Thumbnailator/grid.png";
-			String f2 = "src/test/resources/Thumbnailator/grid.jpg";
-
-			// when
-			List<File> thumbnails = Thumbnails.of(f1, f2)
-				.size(50, 50)
-				.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
-			outFile1.deleteOnExit();
-			outFile2.deleteOnExit();
-
-			assertEquals(2, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-			BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFilenames([String])</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is written to the specified file.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFilenames_Single_toFile() throws IOException {
-			// given
-			String f = "src/test/resources/Thumbnailator/grid.png";
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			// when
-			Thumbnails.fromFilenames(Arrays.asList(f))
-				.size(50, 50)
-				.toFile(outFile);
-
-			// then
-			BufferedImage fromFileImage = ImageIO.read(outFile);
-
-			assertEquals(50, fromFileImage.getWidth());
-			assertEquals(50, fromFileImage.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFilenames([String, String])</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An IllegalArgumentException is thrown.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test(expected=IllegalArgumentException.class)
-		public void fromFilenames_Multiple_toFile() throws IOException {
-			// given
-			String f = "src/test/resources/Thumbnailator/grid.png";
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			// when
-			Thumbnails.fromFilenames(Arrays.asList(f, f))
-				.size(50, 50)
-				.toFile(outFile);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFilenames([String])</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFilenames_Single_toFiles() throws IOException {
-			// given
-			String f1 = "src/test/resources/Thumbnailator/grid.png";
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			outFile1.deleteOnExit();
-
-			// when
-			Thumbnails.fromFilenames(Arrays.asList(f1))
-				.size(50, 50)
-				.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFilenames([String, String])</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and written to a file whose name is
-		 * generated from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFilenames_Multiple_toFiles() throws IOException {
-			// given
-			String f1 = "src/test/resources/Thumbnailator/grid.png";
-			String f2 = "src/test/resources/Thumbnailator/grid.jpg";
-
-			// when
-			Thumbnails.fromFilenames(Arrays.asList(f1, f2))
-				.size(50, 50)
-				.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
-			outFile1.deleteOnExit();
-			outFile2.deleteOnExit();
-
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFilenames([String])</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFilenames_Single_asFiles() throws IOException {
-			// given
-			String f1 = "src/test/resources/Thumbnailator/grid.png";
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			outFile1.deleteOnExit();
-
-			// when
-			List<File> thumbnails = Thumbnails.fromFilenames(Arrays.asList(f1))
-				.size(50, 50)
-				.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			assertEquals(1, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFilenames([String, String])</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and written to a file whose name is
-		 * generated from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFilenames_Multiple_asFiles() throws IOException {
-			// given
-			String f1 = "src/test/resources/Thumbnailator/grid.png";
-			String f2 = "src/test/resources/Thumbnailator/grid.jpg";
-
-			// when
-			List<File> thumbnails = Thumbnails.fromFilenames(Arrays.asList(f1, f2))
-				.size(50, 50)
-				.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
-			outFile1.deleteOnExit();
-			outFile2.deleteOnExit();
-
-			assertEquals(2, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFilenames(Iterable[String])</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is written to the specified file.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFilenamesIterable_Single_toFile() throws IOException {
-			// given
-			String f = "src/test/resources/Thumbnailator/grid.png";
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			// when
-			Thumbnails.fromFilenames((Iterable<String>)Arrays.asList(f))
-				.size(50, 50)
-				.toFile(outFile);
-
-			// then
-			BufferedImage fromFileImage = ImageIO.read(outFile);
-
-			assertEquals(50, fromFileImage.getWidth());
-			assertEquals(50, fromFileImage.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFilenames(Iterable[String, String])</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An IllegalArgumentException is thrown.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test(expected=IllegalArgumentException.class)
-		public void fromFilenamesIterable_Multiple_toFile() throws IOException {
-			// given
-			String f = "src/test/resources/Thumbnailator/grid.png";
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			// when
-			Thumbnails.fromFilenames((Iterable<String>)Arrays.asList(f, f))
-				.size(50, 50)
-				.toFile(outFile);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFilenames(Iterable[String])</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFilenamesIterable_Single_toFiles() throws IOException {
-			// given
-			String f1 = "src/test/resources/Thumbnailator/grid.png";
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			outFile1.deleteOnExit();
-
-			// when
-			Thumbnails.fromFilenames((Iterable<String>)Arrays.asList(f1))
-				.size(50, 50)
-				.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFilenames(Iterable[String, String])</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and written to a file whose name is
-		 * generated from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFilenamesIterable_Multiple_toFiles() throws IOException {
-			// given
-			String f1 = "src/test/resources/Thumbnailator/grid.png";
-			String f2 = "src/test/resources/Thumbnailator/grid.jpg";
-
-			// when
-			Thumbnails.fromFilenames((Iterable<String>)Arrays.asList(f1, f2))
-				.size(50, 50)
-				.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
-			outFile1.deleteOnExit();
-			outFile2.deleteOnExit();
-
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFilenames(Iterable[String])</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFilenamesIterable_Single_asFiles() throws IOException {
-			// given
-			String f1 = "src/test/resources/Thumbnailator/grid.png";
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			outFile1.deleteOnExit();
-
-			// when
-			List<File> thumbnails = Thumbnails.fromFilenames((Iterable<String>)Arrays.asList(f1))
-				.size(50, 50)
-				.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			assertEquals(1, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.fromFilenames(Iterable[String, String])</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and written to a file whose name is
-		 * generated from the Rename object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void fromFilenamesIterable_Multiple_asFiles() throws IOException {
-			// given
-			String f1 = "src/test/resources/Thumbnailator/grid.png";
-			String f2 = "src/test/resources/Thumbnailator/grid.jpg";
-
-			// when
-			List<File> thumbnails = Thumbnails.fromFilenames((Iterable<String>)Arrays.asList(f1, f2))
-				.size(50, 50)
-				.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			File outFile2 = new File("src/test/resources/Thumbnailator/thumbnail.grid.jpg");
-			outFile1.deleteOnExit();
-			outFile2.deleteOnExit();
-
-			assertEquals(2, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
-
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
 		 * <li>Thumbnails.of(URL)</li>
 		 * <li>toFile(File)</li>
 		 * </ol>
@@ -6930,6 +5252,1751 @@ public class ThumbnailsBuilderInputOutputTest {
 			assertNotNull("Read image is null.", img);
 			assertEquals(width, img.getWidth());
 			assertEquals(height, img.getHeight());
+		}
+	}
+
+	public static class FileInputToOutputTests {
+
+		@Rule
+		public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File)</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is written to the specified file.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_File_toFile() throws IOException {
+			// given
+			File f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File outFile = new File(temporaryFolder.getRoot(), "grid.tmp.png");
+
+			// when
+			Thumbnails.of(f)
+					.size(50, 50)
+					.toFile(outFile);
+
+			// then
+			BufferedImage fromFileImage = ImageIO.read(outFile);
+			assertEquals(50, fromFileImage.getWidth());
+			assertEquals(50, fromFileImage.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File)</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is generated and written to a file whose name is generated
+		 * from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_File_toFiles_Rename() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File expectedFile = new File(temporaryFolder.getRoot(), "thumbnail.grid.png");
+
+			// when
+			Thumbnails.of(f1)
+					.size(50, 50)
+					.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			BufferedImage fromFileImage1 = ImageIO.read(expectedFile);
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File)</li>
+		 * <li>asFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is generated and written to a file whose name is generated
+		 * from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_File_asFiles_Rename() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+
+			// when
+			List<File> thumbnails = Thumbnails.of(f1)
+					.size(50, 50)
+					.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			assertEquals(1, thumbnails.size());
+
+			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File)</li>
+		 * <li>toFiles(Iterable<File>)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is generated and written to a file whose name is generated
+		 * from the Iterable<File> object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_File_toFiles_Iterable() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+
+			// when
+			Thumbnails.of(f1)
+					.size(50, 50)
+					.toFiles(new ConsecutivelyNumberedFilenames(temporaryFolder.getRoot(), "temp-%d.png"));
+
+			// then
+			File expectedFile = new File(temporaryFolder.getRoot(), "temp-0.png");
+
+			BufferedImage fromFileImage1 = ImageIO.read(expectedFile);
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File)</li>
+		 * <li>asFiles(Iterable<File>)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is generated and written to a file whose name is generated
+		 * from the Iterable<File> object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_File_asFiles_Iterable() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+
+			// when
+			List<File> thumbnails = Thumbnails.of(f1)
+					.size(50, 50)
+					.asFiles(new ConsecutivelyNumberedFilenames(temporaryFolder.getRoot(), "temp-%d.png"));
+
+			// then
+			assertEquals(1, thumbnails.size());
+
+			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File)</li>
+		 * <li>asBufferedImage()</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Processing completes successfully.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_File_asBufferedImage() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+
+			// when
+			BufferedImage thumbnail = Thumbnails.of(f1)
+					.size(50, 50)
+					.asBufferedImage();
+
+			// then
+			assertEquals(50, thumbnail.getWidth());
+			assertEquals(50, thumbnail.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File)</li>
+		 * <li>asBufferedImages()</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Processing completes successfully.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_File_asBufferedImages() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+
+			// when
+			List<BufferedImage> thumbnails = Thumbnails.of(f1)
+					.size(50, 50)
+					.asBufferedImages();
+
+			// then
+			assertEquals(1, thumbnails.size());
+
+			BufferedImage thumbnail = thumbnails.get(0);
+			assertEquals(50, thumbnail.getWidth());
+			assertEquals(50, thumbnail.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File)</li>
+		 * <li>toOutputStream()</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Processing completes successfully.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_File_toOutputStream() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+			// when
+			Thumbnails.of(f1)
+					.size(50, 50)
+					.toOutputStream(os);
+
+			// then
+			BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
+			assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os.toByteArray())));
+			assertEquals(50, thumbnail.getWidth());
+			assertEquals(50, thumbnail.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File)</li>
+		 * <li>toOutputStreams()</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Processing completes successfully.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_File_toOutputStreams() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+			// when
+			Thumbnails.of(f1)
+					.size(50, 50)
+					.toOutputStreams(Arrays.asList(os));
+
+			// then
+			BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os.toByteArray()));
+			assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os.toByteArray())));
+			assertEquals(50, thumbnail.getWidth());
+			assertEquals(50, thumbnail.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File)</li>
+		 * <li>iterableBufferedImages()</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Processing completes successfully.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_File_iterableBufferedImages() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+
+			// when
+			Iterable<BufferedImage> thumbnails = Thumbnails.of(f1)
+					.size(50, 50)
+					.iterableBufferedImages();
+
+			// then
+			Iterator<BufferedImage> iter = thumbnails.iterator();
+
+			BufferedImage thumbnail = iter.next();
+			assertEquals(50, thumbnail.getWidth());
+			assertEquals(50, thumbnail.getHeight());
+
+			assertFalse(iter.hasNext());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File, File)</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An IllegalArgumentException is thrown.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test(expected=IllegalArgumentException.class)
+		public void of_Files_toFile() throws IOException {
+			// given
+			File f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File outFile = new File(temporaryFolder.getRoot(), "grid.tmp.png");
+
+			try {
+				// when
+				Thumbnails.of(f, f)
+						.size(50, 50)
+						.toFile(outFile);
+			} catch (IllegalArgumentException e) {
+				// then
+				assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
+				throw e;
+			}
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File, File)</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Two images are generated and written to a file whose name is
+		 * generated from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_Files_toFiles_Rename() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File f2 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			);
+
+			// when
+			Thumbnails.of(f1, f2)
+					.size(50, 50)
+					.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			File outFile1 = new File(temporaryFolder.getRoot(), "thumbnail.grid.png");
+			File outFile2 = new File(temporaryFolder.getRoot(), "thumbnail.grid.jpg");
+
+			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+
+			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
+			assertEquals(50, fromFileImage2.getWidth());
+			assertEquals(50, fromFileImage2.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File, File)</li>
+		 * <li>asFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Two images are generated and written to a file whose name is
+		 * generated from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_Files_asFiles_Rename() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File f2 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			);
+
+			// when
+			List<File> thumbnails = Thumbnails.of(f1, f2)
+					.size(50, 50)
+					.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			File outFile1 = new File(temporaryFolder.getRoot(), "thumbnail.grid.png");
+			File outFile2 = new File(temporaryFolder.getRoot(), "thumbnail.grid.jpg");
+
+			assertEquals(2, thumbnails.size());
+
+			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+
+			BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
+			assertEquals(50, fromFileImage2.getWidth());
+			assertEquals(50, fromFileImage2.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File, File)</li>
+		 * <li>toFiles(Iterable<File>)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Two images are generated and written to a file whose name is
+		 * generated from the Iterable<File> object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_Files_toFiles_Iterable() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File f2 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			);
+
+			// when
+			Thumbnails.of(f1, f2)
+					.size(50, 50)
+					.toFiles(new ConsecutivelyNumberedFilenames(temporaryFolder.getRoot(), "temp-%d.png"));
+
+			// then
+			File outFile1 = new File(temporaryFolder.getRoot(), "temp-0.png");
+			File outFile2 = new File(temporaryFolder.getRoot(), "temp-1.png");
+
+			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+
+			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
+			assertEquals(50, fromFileImage2.getWidth());
+			assertEquals(50, fromFileImage2.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File, File)</li>
+		 * <li>asFiles(Iterable<File>)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Two images are generated and written to a file whose name is
+		 * generated from the Iterable<File> object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_Files_asFiles_Iterable() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File f2 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			);
+
+			// when
+			List<File> thumbnails = Thumbnails.of(f1, f2)
+					.size(50, 50)
+					.asFiles(new ConsecutivelyNumberedFilenames(temporaryFolder.getRoot(), "temp-%d.png"));
+
+			// then
+			assertEquals(2, thumbnails.size());
+
+			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+
+			BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
+			assertEquals(50, fromFileImage2.getWidth());
+			assertEquals(50, fromFileImage2.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File, File)</li>
+		 * <li>asBufferedImage()</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An IllegalArgumentException is thrown.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test(expected=IllegalArgumentException.class)
+		public void of_Files_asBufferedImage() throws IOException {
+			// given
+			File f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+
+			try {
+				// when
+				Thumbnails.of(f, f)
+						.size(50, 50)
+						.asBufferedImage();
+			} catch (IllegalArgumentException e) {
+				// then
+				assertEquals("Cannot create one thumbnail from multiple original images.", e.getMessage());
+				throw e;
+			}
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File, File)</li>
+		 * <li>asBufferedImages()</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Two images are generated and returned as BufferedImages in a List</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_Files_asBufferedImages() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File f2 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			);
+
+			// when
+			List<BufferedImage> thumbnails = Thumbnails.of(f1, f2)
+					.size(50, 50)
+					.asBufferedImages();
+
+			// then
+			assertEquals(2, thumbnails.size());
+
+			BufferedImage thumbnail1 = thumbnails.get(0);
+			assertEquals(50, thumbnail1.getWidth());
+			assertEquals(50, thumbnail1.getHeight());
+
+			BufferedImage thumbnail2 = thumbnails.get(1);
+			assertEquals(50, thumbnail2.getWidth());
+			assertEquals(50, thumbnail2.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File, File)</li>
+		 * <li>toOutputStream()</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An IllegalArgumentException is thrown.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test(expected=IllegalArgumentException.class)
+		public void of_Files_toOutputStream() throws IOException {
+			// given
+			File f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			OutputStream os = mock(OutputStream.class);
+
+			try {
+				// when
+				Thumbnails.of(f, f)
+						.size(50, 50)
+						.toOutputStream(os);
+			} catch (IllegalArgumentException e) {
+				// then
+				assertEquals("Cannot output multiple thumbnails to a single OutputStream.", e.getMessage());
+				verifyZeroInteractions(os);
+				throw e;
+			}
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File, File)</li>
+		 * <li>toOutputStreams()</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Processing will be successful.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_Files_toOutputStreams() throws IOException {
+			// given
+			File f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			ByteArrayOutputStream os1 = new ByteArrayOutputStream();
+			ByteArrayOutputStream os2 = new ByteArrayOutputStream();
+
+			// when
+			Thumbnails.of(f, f)
+					.size(50, 50)
+					.toOutputStreams(Arrays.asList(os1, os2));
+
+			//then
+			BufferedImage thumbnail = ImageIO.read(new ByteArrayInputStream(os1.toByteArray()));
+			assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os1.toByteArray())));
+			assertEquals(50, thumbnail.getWidth());
+			assertEquals(50, thumbnail.getHeight());
+
+			thumbnail = ImageIO.read(new ByteArrayInputStream(os2.toByteArray()));
+			assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(os2.toByteArray())));
+			assertEquals(50, thumbnail.getWidth());
+			assertEquals(50, thumbnail.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(File, File)</li>
+		 * <li>iterableBufferedImages()</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Two images are generated and an Iterable which can iterate over the
+		 * two BufferedImages is returned.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_Files_iterableBufferedImages() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File f2 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			);
+
+			// when
+			Iterable<BufferedImage> thumbnails = Thumbnails.of(f1, f2)
+					.size(50, 50)
+					.iterableBufferedImages();
+
+			// then
+			Iterator<BufferedImage> iter = thumbnails.iterator();
+
+			BufferedImage thumbnail1 = iter.next();
+			assertEquals(50, thumbnail1.getWidth());
+			assertEquals(50, thumbnail1.getHeight());
+
+			BufferedImage thumbnail2 = iter.next();
+			assertEquals(50, thumbnail2.getWidth());
+			assertEquals(50, thumbnail2.getHeight());
+
+			assertFalse(iter.hasNext());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFiles([File])</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is written to the specified file.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFiles_Single_toFile() throws IOException {
+			// given
+			File f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File outFile = new File(temporaryFolder.getRoot(), "/grid.tmp.png");
+
+			// when
+			Thumbnails.fromFiles(Arrays.asList(f))
+					.size(50, 50)
+					.toFile(outFile);
+
+			// then
+			BufferedImage fromFileImage = ImageIO.read(outFile);
+
+			assertEquals(50, fromFileImage.getWidth());
+			assertEquals(50, fromFileImage.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFiles([File, File])</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An IllegalArgumentException is thrown.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test(expected=IllegalArgumentException.class)
+		public void fromFiles_Multiple_toFile() throws IOException {
+			// given
+			File f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File outFile = new File(temporaryFolder.getRoot(), "grid.tmp.png");
+
+			// when
+			Thumbnails.fromFiles(Arrays.asList(f, f))
+					.size(50, 50)
+					.toFile(outFile);
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFiles([File])</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is generated and written to a file whose name is generated
+		 * from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFiles_Single_toFiles() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File expectedFile = new File(temporaryFolder.getRoot(), "thumbnail.grid.png");
+
+			// when
+			Thumbnails.fromFiles(Arrays.asList(f1))
+					.size(50, 50)
+					.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			BufferedImage fromFileImage1 = ImageIO.read(expectedFile);
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFiles([File, File])</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Two images are generated and written to a file whose name is
+		 * generated from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFiles_Multiple_toFiles() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File f2 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			);
+
+			// when
+			Thumbnails.fromFiles(Arrays.asList(f1, f2))
+					.size(50, 50)
+					.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			File outFile1 = new File(temporaryFolder.getRoot(), "thumbnail.grid.png");
+			File outFile2 = new File(temporaryFolder.getRoot(), "thumbnail.grid.jpg");
+
+			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
+			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+			assertEquals(50, fromFileImage2.getWidth());
+			assertEquals(50, fromFileImage2.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFiles([File])</li>
+		 * <li>asFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is generated and written to a file whose name is generated
+		 * from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFiles_Single_asFiles() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+
+			// when
+			List<File> thumbnails = Thumbnails.fromFiles(Arrays.asList(f1))
+					.size(50, 50)
+					.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			assertEquals(1, thumbnails.size());
+
+			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFiles([File, File])</li>
+		 * <li>asFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Two images are generated and written to a file whose name is
+		 * generated from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFiles_Multiple_asFiles() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File f2 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			);
+
+			// when
+			List<File> thumbnails = Thumbnails.fromFiles(Arrays.asList(f1, f2))
+					.size(50, 50)
+					.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			assertEquals(2, thumbnails.size());
+
+			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
+			BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+			assertEquals(50, fromFileImage2.getWidth());
+			assertEquals(50, fromFileImage2.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFiles(Iterable[File])</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is written to the specified file.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFilesIterable_Single_toFile() throws IOException {
+			// given
+			File f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File outFile = new File(temporaryFolder.getRoot(), "grid.tmp.png");
+
+			// when
+			Thumbnails.fromFiles((Iterable<File>)Arrays.asList(f))
+					.size(50, 50)
+					.toFile(outFile);
+
+			// then
+			BufferedImage fromFileImage = ImageIO.read(outFile);
+
+			assertEquals(50, fromFileImage.getWidth());
+			assertEquals(50, fromFileImage.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFiles(Iterable[File, File])</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An IllegalArgumentException is thrown.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test(expected=IllegalArgumentException.class)
+		public void fromFilesIterable_Multiple_toFile() throws IOException {
+			// given
+			File f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File outFile = new File(temporaryFolder.getRoot(), "grid.tmp.png");
+
+			// when
+			Thumbnails.fromFiles((Iterable<File>)Arrays.asList(f, f))
+					.size(50, 50)
+					.toFile(outFile);
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFiles(Iterable[File])</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is generated and written to a file whose name is generated
+		 * from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFilesIterable_Single_toFiles() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File expectedFile = new File(temporaryFolder.getRoot(), "thumbnail.grid.png");
+
+			// when
+			Thumbnails.fromFiles((Iterable<File>)Arrays.asList(f1))
+					.size(50, 50)
+					.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			BufferedImage fromFileImage1 = ImageIO.read(expectedFile);
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFiles(Iterable[File, File])</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Two images are generated and written to a file whose name is
+		 * generated from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFilesIterable_Multiple_toFiles() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File f2 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			);
+
+			// when
+			Thumbnails.fromFiles((Iterable<File>)Arrays.asList(f1, f2))
+					.size(50, 50)
+					.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			File outFile1 = new File(temporaryFolder.getRoot(), "thumbnail.grid.png");
+			File outFile2 = new File(temporaryFolder.getRoot(), "thumbnail.grid.jpg");
+
+			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
+			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+			assertEquals(50, fromFileImage2.getWidth());
+			assertEquals(50, fromFileImage2.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFiles(Iterable[File])</li>
+		 * <li>asFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is generated and written to a file whose name is generated
+		 * from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFilesIterable_Single_asFiles() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+
+			// when
+			List<File> thumbnails = Thumbnails.fromFiles((Iterable<File>)Arrays.asList(f1))
+					.size(50, 50)
+					.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			assertEquals(1, thumbnails.size());
+
+			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFiles(Iterable[File, File])</li>
+		 * <li>asFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Two images are generated and written to a file whose name is
+		 * generated from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFilesIterable_Multiple_asFiles() throws IOException {
+			// given
+			File f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File f2 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			);
+
+			// when
+			List<File> thumbnails = Thumbnails.fromFiles((Iterable<File>)Arrays.asList(f1, f2))
+					.size(50, 50)
+					.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			assertEquals(2, thumbnails.size());
+
+			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
+			BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+			assertEquals(50, fromFileImage2.getWidth());
+			assertEquals(50, fromFileImage2.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(String)</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is written to the specified file.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_String_toFile() throws IOException {
+			// given
+			String f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+			File outFile = new File(temporaryFolder.getRoot(), "grid.tmp.png");
+
+			// when
+			Thumbnails.of(f)
+					.size(50, 50)
+					.toFile(outFile);
+
+			// then
+			BufferedImage fromFileImage = ImageIO.read(outFile);
+
+			assertEquals(50, fromFileImage.getWidth());
+			assertEquals(50, fromFileImage.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(String, String)</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An IllegalArgumentException is thrown.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test(expected=IllegalArgumentException.class)
+		public void of_Strings_toFile() throws IOException {
+			// given
+			String f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+			File outFile = new File(temporaryFolder.getRoot(), "grid.tmp.png");
+
+			// when
+			Thumbnails.of(f, f)
+					.size(50, 50)
+					.toFile(outFile);
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(String)</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is generated and written to a file whose name is generated
+		 * from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_String_toFiles() throws IOException {
+			// given
+			String f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+			File expectedFile = new File(temporaryFolder.getRoot(), "thumbnail.grid.png");
+
+			// when
+			Thumbnails.of(f1)
+					.size(50, 50)
+					.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			BufferedImage fromFileImage1 = ImageIO.read(expectedFile);
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(String, String)</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Two images are generated and written to a file whose name is
+		 * generated from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_Strings_toFiles() throws IOException {
+			// given
+			String f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+			String f2 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			).getAbsolutePath();
+
+			// when
+			Thumbnails.of(f1, f2)
+					.size(50, 50)
+					.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			File outFile1 = new File(temporaryFolder.getRoot(), "thumbnail.grid.png");
+			File outFile2 = new File(temporaryFolder.getRoot(), "thumbnail.grid.jpg");
+
+			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
+			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+			assertEquals(50, fromFileImage2.getWidth());
+			assertEquals(50, fromFileImage2.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(String)</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is generated and written to a file whose name is generated
+		 * from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_String_asFiles() throws IOException {
+			// given
+			String f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+
+			// when
+			List<File> thumbnails = Thumbnails.of(f1)
+					.size(50, 50)
+					.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			assertEquals(1, thumbnails.size());
+
+			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(String, String)</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Two images are generated and written to a file whose name is
+		 * generated from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_Strings_asFiles() throws IOException {
+			// given
+			String f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+			String f2 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			).getAbsolutePath();
+
+			// when
+			List<File> thumbnails = Thumbnails.of(f1, f2)
+					.size(50, 50)
+					.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			assertEquals(2, thumbnails.size());
+
+			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
+			BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+			assertEquals(50, fromFileImage2.getWidth());
+			assertEquals(50, fromFileImage2.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFilenames([String])</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is written to the specified file.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFilenames_Single_toFile() throws IOException {
+			// given
+			String f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+			File outFile = new File(temporaryFolder.getRoot(), "grid.tmp.png");
+
+			// when
+			Thumbnails.fromFilenames(Arrays.asList(f))
+					.size(50, 50)
+					.toFile(outFile);
+
+			// then
+			BufferedImage fromFileImage = ImageIO.read(outFile);
+
+			assertEquals(50, fromFileImage.getWidth());
+			assertEquals(50, fromFileImage.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFilenames([String, String])</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An IllegalArgumentException is thrown.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test(expected=IllegalArgumentException.class)
+		public void fromFilenames_Multiple_toFile() throws IOException {
+			// given
+			String f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+			File outFile = new File(temporaryFolder.getRoot(), "grid.tmp.png");
+
+			// when
+			Thumbnails.fromFilenames(Arrays.asList(f, f))
+					.size(50, 50)
+					.toFile(outFile);
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFilenames([String])</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is generated and written to a file whose name is generated
+		 * from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFilenames_Single_toFiles() throws IOException {
+			// given
+			String f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+
+			File expectedFile = new File(temporaryFolder.getRoot(), "thumbnail.grid.png");
+
+			// when
+			Thumbnails.fromFilenames(Arrays.asList(f1))
+					.size(50, 50)
+					.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			BufferedImage fromFileImage1 = ImageIO.read(expectedFile);
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFilenames([String, String])</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Two images are generated and written to a file whose name is
+		 * generated from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFilenames_Multiple_toFiles() throws IOException {
+			// given
+			String f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+			String f2 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			).getAbsolutePath();
+
+			// when
+			Thumbnails.fromFilenames(Arrays.asList(f1, f2))
+					.size(50, 50)
+					.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			File outFile1 = new File(temporaryFolder.getRoot(), "thumbnail.grid.png");
+			File outFile2 = new File(temporaryFolder.getRoot(), "thumbnail.grid.jpg");
+
+			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
+			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+			assertEquals(50, fromFileImage2.getWidth());
+			assertEquals(50, fromFileImage2.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFilenames([String])</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is generated and written to a file whose name is generated
+		 * from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFilenames_Single_asFiles() throws IOException {
+			// given
+			String f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+
+			// when
+			List<File> thumbnails = Thumbnails.fromFilenames(Arrays.asList(f1))
+					.size(50, 50)
+					.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			assertEquals(1, thumbnails.size());
+
+			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFilenames([String, String])</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Two images are generated and written to a file whose name is
+		 * generated from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFilenames_Multiple_asFiles() throws IOException {
+			// given
+			String f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+			String f2 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			).getAbsolutePath();
+
+			// when
+			List<File> thumbnails = Thumbnails.fromFilenames(Arrays.asList(f1, f2))
+					.size(50, 50)
+					.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			File outFile1 = new File(temporaryFolder.getRoot(), "thumbnail.grid.png");
+			File outFile2 = new File(temporaryFolder.getRoot(), "thumbnail.grid.jpg");
+
+			assertEquals(2, thumbnails.size());
+
+			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
+			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+			assertEquals(50, fromFileImage2.getWidth());
+			assertEquals(50, fromFileImage2.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFilenames(Iterable[String])</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is written to the specified file.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFilenamesIterable_Single_toFile() throws IOException {
+			// given
+			String f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+			File outFile = new File(temporaryFolder.getRoot(), "grid.tmp.png");
+
+			// when
+			Thumbnails.fromFilenames((Iterable<String>)Arrays.asList(f))
+					.size(50, 50)
+					.toFile(outFile);
+
+			// then
+			BufferedImage fromFileImage = ImageIO.read(outFile);
+
+			assertEquals(50, fromFileImage.getWidth());
+			assertEquals(50, fromFileImage.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFilenames(Iterable[String, String])</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An IllegalArgumentException is thrown.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test(expected=IllegalArgumentException.class)
+		public void fromFilenamesIterable_Multiple_toFile() throws IOException {
+			// given
+			String f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+			File outFile = new File(temporaryFolder.getRoot(), "grid.tmp.png");
+
+			// when
+			Thumbnails.fromFilenames((Iterable<String>)Arrays.asList(f, f))
+					.size(50, 50)
+					.toFile(outFile);
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFilenames(Iterable[String])</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is generated and written to a file whose name is generated
+		 * from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFilenamesIterable_Single_toFiles() throws IOException {
+			// given
+			String f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+
+			File expectedFile = new File(temporaryFolder.getRoot(), "thumbnail.grid.png");
+
+			// when
+			Thumbnails.fromFilenames((Iterable<String>)Arrays.asList(f1))
+					.size(50, 50)
+					.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			BufferedImage fromFileImage1 = ImageIO.read(expectedFile);
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFilenames(Iterable[String, String])</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Two images are generated and written to a file whose name is
+		 * generated from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFilenamesIterable_Multiple_toFiles() throws IOException {
+			// given
+			String f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+			String f2 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			).getAbsolutePath();
+
+			// when
+			Thumbnails.fromFilenames((Iterable<String>)Arrays.asList(f1, f2))
+					.size(50, 50)
+					.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			File outFile1 = new File(temporaryFolder.getRoot(), "thumbnail.grid.png");
+			File outFile2 = new File(temporaryFolder.getRoot(), "thumbnail.grid.jpg");
+
+			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
+			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+			assertEquals(50, fromFileImage2.getWidth());
+			assertEquals(50, fromFileImage2.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFilenames(Iterable[String])</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is generated and written to a file whose name is generated
+		 * from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFilenamesIterable_Single_asFiles() throws IOException {
+			// given
+			String f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+
+			// when
+			List<File> thumbnails = Thumbnails.fromFilenames((Iterable<String>)Arrays.asList(f1))
+					.size(50, 50)
+					.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			assertEquals(1, thumbnails.size());
+
+			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.fromFilenames(Iterable[String, String])</li>
+		 * <li>toFiles(Rename)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Two images are generated and written to a file whose name is
+		 * generated from the Rename object.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void fromFilenamesIterable_Multiple_asFiles() throws IOException {
+			// given
+			String f1 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			).getAbsolutePath();
+			String f2 = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			).getAbsolutePath();
+
+			// when
+			List<File> thumbnails = Thumbnails.fromFilenames((Iterable<String>)Arrays.asList(f1, f2))
+					.size(50, 50)
+					.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			File outFile1 = new File(temporaryFolder.getRoot(), "thumbnail.grid.png");
+			File outFile2 = new File(temporaryFolder.getRoot(), "thumbnail.grid.jpg");
+
+			assertEquals(2, thumbnails.size());
+
+			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
+			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
+
+			assertEquals(50, fromFileImage1.getWidth());
+			assertEquals(50, fromFileImage1.getHeight());
+			assertEquals(50, fromFileImage2.getWidth());
+			assertEquals(50, fromFileImage2.getHeight());
 		}
 	}
 }
