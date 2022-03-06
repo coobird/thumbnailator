@@ -151,6 +151,10 @@ public class TestUtils {
 		return copyResourceToFile(resourceName, destination);
 	}
 
+	public static File copyResourceToTemporaryFile(String resourceName, String namedAs, TemporaryFolder folder) throws IOException {
+		return copyResourceToFile(resourceName, folder.newFile(namedAs));
+	}
+
 	public static BufferedImage getImageFromResource(String resourceName) throws IOException {
 		InputStream is = getResourceStream(resourceName);
 		try {

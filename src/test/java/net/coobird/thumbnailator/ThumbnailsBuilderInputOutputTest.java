@@ -3845,441 +3845,6 @@ public class ThumbnailsBuilderInputOutputTest {
 		}
 
 		@Test
-		public void multipleCallsCorrectOrientation_SameOrientation_asBufferedImages() throws IOException {
-			// given
-			// when
-			List<BufferedImage> results =
-				Thumbnails.of("src/test/resources/Exif/source_1.jpg", "src/test/resources/Exif/source_1.jpg")
-					.size(100, 100)
-					.asBufferedImages();
-
-			// then
-			assertEquals(results.size(), 2);
-			BufferedImageAssert.assertMatches(
-					results.get(0),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-			BufferedImageAssert.assertMatches(
-					results.get(1),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-		}
-
-		@Test
-		public void multipleCallsCorrectOrientation_DifferentOrientation_asBufferedImages() throws IOException {
-			// given
-			// when
-			List<BufferedImage> results =
-				Thumbnails.of("src/test/resources/Exif/source_2.jpg", "src/test/resources/Exif/source_1.jpg")
-					.size(100, 100)
-					.asBufferedImages();
-
-			// then
-			assertEquals(results.size(), 2);
-			BufferedImageAssert.assertMatches(
-					results.get(0),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-			BufferedImageAssert.assertMatches(
-					results.get(1),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-		}
-
-		@Test
-		public void multipleCallsCorrectOrientation_SameOrientation_iterableBufferedImages() throws IOException {
-			// given
-			// when
-			Iterable<BufferedImage> results =
-				Thumbnails.of("src/test/resources/Exif/source_1.jpg", "src/test/resources/Exif/source_1.jpg")
-					.size(100, 100)
-					.iterableBufferedImages();
-
-			// then
-			Iterator<BufferedImage> iter = results.iterator();
-			BufferedImageAssert.assertMatches(
-					iter.next(),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-			BufferedImageAssert.assertMatches(
-					iter.next(),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-			assertFalse(iter.hasNext());
-		}
-
-		@Test
-		public void multipleCallsCorrectOrientation_DifferentOrientation_iterableBufferedImages() throws IOException {
-			// given
-			// when
-			Iterable<BufferedImage> results =
-					Thumbnails.of("src/test/resources/Exif/source_2.jpg", "src/test/resources/Exif/source_1.jpg")
-						.size(100, 100)
-						.iterableBufferedImages();
-
-
-			// then
-			Iterator<BufferedImage> iter = results.iterator();
-			BufferedImageAssert.assertMatches(
-					iter.next(),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-			BufferedImageAssert.assertMatches(
-					iter.next(),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-			assertFalse(iter.hasNext());
-		}
-
-		@Test
-		public void multipleCallsCorrectOrientation_SameOrientation_asFiles() throws IOException {
-			// given
-			File outFile1 = TestUtils.createTempFile(TMPDIR, "jpg");
-			File outFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
-
-			// when
-			List<File> results =
-				Thumbnails.of("src/test/resources/Exif/source_1.jpg", "src/test/resources/Exif/source_1.jpg")
-					.size(100, 100)
-					.asFiles(Arrays.asList(outFile1, outFile2));
-
-			// then
-			assertEquals(results.size(), 2);
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(results.get(0)),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(results.get(1)),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-		}
-
-		@Test
-		public void multipleCallsCorrectOrientation_DifferentOrientation_asFiles() throws IOException {
-			// given
-			File outFile1 = TestUtils.createTempFile(TMPDIR, "jpg");
-			File outFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
-
-			// when
-			List<File> results =
-				Thumbnails.of("src/test/resources/Exif/source_2.jpg", "src/test/resources/Exif/source_1.jpg")
-					.size(100, 100)
-					.asFiles(Arrays.asList(outFile1, outFile2));
-
-			// then
-			assertEquals(results.size(), 2);
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(results.get(0)),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(results.get(1)),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-		}
-
-		@Test
-		public void multipleCallsCorrectOrientation_SameOrientation_asFilesRename() throws IOException {
-			// given
-			File sourceFile1 = TestUtils.createTempFile(TMPDIR, "jpg");
-			File sourceFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
-			TestUtils.copyFile(new File("src/test/resources/Exif/source_1.jpg"), sourceFile1);
-			TestUtils.copyFile(new File("src/test/resources/Exif/source_1.jpg"), sourceFile2);
-
-			// when
-			List<File> results =
-				Thumbnails.of(sourceFile1, sourceFile2)
-					.size(100, 100)
-					.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			assertEquals(results.size(), 2);
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(results.get(0)),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(results.get(1)),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-		}
-
-		@Test
-		public void multipleCallsCorrectOrientation_DifferentOrientation_asFilesRename() throws IOException {
-			// given
-			File sourceFile1 = TestUtils.createTempFile(TMPDIR, "jpg");
-			File sourceFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
-			TestUtils.copyFile(new File("src/test/resources/Exif/source_2.jpg"), sourceFile1);
-			TestUtils.copyFile(new File("src/test/resources/Exif/source_1.jpg"), sourceFile2);
-
-			// when
-			List<File> results =
-				Thumbnails.of(sourceFile1, sourceFile2)
-					.size(100, 100)
-					.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			assertEquals(results.size(), 2);
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(results.get(0)),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(results.get(1)),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-		}
-
-		@Test
-		public void multipleCallsCorrectOrientation_SameOrientation_toFiles() throws IOException {
-			// given
-			File outFile1 = TestUtils.createTempFile(TMPDIR, "jpg");
-			File outFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
-
-			// when
-			Thumbnails.of("src/test/resources/Exif/source_1.jpg", "src/test/resources/Exif/source_1.jpg")
-				.size(100, 100)
-				.toFiles(Arrays.asList(outFile1, outFile2));
-
-			// then
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(outFile1),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(outFile2),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-		}
-
-		@Test
-		public void multipleCallsCorrectOrientation_DifferentOrientation_toFiles() throws IOException {
-			// given
-			File outFile1 = TestUtils.createTempFile(TMPDIR, "jpg");
-			File outFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
-
-			// when
-			Thumbnails.of("src/test/resources/Exif/source_2.jpg", "src/test/resources/Exif/source_1.jpg")
-				.size(100, 100)
-				.toFiles(Arrays.asList(outFile1, outFile2));
-
-			// then
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(outFile1),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(outFile2),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-		}
-
-		@Test
-		public void multipleCallsCorrectOrientation_SameOrientation_toFilesRename() throws IOException {
-			// given
-			File sourceFile1 = TestUtils.createTempFile(TMPDIR, "jpg");
-			File sourceFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
-			TestUtils.copyFile(new File("src/test/resources/Exif/source_1.jpg"), sourceFile1);
-			TestUtils.copyFile(new File("src/test/resources/Exif/source_1.jpg"), sourceFile2);
-
-			// when
-			Thumbnails.of(sourceFile1, sourceFile2)
-				.size(100, 100)
-				.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(new File(TMPDIR, "thumbnail." + sourceFile1.getName())),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(new File(TMPDIR, "thumbnail." + sourceFile2.getName())),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-		}
-
-		@Test
-		public void multipleCallsCorrectOrientation_DifferentOrientation_toFilesRename() throws IOException {
-			// given
-			File sourceFile1 = TestUtils.createTempFile(TMPDIR, "jpg");
-			File sourceFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
-			TestUtils.copyFile(new File("src/test/resources/Exif/source_2.jpg"), sourceFile1);
-			TestUtils.copyFile(new File("src/test/resources/Exif/source_1.jpg"), sourceFile2);
-
-			// when
-			Thumbnails.of(sourceFile1, sourceFile2)
-				.size(100, 100)
-				.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-
-			// then
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(new File(TMPDIR, "thumbnail." + sourceFile1.getName())),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(new File(TMPDIR, "thumbnail." + sourceFile2.getName())),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-		}
-
-		@Test
-		public void multipleCallsCorrectOrientation_SameOrientation_toOutputStreams() throws IOException {
-			// given
-			ByteArrayOutputStream os1 = new ByteArrayOutputStream();
-			ByteArrayOutputStream os2 = new ByteArrayOutputStream();
-
-			// when
-			Thumbnails.of("src/test/resources/Exif/source_1.jpg", "src/test/resources/Exif/source_1.jpg")
-				.size(100, 100)
-				.toOutputStreams(Arrays.asList(os1, os2));
-
-			// then
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(new ByteArrayInputStream(os1.toByteArray())),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(new ByteArrayInputStream(os2.toByteArray())),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-		}
-
-		@Test
-		public void multipleCallsCorrectOrientation_DifferentOrientation_toOutputStreams() throws IOException {
-			// given
-			ByteArrayOutputStream os1 = new ByteArrayOutputStream();
-			ByteArrayOutputStream os2 = new ByteArrayOutputStream();
-
-			// when
-			Thumbnails.of("src/test/resources/Exif/source_2.jpg", "src/test/resources/Exif/source_1.jpg")
-				.size(100, 100)
-				.toOutputStreams(Arrays.asList(os1, os2));
-
-			// then
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(new ByteArrayInputStream(os1.toByteArray())),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-			BufferedImageAssert.assertMatches(
-					ImageIO.read(new ByteArrayInputStream(os2.toByteArray())),
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-		}
-
-		@Test
 		public void useExifOrientationIsTrue_OrientationHonored() throws IOException {
 			// given
 			File outFile1 = TestUtils.createTempFile(TMPDIR, "jpg");
@@ -4669,6 +4234,174 @@ public class ThumbnailsBuilderInputOutputTest {
 							1, 0, 0,
 					}
 			);
+		}
+	}
+
+	@RunWith(Parameterized.class)
+	public static class MultipleCallsCorrectOrientationTests {
+
+		@Parameterized.Parameters(name = "orientationIsSame={0}")
+		public static Object[] values() {
+			return new Object[] { true, false };
+		}
+
+		@Parameterized.Parameter
+		public boolean isSame;
+
+		@Rule
+		public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+		private List<InputStream> getSources() throws IOException {
+			return Arrays.asList(
+					isSame ?
+							TestUtils.getResourceStream("Exif/source_2.jpg") :
+							TestUtils.getResourceStream("Exif/source_1.jpg"),
+					TestUtils.getResourceStream("Exif/source_1.jpg")
+			);
+		}
+
+		public List<File> getFileSources() throws IOException {
+			String source = isSame ? "Exif/source_1.jpg" : "Exif/source_2.jpg";
+			return Arrays.asList(
+					TestUtils.copyResourceToTemporaryFile(
+							source, "first.jpg", temporaryFolder
+					),
+					TestUtils.copyResourceToTemporaryFile(
+							"Exif/source_1.jpg", "second.jpg", temporaryFolder
+					)
+			);
+		}
+
+		private void assertOrientation(BufferedImage img) {
+			BufferedImageAssert.assertMatches(
+					img,
+					new float[] {
+							1, 1, 1,
+							1, 1, 1,
+							1, 0, 0,
+					}
+			);
+		}
+
+		@Test
+		public void multipleCallsCorrectOrientation_asBufferedImages() throws IOException {
+			// given
+			// when
+			List<BufferedImage> results =
+					Thumbnails.fromInputStreams(getSources())
+							.size(100, 100)
+							.asBufferedImages();
+
+			// then
+			assertEquals(results.size(), 2);
+			for (BufferedImage result : results) {
+				assertOrientation(result);
+			}
+		}
+
+		@Test
+		public void multipleCallsCorrectOrientation_iterableBufferedImages() throws IOException {
+			// given
+			// when
+			Iterable<BufferedImage> results =
+					Thumbnails.fromInputStreams(getSources())
+							.size(100, 100)
+							.iterableBufferedImages();
+
+			// then
+			Iterator<BufferedImage> iter = results.iterator();
+			assertOrientation(iter.next());
+			assertOrientation(iter.next());
+			assertFalse(iter.hasNext());
+		}
+
+		@Test
+		public void multipleCallsCorrectOrientation_asFiles() throws IOException {
+			// given
+			File outFile1 = new File(temporaryFolder.getRoot(), "out1.jpg");
+			File outFile2 = new File(temporaryFolder.getRoot(), "out2.jpg");
+
+			// when
+			List<File> results =
+					Thumbnails.fromInputStreams(getSources())
+							.size(100, 100)
+							.asFiles(Arrays.asList(outFile1, outFile2));
+
+			// then
+			assertEquals(results.size(), 2);
+			for (File result : results) {
+				assertOrientation(ImageIO.read(result));
+			}
+		}
+
+		@Test
+		public void multipleCallsCorrectOrientation_asFilesRename() throws IOException {
+			// given
+			// when
+			List<File> results =
+					Thumbnails.fromFiles(getFileSources())
+							.size(100, 100)
+							.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			assertEquals(results.size(), 2);
+			for (File result : results) {
+				assertOrientation(ImageIO.read(result));
+			}
+		}
+
+		@Test
+		public void multipleCallsCorrectOrientation_toFiles() throws IOException {
+			// given
+			File outFile1 = new File(temporaryFolder.getRoot(), "out1.jpg");
+			File outFile2 = new File(temporaryFolder.getRoot(), "out2.jpg");
+
+			// when
+			Thumbnails.fromInputStreams(getSources())
+					.size(100, 100)
+					.toFiles(Arrays.asList(outFile1, outFile2));
+
+			// then
+			assertOrientation(ImageIO.read(outFile1));
+			assertOrientation(ImageIO.read(outFile2));
+		}
+
+		@Test
+		public void multipleCallsCorrectOrientation_toFilesRename() throws IOException {
+			// given
+			List<File> sources = getFileSources();
+
+			// when
+			Thumbnails.fromFiles(sources)
+					.size(100, 100)
+					.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+
+			// then
+			for (File source : sources) {
+				assertOrientation(
+						ImageIO.read(
+								new File(
+										temporaryFolder.getRoot(), "thumbnail." + source.getName()
+								)
+						)
+				);
+			}
+		}
+
+		@Test
+		public void multipleCallsCorrectOrientation_toOutputStreams() throws IOException {
+			// given
+			ByteArrayOutputStream os1 = new ByteArrayOutputStream();
+			ByteArrayOutputStream os2 = new ByteArrayOutputStream();
+
+			// when
+			Thumbnails.fromInputStreams(getSources())
+					.size(100, 100)
+					.toOutputStreams(Arrays.asList(os1, os2));
+
+			// then
+			assertOrientation(ImageIO.read(new ByteArrayInputStream(os1.toByteArray())));
+			assertOrientation(ImageIO.read(new ByteArrayInputStream(os2.toByteArray())));
 		}
 	}
 
