@@ -2139,134 +2139,6 @@ public class ThumbnailsBuilderInputOutputTest {
 		 * Test for the {@link Thumbnails.Builder} class where,
 		 * <ol>
 		 * <li>Thumbnails.of(InputStream)</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An IllegalStateException occurs.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test(expected=IllegalStateException.class)
-		public void of_InputStream_toFiles_Rename() throws IOException {
-			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			outFile1.deleteOnExit();
-
-			try {
-				// when
-				Thumbnails.of(is)
-					.size(50, 50)
-					.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-			} catch (IllegalStateException e) {
-				// then
-				assertEquals("Cannot create thumbnails to files if original images are not from files.", e.getMessage());
-				throw e;
-			}
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(InputStream)</li>
-		 * <li>asFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An IllegalStateException occurs.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test(expected=IllegalStateException.class)
-		public void of_InputStream_asFiles_Rename() throws IOException {
-			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
-			File outFile1 = new File("src/test/resources/Thumbnailator/thumbnail.grid.png");
-			outFile1.deleteOnExit();
-
-			try {
-				// when
-				Thumbnails.of(is)
-					.size(50, 50)
-					.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-			} catch (IllegalStateException e) {
-				// then
-				assertEquals("Cannot create thumbnails to files if original images are not from files.", e.getMessage());
-				throw e;
-			}
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(InputStream)</li>
-		 * <li>toFiles(Iterable<File>)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Iterable<File> object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_InputStream_toFiles_Iterable() throws IOException {
-			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
-
-			// when
-			Thumbnails.of(is)
-				.size(50, 50)
-				.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
-
-			// then
-			File outFile = new File("src/test/resources/Thumbnailator/temp-0.png");
-			outFile.deleteOnExit();
-
-			BufferedImage fromFileImage1 = ImageIO.read(outFile);
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(InputStream)</li>
-		 * <li>asFiles(Iterable<File>)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Iterable<File> object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_InputStream_asFiles_Iterable() throws IOException {
-			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
-
-			// when
-			List<File> thumbnails = Thumbnails.of(is)
-				.size(50, 50)
-				.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/temp-0.png");
-			outFile1.deleteOnExit();
-
-			assertEquals(1, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(InputStream)</li>
 		 * <li>asBufferedImage()</li>
 		 * </ol>
 		 * and the expected outcome is,
@@ -2441,145 +2313,6 @@ public class ThumbnailsBuilderInputOutputTest {
 				assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
 				throw e;
 			}
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(InputStream, InputStream)</li>
-		 * <li>toFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An IllegalStateException occurs.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test(expected=IllegalStateException.class)
-		public void of_InputStreams_toFiles_Rename() throws IOException {
-			// given
-			InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
-			InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
-
-			try {
-				// when
-				Thumbnails.of(is1, is2)
-					.size(50, 50)
-					.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
-			} catch (IllegalStateException e) {
-				// then
-				assertEquals("Cannot create thumbnails to files if original images are not from files.", e.getMessage());
-				throw e;
-			}
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(InputStream, InputStream)</li>
-		 * <li>asFiles(Rename)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An IllegalStateException occurs.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test(expected=IllegalStateException.class)
-		public void of_InputStreams_asFiles_Rename() throws IOException {
-			// given
-			InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
-			InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
-
-			try {
-				// when
-				Thumbnails.of(is1, is2)
-					.size(50, 50)
-					.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
-			} catch (IllegalStateException e) {
-				// then
-				assertEquals("Cannot create thumbnails to files if original images are not from files.", e.getMessage());
-				throw e;
-			}
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(InputStream, InputStream)</li>
-		 * <li>toFiles(Iterable<File>)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and written to a file whose name is
-		 * generated from the Iterable<File> object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_InputStreams_toFiles_Iterable() throws IOException {
-			// given
-			InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
-			InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
-
-			// when
-			Thumbnails.of(is1, is2)
-				.size(50, 50)
-				.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/temp-0.png");
-			File outFile2 = new File("src/test/resources/Thumbnailator/temp-1.png");
-			outFile1.deleteOnExit();
-			outFile2.deleteOnExit();
-
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-
-			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(InputStream, InputStream)</li>
-		 * <li>asFiles(Iterable<File>)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Two images are generated and written to a file whose name is
-		 * generated from the Iterable<File> object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_InputStreams_asFiles_Iterable() throws IOException {
-			// given
-			InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
-			InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
-
-			// when
-			List<File> thumbnails = Thumbnails.of(is1, is2)
-				.size(50, 50)
-				.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
-
-			// then
-			assertEquals(2, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-
-			BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-
-			// clean up
-			thumbnails.get(0).deleteOnExit();
-			thumbnails.get(1).deleteOnExit();
 		}
 
 		/**
@@ -4654,6 +4387,98 @@ public class ThumbnailsBuilderInputOutputTest {
 			}
 		}
 
+		@Test
+		public void ofInputStreamToFilesIterable() throws IOException {
+			// given
+			outputFile = new File(temporaryFolder.getRoot(), "first.png");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
+
+			if (outputFileExists) {
+				TestUtils.copyResourceToFile(
+						"Thumbnailator/grid.png",
+						outputFile
+				);
+			}
+
+			// when
+			Thumbnails.of(is)
+					.size(50, 50)
+					.allowOverwrite(allowOverwrite)
+					.toFiles(Collections.singletonList(outputFile));
+
+			// then
+			verify();
+		}
+
+		@Test
+		public void ofInputStreamAsFilesIterable() throws IOException {
+			// given
+			outputFile = new File(temporaryFolder.getRoot(), "first.png");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
+
+			if (outputFileExists) {
+				TestUtils.copyResourceToFile(
+						"Thumbnailator/grid.png",
+						outputFile
+				);
+			}
+
+			// when
+			List<File> outputFiles = Thumbnails.of(is)
+					.size(50, 50)
+					.allowOverwrite(allowOverwrite)
+					.asFiles(Collections.singletonList(outputFile));
+
+			// then
+			// Check contents of returned list.
+			Queue<File> verificationQueue = new LinkedList<File>(outputFiles);
+			int expectedListSize = 0;
+			if (expectOutputChanged) {
+				expectedListSize++;
+				assertEquals(outputFile, verificationQueue.remove());
+			}
+			assertEquals(0, verificationQueue.size());
+			assertEquals(expectedListSize, outputFiles.size());
+
+			verify();
+		}
+
+		@Test(expected=IllegalStateException.class)
+		public void ofInputStreamToFilesRename() throws IOException {
+			// given
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
+
+			try {
+				// when
+				Thumbnails.of(is)
+						.size(50, 50)
+						.allowOverwrite(allowOverwrite)
+						.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+			} catch (IllegalStateException e) {
+				// then
+				assertEquals("Cannot create thumbnails to files if original images are not from files.", e.getMessage());
+				throw e;
+			}
+		}
+
+		@Test(expected=IllegalStateException.class)
+		public void ofInputStreamAsFilesRename() throws IOException {
+			// given
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
+
+			try {
+				// when
+				Thumbnails.of(is)
+						.size(50, 50)
+						.allowOverwrite(allowOverwrite)
+						.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+			} catch (IllegalStateException e) {
+				// then
+				assertEquals("Cannot create thumbnails to files if original images are not from files.", e.getMessage());
+				throw e;
+			}
+		}
+
 		private void assertImageExists(File f, int width, int height) throws IOException {
 			assertTrue("f exists.", f.exists());
 
@@ -4975,6 +4800,104 @@ public class ThumbnailsBuilderInputOutputTest {
 						"Cannot create thumbnails to files if original images are not from files.",
 						e.getMessage()
 				);
+			}
+		}
+
+		@Test
+		public void ofInputStreamsToFilesIterable() throws IOException {
+			firstOutputFile = new File(temporaryFolder.getRoot(), "first.png");
+			secondOutputFile = new File(temporaryFolder.getRoot(), "second.png");
+
+			InputStream is1 = TestUtils.getResourceStream("Thumbnailator/grid.png");
+			InputStream is2 = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
+
+			if (firstOutputFileExists) {
+				TestUtils.copyResourceToFile("Thumbnailator/grid.png", firstOutputFile);
+			}
+			if (secondOutputFileExists) {
+				TestUtils.copyResourceToFile("Thumbnailator/grid.jpg", secondOutputFile);
+			}
+
+			Thumbnails.of(is1, is2)
+					.size(50, 50)
+					.allowOverwrite(allowOverwrite)
+					.toFiles(Arrays.asList(firstOutputFile, secondOutputFile));
+
+			verify();
+		}
+
+		@Test
+		public void ofInputStreamsAsFilesIterable() throws IOException {
+			firstOutputFile = new File(temporaryFolder.getRoot(), "first.png");
+			secondOutputFile = new File(temporaryFolder.getRoot(), "second.png");
+
+			InputStream is1 = TestUtils.getResourceStream("Thumbnailator/grid.png");
+			InputStream is2 = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
+
+			if (firstOutputFileExists) {
+				TestUtils.copyResourceToFile("Thumbnailator/grid.png", firstOutputFile);
+			}
+			if (secondOutputFileExists) {
+				TestUtils.copyResourceToFile("Thumbnailator/grid.jpg", secondOutputFile);
+			}
+
+			List<File> outputFiles = Thumbnails.of(is1, is2)
+					.size(50, 50)
+					.allowOverwrite(allowOverwrite)
+					.asFiles(Arrays.asList(firstOutputFile, secondOutputFile));
+
+			// Check contents of returned list.
+			Queue<File> verificationQueue = new LinkedList<File>(outputFiles);
+			int expectedListSize = 0;
+			if (expectFirstOutputChanged) {
+				expectedListSize++;
+				assertEquals(firstOutputFile, verificationQueue.remove());
+			}
+			if (expectSecondOutputChanged) {
+				expectedListSize++;
+				assertEquals(secondOutputFile, verificationQueue.remove());
+			}
+			assertEquals(0, verificationQueue.size());
+			assertEquals(expectedListSize, outputFiles.size());
+
+			verify();
+		}
+
+		@Test(expected=IllegalStateException.class)
+		public void ofInputStreamsToFilesRename() throws IOException {
+			// given
+			InputStream is1 = TestUtils.getResourceStream("Thumbnailator/grid.png");
+			InputStream is2 = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
+
+			try {
+				// when
+				Thumbnails.of(is1, is2)
+						.size(50, 50)
+						.allowOverwrite(allowOverwrite)
+						.toFiles(Rename.PREFIX_DOT_THUMBNAIL);
+			} catch (IllegalStateException e) {
+				// then
+				assertEquals("Cannot create thumbnails to files if original images are not from files.", e.getMessage());
+				throw e;
+			}
+		}
+
+		@Test(expected=IllegalStateException.class)
+		public void ofInputStreamsAsFilesRename() throws IOException {
+			// given
+			InputStream is1 = TestUtils.getResourceStream("Thumbnailator/grid.png");
+			InputStream is2 = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
+
+			try {
+				// when
+				Thumbnails.of(is1, is2)
+						.size(50, 50)
+						.allowOverwrite(allowOverwrite)
+						.asFiles(Rename.PREFIX_DOT_THUMBNAIL);
+			} catch (IllegalStateException e) {
+				// then
+				assertEquals("Cannot create thumbnails to files if original images are not from files.", e.getMessage());
+				throw e;
 			}
 		}
 
