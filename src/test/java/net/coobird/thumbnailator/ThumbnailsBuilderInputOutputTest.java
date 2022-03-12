@@ -96,72 +96,6 @@ public class ThumbnailsBuilderInputOutputTest {
 		 * Test for the {@link Thumbnails.Builder} class where,
 		 * <ol>
 		 * <li>Thumbnails.of(BufferedImage)</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Processing completes successfully. Image format is determined
-		 * by the extension of the file.</li>
-		 * </ol>
-		 */
-		@Test
-		public void of_BufferedImage_toFile_File_NoOutputFormatSpecified() throws IOException {
-			// given
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-			File destFile = new File("src/test/resources/Thumbnailator/tmp.png");
-			destFile.deleteOnExit();
-
-			// when
-			Thumbnails.of(img)
-				.size(100, 100)
-				.toFile(destFile);
-
-			// then
-			assertEquals("png", TestUtils.getFormatName(new FileInputStream(destFile)));
-
-			BufferedImage thumbnail = ImageIO.read(destFile);
-			assertEquals(100, thumbnail.getWidth());
-			assertEquals(100, thumbnail.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(BufferedImage)</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Processing completes successfully. Image format is determined
-		 * by the extension of the file.</li>
-		 * </ol>
-		 */
-		@Test
-		public void of_BufferedImage_toFile_String_NoOutputFormatSpecified() throws IOException {
-			// given
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-			String destFilePath = "src/test/resources/Thumbnailator/tmp.png";
-
-			// when
-			Thumbnails.of(img)
-				.size(100, 100)
-				.toFile(destFilePath);
-
-			// then
-			File destFile = new File(destFilePath);
-			destFile.deleteOnExit();
-
-			assertEquals("png", TestUtils.getFormatName(new FileInputStream(destFile)));
-
-			BufferedImage thumbnail = ImageIO.read(destFile);
-			assertEquals(100, thumbnail.getWidth());
-			assertEquals(100, thumbnail.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(BufferedImage)</li>
 		 * <li>asBufferedImage()</li>
 		 * </ol>
 		 * and the expected outcome is,
@@ -308,69 +242,7 @@ public class ThumbnailsBuilderInputOutputTest {
 			assertFalse(iter.hasNext());
 		}
 
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(BufferedImage)</li>
-		 * <li>outputFormat("png")</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The thumbnail is written to the specified file</li>
-		 * </ol>
-		 */
-		@Test
-		public void of_BufferedImage_toFile_File_OutputFormatSpecified() throws IOException {
-			// given
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-			File destFile = new File("src/test/resources/Thumbnailator/tmp.png");
-			destFile.deleteOnExit();
 
-			// when
-			Thumbnails.of(img)
-				.size(100, 100)
-				.outputFormat("png")
-				.toFile(destFile);
-
-			// then
-			BufferedImage thumbnail = ImageIO.read(destFile);
-			assertEquals(100, thumbnail.getWidth());
-			assertEquals(100, thumbnail.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(BufferedImage)</li>
-		 * <li>outputFormat("png")</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The thumbnail is written to the specified file</li>
-		 * </ol>
-		 */
-		@Test
-		public void of_BufferedImage_toFile_String_OutputFormatSpecified() throws IOException {
-			// given
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-			String destFilePath = "src/test/resources/Thumbnailator/tmp.png";
-
-			// when
-			Thumbnails.of(img)
-				.size(100, 100)
-				.outputFormat("png")
-				.toFile(destFilePath);
-
-			// then
-			File destFile = new File(destFilePath);
-			destFile.deleteOnExit();
-
-			BufferedImage thumbnail = ImageIO.read(destFile);
-			assertEquals(100, thumbnail.getWidth());
-			assertEquals(100, thumbnail.getHeight());
-		}
 
 		/**
 		 * Test for the {@link Thumbnails.Builder} class where,
@@ -529,68 +401,6 @@ public class ThumbnailsBuilderInputOutputTest {
 		 * Test for the {@link Thumbnails.Builder} class where,
 		 * <ol>
 		 * <li>Thumbnails.of(BufferedImage, BufferedImage)</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An IllegalArgumentException will be thrown</li>
-		 * </ol>
-		 */
-		@Test(expected=IllegalArgumentException.class)
-		public void of_BufferedImages_toFile_File_NoOutputFormatSpecified() throws IOException {
-			// given
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-			File destFile = new File("src/test/resources/Thumbnailator/tmp.png");
-			destFile.deleteOnExit();
-
-			try {
-				// when
-				Thumbnails.of(img, img)
-					.size(100, 100)
-					.toFile(destFile);
-			} catch (IllegalArgumentException e) {
-				// then
-				assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
-				throw e;
-			}
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(BufferedImage, BufferedImage)</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Processing completes successfully. Image format is determined
-		 * by the extension of the file.</li>
-		 * </ol>
-		 */
-		@Test(expected=IllegalArgumentException.class)
-		public void of_BufferedImages_toFile_String_NoOutputFormatSpecified() throws IOException {
-			// given
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-			String destFilePath = "src/test/resources/Thumbnailator/tmp.png";
-
-			try {
-				// when
-				Thumbnails.of(img, img)
-					.size(100, 100)
-					.toFile(destFilePath);
-			} catch (IllegalArgumentException e) {
-				// then
-				assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
-				throw e;
-			}
-		}
-
-
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(BufferedImage, BufferedImage)</li>
 		 * <li>asBufferedImage()</li>
 		 * </ol>
 		 * and the expected outcome is,
@@ -743,72 +553,6 @@ public class ThumbnailsBuilderInputOutputTest {
 			assertEquals(50, thumbnail2.getHeight());
 
 			assertFalse(iter.hasNext());
-		}
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(BufferedImage, BufferedImage)</li>
-		 * <li>outputFormat("png")</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The thumbnail is written to the specified file</li>
-		 * </ol>
-		 */
-		@Test(expected=IllegalArgumentException.class)
-		public void of_BufferedImages_toFile_File_OutputFormatSpecified() throws IOException {
-			// given
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-			File destFile = new File("src/test/resources/Thumbnailator/tmp.png");
-			destFile.deleteOnExit();
-
-			try {
-				// when
-				Thumbnails.of(img, img)
-					.size(100, 100)
-					.outputFormat("png")
-					.toFile(destFile);
-			} catch (IllegalArgumentException e) {
-				// then
-				assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
-				throw e;
-			}
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(BufferedImage, BufferedImage)</li>
-		 * <li>outputFormat("png")</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The thumbnail is written to the specified file</li>
-		 * </ol>
-		 */
-		@Test(expected=IllegalArgumentException.class)
-		public void of_BufferedImages_toFile_String_OutputFormatSpecified() throws IOException {
-			// given
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-			String destFilePath = "src/test/resources/Thumbnailator/tmp.png";
-
-			try {
-				// when
-				Thumbnails.of(img, img)
-					.size(100, 100)
-					.outputFormat("png")
-					.toFile(destFilePath);
-			} catch (IllegalArgumentException e) {
-				// then
-				assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
-				throw e;
-			}
-			finally {
-				// clean up
-				new File(destFilePath).deleteOnExit();
-			}
 		}
 
 		/**
@@ -1210,36 +954,6 @@ public class ThumbnailsBuilderInputOutputTest {
 		 * Test for the {@link Thumbnails.Builder} class where,
 		 * <ol>
 		 * <li>Thumbnails.of(URL)</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is written to the specified file.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_URL_toFile() throws IOException {
-			// given
-			URL f = new File("src/test/resources/Thumbnailator/grid.png").toURL();
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			// when
-			Thumbnails.of(f)
-				.size(50, 50)
-				.toFile(outFile);
-
-			// then
-			BufferedImage fromFileImage = ImageIO.read(outFile);
-			assertEquals(50, fromFileImage.getWidth());
-			assertEquals(50, fromFileImage.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(URL)</li>
 		 * <li>asBufferedImage()</li>
 		 * </ol>
 		 * and the expected outcome is,
@@ -1383,37 +1097,6 @@ public class ThumbnailsBuilderInputOutputTest {
 			assertEquals(50, thumbnail.getHeight());
 
 			assertFalse(iter.hasNext());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(URL, URL)</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An IllegalArgumentException is thrown.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test(expected=IllegalArgumentException.class)
-		public void of_URLs_toFile() throws IOException {
-			// given
-			URL f = new File("src/test/resources/Thumbnailator/grid.png").toURL();
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			try {
-				// when
-				Thumbnails.of(f, f)
-					.size(50, 50)
-					.toFile(outFile);
-			} catch (IllegalArgumentException e) {
-				// then
-				assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
-				throw e;
-			}
 		}
 
 		/**
@@ -1813,36 +1496,6 @@ public class ThumbnailsBuilderInputOutputTest {
 		 * Test for the {@link Thumbnails.Builder} class where,
 		 * <ol>
 		 * <li>Thumbnails.of(InputStream)</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is written to the specified file.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_InputStream_toFile() throws IOException {
-			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			// when
-			Thumbnails.of(is)
-				.size(50, 50)
-				.toFile(outFile);
-
-			// then
-			BufferedImage fromFileImage = ImageIO.read(outFile);
-			assertEquals(50, fromFileImage.getWidth());
-			assertEquals(50, fromFileImage.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(InputStream)</li>
 		 * <li>asBufferedImage()</li>
 		 * </ol>
 		 * and the expected outcome is,
@@ -1986,37 +1639,6 @@ public class ThumbnailsBuilderInputOutputTest {
 			assertEquals(50, thumbnail.getHeight());
 
 			assertFalse(iter.hasNext());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(InputStream, InputStream)</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An IllegalArgumentException is thrown.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test(expected=IllegalArgumentException.class)
-		public void of_InputStreams_toFile() throws IOException {
-			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			try {
-				// when
-				Thumbnails.of(is, is)
-					.size(50, 50)
-					.toFile(outFile);
-			} catch (IllegalArgumentException e) {
-				// then
-				assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
-				throw e;
-			}
 		}
 
 		/**
@@ -4850,6 +4472,379 @@ public class ThumbnailsBuilderInputOutputTest {
 			assertNotNull("Read image is null.", img);
 			assertEquals(width, img.getWidth());
 			assertEquals(height, img.getHeight());
+		}
+	}
+
+	public static class VariousToFileTests {
+
+		@Rule
+		public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(BufferedImage)</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Processing completes successfully. Image format is determined
+		 * by the extension of the file.</li>
+		 * </ol>
+		 */
+		@Test
+		public void of_BufferedImage_toFile_File_NoOutputFormatSpecified() throws IOException {
+			// given
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+			File destFile = new File(temporaryFolder.getRoot(), "tmp.png");
+
+			// when
+			Thumbnails.of(img)
+					.size(100, 100)
+					.toFile(destFile);
+
+			// then
+			assertEquals("png", TestUtils.getFormatName(new FileInputStream(destFile)));
+
+			BufferedImage thumbnail = ImageIO.read(destFile);
+			assertEquals(100, thumbnail.getWidth());
+			assertEquals(100, thumbnail.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(BufferedImage)</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Processing completes successfully. Image format is determined
+		 * by the extension of the file.</li>
+		 * </ol>
+		 */
+		@Test
+		public void of_BufferedImage_toFile_String_NoOutputFormatSpecified() throws IOException {
+			// given
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+			String destFilePath = new File(temporaryFolder.getRoot(), "tmp.png").getAbsolutePath();
+
+			// when
+			Thumbnails.of(img)
+					.size(100, 100)
+					.toFile(destFilePath);
+
+			// then
+			File destFile = new File(destFilePath);
+			assertEquals("png", TestUtils.getFormatName(new FileInputStream(destFile)));
+
+			BufferedImage thumbnail = ImageIO.read(destFile);
+			assertEquals(100, thumbnail.getWidth());
+			assertEquals(100, thumbnail.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(BufferedImage)</li>
+		 * <li>outputFormat("png")</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>The thumbnail is written to the specified file</li>
+		 * </ol>
+		 */
+		@Test
+		public void of_BufferedImage_toFile_File_OutputFormatSpecified() throws IOException {
+			// given
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+			File destFile = new File(temporaryFolder.getRoot(), "tmp.png");
+
+			// when
+			Thumbnails.of(img)
+					.size(100, 100)
+					.outputFormat("png")
+					.toFile(destFile);
+
+			// then
+			BufferedImage thumbnail = ImageIO.read(destFile);
+			assertEquals(100, thumbnail.getWidth());
+			assertEquals(100, thumbnail.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(BufferedImage)</li>
+		 * <li>outputFormat("png")</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>The thumbnail is written to the specified file</li>
+		 * </ol>
+		 */
+		@Test
+		public void of_BufferedImage_toFile_String_OutputFormatSpecified() throws IOException {
+			// given
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+			String destFilePath = new File(temporaryFolder.getRoot(), "tmp.png").getAbsolutePath();
+
+			// when
+			Thumbnails.of(img)
+					.size(100, 100)
+					.outputFormat("png")
+					.toFile(destFilePath);
+
+			// then
+			File destFile = new File(destFilePath);
+			BufferedImage thumbnail = ImageIO.read(destFile);
+			assertEquals(100, thumbnail.getWidth());
+			assertEquals(100, thumbnail.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(BufferedImage, BufferedImage)</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An IllegalArgumentException will be thrown</li>
+		 * </ol>
+		 */
+		@Test(expected=IllegalArgumentException.class)
+		public void of_BufferedImages_toFile_File_NoOutputFormatSpecified() throws IOException {
+			// given
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+			File destFile = new File(temporaryFolder.getRoot(), "tmp.png");
+
+			try {
+				// when
+				Thumbnails.of(img, img)
+						.size(100, 100)
+						.toFile(destFile);
+			} catch (IllegalArgumentException e) {
+				// then
+				assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
+				throw e;
+			}
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(BufferedImage, BufferedImage)</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>Processing completes successfully. Image format is determined
+		 * by the extension of the file.</li>
+		 * </ol>
+		 */
+		@Test(expected=IllegalArgumentException.class)
+		public void of_BufferedImages_toFile_String_NoOutputFormatSpecified() throws IOException {
+			// given
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+			String destFilePath = new File(temporaryFolder.getRoot(), "tmp.png").getAbsolutePath();
+
+			try {
+				// when
+				Thumbnails.of(img, img)
+						.size(100, 100)
+						.toFile(destFilePath);
+			} catch (IllegalArgumentException e) {
+				// then
+				assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
+				throw e;
+			}
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(BufferedImage, BufferedImage)</li>
+		 * <li>outputFormat("png")</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>The thumbnail is written to the specified file</li>
+		 * </ol>
+		 */
+		@Test(expected=IllegalArgumentException.class)
+		public void of_BufferedImages_toFile_File_OutputFormatSpecified() throws IOException {
+			// given
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+			File destFile = new File(temporaryFolder.getRoot(), "tmp.png");
+
+			try {
+				// when
+				Thumbnails.of(img, img)
+						.size(100, 100)
+						.outputFormat("png")
+						.toFile(destFile);
+			} catch (IllegalArgumentException e) {
+				// then
+				assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
+				throw e;
+			}
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(BufferedImage, BufferedImage)</li>
+		 * <li>outputFormat("png")</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>The thumbnail is written to the specified file</li>
+		 * </ol>
+		 */
+		@Test(expected=IllegalArgumentException.class)
+		public void of_BufferedImages_toFile_String_OutputFormatSpecified() throws IOException {
+			// given
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+			String destFilePath = new File(temporaryFolder.getRoot(), "tmp.png").getAbsolutePath();
+
+			try {
+				// when
+				Thumbnails.of(img, img)
+						.size(100, 100)
+						.outputFormat("png")
+						.toFile(destFilePath);
+			} catch (IllegalArgumentException e) {
+				// then
+				assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
+				throw e;
+			}
+			finally {
+				// clean up
+				new File(destFilePath).deleteOnExit();
+			}
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(URL)</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is written to the specified file.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_URL_toFile() throws IOException {
+			// given
+			URL f = TestUtils.getResource("Thumbnailator/grid.png");
+			File destFile = new File(temporaryFolder.getRoot(), "tmp.png");
+
+			// when
+			Thumbnails.of(f)
+					.size(50, 50)
+					.toFile(destFile);
+
+			// then
+			BufferedImage fromFileImage = ImageIO.read(destFile);
+			assertEquals(50, fromFileImage.getWidth());
+			assertEquals(50, fromFileImage.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(URL, URL)</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An IllegalArgumentException is thrown.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test(expected=IllegalArgumentException.class)
+		public void of_URLs_toFile() throws IOException {
+			// given
+			URL f = TestUtils.getResource("Thumbnailator/grid.png");
+			File destFile = new File(temporaryFolder.getRoot(), "tmp.png");
+
+			try {
+				// when
+				Thumbnails.of(f, f)
+						.size(50, 50)
+						.toFile(destFile);
+			} catch (IllegalArgumentException e) {
+				// then
+				assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
+				throw e;
+			}
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(InputStream)</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An image is written to the specified file.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test
+		public void of_InputStream_toFile() throws IOException {
+			// given
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
+			File destFile = new File(temporaryFolder.getRoot(), "tmp.png");
+
+			// when
+			Thumbnails.of(is)
+					.size(50, 50)
+					.toFile(destFile);
+
+			// then
+			BufferedImage fromFileImage = ImageIO.read(destFile);
+			assertEquals(50, fromFileImage.getWidth());
+			assertEquals(50, fromFileImage.getHeight());
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>Thumbnails.of(InputStream, InputStream)</li>
+		 * <li>toFile(File)</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>An IllegalArgumentException is thrown.</li>
+		 * </ol>
+		 * @throws IOException
+		 */
+		@Test(expected=IllegalArgumentException.class)
+		public void of_InputStreams_toFile() throws IOException {
+			// given
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
+			File destFile = new File(temporaryFolder.getRoot(), "tmp.png");
+
+			try {
+				// when
+				Thumbnails.of(is, is)
+						.size(50, 50)
+						.toFile(destFile);
+			} catch (IllegalArgumentException e) {
+				// then
+				assertEquals("Cannot output multiple thumbnails to one file.", e.getMessage());
+				throw e;
+			}
 		}
 	}
 
