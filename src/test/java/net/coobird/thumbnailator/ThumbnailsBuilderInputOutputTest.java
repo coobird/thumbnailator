@@ -162,75 +162,6 @@ public class ThumbnailsBuilderInputOutputTest {
 		 * Test for the {@link Thumbnails.Builder} class where,
 		 * <ol>
 		 * <li>Thumbnails.of(BufferedImage)</li>
-		 * <li>toFiles(Iterable<File>)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Processing completes successfully. Image format is determined
-		 * by the extension of the file.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_BufferedImage_toFiles_Iterable_NoOutputFormatSpecified() throws IOException {
-			// given
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-
-			// when
-			Thumbnails.of(img)
-				.size(50, 50)
-				.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
-
-			// then
-			File outFile = new File("src/test/resources/Thumbnailator/temp-0.png");
-			outFile.deleteOnExit();
-
-			assertEquals("png", TestUtils.getFormatName(new FileInputStream(outFile)));
-
-			BufferedImage fromFileImage1 = ImageIO.read(outFile);
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(BufferedImage)</li>
-		 * <li>asFiles(Iterable<File>)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Processing completes successfully. Image format is determined
-		 * by the extension of the file.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_BufferedImage_asFiles_Iterable_NoOutputFormatSpecified() throws IOException {
-			// given
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-
-			// when
-			List<File> thumbnails = Thumbnails.of(img)
-				.size(50, 50)
-				.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
-
-			// then
-			assertEquals(1, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-			assertEquals("png", TestUtils.getFormatName(new FileInputStream(thumbnails.get(0))));
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-
-			// clean up
-			thumbnails.get(0).deleteOnExit();
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(BufferedImage)</li>
 		 * <li>asBufferedImage()</li>
 		 * </ol>
 		 * and the expected outcome is,
@@ -446,76 +377,6 @@ public class ThumbnailsBuilderInputOutputTest {
 		 * <ol>
 		 * <li>Thumbnails.of(BufferedImage)</li>
 		 * <li>outputFormat("png")</li>
-		 * <li>toFiles(Iterable<File>)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Iterable<File> object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_BufferedImage_toFiles_Iterable_OutputFormatSpecified() throws IOException {
-			// given
-			BufferedImage img1 = new BufferedImageBuilder(200, 200).build();
-
-			// when
-			Thumbnails.of(img1)
-				.size(50, 50)
-				.outputFormat("png")
-				.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
-
-			// then
-			File outFile = new File("src/test/resources/Thumbnailator/temp-0.png");
-			outFile.deleteOnExit();
-
-			BufferedImage fromFileImage1 = ImageIO.read(outFile);
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(BufferedImage)</li>
-		 * <li>outputFormat("png")</li>
-		 * <li>asFiles(Iterable<File>)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Iterable<File> object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_BufferedImage_asFiles_Iterable_OutputFormatSpecified() throws IOException {
-			// given
-			BufferedImage img1 = new BufferedImageBuilder(200, 200).build();
-
-			// when
-			List<File> thumbnails = Thumbnails.of(img1)
-				.size(50, 50)
-				.outputFormat("png")
-				.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
-
-			// then
-			File outFile = new File("src/test/resources/Thumbnailator/temp-0.png");
-			outFile.deleteOnExit();
-
-			assertEquals(1, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(BufferedImage)</li>
-		 * <li>outputFormat("png")</li>
 		 * <li>asBufferedImage()</li>
 		 * </ol>
 		 * and the expected outcome is,
@@ -724,80 +585,7 @@ public class ThumbnailsBuilderInputOutputTest {
 			}
 		}
 
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(BufferedImage, BufferedImage)</li>
-		 * <li>toFiles(Iterable<File>)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Processing completes successfully. Image format is determined
-		 * by the extension of the file.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_BufferedImages_toFiles_Iterable_NoOutputFormatSpecified() throws IOException {
-			// given
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
 
-			// when
-			Thumbnails.of(img, img)
-				.size(50, 50)
-				.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
-
-			// then
-			File outFile = new File("src/test/resources/Thumbnailator/temp-0.png");
-			outFile.deleteOnExit();
-
-			assertEquals("png", TestUtils.getFormatName(new FileInputStream(outFile)));
-
-			BufferedImage fromFileImage1 = ImageIO.read(outFile);
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(BufferedImage, BufferedImage)</li>
-		 * <li>asFiles(Iterable<File>)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>Processing completes successfully. Image format is determined
-		 * by the extension of the file.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_BufferedImages_asFiles_Iterable_NoOutputFormatSpecified() throws IOException {
-			// given
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-
-			// when
-			List<File> thumbnails = Thumbnails.of(img, img)
-				.size(50, 50)
-				.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
-
-			// then
-			assertEquals(2, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-			assertEquals("png", TestUtils.getFormatName(new FileInputStream(thumbnails.get(0))));
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-
-			BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
-			assertEquals("png", TestUtils.getFormatName(new FileInputStream(thumbnails.get(1))));
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-
-			// clean up
-			thumbnails.get(0).deleteOnExit();
-			thumbnails.get(1).deleteOnExit();
-		}
 
 		/**
 		 * Test for the {@link Thumbnails.Builder} class where,
@@ -1021,90 +809,6 @@ public class ThumbnailsBuilderInputOutputTest {
 				// clean up
 				new File(destFilePath).deleteOnExit();
 			}
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(BufferedImage, BufferedImage)</li>
-		 * <li>outputFormat("png")</li>
-		 * <li>toFiles(Iterable<File>)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Iterable<File> object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_BufferedImages_toFiles_Iterable_OutputFormatSpecified() throws IOException {
-			// given
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-
-			// when
-			Thumbnails.of(img, img)
-				.size(50, 50)
-				.outputFormat("png")
-				.toFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
-
-			// then
-			File outFile1 = new File("src/test/resources/Thumbnailator/temp-0.png");
-			outFile1.deleteOnExit();
-			File outFile2 = new File("src/test/resources/Thumbnailator/temp-1.png");
-			outFile2.deleteOnExit();
-
-			BufferedImage fromFileImage1 = ImageIO.read(outFile1);
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-
-			BufferedImage fromFileImage2 = ImageIO.read(outFile2);
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>Thumbnails.of(BufferedImage, BufferedImage)</li>
-		 * <li>outputFormat("png")</li>
-		 * <li>asFiles(Iterable<File>)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is generated and written to a file whose name is generated
-		 * from the Iterable<File> object.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_BufferedImages_asFiles_Iterable_OutputFormatSpecified() throws IOException {
-			// given
-			BufferedImage img = new BufferedImageBuilder(200, 200).build();
-
-			// when
-			List<File> thumbnails = Thumbnails.of(img, img)
-				.size(50, 50)
-				.outputFormat("png")
-				.asFiles(new ConsecutivelyNumberedFilenames(new File("src/test/resources/Thumbnailator"), "temp-%d.png"));
-
-			// then
-			File outFile = new File("src/test/resources/Thumbnailator/temp-0.png");
-			outFile.deleteOnExit();
-
-			assertEquals(2, thumbnails.size());
-
-			BufferedImage fromFileImage1 = ImageIO.read(thumbnails.get(0));
-			assertEquals(50, fromFileImage1.getWidth());
-			assertEquals(50, fromFileImage1.getHeight());
-
-			BufferedImage fromFileImage2 = ImageIO.read(thumbnails.get(1));
-			assertEquals(50, fromFileImage2.getWidth());
-			assertEquals(50, fromFileImage2.getHeight());
-
-			// clean up
-			thumbnails.get(0).deleteOnExit();
-			thumbnails.get(1).deleteOnExit();
 		}
 
 		/**
@@ -4294,6 +3998,112 @@ public class ThumbnailsBuilderInputOutputTest {
 		}
 
 		@Test
+		public void ofBufferedImageToFilesIterableNoOutputFormatSpecified() throws IOException {
+			// given
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+
+			outputFile = new File(temporaryFolder.getRoot(), "first.png");
+			if (outputFileExists) {
+				TestUtils.copyResourceToFile("Thumbnailator/grid.png", outputFile);
+			}
+
+			// when
+			Thumbnails.of(img)
+					.size(50, 50)
+					.allowOverwrite(allowOverwrite)
+					.toFiles(Collections.singletonList(outputFile));
+
+			// then
+			assertEquals("png", TestUtils.getFormatName(new FileInputStream(outputFile)));
+			verify();
+		}
+
+		@Test
+		public void ofBufferedImageToFilesIterableOutputFormatSpecified() throws IOException {
+			// given
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+
+			outputFile = new File(temporaryFolder.getRoot(), "first.png");
+			if (outputFileExists) {
+				TestUtils.copyResourceToFile("Thumbnailator/grid.png", outputFile);
+			}
+
+			// when
+			Thumbnails.of(img)
+					.size(50, 50)
+					.allowOverwrite(allowOverwrite)
+					.outputFormat("png")
+					.toFiles(Collections.singletonList(outputFile));
+
+			// then
+			assertEquals("png", TestUtils.getFormatName(new FileInputStream(outputFile)));
+			verify();
+		}
+
+		@Test
+		public void ofBufferedImageAsFilesIterableNoOutputFormatSpecified() throws IOException {
+			// given
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+
+			outputFile = new File(temporaryFolder.getRoot(), "first.png");
+			if (outputFileExists) {
+				TestUtils.copyResourceToFile("Thumbnailator/grid.png", outputFile);
+			}
+
+			// when
+			List<File> outputFiles = Thumbnails.of(img)
+					.size(50, 50)
+					.allowOverwrite(allowOverwrite)
+					.asFiles(Collections.singletonList(outputFile));
+
+			// then
+			Queue<File> verificationQueue = new LinkedList<File>(outputFiles);
+			int expectedListSize = 0;
+			if (expectOutputChanged) {
+				expectedListSize++;
+				File f = verificationQueue.remove();
+				assertEquals(outputFile, f);
+				assertEquals("png", TestUtils.getFormatName(new FileInputStream(f)));
+			}
+			assertEquals(0, verificationQueue.size());
+			assertEquals(expectedListSize, outputFiles.size());
+
+			verify();
+		}
+
+		@Test
+		public void ofBufferedImageAsFilesIterableOutputFormatSpecified() throws IOException {
+			// given
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+
+			outputFile = new File(temporaryFolder.getRoot(), "first.png");
+			if (outputFileExists) {
+				TestUtils.copyResourceToFile("Thumbnailator/grid.png", outputFile);
+			}
+
+			// when
+			List<File> outputFiles = Thumbnails.of(img)
+					.size(50, 50)
+					.allowOverwrite(allowOverwrite)
+					.outputFormat("png")
+					.asFiles(Collections.singletonList(outputFile));
+
+			// then
+			Queue<File> verificationQueue = new LinkedList<File>(outputFiles);
+			int expectedListSize = 0;
+			if (expectOutputChanged) {
+				expectedListSize++;
+				File f = verificationQueue.remove();
+				assertEquals(outputFile, f);
+				assertEquals("png", TestUtils.getFormatName(new FileInputStream(f)));
+			}
+			assertEquals(0, verificationQueue.size());
+			assertEquals(expectedListSize, outputFiles.size());
+
+			verify();
+		}
+
+		@Test
 		public void ofUrlToFilesIterable() throws IOException {
 			outputFile = new File(temporaryFolder.getRoot(), "first.png");
 			URL originalUrl = TestUtils.getResource("Thumbnailator/grid.png");
@@ -4687,6 +4497,143 @@ public class ThumbnailsBuilderInputOutputTest {
 			}
 			if (expectSecondOutputChanged) {
 				expectedListSize++;
+				assertEquals(secondOutputFile, verificationQueue.remove());
+			}
+			assertEquals(0, verificationQueue.size());
+			assertEquals(expectedListSize, outputFiles.size());
+
+			verify();
+		}
+
+
+		@Test
+		public void ofBufferedImagesToFilesIterableNoOutputFormatSpecified() throws IOException {
+			firstOutputFile = new File(temporaryFolder.getRoot(), "first.png");
+			secondOutputFile = new File(temporaryFolder.getRoot(), "second.png");
+
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+
+			if (firstOutputFileExists) {
+				TestUtils.copyResourceToFile(
+						"Thumbnailator/grid.png", firstOutputFile
+				);
+			}
+			if (secondOutputFileExists) {
+				TestUtils.copyResourceToFile(
+						"Thumbnailator/grid.png", secondOutputFile
+				);
+			}
+
+			Thumbnails.of(img, img)
+					.size(50, 50)
+					.allowOverwrite(allowOverwrite)
+					.toFiles(Arrays.asList(firstOutputFile, secondOutputFile));
+
+			verify();
+		}
+
+		@Test
+		public void ofBufferedImagesToFilesIterableOutputFormatSpecified() throws IOException {
+			firstOutputFile = new File(temporaryFolder.getRoot(), "first.png");
+			secondOutputFile = new File(temporaryFolder.getRoot(), "second.png");
+
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+
+			if (firstOutputFileExists) {
+				TestUtils.copyResourceToFile(
+						"Thumbnailator/grid.png", firstOutputFile
+				);
+			}
+			if (secondOutputFileExists) {
+				TestUtils.copyResourceToFile(
+						"Thumbnailator/grid.png", secondOutputFile
+				);
+			}
+
+			Thumbnails.of(img, img)
+					.size(50, 50)
+					.allowOverwrite(allowOverwrite)
+					.outputFormat("png")
+					.toFiles(Arrays.asList(firstOutputFile, secondOutputFile));
+
+			assertEquals("png", TestUtils.getFormatName(new FileInputStream(firstOutputFile)));
+			assertEquals("png", TestUtils.getFormatName(new FileInputStream(secondOutputFile)));
+			verify();
+		}
+
+		@Test
+		public void ofBufferedImagesAsFilesIterableNoOutputFormatSpecified() throws IOException {
+			firstOutputFile = new File(temporaryFolder.getRoot(), "first.png");
+			secondOutputFile = new File(temporaryFolder.getRoot(), "second.png");
+
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+
+			if (firstOutputFileExists) {
+				TestUtils.copyResourceToFile(
+						"Thumbnailator/grid.png", firstOutputFile
+				);
+			}
+			if (secondOutputFileExists) {
+				TestUtils.copyResourceToFile(
+						"Thumbnailator/grid.png", secondOutputFile
+				);
+			}
+
+			List<File> outputFiles = Thumbnails.of(img, img)
+					.size(50, 50)
+					.allowOverwrite(allowOverwrite)
+					.asFiles(Arrays.asList(firstOutputFile, secondOutputFile));
+
+			Queue<File> verificationQueue = new LinkedList<File>(outputFiles);
+			int expectedListSize = 0;
+			if (expectFirstOutputChanged) {
+				expectedListSize++;
+				assertEquals(firstOutputFile, verificationQueue.remove());
+			}
+			if (expectSecondOutputChanged) {
+				expectedListSize++;
+				assertEquals(secondOutputFile, verificationQueue.remove());
+			}
+			assertEquals(0, verificationQueue.size());
+			assertEquals(expectedListSize, outputFiles.size());
+
+			verify();
+		}
+
+		@Test
+		public void ofBufferedImagesAsFilesIterableOutputFormatSpecified() throws IOException {
+			firstOutputFile = new File(temporaryFolder.getRoot(), "first.png");
+			secondOutputFile = new File(temporaryFolder.getRoot(), "second.png");
+
+			BufferedImage img = new BufferedImageBuilder(200, 200).build();
+
+			if (firstOutputFileExists) {
+				TestUtils.copyResourceToFile(
+						"Thumbnailator/grid.png", firstOutputFile
+				);
+			}
+			if (secondOutputFileExists) {
+				TestUtils.copyResourceToFile(
+						"Thumbnailator/grid.png", secondOutputFile
+				);
+			}
+
+			List<File> outputFiles = Thumbnails.of(img, img)
+					.size(50, 50)
+					.allowOverwrite(allowOverwrite)
+					.outputFormat("png")
+					.asFiles(Arrays.asList(firstOutputFile, secondOutputFile));
+
+			Queue<File> verificationQueue = new LinkedList<File>(outputFiles);
+			int expectedListSize = 0;
+			if (expectFirstOutputChanged) {
+				expectedListSize++;
+				assertEquals("png", TestUtils.getFormatName(new FileInputStream(firstOutputFile)));
+				assertEquals(firstOutputFile, verificationQueue.remove());
+			}
+			if (expectSecondOutputChanged) {
+				expectedListSize++;
+				assertEquals("png", TestUtils.getFormatName(new FileInputStream(firstOutputFile)));
 				assertEquals(secondOutputFile, verificationQueue.remove());
 			}
 			assertEquals(0, verificationQueue.size());
