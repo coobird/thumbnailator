@@ -965,7 +965,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void of_URL_asBufferedImage() throws IOException {
 			// given
-			URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+			URL f1 = TestUtils.getResource("Thumbnailator/grid.png");
 
 			// when
 			BufferedImage thumbnail = Thumbnails.of(f1)
@@ -992,7 +992,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void of_URL_asBufferedImages() throws IOException {
 			// given
-			URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+			URL f1 = TestUtils.getResource("Thumbnailator/grid.png");
 
 			// when
 			List<BufferedImage> thumbnails = Thumbnails.of(f1)
@@ -1022,7 +1022,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void of_URL_toOutputStream() throws IOException {
 			// given
-			URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+			URL f1 = TestUtils.getResource("Thumbnailator/grid.png");
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 
 			// when
@@ -1052,7 +1052,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void of_URL_toOutputStreams() throws IOException {
 			// given
-			URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+			URL f1 = TestUtils.getResource("Thumbnailator/grid.png");
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 
 			// when
@@ -1082,7 +1082,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void of_URL_iterableBufferedImages() throws IOException {
 			// given
-			URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+			URL f1 = TestUtils.getResource("Thumbnailator/grid.png");
 
 			// when
 			Iterable<BufferedImage> thumbnails = Thumbnails.of(f1)
@@ -1114,7 +1114,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test(expected=IllegalArgumentException.class)
 		public void of_URLs_asBufferedImage() throws IOException {
 			// given
-			URL f = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+			URL f = TestUtils.getResource("Thumbnailator/grid.png");
 
 			try {
 				// when
@@ -1143,8 +1143,8 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void of_URLs_asBufferedImages() throws IOException {
 			// given
-			URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
-			URL f2 = new File("src/test/resources/Thumbnailator/grid.jpg").toURL();
+			URL f1 = TestUtils.getResource("Thumbnailator/grid.png");
+			URL f2 = TestUtils.getResource("Thumbnailator/grid.jpg");
 
 			// when
 			List<BufferedImage> thumbnails = Thumbnails.of(f1, f2)
@@ -1178,7 +1178,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test(expected=IllegalArgumentException.class)
 		public void of_URLs_toOutputStream() throws IOException {
 			// given
-			URL f = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+			URL f = TestUtils.getResource("Thumbnailator/grid.png");
 			OutputStream os = mock(OutputStream.class);
 
 			try {
@@ -1209,7 +1209,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void of_URLs_toOutputStreams() throws IOException {
 			// given
-			URL f = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+			URL f = TestUtils.getResource("Thumbnailator/grid.png");
 			ByteArrayOutputStream os1 = new ByteArrayOutputStream();
 			ByteArrayOutputStream os2 = new ByteArrayOutputStream();
 
@@ -1246,8 +1246,8 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void of_URLs_iterableBufferedImages() throws IOException {
 			// given
-			URL f1 = new File("src/test/resources/Thumbnailator/grid.png").toURL();
-			URL f2 = new File("src/test/resources/Thumbnailator/grid.jpg").toURL();
+			URL f1 = TestUtils.getResource("Thumbnailator/grid.png");
+			URL f2 = TestUtils.getResource("Thumbnailator/grid.jpg");
 
 			// when
 			Iterable<BufferedImage> thumbnails = Thumbnails.of(f1, f2)
@@ -1282,7 +1282,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void fromURLs_Single_asBufferedImage() throws IOException {
 			// given
-			URL url = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+			URL url = TestUtils.getResource("Thumbnailator/grid.png");
 
 			// when
 			BufferedImage thumbnail = Thumbnails.fromURLs(Arrays.asList(url))
@@ -1308,7 +1308,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test(expected=IllegalArgumentException.class)
 		public void fromURLs_Multiple_asBufferedImage() throws IOException {
 			// given
-			URL url = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+			URL url = TestUtils.getResource("Thumbnailator/grid.png");
 
 			try {
 				// when
@@ -1336,7 +1336,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void fromURLs_Single_asBufferedImages() throws IOException {
 			// given
-			URL url = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+			URL url = TestUtils.getResource("Thumbnailator/grid.png");
 
 			// when
 			List<BufferedImage> thumbnails = Thumbnails.fromURLs(Arrays.asList(url))
@@ -1364,7 +1364,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void fromURLs_Multiple_asBufferedImages() throws IOException {
 			// given
-			URL url = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+			URL url = TestUtils.getResource("Thumbnailator/grid.png");
 
 			// when
 			List<BufferedImage> thumbnails = Thumbnails.fromURLs(Arrays.asList(url, url))
@@ -1394,7 +1394,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void fromURLsIterable_Single_asBufferedImage() throws IOException {
 			// given
-			URL url = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+			URL url = TestUtils.getResource("Thumbnailator/grid.png");
 
 			// when
 			BufferedImage thumbnail = Thumbnails.fromURLs((Iterable<URL>)Arrays.asList(url))
@@ -1420,7 +1420,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test(expected=IllegalArgumentException.class)
 		public void fromURLsIterable_Multiple_asBufferedImage() throws IOException {
 			// given
-			URL url = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+			URL url = TestUtils.getResource("Thumbnailator/grid.png");
 
 			try {
 				// when
@@ -1448,7 +1448,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void fromURLsIterable_Single_asBufferedImages() throws IOException {
 			// given
-			URL url = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+			URL url = TestUtils.getResource("Thumbnailator/grid.png");
 
 			// when
 			List<BufferedImage> thumbnails = Thumbnails.fromURLs((Iterable<URL>)Arrays.asList(url))
@@ -1476,7 +1476,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void fromURLsIterable_Multiple_asBufferedImages() throws IOException {
 			// given
-			URL url = new File("src/test/resources/Thumbnailator/grid.png").toURL();
+			URL url = TestUtils.getResource("Thumbnailator/grid.png");
 
 			// when
 			List<BufferedImage> thumbnails = Thumbnails.fromURLs((Iterable<URL>)Arrays.asList(url, url))
