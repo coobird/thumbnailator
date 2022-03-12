@@ -1495,7 +1495,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void of_InputStream_asBufferedImage() throws IOException {
 			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 
 			// when
 			BufferedImage thumbnail = Thumbnails.of(is)
@@ -1522,7 +1522,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void of_InputStream_asBufferedImages() throws IOException {
 			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 
 			// when
 			List<BufferedImage> thumbnails = Thumbnails.of(is)
@@ -1552,7 +1552,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void of_InputStream_toOutputStream() throws IOException {
 			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 
 			// when
@@ -1582,7 +1582,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void of_InputStream_toOutputStreams() throws IOException {
 			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 
 			// when
@@ -1612,7 +1612,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void of_InputStream_iterableBufferedImages() throws IOException {
 			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 
 			// when
 			Iterable<BufferedImage> thumbnails = Thumbnails.of(is)
@@ -1644,7 +1644,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test(expected=IllegalArgumentException.class)
 		public void of_InputStreams_asBufferedImage() throws IOException {
 			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 
 			try {
 				// when
@@ -1673,8 +1673,8 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void of_InputStreams_asBufferedImages() throws IOException {
 			// given
-			InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
-			InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
+			InputStream is1 = TestUtils.getResourceStream("Thumbnailator/grid.png");
+			InputStream is2 = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
 
 			// when
 			List<BufferedImage> thumbnails = Thumbnails.of(is1, is2)
@@ -1708,7 +1708,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test(expected=IllegalArgumentException.class)
 		public void of_InputStreams_toOutputStream() throws IOException {
 			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 			OutputStream os = mock(OutputStream.class);
 
 			try {
@@ -1739,8 +1739,8 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void of_InputStreams_toOutputStreams() throws IOException {
 			// given
-			InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
-			InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is1 = TestUtils.getResourceStream("Thumbnailator/grid.png");
+			InputStream is2 = TestUtils.getResourceStream("Thumbnailator/grid.png");
 			ByteArrayOutputStream os1 = new ByteArrayOutputStream();
 			ByteArrayOutputStream os2 = new ByteArrayOutputStream();
 
@@ -1777,8 +1777,8 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void of_InputStreams_iterableBufferedImages() throws IOException {
 			// given
-			InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
-			InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
+			InputStream is1 = TestUtils.getResourceStream("Thumbnailator/grid.png");
+			InputStream is2 = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
 
 			// when
 			Iterable<BufferedImage> thumbnails = Thumbnails.of(is1, is2)
@@ -1813,7 +1813,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void fromInputStreams_Single_asBufferedImage() throws IOException {
 			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 
 			// when
 			BufferedImage thumbnail = Thumbnails.fromInputStreams(Arrays.asList(is))
@@ -1839,7 +1839,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test(expected=IllegalArgumentException.class)
 		public void fromInputStreams_Multiple_asBufferedImage() throws IOException {
 			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 
 			try {
 				// when
@@ -1867,7 +1867,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void fromInputStreams_Single_asBufferedImages() throws IOException {
 			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 
 			// when
 			List<BufferedImage> thumbnails = Thumbnails.fromInputStreams(Arrays.asList(is))
@@ -1895,8 +1895,8 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void fromInputStreams_Multiple_asBufferedImages() throws IOException {
 			// given
-			InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
-			InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is1 = TestUtils.getResourceStream("Thumbnailator/grid.png");
+			InputStream is2 = TestUtils.getResourceStream("Thumbnailator/grid.png");
 
 			// when
 			List<BufferedImage> thumbnails = Thumbnails.fromInputStreams(Arrays.asList(is1, is2))
@@ -1915,37 +1915,6 @@ public class ThumbnailsBuilderInputOutputTest {
 		/**
 		 * Test for the {@link Thumbnails.Builder} class where,
 		 * <ol>
-		 * <li>Thumbnails.of(InputStream)</li>
-		 * <li>InputStream is a FileInputStream</li>
-		 * <li>toFile(File)</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>An image is written to the specified file.</li>
-		 * </ol>
-		 * @throws IOException
-		 */
-		@Test
-		public void of_InputStream_FileInputStream_toFile() throws IOException {
-			// given
-			FileInputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
-			File outFile = new File("src/test/resources/Thumbnailator/grid.tmp.png");
-			outFile.deleteOnExit();
-
-			// when
-			Thumbnails.of(is)
-				.size(50, 50)
-				.toFile(outFile);
-
-			// then
-			BufferedImage fromFileImage = ImageIO.read(outFile);
-			assertEquals(50, fromFileImage.getWidth());
-			assertEquals(50, fromFileImage.getHeight());
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
 		 * <li>Thumbnails.fromImages(Iterable[InputStream])</li>
 		 * <li>asBufferedImage()</li>
 		 * </ol>
@@ -1957,7 +1926,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void fromInputStreamsIterable_Single_asBufferedImage() throws IOException {
 			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 
 			// when
 			BufferedImage thumbnail = Thumbnails.fromInputStreams((Iterable<InputStream>)Arrays.asList(is))
@@ -1983,7 +1952,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test(expected=IllegalArgumentException.class)
 		public void fromInputStreamsIterable_Multiple_asBufferedImage() throws IOException {
 			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 
 			try {
 				// when
@@ -2011,7 +1980,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void fromInputStreamsIterable_Single_asBufferedImages() throws IOException {
 			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 
 			// when
 			List<BufferedImage> thumbnails = Thumbnails.fromInputStreams((Iterable<InputStream>)Arrays.asList(is))
@@ -2039,8 +2008,8 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void fromInputStreamsIterable_Multiple_asBufferedImages() throws IOException {
 			// given
-			InputStream is1 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
-			InputStream is2 = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is1 = TestUtils.getResourceStream("Thumbnailator/grid.png");
+			InputStream is2 = TestUtils.getResourceStream("Thumbnailator/grid.png");
 
 			// when
 			List<BufferedImage> thumbnails = Thumbnails.fromInputStreams((Iterable<InputStream>)Arrays.asList(is1, is2))
@@ -2075,12 +2044,7 @@ public class ThumbnailsBuilderInputOutputTest {
 
 		private File newCopyOfPngFile() throws IOException {
 			File f = temporaryFolder.newFile(generatePngName());
-			TestUtils.copyFile(new File("src/test/resources/Thumbnailator/grid.png"), f);
-			return f;
-		}
-
-		private File newUncreatedPngFile() throws IOException {
-			return new File(temporaryFolder.getRoot(), generatePngName());
+			return TestUtils.copyResourceToFile("Thumbnailator/grid.png", f);
 		}
 
 		/**
