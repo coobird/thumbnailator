@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,11 @@
 
 package net.coobird.thumbnailator.filters;
 
+import static net.coobird.thumbnailator.TestUtils.getImageFromResource;
 import static net.coobird.thumbnailator.filters.ImageFilterTestUtils.assertImageTypeRetained;
 import static org.junit.Assert.*;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-
-import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.test.BufferedImageAssert;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
@@ -97,7 +95,7 @@ public class RotationTest {
 	@Test
 	public void imageRotatedLeft90Degrees() throws Exception {
 		// given
-		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/original.png"));
+		BufferedImage img = getImageFromResource("Exif/original.png");
 		
 		// when
 		BufferedImage result = Rotation.LEFT_90_DEGREES.apply(img);
@@ -116,7 +114,7 @@ public class RotationTest {
 	@Test
 	public void imageRotatedRight90Degrees() throws Exception {
 		// given
-		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/original.png"));
+		BufferedImage img = getImageFromResource("Exif/original.png");
 		
 		// when
 		BufferedImage result = Rotation.RIGHT_90_DEGREES.apply(img);
@@ -135,7 +133,7 @@ public class RotationTest {
 	@Test
 	public void imageRotated180Degrees() throws Exception {
 		// given
-		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/original.png"));
+		BufferedImage img = getImageFromResource("Exif/original.png");
 		
 		// when
 		BufferedImage result = Rotation.ROTATE_180_DEGREES.apply(img);
@@ -154,7 +152,7 @@ public class RotationTest {
 	@Test
 	public void stretchedImageRotatedLeft90Degrees() throws Exception {
 		// given
-		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/stretch.png"));
+		BufferedImage img = getImageFromResource("Exif/stretch.png");
 		
 		// when
 		BufferedImage result = Rotation.LEFT_90_DEGREES.apply(img);
@@ -174,7 +172,7 @@ public class RotationTest {
 	@Test
 	public void stretchedImageRotatedRight90Degrees() throws Exception {
 		// given
-		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/stretch.png"));
+		BufferedImage img = getImageFromResource("Exif/stretch.png");
 		
 		// when
 		BufferedImage result = Rotation.RIGHT_90_DEGREES.apply(img);
@@ -194,7 +192,7 @@ public class RotationTest {
 	@Test
 	public void stretchedImageRotated180Degrees() throws Exception {
 		// given
-		BufferedImage img = ImageIO.read(new File("src/test/resources/Exif/stretch.png"));
+		BufferedImage img = getImageFromResource("Exif/stretch.png");
 		
 		// when
 		BufferedImage result = Rotation.ROTATE_180_DEGREES.apply(img);

@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,11 @@
 
 package net.coobird.thumbnailator.tasks.io;
 
+import static net.coobird.thumbnailator.TestUtils.getImageFromResource;
 import static org.junit.Assert.*;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 import net.coobird.thumbnailator.geometry.AbsoluteSize;
@@ -58,7 +56,7 @@ public class BufferedImageSourceTest {
 	@Test
 	public void givenValidImage() throws IOException {
 		// given
-		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		BufferedImage sourceImage = getImageFromResource("Thumbnailator/grid.png");
 		BufferedImageSource source = new BufferedImageSource(sourceImage);
 		
 		// when
@@ -74,7 +72,7 @@ public class BufferedImageSourceTest {
 	@Test(expected=IllegalStateException.class)
 	public void givenValidImage_getInputFormatNameBeforeRead() throws IOException {
 		// given
-		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		BufferedImage sourceImage = getImageFromResource("Thumbnailator/grid.png");
 		BufferedImageSource source = new BufferedImageSource(sourceImage);
 		
 		try {
@@ -105,7 +103,7 @@ public class BufferedImageSourceTest {
 	@Test
 	public void appliesSourceRegion() throws IOException {
 		// given
-		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		BufferedImage sourceImage = getImageFromResource("Thumbnailator/grid.png");
 		
 		BufferedImageSource source = new BufferedImageSource(sourceImage);
 		source.setThumbnailParameter(
@@ -141,7 +139,7 @@ public class BufferedImageSourceTest {
 	@Test
 	public void appliesSourceRegionTooBig() throws IOException {
 		// given
-		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		BufferedImage sourceImage = getImageFromResource("Thumbnailator/grid.png");
 		
 		BufferedImageSource source = new BufferedImageSource(sourceImage);
 		source.setThumbnailParameter(
@@ -177,7 +175,7 @@ public class BufferedImageSourceTest {
 	@Test
 	public void appliesSourceRegionBeyondOrigin() throws IOException {
 		// given
-		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		BufferedImage sourceImage = getImageFromResource("Thumbnailator/grid.png");
 		
 		BufferedImageSource source = new BufferedImageSource(sourceImage);
 		source.setThumbnailParameter(
@@ -198,7 +196,7 @@ public class BufferedImageSourceTest {
 	@Test
 	public void appliesSourceRegionNotSpecified() throws IOException {
 		// given
-		BufferedImage sourceImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		BufferedImage sourceImage = getImageFromResource("Thumbnailator/grid.png");
 		
 		BufferedImageSource source = new BufferedImageSource(sourceImage);
 		source.setThumbnailParameter(
