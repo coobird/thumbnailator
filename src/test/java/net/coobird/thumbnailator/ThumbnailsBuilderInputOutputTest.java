@@ -3283,21 +3283,19 @@ public class ThumbnailsBuilderInputOutputTest {
 
 		@Test
 		public void useExifOrientationIsTrue_OrientationHonored() throws IOException {
-			// given
-			File outFile1 = TestUtils.createTempFile(TMPDIR, "jpg");
-			File outFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
+			ByteArrayOutputStream baos1 = new ByteArrayOutputStream();
+			ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
 
-			// when
-			List<File> results =
-				Thumbnails.of("src/test/resources/Exif/source_2.jpg", "src/test/resources/Exif/source_1.jpg")
-					.size(100, 100)
-					.useExifOrientation(true)
-					.asFiles(Arrays.asList(outFile1, outFile2));
+			InputStream source1 = TestUtils.getResourceStream("Exif/source_2.jpg");
+			InputStream source2 = TestUtils.getResourceStream("Exif/source_1.jpg");
 
-			// then
-			assertEquals(results.size(), 2);
+			Thumbnails.of(source1, source2)
+				.size(100, 100)
+				.useExifOrientation(true)
+				.toOutputStreams(Arrays.asList(baos1, baos2));
+
 			BufferedImageAssert.assertMatches(
-					ImageIO.read(results.get(0)),
+					ImageIO.read(new ByteArrayInputStream(baos1.toByteArray())),
 					new float[] {
 							1, 1, 1,
 							1, 1, 1,
@@ -3305,7 +3303,7 @@ public class ThumbnailsBuilderInputOutputTest {
 					}
 			);
 			BufferedImageAssert.assertMatches(
-					ImageIO.read(results.get(1)),
+					ImageIO.read(new ByteArrayInputStream(baos2.toByteArray())),
 					new float[] {
 							1, 1, 1,
 							1, 1, 1,
@@ -3316,21 +3314,18 @@ public class ThumbnailsBuilderInputOutputTest {
 
 		@Test
 		public void useExifOrientationIsFalse_OrientationIgnored() throws IOException {
-			// given
-			File outFile1 = TestUtils.createTempFile(TMPDIR, "jpg");
-			File outFile2 = TestUtils.createTempFile(TMPDIR, "jpg");
+			ByteArrayOutputStream baos1 = new ByteArrayOutputStream();
+			ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
 
-			// when
-			List<File> results =
-				Thumbnails.of("src/test/resources/Exif/source_2.jpg", "src/test/resources/Exif/source_1.jpg")
-					.size(100, 100)
-					.useExifOrientation(false)
-					.asFiles(Arrays.asList(outFile1, outFile2));
+			InputStream source1 = TestUtils.getResourceStream("Exif/source_2.jpg");
+			InputStream source2 = TestUtils.getResourceStream("Exif/source_1.jpg");
 
-			// then
-			assertEquals(results.size(), 2);
+			Thumbnails.of(source1, source2)				.size(100, 100)
+				.useExifOrientation(false)
+				.toOutputStreams(Arrays.asList(baos1, baos2));
+
 			BufferedImageAssert.assertMatches(
-					ImageIO.read(results.get(0)),
+					ImageIO.read(new ByteArrayInputStream(baos1.toByteArray())),
 					new float[] {
 							1, 1, 1,
 							1, 1, 1,
@@ -3338,7 +3333,7 @@ public class ThumbnailsBuilderInputOutputTest {
 					}
 			);
 			BufferedImageAssert.assertMatches(
-					ImageIO.read(results.get(1)),
+					ImageIO.read(new ByteArrayInputStream(baos2.toByteArray())),
 					new float[] {
 							1, 1, 1,
 							1, 1, 1,
@@ -3368,7 +3363,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void toOutputStreamImageFormatMatchesInputForPngStream() throws IOException {
 			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.png");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.png");
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
 			// when
@@ -3383,7 +3378,7 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Test
 		public void toOutputStreamImageFormatMatchesInputForJpegStream() throws IOException {
 			// given
-			InputStream is = new FileInputStream("src/test/resources/Thumbnailator/grid.jpg");
+			InputStream is = TestUtils.getResourceStream("Thumbnailator/grid.jpg");
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
 			// when
