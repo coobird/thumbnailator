@@ -6246,7 +6246,7 @@ public class ThumbnailsBuilderInputOutputTest {
 			File sourceFile = TestUtils.copyResourceToTemporaryFile(
 					"Thumbnailator/grid.png", temporaryFolder
 			);
-			File destFile = TestUtils.createTempFile(temporaryFolder.getRoot(), "jpg");
+			File destFile = new File(temporaryFolder.getRoot(), "dest.jpg");
 
 			// when
 			Thumbnails.of(sourceFile)
@@ -6266,7 +6266,7 @@ public class ThumbnailsBuilderInputOutputTest {
 			File sourceFile = TestUtils.copyResourceToTemporaryFile(
 					"Thumbnailator/grid.png", temporaryFolder
 			);
-			File destFile = TestUtils.createTempFile(temporaryFolder.getRoot(), "jpg");
+			File destFile = new File(temporaryFolder.getRoot(), "dest.jpg");
 
 			// when
 			Thumbnails.of(sourceFile)

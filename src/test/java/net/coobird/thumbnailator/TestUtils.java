@@ -33,7 +33,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -76,34 +75,6 @@ public class TestUtils {
 		return ImageIO.getImageReaders(
 				ImageIO.createImageInputStream(is)
 		).next().getFormatName();
-	}
-
-	public static void makeTemporaryDirectory(String dir) {
-		new File(dir).mkdirs();
-	}
-
-	public static void deleteTemporaryDirectory(String dir) {
-		File tmpDir = new File(dir);
-		for (File f : tmpDir.listFiles()) {
-			f.delete();
-		}
-		tmpDir.delete();
-		
-		File tmpParentDir = tmpDir.getParentFile();
-		if (tmpParentDir.isDirectory() && tmpParentDir.getName().equals("tmp")) {
-			tmpParentDir.delete();
-		}
-	}
-
-	public static File createTempFile(String dir, String ext) throws IOException {
-		return createTempFile(new File(dir), ext);
-	}
-
-	public static File createTempFile(File dir, String ext) throws IOException {
-		return new File(
-				dir,
-				"tmp-" + Math.abs(new Random().nextLong()) + "." + ext
-		);
 	}
 
 	public static URL getResource(String resourceName) throws IOException {
