@@ -72,12 +72,6 @@ import org.junit.runners.Parameterized;
 @RunWith(Enclosed.class)
 public class ThumbnailsBuilderInputOutputTest {
 
-	/**
-	 * The temporary directory to use when creating files to use for this test.
-	 */
-	private static final String TMPDIR =
-			"src/test/resources/tmp/ThumbnailsBuilderInputOutputTest";
-
 	public static class Tests {
 
 		/**
@@ -2025,216 +2019,6 @@ public class ThumbnailsBuilderInputOutputTest {
 			assertEquals(100, thumbnails.get(1).getHeight());
 		}
 
-		private void assertImageExists(File f, int width, int height) throws IOException {
-			assertTrue("f exists.", f.exists());
-
-			BufferedImage img = ImageIO.read(f);
-			assertNotNull("Read image is null.", img);
-			assertEquals(width, img.getWidth());
-			assertEquals(height, img.getHeight());
-		}
-
-		@Rule
-		public TemporaryFolder temporaryFolder = new TemporaryFolder();
-
-		private AtomicInteger counter = new AtomicInteger(0);
-		private String generatePngName() {
-			return this.getClass().getName() + "_" + counter.incrementAndGet() + ".png";
-		}
-
-		private File newCopyOfPngFile() throws IOException {
-			File f = temporaryFolder.newFile(generatePngName());
-			return TestUtils.copyResourceToFile("Thumbnailator/grid.png", f);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>input is a file</li>
-		 * <li>output is via toFile</li>
-		 * <li>where the input and output file is the same</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is overwritten</li>
-		 * </ol>
-		 */
-		@Test
-		public void toFile_File_DefaultIsOverwrite() throws IOException {
-			// set up
-			File f = newCopyOfPngFile();
-
-			// given
-			// when
-			Thumbnails.of(f)
-				.size(50, 50)
-				.toFile(f);
-
-			// then
-			assertImageExists(f, 50, 50);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument toFile(File) is called</li>
-		 * <li>allowOverwrite is true</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is overwritten</li>
-		 * </ol>
-		 */
-		@Test
-		public void toFile_File_AllowOverwrite() throws IOException {
-			// set up
-			File f = newCopyOfPngFile();
-
-			// given
-			// when
-			Thumbnails.of(f)
-				.size(50, 50)
-				.allowOverwrite(true)
-				.toFile(f);
-
-			// then
-			assertImageExists(f, 50, 50);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument toFile(File) is called</li>
-		 * <li>allowOverwrite is false</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is overwritten</li>
-		 * </ol>
-		 */
-		@Test
-		public void toFile_File_DisallowOverwrite() throws IOException {
-			// set up
-			File f = newCopyOfPngFile();
-
-			// given
-			// when
-			try {
-				Thumbnails.of(f)
-					.size(50, 50)
-					.allowOverwrite(false)
-					.toFile(f);
-
-				fail();
-			} catch (IllegalArgumentException e) {
-				// then
-				assertEquals("The destination file exists.", e.getMessage());
-				assertImageExists(f, 100, 100);
-			}
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument toFile(String) is called</li>
-		 * <li>allowOverwrite is true</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is overwritten</li>
-		 * </ol>
-		 */
-		@Test
-		public void toFile_String_AllowOverwrite() throws IOException {
-			// set up
-			File f = newCopyOfPngFile();
-
-			// given
-			// when
-			Thumbnails.of(f)
-				.size(50, 50)
-				.allowOverwrite(true)
-				.toFile(f.getAbsolutePath());
-
-			// then
-			assertImageExists(f, 50, 50);
-		}
-
-		/**
-		 * Test for the {@link Thumbnails.Builder} class where,
-		 * <ol>
-		 * <li>the two argument toFile(String) is called</li>
-		 * <li>allowOverwrite is false</li>
-		 * </ol>
-		 * and the expected outcome is,
-		 * <ol>
-		 * <li>The destination file is overwritten</li>
-		 * </ol>
-		 */
-		@Test
-		public void toFile_String_DisallowOverwrite() throws IOException {
-			// set up
-			File f = newCopyOfPngFile();
-
-			// given
-			// when
-			try {
-				Thumbnails.of(f)
-					.size(50, 50)
-					.allowOverwrite(false)
-					.toFile(f.getAbsolutePath());
-
-				fail();
-			} catch (IllegalArgumentException e) {
-				// then
-				assertEquals("The destination file exists.", e.getMessage());
-				assertImageExists(f, 100, 100);
-			}
-		}
-
-
-
-		@Test
-		public void useOriginalFormat() throws IOException {
-			// given
-			File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-			File f = TestUtils.createTempFile(TMPDIR, "png");
-			TestUtils.copyFile(sourceFile, f);
-
-			File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
-
-			// when
-			Thumbnails.of(f)
-				.size(10, 10)
-				.useOriginalFormat()
-				.toFile(destFile);
-
-			// then
-			File actualDestFile = new File(destFile.getParent(), destFile.getName() + ".png");
-			assertTrue(actualDestFile.exists());
-			assertEquals("png", TestUtils.getFormatName(new FileInputStream(actualDestFile)));
-		}
-
-		@Test
-		public void determineOutputFormat() throws IOException {
-			// given
-			File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-			File f = TestUtils.createTempFile(TMPDIR, "png");
-			TestUtils.copyFile(sourceFile, f);
-
-			File destFile = TestUtils.createTempFile(TMPDIR, "jpg");
-
-			// when
-			Thumbnails.of(f)
-				.size(10, 10)
-				.determineOutputFormat()
-				.toFile(destFile);
-
-			// then
-			assertTrue(destFile.exists());
-			assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
-		}
-
 		@Test
 		public void useExifOrientationIsTrue_OrientationHonored() throws IOException {
 			ByteArrayOutputStream baos1 = new ByteArrayOutputStream();
@@ -2338,64 +2122,6 @@ public class ThumbnailsBuilderInputOutputTest {
 			// when
 			Thumbnails.of(is)
 				.size(100, 100)
-				.toOutputStream(baos);
-
-			// then
-			assertEquals("JPEG", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
-		}
-
-		@Test
-		public void toOutputStreamImageFormatMatchesInputForPngFile() throws IOException {
-			// given
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-			// when
-			Thumbnails.of("src/test/resources/Thumbnailator/grid.png")
-				.size(100, 100)
-				.toOutputStream(baos);
-
-			// then
-			assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
-		}
-
-		@Test
-		public void toOutputStreamImageFormatMatchesInputForJpegFile() throws IOException {
-			// given
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-			// when
-			Thumbnails.of("src/test/resources/Thumbnailator/grid.jpg")
-				.size(100, 100)
-				.toOutputStream(baos);
-
-			// then
-			assertEquals("JPEG", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
-		}
-
-		@Test
-		public void toOutputStreamImageFormatMatchesOutputFormatForPng() throws IOException {
-			// given
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-			// when
-			Thumbnails.of("src/test/resources/Thumbnailator/grid.jpg")
-				.size(100, 100)
-				.outputFormat("png")
-				.toOutputStream(baos);
-
-			// then
-			assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
-		}
-
-		@Test
-		public void toOutputStreamImageFormatMatchesOutputFormatForJpeg() throws IOException {
-			// given
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-			// when
-			Thumbnails.of("src/test/resources/Thumbnailator/grid.jpg")
-				.size(100, 100)
-				.outputFormat("JPEG")
 				.toOutputStream(baos);
 
 			// then
@@ -6351,6 +6077,285 @@ public class ThumbnailsBuilderInputOutputTest {
 			assertEquals(50, fromFileImage1.getHeight());
 			assertEquals(50, fromFileImage2.getWidth());
 			assertEquals(50, fromFileImage2.getHeight());
+		}
+	}
+
+	public static class OtherTests {
+
+		@Rule
+		public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>input is a file</li>
+		 * <li>output is via toFile</li>
+		 * <li>where the input and output file is the same</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>The destination file is overwritten</li>
+		 * </ol>
+		 */
+		@Test
+		public void toFile_File_DefaultIsOverwrite() throws IOException {
+			// set up
+			File f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+
+			// given
+			// when
+			Thumbnails.of(f)
+					.size(50, 50)
+					.toFile(f);
+
+			// then
+			assertImageExists(f, 50, 50);
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>the two argument toFile(File) is called</li>
+		 * <li>allowOverwrite is true</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>The destination file is overwritten</li>
+		 * </ol>
+		 */
+		@Test
+		public void toFile_File_AllowOverwrite() throws IOException {
+			// set up
+			File f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+
+			// given
+			// when
+			Thumbnails.of(f)
+					.size(50, 50)
+					.allowOverwrite(true)
+					.toFile(f);
+
+			// then
+			assertImageExists(f, 50, 50);
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>the two argument toFile(File) is called</li>
+		 * <li>allowOverwrite is false</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>The destination file is overwritten</li>
+		 * </ol>
+		 */
+		@Test
+		public void toFile_File_DisallowOverwrite() throws IOException {
+			// set up
+			File f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+
+			// given
+			// when
+			try {
+				Thumbnails.of(f)
+						.size(50, 50)
+						.allowOverwrite(false)
+						.toFile(f);
+
+				fail();
+			} catch (IllegalArgumentException e) {
+				// then
+				assertEquals("The destination file exists.", e.getMessage());
+				assertImageExists(f, 100, 100);
+			}
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>the two argument toFile(String) is called</li>
+		 * <li>allowOverwrite is true</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>The destination file is overwritten</li>
+		 * </ol>
+		 */
+		@Test
+		public void toFile_String_AllowOverwrite() throws IOException {
+			// set up
+			File f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+
+			// given
+			// when
+			Thumbnails.of(f)
+					.size(50, 50)
+					.allowOverwrite(true)
+					.toFile(f.getAbsolutePath());
+
+			// then
+			assertImageExists(f, 50, 50);
+		}
+
+		/**
+		 * Test for the {@link Thumbnails.Builder} class where,
+		 * <ol>
+		 * <li>the two argument toFile(String) is called</li>
+		 * <li>allowOverwrite is false</li>
+		 * </ol>
+		 * and the expected outcome is,
+		 * <ol>
+		 * <li>The destination file is overwritten</li>
+		 * </ol>
+		 */
+		@Test
+		public void toFile_String_DisallowOverwrite() throws IOException {
+			// set up
+			File f = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+
+			// given
+			// when
+			try {
+				Thumbnails.of(f)
+						.size(50, 50)
+						.allowOverwrite(false)
+						.toFile(f.getAbsolutePath());
+
+				fail();
+			} catch (IllegalArgumentException e) {
+				// then
+				assertEquals("The destination file exists.", e.getMessage());
+				assertImageExists(f, 100, 100);
+			}
+		}
+
+		@Test
+		public void useOriginalFormat() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File destFile = TestUtils.createTempFile(temporaryFolder.getRoot(), "jpg");
+
+			// when
+			Thumbnails.of(sourceFile)
+					.size(10, 10)
+					.useOriginalFormat()
+					.toFile(destFile);
+
+			// then
+			File actualDestFile = new File(destFile.getParent(), destFile.getName() + ".png");
+			assertTrue(actualDestFile.exists());
+			assertEquals("png", TestUtils.getFormatName(new FileInputStream(actualDestFile)));
+		}
+
+		@Test
+		public void determineOutputFormat() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			File destFile = TestUtils.createTempFile(temporaryFolder.getRoot(), "jpg");
+
+			// when
+			Thumbnails.of(sourceFile)
+					.size(10, 10)
+					.determineOutputFormat()
+					.toFile(destFile);
+
+			// then
+			assertTrue(destFile.exists());
+			assertEquals("JPEG", TestUtils.getFormatName(new FileInputStream(destFile)));
+		}
+
+		@Test
+		public void toOutputStreamImageFormatMatchesInputForPngFile() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+			// when
+			Thumbnails.of(sourceFile)
+					.size(100, 100)
+					.toOutputStream(baos);
+
+			// then
+			assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
+		}
+
+		@Test
+		public void toOutputStreamImageFormatMatchesInputForJpegFile() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+			// when
+			Thumbnails.of(sourceFile)
+					.size(100, 100)
+					.toOutputStream(baos);
+
+			// then
+			assertEquals("JPEG", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
+		}
+
+		@Test
+		public void toOutputStreamImageFormatMatchesOutputFormatForPng() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+			// when
+			Thumbnails.of(sourceFile)
+					.size(100, 100)
+					.outputFormat("png")
+					.toOutputStream(baos);
+
+			// then
+			assertEquals("png", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
+		}
+
+		@Test
+		public void toOutputStreamImageFormatMatchesOutputFormatForJpeg() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.jpg", temporaryFolder
+			);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+			// when
+			Thumbnails.of(sourceFile)
+					.size(100, 100)
+					.outputFormat("JPEG")
+					.toOutputStream(baos);
+
+			// then
+			assertEquals("JPEG", TestUtils.getFormatName(new ByteArrayInputStream(baos.toByteArray())));
+		}
+
+		private void assertImageExists(File f, int width, int height) throws IOException {
+			assertTrue("f exists.", f.exists());
+
+			BufferedImage img = ImageIO.read(f);
+			assertNotNull("Read image is null.", img);
+			assertEquals(width, img.getWidth());
+			assertEquals(height, img.getHeight());
 		}
 	}
 }
