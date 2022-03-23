@@ -42,8 +42,10 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
+import net.coobird.thumbnailator.filters.Watermark;
 import net.coobird.thumbnailator.geometry.AbsoluteSize;
 import net.coobird.thumbnailator.geometry.Coordinate;
+import net.coobird.thumbnailator.geometry.Position;
 import net.coobird.thumbnailator.geometry.Positions;
 import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.name.Rename;
@@ -4400,6 +4402,100 @@ public class ThumbnailsBuilderTest {
 			assertEquals(50, fromFileImage1.getHeight());
 			assertEquals(50, fromFileImage2.getWidth());
 			assertEquals(50, fromFileImage2.getHeight());
+		}
+	}
+
+	@RunWith(Parameterized.class)
+	public static class WatermarkPositioningTests {
+		@Parameterized.Parameters(name = "position={0}, x={1}, y={2}")
+		public static Object[][] values() {
+			return new Object[][] {
+					new Object[] { Positions.TOP_LEFT, 10, 10, 20, 20, 9, 9 },
+					new Object[] { Positions.TOP_CENTER, 50, 10, 50, 20, 50, 9 },
+					new Object[] { Positions.TOP_RIGHT, 89, 10, 80, 20, 89, 9 },
+
+					new Object[] { Positions.CENTER_LEFT, 10, 50, 20, 50, 9, 50 },
+					new Object[] { Positions.CENTER, 50, 50, 60, 50, 60, 60 },
+					new Object[] { Positions.CENTER_RIGHT, 89, 50, 79, 50, 90, 50 },
+
+					new Object[] { Positions.BOTTOM_LEFT, 10, 89, 20, 89, 9, 91 },
+					new Object[] { Positions.BOTTOM_CENTER, 50, 89, 50, 79, 50, 91 },
+					new Object[] { Positions.BOTTOM_RIGHT, 89, 89, 79, 89, 90, 91 },
+			};
+		}
+
+		@Parameterized.Parameter
+		public Position position;
+
+		@Parameterized.Parameter(1)
+		public int expectedXForWatermark;
+
+		@Parameterized.Parameter(2)
+		public int expectedYForWatermark;
+
+		@Parameterized.Parameter(3)
+		public int expectedXForBackground;
+
+		@Parameterized.Parameter(4)
+		public int expectedYForBackground;
+
+		@Parameterized.Parameter(5)
+		public int expectedXForBackground2;
+
+		@Parameterized.Parameter(6)
+		public int expectedYForBackground2;
+
+		private static final BufferedImage ORIGINAL_IMAGE;
+		private static final BufferedImage WATERMARK_IMAGE;
+
+		static {
+			Graphics g;
+			WATERMARK_IMAGE = new BufferedImageBuilder(20, 20).build();
+			g = WATERMARK_IMAGE.getGraphics();
+			g.setColor(Color.BLUE);
+			g.fillRect(0, 0, 20, 20);
+			g.dispose();
+
+			ORIGINAL_IMAGE = new BufferedImageBuilder(100, 100).build();
+			g = ORIGINAL_IMAGE.getGraphics();
+			g.setColor(Color.WHITE);
+			g.fillRect(0, 0, 100, 100);
+			g.dispose();
+		}
+
+		@Test
+		public void watermark() throws IOException {
+			Watermark watermark = new Watermark(position, WATERMARK_IMAGE, 1f);
+
+			BufferedImage image = Thumbnails.of(ORIGINAL_IMAGE)
+					.scale(1)
+					.watermark(watermark)
+					.asBufferedImage();
+
+			assertEquals(Color.BLUE.getRGB(), image.getRGB(expectedXForWatermark, expectedYForWatermark));
+			assertEquals(Color.WHITE.getRGB(), image.getRGB(expectedXForBackground, expectedYForBackground));
+		}
+
+		@Test
+		public void watermarkPosition() throws IOException {
+			BufferedImage image = Thumbnails.of(ORIGINAL_IMAGE)
+					.scale(1)
+					.watermark(position, WATERMARK_IMAGE, 1f)
+					.asBufferedImage();
+
+			assertEquals(Color.BLUE.getRGB(), image.getRGB(expectedXForWatermark, expectedYForWatermark));
+			assertEquals(Color.WHITE.getRGB(), image.getRGB(expectedXForBackground, expectedYForBackground));
+		}
+
+		@Test
+		public void watermarkPositionInset() throws IOException {
+			BufferedImage image = Thumbnails.of(ORIGINAL_IMAGE)
+					.scale(1)
+					.watermark(position, WATERMARK_IMAGE, 1f, 10)
+					.asBufferedImage();
+
+			assertEquals(Color.BLUE.getRGB(), image.getRGB(expectedXForWatermark, expectedYForWatermark));
+			assertEquals(Color.WHITE.getRGB(), image.getRGB(expectedXForBackground2, expectedYForBackground2));
 		}
 	}
 
