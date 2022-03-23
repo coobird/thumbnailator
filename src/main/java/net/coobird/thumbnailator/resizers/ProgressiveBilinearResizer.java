@@ -73,19 +73,19 @@ public class ProgressiveBilinearResizer extends AbstractResizer {
 	 * If the source and/or destination image is {@code null}, then a
 	 * {@link NullPointerException} will be thrown.
 	 * 
-	 * @param srcImage		The source image.
+	 * @param sourceImage		The source image.
 	 * @param destImage		The destination image.
 	 * 
 	 * @throws NullPointerException		When the source and/or the destination
 	 * 									image is {@code null}.
 	 */	
 	@Override
-	public void resize(BufferedImage srcImage, BufferedImage destImage)
+	public void resize(BufferedImage sourceImage, BufferedImage destImage)
 			throws NullPointerException {
-		super.performChecks(srcImage, destImage);
+		super.performChecks(sourceImage, destImage);
 		
-		int currentWidth = srcImage.getWidth();
-		int currentHeight = srcImage.getHeight();
+		int currentWidth = sourceImage.getWidth();
+		int currentHeight = sourceImage.getHeight();
 		
 		final int targetWidth = destImage.getWidth();
 		final int targetHeight = destImage.getHeight();
@@ -93,7 +93,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer {
 		// If multi-step downscaling is not required, perform one-step.
 		if ((targetWidth * 2 >= currentWidth) && (targetHeight * 2 >= currentHeight)) {
 			Graphics2D g = createGraphics(destImage);
-			g.drawImage(srcImage, 0, 0, targetWidth, targetHeight, null);
+			g.drawImage(sourceImage, 0, 0, targetWidth, targetHeight, null);
 			g.dispose();
 			return;
 		}
@@ -126,7 +126,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer {
 		currentHeight = startHeight / 2;
 
 		// Perform first resize step.
-		g.drawImage(srcImage, 0, 0, currentWidth, currentHeight, null);
+		g.drawImage(sourceImage, 0, 0, currentWidth, currentHeight, null);
 		
 		// Perform an in-place progressive bilinear resize.
 		while (	(currentWidth >= targetWidth * 2) && (currentHeight >= targetHeight * 2) ) {

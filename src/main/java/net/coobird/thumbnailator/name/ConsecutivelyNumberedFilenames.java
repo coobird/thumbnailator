@@ -41,7 +41,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	/**
 	 * The iterator to return upon the {@link #iterator()} method being called.
 	 */
-	private final Iterator<File> iter;
+	private final Iterator<File> fileIterator;
 
 	/**
 	 * <p>
@@ -61,7 +61,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	 * </p>
 	 */
 	public ConsecutivelyNumberedFilenames() {
-		this.iter = new ConsecutivelyNumberedFilenamesIterator(new File("").getParentFile(), "%d", 0);
+		this.fileIterator = new ConsecutivelyNumberedFilenamesIterator(new File("").getParentFile(), "%d", 0);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	 * @param start		The value from which to start counting.
 	 */
 	public ConsecutivelyNumberedFilenames(int start) {
-		this.iter = new ConsecutivelyNumberedFilenamesIterator(new File("").getParentFile(), "%d", start);
+		this.fileIterator = new ConsecutivelyNumberedFilenamesIterator(new File("").getParentFile(), "%d", start);
 	}
 	
 	/**
@@ -116,7 +116,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	 */
 	public ConsecutivelyNumberedFilenames(File dir) throws IOException {
 		checkDirectory(dir);
-		this.iter = new ConsecutivelyNumberedFilenamesIterator(dir, "%d", 0);
+		this.fileIterator = new ConsecutivelyNumberedFilenamesIterator(dir, "%d", 0);
 	}
 	
 	/**
@@ -149,7 +149,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	 * @param format		The format string to use.
 	 */
 	public ConsecutivelyNumberedFilenames(String format) {
-		this.iter = new ConsecutivelyNumberedFilenamesIterator(new File("").getParentFile(), format, 0);
+		this.fileIterator = new ConsecutivelyNumberedFilenamesIterator(new File("").getParentFile(), format, 0);
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	 */
 	public ConsecutivelyNumberedFilenames(File dir, int start) throws IOException {
 		checkDirectory(dir);
-		this.iter = new ConsecutivelyNumberedFilenamesIterator(dir, "%d", start);
+		this.fileIterator = new ConsecutivelyNumberedFilenamesIterator(dir, "%d", start);
 	}
 	
 	/**
@@ -219,7 +219,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	 */
 	public ConsecutivelyNumberedFilenames(File dir, String format) throws IOException {
 		checkDirectory(dir);
-		this.iter = new ConsecutivelyNumberedFilenamesIterator(dir, format, 0);
+		this.fileIterator = new ConsecutivelyNumberedFilenamesIterator(dir, format, 0);
 	}
 
 	/**
@@ -254,7 +254,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	 * @param start			The value from which to start counting.
 	 */
 	public ConsecutivelyNumberedFilenames(String format, int start) {
-		this.iter = new ConsecutivelyNumberedFilenamesIterator(new File("").getParentFile(), format, start);
+		this.fileIterator = new ConsecutivelyNumberedFilenamesIterator(new File("").getParentFile(), format, start);
 	}
 
 	/**
@@ -294,7 +294,7 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	 */
 	public ConsecutivelyNumberedFilenames(File dir, String format, int start) throws IOException {
 		checkDirectory(dir);
-		this.iter = new ConsecutivelyNumberedFilenamesIterator(dir, format, start);
+		this.fileIterator = new ConsecutivelyNumberedFilenamesIterator(dir, format, start);
 	}
 
 	private static void checkDirectory(File dir) throws IOException {
@@ -341,6 +341,6 @@ public class ConsecutivelyNumberedFilenames implements Iterable<File> {
 	 * @return		An iterator which generates file names.
 	 */
 	public Iterator<File> iterator() {
-		return iter;
+		return fileIterator;
 	}
 }

@@ -150,35 +150,7 @@ public final class Thumbnails {
 	 */
 	private Thumbnails() {}
 	
-	/**
-	 * Performs validation on the specified dimensions.
-	 * <p>
-	 * If any of the dimensions are less than or equal to 0, an
-	 * {@code IllegalArgumentException} is thrown with an message specifying the
-	 * reason for the exception.
-	 * <p>
-	 * This method is used to perform a check on the output dimensions of a
-	 * thumbnail for the {@link Thumbnails#createThumbnail} methods.
-	 * 
-	 * @param width		The width to validate.
-	 * @param height	The height to validate.
-	 */
-	private static void validateDimensions(int width, int height) {
-		if (width <= 0 && height <= 0) {
-			throw new IllegalArgumentException(
-					"Destination image dimensions must not be less than " +
-					"0 pixels."
-			);
-
-		} else if (width <= 0 || height <= 0) {
-			String dimension = width == 0 ? "width" : "height";
-			
-			throw new IllegalArgumentException(
-					"Destination image " + dimension + " must not be " +
-					"less than or equal to 0 pixels."
-			);
-		}		
-	}
+	private static Validator validator = new Validator();
 	
 	private static void checkForNull(Object o, String message) {
 		if (o == null) {
@@ -846,8 +818,8 @@ Thumbnails.of(image)
 		public Builder<T> size(int width, int height) {
 			updateStatus(Properties.SIZE, Status.ALREADY_SET);
 			updateStatus(Properties.SCALE, Status.CANNOT_SET);
-			
-			validateDimensions(width, height);
+
+			validator.validateDimensions(width, height);
 			this.width = width;
 			this.height = height;
 			
@@ -880,8 +852,8 @@ Thumbnails.of(image)
 				updateStatus(Properties.SCALE, Status.CANNOT_SET);
 			}
 			updateStatus(Properties.WIDTH, Status.ALREADY_SET);
-			
-			validateDimensions(width, Integer.MAX_VALUE);
+
+			validator.validateDimensions(width, Integer.MAX_VALUE);
 			this.width = width;
 			
 			return this;
@@ -913,8 +885,8 @@ Thumbnails.of(image)
 				updateStatus(Properties.SCALE, Status.CANNOT_SET);
 			}
 			updateStatus(Properties.HEIGHT, Status.ALREADY_SET);
-			
-			validateDimensions(Integer.MAX_VALUE, height);
+
+			validator.validateDimensions(Integer.MAX_VALUE, height);
 			this.height = height;
 			
 			return this;
@@ -944,8 +916,8 @@ Thumbnails.of(image)
 			updateStatus(Properties.SIZE, Status.ALREADY_SET);
 			updateStatus(Properties.KEEP_ASPECT_RATIO, Status.ALREADY_SET);
 			updateStatus(Properties.SCALE, Status.CANNOT_SET);
-			
-			validateDimensions(width, height);
+
+			validator.validateDimensions(width, height);
 			this.width = width;
 			this.height = height;
 			this.keepAspectRatio = false;

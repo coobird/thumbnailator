@@ -62,15 +62,15 @@ public class BilinearResizer extends AbstractResizer {
 	 * {@link NullPointerException} will be thrown.
 	 * </p>
 	 * 
-	 * @param srcImage		The source image.
+	 * @param sourceImage		The source image.
 	 * @param destImage		The destination image.
 	 * 
 	 * @throws NullPointerException		When the source and/or the destination
 	 * 									image is {@code null}.
 	 */
 	@Override
-	public void resize(BufferedImage srcImage, BufferedImage destImage)
+	public void resize(BufferedImage sourceImage, BufferedImage destImage)
 			throws NullPointerException {
-		super.resize(srcImage, destImage);
+		super.resize(sourceImage, destImage);
 	}
 }

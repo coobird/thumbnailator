@@ -275,20 +275,10 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 					byte[] header = new byte[4];
 					System.arraycopy(buffer, startApp1 + 4, header, 0, header.length);
 
-					if (new String(header).equals("Exif")) {
-						debugln("Found Exif!");
-						hasCapturedExif = true;
-						doIntercept = false;
-						byte[] exifData = new byte[endApp1 - (startApp1 + 4)];
-						System.arraycopy(buffer, startApp1 + 4, exifData, 0, exifData.length);
-						buffer = exifData;
+					if(checkIfExif(header)){
 						break;
-					} else {
-						debugln("APP1 was not Exif.");
-						hasCapturedExif = false;
-						doIntercept = true;
-						doCaptureApp1 = false;
 					}
+
 				}
 
 				if (position == 0 && totalRead >= 2) {
@@ -403,6 +393,24 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 			}
 
 			return bytesRead;
+		}
+
+		public boolean checkIfExif(byte[] header){
+			if (new String(header).equals("Exif")) {
+				debugln("Found Exif!");
+				hasCapturedExif = true;
+				doIntercept = false;
+				byte[] exifData = new byte[endApp1 - (startApp1 + 4)];
+				System.arraycopy(buffer, startApp1 + 4, exifData, 0, exifData.length);
+				buffer = exifData;
+				return true;
+			} else {
+				debugln("APP1 was not Exif.");
+				hasCapturedExif = false;
+				doIntercept = true;
+				doCaptureApp1 = false;
+				return false;
+			}
 		}
 
 		@Override

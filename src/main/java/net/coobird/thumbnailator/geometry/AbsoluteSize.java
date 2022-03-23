@@ -34,7 +34,7 @@ import java.awt.Dimension;
  * @since	0.3.4
  *
  */
-public class AbsoluteSize implements Size {
+public class AbsoluteSize extends SizeType implements Size {
 	/**
 	 * The size of the object.
 	 */
@@ -71,11 +71,7 @@ public class AbsoluteSize implements Size {
 	}
 
 	public Dimension calculate(int width, int height) {
-		if (width <= 0 || height <= 0) {
-			throw new IllegalArgumentException(
-					"Width and height must be greater than 0."
-			);
-		}
+		super.checkDimesion(width,height);
 		return new Dimension(size);
 	}
 

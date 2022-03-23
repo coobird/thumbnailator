@@ -89,20 +89,20 @@ public abstract class AbstractResizer implements Resizer {
 	 * {@link NullPointerException} will be thrown.
 	 * </p>
 	 * 
-	 * @param srcImage		The source image.
-	 * @param destImage		The destination image.
+	 * @param sourceImage		The source image.
+	 * @param destinationImage		The destination image.
 	 * 
 	 * @throws NullPointerException		When the source and/or the destination
 	 * 									image is {@code null}.
 	 */
-	public void resize(BufferedImage srcImage, BufferedImage destImage) {
-		performChecks(srcImage, destImage);
+	public void resize(BufferedImage sourceImage, BufferedImage destinationImage) {
+		performChecks(sourceImage, destinationImage);
 		
-		int width = destImage.getWidth();
-		int height = destImage.getHeight();
+		int width = destinationImage.getWidth();
+		int height = destinationImage.getHeight();
 		
-		Graphics2D g = createGraphics(destImage);
-		g.drawImage(srcImage, 0, 0, width, height, null);
+		Graphics2D g = createGraphics(destinationImage);
+		g.drawImage(sourceImage, 0, 0, width, height, null);
 		g.dispose();
 	}
 	

@@ -63,11 +63,11 @@ public class NullResizer extends AbstractResizer {
 		super(interpolationValue, hints);
 	}
 
-	public void resize(BufferedImage srcImage, BufferedImage destImage) {
-		super.performChecks(srcImage, destImage);
+	public void resize(BufferedImage sourceImage, BufferedImage destImage) {
+		super.performChecks(sourceImage, destImage);
 		
 		Graphics g = destImage.getGraphics();
-		g.drawImage(srcImage, 0, 0, null);
+		g.drawImage(sourceImage, 0, 0, null);
 		g.dispose();
 	}
 }

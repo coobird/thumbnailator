@@ -33,7 +33,7 @@ import java.awt.Dimension;
  * @since	0.3.4
  *
  */
-public class RelativeSize implements Size {
+public class RelativeSize extends SizeType implements Size {
 	/**
 	 * The scaling factor to use for the enclosed object.
 	 */
@@ -60,11 +60,7 @@ public class RelativeSize implements Size {
 	}
 
 	public Dimension calculate(int width, int height) {
-		if (width <= 0 || height <= 0) {
-			throw new IllegalArgumentException(
-					"Width and height must be greater than 0."
-			);
-		}
+		super.checkDimesion(width,height);
 		int newWidth = (int)Math.round(width * scalingFactor);
 		int newHeight = (int)Math.round(height * scalingFactor);
 		return new Dimension(newWidth, newHeight);
