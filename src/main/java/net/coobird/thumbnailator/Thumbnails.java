@@ -33,12 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.imageio.ImageIO;
 
@@ -150,7 +145,7 @@ public final class Thumbnails {
 	 */
 	private Thumbnails() {}
 	
-	private static Validator validator = new Validator();
+	private static final Validator validator = new Validator();
 	
 	private static void checkForNull(Object o, String message) {
 		if (o == null) {
@@ -1631,7 +1626,7 @@ Thumbnails.of(image)
 		 * 									specified.
 		 */
 		public Builder<T> outputFormat(String format) {
-			if (!ThumbnailatorUtils.isSupportedOutputFormat(format)) {
+			if (!isSupportedOutputFormat(format)) {
 				throw new IllegalArgumentException(
 						"Specified format is not supported: " + format
 				);
@@ -2684,5 +2679,44 @@ watermark(Positions.CENTER, image, opacity);
 				);
 			}
 		}
+
+		/**
+		 * Returns whether a specified format is supported for output.
+		 *
+		 * @param format	The format to check whether it is supported or not.
+		 * @return			{@code true} if the format is supported, {@code false}
+		 * 					otherwise.
+		 */
+		public boolean isSupportedOutputFormat(String format)
+		{
+			if (format == ThumbnailParameter.ORIGINAL_FORMAT) {
+				return true;
+			}
+
+			for (String supportedFormat : getSupportedOutputFormats()) {
+				if (supportedFormat.equals(format)) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		/**
+		 * Returns a {@link List} of supported output formats.
+		 *
+		 * @return		A {@link List} of supported output formats. If no formats
+		 * 				are supported, an empty list is returned.
+		 */
+		public  List<String> getSupportedOutputFormats() {
+			String[] formats = ImageIO.getWriterFormatNames();
+
+			if (formats == null) {
+				return Collections.emptyList();
+			} else {
+				return Arrays.asList(formats);
+			}
+		}
+
 	}
 }

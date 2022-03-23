@@ -48,13 +48,13 @@ public final class ThumbnailatorUtils {
 	
 	/**
 	 * Returns a {@link List} of supported output formats.
-	 * 
+	 *
 	 * @return		A {@link List} of supported output formats. If no formats
 	 * 				are supported, an empty list is returned.
 	 */
 	public static List<String> getSupportedOutputFormats() {
 		String[] formats = ImageIO.getWriterFormatNames();
-		
+
 		if (formats == null) {
 			return Collections.emptyList();
 		} else {
@@ -74,16 +74,16 @@ public final class ThumbnailatorUtils {
 		if (format == ThumbnailParameter.ORIGINAL_FORMAT) {
 			return true;
 		}
-		
+
 		for (String supportedFormat : getSupportedOutputFormats()) {
 			if (supportedFormat.equals(format)) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Returns a {@link List} of supported output formats types for a specified
 	 * output format.
