@@ -4499,6 +4499,68 @@ public class ThumbnailsBuilderTest {
 		}
 	}
 
+	public static class WatermarkOrdinaryTests {
+		private static final BufferedImage ORIGINAL_IMAGE = WatermarkPositioningTests.ORIGINAL_IMAGE;
+		private static final BufferedImage WATERMARK_IMAGE = WatermarkPositioningTests.WATERMARK_IMAGE;
+
+		@Test
+		public void watermarkRejectsNull() {
+			try {
+				Thumbnails.of(ORIGINAL_IMAGE)
+						.watermark((Watermark) null);
+				fail();
+			} catch (NullPointerException e) {
+				assertEquals("Watermark is null.", e.getMessage());
+			}
+		}
+
+		@Test
+		public void watermarkNormalPositioning() throws IOException {
+			BufferedImage thumbnail = Thumbnails.of(ORIGINAL_IMAGE)
+					.watermark(WATERMARK_IMAGE)
+					.scale(1)
+					.asBufferedImage();
+
+			Color expectedColor = new Color(127, 127, 255);
+			assertEquals(expectedColor.getRGB(), thumbnail.getRGB(50, 50));
+			assertEquals(Color.WHITE.getRGB(), thumbnail.getRGB(39, 50));
+		}
+
+		@Test
+		public void watermarkNormalPositioningWithScaling() throws IOException {
+			BufferedImage thumbnail = Thumbnails.of(ORIGINAL_IMAGE)
+					.watermark(WATERMARK_IMAGE)
+					.scale(0.5)
+					.asBufferedImage();
+
+			Color expectedColor = new Color(127, 127, 255);
+			assertEquals(expectedColor.getRGB(), thumbnail.getRGB(25, 25));
+			assertEquals(Color.WHITE.getRGB(), thumbnail.getRGB(14, 25));
+		}
+
+		@Test
+		public void watermarkOpacityPositioning() throws IOException {
+			BufferedImage thumbnail = Thumbnails.of(ORIGINAL_IMAGE)
+					.watermark(WATERMARK_IMAGE, 1.0f)
+					.scale(1)
+					.asBufferedImage();
+
+			assertEquals(Color.BLUE.getRGB(), thumbnail.getRGB(50, 50));
+			assertEquals(Color.WHITE.getRGB(), thumbnail.getRGB(39, 50));
+		}
+
+		@Test
+		public void watermarkOpacityPositioningWithScaling() throws IOException {
+			BufferedImage thumbnail = Thumbnails.of(ORIGINAL_IMAGE)
+					.watermark(WATERMARK_IMAGE, 1.0f)
+					.scale(0.5)
+					.asBufferedImage();
+
+			assertEquals(Color.BLUE.getRGB(), thumbnail.getRGB(25, 25));
+			assertEquals(Color.WHITE.getRGB(), thumbnail.getRGB(14, 25));
+		}
+	}
+
 	@RunWith(Parameterized.class)
 	public static class WatermarkWithOrientationInputStreamSourceTests {
 
