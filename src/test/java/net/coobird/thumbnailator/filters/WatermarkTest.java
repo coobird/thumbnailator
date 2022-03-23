@@ -160,7 +160,7 @@ public class WatermarkTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void constructorAllowsNegativeInsets() {
+	public void constructorRejectsNegativeInsets() {
 		new Watermark(
 				DEFAULT_POSITION,
 				DEFAULT_WATERMARK,
