@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 
 /**
  * This package contains classes which provide the core functionalities of
- * Thumbnailator.
+ * Thumbnailator, including {@link net.coobird.thumbnailator.Thumbnails},
+ * the entry point for most use cases of Thumbnailator.
  */
 package net.coobird.thumbnailator;

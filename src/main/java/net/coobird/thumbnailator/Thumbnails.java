@@ -111,7 +111,7 @@ Thumbnails.of(directory.listFiles())
  * </DD>
  * </DL>
  * <p>
- * For more examples, please visit the <a href="http://code.google.com/p/thumbnailator/">
+ * For more examples, please visit the <a href="https://github.com/coobird/thumbnailator">
  * Thumbnailator</a> project page.
  * </p>
  * <h2>Important Implementation Notes</h2>
@@ -156,10 +156,7 @@ public final class Thumbnails {
 	 * If any of the dimensions are less than or equal to 0, an
 	 * {@code IllegalArgumentException} is thrown with an message specifying the
 	 * reason for the exception.
-	 * <p>
-	 * This method is used to perform a check on the output dimensions of a
-	 * thumbnail for the {@link Thumbnails#createThumbnail} methods.
-	 * 
+	 *
 	 * @param width		The width to validate.
 	 * @param height	The height to validate.
 	 */
@@ -2205,7 +2202,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * </p>
 		 * 
 		 * @return		A list of thumbnails.
-		 * @throws IOException					If an problem occurred during
+		 * @throws IOException					If a problem occurred during
 		 * 										the reading of the original
 		 * 										images.
 		 */
@@ -2235,7 +2232,7 @@ watermark(Positions.CENTER, image, opacity);
 		 * single source.
 		 * 
 		 * @return		A thumbnail as a {@link BufferedImage}.
-		 * @throws IOException					If an problem occurred during
+		 * @throws IOException					If a problem occurred during
 		 * 										the reading of the original
 		 * 										image.
 		 * @throws IllegalArgumentException		If multiple original images are
