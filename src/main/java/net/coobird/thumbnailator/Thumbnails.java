@@ -2160,6 +2160,9 @@ watermark(Positions.CENTER, image, opacity);
 		 * Create the thumbnails and return as a {@link Iterable} of
 		 * {@link BufferedImage}s.
 		 * <p>
+		 * Thumbnail for a given input is lazily evaluated as the
+		 * {@link Iterator#next()} method is called on the iterator.
+		 * <p>
 		 * For situations where multiple thumbnails are being generated, this
 		 * method is preferred over the {@link #asBufferedImages()} method,
 		 * as (1) the processing does not have to complete before the method
@@ -2192,9 +2195,11 @@ watermark(Positions.CENTER, image, opacity);
 		 * </p>
 		 * <p><strong>Note about performance</strong></p>
 		 * <p>
-		 * If there are many thumbnails generated at once, it is possible that
-		 * the Java virtual machine's heap space will run out and an
-		 * {@link OutOfMemoryError} could result.
+		 * This method will process all inputs and create the corresponding
+		 * thumbnails at once before returning them as in a list.
+		 * Therefore, if many thumbnails are generated at once, it is possible
+		 * that the Java virtual machine's heap space will run out and an
+		 * {@link OutOfMemoryError} could be thrown.
 		 * </p>
 		 * <p>
 		 * If many thumbnails are being processed at once, then using the
