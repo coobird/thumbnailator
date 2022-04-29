@@ -2157,11 +2157,14 @@ watermark(Positions.CENTER, image, opacity);
 		}
 
 		/**
+		 * <p>
 		 * Create the thumbnails and return as a {@link Iterable} of
 		 * {@link BufferedImage}s.
+		 * </p>
 		 * <p>
 		 * Thumbnail for a given input is lazily evaluated as the
 		 * {@link Iterator#next()} method is called on the iterator.
+		 * </p>
 		 * <p>
 		 * For situations where multiple thumbnails are being generated, this
 		 * method is preferred over the {@link #asBufferedImages()} method,
@@ -2170,10 +2173,38 @@ watermark(Positions.CENTER, image, opacity);
 		 * potentially reducing the number of thumbnails which need to be
 		 * retained in the heap memory, potentially reducing the chance of
 		 * {@link OutOfMemoryError}s from occurring.
+		 * </p>
 		 * <p>
 		 * If an {@link IOException} occurs during the processing of the
 		 * thumbnail, the {@link Iterable} will return a {@code null} for that
 		 * element.
+		 * </p>
+		 * <p><strong>Notes on image types</strong></p>
+		 * <p>
+		 * The image type of the {@link BufferedImage} depends on the type
+		 * of the input image. (Specifically, the type emitted by the
+		 * {@link javax.imageio.ImageReader} associated for the file type.)
+		 * Thumbnailator will attempt to use the same image type as the
+		 * input if it is not specified through {@link #imageType(int)}.
+		 * </p>
+		 * <p>
+		 * This has implications when writing {@code BufferedImage} to files
+		 * using the default JPEG writer bundled with Java. There are issues
+		 * with the JPEG writer <a href="https://bugs.openjdk.java.net/browse/JDK-8041459">outputting wrong colors</a>
+		 * or <a href="https://bugs.openjdk.java.net/browse/JDK-8204188">throwing exceptions</a>
+		 * when writing a image containing an alpha channel.
+		 * </p>
+		 * <p>
+		 * If outputting to a file, consider using one of the
+		 * {@link #toFiles(Iterable)}, {@link #toFiles(Rename)}, {@link #toFiles(File, Rename)}
+		 * {@link #asFiles(Iterable)}, {@link #asFiles(Rename)} or {@link #asFiles(File, Rename)}
+		 * methods instead, as it contains workarounds to prevent issues
+		 * mentioned in the previous paragraph.
+		 * </p>
+		 * <p>
+		 * For more information on {@code BufferedImage} types, refer to
+		 * {@link BufferedImage#getType()}.
+		 * </p>
 		 * 
 		 * @return		An {@link Iterable} which will provide an
 		 * 				{@link Iterator} which returns thumbnails as
@@ -2192,6 +2223,38 @@ watermark(Positions.CENTER, image, opacity);
 		 * <p>
 		 * Create the thumbnails and return as a {@link List} of
 		 * {@link BufferedImage}s.
+		 * </p>
+		 * <p>
+		 * If you intend to write these {@link BufferedImage}s to files,
+		 * you're strongly encouraged to use one of the {@code toFiles(...)}
+		 * or {@code asFiles(...)} methods instead. See "Notes on image types"
+		 * for details.
+		 * </p>
+		 * <p><strong>Notes on image types</strong></p>
+		 * <p>
+		 * The image type of the {@link BufferedImage} depends on the type
+		 * of the input image. (Specifically, the type emitted by the
+		 * {@link javax.imageio.ImageReader} associated for the file type.)
+		 * Thumbnailator will attempt to use the same image type as the
+		 * input if it is not specified through {@link #imageType(int)}.
+		 * </p>
+		 * <p>
+		 * This has implications when writing {@code BufferedImage} to files
+		 * using the default JPEG writer bundled with Java. There are issues
+		 * with the JPEG writer <a href="https://bugs.openjdk.java.net/browse/JDK-8041459">outputting wrong colors</a>
+		 * or <a href="https://bugs.openjdk.java.net/browse/JDK-8204188">throwing exceptions</a>
+		 * when writing a image containing an alpha channel.
+		 * </p>
+		 * <p>
+		 * If outputting to a file, consider using one of the
+		 * {@link #toFiles(Iterable)}, {@link #toFiles(Rename)}, {@link #toFiles(File, Rename)}
+		 * {@link #asFiles(Iterable)}, {@link #asFiles(Rename)} or {@link #asFiles(File, Rename)}
+		 * methods instead, as it contains workarounds to prevent issues
+		 * mentioned in the previous paragraph.
+		 * </p>
+		 * <p>
+		 * For more information on {@code BufferedImage} types, refer to
+		 * {@link BufferedImage#getType()}.
 		 * </p>
 		 * <p><strong>Note about performance</strong></p>
 		 * <p>
@@ -2231,10 +2294,43 @@ watermark(Positions.CENTER, image, opacity);
 		}
 		
 		/**
+		 * <p>
 		 * Creates a thumbnail and returns it as a {@link BufferedImage}.
+		 * </p>
 		 * <p>
 		 * To call this method, the thumbnail must have been created from a
 		 * single source.
+		 * </p>
+		 * <p>
+		 * If you intend to write the {@link BufferedImage} to a file,
+		 * you're strongly encouraged to use one of the {@code toFile(...)}
+		 * methods instead. See "Notes on image types" for details.
+		 * </p>
+		 * <p><strong>Notes on image types</strong></p>
+		 * <p>
+		 * The image type of the {@link BufferedImage} depends on the type
+		 * of the input image. (Specifically, the type emitted by the
+		 * {@link javax.imageio.ImageReader} associated for the file type.)
+		 * Thumbnailator will attempt to use the same image type as the
+		 * input if it is not specified through {@link #imageType(int)}.
+		 * </p>
+		 * <p>
+		 * This has implications when writing {@code BufferedImage} to files
+		 * using the default JPEG writer bundled with Java. There are issues
+		 * with the JPEG writer <a href="https://bugs.openjdk.java.net/browse/JDK-8041459">outputting wrong colors</a>
+		 * or <a href="https://bugs.openjdk.java.net/browse/JDK-8204188">throwing exceptions</a>
+		 * when writing a image containing an alpha channel.
+		 * </p>
+		 * <p>
+		 * If outputting to a file, consider using one of the
+		 * {@link #toFile(File)} or {@link #toFile(String)} methods instead,
+		 * as it contains workarounds to prevent issues mentioned in the
+		 * previous paragraph.
+		 * </p>
+		 * <p>
+		 * For more information on {@code BufferedImage} types, refer to
+		 * {@link BufferedImage#getType()}.
+		 * </p>
 		 * 
 		 * @return		A thumbnail as a {@link BufferedImage}.
 		 * @throws IOException					If a problem occurred during
