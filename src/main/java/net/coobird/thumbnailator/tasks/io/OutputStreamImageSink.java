@@ -195,9 +195,15 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream> {
 		 * with the JDK.
 		 * 
 		 * At issue is, that the JPEG writer appears to write the alpha
-		 * channel when it should not. To circumvent this, images which are
-		 * to be saved as a JPEG will be copied to another BufferedImage without
-		 * an alpha channel before it is saved.
+		 * channel when it should not. Such images end up with wrong colors.
+		 * https://bugs.openjdk.java.net/browse/JDK-8041459
+		 *
+		 * To circumvent this, images to be saved as JPEG will be copied to
+		 * another BufferedImage without an alpha channel before it is saved.
+		 *
+		 * Furthermore, as of OpenJDK 11, if an BufferedImage with an alpha
+		 * channel is given to the JPEG writer, it will throw an exception.
+		 * https://bugs.openjdk.java.net/browse/JDK-8204188
 		 * 
 		 * Also, the BMP writer appears not to support ARGB, so an RGB image
 		 * will be produced before saving.
