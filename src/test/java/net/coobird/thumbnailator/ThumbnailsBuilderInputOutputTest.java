@@ -51,7 +51,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.imageio.ImageIO;
 
@@ -2299,6 +2298,17 @@ public class ThumbnailsBuilderInputOutputTest {
 		@Rule
 		public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
+		private void assertOrientation(BufferedImage result) {
+			BufferedImageAssert.assertMatches(
+					result,
+					new float[] {
+							1, 1, 1,
+							1, 1, 1,
+							1, 0, 0,
+					}
+			);
+		}
+
 		@Test
 		public void correctOrientationFromFile() throws IOException {
 			// given
@@ -2314,14 +2324,7 @@ public class ThumbnailsBuilderInputOutputTest {
 							.asBufferedImage();
 
 			// then
-			BufferedImageAssert.assertMatches(
-					result,
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
+			assertOrientation(result);
 			assertEquals(100, result.getWidth());
 			assertEquals(100, result.getHeight());
 		}
@@ -2341,14 +2344,7 @@ public class ThumbnailsBuilderInputOutputTest {
 							.asBufferedImage();
 
 			// then
-			BufferedImageAssert.assertMatches(
-					result,
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
+			assertOrientation(result);
 			assertEquals(80, result.getWidth());
 			assertEquals(40, result.getHeight());
 		}
@@ -2368,14 +2364,7 @@ public class ThumbnailsBuilderInputOutputTest {
 							.asBufferedImage();
 
 			// then
-			BufferedImageAssert.assertMatches(
-					result,
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
+			assertOrientation(result);
 			assertEquals(40, result.getWidth());
 			assertEquals(80, result.getHeight());
 		}
@@ -2395,14 +2384,7 @@ public class ThumbnailsBuilderInputOutputTest {
 							.asBufferedImage();
 
 			// then
-			BufferedImageAssert.assertMatches(
-					result,
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
+			assertOrientation(result);
 			assertEquals(80, result.getWidth());
 			assertEquals(40, result.getHeight());
 		}
@@ -2422,14 +2404,7 @@ public class ThumbnailsBuilderInputOutputTest {
 							.asBufferedImage();
 
 			// then
-			BufferedImageAssert.assertMatches(
-					result,
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
+			assertOrientation(result);
 			assertEquals(40, result.getWidth());
 			assertEquals(80, result.getHeight());
 		}
@@ -2448,14 +2423,7 @@ public class ThumbnailsBuilderInputOutputTest {
 							.asBufferedImage();
 
 			// then
-			BufferedImageAssert.assertMatches(
-					result,
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
+			assertOrientation(result);
 			assertEquals(100, result.getWidth());
 			assertEquals(100, result.getHeight());
 		}
@@ -2474,14 +2442,7 @@ public class ThumbnailsBuilderInputOutputTest {
 							.asBufferedImage();
 
 			// then
-			BufferedImageAssert.assertMatches(
-					result,
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
+			assertOrientation(result);
 			assertEquals(80, result.getWidth());
 			assertEquals(40, result.getHeight());
 		}
@@ -2500,14 +2461,7 @@ public class ThumbnailsBuilderInputOutputTest {
 							.asBufferedImage();
 
 			// then
-			BufferedImageAssert.assertMatches(
-					result,
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
+			assertOrientation(result);
 			assertEquals(40, result.getWidth());
 			assertEquals(80, result.getHeight());
 		}
@@ -2526,14 +2480,7 @@ public class ThumbnailsBuilderInputOutputTest {
 							.asBufferedImage();
 
 			// then
-			BufferedImageAssert.assertMatches(
-					result,
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
+			assertOrientation(result);
 			assertEquals(80, result.getWidth());
 			assertEquals(40, result.getHeight());
 		}
@@ -2552,14 +2499,7 @@ public class ThumbnailsBuilderInputOutputTest {
 							.asBufferedImage();
 
 			// then
-			BufferedImageAssert.assertMatches(
-					result,
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
+			assertOrientation(result);
 			assertEquals(40, result.getWidth());
 			assertEquals(80, result.getHeight());
 		}
