@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,7 @@ import net.coobird.thumbnailator.filters.Flip;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.filters.Pipeline;
 import net.coobird.thumbnailator.filters.Rotation;
+import net.coobird.thumbnailator.filters.SwapDimensions;
 
 /**
  * An utility class which returns a suitable {@link ImageFilter} to perform
@@ -68,16 +69,20 @@ public final class ExifFilterUtils {
         } else if (orientation == Orientation.LEFT_TOP) {
             filters.add(Rotation.RIGHT_90_DEGREES);
             filters.add(Flip.HORIZONTAL);
+            filters.add(SwapDimensions.getInstance());
 
         } else if (orientation == Orientation.RIGHT_TOP) {
             filters.add(Rotation.RIGHT_90_DEGREES);
+            filters.add(SwapDimensions.getInstance());
 
         } else if (orientation == Orientation.RIGHT_BOTTOM) {
             filters.add(Rotation.LEFT_90_DEGREES);
             filters.add(Flip.HORIZONTAL);
+            filters.add(SwapDimensions.getInstance());
 
         } else if (orientation == Orientation.LEFT_BOTTOM) {
             filters.add(Rotation.LEFT_90_DEGREES);
+            filters.add(SwapDimensions.getInstance());
         }
 
         return filters;

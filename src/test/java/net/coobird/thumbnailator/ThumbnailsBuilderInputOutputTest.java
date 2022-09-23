@@ -2322,6 +2322,35 @@ public class ThumbnailsBuilderInputOutputTest {
 							1, 0, 0,
 					}
 			);
+			assertEquals(100, result.getWidth());
+			assertEquals(100, result.getHeight());
+		}
+
+		@Test
+		public void correctOrientationRectangleFromFile() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					String.format("Exif/sourceRect_%s.jpg", orientation),
+					temporaryFolder
+			);
+
+			// when
+			BufferedImage result =
+					Thumbnails.of(sourceFile)
+							.size(80, 40)
+							.asBufferedImage();
+
+			// then
+			BufferedImageAssert.assertMatches(
+					result,
+					new float[] {
+							1, 1, 1,
+							1, 1, 1,
+							1, 0, 0,
+					}
+			);
+			assertEquals(80, result.getWidth());
+			assertEquals(40, result.getHeight());
 		}
 
 		@Test
@@ -2346,6 +2375,34 @@ public class ThumbnailsBuilderInputOutputTest {
 							1, 0, 0,
 					}
 			);
+			assertEquals(100, result.getWidth());
+			assertEquals(100, result.getHeight());
+		}
+
+		@Test
+		public void correctOrientationRectangleFromInputStream() throws Exception {
+			// given
+			InputStream is = TestUtils.getResourceStream(
+					String.format("Exif/sourceRect_%s.jpg", orientation)
+			);
+
+			// when
+			BufferedImage result =
+					Thumbnails.of(is)
+							.size(80, 40)
+							.asBufferedImage();
+
+			// then
+			BufferedImageAssert.assertMatches(
+					result,
+					new float[] {
+							1, 1, 1,
+							1, 1, 1,
+							1, 0, 0,
+					}
+			);
+			assertEquals(80, result.getWidth());
+			assertEquals(40, result.getHeight());
 		}
 	}
 
