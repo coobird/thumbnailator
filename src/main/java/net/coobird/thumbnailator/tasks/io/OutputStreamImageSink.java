@@ -171,6 +171,8 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream> {
 		 * The "cause" parameter has been introduced in Java 6:
 		 * http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html#IOException%28java.lang.String,%20java.lang.Throwable%29
 		 * 
+		 * TODO Include `cause` in exception when moving codebase to Java 6+
+		 *
 		 * TODO Whether to surround this portion of code in a try-catch
 		 *      is debatable, as it wouldn't really add more utility.
 		 *
