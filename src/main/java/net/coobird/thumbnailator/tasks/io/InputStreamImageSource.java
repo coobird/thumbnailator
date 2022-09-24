@@ -465,7 +465,7 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 			 * Java 7 Update 21.
 			 *
 			 * Issue:
-			 * http://code.google.com/p/thumbnailator/issues/detail?id=42
+			 * https://github.com/coobird/thumbnailator/issues/42
 			 */
 			reader.dispose();
 

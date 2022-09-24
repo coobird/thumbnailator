@@ -181,7 +181,7 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream> {
 		 *      in a try-catch.)
 		 *
 		 * Related issue:
-		 * http://code.google.com/p/thumbnailator/issues/detail?id=37
+		 * https://github.com/coobird/thumbnailator/issues/37
 		 */
 		ImageOutputStream ios = ImageIO.createImageOutputStream(os);
 		
@@ -222,7 +222,7 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream> {
 		 * started to frequently appear with Java 7 Update 21.
 		 * 
 		 * Issue:
-		 * http://code.google.com/p/thumbnailator/issues/detail?id=42
+		 * https://github.com/coobird/thumbnailator/issues/42
 		 */
 		writer.dispose();
 		
