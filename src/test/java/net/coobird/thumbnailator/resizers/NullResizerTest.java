@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,14 +25,13 @@
 package net.coobird.thumbnailator.resizers;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 
 import org.junit.Test;
+
+import static net.coobird.thumbnailator.TestUtils.getImageFromResource;
 import static org.junit.Assert.*;
 
 public class NullResizerTest {
@@ -40,7 +39,7 @@ public class NullResizerTest {
 	@Test
 	public void sourceAndDestSameDimension() throws IOException {
 		// given
-		BufferedImage srcImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		BufferedImage srcImage = getImageFromResource("Thumbnailator/grid.png");
 		BufferedImage destImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
@@ -55,7 +54,7 @@ public class NullResizerTest {
 	@Test
 	public void sourceSmallerThanDest() throws IOException {
 		// given
-		BufferedImage srcImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		BufferedImage srcImage = getImageFromResource("Thumbnailator/grid.png");
 		BufferedImage destImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
 		
 		// when
@@ -68,7 +67,7 @@ public class NullResizerTest {
 	@Test
 	public void sourceLargerThanDest() throws IOException {
 		// given
-		BufferedImage srcImage = ImageIO.read(new File("src/test/resources/Thumbnailator/grid.png"));
+		BufferedImage srcImage = getImageFromResource("Thumbnailator/grid.png");
 		BufferedImage destImage = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
 		
 		// when

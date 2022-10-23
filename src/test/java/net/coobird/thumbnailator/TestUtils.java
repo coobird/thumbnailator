@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,15 @@
 
 package net.coobird.thumbnailator;
 
+import org.junit.rules.TemporaryFolder;
+
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Random;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -74,31 +77,61 @@ public class TestUtils {
 		).next().getFormatName();
 	}
 
-	public static void makeTemporaryDirectory(String dir) {
-		new File(dir).mkdirs();
+	public static URL getResource(String resourceName) throws IOException {
+		URL url = ClassLoader.getSystemClassLoader().getResource(resourceName);
+		if (url == null) {
+			throw new IOException("Resource not found: " + resourceName);
+		}
+		return url;
 	}
 
-	public static void deleteTemporaryDirectory(String dir) {
-		File tmpDir = new File(dir);
-		for (File f : tmpDir.listFiles()) {
-			f.delete();
+	public static InputStream getResourceStream(String resourceName) throws IOException {
+		InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(resourceName);
+		if (is == null) {
+			throw new IOException("Resource not found: " + resourceName);
 		}
-		tmpDir.delete();
-		
-		File tmpParentDir = tmpDir.getParentFile();
-		if (tmpParentDir.isDirectory() && tmpParentDir.getName().equals("tmp")) {
-			tmpParentDir.delete();
-		}
-	}
-	
-	public static File createTempFile(String dir, String ext) throws IOException {
-		return createTempFile(new File(dir), ext);
+		return is;
 	}
 
-	public static File createTempFile(File dir, String ext) throws IOException {
-		return new File(
-				dir,
-				"tmp-" + Math.abs(new Random().nextLong()) + "." + ext
-		);
+	public static File copyResourceToFile(String resourceName, File destination) throws IOException {
+		InputStream is = getResourceStream(resourceName);
+		FileOutputStream fos = new FileOutputStream(destination);
+
+		byte[] buffer;
+		int bytesAvailable;
+		while ((bytesAvailable = is.available()) != 0) {
+			buffer = new byte[bytesAvailable];
+			int bytesRead = is.read(buffer, 0, buffer.length);
+			fos.write(buffer, 0, bytesRead);
+		}
+		is.close();
+		fos.close();
+
+		return destination;
+	}
+
+	public static File copyResourceToTemporaryFile(String resourceName, TemporaryFolder folder) throws IOException {
+		String name;
+		if (resourceName.contains("/")) {
+			name = resourceName.substring(resourceName.lastIndexOf("/") + 1);
+		} else {
+			name = resourceName;
+		}
+		File destination = folder.newFile(name);
+
+		return copyResourceToFile(resourceName, destination);
+	}
+
+	public static File copyResourceToTemporaryFile(String resourceName, String namedAs, TemporaryFolder folder) throws IOException {
+		return copyResourceToFile(resourceName, folder.newFile(namedAs));
+	}
+
+	public static BufferedImage getImageFromResource(String resourceName) throws IOException {
+		InputStream is = getResourceStream(resourceName);
+		try {
+			return ImageIO.read(is);
+		} finally {
+			is.close();
+		}
 	}
 }

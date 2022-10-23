@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -171,6 +171,8 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream> {
 		 * The "cause" parameter has been introduced in Java 6:
 		 * http://docs.oracle.com/javase/6/docs/api/java/io/IOException.html#IOException%28java.lang.String,%20java.lang.Throwable%29
 		 * 
+		 * TODO Include `cause` in exception when moving codebase to Java 6+
+		 *
 		 * TODO Whether to surround this portion of code in a try-catch
 		 *      is debatable, as it wouldn't really add more utility.
 		 *
@@ -181,7 +183,7 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream> {
 		 *      in a try-catch.)
 		 *
 		 * Related issue:
-		 * http://code.google.com/p/thumbnailator/issues/detail?id=37
+		 * https://github.com/coobird/thumbnailator/issues/37
 		 */
 		ImageOutputStream ios = ImageIO.createImageOutputStream(os);
 		
@@ -195,9 +197,15 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream> {
 		 * with the JDK.
 		 * 
 		 * At issue is, that the JPEG writer appears to write the alpha
-		 * channel when it should not. To circumvent this, images which are
-		 * to be saved as a JPEG will be copied to another BufferedImage without
-		 * an alpha channel before it is saved.
+		 * channel when it should not. Such images end up with wrong colors.
+		 * https://bugs.openjdk.java.net/browse/JDK-8041459
+		 *
+		 * To circumvent this, images to be saved as JPEG will be copied to
+		 * another BufferedImage without an alpha channel before it is saved.
+		 *
+		 * Furthermore, as of OpenJDK 11, if an BufferedImage with an alpha
+		 * channel is given to the JPEG writer, it will throw an exception.
+		 * https://bugs.openjdk.java.net/browse/JDK-8204188
 		 * 
 		 * Also, the BMP writer appears not to support ARGB, so an RGB image
 		 * will be produced before saving.
@@ -216,7 +224,7 @@ public class OutputStreamImageSink extends AbstractImageSink<OutputStream> {
 		 * started to frequently appear with Java 7 Update 21.
 		 * 
 		 * Issue:
-		 * http://code.google.com/p/thumbnailator/issues/detail?id=42
+		 * https://github.com/coobird/thumbnailator/issues/42
 		 */
 		writer.dispose();
 		

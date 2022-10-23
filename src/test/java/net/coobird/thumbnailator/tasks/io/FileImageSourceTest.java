@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2021 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,12 @@ import net.coobird.thumbnailator.test.BufferedImageComparer;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.rules.TemporaryFolder;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -52,744 +57,448 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
+@RunWith(Enclosed.class)
 public class FileImageSourceTest {
-	/**
-	 * The temporary directory to use when creating files to use for this test.
-	 */
-	private static final String TMPDIR =
-			"src/test/resources/tmp/FileImageSourceTest";
 
-	@BeforeClass
-	public static void makeTemporaryDirectory() {
-		TestUtils.makeTemporaryDirectory(TMPDIR);
-	}
+	public static class Tests {
+		@Rule
+		public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	@AfterClass
-	public static void deleteTemporaryDirectory() {
-		TestUtils.deleteTemporaryDirectory(TMPDIR);
-	}
+		@Test(expected=FileNotFoundException.class)
+		public void fileDoesNotExists() throws IOException {
+			// given
+			File nonExistentFile = new File(temporaryFolder.getRoot(), "nonExistentFile");
+			FileImageSource source = new FileImageSource(nonExistentFile);
 
-	@Test
-	public void fileExists_Png() throws IOException {
-		// given
-		FileImageSource source = new FileImageSource(new File("src/test/resources/Thumbnailator/grid.png"));
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		assertEquals(100, img.getWidth());
-		assertEquals(100, img.getHeight());
-		assertEquals("png", source.getInputFormatName());
-	}
-	
-	@Test
-	public void fileExists_Jpeg() throws IOException {
-		// given
-		FileImageSource source = new FileImageSource(new File("src/test/resources/Thumbnailator/grid.jpg"));
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		assertEquals(100, img.getWidth());
-		assertEquals(100, img.getHeight());
-		assertEquals("JPEG", source.getInputFormatName());
-	}
-	
-	@Test
-	public void fileExists_Bmp() throws IOException {
-		// given
-		FileImageSource source = new FileImageSource(new File("src/test/resources/Thumbnailator/grid.bmp"));
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		assertEquals(100, img.getWidth());
-		assertEquals(100, img.getHeight());
-		assertEquals("bmp", source.getInputFormatName());
-	}
-	
-	@Test(expected=FileNotFoundException.class)
-	public void fileDoesNotExists() throws IOException {
-		// given
-		FileImageSource source = new FileImageSource(new File("notfound"));
-		
-		try {
-			// when
-			source.read();
-		} catch (FileNotFoundException e) {
-			// then
-			assertThat(e.getMessage(), containsString("Could not find file"));
-			throw e;
-		}
-		fail();
-	}
-	
-	@Test
-	public void fileExists_Png_AsString() throws IOException {
-		// given
-		FileImageSource source = new FileImageSource("src/test/resources/Thumbnailator/grid.png");
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		assertEquals(100, img.getWidth());
-		assertEquals(100, img.getHeight());
-		assertEquals("png", source.getInputFormatName());
-	}
-	
-	@Test
-	public void fileExists_Jpeg_AsString() throws IOException {
-		// given
-		FileImageSource source = new FileImageSource("src/test/resources/Thumbnailator/grid.jpg");
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		assertEquals(100, img.getWidth());
-		assertEquals(100, img.getHeight());
-		assertEquals("JPEG", source.getInputFormatName());
-	}
-	
-	@Test
-	public void fileExists_Bmp_AsString() throws IOException {
-		// given
-		FileImageSource source = new FileImageSource("src/test/resources/Thumbnailator/grid.bmp");
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		assertEquals(100, img.getWidth());
-		assertEquals(100, img.getHeight());
-		assertEquals("bmp", source.getInputFormatName());
-	}
-	
-	@Test(expected=FileNotFoundException.class)
-	public void fileDoesNotExists_AsString() throws IOException {
-		// given
-		FileImageSource source = new FileImageSource("notfound");
-		
-		try {
-			// when
-			source.read();
-		} catch (FileNotFoundException e) {
-			// then
-			assertThat(e.getMessage(), containsString("Could not find file"));
-			throw e;
-		}
-		fail();
-	}
-	
-	@Test(expected=IllegalStateException.class)
-	public void fileExists_getInputFormatNameBeforeRead() throws IOException {
-		// given
-		FileImageSource source = new FileImageSource(new File("src/test/resources/Thumbnailator/grid.png"));
-		
-		try {
-			// when
-			source.getInputFormatName();
-		} catch (IllegalStateException e) {
-			// then
-			assertEquals("Input has not been read yet.", e.getMessage());
-			throw e;
-		}
-	}
-	
-	/*
-	 *
-	 *     +------+-----------+
-	 *     |XXXXXX|           |
-	 *     |XXXXXX|           |
-	 *     +------+           |
-	 *     |      region      |
-	 *     |                  |
-	 *     |                  |
-	 *     |                  |
-	 *     |                  |
-	 *     +------------------+
-	 *                        source
-	 */
-	@Test
-	public void appliesSourceRegion() throws IOException {
-		// given
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-		
-		FileImageSource source = new FileImageSource(sourceFile);
-		source.setThumbnailParameter(
-				new ThumbnailParameterBuilder()
-					.region(new Region(Positions.TOP_LEFT, new AbsoluteSize(40, 40)))
-					.size(20, 20)
-					.build()
-		);
-		
-		// when
-		BufferedImage img = source.read();
-			
-		// then
-		BufferedImage expectedImg = sourceImage.getSubimage(0, 0, 40, 40);
-		assertTrue(BufferedImageComparer.isRGBSimilar(expectedImg, img));
-	}
-	
-	/*
-	 *
-	 *     +------------------+ source
-	 *     |  +------------------+
-	 *     |  |XXXXXXXXXXXXXXX|  |
-	 *     |  |XXXXXXXXXXXXXXX|  |
-	 *     |  |XX  final  XXXX|  |
-	 *     |  |XX  region XXXX|  |
-	 *     |  |XXXXXXXXXXXXXXX|  |
-	 *     |  |XXXXXXXXXXXXXXX|  |
-	 *     |  |XXXXXXXXXXXXXXX|  |
-	 *     +--|---------------+  |
-	 *        +------------------+
-	 *                             region
-	 */
-	@Test
-	public void appliesSourceRegionTooBig() throws IOException {
-		// given
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-		
-		FileImageSource source = new FileImageSource(sourceFile);
-		source.setThumbnailParameter(
-				new ThumbnailParameterBuilder()
-					.region(new Region(new Coordinate(20, 20), new AbsoluteSize(100, 100)))
-					.size(80, 80)
-					.build()
-		);
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		BufferedImage expectedImg = sourceImage.getSubimage(20, 20, 80, 80);
-		assertTrue(BufferedImageComparer.isRGBSimilar(expectedImg, img));
-	}
-	
-	/*
-	 *   +-----------------+
-	 *   |                 |
-	 *   | +---------------|--+
-	 *   | |XXXXXXXXXXXXXXX|  |
-	 *   | |XXXXXXXXXXXXXXX|  |
-	 *   | |XXXX final XXXX|  |
-	 *   | |XXXX regionXXXX|  |
-	 *   | |XXXXXXXXXXXXXXX|  |
-	 *   | |XXXXXXXXXXXXXXX|  |
-	 *   +-----------------+  |
-	 *     |                region
-	 *     +------------------+
-	 *                        source
-	 */
-	@Test
-	public void appliesSourceRegionBeyondOrigin() throws IOException {
-		// given
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-		
-		FileImageSource source = new FileImageSource(sourceFile);
-		source.setThumbnailParameter(
-				new ThumbnailParameterBuilder()
-					.region(new Region(new Coordinate(-20, -20), new AbsoluteSize(100, 100)))
-					.size(80, 80)
-					.build()
-		);
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		BufferedImage expectedImg = sourceImage.getSubimage(0, 0, 80, 80);
-		assertTrue(BufferedImageComparer.isRGBSimilar(expectedImg, img));
-	}
-	
-	@Test
-	public void appliesSourceRegionNotSpecified() throws IOException {
-		// given
-		File sourceFile = new File("src/test/resources/Thumbnailator/grid.png");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-		
-		FileImageSource source = new FileImageSource(sourceFile);
-		source.setThumbnailParameter(
-				new ThumbnailParameterBuilder()
-					.size(20, 20)
-					.build()
-		);
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
-	}
-	
-	@Test
-	public void readImageUnaffectedForOrientation1() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_1.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-
-		FileImageSource source = new FileImageSource(sourceFile);
-
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder().size(20, 20).build();
-		source.setThumbnailParameter(param);
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
-	}
-
-	@Test
-	public void readImageUnaffectedForOrientation2() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-
-		FileImageSource source = new FileImageSource(sourceFile);
-
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder().size(20, 20).build();
-		source.setThumbnailParameter(param);
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
-	}
-	
-	@Test
-	public void readImageUnaffectedForOrientation3() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_3.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-
-		FileImageSource source = new FileImageSource(sourceFile);
-
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder().size(20, 20).build();
-		source.setThumbnailParameter(param);
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
-	}
-	
-	@Test
-	public void readImageUnaffectedForOrientation4() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_4.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-
-		FileImageSource source = new FileImageSource(sourceFile);
-
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder().size(20, 20).build();
-		source.setThumbnailParameter(param);
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
-	}
-	
-	@Test
-	public void readImageUnaffectedForOrientation5() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_5.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-
-		FileImageSource source = new FileImageSource(sourceFile);
-
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder().size(20, 20).build();
-		source.setThumbnailParameter(param);
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
-	}
-	
-	@Test
-	public void readImageUnaffectedForOrientation6() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_6.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-
-		FileImageSource source = new FileImageSource(sourceFile);
-
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder().size(20, 20).build();
-		source.setThumbnailParameter(param);
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
-	}
-	
-	@Test
-	public void readImageUnaffectedForOrientation7() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_7.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-
-		FileImageSource source = new FileImageSource(sourceFile);
-
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder().size(20, 20).build();
-		source.setThumbnailParameter(param);
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
-	}
-	
-	@Test
-	public void readImageUnaffectedForOrientation8() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_8.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-
-		FileImageSource source = new FileImageSource(sourceFile);
-
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder().size(20, 20).build();
-		source.setThumbnailParameter(param);
-		
-		// when
-		BufferedImage img = source.read();
-		
-		// then
-		assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
-	}
-	
-	@Test
-	public void containsCorrectFilterForOrientation1() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_1.jpg");
-		FileImageSource source = new FileImageSource(sourceFile);
-		
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder().size(20, 20).build();
-		source.setThumbnailParameter(param);
-		
-		// when
-		source.read();
-		
-		// then
-		assertTrue(param.getImageFilters().isEmpty());
-	}	
-	
-	@Test
-	public void containsCorrectFilterForOrientation2() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-		
-		FileImageSource source = new FileImageSource(sourceFile);
-		
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder().size(20, 20).build();
-		source.setThumbnailParameter(param);
-		
-		// when
-		source.read();
-		
-		// then
-		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
-		BufferedImageAssert.assertMatches(
-				result,
-				new float[] {
-						1, 1, 1,
-						1, 1, 1,
-						1, 0, 0,
-				}
-		);
-	}
-	
-	@Test
-	public void containsCorrectFilterForOrientation3() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_3.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-		
-		FileImageSource source = new FileImageSource(sourceFile);
-		
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder().size(20, 20).build();
-		source.setThumbnailParameter(param);
-		
-		// when
-		source.read();
-		
-		// then
-		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
-		BufferedImageAssert.assertMatches(
-				result,
-				new float[] {
-						1, 1, 1,
-						1, 1, 1,
-						1, 0, 0,
-				}
-		);
-	}
-	
-	@Test
-	public void containsCorrectFilterForOrientation4() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_4.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-		
-		FileImageSource source = new FileImageSource(sourceFile);
-		
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder().size(20, 20).build();
-		source.setThumbnailParameter(param);
-		
-		// when
-		source.read();
-		
-		// then
-		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
-		BufferedImageAssert.assertMatches(
-				result,
-				new float[] {
-						1, 1, 1,
-						1, 1, 1,
-						1, 0, 0,
-				}
-		);
-	}
-	
-	@Test
-	public void containsCorrectFilterForOrientation5() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_5.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-		
-		FileImageSource source = new FileImageSource(sourceFile);
-		
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder().size(20, 20).build();
-		source.setThumbnailParameter(param);
-		
-		// when
-		source.read();
-		
-		// then
-		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
-		BufferedImageAssert.assertMatches(
-				result,
-				new float[] {
-						1, 1, 1,
-						1, 1, 1,
-						1, 0, 0,
-				}
-		);
-	}
-	
-	@Test
-	public void containsCorrectFilterForOrientation6() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_6.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-		
-		FileImageSource source = new FileImageSource(sourceFile);
-		
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder().size(20, 20).build();
-		source.setThumbnailParameter(param);
-		
-		// when
-		source.read();
-		
-		// then
-		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
-		BufferedImageAssert.assertMatches(
-				result,
-				new float[] {
-						1, 1, 1,
-						1, 1, 1,
-						1, 0, 0,
-				}
-		);
-	}
-	
-	@Test
-	public void containsCorrectFilterForOrientation7() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_7.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-		
-		FileImageSource source = new FileImageSource(sourceFile);
-		
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder().size(20, 20).build();
-		source.setThumbnailParameter(param);
-		
-		// when
-		source.read();
-		
-		// then
-		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
-		BufferedImageAssert.assertMatches(
-				result,
-				new float[] {
-						1, 1, 1,
-						1, 1, 1,
-						1, 0, 0,
-				}
-		);
-	}
-	
-	@Test
-	public void containsCorrectFilterForOrientation8() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_8.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-		
-		FileImageSource source = new FileImageSource(sourceFile);
-		
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder().size(20, 20).build();
-		source.setThumbnailParameter(param);
-		
-		// when
-		source.read();
-		
-		// then
-		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
-		BufferedImageAssert.assertMatches(
-				result,
-				new float[] {
-						1, 1, 1,
-						1, 1, 1,
-						1, 0, 0,
-				}
-		);
-	}
-	
-	@Test
-	public void useExifOrientationIsTrue_OrientationHonored() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
-		BufferedImage sourceImage = ImageIO.read(sourceFile);
-		
-		FileImageSource source = new FileImageSource(sourceFile);
-		
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder()
-						.size(20, 20)
-						.useExifOrientation(true)
-						.build();
-		
-		source.setThumbnailParameter(param);
-		
-		// when
-		source.read();
-		
-		// then
-		BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
-		BufferedImageAssert.assertMatches(
-				result,
-				new float[] {
-						1, 1, 1,
-						1, 1, 1,
-						1, 0, 0,
-				}
-		);
-	}
-	
-	@Test
-	public void useExifOrientationIsFalse_OrientationIgnored() throws Exception {
-		// given
-		File sourceFile = new File("src/test/resources/Exif/source_2.jpg");
-		
-		FileImageSource source = new FileImageSource(sourceFile);
-		
-		ThumbnailParameter param =
-				new ThumbnailParameterBuilder()
-						.size(20, 20)
-						.useExifOrientation(false)
-						.build();
-		
-		source.setThumbnailParameter(param);
-		
-		// when
-		BufferedImage result = source.read();
-		
-		// then
-		assertTrue(param.getImageFilters().isEmpty());
-		BufferedImageAssert.assertMatches(
-				result,
-				new float[] {
-						1, 1, 1,
-						1, 1, 1,
-						0, 0, 1,
-				}
-		);
-	}
-
-	// What we really want to check the file resource is released.
-	@Test
-	public void canRemoveSourceImage() throws IOException {
-		// given
-		File inputFile = TestUtils.createTempFile(TMPDIR, "png");
-		TestUtils.copyFile(new File("src/test/resources/Thumbnailator/grid.png"), inputFile);
-
-		FileImageSource source = new FileImageSource(inputFile);
-
-		// when
-		source.read();
-
-		// then
-		assertEquals(inputFile, source.getSource());
-		assertTrue(inputFile.exists());
-		assertTrue(inputFile.delete());
-		assertFalse(inputFile.exists());
-	}
-
-	// What we really want to check the file resource is released.
-	// Reproducible on Windows, not Linux. (Issue #143)
-	@Test
-	public void canRemoveSourceImageOnReadFailure() throws IOException {
-		// given
-		File inputFile = TestUtils.createTempFile(TMPDIR, "png");
-		TestUtils.copyFile(new File("src/test/resources/Thumbnailator/grid.png"), inputFile, 200);
-
-		FileImageSource source = new FileImageSource(inputFile);
-
-		// when
-		try {
-			source.read();
+			try {
+				// when
+				source.read();
+			} catch (FileNotFoundException e) {
+				// then
+				assertThat(e.getMessage(), containsString("Could not find file"));
+				throw e;
+			}
 			fail();
-		} catch (Exception e) {
-			// expected
 		}
 
-		// then
-		assertEquals(inputFile, source.getSource());
-		assertTrue(inputFile.exists());
-		assertTrue(inputFile.delete());
-		assertFalse(inputFile.exists());
+		@Test(expected=FileNotFoundException.class)
+		public void fileDoesNotExists_AsString() throws IOException {
+			// given
+			File nonExistentFile = new File(temporaryFolder.getRoot(), "nonExistentFile");
+			FileImageSource source = new FileImageSource(nonExistentFile.getAbsolutePath());
+
+			try {
+				// when
+				source.read();
+			} catch (FileNotFoundException e) {
+				// then
+				assertThat(e.getMessage(), containsString("Could not find file"));
+				throw e;
+			}
+			fail();
+		}
+
+		@Test(expected=IllegalStateException.class)
+		public void fileExists_getInputFormatNameBeforeRead() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			FileImageSource source = new FileImageSource(sourceFile);
+
+			try {
+				// when
+				source.getInputFormatName();
+			} catch (IllegalStateException e) {
+				// then
+				assertEquals("Input has not been read yet.", e.getMessage());
+				throw e;
+			}
+		}
+
+		/*
+		 *
+		 *     +------+-----------+
+		 *     |XXXXXX|           |
+		 *     |XXXXXX|           |
+		 *     +------+           |
+		 *     |      region      |
+		 *     |                  |
+		 *     |                  |
+		 *     |                  |
+		 *     |                  |
+		 *     +------------------+
+		 *                        source
+		 */
+		@Test
+		public void appliesSourceRegion() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			BufferedImage sourceImage = ImageIO.read(sourceFile);
+
+			FileImageSource source = new FileImageSource(sourceFile);
+			source.setThumbnailParameter(
+					new ThumbnailParameterBuilder()
+						.region(new Region(Positions.TOP_LEFT, new AbsoluteSize(40, 40)))
+						.size(20, 20)
+						.build()
+			);
+
+			// when
+			BufferedImage img = source.read();
+
+			// then
+			BufferedImage expectedImg = sourceImage.getSubimage(0, 0, 40, 40);
+			assertTrue(BufferedImageComparer.isRGBSimilar(expectedImg, img));
+		}
+
+		/*
+		 *
+		 *     +------------------+ source
+		 *     |  +------------------+
+		 *     |  |XXXXXXXXXXXXXXX|  |
+		 *     |  |XXXXXXXXXXXXXXX|  |
+		 *     |  |XX  final  XXXX|  |
+		 *     |  |XX  region XXXX|  |
+		 *     |  |XXXXXXXXXXXXXXX|  |
+		 *     |  |XXXXXXXXXXXXXXX|  |
+		 *     |  |XXXXXXXXXXXXXXX|  |
+		 *     +--|---------------+  |
+		 *        +------------------+
+		 *                             region
+		 */
+		@Test
+		public void appliesSourceRegionTooBig() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			BufferedImage sourceImage = ImageIO.read(sourceFile);
+
+			FileImageSource source = new FileImageSource(sourceFile);
+			source.setThumbnailParameter(
+					new ThumbnailParameterBuilder()
+						.region(new Region(new Coordinate(20, 20), new AbsoluteSize(100, 100)))
+						.size(80, 80)
+						.build()
+			);
+
+			// when
+			BufferedImage img = source.read();
+
+			// then
+			BufferedImage expectedImg = sourceImage.getSubimage(20, 20, 80, 80);
+			assertTrue(BufferedImageComparer.isRGBSimilar(expectedImg, img));
+		}
+
+		/*
+		 *   +-----------------+
+		 *   |                 |
+		 *   | +---------------|--+
+		 *   | |XXXXXXXXXXXXXXX|  |
+		 *   | |XXXXXXXXXXXXXXX|  |
+		 *   | |XXXX final XXXX|  |
+		 *   | |XXXX regionXXXX|  |
+		 *   | |XXXXXXXXXXXXXXX|  |
+		 *   | |XXXXXXXXXXXXXXX|  |
+		 *   +-----------------+  |
+		 *     |                region
+		 *     +------------------+
+		 *                        source
+		 */
+		@Test
+		public void appliesSourceRegionBeyondOrigin() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			BufferedImage sourceImage = ImageIO.read(sourceFile);
+
+			FileImageSource source = new FileImageSource(sourceFile);
+			source.setThumbnailParameter(
+					new ThumbnailParameterBuilder()
+						.region(new Region(new Coordinate(-20, -20), new AbsoluteSize(100, 100)))
+						.size(80, 80)
+						.build()
+			);
+
+			// when
+			BufferedImage img = source.read();
+
+			// then
+			BufferedImage expectedImg = sourceImage.getSubimage(0, 0, 80, 80);
+			assertTrue(BufferedImageComparer.isRGBSimilar(expectedImg, img));
+		}
+
+		@Test
+		public void appliesSourceRegionNotSpecified() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			BufferedImage sourceImage = ImageIO.read(sourceFile);
+
+			FileImageSource source = new FileImageSource(sourceFile);
+			source.setThumbnailParameter(
+					new ThumbnailParameterBuilder()
+						.size(20, 20)
+						.build()
+			);
+
+			// when
+			BufferedImage img = source.read();
+
+			// then
+			assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
+		}
+
+		@Test
+		public void useExifOrientationIsTrue_OrientationHonored() throws Exception {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Exif/source_2.jpg", temporaryFolder
+			);
+			BufferedImage sourceImage = ImageIO.read(sourceFile);
+
+			FileImageSource source = new FileImageSource(sourceFile);
+
+			ThumbnailParameter param =
+					new ThumbnailParameterBuilder()
+							.size(20, 20)
+							.useExifOrientation(true)
+							.build();
+
+			source.setThumbnailParameter(param);
+
+			// when
+			source.read();
+
+			// then
+			BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
+			BufferedImageAssert.assertMatches(
+					result,
+					new float[] {
+							1, 1, 1,
+							1, 1, 1,
+							1, 0, 0,
+					}
+			);
+		}
+
+		@Test
+		public void useExifOrientationIsFalse_OrientationIgnored() throws Exception {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					"Exif/source_2.jpg", temporaryFolder
+			);
+			FileImageSource source = new FileImageSource(sourceFile);
+
+			ThumbnailParameter param =
+					new ThumbnailParameterBuilder()
+							.size(20, 20)
+							.useExifOrientation(false)
+							.build();
+
+			source.setThumbnailParameter(param);
+
+			// when
+			BufferedImage result = source.read();
+
+			// then
+			assertTrue(param.getImageFilters().isEmpty());
+			BufferedImageAssert.assertMatches(
+					result,
+					new float[] {
+							1, 1, 1,
+							1, 1, 1,
+							0, 0, 1,
+					}
+			);
+		}
+
+		// What we really want to check the file resource is released.
+		@Test
+		public void canRemoveSourceImage() throws IOException {
+			// given
+			File inputFile = TestUtils.copyResourceToTemporaryFile(
+					"Thumbnailator/grid.png", temporaryFolder
+			);
+			FileImageSource source = new FileImageSource(inputFile);
+
+			// when
+			source.read();
+
+			// then
+			assertEquals(inputFile, source.getSource());
+			assertTrue(inputFile.exists());
+			assertTrue(inputFile.delete());
+			assertFalse(inputFile.exists());
+		}
+
+		// What we really want to check the file resource is released.
+		// Reproducible on Windows, not Linux. (Issue #143)
+		@Test
+		public void canRemoveSourceImageOnReadFailure() throws IOException {
+			// given
+			File inputFile = temporaryFolder.newFile("something.png");
+			TestUtils.copyFile(
+					TestUtils.copyResourceToTemporaryFile(
+							"Thumbnailator/grid.png", temporaryFolder
+					)
+					, inputFile, 200
+			);
+
+			FileImageSource source = new FileImageSource(inputFile);
+
+			// when
+			try {
+				source.read();
+				fail();
+			} catch (Exception e) {
+				// expected
+			}
+
+			// then
+			assertEquals(inputFile, source.getSource());
+			assertTrue(inputFile.exists());
+			assertTrue(inputFile.delete());
+			assertFalse(inputFile.exists());
+		}
+	}
+
+	@RunWith(Parameterized.class)
+	public static class FileReadTests {
+		@Parameterized.Parameters
+		public static Object[][] formats() {
+			return new Object[][] {
+					new Object[] { "png", "png" },
+					new Object[] { "jpg", "JPEG" },
+					new Object[] { "bmp", "bmp" },
+			};
+		}
+
+		@Parameterized.Parameter
+		public String format;
+
+		@Parameterized.Parameter(1)
+		public String expectedFormat;
+
+		@Rule
+		public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+		private interface FileImageSourceSupplier {
+			FileImageSource get(File sourceFile);
+		}
+
+		private void test(FileImageSourceSupplier supplier) throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					String.format("Thumbnailator/grid.%s", format), temporaryFolder
+			);
+			FileImageSource source = supplier.get(sourceFile);
+
+			// when
+			BufferedImage img = source.read();
+
+			// then
+			assertEquals(100, img.getWidth());
+			assertEquals(100, img.getHeight());
+			assertEquals(expectedFormat, source.getInputFormatName());
+		}
+
+		@Test
+		public void fileExistsUsingFile() throws IOException {
+			test(new FileImageSourceSupplier() {
+				public FileImageSource get(File sourceFile) {
+					return new FileImageSource(sourceFile);
+				}
+			});
+		}
+
+		@Test
+		public void fileExistsUsingString() throws IOException {
+			test(new FileImageSourceSupplier() {
+				public FileImageSource get(File sourceFile) {
+					return new FileImageSource(sourceFile.getAbsolutePath());
+				}
+			});
+		}
+	}
+
+	@RunWith(Parameterized.class)
+	public static class OrientationTests {
+		@Parameterized.Parameters(name = "orientation={0}")
+		public static Object[] values() {
+			return new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+		}
+
+		@Parameterized.Parameter
+		public int orientation;
+
+		@Rule
+		public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+		/**
+		 * Check that `FileImageSource.read` behaves like `ImageIO.read`.
+		 */
+		@Test
+		public void readImageUnaffectedByOrientation() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					String.format("Exif/source_%s.jpg", orientation), temporaryFolder
+			);
+			BufferedImage sourceImage = ImageIO.read(sourceFile);
+
+			FileImageSource source = new FileImageSource(sourceFile);
+
+			ThumbnailParameter param =
+					new ThumbnailParameterBuilder().size(20, 20).build();
+			source.setThumbnailParameter(param);
+
+			// when
+			BufferedImage img = source.read();
+
+			// then
+			assertTrue(BufferedImageComparer.isRGBSimilar(sourceImage, img));
+		}
+
+		/**
+		 * Check that the Exif orientation is honored by default.
+		 */
+		@Test
+		public void containsCorrectFilterForOrientation() throws Exception {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					String.format("Exif/source_%s.jpg", orientation), temporaryFolder
+			);
+			BufferedImage sourceImage = ImageIO.read(sourceFile);
+
+			FileImageSource source = new FileImageSource(sourceFile);
+
+			ThumbnailParameter param =
+					new ThumbnailParameterBuilder().size(20, 20).build();
+			source.setThumbnailParameter(param);
+
+			// when
+			source.read();
+
+			// then
+			if (orientation == 1) {
+				assertTrue(param.getImageFilters().isEmpty());
+				return;
+			}
+
+			BufferedImage result = param.getImageFilters().get(0).apply(sourceImage);
+			BufferedImageAssert.assertMatches(
+					result,
+					new float[] {
+							1, 1, 1,
+							1, 1, 1,
+							1, 0, 0,
+					}
+			);
+		}
 	}
 }

@@ -22,9 +22,26 @@
  * THE SOFTWARE.
  */
 
+package net.coobird.thumbnailator.filters;
+
+import java.awt.image.BufferedImage;
+
 /**
- * This package contains classes which provide the core functionalities of
- * Thumbnailator, including {@link net.coobird.thumbnailator.Thumbnails},
- * the entry point for most use cases of Thumbnailator.
+ * This is a no-op filter that acts as a "flag" to enable proper handling of
+ * dimensions for images that will be oriented by using Exif metadata.
+ * <p>
+ * This is an internal filter that should not be used by consumers of
+ * Thumbnailator.
  */
-package net.coobird.thumbnailator;
+public class SwapDimensions implements ImageFilter {
+	private static final SwapDimensions INSTANCE = new SwapDimensions();
+	private SwapDimensions() {}
+
+	public static SwapDimensions getInstance() {
+		return INSTANCE;
+	}
+
+	public BufferedImage apply(BufferedImage img) {
+		return img;
+	}
+}

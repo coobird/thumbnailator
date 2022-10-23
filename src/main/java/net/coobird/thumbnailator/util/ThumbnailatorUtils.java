@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -76,7 +76,7 @@ public final class ThumbnailatorUtils {
 		}
 		
 		for (String supportedFormat : getSupportedOutputFormats()) {
-			if (supportedFormat.equals(format)) {
+			if (supportedFormat.equalsIgnoreCase(format)) {
 				return true;
 			}
 		}

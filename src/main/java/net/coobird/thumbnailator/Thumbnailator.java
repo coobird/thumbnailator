@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2022 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,10 +35,13 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 import net.coobird.thumbnailator.filters.ImageFilter;
+import net.coobird.thumbnailator.filters.Pipeline;
+import net.coobird.thumbnailator.filters.SwapDimensions;
 import net.coobird.thumbnailator.makers.FixedSizeThumbnailMaker;
 import net.coobird.thumbnailator.makers.ScaledThumbnailMaker;
 import net.coobird.thumbnailator.name.Rename;
@@ -93,13 +96,17 @@ public final class Thumbnailator {
 				imageType = sourceImage.getType();
 			}
 		}
-		
+
+		// Check for presence of marker indicating to swap the width and height.
+		boolean isSwapDimensions = hasSwapDimensionsFilter(param.getImageFilters());
+
 		BufferedImage destinationImage;
 		
 		if (param.getSize() != null) {
 			// Get the dimensions of the original and thumbnail images.
-			int destinationWidth = param.getSize().width;
-			int destinationHeight = param.getSize().height;
+			Dimension size = param.getSize();
+			int destinationWidth = !isSwapDimensions ? size.width : size.height;
+			int destinationHeight = !isSwapDimensions ? size.height : size.width;
 			
 			// Create the thumbnail.
 			destinationImage =
@@ -113,9 +120,14 @@ public final class Thumbnailator {
 
 		} else if (!Double.isNaN(param.getWidthScalingFactor())) {
 			// Create the thumbnail.
+			double widthScalingFactor = !isSwapDimensions ?
+					param.getWidthScalingFactor() : param.getHeightScalingFactor();
+			double heightScalingFactor = !isSwapDimensions ?
+					param.getHeightScalingFactor() : param.getWidthScalingFactor();
+
 			destinationImage =
 				new ScaledThumbnailMaker()
-					.scale(param.getWidthScalingFactor(), param.getHeightScalingFactor())
+					.scale(widthScalingFactor, heightScalingFactor)
 					.imageType(imageType)
 					.resizerFactory(param.getResizerFactory())
 					.make(sourceImage);
@@ -135,6 +147,20 @@ public final class Thumbnailator {
 		
 		sourceImage.flush();
 		destinationImage.flush();
+	}
+
+	private static boolean hasSwapDimensionsFilter(List<ImageFilter> imageFilters) {
+		boolean hasSwapDimenionsFilter = false;
+		for (ImageFilter imageFilter : imageFilters) {
+			if (imageFilter instanceof Pipeline) {
+				if (hasSwapDimensionsFilter(((Pipeline) imageFilter).getFilters())) {
+					return true;
+				}
+			} else {
+				hasSwapDimenionsFilter = imageFilter.equals(SwapDimensions.getInstance());
+			}
+		}
+		return hasSwapDimenionsFilter;
 	}
 
 	/**
