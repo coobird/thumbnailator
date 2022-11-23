@@ -1,0 +1,4 @@
+thumbnailator.disableExifWorkaround=false
+thumbnailator.debugLog=false
+thumbnailator.debugLog.exifWorkaround=false
+thumbnailator.conserveMemoryWorkaround=false
