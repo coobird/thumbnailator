@@ -43,6 +43,7 @@ import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.geometry.Region;
 import net.coobird.thumbnailator.tasks.UnsupportedFormatException;
+import net.coobird.thumbnailator.util.Configurations;
 import net.coobird.thumbnailator.util.exif.ExifFilterUtils;
 import net.coobird.thumbnailator.util.exif.ExifUtils;
 import net.coobird.thumbnailator.util.exif.Orientation;
@@ -81,7 +82,7 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 			throw new NullPointerException("InputStream cannot be null.");
 		}
 
-		if (!Boolean.getBoolean("thumbnailator.disableExifWorkaround")) {
+		if (!Configurations.DISABLE_EXIF_WORKAROUND.getBoolean()) {
 			this.is = new ExifCaptureInputStream(is);
 		} else {
 			this.is = is;
@@ -173,8 +174,8 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 		/**
 		 * A flag to indicate whether to output debug logs.
 		 */
-		private final boolean isDebug = Boolean.getBoolean("thumbnailator.debugLog.exifWorkaround")
-				|| Boolean.getBoolean("thumbnailator.debugLog");
+		private final boolean isDebug = Configurations.DEBUG_LOG_EXIF_WORKAROUND.getBoolean()
+				|| Configurations.DEBUG_LOG.getBoolean();
 
 		/**
 		 * Returns Exif data captured from the JPEG image.
@@ -542,7 +543,7 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 		 * https://github.com/coobird/thumbnailator/issues/69
 		 */
 		if (param != null &&
-				Boolean.getBoolean("thumbnailator.conserveMemoryWorkaround") &&
+				Configurations.CONSERVE_MEMORY_WORKAROUND.getBoolean() &&
 				width > 1800 && height > 1800 &&
 				(width * height * 4L > Runtime.getRuntime().freeMemory() / 4)
 		) {
