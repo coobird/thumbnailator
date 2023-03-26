@@ -9,8 +9,8 @@
   <url>https://github.com/coobird/thumbnailator</url>
   <licenses>
     <license>
-      <name>The MIT License (MIT)</name>
-      <url>http://www.opensource.org/licenses/mit-license.html</url>
+      <name>MIT License</name>
+      <url>https://spdx.org/licenses/MIT.html</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
