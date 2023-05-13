@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2023 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -66,7 +66,9 @@ public class BufferedImageSource extends AbstractImageSource<BufferedImage> {
 		
 		if (param != null && param.getSourceRegion() != null) {
 			Region region = param.getSourceRegion();
-			Rectangle r = region.calculate(img.getWidth(), img.getHeight());
+			Rectangle r = region.calculate(
+					img.getWidth(), img.getHeight(), false, false
+			);
 			
 			return finishedReading(img.getSubimage(r.x, r.y, r.width, r.height));
 		} else {

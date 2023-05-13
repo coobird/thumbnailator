@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2022 Chris Kroells
+ * Copyright (c) 2008-2023 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -484,10 +484,9 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 	}
 
 	private BufferedImage readImage(ImageReader reader) throws IOException {
-
+		Orientation orientation = null;
 		try {
 			if (param.useExifOrientation()) {
-				Orientation orientation = null;
 
 				// Attempt to use Exif reader of the ImageReader.
 				// If the ImageReader fails like seen in Issue #108, use the
@@ -531,9 +530,9 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 
 		if (param != null && param.getSourceRegion() != null) {
 			Region region = param.getSourceRegion();
-			Rectangle sourceRegion = region.calculate(width, height);
-
-			irParam.setSourceRegion(sourceRegion);
+			irParam.setSourceRegion(
+					calculateSourceRegion(width, height, orientation, region)
+			);
 		}
 
 		/*
@@ -592,6 +591,48 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 		}
 
 		return reader.read(FIRST_IMAGE_INDEX, irParam);
+	}
+
+	private Rectangle calculateSourceRegion(int width, int height, Orientation orientation, Region region) {
+		boolean flipHorizontal = false;
+		boolean flipVertical = false;
+
+		/*
+		 * Fix for Issue 207:
+		 * https://github.com/coobird/thumbnailator/issues/207
+		 *
+		 * Source region should be selected from the image _after_ applying
+		 * the Exif orientation. Therefore, we need to change the source
+		 * region based on the Exif orientation, as source pixels will be
+		 * oriented differently.
+		 */
+		if (orientation == Orientation.TOP_RIGHT) {
+			flipHorizontal = true;
+
+		} else if (orientation == Orientation.BOTTOM_RIGHT) {
+			flipHorizontal = true;
+			flipVertical = true;
+
+		} else if (orientation == Orientation.BOTTOM_LEFT) {
+			flipVertical = true;
+
+		} else if (orientation == Orientation.LEFT_TOP) {
+			// Do nothing.
+
+		} else if (orientation == Orientation.RIGHT_TOP) {
+			flipVertical = true;
+
+		} else if (orientation == Orientation.RIGHT_BOTTOM) {
+			flipHorizontal = true;
+			flipVertical = true;
+
+		} else if (orientation == Orientation.LEFT_BOTTOM) {
+			flipHorizontal = true;
+		}
+
+		return region.calculate(
+				width, height, flipHorizontal, flipVertical
+		);
 	}
 
 	public InputStream getSource() {
