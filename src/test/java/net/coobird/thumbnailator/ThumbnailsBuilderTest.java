@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2022 Chris Kroells
+ * Copyright (c) 2008-2023 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -4402,6 +4402,145 @@ public class ThumbnailsBuilderTest {
 			assertEquals(50, fromFileImage1.getHeight());
 			assertEquals(50, fromFileImage2.getWidth());
 			assertEquals(50, fromFileImage2.getHeight());
+		}
+	}
+
+	@RunWith(Parameterized.class)
+	public static class SourceRegionTests {
+		// Error tolerance to deal with JPEG artifacts.
+		private static final int MAX_ERROR = 3;
+		private static final BufferedImage EXPECTED_GRID_IMAGE;
+		private static final BufferedImage EXPECTED_F_IMAGE;
+
+		static {
+			InputStream is;
+			try {
+				is = TestUtils.getResourceStream("Thumbnailator/grid.png");
+				EXPECTED_GRID_IMAGE = ImageIO.read(is).getSubimage(0, 0, 50, 50);
+				is.close();
+
+				is = TestUtils.getResourceStream("Exif/original.png");
+				EXPECTED_F_IMAGE = ImageIO.read(is).getSubimage(0, 0, 80, 80);
+				is.close();
+
+			} catch (Exception e) {
+				throw new RuntimeException("Shouldn't happen.", e);
+			}
+		}
+
+		@Parameterized.Parameters(name = "sourceImage={0}, expectedImage={1}, width={2}, height={0}")
+		public static Object[][] values() {
+			return new Object[][] {
+					new Object[] { "Thumbnailator/grid.png", EXPECTED_GRID_IMAGE, 50, 50 },
+					new Object[] { "Exif/source_1.jpg", EXPECTED_F_IMAGE, 80, 80 },
+					new Object[] { "Exif/source_2.jpg", EXPECTED_F_IMAGE, 80, 80 },
+					new Object[] { "Exif/source_3.jpg", EXPECTED_F_IMAGE, 80, 80 },
+					new Object[] { "Exif/source_4.jpg", EXPECTED_F_IMAGE, 80, 80 },
+					new Object[] { "Exif/source_5.jpg", EXPECTED_F_IMAGE, 80, 80 },
+					new Object[] { "Exif/source_6.jpg", EXPECTED_F_IMAGE, 80, 80 },
+					new Object[] { "Exif/source_7.jpg", EXPECTED_F_IMAGE, 80, 80 },
+					new Object[] { "Exif/source_8.jpg", EXPECTED_F_IMAGE, 80, 80 },
+			};
+		}
+
+		@Parameterized.Parameter
+		public String resourcePath;
+
+		@Parameterized.Parameter(1)
+		public BufferedImage expectedImage;
+
+		@Parameterized.Parameter(2)
+		public int width;
+
+		@Parameterized.Parameter(3)
+		public int height;
+
+		@Rule
+		public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+		@Test
+		public void sourceRegion_Region() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(resourcePath, temporaryFolder);
+
+			// when
+			BufferedImage thumbnail = Thumbnails.of(sourceFile)
+					.sourceRegion(new Region(new Coordinate(0, 0), new AbsoluteSize(width, height)))
+					.size(width, height)
+					.asBufferedImage();
+
+			// then
+			assertEquals(width, thumbnail.getWidth());
+			assertEquals(height, thumbnail.getHeight());
+			assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, expectedImage, MAX_ERROR));
+		}
+
+		@Test
+		public void sourceRegion_Rectangle() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(resourcePath, temporaryFolder);
+
+			// when
+			BufferedImage thumbnail = Thumbnails.of(sourceFile)
+					.sourceRegion(new Rectangle(0, 0, width, height))
+					.size(width, height)
+					.asBufferedImage();
+
+			// then
+			assertEquals(width, thumbnail.getWidth());
+			assertEquals(height, thumbnail.getHeight());
+			assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, expectedImage, MAX_ERROR));
+		}
+
+		@Test
+		public void sourceRegion_PositionSize() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(resourcePath, temporaryFolder);
+
+			// when
+			BufferedImage thumbnail = Thumbnails.of(sourceFile)
+					.sourceRegion(new Coordinate(0, 0), new AbsoluteSize(width, height))
+					.size(width, height)
+					.asBufferedImage();
+
+			// then
+			assertEquals(width, thumbnail.getWidth());
+			assertEquals(height, thumbnail.getHeight());
+			assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, expectedImage, MAX_ERROR));
+		}
+
+		@Test
+		public void sourceRegion_PositionIntInt() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(resourcePath, temporaryFolder);
+
+			// when
+			BufferedImage thumbnail = Thumbnails.of(sourceFile)
+					.sourceRegion(new Coordinate(0, 0), width, height)
+					.size(width, height)
+					.asBufferedImage();
+
+			// then
+			assertEquals(width, thumbnail.getWidth());
+			assertEquals(height, thumbnail.getHeight());
+			assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, expectedImage, MAX_ERROR));
+		}
+
+		@Test
+		public void sourceRegion_IntIntIntInt() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(resourcePath, temporaryFolder);
+
+			// when
+			BufferedImage thumbnail = Thumbnails.of(sourceFile)
+					.sourceRegion(0, 0, width, height)
+					.size(width, height)
+					.asBufferedImage();
+
+			// then
+			assertEquals(width, thumbnail.getWidth());
+			assertEquals(height, thumbnail.getHeight());
+			assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, expectedImage, 5));
 		}
 	}
 
