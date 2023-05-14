@@ -95,33 +95,47 @@ public final class Region {
 	 * region are ignored. Effectively, the {@link Rectangle} returned by this
 	 * method is an intersection of the enclosing and enclose regions.
 	 * 
-	 * @param width				Width of the enclosing region.
-	 * @param height			Height of the enclosing region.
+	 * @param outerWidth		Width of the enclosing region.
+	 * @param outerHeight		Height of the enclosing region.
 	 * @param flipHorizontal	Whether enclosed region should flip
 	 * 							horizontally within the enclosing region.
 	 * @param flipVertical		Whether enclosed region should flip
 	 * 							vertically within the enclosing region.
-	 * @return			Position and size of the enclosed region.
+	 * @param swapDimensions	Whether the components of the point and
+	 * 							dimension of the enclosed region should be
+	 * 							swapped.
+	 * @return					Position and size of the enclosed region.
 	 */
-	public Rectangle calculate(int width, int height, boolean flipHorizontal, boolean flipVertical) {
-		Dimension innerDimension = size.calculate(width, height);
+	public Rectangle calculate(
+			int outerWidth,
+			int outerHeight,
+			boolean flipHorizontal,
+			boolean flipVertical,
+			boolean swapDimensions
+	) {
+		Dimension innerDimension = size.calculate(outerWidth, outerHeight);
 
 		Point innerPoint = position.calculate(
-				width, height, innerDimension.width, innerDimension.height, 0, 0, 0, 0
+				outerWidth, outerHeight, innerDimension.width, innerDimension.height, 0, 0, 0, 0
 		);
 
+		if (swapDimensions) {
+			innerDimension = new Dimension(innerDimension.height, innerDimension.width);
+			innerPoint = new Point(innerPoint.y, innerPoint.x);
+		}
+
 		if (flipHorizontal) {
-			int newX = width - innerPoint.x - innerDimension.width;
+			int newX = outerWidth - innerPoint.x - innerDimension.width;
 			innerPoint.setLocation(newX, innerPoint.y);
 		}
 		if (flipVertical) {
-			int newY = height - innerPoint.y - innerDimension.height;
+			int newY = outerHeight - innerPoint.y - innerDimension.height;
 			innerPoint.setLocation(innerPoint.x, newY);
 		}
-		
-		Rectangle outerRectangle = new Rectangle(0, 0, width, height);
+
+		Rectangle outerRectangle = new Rectangle(0, 0, outerWidth, outerHeight);
 		Rectangle innerRectangle = new Rectangle(innerPoint, innerDimension);
-		
+
 		return outerRectangle.intersection(innerRectangle);
 	}
 

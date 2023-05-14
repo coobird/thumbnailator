@@ -67,7 +67,7 @@ public class BufferedImageSource extends AbstractImageSource<BufferedImage> {
 		if (param != null && param.getSourceRegion() != null) {
 			Region region = param.getSourceRegion();
 			Rectangle r = region.calculate(
-					img.getWidth(), img.getHeight(), false, false
+					img.getWidth(), img.getHeight(), false, false, false
 			);
 			
 			return finishedReading(img.getSubimage(r.x, r.y, r.width, r.height));

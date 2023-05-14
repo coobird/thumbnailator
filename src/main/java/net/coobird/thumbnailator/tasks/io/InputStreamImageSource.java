@@ -596,6 +596,7 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 	private Rectangle calculateSourceRegion(int width, int height, Orientation orientation, Region region) {
 		boolean flipHorizontal = false;
 		boolean flipVertical = false;
+		boolean swapDimensions = false;
 
 		/*
 		 * Fix for Issue 207:
@@ -617,21 +618,24 @@ public class InputStreamImageSource extends AbstractImageSource<InputStream> {
 			flipVertical = true;
 
 		} else if (orientation == Orientation.LEFT_TOP) {
-			// Do nothing.
+			swapDimensions = true;
 
 		} else if (orientation == Orientation.RIGHT_TOP) {
 			flipVertical = true;
+			swapDimensions = true;
 
 		} else if (orientation == Orientation.RIGHT_BOTTOM) {
 			flipHorizontal = true;
 			flipVertical = true;
+			swapDimensions = true;
 
 		} else if (orientation == Orientation.LEFT_BOTTOM) {
 			flipHorizontal = true;
+			swapDimensions = true;
 		}
 
 		return region.calculate(
-				width, height, flipHorizontal, flipVertical
+				width, height, flipHorizontal, flipVertical, swapDimensions
 		);
 	}
 

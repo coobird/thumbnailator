@@ -4411,6 +4411,8 @@ public class ThumbnailsBuilderTest {
 		private static final int MAX_ERROR = 3;
 		private static final BufferedImage EXPECTED_GRID_IMAGE;
 		private static final BufferedImage EXPECTED_F_IMAGE;
+		private static final BufferedImage EXPECTED_GRID_SHIFT_IMAGE;
+		private static final BufferedImage EXPECTED_F_SHIFT_IMAGE;
 
 		static {
 			InputStream is;
@@ -4423,23 +4425,40 @@ public class ThumbnailsBuilderTest {
 				EXPECTED_F_IMAGE = ImageIO.read(is).getSubimage(0, 0, 80, 80);
 				is.close();
 
+				is = TestUtils.getResourceStream("Thumbnailator/grid.png");
+				EXPECTED_GRID_SHIFT_IMAGE = ImageIO.read(is).getSubimage(10, 20, 50, 30);
+				is.close();
+
+				is = TestUtils.getResourceStream("Exif/original.png");
+				EXPECTED_F_SHIFT_IMAGE = ImageIO.read(is).getSubimage(10, 20, 80, 90);
+				is.close();
+
 			} catch (Exception e) {
 				throw new RuntimeException("Shouldn't happen.", e);
 			}
 		}
 
-		@Parameterized.Parameters(name = "sourceImage={0}, expectedImage={1}, width={2}, height={0}")
+		@Parameterized.Parameters(name = "sourceImage={0}, x={2}, y={3}, width={4}, height={5}")
 		public static Object[][] values() {
 			return new Object[][] {
-					new Object[] { "Thumbnailator/grid.png", EXPECTED_GRID_IMAGE, 50, 50 },
-					new Object[] { "Exif/source_1.jpg", EXPECTED_F_IMAGE, 80, 80 },
-					new Object[] { "Exif/source_2.jpg", EXPECTED_F_IMAGE, 80, 80 },
-					new Object[] { "Exif/source_3.jpg", EXPECTED_F_IMAGE, 80, 80 },
-					new Object[] { "Exif/source_4.jpg", EXPECTED_F_IMAGE, 80, 80 },
-					new Object[] { "Exif/source_5.jpg", EXPECTED_F_IMAGE, 80, 80 },
-					new Object[] { "Exif/source_6.jpg", EXPECTED_F_IMAGE, 80, 80 },
-					new Object[] { "Exif/source_7.jpg", EXPECTED_F_IMAGE, 80, 80 },
-					new Object[] { "Exif/source_8.jpg", EXPECTED_F_IMAGE, 80, 80 },
+					new Object[] { "Thumbnailator/grid.png", EXPECTED_GRID_IMAGE, 0, 0, 50, 50 },
+					new Object[] { "Exif/source_1.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
+					new Object[] { "Exif/source_2.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
+					new Object[] { "Exif/source_3.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
+					new Object[] { "Exif/source_4.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
+					new Object[] { "Exif/source_5.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
+					new Object[] { "Exif/source_6.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
+					new Object[] { "Exif/source_7.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
+					new Object[] { "Exif/source_8.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
+					new Object[] { "Thumbnailator/grid.png", EXPECTED_GRID_SHIFT_IMAGE, 10, 20, 50, 30 },
+					new Object[] { "Exif/source_1.jpg", EXPECTED_F_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_2.jpg", EXPECTED_F_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_3.jpg", EXPECTED_F_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_4.jpg", EXPECTED_F_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_5.jpg", EXPECTED_F_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_6.jpg", EXPECTED_F_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_7.jpg", EXPECTED_F_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_8.jpg", EXPECTED_F_SHIFT_IMAGE, 10, 20, 80, 90 },
 			};
 		}
 
@@ -4450,9 +4469,15 @@ public class ThumbnailsBuilderTest {
 		public BufferedImage expectedImage;
 
 		@Parameterized.Parameter(2)
-		public int width;
+		public int x;
 
 		@Parameterized.Parameter(3)
+		public int y;
+
+		@Parameterized.Parameter(4)
+		public int width;
+
+		@Parameterized.Parameter(5)
 		public int height;
 
 		@Rule
@@ -4465,7 +4490,7 @@ public class ThumbnailsBuilderTest {
 
 			// when
 			BufferedImage thumbnail = Thumbnails.of(sourceFile)
-					.sourceRegion(new Region(new Coordinate(0, 0), new AbsoluteSize(width, height)))
+					.sourceRegion(new Region(new Coordinate(x, y), new AbsoluteSize(width, height)))
 					.size(width, height)
 					.asBufferedImage();
 
@@ -4482,7 +4507,7 @@ public class ThumbnailsBuilderTest {
 
 			// when
 			BufferedImage thumbnail = Thumbnails.of(sourceFile)
-					.sourceRegion(new Rectangle(0, 0, width, height))
+					.sourceRegion(new Rectangle(x, y, width, height))
 					.size(width, height)
 					.asBufferedImage();
 
@@ -4499,7 +4524,7 @@ public class ThumbnailsBuilderTest {
 
 			// when
 			BufferedImage thumbnail = Thumbnails.of(sourceFile)
-					.sourceRegion(new Coordinate(0, 0), new AbsoluteSize(width, height))
+					.sourceRegion(new Coordinate(x, y), new AbsoluteSize(width, height))
 					.size(width, height)
 					.asBufferedImage();
 
@@ -4516,7 +4541,7 @@ public class ThumbnailsBuilderTest {
 
 			// when
 			BufferedImage thumbnail = Thumbnails.of(sourceFile)
-					.sourceRegion(new Coordinate(0, 0), width, height)
+					.sourceRegion(new Coordinate(x, y), width, height)
 					.size(width, height)
 					.asBufferedImage();
 
@@ -4533,7 +4558,7 @@ public class ThumbnailsBuilderTest {
 
 			// when
 			BufferedImage thumbnail = Thumbnails.of(sourceFile)
-					.sourceRegion(0, 0, width, height)
+					.sourceRegion(x, y, width, height)
 					.size(width, height)
 					.asBufferedImage();
 
