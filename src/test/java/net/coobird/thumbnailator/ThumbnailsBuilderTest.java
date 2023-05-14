@@ -4411,8 +4411,12 @@ public class ThumbnailsBuilderTest {
 		private static final int MAX_ERROR = 3;
 		private static final BufferedImage EXPECTED_GRID_IMAGE;
 		private static final BufferedImage EXPECTED_F_IMAGE;
-		private static final BufferedImage EXPECTED_GRID_SHIFT_IMAGE;
-		private static final BufferedImage EXPECTED_F_SHIFT_IMAGE;
+		private static final BufferedImage EXPECTED_GRID_TOP_LEFT_SHIFT_IMAGE;
+		private static final BufferedImage EXPECTED_F_TOP_LEFT_SHIFT_IMAGE;
+		private static final BufferedImage EXPECTED_GRID_BOTTOM_LEFT_SHIFT_IMAGE;
+		private static final BufferedImage EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE;
+		private static final BufferedImage EXPECTED_GRID_BOTTOM_RIGHT_SHIFT_IMAGE;
+		private static final BufferedImage EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE;
 
 		static {
 			InputStream is;
@@ -4426,11 +4430,27 @@ public class ThumbnailsBuilderTest {
 				is.close();
 
 				is = TestUtils.getResourceStream("Thumbnailator/grid.png");
-				EXPECTED_GRID_SHIFT_IMAGE = ImageIO.read(is).getSubimage(10, 20, 50, 30);
+				EXPECTED_GRID_TOP_LEFT_SHIFT_IMAGE = ImageIO.read(is).getSubimage(10, 20, 50, 30);
 				is.close();
 
 				is = TestUtils.getResourceStream("Exif/original.png");
-				EXPECTED_F_SHIFT_IMAGE = ImageIO.read(is).getSubimage(10, 20, 80, 90);
+				EXPECTED_F_TOP_LEFT_SHIFT_IMAGE = ImageIO.read(is).getSubimage(10, 20, 80, 90);
+				is.close();
+
+				is = TestUtils.getResourceStream("Thumbnailator/grid.png");
+				EXPECTED_GRID_BOTTOM_LEFT_SHIFT_IMAGE = ImageIO.read(is).getSubimage(10, 50, 50, 30);
+				is.close();
+
+				is = TestUtils.getResourceStream("Exif/original.png");
+				EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE = ImageIO.read(is).getSubimage(10, 60, 80, 90);
+				is.close();
+
+				is = TestUtils.getResourceStream("Thumbnailator/grid.png");
+				EXPECTED_GRID_BOTTOM_RIGHT_SHIFT_IMAGE = ImageIO.read(is).getSubimage(30, 50, 50, 30);
+				is.close();
+
+				is = TestUtils.getResourceStream("Exif/original.png");
+				EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE = ImageIO.read(is).getSubimage(70, 60, 80, 90);
 				is.close();
 
 			} catch (Exception e) {
@@ -4450,15 +4470,33 @@ public class ThumbnailsBuilderTest {
 					new Object[] { "Exif/source_6.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
 					new Object[] { "Exif/source_7.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
 					new Object[] { "Exif/source_8.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
-					new Object[] { "Thumbnailator/grid.png", EXPECTED_GRID_SHIFT_IMAGE, 10, 20, 50, 30 },
-					new Object[] { "Exif/source_1.jpg", EXPECTED_F_SHIFT_IMAGE, 10, 20, 80, 90 },
-					new Object[] { "Exif/source_2.jpg", EXPECTED_F_SHIFT_IMAGE, 10, 20, 80, 90 },
-					new Object[] { "Exif/source_3.jpg", EXPECTED_F_SHIFT_IMAGE, 10, 20, 80, 90 },
-					new Object[] { "Exif/source_4.jpg", EXPECTED_F_SHIFT_IMAGE, 10, 20, 80, 90 },
-					new Object[] { "Exif/source_5.jpg", EXPECTED_F_SHIFT_IMAGE, 10, 20, 80, 90 },
-					new Object[] { "Exif/source_6.jpg", EXPECTED_F_SHIFT_IMAGE, 10, 20, 80, 90 },
-					new Object[] { "Exif/source_7.jpg", EXPECTED_F_SHIFT_IMAGE, 10, 20, 80, 90 },
-					new Object[] { "Exif/source_8.jpg", EXPECTED_F_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Thumbnailator/grid.png", EXPECTED_GRID_TOP_LEFT_SHIFT_IMAGE, 10, 20, 50, 30 },
+					new Object[] { "Exif/source_1.jpg", EXPECTED_F_TOP_LEFT_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_2.jpg", EXPECTED_F_TOP_LEFT_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_3.jpg", EXPECTED_F_TOP_LEFT_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_4.jpg", EXPECTED_F_TOP_LEFT_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_5.jpg", EXPECTED_F_TOP_LEFT_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_6.jpg", EXPECTED_F_TOP_LEFT_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_7.jpg", EXPECTED_F_TOP_LEFT_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_8.jpg", EXPECTED_F_TOP_LEFT_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Thumbnailator/grid.png", EXPECTED_GRID_BOTTOM_LEFT_SHIFT_IMAGE, 10, 50, 50, 30 },
+					new Object[] { "Exif/source_1.jpg", EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE, 10, 60, 80, 90 },
+					new Object[] { "Exif/source_2.jpg", EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE, 10, 60, 80, 90 },
+					new Object[] { "Exif/source_3.jpg", EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE, 10, 60, 80, 90 },
+					new Object[] { "Exif/source_4.jpg", EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE, 10, 60, 80, 90 },
+					new Object[] { "Exif/source_5.jpg", EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE, 10, 60, 80, 90 },
+					new Object[] { "Exif/source_6.jpg", EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE, 10, 60, 80, 90 },
+					new Object[] { "Exif/source_7.jpg", EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE, 10, 60, 80, 90 },
+					new Object[] { "Exif/source_8.jpg", EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE, 10, 60, 80, 90 },
+					new Object[] { "Thumbnailator/grid.png", EXPECTED_GRID_BOTTOM_RIGHT_SHIFT_IMAGE, 30, 50, 50, 30 },
+					new Object[] { "Exif/source_1.jpg", EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE, 70, 60, 80, 90 },
+					new Object[] { "Exif/source_2.jpg", EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE, 70, 60, 80, 90 },
+					new Object[] { "Exif/source_3.jpg", EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE, 70, 60, 80, 90 },
+					new Object[] { "Exif/source_4.jpg", EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE, 70, 60, 80, 90 },
+					new Object[] { "Exif/source_5.jpg", EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE, 70, 60, 80, 90 },
+					new Object[] { "Exif/source_6.jpg", EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE, 70, 60, 80, 90 },
+					new Object[] { "Exif/source_7.jpg", EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE, 70, 60, 80, 90 },
+					new Object[] { "Exif/source_8.jpg", EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE, 70, 60, 80, 90 },
 			};
 		}
 
