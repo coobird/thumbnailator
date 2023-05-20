@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2023 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -137,6 +137,49 @@ public final class BufferedImageComparer {
 			}
 		}
 		
+		return true;
+	}
+
+	// Checks if the pixels are similar.
+	public static final boolean isRGBSimilar(BufferedImage img0, BufferedImage img1, int maxError) {
+		int width0 = img0.getWidth();
+		int height0 = img0.getHeight();
+		int width1 = img1.getWidth();
+		int height1 = img1.getHeight();
+
+		if (width0 != width1 || height0 != height1) {
+			throw new AssertionError("Width and/or height do not match.");
+		}
+
+		/*
+		 * Check the RGB data.
+		 */
+		for (int i = 0; i < width0; i++) {
+			for (int j = 0; j < height0; j++) {
+				int v0 = img0.getRGB(i, j);
+				int v1 = img1.getRGB(i, j);
+
+				int r0 = (v0 << 8) >>> 24;
+				int r1 = (v1 << 8) >>> 24;
+				int g0 = (v0 << 16) >>> 24;
+				int g1 = (v1 << 16) >>> 24;
+				int b0 = (v0 << 24) >>> 24;
+				int b1 = (v1 << 24) >>> 24;
+
+				int rError = Math.abs(r1 - r0);
+				int gError = Math.abs(g1 - g0);
+				int bError = Math.abs(b1 - b0);
+
+				if (rError > maxError || gError > maxError || bError > maxError) {
+					String message = String.format(
+							"Pixels errors too large. location: (%d, %d), rgb: ([%d, %d, %d], [%d, %d, %d])",
+							i, j, r0, g0, b0, r1, g1, b1
+					);
+					throw new AssertionError(message);
+				}
+			}
+		}
+
 		return true;
 	}
 }

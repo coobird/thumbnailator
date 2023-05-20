@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2022 Chris Kroells
+ * Copyright (c) 2008-2023 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -4402,6 +4402,208 @@ public class ThumbnailsBuilderTest {
 			assertEquals(50, fromFileImage1.getHeight());
 			assertEquals(50, fromFileImage2.getWidth());
 			assertEquals(50, fromFileImage2.getHeight());
+		}
+	}
+
+	@RunWith(Parameterized.class)
+	public static class SourceRegionTests {
+		// Error tolerance to deal with JPEG artifacts.
+		private static final int MAX_ERROR = 3;
+		private static final BufferedImage EXPECTED_GRID_IMAGE;
+		private static final BufferedImage EXPECTED_F_IMAGE;
+		private static final BufferedImage EXPECTED_GRID_TOP_LEFT_SHIFT_IMAGE;
+		private static final BufferedImage EXPECTED_F_TOP_LEFT_SHIFT_IMAGE;
+		private static final BufferedImage EXPECTED_GRID_BOTTOM_LEFT_SHIFT_IMAGE;
+		private static final BufferedImage EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE;
+		private static final BufferedImage EXPECTED_GRID_BOTTOM_RIGHT_SHIFT_IMAGE;
+		private static final BufferedImage EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE;
+
+		static {
+			InputStream is;
+			try {
+				is = TestUtils.getResourceStream("Thumbnailator/grid.png");
+				EXPECTED_GRID_IMAGE = ImageIO.read(is).getSubimage(0, 0, 50, 50);
+				is.close();
+
+				is = TestUtils.getResourceStream("Exif/original.png");
+				EXPECTED_F_IMAGE = ImageIO.read(is).getSubimage(0, 0, 80, 80);
+				is.close();
+
+				is = TestUtils.getResourceStream("Thumbnailator/grid.png");
+				EXPECTED_GRID_TOP_LEFT_SHIFT_IMAGE = ImageIO.read(is).getSubimage(10, 20, 50, 30);
+				is.close();
+
+				is = TestUtils.getResourceStream("Exif/original.png");
+				EXPECTED_F_TOP_LEFT_SHIFT_IMAGE = ImageIO.read(is).getSubimage(10, 20, 80, 90);
+				is.close();
+
+				is = TestUtils.getResourceStream("Thumbnailator/grid.png");
+				EXPECTED_GRID_BOTTOM_LEFT_SHIFT_IMAGE = ImageIO.read(is).getSubimage(10, 50, 50, 30);
+				is.close();
+
+				is = TestUtils.getResourceStream("Exif/original.png");
+				EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE = ImageIO.read(is).getSubimage(10, 60, 80, 90);
+				is.close();
+
+				is = TestUtils.getResourceStream("Thumbnailator/grid.png");
+				EXPECTED_GRID_BOTTOM_RIGHT_SHIFT_IMAGE = ImageIO.read(is).getSubimage(30, 50, 50, 30);
+				is.close();
+
+				is = TestUtils.getResourceStream("Exif/original.png");
+				EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE = ImageIO.read(is).getSubimage(70, 60, 80, 90);
+				is.close();
+
+			} catch (Exception e) {
+				throw new RuntimeException("Shouldn't happen.", e);
+			}
+		}
+
+		@Parameterized.Parameters(name = "sourceImage={0}, x={2}, y={3}, width={4}, height={5}")
+		public static Object[][] values() {
+			return new Object[][] {
+					new Object[] { "Thumbnailator/grid.png", EXPECTED_GRID_IMAGE, 0, 0, 50, 50 },
+					new Object[] { "Exif/source_1.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
+					new Object[] { "Exif/source_2.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
+					new Object[] { "Exif/source_3.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
+					new Object[] { "Exif/source_4.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
+					new Object[] { "Exif/source_5.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
+					new Object[] { "Exif/source_6.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
+					new Object[] { "Exif/source_7.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
+					new Object[] { "Exif/source_8.jpg", EXPECTED_F_IMAGE, 0, 0, 80, 80 },
+					new Object[] { "Thumbnailator/grid.png", EXPECTED_GRID_TOP_LEFT_SHIFT_IMAGE, 10, 20, 50, 30 },
+					new Object[] { "Exif/source_1.jpg", EXPECTED_F_TOP_LEFT_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_2.jpg", EXPECTED_F_TOP_LEFT_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_3.jpg", EXPECTED_F_TOP_LEFT_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_4.jpg", EXPECTED_F_TOP_LEFT_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_5.jpg", EXPECTED_F_TOP_LEFT_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_6.jpg", EXPECTED_F_TOP_LEFT_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_7.jpg", EXPECTED_F_TOP_LEFT_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Exif/source_8.jpg", EXPECTED_F_TOP_LEFT_SHIFT_IMAGE, 10, 20, 80, 90 },
+					new Object[] { "Thumbnailator/grid.png", EXPECTED_GRID_BOTTOM_LEFT_SHIFT_IMAGE, 10, 50, 50, 30 },
+					new Object[] { "Exif/source_1.jpg", EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE, 10, 60, 80, 90 },
+					new Object[] { "Exif/source_2.jpg", EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE, 10, 60, 80, 90 },
+					new Object[] { "Exif/source_3.jpg", EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE, 10, 60, 80, 90 },
+					new Object[] { "Exif/source_4.jpg", EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE, 10, 60, 80, 90 },
+					new Object[] { "Exif/source_5.jpg", EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE, 10, 60, 80, 90 },
+					new Object[] { "Exif/source_6.jpg", EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE, 10, 60, 80, 90 },
+					new Object[] { "Exif/source_7.jpg", EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE, 10, 60, 80, 90 },
+					new Object[] { "Exif/source_8.jpg", EXPECTED_F_BOTTOM_LEFT_SHIFT_IMAGE, 10, 60, 80, 90 },
+					new Object[] { "Thumbnailator/grid.png", EXPECTED_GRID_BOTTOM_RIGHT_SHIFT_IMAGE, 30, 50, 50, 30 },
+					new Object[] { "Exif/source_1.jpg", EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE, 70, 60, 80, 90 },
+					new Object[] { "Exif/source_2.jpg", EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE, 70, 60, 80, 90 },
+					new Object[] { "Exif/source_3.jpg", EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE, 70, 60, 80, 90 },
+					new Object[] { "Exif/source_4.jpg", EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE, 70, 60, 80, 90 },
+					new Object[] { "Exif/source_5.jpg", EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE, 70, 60, 80, 90 },
+					new Object[] { "Exif/source_6.jpg", EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE, 70, 60, 80, 90 },
+					new Object[] { "Exif/source_7.jpg", EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE, 70, 60, 80, 90 },
+					new Object[] { "Exif/source_8.jpg", EXPECTED_F_BOTTOM_RIGHT_SHIFT_IMAGE, 70, 60, 80, 90 },
+			};
+		}
+
+		@Parameterized.Parameter
+		public String resourcePath;
+
+		@Parameterized.Parameter(1)
+		public BufferedImage expectedImage;
+
+		@Parameterized.Parameter(2)
+		public int x;
+
+		@Parameterized.Parameter(3)
+		public int y;
+
+		@Parameterized.Parameter(4)
+		public int width;
+
+		@Parameterized.Parameter(5)
+		public int height;
+
+		@Rule
+		public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+		@Test
+		public void sourceRegion_Region() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(resourcePath, temporaryFolder);
+
+			// when
+			BufferedImage thumbnail = Thumbnails.of(sourceFile)
+					.sourceRegion(new Region(new Coordinate(x, y), new AbsoluteSize(width, height)))
+					.size(width, height)
+					.asBufferedImage();
+
+			// then
+			assertEquals(width, thumbnail.getWidth());
+			assertEquals(height, thumbnail.getHeight());
+			assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, expectedImage, MAX_ERROR));
+		}
+
+		@Test
+		public void sourceRegion_Rectangle() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(resourcePath, temporaryFolder);
+
+			// when
+			BufferedImage thumbnail = Thumbnails.of(sourceFile)
+					.sourceRegion(new Rectangle(x, y, width, height))
+					.size(width, height)
+					.asBufferedImage();
+
+			// then
+			assertEquals(width, thumbnail.getWidth());
+			assertEquals(height, thumbnail.getHeight());
+			assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, expectedImage, MAX_ERROR));
+		}
+
+		@Test
+		public void sourceRegion_PositionSize() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(resourcePath, temporaryFolder);
+
+			// when
+			BufferedImage thumbnail = Thumbnails.of(sourceFile)
+					.sourceRegion(new Coordinate(x, y), new AbsoluteSize(width, height))
+					.size(width, height)
+					.asBufferedImage();
+
+			// then
+			assertEquals(width, thumbnail.getWidth());
+			assertEquals(height, thumbnail.getHeight());
+			assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, expectedImage, MAX_ERROR));
+		}
+
+		@Test
+		public void sourceRegion_PositionIntInt() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(resourcePath, temporaryFolder);
+
+			// when
+			BufferedImage thumbnail = Thumbnails.of(sourceFile)
+					.sourceRegion(new Coordinate(x, y), width, height)
+					.size(width, height)
+					.asBufferedImage();
+
+			// then
+			assertEquals(width, thumbnail.getWidth());
+			assertEquals(height, thumbnail.getHeight());
+			assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, expectedImage, MAX_ERROR));
+		}
+
+		@Test
+		public void sourceRegion_IntIntIntInt() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(resourcePath, temporaryFolder);
+
+			// when
+			BufferedImage thumbnail = Thumbnails.of(sourceFile)
+					.sourceRegion(x, y, width, height)
+					.size(width, height)
+					.asBufferedImage();
+
+			// then
+			assertEquals(width, thumbnail.getWidth());
+			assertEquals(height, thumbnail.getHeight());
+			assertTrue(BufferedImageComparer.isRGBSimilar(thumbnail, expectedImage, 5));
 		}
 	}
 
