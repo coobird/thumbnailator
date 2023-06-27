@@ -2,15 +2,15 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.coobird</groupId>
   <artifactId>thumbnailator</artifactId>
-  <version>0.4.19</version>
+  <version>0.4.20-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>thumbnailator</name>
   <description>Thumbnailator - a thumbnail generation library for Java</description>
   <url>https://github.com/coobird/thumbnailator</url>
   <licenses>
     <license>
-      <name>The MIT License (MIT)</name>
-      <url>http://www.opensource.org/licenses/mit-license.html</url>
+      <name>MIT License</name>
+      <url>https://spdx.org/licenses/MIT.html</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
@@ -23,7 +23,7 @@
     <developer>
       <name>Chris Kroells</name>
       <email>coobirdnet@gmail.com</email>
-      <url>http://coobird.net</url>
+      <url>https://coobird.net</url>
     </developer>
   </developers>
   <distributionManagement>
