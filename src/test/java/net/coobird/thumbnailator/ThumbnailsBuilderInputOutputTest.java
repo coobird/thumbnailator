@@ -2287,13 +2287,13 @@ public class ThumbnailsBuilderInputOutputTest {
 	}
 
 	@RunWith(Parameterized.class)
-	public static class OrientationSizeTests {
+	public static class OrientationTests {
 
 		@Parameterized.Parameters(name = "orientation={0}, sourcePathPattern={1}, width={2}, height={3}")
 		public static Collection<Object[]> values() {
 			List<Object[]> values = new ArrayList<Object[]>();
 			for (int i = 1; i <= 8; i++) {
-				values.add(new Object[] { i, "source", 100, 100 });
+				values.add(new Object[] { i, "source", 80, 80 });
 				values.add(new Object[] { i, "sourceWide", 80, 40 });
 				values.add(new Object[] { i, "sourceTall", 40, 80 });
 			}
@@ -2388,47 +2388,6 @@ public class ThumbnailsBuilderInputOutputTest {
 			assertEquals(width, result.getWidth());
 			assertEquals(height, result.getHeight());
 		}
-	}
-
-	@RunWith(Parameterized.class)
-	public static class OrientationScaleTests {
-
-		@Parameterized.Parameters(name = "orientation={0}, sourcePathPattern={1}, expectedWidth={2}, expectedHeight={3}")
-		public static Collection<Object[]> values() {
-			List<Object[]> values = new ArrayList<Object[]>();
-			for (int i = 1; i <= 8; i++) {
-				values.add(new Object[] { i, "source", 80, 80 });
-				values.add(new Object[] { i, "sourceWide", 80, 40 });
-				values.add(new Object[] { i, "sourceTall", 40, 80 });
-			}
-			return values;
-		}
-
-		@Parameterized.Parameter
-		public int orientation;
-
-		@Parameterized.Parameter(1)
-		public String source;
-
-		@Parameterized.Parameter(2)
-		public int expectedWidth;
-
-		@Parameterized.Parameter(3)
-		public int expectedHeight;
-
-		@Rule
-		public TemporaryFolder temporaryFolder = new TemporaryFolder();
-
-		private void assertOrientation(BufferedImage result) {
-			BufferedImageAssert.assertMatches(
-					result,
-					new float[] {
-							1, 1, 1,
-							1, 1, 1,
-							1, 0, 0,
-					}
-			);
-		}
 
 		@Test
 		public void correctOrientationScaleFromFile() throws IOException {
@@ -2446,8 +2405,8 @@ public class ThumbnailsBuilderInputOutputTest {
 
 			// then
 			assertOrientation(result);
-			assertEquals(expectedWidth, result.getWidth());
-			assertEquals(expectedHeight, result.getHeight());
+			assertEquals(width, result.getWidth());
+			assertEquals(height, result.getHeight());
 		}
 
 		@Test
@@ -2465,8 +2424,8 @@ public class ThumbnailsBuilderInputOutputTest {
 
 			// then
 			assertOrientation(result);
-			assertEquals(expectedWidth, result.getWidth());
-			assertEquals(expectedHeight, result.getHeight());
+			assertEquals(width, result.getWidth());
+			assertEquals(height, result.getHeight());
 		}
 
 		/*
@@ -2490,8 +2449,8 @@ public class ThumbnailsBuilderInputOutputTest {
 
 			// then
 			assertOrientation(result);
-			assertEquals(expectedWidth, result.getWidth());
-			assertEquals(expectedHeight, result.getHeight());
+			assertEquals(width, result.getWidth());
+			assertEquals(height, result.getHeight());
 		}
 	}
 
