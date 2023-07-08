@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2022 Chris Kroells
+ * Copyright (c) 2008-2023 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -61,6 +61,8 @@ import net.coobird.thumbnailator.name.Rename;
 import net.coobird.thumbnailator.test.BufferedImageAssert;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 
+import net.coobird.thumbnailator.util.exif.ExifFilterUtils;
+import net.coobird.thumbnailator.util.exif.Orientation;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -2495,6 +2497,115 @@ public class ThumbnailsBuilderInputOutputTest {
 			// when
 			BufferedImage result =
 					Thumbnails.of(is)
+							.scale(0.5)
+							.asBufferedImage();
+
+			// then
+			assertOrientation(result);
+			assertEquals(40, result.getWidth());
+			assertEquals(80, result.getHeight());
+		}
+
+		/*
+		 * These test cases reflect Thumbnailator usage where `BufferedImage`
+		 * is used and Exif orientation is determined by other means.
+		 */
+		@Test
+		public void correctOrientationFromBufferedImage() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					String.format("Exif/source_%s.jpg", orientation),
+					temporaryFolder
+			);
+
+			// when
+			BufferedImage result =
+					Thumbnails.of(ImageIO.read(sourceFile))
+							.addFilter(ExifFilterUtils.getFilterForOrientation(Orientation.typeOf(orientation)))
+							.size(100, 100)
+							.asBufferedImage();
+
+			// then
+			assertOrientation(result);
+			assertEquals(100, result.getWidth());
+			assertEquals(100, result.getHeight());
+		}
+
+		@Test
+		public void correctOrientationWideFromBufferedImage() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					String.format("Exif/sourceWide_%s.jpg", orientation),
+					temporaryFolder
+			);
+
+			// when
+			BufferedImage result =
+					Thumbnails.of(ImageIO.read(sourceFile))
+							.addFilter(ExifFilterUtils.getFilterForOrientation(Orientation.typeOf(orientation)))
+							.size(80, 40)
+							.asBufferedImage();
+
+			// then
+			assertOrientation(result);
+			assertEquals(80, result.getWidth());
+			assertEquals(40, result.getHeight());
+		}
+
+		@Test
+		public void correctOrientationTallFromBufferedImage() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					String.format("Exif/sourceTall_%s.jpg", orientation),
+					temporaryFolder
+			);
+
+			// when
+			BufferedImage result =
+					Thumbnails.of(ImageIO.read(sourceFile))
+							.addFilter(ExifFilterUtils.getFilterForOrientation(Orientation.typeOf(orientation)))
+							.size(40, 80)
+							.asBufferedImage();
+
+			// then
+			assertOrientation(result);
+			assertEquals(40, result.getWidth());
+			assertEquals(80, result.getHeight());
+		}
+
+		@Test
+		public void correctOrientationWideScaleFromBufferedImage() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					String.format("Exif/sourceWide_%s.jpg", orientation),
+					temporaryFolder
+			);
+
+			// when
+			BufferedImage result =
+					Thumbnails.of(ImageIO.read(sourceFile))
+							.addFilter(ExifFilterUtils.getFilterForOrientation(Orientation.typeOf(orientation)))
+							.scale(0.5)
+							.asBufferedImage();
+
+			// then
+			assertOrientation(result);
+			assertEquals(80, result.getWidth());
+			assertEquals(40, result.getHeight());
+		}
+
+		@Test
+		public void correctOrientationTallScaleFromBufferedImage() throws IOException {
+			// given
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					String.format("Exif/sourceTall_%s.jpg", orientation),
+					temporaryFolder
+			);
+
+			// when
+			BufferedImage result =
+					Thumbnails.of(ImageIO.read(sourceFile))
+							.addFilter(ExifFilterUtils.getFilterForOrientation(Orientation.typeOf(orientation)))
 							.scale(0.5)
 							.asBufferedImage();
 
