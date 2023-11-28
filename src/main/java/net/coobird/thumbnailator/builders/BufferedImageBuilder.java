@@ -119,15 +119,24 @@ public final class BufferedImageBuilder {
 	 * 						be substituted by {@link BufferedImage#TYPE_INT_ARGB}.
 	 * @return				This {@link BufferedImageBuilder} instance.
 	 */
-	public BufferedImageBuilder imageType(int imageType) {
+
+	// Existing code commenting it out
+	/*public BufferedImageBuilder imageType(int imageType) {
 		if (imageType == BufferedImage.TYPE_CUSTOM) {
 			imageType = DEFAULT_TYPE;
 		}
 
 		this.imageType = imageType;
 		return this;
+	}*/
+
+	public BufferedImageBuilder imageType(int imageType) {
+		this.imageType = ImageTypeHandler.validateAndSetImageType(imageType);
+		return this;
 	}
-	
+
+
+
 	/**
 	 * Sets the size for the {@code BufferedImage}.
 	 * 
@@ -135,19 +144,37 @@ public final class BufferedImageBuilder {
 	 * @param height		The height of the image to create.
 	 * @return				This {@link BufferedImageBuilder} instance.
 	 */
-	public BufferedImageBuilder size(int width, int height) {
+
+	// Existing logic commenting out
+
+/*	public BufferedImageBuilder size(int width, int height) {
 		width(width);
 		height(height);
 		return this;
+	}*/
+
+
+	public BufferedImageBuilder size(int width, int height) {
+		ImageValidationUtils.validateDimension(width, "Width");
+		ImageValidationUtils.validateDimension(height, "Height");
+
+		this.width = width;
+		this.height = height;
+		return this;
 	}
-	
+
+
+
+
 	/**
 	 * Sets the width for the {@link BufferedImage}.
 	 * 
 	 * @param width			The width of the image to create.
 	 * @return				This {@link BufferedImageBuilder} instance.
 	 */
-	public BufferedImageBuilder width(int width) {
+
+	// Existing logic . COmmenting it out...
+	/*public BufferedImageBuilder width(int width) {
 		if (width <= 0) {
 			throw new IllegalArgumentException(
 					"Width must be greater than 0."
@@ -156,15 +183,28 @@ public final class BufferedImageBuilder {
 		
 		this.width = width;
 		return this;
+	}*/
+
+
+
+	public BufferedImageBuilder width(int width) {
+		ImageValidationUtils.validateDimension(width, "Width");
+		this.width = width;
+		return this;
 	}
-	
+
+
+
+
 	/**
 	 * Sets the height for the {@link BufferedImage}.
 	 * 
 	 * @param height		The height of the image to create.
 	 * @return				This {@link BufferedImageBuilder} instance.
 	 */
-	public BufferedImageBuilder height(int height) {
+
+	// Existing logic commenting it out
+/*	public BufferedImageBuilder height(int height) {
 		if (height <= 0) {
 			throw new IllegalArgumentException(
 					"Height must be greater than 0."
@@ -173,5 +213,14 @@ public final class BufferedImageBuilder {
 
 		this.height = height;
 		return this;
+	}*/
+
+
+	public BufferedImageBuilder height(int height) {
+		ImageValidationUtils.validateDimension(height, "Height");
+		this.height = height;
+		return this;
 	}
+
+
 }

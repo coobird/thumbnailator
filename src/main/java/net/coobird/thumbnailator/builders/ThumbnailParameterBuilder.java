@@ -47,12 +47,11 @@ import net.coobird.thumbnailator.resizers.ResizerFactory;
  * </p>
  * <dl>
  * <dt>width</dt>
- * <dd>Unassigned. Must be set by the {@link #size(int, int)} method.</dd>
+
  * <dt>height</dt>
- * <dd>Unassigned. Must be set by the {@link #size(int, int)} method.</dd>
+
  * <dt>scaling factor</dt>
- * <dd>Unassigned. Must be set by the {@link #scale(double)} method or
- * {@link #scale(double, double)} method.</dd>
+
  * <dt>source region</dt>
  * <dd>Uses the entire source image.</dd>
  * <dt>image type</dt>
@@ -81,6 +80,29 @@ import net.coobird.thumbnailator.resizers.ResizerFactory;
  * @author coobird
  *
  */
+
+
+// New class for handling image type
+class ImageTypeHandler {
+	private static final int DEFAULT_TYPE = BufferedImage.TYPE_INT_ARGB;
+
+	static int validateAndSetImageType(int imageType) {
+		if (imageType == BufferedImage.TYPE_CUSTOM) {
+			return DEFAULT_TYPE;
+		}
+		return imageType;
+	}
+}
+
+// New utility class for common validations
+class ImageValidationUtils {
+	static void validateDimension(int value, String dimensionName) {
+		if (value <= 0) {
+			throw new IllegalArgumentException(dimensionName + " must be greater than 0.");
+		}
+	}
+}
+
 public final class ThumbnailParameterBuilder {
 	private static final int UNINITIALIZED = -1;
 	
@@ -134,7 +156,9 @@ public final class ThumbnailParameterBuilder {
 	 * @return			A reference to this object.
 	 * @throws IllegalArgumentException	If the widht or height is less than 0.
 	 */
-	public ThumbnailParameterBuilder size(int width, int height) {
+
+	// Existing Logic Commenting it out.
+/*	public ThumbnailParameterBuilder size(int width, int height) {
 		if (width < 0) {
 			throw new IllegalArgumentException("Width must be greater than 0.");
 		}
@@ -145,8 +169,22 @@ public final class ThumbnailParameterBuilder {
 		this.width = width;
 		this.height = height;
 		return this;
+	}*/
+
+	public ThumbnailParameterBuilder size(int width, int height) {
+		ImageValidationUtils.validateDimension(width, "Width");
+		ImageValidationUtils.validateDimension(height, "Height");
+
+		this.width = width;
+		this.height = height;
+		return this;
 	}
-	
+
+
+
+
+
+
 	/**
 	 * Sets the scaling factor of the thumbnail.
 	 * 
