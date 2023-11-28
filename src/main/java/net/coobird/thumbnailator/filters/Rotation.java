@@ -80,11 +80,14 @@ public class Rotation {
 			
 			private double[] calculatePosition(double x, double y, double angle) {
 				angle = Math.toRadians(angle);
-				
-				double nx = (Math.cos(angle) * x) - (Math.sin(angle) * y);
-				double ny = (Math.sin(angle) * x) + (Math.cos(angle) * y);
 
-				return new double[] {nx, ny};
+				double cosAngle = Math.cos(angle);
+				double sinAngle = Math.sin(angle);
+
+				double nx = (cosAngle * x) - (sinAngle * y);
+				double ny = (sinAngle * x) + (cosAngle * y);
+
+				return new double[]{nx, ny};
 			}
 			
 			public BufferedImage apply(BufferedImage img) {
