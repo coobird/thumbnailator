@@ -145,7 +145,8 @@ public final class ScaledThumbnailMaker extends ThumbnailMaker {
 	 * 									been previously set.
 	 */
 	public ScaledThumbnailMaker scale(double factor) {
-		return scale(factor, factor);
+		DimensionValidation.validateScalingFactor(factor);
+		return this;
 	}
 	
 	/**

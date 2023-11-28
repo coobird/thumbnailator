@@ -43,6 +43,7 @@ import net.coobird.thumbnailator.resizers.ResizerFactory;
  *
  */
 public abstract class ThumbnailMaker {
+
 	/**
 	 * String used for an exception message.
 	 */
@@ -195,8 +196,9 @@ public abstract class ThumbnailMaker {
 		if (!ready.isReady()) {
 			throw new IllegalStateException(ThumbnailMaker.NOT_READY_FOR_MAKE);
 		}
-		
-		if (width <= 0) {
+
+		// Exisisting logic comemnting it out...
+		/*if (width <= 0) {
 			throw new IllegalArgumentException(
 					"Width must be greater than zero."
 			);
@@ -205,7 +207,11 @@ public abstract class ThumbnailMaker {
 			throw new IllegalArgumentException(
 					"Height must be greater than zero."
 			);
-		}
+		}*/
+
+
+		DimensionValidation.validate(width, height);
+
 
 		BufferedImage thumbnailImage =
 			new BufferedImageBuilder(width, height, imageType).build();
