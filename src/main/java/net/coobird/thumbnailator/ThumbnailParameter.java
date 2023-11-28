@@ -308,13 +308,22 @@ public class ThumbnailParameter {
 		 * by using the regular == operator. Therefore, to check that NaN is
 		 * being used, one must use the Float.NaN method.
 		 */
-		if ( (outputQuality < 0.0f || outputQuality > 1.0f) &&
-				!Float.isNaN(outputQuality) ) {
-			throw new IllegalArgumentException("The output quality must be " +
-					"between 0.0f and 1.0f, or Float.NaN to use the default " +
-			"compression quality of codec being used.");
+		// Check if outputQuality is outside the valid range [0.0f, 1.0f]
+		boolean isOutOfRange = (outputQuality < 0.0f || outputQuality > 1.0f);
+
+// Check if outputQuality is NaN
+		boolean isNotNaN = !Float.isNaN(outputQuality);
+
+// Combine the conditions for clarity
+		if (isOutOfRange && isNotNaN) {
+			// If the conditions are not met, throw an exception with a descriptive message
+			throw new IllegalArgumentException("The output quality must be within the range " +
+					"[0.0f, 1.0f], or Float.NaN to use the default compression quality of the codec being used.");
 		}
-		
+
+
+
+
 		this.outputQuality = outputQuality;
 		this.imageType = imageType;
 		
