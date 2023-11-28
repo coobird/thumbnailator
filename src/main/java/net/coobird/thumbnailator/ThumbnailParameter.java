@@ -315,10 +315,12 @@ public class ThumbnailParameter {
 		boolean isNotNaN = !Float.isNaN(outputQuality);
 
 // Combine the conditions for clarity
-		if (isOutOfRange && isNotNaN) {
-			// If the conditions are not met, throw an exception with a descriptive message
-			throw new IllegalArgumentException("The output quality must be within the range " +
-					"[0.0f, 1.0f], or Float.NaN to use the default compression quality of the codec being used.");
+		if (isOutOfRange) {
+			if (isNotNaN) {
+				// If the conditions are not met, throw an exception with a descriptive message
+				throw new IllegalArgumentException("The output quality must be within the range " +
+						"[0.0f, 1.0f], or Float.NaN to use the default compression quality of the codec being used.");
+			}
 		}
 
 
