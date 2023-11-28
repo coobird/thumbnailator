@@ -51,9 +51,9 @@ public enum Positions implements Position {
 				int width, int height, int insetLeft, int insetRight,
 				int insetTop, int insetBottom) {
 
-			int x = insetLeft;
-			int y = insetTop;
-			return new Point(x, y);
+			int new_Left = insetLeft;
+			int new_Top = insetTop;
+			return new Point(new_Left, new_Top);
 		}
 	},
 	
