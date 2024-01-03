@@ -57,4 +57,4 @@ The following pages have more information on what _Thumbnailator_ can do:
 change at any time.*
 
 # License
-Thumbnailtor is released under the MIT License.
+Thumbnailator is released under the MIT License.
