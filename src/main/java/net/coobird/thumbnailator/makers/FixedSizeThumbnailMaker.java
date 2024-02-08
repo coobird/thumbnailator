@@ -71,7 +71,7 @@ BufferedImage thumbnail = new FixedSizeThumbnailMaker()
  * @author coobird
  *
  */
-public final class FixedSizeThumbnailMaker extends ThumbnailMaker {
+public class FixedSizeThumbnailMaker extends ThumbnailMaker {
 	private static final String PARAM_SIZE = "size";
 	private static final String PARAM_KEEP_RATIO = "keepRatio";
 	private static final String PARAM_FIT_WITHIN = "fitWithinDimensions";
@@ -303,4 +303,12 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker {
 		
 		return super.makeThumbnail(img, targetWidth, targetHeight);
 	}
+
+    protected int getWidth() {
+        return width;
+    }
+
+    protected int getHeight() {
+        return height;
+    }
 }

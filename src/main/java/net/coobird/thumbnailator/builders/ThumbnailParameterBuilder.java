@@ -24,6 +24,7 @@
 
 package net.coobird.thumbnailator.builders;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
@@ -98,6 +99,8 @@ public final class ThumbnailParameterBuilder {
 	private Region sourceRegion = null;
 	private boolean fitWithinDimensions = true;
 	private boolean useExifOrientation = true;
+    private boolean useFrame;
+    private Color frameColor;
 	
 	/**
 	 * Creates an instance of a {@link ThumbnailParameterBuilder}.
@@ -347,6 +350,31 @@ public final class ThumbnailParameterBuilder {
 		return this;
 	}
 
+    /**
+     * Sets whether or not, the thumbnail should be scaled to fit a fixed size (frame) background.
+     *
+     * @param useFrame  {@code true} if the thumbnail should be generated
+     *                  in a frame, {@code false} otherwise.
+     * @return          A reference to this object.
+     * @since	0.4.21
+     */
+    public ThumbnailParameterBuilder useFrame(boolean useFrame) {
+        this.useFrame = useFrame;
+        return this;
+    }
+
+    /**
+     * Sets the background color of the frame.
+     *
+     * @param frameColor    The background color of the frame.
+     * @return              A reference to this object.
+     * @since	0.4.21
+     */
+    public ThumbnailParameterBuilder frameColor(Color frameColor) {
+        this.frameColor = frameColor;
+        return this;
+    }
+
 	/**
 	 * Returns a {@link ThumbnailParameter} from the parameters which are
 	 * currently set.
@@ -374,7 +402,9 @@ public final class ThumbnailParameterBuilder {
 					filters,
 					resizerFactory,
 					fitWithinDimensions,
-					useExifOrientation
+					useExifOrientation,
+                    useFrame,
+                    frameColor
 			);
 
 		} else if (width != UNINITIALIZED && height != UNINITIALIZED) {
@@ -389,7 +419,9 @@ public final class ThumbnailParameterBuilder {
 					filters,
 					resizerFactory,
 					fitWithinDimensions,
-					useExifOrientation
+					useExifOrientation,
+                    useFrame,
+                    frameColor
 			);
 		} else {
 			throw new IllegalStateException(
