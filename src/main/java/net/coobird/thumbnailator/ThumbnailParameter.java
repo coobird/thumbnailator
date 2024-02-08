@@ -24,14 +24,15 @@
 
 package net.coobird.thumbnailator;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.coobird.thumbnailator.filters.ImageFilter;
-import net.coobird.thumbnailator.resizers.FixedResizerFactory;
 import net.coobird.thumbnailator.geometry.Region;
+import net.coobird.thumbnailator.resizers.FixedResizerFactory;
 import net.coobird.thumbnailator.resizers.Resizer;
 import net.coobird.thumbnailator.resizers.ResizerFactory;
 
@@ -193,6 +194,16 @@ public class ThumbnailParameter {
 	 * thumbnails.
 	 */
 	private final boolean useExifOrientation;
+
+    /**
+     * Indicated whether or not the thumbnail should be scaled to fit a fixed size (frame) background.
+     */
+    private final boolean useFrame;
+
+    /**
+     * The background color of the frame, if thumbnail will be produced with frame.
+     */
+    private final Color frameColor;
 	
 	/**
 	 * Private constructor which sets all the required fields, and performs
@@ -270,6 +281,9 @@ public class ThumbnailParameter {
 	 * 								If {@code true} is specified, then the
 	 * 								Exif metadata will be used to determine
 	 * 								the orientation of the thumbnail.
+     * @param useFrame				Whether or not, the thumbnail should be scaled to
+     *                              fit a fixed size (frame) background.
+     * @param frameColor            The background color of the frame.
 	 * 
 	 * @throws IllegalArgumentException 	If the scaling factor is not a
 	 * 										rational number or is less than or
@@ -289,7 +303,9 @@ public class ThumbnailParameter {
 			List<ImageFilter> filters,
 			ResizerFactory resizerFactory,
 			boolean fitWithinDimensions,
-			boolean useExifOrientation
+			boolean useExifOrientation,
+            boolean useFrame,
+            Color frameColor
 	) {
 		// The following 2 fields are set by the public constructors.
 		this.thumbnailSize = thumbnailSize;
@@ -332,6 +348,8 @@ public class ThumbnailParameter {
 		this.resizerFactory = resizerFactory;
 		this.fitWithinDimensions = fitWithinDimensions;
 		this.useExifOrientation = useExifOrientation;
+        this.useFrame = useFrame;
+        this.frameColor = frameColor;
 	}
 	
 	/**
@@ -428,6 +446,9 @@ public class ThumbnailParameter {
 	 * 								If {@code true} is specified, then the
 	 * 								Exif metadata will be used to determine
 	 * 								the orientation of the thumbnail.
+     * @param useFrame              Whether or not, the thumbnail should be scaled to
+     *                              fit a fixed size (frame) background.
+     * @param frameColor            The background color of the frame.
 	 *
 	 * @throws IllegalArgumentException 	If size is {@code null} or if the
 	 * 										dimensions are negative, or if the
@@ -445,7 +466,9 @@ public class ThumbnailParameter {
 			List<ImageFilter> filters,
 			Resizer resizer,
 			boolean fitWithinDimensions,
-			boolean useExifOrientation
+			boolean useExifOrientation,
+            boolean useFrame,
+            Color frameColor
 	) {
 		this(
 				thumbnailSize,
@@ -460,7 +483,9 @@ public class ThumbnailParameter {
 				filters,
 				new FixedResizerFactory(resizer),
 				fitWithinDimensions,
-				useExifOrientation
+				useExifOrientation,
+                useFrame,
+                frameColor
 		);
 		
 		validateThumbnailSize();
@@ -538,6 +563,9 @@ public class ThumbnailParameter {
 	 * 								If {@code true} is specified, then the
 	 * 								Exif metadata will be used to determine
 	 * 								the orientation of the thumbnail.
+     * @param useFrame				Whether or not, the thumbnail should be scaled to
+     *                              fit a fixed size (frame) background.
+     * @param frameColor            The background color of the frame.
 	 * 
 	 * @throws IllegalArgumentException 	If the scaling factor is not a
 	 * 										rational number or is less than or
@@ -557,7 +585,9 @@ public class ThumbnailParameter {
 			List<ImageFilter> filters,
 			Resizer resizer,
 			boolean fitWithinDimensions,
-			boolean useExifOrientation
+			boolean useExifOrientation,
+            boolean useFrame,
+            Color frameColor
 	) {
 		this(
 				null,
@@ -572,7 +602,9 @@ public class ThumbnailParameter {
 				filters,
 				new FixedResizerFactory(resizer),
 				fitWithinDimensions,
-				useExifOrientation
+				useExifOrientation,
+                useFrame,
+                frameColor
 		);
 		
 		validateScalingFactor();
@@ -646,6 +678,9 @@ public class ThumbnailParameter {
 	 * 								If {@code true} is specified, then the
 	 * 								Exif metadata will be used to determine
 	 * 								the orientation of the thumbnail.
+     * @param useFrame				Whether or not, the thumbnail should be scaled to
+     *                              fit a fixed size (frame) background.
+     * @param frameColor            The background color of the frame.
 	 * 
 	 * @throws IllegalArgumentException 	If size is {@code null} or if the
 	 * 										dimensions are negative, or if the
@@ -663,7 +698,9 @@ public class ThumbnailParameter {
 			List<ImageFilter> filters,
 			ResizerFactory resizerFactory,
 			boolean fitWithinDimensions,
-			boolean useExifOrientation
+			boolean useExifOrientation,
+            boolean useFrame,
+            Color frameColor
 	) {
 		this(
 				thumbnailSize,
@@ -678,7 +715,9 @@ public class ThumbnailParameter {
 				filters,
 				resizerFactory,
 				fitWithinDimensions,
-				useExifOrientation
+				useExifOrientation,
+                useFrame,
+                frameColor
 		);
 		
 		validateThumbnailSize();
@@ -757,6 +796,9 @@ public class ThumbnailParameter {
 	 * 								If {@code true} is specified, then the
 	 * 								Exif metadata will be used to determine
 	 * 								the orientation of the thumbnail.
+     * @param useFrame				Whether or not, the thumbnail should be scaled to
+     *                              fit a fixed size (frame) background.
+     * @param frameColor            The background color of the frame.
 	 * 
 	 * @throws IllegalArgumentException 	If the scaling factor is not a
 	 * 										rational number or is less than or
@@ -776,7 +818,9 @@ public class ThumbnailParameter {
 			List<ImageFilter> filters,
 			ResizerFactory resizerFactory,
 			boolean fitWithinDimensions,
-			boolean useExifOrientation
+			boolean useExifOrientation,
+            boolean useFrame,
+            Color frameColor
 	) {
 		this(
 				null,
@@ -791,7 +835,9 @@ public class ThumbnailParameter {
 				filters,
 				resizerFactory,
 				fitWithinDimensions,
-				useExifOrientation
+				useExifOrientation,
+                useFrame,
+                frameColor
 		);
 		
 		validateScalingFactor();
@@ -993,4 +1039,25 @@ public class ThumbnailParameter {
 	public boolean useExifOrientation() {
 		return useExifOrientation;
 	}
+
+
+    /**
+     * Whether or not, the thumbnail should be scaled to fit a fixed size (frame) background.
+     *
+     * @return      {@code true} is returned when thumbnail should be generated in a frame.
+	 * @since	0.4.21
+     */
+    public boolean useFrame() {
+        return useFrame;
+    }
+
+    /**
+     * The background color of the frame
+     *
+     * @return      The background color of the frame, if thumbnail should be generated in a frame
+	 * @since	0.4.21
+     */
+    public Color frameColor() {
+        return frameColor;
+    }
 }

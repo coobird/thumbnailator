@@ -86,7 +86,9 @@ public class StreamThumbnailTaskTest {
 				null,
 				Resizers.PROGRESSIVE,
 				true,
-				true
+				true,
+                false,
+                null
 		);
 		
 		File inputFile = TestUtils.copyResourceToTemporaryFile(
@@ -119,7 +121,9 @@ public class StreamThumbnailTaskTest {
 				null,
 				Resizers.PROGRESSIVE,
 				true,
-				true
+				true,
+                false,
+                null
 		);
 
 		File inputFile = TestUtils.copyResourceToTemporaryFile(
@@ -155,7 +159,9 @@ public class StreamThumbnailTaskTest {
 				null,
 				Resizers.PROGRESSIVE,
 				true,
-				true
+				true,
+                false,
+                null
 		);
 		
 		InputStream is = mock(InputStream.class);

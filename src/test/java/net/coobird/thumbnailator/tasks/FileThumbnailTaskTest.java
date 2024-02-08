@@ -24,24 +24,25 @@
 
 package net.coobird.thumbnailator.tasks;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.TestUtils;
 import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.builders.BufferedImageBuilder;
 import net.coobird.thumbnailator.resizers.Resizers;
-
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-
-import javax.imageio.ImageIO;
 
 public class FileThumbnailTaskTest {
 
@@ -81,7 +82,9 @@ public class FileThumbnailTaskTest {
 				null,
 				Resizers.PROGRESSIVE,
 				true,
-				true
+				true,
+                false,
+                null
 		);
 		
 		File inputFile = TestUtils.copyResourceToTemporaryFile(
@@ -109,7 +112,9 @@ public class FileThumbnailTaskTest {
 				null,
 				Resizers.PROGRESSIVE,
 				true,
-				true
+				true,
+                false,
+                null
 		);
 
 		// When inputFile is read, then an exception should be thrown.
@@ -139,7 +144,9 @@ public class FileThumbnailTaskTest {
 				null,
 				Resizers.PROGRESSIVE,
 				true,
-				true
+				true,
+                false,
+                null
 		);
 
 		// When inputFile is read, then an exception should be thrown.

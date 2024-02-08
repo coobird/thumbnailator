@@ -43,6 +43,7 @@ import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.filters.Pipeline;
 import net.coobird.thumbnailator.filters.SwapDimensions;
 import net.coobird.thumbnailator.makers.FixedSizeThumbnailMaker;
+import net.coobird.thumbnailator.makers.FramedThumbnailMaker;
 import net.coobird.thumbnailator.makers.ScaledThumbnailMaker;
 import net.coobird.thumbnailator.name.Rename;
 import net.coobird.thumbnailator.resizers.DefaultResizerFactory;
@@ -101,8 +102,23 @@ public final class Thumbnailator {
 		boolean isSwapDimensions = hasSwapDimensionsFilter(param.getImageFilters());
 
 		BufferedImage destinationImage;
-		
-		if (param.getSize() != null) {
+
+        if (param.useFrame()) {
+            // Get the dimensions of the original and thumbnail images.
+            int destinationWidth = param.getSize().width;
+            int destinationHeight = param.getSize().height;
+
+            // Create the thumbnail.
+            destinationImage =
+                new FramedThumbnailMaker(destinationWidth, destinationHeight)
+                    .keepAspectRatio(param.isKeepAspectRatio())
+                    .fitWithinDimensions(param.fitWithinDimenions())
+                    .frameColor(param.frameColor())
+                    .imageType(imageType)
+                    .resizerFactory(param.getResizerFactory())
+                    .make(sourceImage);
+
+        } else if (param.getSize() != null) {
 			// Get the dimensions of the original and thumbnail images.
 			Dimension size = param.getSize();
 			int destinationWidth = !isSwapDimensions ? size.width : size.height;

@@ -24,6 +24,7 @@
 
 package net.coobird.thumbnailator;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
@@ -691,6 +692,8 @@ instance.asFiles("path/to/thumbnail");
 			ALLOW_OVERWRITE("allowOverwrite"),
 			CROP("crop"),
 			USE_EXIF_ORIENTATION("useExifOrientation"),
+            USE_FRAME("useFrame"),
+            FRAME_COLOR("frameColor")
 			;
 			
 			private final String name;
@@ -733,6 +736,8 @@ instance.asFiles("path/to/thumbnail");
 			statusMap.put(Properties.ALLOW_OVERWRITE, Status.OPTIONAL);
 			statusMap.put(Properties.CROP, Status.OPTIONAL);
 			statusMap.put(Properties.USE_EXIF_ORIENTATION, Status.OPTIONAL);
+            statusMap.put(Properties.USE_FRAME, Status.OPTIONAL);
+            statusMap.put(Properties.FRAME_COLOR, Status.OPTIONAL);
 		}
 
 		/**
@@ -800,6 +805,10 @@ instance.asFiles("path/to/thumbnail");
 		private boolean fitWithinDimenions = true;
 		
 		private boolean useExifOrientation = true;
+
+        private boolean useFrame = false;
+
+        private Color frameColor = Color.WHITE;
 		
 		/**
 		 * This field should be set to the {@link Position} to be used for
@@ -1702,6 +1711,25 @@ Thumbnails.of(image)
 			this.useExifOrientation = useExifOrientation;
 			return this;
 		}
+
+        public Builder<T> frame(int width, int height) {
+            updateStatus(Properties.SIZE, Status.ALREADY_SET);
+            updateStatus(Properties.SCALE, Status.CANNOT_SET);
+            updateStatus(Properties.USE_FRAME, Status.ALREADY_SET);
+
+            validateDimensions(width, height);
+            this.width = width;
+            this.height = height;
+            this.useFrame = true;
+            return this;
+        }
+
+        public Builder<T> frameColor(Color color) {
+            updateStatus(Properties.FRAME_COLOR, Status.ALREADY_SET);
+
+            this.frameColor = color;
+            return this;
+        }
 		
 		/**
 		 * Indicates that the output format should be determined from the
@@ -2134,7 +2162,9 @@ watermark(Positions.CENTER, image, opacity);
 						filterPipeline.getFilters(),
 						resizerFactory,
 						fitWithinDimenions,
-						useExifOrientation
+						useExifOrientation,
+                        useFrame,
+                        frameColor
 				);
 
 			} else {
@@ -2151,7 +2181,9 @@ watermark(Positions.CENTER, image, opacity);
 						filterPipeline.getFilters(),
 						resizerFactory,
 						fitWithinDimenions,
-						useExifOrientation
+						useExifOrientation,
+                        useFrame,
+                        frameColor
 				);
 			}
 		}
