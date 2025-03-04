@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2025 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,11 +38,10 @@ import java.util.Map;
  * progressive bilinear scaling.
  * <p>
  * The resizing technique used in this class is based on the technique
- * discussed in <em>Chapter 4: Images</em> of
- * <a href="http://filthyrichclients.org">Filthy Rich Clients</a>
+ * discussed in <em>Chapter 4: Images</em> of <em>Filthy Rich Clients</em>
  * by Chet Haase and Romain Guy.
  * <p>
- * The actual implemenation of the technique is independent of the code which
+ * The actual implementation of the technique is independent of the code which
  * is provided in the book.
  * 
  * @author coobird
