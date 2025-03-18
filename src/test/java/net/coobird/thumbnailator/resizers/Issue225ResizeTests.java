@@ -32,8 +32,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -52,11 +54,11 @@ public class Issue225ResizeTests {
     /**
      * Creates a RGB test pattern consisting of 3 columns by 6 rows.
      */
-    private static BufferedImage createTestImage() {
+    private BufferedImage createTestImage() {
         int width = SOURCE_WIDTH;
         int height = SOURCE_HEIGHT;
 
-        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage img = new BufferedImage(width, height, imageType);
         Graphics g = img.createGraphics();
         g.setColor(Color.white);
         g.fillRect(0, 0, width, height);
@@ -108,22 +110,42 @@ public class Issue225ResizeTests {
             }
         }
     }
-
-    @Parameterized.Parameters(name = "width={0}, height={1}")
+    
+    @Parameterized.Parameters(name = "width={0}, height={1}, imageType={2}")
     public static Collection<Object[]> testCases() {
-        return Arrays.asList(
-                new Object[] { SOURCE_WIDTH, SOURCE_HEIGHT },
-                new Object[] { SOURCE_WIDTH * 2, SOURCE_HEIGHT * 2 },
-                new Object[] { SOURCE_WIDTH * 3, SOURCE_HEIGHT * 3 },
-                new Object[] { SOURCE_WIDTH / 2, SOURCE_HEIGHT / 2 },
-                new Object[] { SOURCE_WIDTH / 3, SOURCE_HEIGHT / 3 },
+        List<Integer> imageTypes = Arrays.asList(
+                BufferedImage.TYPE_INT_ARGB,
+                BufferedImage.TYPE_INT_RGB
+        );
+        
+        List<Dimension> dimensions = Arrays.asList(
+                new Dimension(SOURCE_WIDTH, SOURCE_HEIGHT),
+                new Dimension(SOURCE_WIDTH * 2, SOURCE_HEIGHT * 2),
+                new Dimension(SOURCE_WIDTH * 3, SOURCE_HEIGHT * 3),
+                new Dimension(SOURCE_WIDTH / 2, SOURCE_HEIGHT / 2),
+                new Dimension(SOURCE_WIDTH / 3, SOURCE_HEIGHT / 3),
                 
                 // Test cases for aspect ratio not preserved
-                new Object[] { SOURCE_WIDTH * 2, SOURCE_HEIGHT / 2 },
-                new Object[] { SOURCE_WIDTH / 2, SOURCE_HEIGHT * 2 },
-                new Object[] { SOURCE_WIDTH * 3, SOURCE_HEIGHT / 3 },
-                new Object[] { SOURCE_WIDTH / 3, SOURCE_HEIGHT * 3 }
+                new Dimension(SOURCE_WIDTH * 2, SOURCE_HEIGHT / 2),
+                new Dimension(SOURCE_WIDTH / 2, SOURCE_HEIGHT * 2),
+                new Dimension(SOURCE_WIDTH * 3, SOURCE_HEIGHT / 3),
+                new Dimension(SOURCE_WIDTH / 3, SOURCE_HEIGHT * 3)
         );
+        
+        List<Object[]> testCases = new ArrayList<Object[]>();
+        for (int imageType : imageTypes) {
+            for (Dimension dimension : dimensions) {
+                testCases.add(
+                        new Object[] {
+                                dimension.width,
+                                dimension.height,
+                                imageType
+                        }
+                );
+            }
+        }
+        
+        return testCases;
     }
 
     @Parameterized.Parameter
@@ -132,17 +154,20 @@ public class Issue225ResizeTests {
     @Parameterized.Parameter(1)
     public int height;
 
-    private static void resizerTest(Resizer resizer, int targetWidth, int targetHeight) {
+    @Parameterized.Parameter(2)
+    public int imageType;
+
+    private void resizerTest(Resizer resizer) {
         // given
         BufferedImage sourceImage = createTestImage();
-        BufferedImage thumbnail = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage thumbnail = new BufferedImage(width, height, imageType);
 
         // when
         resizer.resize(sourceImage, thumbnail);
 
         // then
         assertEquals(
-                new Dimension(targetWidth, targetHeight),
+                new Dimension(width, height),
                 new Dimension(thumbnail.getWidth(), thumbnail.getHeight())
         );
         assertImage(thumbnail);
@@ -150,16 +175,16 @@ public class Issue225ResizeTests {
 
     @Test
     public void bilinearResizerTest() {
-        resizerTest(Resizers.BILINEAR, width, height);
+        resizerTest(Resizers.BILINEAR);
     }
 
     @Test
     public void bicubicResizerTest() {
-        resizerTest(Resizers.BICUBIC, width, height);
+        resizerTest(Resizers.BICUBIC);
     }
 
     @Test
     public void progressiveResizerTest() {
-        resizerTest(Resizers.PROGRESSIVE, width, height);
+        resizerTest(Resizers.PROGRESSIVE);
     }
 }
