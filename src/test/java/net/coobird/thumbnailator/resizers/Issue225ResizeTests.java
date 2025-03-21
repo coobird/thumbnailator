@@ -80,7 +80,9 @@ public class Issue225ResizeTests {
     }
 
     private static int round(double v) {
-        return (int) Math.round(v);
+        // Floor should be close enough for most test cases.
+        // It's required for the 3x6 destination size case to work.
+        return (int) Math.floor(v);
     }
 
     /**
@@ -90,22 +92,19 @@ public class Issue225ResizeTests {
         int width = img.getWidth();
         int height = img.getHeight();
 
-        int blockWidth = round(width / 3.0);
-        int blockHeight = round(height / 6.0);
-        int halfBlockWidth = round(blockWidth / 2.0);
-        int halfBlockHeight = round(blockHeight / 2.0);
+        double blockWidth = width / 3.0;
+        double blockHeight = height / 6.0;
+        double halfBlockWidth = blockWidth / 2.0;
+        double halfBlockHeight = blockHeight / 2.0;
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 3; j++) {
+                int x = round((blockWidth * j) + halfBlockWidth);
+                int y = round((blockHeight * (i % 3)) + halfBlockHeight);
                 assertEquals(
                         String.format("mismatch at i=%s, j=%s", i, j),
                         COLOR_BLOCKS[i % 3][j],
-                        new Color(
-                                img.getRGB(
-                                        (blockWidth * j) + halfBlockWidth,
-                                        (blockHeight * (i % 3)) + halfBlockHeight
-                                )
-                        )
+                        new Color(img.getRGB(x, y))
                 );
             }
         }
@@ -129,7 +128,11 @@ public class Issue225ResizeTests {
                 new Dimension(SOURCE_WIDTH * 2, SOURCE_HEIGHT / 2),
                 new Dimension(SOURCE_WIDTH / 2, SOURCE_HEIGHT * 2),
                 new Dimension(SOURCE_WIDTH * 3, SOURCE_HEIGHT / 3),
-                new Dimension(SOURCE_WIDTH / 3, SOURCE_HEIGHT * 3)
+                new Dimension(SOURCE_WIDTH / 3, SOURCE_HEIGHT * 3),
+
+                // Smallest possible dimensions without losing color detail.
+                new Dimension(3, 6),
+                new Dimension(6, 12)
         );
         
         List<Object[]> testCases = new ArrayList<Object[]>();
