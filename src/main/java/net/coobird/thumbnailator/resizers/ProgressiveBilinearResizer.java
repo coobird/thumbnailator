@@ -75,6 +75,9 @@ public class ProgressiveBilinearResizer extends AbstractResizer {
 	/**
 	 * Resizes an image using the progressive bilinear scaling technique.
 	 * <p>
+	 * When the source image isn't at least twice as large as the destination
+	 * image for both dimensions, a regular one-step scaling is performed.
+	 * <p>
 	 * If the source and/or destination image is {@code null}, then a
 	 * {@link NullPointerException} will be thrown.
 	 * 
