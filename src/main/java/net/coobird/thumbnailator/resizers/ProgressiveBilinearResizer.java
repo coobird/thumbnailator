@@ -104,16 +104,6 @@ public class ProgressiveBilinearResizer extends AbstractResizer {
 			return;
 		}
 		
-		// Temporary image used for in-place resizing of image.
-		BufferedImage tempImage = new BufferedImageBuilder(
-				currentWidth,
-				currentHeight,
-				destImage.getType()
-		).build();
-		
-		Graphics2D g = createGraphics(tempImage);
-		g.setComposite(AlphaComposite.Src);
-		
 		/*
 		 * Determine the size of the first resize step should be.
 		 * 1) Beginning from the target size
@@ -131,6 +121,21 @@ public class ProgressiveBilinearResizer extends AbstractResizer {
 		// FIXME This probably should have been rounded rather than truncated.
 		currentWidth = startWidth / 2;
 		currentHeight = startHeight / 2;
+
+		// Temporary image used for in-place resizing of image.
+		/*
+		 * Special case for `width` and `height` when they're `0`'.
+		 * This can happen when the target dimension is `1`.
+		 * This is caused by integer truncation in the previous lines.
+		 */
+		BufferedImage tempImage = new BufferedImageBuilder(
+				Math.max(1, currentWidth),
+				Math.max(1, currentHeight),
+				destImage.getType()
+		).build();
+
+		Graphics2D g = createGraphics(tempImage);
+		g.setComposite(AlphaComposite.Src);
 
 		// Perform first resize step.
 		g.drawImage(srcImage, 0, 0, currentWidth, currentHeight, null);
