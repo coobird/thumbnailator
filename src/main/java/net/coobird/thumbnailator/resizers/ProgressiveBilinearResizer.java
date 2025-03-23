@@ -49,6 +49,11 @@ import java.util.Map;
  */
 public class ProgressiveBilinearResizer extends AbstractResizer {
 	/**
+	 * A resizer that's used when a single-step resize is needed.
+	 */
+	private final BilinearResizer bilinearResizer;
+
+	/**
 	 * Instantiates a {@link ProgressiveBilinearResizer} with default
 	 * rendering hints.
 	 */
@@ -64,6 +69,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer {
 	 */
 	public ProgressiveBilinearResizer(Map<RenderingHints.Key, Object> hints) {
 		super(RenderingHints.VALUE_INTERPOLATION_BILINEAR, hints);
+		bilinearResizer = new BilinearResizer(getRenderingHints());
 	}
 	
 	/**
@@ -91,9 +97,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer {
 		
 		// If multi-step downscaling is not required, perform one-step.
 		if ((targetWidth * 2 >= currentWidth) && (targetHeight * 2 >= currentHeight)) {
-			Graphics2D g = createGraphics(destImage);
-			g.drawImage(srcImage, 0, 0, targetWidth, targetHeight, null);
-			g.dispose();
+			bilinearResizer.resize(srcImage, destImage);
 			return;
 		}
 		
