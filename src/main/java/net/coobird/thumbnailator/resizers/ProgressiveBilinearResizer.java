@@ -127,7 +127,8 @@ public class ProgressiveBilinearResizer extends AbstractResizer {
 			startWidth *= 2;
 			startHeight *= 2;
 		}
-		
+
+		// FIXME This probably should have been rounded rather than truncated.
 		currentWidth = startWidth / 2;
 		currentHeight = startHeight / 2;
 
@@ -136,6 +137,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer {
 		
 		// Perform an in-place progressive bilinear resize.
 		while (	(currentWidth >= targetWidth * 2) && (currentHeight >= targetHeight * 2) ) {
+			// FIXME Probably should be rounding rather than truncating.
 			currentWidth /= 2;
 			currentHeight /= 2;
 			
