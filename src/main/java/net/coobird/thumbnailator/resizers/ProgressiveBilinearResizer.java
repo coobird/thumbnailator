@@ -98,7 +98,11 @@ public class ProgressiveBilinearResizer extends AbstractResizer {
 		final int targetWidth = destImage.getWidth();
 		final int targetHeight = destImage.getHeight();
 		
-		// If multi-step downscaling is not required, perform one-step.
+		/*
+		 * Only perform a progressive bilinear scaling when both width and
+		 * height are at least twice as large as the target.
+		 * In other situations, fallback to using a one-step bilinear resize.
+		 */
 		if ((targetWidth * 2 >= currentWidth) && (targetHeight * 2 >= currentHeight)) {
 			bilinearResizer.resize(srcImage, destImage);
 			return;
@@ -124,7 +128,7 @@ public class ProgressiveBilinearResizer extends AbstractResizer {
 
 		// Temporary image used for in-place resizing of image.
 		/*
-		 * Special case for `width` and `height` when they're `0`'.
+		 * Special case for `width` and `height` when they're `0`.
 		 * This can happen when the target dimension is `1`.
 		 * This is caused by integer truncation in the previous lines.
 		 */
