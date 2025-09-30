@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2025 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,17 +38,21 @@ import java.util.Map;
  * progressive bilinear scaling.
  * <p>
  * The resizing technique used in this class is based on the technique
- * discussed in <em>Chapter 4: Images</em> of
- * <a href="http://filthyrichclients.org">Filthy Rich Clients</a>
+ * discussed in <em>Chapter 4: Images</em> of <em>Filthy Rich Clients</em>
  * by Chet Haase and Romain Guy.
  * <p>
- * The actual implemenation of the technique is independent of the code which
+ * The actual implementation of the technique is independent of the code which
  * is provided in the book.
  * 
  * @author coobird
  *
  */
 public class ProgressiveBilinearResizer extends AbstractResizer {
+	/**
+	 * A resizer that's used when a single-step resize is needed.
+	 */
+	private final BilinearResizer bilinearResizer;
+
 	/**
 	 * Instantiates a {@link ProgressiveBilinearResizer} with default
 	 * rendering hints.
@@ -65,10 +69,14 @@ public class ProgressiveBilinearResizer extends AbstractResizer {
 	 */
 	public ProgressiveBilinearResizer(Map<RenderingHints.Key, Object> hints) {
 		super(RenderingHints.VALUE_INTERPOLATION_BILINEAR, hints);
+		bilinearResizer = new BilinearResizer(getRenderingHints());
 	}
 	
 	/**
 	 * Resizes an image using the progressive bilinear scaling technique.
+	 * <p>
+	 * When the source image isn't at least twice as large as the destination
+	 * image for both dimensions, a regular one-step scaling is performed.
 	 * <p>
 	 * If the source and/or destination image is {@code null}, then a
 	 * {@link NullPointerException} will be thrown.
@@ -90,23 +98,15 @@ public class ProgressiveBilinearResizer extends AbstractResizer {
 		final int targetWidth = destImage.getWidth();
 		final int targetHeight = destImage.getHeight();
 		
-		// If multi-step downscaling is not required, perform one-step.
+		/*
+		 * Only perform a progressive bilinear scaling when both width and
+		 * height are at least twice as large as the target.
+		 * In other situations, fallback to using a one-step bilinear resize.
+		 */
 		if ((targetWidth * 2 >= currentWidth) && (targetHeight * 2 >= currentHeight)) {
-			Graphics2D g = createGraphics(destImage);
-			g.drawImage(srcImage, 0, 0, targetWidth, targetHeight, null);
-			g.dispose();
+			bilinearResizer.resize(srcImage, destImage);
 			return;
 		}
-		
-		// Temporary image used for in-place resizing of image.
-		BufferedImage tempImage = new BufferedImageBuilder(
-				currentWidth,
-				currentHeight,
-				destImage.getType()
-		).build();
-		
-		Graphics2D g = createGraphics(tempImage);
-		g.setComposite(AlphaComposite.Src);
 		
 		/*
 		 * Determine the size of the first resize step should be.
@@ -121,15 +121,32 @@ public class ProgressiveBilinearResizer extends AbstractResizer {
 			startWidth *= 2;
 			startHeight *= 2;
 		}
-		
+
+		// FIXME This probably should have been rounded rather than truncated.
 		currentWidth = startWidth / 2;
 		currentHeight = startHeight / 2;
+
+		// Temporary image used for in-place resizing of image.
+		/*
+		 * Special case for `width` and `height` when they're `0`.
+		 * This can happen when the target dimension is `1`.
+		 * This is caused by integer truncation in the previous lines.
+		 */
+		BufferedImage tempImage = new BufferedImageBuilder(
+				Math.max(1, currentWidth),
+				Math.max(1, currentHeight),
+				destImage.getType()
+		).build();
+
+		Graphics2D g = createGraphics(tempImage);
+		g.setComposite(AlphaComposite.Src);
 
 		// Perform first resize step.
 		g.drawImage(srcImage, 0, 0, currentWidth, currentHeight, null);
 		
 		// Perform an in-place progressive bilinear resize.
 		while (	(currentWidth >= targetWidth * 2) && (currentHeight >= targetHeight * 2) ) {
+			// FIXME Probably should be rounding rather than truncating.
 			currentWidth /= 2;
 			currentHeight /= 2;
 			

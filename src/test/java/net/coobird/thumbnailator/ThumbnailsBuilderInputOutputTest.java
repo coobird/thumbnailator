@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2022 Chris Kroells
+ * Copyright (c) 2008-2023 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -61,6 +61,8 @@ import net.coobird.thumbnailator.name.Rename;
 import net.coobird.thumbnailator.test.BufferedImageAssert;
 import net.coobird.thumbnailator.test.BufferedImageComparer;
 
+import net.coobird.thumbnailator.util.exif.ExifFilterUtils;
+import net.coobird.thumbnailator.util.exif.Orientation;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
@@ -2287,13 +2289,28 @@ public class ThumbnailsBuilderInputOutputTest {
 	@RunWith(Parameterized.class)
 	public static class OrientationTests {
 
-		@Parameterized.Parameters(name = "orientation={0}")
-		public static Object[] values() {
-			return new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+		@Parameterized.Parameters(name = "orientation={0}, sourcePathPattern={1}, width={2}, height={3}")
+		public static Collection<Object[]> values() {
+			List<Object[]> values = new ArrayList<Object[]>();
+			for (int i = 1; i <= 8; i++) {
+				values.add(new Object[] { i, "source", 80, 80 });
+				values.add(new Object[] { i, "sourceWide", 80, 40 });
+				values.add(new Object[] { i, "sourceTall", 40, 80 });
+			}
+			return values;
 		}
 
 		@Parameterized.Parameter
 		public int orientation;
+
+		@Parameterized.Parameter(1)
+		public String source;
+
+		@Parameterized.Parameter(2)
+		public int width;
+
+		@Parameterized.Parameter(3)
+		public int height;
 
 		@Rule
 		public TemporaryFolder temporaryFolder = new TemporaryFolder();
@@ -2313,164 +2330,90 @@ public class ThumbnailsBuilderInputOutputTest {
 		public void correctOrientationFromFile() throws IOException {
 			// given
 			File sourceFile = TestUtils.copyResourceToTemporaryFile(
-					String.format("Exif/source_%s.jpg", orientation),
+					String.format("Exif/%s_%s.jpg", source, orientation),
 					temporaryFolder
 			);
 
 			// when
 			BufferedImage result =
 					Thumbnails.of(sourceFile)
-							.size(100, 100)
+							.size(width, height)
 							.asBufferedImage();
 
 			// then
 			assertOrientation(result);
-			assertEquals(100, result.getWidth());
-			assertEquals(100, result.getHeight());
-		}
-
-		@Test
-		public void correctOrientationWideFromFile() throws IOException {
-			// given
-			File sourceFile = TestUtils.copyResourceToTemporaryFile(
-					String.format("Exif/sourceWide_%s.jpg", orientation),
-					temporaryFolder
-			);
-
-			// when
-			BufferedImage result =
-					Thumbnails.of(sourceFile)
-							.size(80, 40)
-							.asBufferedImage();
-
-			// then
-			assertOrientation(result);
-			assertEquals(80, result.getWidth());
-			assertEquals(40, result.getHeight());
-		}
-
-		@Test
-		public void correctOrientationTallFromFile() throws IOException {
-			// given
-			File sourceFile = TestUtils.copyResourceToTemporaryFile(
-					String.format("Exif/sourceTall_%s.jpg", orientation),
-					temporaryFolder
-			);
-
-			// when
-			BufferedImage result =
-					Thumbnails.of(sourceFile)
-							.size(40, 80)
-							.asBufferedImage();
-
-			// then
-			assertOrientation(result);
-			assertEquals(40, result.getWidth());
-			assertEquals(80, result.getHeight());
-		}
-
-		@Test
-		public void correctOrientationWideScaleFromFile() throws IOException {
-			// given
-			File sourceFile = TestUtils.copyResourceToTemporaryFile(
-					String.format("Exif/sourceWide_%s.jpg", orientation),
-					temporaryFolder
-			);
-
-			// when
-			BufferedImage result =
-					Thumbnails.of(sourceFile)
-							.scale(0.5)
-							.asBufferedImage();
-
-			// then
-			assertOrientation(result);
-			assertEquals(80, result.getWidth());
-			assertEquals(40, result.getHeight());
-		}
-
-		@Test
-		public void correctOrientationTallScaleFromFile() throws IOException {
-			// given
-			File sourceFile = TestUtils.copyResourceToTemporaryFile(
-					String.format("Exif/sourceTall_%s.jpg", orientation),
-					temporaryFolder
-			);
-
-			// when
-			BufferedImage result =
-					Thumbnails.of(sourceFile)
-							.scale(0.5)
-							.asBufferedImage();
-
-			// then
-			assertOrientation(result);
-			assertEquals(40, result.getWidth());
-			assertEquals(80, result.getHeight());
+			assertEquals(width, result.getWidth());
+			assertEquals(height, result.getHeight());
 		}
 
 		@Test
 		public void correctOrientationFromInputStream() throws Exception {
 			// given
 			InputStream is = TestUtils.getResourceStream(
-					String.format("Exif/source_%s.jpg", orientation)
+					String.format("Exif/%s_%s.jpg", source, orientation)
 			);
 
 			// when
 			BufferedImage result =
 					Thumbnails.of(is)
-							.size(100, 100)
+							.size(width, height)
 							.asBufferedImage();
 
 			// then
 			assertOrientation(result);
-			assertEquals(100, result.getWidth());
-			assertEquals(100, result.getHeight());
+			assertEquals(width, result.getWidth());
+			assertEquals(height, result.getHeight());
 		}
 
+		/*
+		 * These test cases reflect Thumbnailator usage where `BufferedImage`
+		 * is used and Exif orientation is determined by other means.
+		 */
 		@Test
-		public void correctOrientationWideFromInputStream() throws Exception {
+		public void correctOrientationFromBufferedImage() throws IOException {
 			// given
 			InputStream is = TestUtils.getResourceStream(
-					String.format("Exif/sourceWide_%s.jpg", orientation)
+					String.format("Exif/%s_%s.jpg", source, orientation)
 			);
 
 			// when
 			BufferedImage result =
-					Thumbnails.of(is)
-							.size(80, 40)
+					Thumbnails.of(ImageIO.read(is))
+							.addFilter(ExifFilterUtils.getFilterForOrientation(Orientation.typeOf(orientation)))
+							.size(width, height)
 							.asBufferedImage();
 
 			// then
 			assertOrientation(result);
-			assertEquals(80, result.getWidth());
-			assertEquals(40, result.getHeight());
+			assertEquals(width, result.getWidth());
+			assertEquals(height, result.getHeight());
 		}
 
 		@Test
-		public void correctOrientationTallFromInputStream() throws Exception {
+		public void correctOrientationScaleFromFile() throws IOException {
 			// given
-			InputStream is = TestUtils.getResourceStream(
-					String.format("Exif/sourceTall_%s.jpg", orientation)
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					String.format("Exif/%s_%s.jpg", source, orientation),
+					temporaryFolder
 			);
 
 			// when
 			BufferedImage result =
-					Thumbnails.of(is)
-							.size(40, 80)
+					Thumbnails.of(sourceFile)
+							.scale(0.5)
 							.asBufferedImage();
 
 			// then
 			assertOrientation(result);
-			assertEquals(40, result.getWidth());
-			assertEquals(80, result.getHeight());
+			assertEquals(width, result.getWidth());
+			assertEquals(height, result.getHeight());
 		}
 
 		@Test
-		public void correctOrientationWideScaleFromInputStream() throws Exception {
+		public void correctOrientationScaleFromInputStream() throws Exception {
 			// given
 			InputStream is = TestUtils.getResourceStream(
-					String.format("Exif/sourceWide_%s.jpg", orientation)
+					String.format("Exif/%s_%s.jpg", source, orientation)
 			);
 
 			// when
@@ -2481,27 +2424,33 @@ public class ThumbnailsBuilderInputOutputTest {
 
 			// then
 			assertOrientation(result);
-			assertEquals(80, result.getWidth());
-			assertEquals(40, result.getHeight());
+			assertEquals(width, result.getWidth());
+			assertEquals(height, result.getHeight());
 		}
 
+		/*
+		 * These test cases reflect Thumbnailator usage where `BufferedImage`
+		 * is used and Exif orientation is determined by other means.
+		 */
 		@Test
-		public void correctOrientationTallScaleFromInputStream() throws Exception {
+		public void correctOrientationScaleFromBufferedImage() throws IOException {
 			// given
-			InputStream is = TestUtils.getResourceStream(
-					String.format("Exif/sourceTall_%s.jpg", orientation)
+			File sourceFile = TestUtils.copyResourceToTemporaryFile(
+					String.format("Exif/%s_%s.jpg", source, orientation),
+					temporaryFolder
 			);
 
 			// when
 			BufferedImage result =
-					Thumbnails.of(is)
+					Thumbnails.of(ImageIO.read(sourceFile))
+							.addFilter(ExifFilterUtils.getFilterForOrientation(Orientation.typeOf(orientation)))
 							.scale(0.5)
 							.asBufferedImage();
 
 			// then
 			assertOrientation(result);
-			assertEquals(40, result.getWidth());
-			assertEquals(80, result.getHeight());
+			assertEquals(width, result.getWidth());
+			assertEquals(height, result.getHeight());
 		}
 	}
 
