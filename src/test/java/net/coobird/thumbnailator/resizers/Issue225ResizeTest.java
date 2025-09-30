@@ -40,7 +40,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
-public class Issue225ResizeTests {
+public class Issue225ResizeTest {
 
     private static final Color[][] COLOR_BLOCKS = new Color[][] {
             new Color[] { Color.red, Color.green, Color.blue },
