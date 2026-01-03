@@ -1,7 +1,7 @@
 /*
  * Thumbnailator - a thumbnail generation library
  *
- * Copyright (c) 2008-2020 Chris Kroells
+ * Copyright (c) 2008-2026 Chris Kroells
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,6 @@ public class BufferedImageAssert {
 	 * 
 	 * @param img		The image to check.
 	 * @param pattern	The pattern that should be present.
-	 * @return			If the pattern is present in the image.
 	 */
 	public static void assertMatches(BufferedImage img, float[] pattern) {
 		if (pattern.length != 9) {
