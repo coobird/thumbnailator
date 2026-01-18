@@ -603,7 +603,41 @@ public class FixedSizeThumbnailMakerTest {
 		assertEquals(10, thumbnail.getWidth());
 		assertEquals(1, thumbnail.getHeight());
 	}
-	
+
+	@Test
+	public void thumbnailWithoutUpscaling_DisableUpscalingTrue() {
+		// given
+		BufferedImage img = new BufferedImageBuilder(10, 10).build();
+
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(20, 20)
+				.keepAspectRatio(true)
+				.fitWithinDimensions(true)
+				.disableUpscaling(true)
+				.make(img);
+
+		// then
+		assertEquals(10, thumbnail.getWidth());
+		assertEquals(10, thumbnail.getHeight());
+	}
+
+	@Test
+	public void thumbnailWithoutUpscalingHeightBigger_DisableUpscalingTrue() {
+		// given
+		BufferedImage img = new BufferedImageBuilder(100, 4).build();
+
+		// when
+		BufferedImage thumbnail = new FixedSizeThumbnailMaker(10, 10)
+				.keepAspectRatio(true)
+				.fitWithinDimensions(true)
+				.disableUpscaling(true)
+				.make(img);
+
+		// then
+		assertEquals(10, thumbnail.getWidth());
+		assertEquals(1, thumbnail.getHeight());
+	}
+
 	@Test
 	public void widthZeroIfTruncatedButOneIfRounded_FitWithinTrue() {
 		// given
