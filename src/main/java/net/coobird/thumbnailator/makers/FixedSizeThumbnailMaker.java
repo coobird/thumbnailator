@@ -75,12 +75,13 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker {
 	private static final String PARAM_SIZE = "size";
 	private static final String PARAM_KEEP_RATIO = "keepRatio";
 	private static final String PARAM_FIT_WITHIN = "fitWithinDimensions";
-	
+
 	private int width;
 	private int height;
 	private boolean keepRatio;
 	private boolean fitWithinDimensions;
-	
+	private boolean disableUpscaling;
+
 	/**
 	 * Creates a {@link FixedSizeThumbnailMaker}.
 	 * <p>
@@ -223,7 +224,12 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker {
 		ready.set(PARAM_KEEP_RATIO);
 		return this;
 	}
-	
+
+	public FixedSizeThumbnailMaker disableUpscaling(boolean disableUpscaling) {
+		this.disableUpscaling = disableUpscaling;
+		return this;
+	}
+
 	/**
 	 * Sets whether or not the thumbnail should fit within the specified
 	 * dimensions.
@@ -269,32 +275,37 @@ public final class FixedSizeThumbnailMaker extends ThumbnailMaker {
 		if (keepRatio) {
 			int sourceWidth = img.getWidth();
 			int sourceHeight = img.getHeight();
-			
-			double sourceRatio = (double)sourceWidth / (double)sourceHeight;
-			double targetRatio = (double)targetWidth / (double)targetHeight;
-			
+
+			double sourceRatio = (double) sourceWidth / (double) sourceHeight;
+			double targetRatio = (double) targetWidth / (double) targetHeight;
+
 			/*
 			 * If the ratios are not the same, then the appropriate
 			 * width and height must be picked.
 			 */
-			if (Double.compare(sourceRatio, targetRatio) != 0) {
-				if (fitWithinDimensions) {
-					if (sourceRatio > targetRatio) {
-						targetWidth = width;
-						targetHeight = (int)Math.round(targetWidth / sourceRatio);
+			if (!disableUpscaling || (sourceHeight > targetHeight || sourceWidth > targetWidth)) {
+				if (Double.compare(sourceRatio, targetRatio) != 0) {
+					if (fitWithinDimensions) {
+						if (sourceRatio > targetRatio) {
+							targetWidth = width;
+							targetHeight = (int) Math.round(targetWidth / sourceRatio);
+						} else {
+							targetWidth = (int) Math.round(targetHeight * sourceRatio);
+							targetHeight = height;
+						}
 					} else {
-						targetWidth = (int)Math.round(targetHeight * sourceRatio);
-						targetHeight = height;
-					}
-				} else {
-					if (sourceRatio > targetRatio) {
-						targetWidth = (int)Math.round(targetHeight * sourceRatio);
-						targetHeight = height;
-					} else {
-						targetWidth = width;
-						targetHeight = (int)Math.round(targetWidth / sourceRatio);
+						if (sourceRatio > targetRatio) {
+							targetWidth = (int) Math.round(targetHeight * sourceRatio);
+							targetHeight = height;
+						} else {
+							targetWidth = width;
+							targetHeight = (int) Math.round(targetWidth / sourceRatio);
+						}
 					}
 				}
+			} else {
+				targetWidth = sourceWidth;
+				targetHeight = sourceHeight;
 			}
 		}
 		

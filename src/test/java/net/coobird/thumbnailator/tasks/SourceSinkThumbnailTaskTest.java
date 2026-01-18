@@ -87,7 +87,35 @@ public class SourceSinkThumbnailTaskTest {
 		verify(destination).setOutputFormatName("42");
 		verify(destination).write(any(BufferedImage.class));
 	}
-	
+
+	public void testImageNotUpscaled() throws IOException {
+		// given
+		ThumbnailParameter param =
+				new ThumbnailParameterBuilder()
+						.size(10, 70)
+						.format(ThumbnailParameter.DETERMINE_FORMAT)
+						.build();
+
+		ImageSource source = mock(ImageSource.class);
+		when(source.read()).thenReturn(new BufferedImageBuilder(100, 100).build());
+		when(source.getInputFormatName()).thenReturn("42a");
+
+		ImageSink destination = mock(ImageSink.class);
+		when(destination.preferredOutputFormatName()).thenReturn("42");
+
+		// when
+		Thumbnailator.createThumbnail(
+				new SourceSinkThumbnailTask(param, source, destination)
+		);
+
+		// then
+		verify(source).read();
+
+		verify(destination).preferredOutputFormatName();
+		verify(destination).setOutputFormatName("42");
+		verify(destination).write(any(BufferedImage.class));
+	}
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void task_UsesOriginalFormat() throws Exception {

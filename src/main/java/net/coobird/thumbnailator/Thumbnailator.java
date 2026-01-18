@@ -114,6 +114,7 @@ public final class Thumbnailator {
 					.size(destinationWidth, destinationHeight)
 					.keepAspectRatio(param.isKeepAspectRatio())
 					.fitWithinDimensions(param.fitWithinDimenions())
+					.disableUpscaling(param.isDisableUpscaling())
 					.imageType(imageType)
 					.resizerFactory(param.getResizerFactory())
 					.make(sourceImage);
